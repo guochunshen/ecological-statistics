@@ -1,7 +1,7 @@
 R语言介绍
 ========================================================
 author: 沈国春
-date: Thu Feb 27 21:24:55 2014
+date: Thu Feb 27 21:32:56 2014
 
 什么是R
 ========================================================
@@ -129,8 +129,8 @@ a
 ```
 
 ```
- [1] -0.3915  0.2525  0.5311 -0.4532 -0.3173  1.7433 -0.1441 -0.9256
- [9] -1.3848 -0.9676
+ [1]  0.9880 -1.5361 -1.7115 -1.4805 -0.7469 -1.8419 -0.6763  0.5910
+ [9] -0.6585 -0.7593
 ```
 
 
@@ -165,7 +165,7 @@ lm(formula = y ~ x)
 
 Coefficients:
 (Intercept)            x  
-   0.000187     1.002178  
+      0.329        0.992  
 ```
 
 
@@ -186,18 +186,18 @@ lm(formula = y ~ x)
 
 Residuals:
    Min     1Q Median     3Q    Max 
--3.438 -0.875  0.194  0.819  3.439 
+-3.853 -1.021  0.077  0.827  3.600 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept) 0.000187   0.288950       0        1    
-x           1.002178   0.004975     201   <2e-16 ***
+(Intercept)  0.32851    0.29590    1.11     0.27    
+x            0.99208    0.00508  195.22   <2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 1.44 on 98 degrees of freedom
-Multiple R-squared:  0.998,	Adjusted R-squared:  0.998 
-F-statistic: 4.06e+04 on 1 and 98 DF,  p-value: <2e-16
+Residual standard error: 1.47 on 98 degrees of freedom
+Multiple R-squared:  0.997,	Adjusted R-squared:  0.997 
+F-statistic: 3.81e+04 on 1 and 98 DF,  p-value: <2e-16
 ```
 
 </small>
