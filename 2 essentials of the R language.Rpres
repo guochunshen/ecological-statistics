@@ -239,3 +239,33 @@ length(y)
 class(y)
 ```
 
+
+函数
+=============================================
+
+fun=function(){
+a=1
+}
+
+逻辑结构
+===========================================
+
+if else, while, for
+
+读取数据
+========================================
+```{r}
+x=data.frame(x=1:10,b=paste("a",10:1))
+write.table(x,file="example.txt",quote=FALSE)
+```
+
+
+练习
+=====================================
+
+$imp_i=\frac{relativeDBH_i+relativeABD_i}{n}$
+
+$relativeDBH_i=\frac{dbh_i}{\sum{dbh_i}}$
+
+$relativeABD_i=\frac{abd_i}{\sum{abd_i}}$
+

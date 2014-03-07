@@ -771,6 +771,16 @@ hljs.initHighlightingOnLoad();
 </script>
 
    
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    showProcessingMessages: false,
+    messageStyle: "none"
+  });
+</script>
+
+<script type="text/javascript" src="2 essentials of the R language_files/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
   
 
 
@@ -784,7 +794,7 @@ hljs.initHighlightingOnLoad();
   <div class="slides">
 
 <section data-state="section" data-transition="linear" data-transition-speed="default">
-<h1>Ｒ语言基础</h1><p>沈国春<br/>Thu Feb 27 21:47:06 2014</p>
+<h1>Ｒ语言基础</h1><p>沈国春<br/>Wed Mar 05 10:55:39 2014</p>
 
 <div class="slideContent" >
 
@@ -1261,6 +1271,46 @@ y
 
 <pre><code>[1] &quot;numeric&quot;
 </code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>函数</h3>
+<div class="slideContent" >
+<p>fun=function(){
+a=1
+}</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>逻辑结构</h3>
+<div class="slideContent" >
+<p>if else, while, for</p>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>读取数据</h3>
+<div class="slideContent" >
+<pre><code class="r">x=data.frame(x=1:10,b=paste(&quot;a&quot;,10:1))
+write.table(x,file=&quot;example.txt&quot;,quote=FALSE)
+</code></pre>
+
+</div>
+
+</section>
+<section data-transition="linear" data-transition-speed="default">
+<h3>练习</h3>
+<div class="slideContent" >
+<p>\( imp_i=\frac{relativeDBH_i+relativeABD_i}{n} \)</p>
+
+<p>\( relativeDBH_i=\frac{dbh_i}{\sum{dbh_i}} \)</p>
+
+<p>\( relativeABD_i=\frac{abd_i}{\sum{abd_i}} \)</p>
 
 </div>
 
