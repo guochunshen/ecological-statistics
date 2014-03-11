@@ -1,7 +1,7 @@
 统计基础
 ========================================================
 author: 沈国春
-date: Wed Mar 05 09:30:38 2014
+date: Tue Mar 11 17:32:45 2014
 
 统计学
 ========================================================
@@ -137,7 +137,21 @@ dbinom(x=50,size=100,prob=0.5)
 Poisson distribution 
 =====================================
 
+the probability of a given number of events occurring in a fixed interval of time and/or space if these events occur with a known average rate and independently of the time since the last event.
+
 $p(x)=\frac{\lambda^x e^{-\lambda}}{x!}$
+
+例如：有100个个体随机分布在一个100m^2 的区域，那么其中10m^2内会出现10个个体的概率是多少？
+
+
+Poisson distribution 
+=====================================
+
+泊松分布的特征是$$E(X)=Var(X)$$
+
+即均值等于方差。
+
+那均值等于方差的分布是否是泊松分布呢？
 
 
 Uniform distribution
@@ -146,8 +160,31 @@ Uniform distribution
 $f(x)=\frac{1}{b-a}$ 
 a<x<b
 
+均匀分布常被用于模拟中产生各种分布。
+
+
+```r
+runif(1)
+```
+
+```
+[1] 0.8596
+```
+
 
 Normal distribution 
 ====================================
 
-$f(x)=\frac{1}{sqrt{2 Pi}\delta}$
+$f(x)=\frac{1}{\sqrt{2 \pi}\delta} e^{-\frac{1}{2} (\frac{x-\mu}{\delta})^2}$
+
+各种分布的特征
+==================================
+
+除了上述的这些分布之外，还有其他很多概率分布函数。而且很多都无法给出显式的表达式。而且在日常运用中，我们通常感兴趣的东西并不是概率分布函数本身，而它所描述的随机变量的一些综合特征。
+
+例如均值，方差等。
+
+$E(x)=\int{xf(x) dx}$  
+
+$Var(x)=E((x-E(x))^2)$
+
