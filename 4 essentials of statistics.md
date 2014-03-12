@@ -1,7 +1,7 @@
 统计基础
 ========================================================
 author: 沈国春
-date: Tue Mar 11 17:32:45 2014
+date: Wed Mar 12 08:55:55 2014
 
 统计学
 ========================================================
@@ -73,6 +73,8 @@ p(a)=P(X=a)
 
 _连续性随机变量_  
 p(a<x<b)=P(a<X<b)
+
+这些分布有什么用？
 
 概率质量函数
 =========================================
@@ -168,7 +170,7 @@ runif(1)
 ```
 
 ```
-[1] 0.8596
+[1] 0.5069
 ```
 
 
@@ -176,6 +178,58 @@ Normal distribution
 ====================================
 
 $f(x)=\frac{1}{\sqrt{2 \pi}\delta} e^{-\frac{1}{2} (\frac{x-\mu}{\delta})^2}$
+
+R中其他内置的分布函数
+==================================
+
+Beta, Cauchy, exponential, chi-squared, Fisher's F, gamma, geometric, hypergeometric, lognormal, logistic, negative binomial, Wilcoxon signed rank statistic, Student's t, weibull, Wilcoxon rank sum
+
+中心极限定理
+==================================
+
+
+```r
+hist(runif(10000)*10,main="")
+```
+
+![plot of chunk unnamed-chunk-6](4_essentials_of_statistics-figure/unnamed-chunk-6.png) 
+
+从这里随机抽取5个数，然后求平均。不断重复上一过程，最终5个数的平均符合什么分布？
+
+
+中心极限定理
+==================================
+
+模拟实验
+
+```r
+means=numeric(10000)
+for(i in 1:10000){
+  means[i]=mean(runif(5)*10)
+}
+hist(means,ylim=c(0,1600))
+```
+
+
+中心极限定理
+==================================
+
+
+```r
+mean(means)
+sd(means)
+xv=seq(0,10,0.1)
+yv=dnorm(xv,mean=mean(means),sd=sd(means))*5000
+lines(xv,yv)
+```
+
+
+中心极限定理
+==================================
+
+The central limit theorem: 随机变量序列部分和分布渐近于正态分布.
+
+
 
 各种分布的特征
 ==================================
