@@ -1,7 +1,7 @@
 Classical Tests
 ========================================================
 author: Guochun Shen
-date: Mon Mar 24 19:25:23 2014
+date: Tue Mar 25 20:07:42 2014
 
 Occam's razor
 ========================================================
@@ -57,7 +57,7 @@ summary(y)
 
 ```
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
--2.9100 -0.6200 -0.0122  0.0183  0.7000  2.5400 
+-3.0000 -0.4560  0.0297  0.0763  0.7320  3.1500 
 ```
 
 
@@ -86,7 +86,7 @@ shapiro.test(y)
 	Shapiro-Wilk normality test
 
 data:  y
-W = 0.987, p-value = 0.4358
+W = 0.9803, p-value = 0.1401
 ```
 
 
@@ -103,7 +103,7 @@ shapiro.test(x)
 	Shapiro-Wilk normality test
 
 data:  x
-W = 0.8178, p-value = 0.0001411
+W = 0.4259, p-value = 9.576e-10
 ```
 
 
@@ -133,13 +133,13 @@ t.test(x,mu=0)
 	One Sample t-test
 
 data:  x
-t = 8.559, df = 99, p-value = 1.497e-13
+t = 9.919, df = 99, p-value < 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 0.6866 1.1009
+ 0.7861 1.1792
 sample estimates:
 mean of x 
-   0.8938 
+   0.9826 
 ```
 
 
@@ -168,7 +168,7 @@ wilcox.test(y,mu=1)
 	Wilcoxon signed rank test with continuity correction
 
 data:  y
-V = 256, p-value = 8.191e-05
+V = 248, p-value = 2.607e-06
 alternative hypothesis: true location is not equal to 1
 ```
 
@@ -199,13 +199,13 @@ var.test(x,y)
 	F test to compare two variances
 
 data:  x and y
-F = 0.0329, num df = 99, denom df = 88, p-value < 2.2e-16
+F = 0.0495, num df = 99, denom df = 88, p-value < 2.2e-16
 alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 0.02181 0.04938
+ 0.03280 0.07427
 sample estimates:
 ratio of variances 
-            0.0329 
+           0.04948 
 ```
 
 
@@ -226,10 +226,168 @@ fligner.test(y~g)
 	Fligner-Killeen test of homogeneity of variances
 
 data:  y by g
-Fligner-Killeen:med chi-squared = 78.79, df = 1, p-value < 2.2e-16
+Fligner-Killeen:med chi-squared = 79.05, df = 1, p-value < 2.2e-16
 ```
+
+
+Comparing two means
+==============================================
+
+There are two classical tests for comparing two sample means:
+
+- Student's test when the samples are independent, the variances constant, and the errors are normally distributed;
+- Wilcoxon's rank-sum test when the samples are independent but the errors are not normally distributed.
+
+Comparing two means- Student's t test
+==============================================
+
+Student was the pseudonym of W.S. Gossett who published his influential paper in Biometrika in 1908. The
+archaic employment laws in place at the time allowed his employer, the Guinness Brewing Company, to
+prevent him publishing independent work under his own name.
+
+Student’s t distribution, later perfected by R.A. Fisher, revolutionized the study of small-sample statistics where inferences need to be made on the basis of the sample variance s^2 with the population variance σ^2 unknown (indeed, usually unknowable).
 
 
 Comparing two means- Student's t test
 ==============================================
+
+
+```r
+r1=t.test(x,y)
+r1
+```
+
+```
+
+	Welch Two Sample t-test
+
+data:  x and y
+t = 2.398, df = 247, p-value = 0.01723
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 0.2392 2.4395
+sample estimates:
+mean of x mean of y 
+ 1.344797  0.005467 
+```
+
+
+Comparing two means- Wilcoxon rank-sum test
+==============================================
+
+
+```r
+r2=wilcox.test(x,y)
+r2
+```
+
+```
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  x and y
+W = 10044, p-value = 0.3798
+alternative hypothesis: true location shift is not equal to 0
+```
+
+
+Comparing two means
+=============================================
+
+The Wilcoxon test is aid to be conservative: if a difference is significant under a Wilcoxon test it would be even more significant under a _t_ test.
+
+
+```r
+r1$p.value # pvalue of Student t test
+```
+
+```
+[1] 0.01723
+```
+
+```r
+r2$p.value # pvalue of Wilcoxon test
+```
+
+```
+[1] 0.3798
+```
+
+
+Comparing two means - paired samples
+=============================================
+
+Sometimes, two-sample data come from paired observations. In this case, we might expect a correlation
+between the two measurements, because they were either made on the same individual, or taken from the
+same location.
+
+Comparing two means - paired samples
+=============================================
+
+The following data are a composite biodiversity score based on a kick sample of aquatic invertebrates:
+
+
+```r
+streams = read.table("./data/streams.txt",header=T)
+attach(streams)
+names(streams)
+```
+
+```
+[1] "down" "up"  
+```
+
+
+The elements are paired because the two samples were taken on the same river, one upstream and one
+downstream from the same sewage outfall.
+
+Comparing two means - paired samples
+=============================================
+
+If we ignore the fact that the samples are paired, it appears that the sewage outfall has no impact on
+biodiversity score (p = 0.6856):
+
+```r
+t.test(down,up)
+```
+
+```
+
+	Welch Two Sample t-test
+
+data:  down and up
+t = -0.4088, df = 29.75, p-value = 0.6856
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -5.248  3.498
+sample estimates:
+mean of x mean of y 
+    12.50     13.38 
+```
+
+
+Comparing two means - paired samples
+=============================================
+
+However, if we allow that the samples are paired, the picture is completely different:
+
+
+```r
+t.test(down,up,paired=TRUE)
+```
+
+```
+
+	Paired t-test
+
+data:  down and up
+t = -3.05, df = 15, p-value = 0.0081
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -1.4864 -0.2636
+sample estimates:
+mean of the differences 
+                 -0.875 
+```
+
 

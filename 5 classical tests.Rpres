@@ -152,6 +152,86 @@ g=as.factor(rep(c("x","y"),c(100,89)))
 fligner.test(y~g)
 ```
 
+Comparing two means
+==============================================
+
+There are two classical tests for comparing two sample means:
+
+- Student's test when the samples are independent, the variances constant, and the errors are normally distributed;
+- Wilcoxon's rank-sum test when the samples are independent but the errors are not normally distributed.
+
 Comparing two means- Student's t test
 ==============================================
+
+Student was the pseudonym of W.S. Gossett who published his influential paper in Biometrika in 1908. The
+archaic employment laws in place at the time allowed his employer, the Guinness Brewing Company, to
+prevent him publishing independent work under his own name.
+
+Student’s t distribution, later perfected by R.A. Fisher, revolutionized the study of small-sample statistics where inferences need to be made on the basis of the sample variance s^2 with the population variance σ^2 unknown (indeed, usually unknowable).
+
+
+Comparing two means- Student's t test
+==============================================
+
+```{r}
+r1=t.test(x,y)
+r1
+```
+
+Comparing two means- Wilcoxon rank-sum test
+==============================================
+
+```{r}
+r2=wilcox.test(x,y)
+r2
+```
+
+Comparing two means
+=============================================
+
+The Wilcoxon test is aid to be conservative: if a difference is significant under a Wilcoxon test it would be even more significant under a _t_ test.
+
+```{r}
+r1$p.value # pvalue of Student t test
+r2$p.value # pvalue of Wilcoxon test
+```
+
+Comparing two means - paired samples
+=============================================
+
+Sometimes, two-sample data come from paired observations. In this case, we might expect a correlation
+between the two measurements, because they were either made on the same individual, or taken from the
+same location.
+
+Comparing two means - paired samples
+=============================================
+
+The following data are a composite biodiversity score based on a kick sample of aquatic invertebrates:
+
+```{r}
+streams = read.table("./data/streams.txt",header=T)
+attach(streams)
+names(streams)
+```
+
+The elements are paired because the two samples were taken on the same river, one upstream and one
+downstream from the same sewage outfall.
+
+Comparing two means - paired samples
+=============================================
+
+If we ignore the fact that the samples are paired, it appears that the sewage outfall has no impact on
+biodiversity score (p = 0.6856):
+```{r}
+t.test(down,up)
+```
+
+Comparing two means - paired samples
+=============================================
+
+However, if we allow that the samples are paired, the picture is completely different:
+
+```{r}
+t.test(down,up,paired=TRUE)
+```
 
