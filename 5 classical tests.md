@@ -1,7 +1,7 @@
 Classical Tests
 ========================================================
 author: Guochun Shen
-date: Tue Mar 25 21:48:37 2014
+date: Wed Mar 26 09:42:11 2014
 
 Occam's razor
 ========================================================
@@ -57,7 +57,7 @@ summary(y)
 
 ```
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- -2.560  -0.776  -0.149  -0.135   0.416   2.700 
+-2.8100 -0.5170 -0.0175  0.0180  0.5350  2.5600 
 ```
 
 
@@ -86,7 +86,7 @@ shapiro.test(y)
 	Shapiro-Wilk normality test
 
 data:  y
-W = 0.9889, p-value = 0.5743
+W = 0.9932, p-value = 0.9014
 ```
 
 
@@ -103,7 +103,7 @@ shapiro.test(x)
 	Shapiro-Wilk normality test
 
 data:  x
-W = 0.8266, p-value = 0.0002088
+W = 0.5247, p-value = 9.88e-09
 ```
 
 
@@ -133,13 +133,13 @@ t.test(x,mu=0)
 	One Sample t-test
 
 data:  x
-t = 10.38, df = 99, p-value < 2.2e-16
+t = 7.782, df = 99, p-value = 7.014e-12
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 0.8087 1.1908
+ 0.6146 1.0353
 sample estimates:
 mean of x 
-   0.9997 
+    0.825 
 ```
 
 
@@ -165,10 +165,10 @@ wilcox.test(y,mu=1)
 
 ```
 
-	Wilcoxon signed rank test
+	Wilcoxon signed rank test with continuity correction
 
 data:  y
-V = 295, p-value = 0.001244
+V = 301, p-value = 0.0002473
 alternative hypothesis: true location is not equal to 1
 ```
 
@@ -199,13 +199,13 @@ var.test(x,y)
 	F test to compare two variances
 
 data:  x and y
-F = 0.0352, num df = 99, denom df = 88, p-value < 2.2e-16
+F = 0.0338, num df = 99, denom df = 88, p-value < 2.2e-16
 alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 0.02331 0.05278
+ 0.02242 0.05076
 sample estimates:
 ratio of variances 
-           0.03516 
+           0.03382 
 ```
 
 
@@ -226,7 +226,7 @@ fligner.test(y~g)
 	Fligner-Killeen test of homogeneity of variances
 
 data:  y by g
-Fligner-Killeen:med chi-squared = 75.4, df = 1, p-value < 2.2e-16
+Fligner-Killeen:med chi-squared = 91.19, df = 1, p-value < 2.2e-16
 ```
 
 
@@ -262,13 +262,13 @@ r1
 	Welch Two Sample t-test
 
 data:  x and y
-t = -0.0585, df = 234.5, p-value = 0.9534
+t = 1.106, df = 232.7, p-value = 0.2699
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -1.240  1.168
+ -0.4774  1.6991
 sample estimates:
 mean of x mean of y 
-   0.8982    0.9339 
+   0.8220    0.2112 
 ```
 
 
@@ -286,7 +286,7 @@ r2
 	Wilcoxon rank sum test with continuity correction
 
 data:  x and y
-W = 9440, p-value = 0.9888
+W = 9529, p-value = 0.9075
 alternative hypothesis: true location shift is not equal to 0
 ```
 
@@ -302,7 +302,7 @@ r1$p.value # pvalue of Student t test
 ```
 
 ```
-[1] 0.9534
+[1] 0.2699
 ```
 
 ```r
@@ -310,7 +310,7 @@ r2$p.value # pvalue of Wilcoxon test
 ```
 
 ```
-[1] 0.9888
+[1] 0.9075
 ```
 
 
@@ -596,7 +596,7 @@ ks.test(x, y)
 	Two-sample Kolmogorov-Smirnov test
 
 data:  x and y
-D = 0.46, p-value = 0.0004387
+D = 0.56, p-value = 6.303e-06
 alternative hypothesis: two-sided
 ```
 
@@ -618,7 +618,7 @@ ks.test(y, "pnorm",mean(y),sd(y))
 	One-sample Kolmogorov-Smirnov test
 
 data:  y
-D = 0.142, p-value = 0.5342
+D = 0.0965, p-value = 0.9174
 alternative hypothesis: two-sided
 ```
 
@@ -637,7 +637,7 @@ shapiro.test(y)
 	Shapiro-Wilk normality test
 
 data:  y
-W = 0.9138, p-value = 0.01855
+W = 0.9494, p-value = 0.1626
 ```
 
 
@@ -651,11 +651,261 @@ it has to do with Type II errors: β is the probability of accepting the null hy
 Power analysis
 ======================================================
 
-In an ideal world, we would obviously make β as small as possible. But there is a snag. The smaller we make the probability of
-committing a Type II error, the greater we make the probability of committing a Type I error, and rejecting the null hypothesis when, in fact, it is correct. This is a classic trade-off. A compromise is called for. 
+In an ideal world, we would obviously make β as small as possible. But there is a snag. The smaller we make the probability of committing a Type II error, the greater we make the probability of committing a Type I error, and rejecting the null hypothesis when, in fact, it is correct. This is a classic trade-off. A compromise is called for. 
 
 Most statisticians work with α = 0.05 and β = 0.2. The power of a test is defined as 1 − β = 0.8 under the standard assumptions.
 
-Bootstrap
+Power analysis
 ======================================================
+
+Three R built-in functions:
+- __power.t.test__ power calculations for one- and two-sample t test;
+- __power.prop.test__ power calculations two-sample test for proportions;
+- __power.anova.test__ power calculations for balanced one-way ANOVA tests;
+
+Power analysis
+======================================================
+
+Example 1:
+
+What is the power of a test to detect a difference of 10% in one sample with 30 replicates when the mean is 20, and standard deviation is about 3.5?
+
+
+Power analysis
+======================================================
+
+Example 1:
+
+```r
+power.t.test(n=30,delta=2,sd=3.5)
+```
+
+```
+
+     Two-sample t test power calculation 
+
+              n = 30
+          delta = 2
+             sd = 3.5
+      sig.level = 0.05
+          power = 0.5857
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+```
+
+
+
+Power analysis
+======================================================
+
+Example 2:
+
+How many replicates do we need in each of two samples to detect a difference of 10% with power = 80% when the mean is 20 (i.e. delta=2.0) and standard deviation is about 3.5?
+
+Power analysis
+======================================================
+
+Example 2:
+
+```r
+power.t.test(delta=2,sd=3.5,power=0.8)
+```
+
+```
+
+     Two-sample t test power calculation 
+
+              n = 49.05
+          delta = 2
+             sd = 3.5
+      sig.level = 0.05
+          power = 0.8
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+```
+
+
+Power analysis
+======================================================
+
+The power analysis can help you to archive a well designed  experiment. 
+
+Before carrying out a power analysis, the work you need to do is to find values for the standard deviation (from the literature or by carrying out a pilot experiment) and the size of difference your want to detect (from discussions with your sponsor or your colleages).
+
+Permutation
+======================================================
+
+All of the tests mentioned so far implicitely assume that __distribution of the random variable (or statistic) is known.__
+
+However, it is quite often in the real world that distribution of the random variable is unknown, or too complex to follow any of the well-known probability distributions.
+
+Then how can we test our expectations or hypotheses?
+
+Permutation
+======================================================
+
+Permutation: instead of comparing the actual value of a test statistic to a standard statistic distribution, __the reference distribution is generated from the data themselves__.
+
+The chief advantage is that one does not have to worry about the distributional assumptions of classical testing procedures.
+
+Disadvantage is the extra computer time required to acturally perform a large number of permutations.
+
+Permutation
+======================================================
+
+Typical steps of permutation test:  
+
+1. establish null hypothesis  
+2. choose a test statistic  
+3. build the distribution of the test statistic  
+4. statistical decision (e.g. p-value)  
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+
+```r
+x1=c(-2.31,1.06,
+     1.38,-0.26,1.29,
+     -1.31,0.41,-0.67
+     ,-0.58,0.76)
+x2=c(-1.08,1.03,
+     0.24,-0.24,0.76,
+     -0.57,-0.05,
+     -1.28,1.04,0.9)
+```
+
+
+***
+
+![plot of chunk unnamed-chunk-31](5_classical_tests-figure/unnamed-chunk-31.png) 
+
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step1: The null hypothesis
+
+There is no significant correlation between x1 and x2.
+
+It means: the correlation between x1 and x2 will not be changed if _order of elements in x1/x2 is changed_ (permutation).
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step2: choose a test statistic  
+
+let's use pearson correlation coefficient r
+
+$$r=\frac{\sum_{i=1}^n{(X_i-\bar{X})(Y_i-\bar{Y}) }}{\sqrt{\sum_{i=1}^n{(X_i-\bar{X})^2} \sum_{i=1}^n{(Y_i-\bar{Y})^2}}}$$
+
+
+```r
+obs_r=cor(x1,x2,method="pearson")
+obs_r
+```
+
+```
+[1] 0.7016
+```
+
+
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step3: build the distribution of the test statistic by permutation
+
+
+```r
+null_r=numeric()
+for(i in 1:999){
+  x1_null=sample(x1)
+  null_r[i]=cor(x1_null,x2,method="pearson")
+}
+```
+
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step3: build the distribution of the test statistic by permutation
+
+***
+
+![plot of chunk unnamed-chunk-34](5_classical_tests-figure/unnamed-chunk-34.png) 
+
+
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step4: statistical decision (e.g. p-value) 
+
+one tail: 
+
+```r
+sum(null_r>obs_r)/(1000)
+```
+
+```
+[1] 0.011
+```
+
+***
+
+![plot of chunk unnamed-chunk-36](5_classical_tests-figure/unnamed-chunk-36.png) 
+
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step4: statistical decision (e.g. p-value) 
+
+two tails: 
+
+```r
+sum(abs(null_r)>abs(obs_r))/(1000)
+```
+
+```
+[1] 0.021
+```
+
+***
+
+![plot of chunk unnamed-chunk-38](5_classical_tests-figure/unnamed-chunk-38.png) 
+
+
+Permutation
+======================================================
+
+- complete permutation test
+- sampled permutation test
+
+- restricted permutation test
+
+
+Monte Carlo
+
+Jackknife
+
+Bootstrap
+
 

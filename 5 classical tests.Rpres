@@ -385,11 +385,216 @@ it has to do with Type II errors: β is the probability of accepting the null hy
 Power analysis
 ======================================================
 
-In an ideal world, we would obviously make β as small as possible. But there is a snag. The smaller we make the probability of
-committing a Type II error, the greater we make the probability of committing a Type I error, and rejecting the null hypothesis when, in fact, it is correct. This is a classic trade-off. A compromise is called for. 
+In an ideal world, we would obviously make β as small as possible. But there is a snag. The smaller we make the probability of committing a Type II error, the greater we make the probability of committing a Type I error, and rejecting the null hypothesis when, in fact, it is correct. This is a classic trade-off. A compromise is called for. 
 
 Most statisticians work with α = 0.05 and β = 0.2. The power of a test is defined as 1 − β = 0.8 under the standard assumptions.
 
-Bootstrap
+Power analysis
 ======================================================
+
+Three R built-in functions:
+- __power.t.test__ power calculations for one- and two-sample t test;
+- __power.prop.test__ power calculations two-sample test for proportions;
+- __power.anova.test__ power calculations for balanced one-way ANOVA tests;
+
+Power analysis
+======================================================
+
+Example 1:
+
+What is the power of a test to detect a difference of 10% in one sample with 30 replicates when the mean is 20, and standard deviation is about 3.5?
+
+
+Power analysis
+======================================================
+
+Example 1:
+```{r}
+power.t.test(n=30,delta=2,sd=3.5)
+```
+
+
+Power analysis
+======================================================
+
+Example 2:
+
+How many replicates do we need in each of two samples to detect a difference of 10% with power = 80% when the mean is 20 (i.e. delta=2.0) and standard deviation is about 3.5?
+
+Power analysis
+======================================================
+
+Example 2:
+```{r}
+power.t.test(delta=2,sd=3.5,power=0.8)
+```
+
+Power analysis
+======================================================
+
+The power analysis can help you to archive a well designed  experiment. 
+
+Before carrying out a power analysis, the work you need to do is to find values for the standard deviation (from the literature or by carrying out a pilot experiment) and the size of difference your want to detect (from discussions with your sponsor or your colleages).
+
+Permutation
+======================================================
+
+All of the tests mentioned so far implicitely assume that __distribution of the random variable (or statistic) is known.__
+
+However, it is quite often in the real world that distribution of the random variable is unknown, or too complex to follow any of the well-known probability distributions.
+
+Then how can we test our expectations or hypotheses?
+
+Permutation
+======================================================
+
+Permutation: instead of comparing the actual value of a test statistic to a standard statistic distribution, __the reference distribution is generated from the data themselves__.
+
+The chief advantage is that one does not have to worry about the distributional assumptions of classical testing procedures.
+
+Disadvantage is the extra computer time required to acturally perform a large number of permutations.
+
+Permutation
+======================================================
+
+Typical steps of permutation test:  
+
+1. establish null hypothesis  
+2. choose a test statistic  
+3. build the distribution of the test statistic  
+4. statistical decision (e.g. p-value)  
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+```{r}
+x1=c(-2.31,1.06,
+     1.38,-0.26,1.29,
+     -1.31,0.41,-0.67
+     ,-0.58,0.76)
+x2=c(-1.08,1.03,
+     0.24,-0.24,0.76,
+     -0.57,-0.05,
+     -1.28,1.04,0.9)
+```
+
+***
+
+```{r,echo=FALSE}
+plot(x=x1,y=x2)
+```
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step1: The null hypothesis
+
+There is no significant correlation between x1 and x2.
+
+It means: the correlation between x1 and x2 will not be changed if _order of elements in x1/x2 is changed_ (permutation).
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step2: choose a test statistic  
+
+let's use pearson correlation coefficient r
+
+$$r=\frac{\sum_{i=1}^n{(X_i-\bar{X})(Y_i-\bar{Y}) }}{\sqrt{\sum_{i=1}^n{(X_i-\bar{X})^2} \sum_{i=1}^n{(Y_i-\bar{Y})^2}}}$$
+
+```{r}
+obs_r=cor(x1,x2,method="pearson")
+obs_r
+```
+
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step3: build the distribution of the test statistic by permutation
+
+```{r}
+null_r=numeric()
+for(i in 1:999){
+  x1_null=sample(x1)
+  null_r[i]=cor(x1_null,x2,method="pearson")
+}
+
+```
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step3: build the distribution of the test statistic by permutation
+
+***
+
+```{r,echo=FALSE}
+hist(null_r,breaks=seq(-1,1,length.out=100),main="")
+```
+
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step4: statistical decision (e.g. p-value) 
+
+one tail: 
+```{r}
+sum(null_r>obs_r)/(1000)
+```
+***
+
+```{r,echo=FALSE}
+hist(null_r,breaks=seq(-1,1,length.out=100),main="")
+abline(v=obs_r,col=2,lty=2)
+text(x=0.8,y=20,"obs_r")
+```
+
+Permutation
+======================================================
+
+Example: Are x1 and x2 significantly correlated?
+
+Step4: statistical decision (e.g. p-value) 
+
+two tails: 
+```{r}
+sum(abs(null_r)>abs(obs_r))/(1000)
+```
+***
+
+```{r,echo=FALSE}
+hist(null_r,breaks=seq(-1,1,length.out=100),main="")
+abline(v=c(obs_r,-(obs_r)),col=2,lty=2)
+
+```
+
+Permutation
+======================================================
+
+- complete permutation test
+- sampled permutation test
+
+- restricted permutation test
+
+
+Monte Carlo
+
+Jackknife
+
+Bootstrap
+
 
