@@ -108,7 +108,7 @@ Test the mean against expectation
 ================================================
 
 ```{r}
-y=1+log(rnorm(100))
+y=1+exp(rnorm(100))
 ```
 Does the mean of y significantly different with 1?
 
