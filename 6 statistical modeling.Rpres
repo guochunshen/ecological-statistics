@@ -1,0 +1,358 @@
+Statistical Modeling
+========================================================
+author: Guochun Shen
+date: `r date()`
+
+Steps of statistical modeling
+========================================================
+
+- Choose one or several models
+- Estimate parameters in the specific model
+- Select the best model
+
+Important qestions
+========================================================
+
+- Which of your variables is the response varaible?
+- Which are the explanatory variables?
+- Are the explanatory variables continuous or categorical, or a maixture of both?
+- What kind of response variable do you have: is it a continous measurement, a count, a proportion, a time at death, or a category?
+
+Appropriate statistical method
+=========================================================
+
+_The explanatory variables_
+
+- All explanatory variables continuous  __Regression__  
+- All explanatory variables categorical __Analysis of variance (ANOVA)__
+- Explanatory variables both continuous and categorical __Analysis of covariance (ANCOVA)__
+
+Appropriate statistical method
+=========================================================
+
+_The response variables_
+
+- Continous __Normal regression, ANOVA, ANCOVA__
+- Proportion __Logistic regression__
+- Count __Log-linear models__
+- Binary __Binary logistic analysis__
+- Time at death __Survival analysis__
+
+Maximum Likelihood
+=======================================================
+
+The object is to determine the values of the parameters in a specific mdoel that lead to _the best fit of the model to the data_
+
+The "best" is in terms of maximum likelihood: __given the data and your choice of model, what values of the parameters of that model make the observed data most likely?__
+
+The principle of Parsimony
+======================================================
+
+- models should have as few as parameters as possible;
+- linear models should be preferred to non-linear models;
+- experiments relying on few assumptions should be preferred to those relying on many;
+- models should be pared down until they are minimal adequate;
+- simple explanantions should be preferred to complex explanations.
+
+The principle of Parsimony
+======================================================
+
+The process of model simplification is an integral part of hypothesis testing. 
+
+In general, a variable is retained in the model only _if it causes a significant increase in deviance when it is removed from the current model_
+
+For _non-orthogonal data_, __order of deletion matters__
+
+Model Formulae in R
+========================================================
+
+The structure of the model is specified in the model formula like this:
+
+__response variables~explanatory variable(s)__
+
+where the tilde symbol ~ reads 'is modeled as a function of'
+
+Model Formulae in R
+========================================================
+
+Examples:
+
+Null: __y~1__
+
+1 is the intercept in regression models, but here is the overall mean y
+
+Model Formulae in R
+========================================================
+
+Examples:
+
+Regression: __y~x__
+
+x is a continous explanatory variables
+
+Symbol meaning in model formulae
+======================================================
+
+- __+__ indicates inclusion of an explanatory variable in the model (not addition);
+- __-__ indicates deletion of an explanatory variable from the model (not subtraction);
+- __*__ indicates inclusion of explanatory variables and interactions (not multiplication);
+- __/__ indicates nesting of explanatory variables in the model (not division);
+- __|__ indicates conditioning (not ‘or’), so that y~x | z is read as ‘y as a function of x given z’.
+
+Model Formulae in R
+========================================================
+
+Examples:
+
+Multiple regression: __y~x+z__
+
+Two continuous explanatory variables, flat surface fit
+
+Multiple regression: __y~x*z__
+
+Fit an interaction term as well (x+z+x:z)
+
+Model Formulae in R
+========================================================
+
+Examples:
+
+Regression through origin: __y~x-1__
+
+Do not fit an intercept
+
+Model Formulae in R
+========================================================
+
+Examples:
+
+One-way ANOVA: __y~sex__
+
+e.g. sex is a two-level categorical variable
+
+Model Formulae in R
+========================================================
+
+Examples:
+
+One-way ANOVA: __y~sex__
+
+e.g. sex is a two-level categorical variable
+
+Model Formulae in R
+========================================================
+
+Examples:
+
+Two-way ANOVA: __y~sex+genotype__
+
+e.g. genotype is a four-level categorical variabe
+
+Model Formulae in R
+========================================================
+
+Examples:
+
+Factorial ANOVA: __y~N * P * K__
+
+N, P and K are two-level factors to be fitted along with all their interactions
+
+Model Formulae in R
+========================================================
+
+Examples:
+
+Analysis of covariance: __y~x + sex__
+
+A common slope for y against x but with two intercepts, one for each sex
+
+Model Formulae in R
+========================================================
+
+Examples:
+
+Nested ANOVA: __y~a/b/c__
+
+Factor c nested within factor b within factor a
+
+Summary of statistical models in R
+============================================================
+
+- __lm__ linear model with normal errors and constant variance
+- __glm__ generalized linear models
+
+- __gam__ generalized additive models
+
+- __lme__ linear mixed-effect models
+- __nls__ non-linear regression model via least squares
+
+Summary of statistical models in R
+============================================================
+
+example:
+```{r}
+ctl <- c(4.17,5.58,5.18,6.11,4.50,
+4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,
+3.83,6.03,4.89,4.32,4.69)
+group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
+weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
+lm.D90 <- lm(weight ~ group - 1) # omitting intercept
+
+```
+
+Summary of statistical models in R
+============================================================
+
+other usefull __generic function__ in R can be used to obtain information about the model.
+
+__summary,plot,coef,fitted,__  
+__resid,predict,anova,update__
+
+Model criticism
+==========================================================
+
+The truths about models:
+- All models are wrong.
+- Some models are better than others.
+- The correct model can never be known with certainty.
+- The simpler the model, the better it is.
+
+__Therefore, you need a set of tools to establish whether and how, your model is inadequate.__
+
+Heteroscedasticity
+=========================================================
+
+A good model must also account for the variance–mean relationship adequately and produce additive effects on the appropriate scale.
+***
+```{r,echo=FALSE}
+par(mfrow=c(1,2))
+x=1:200
+y=runif(200,-10,10)
+plot(x=x,y=y,xlab="fitted(model)",ylab="resid(model)")
+y2=rnorm(200,mean=0,sd=x/20)
+plot(x=x,y=y2,xlab="fitted(model)",ylab="resid(model)")
+```
+
+Non-normality of errors
+==========================================================
+
+```{r,echo=FALSE}
+y <- rt(200, df = 5)
+qqnorm(y); qqline(y, col = 2)
+```
+
+Influence
+===========================================================
+
+One of the commonest reasons for a lack of fit is through the existence of outliers in the data.
+
+It is important to understand, however, that a point may appear to be an outlier because of _misspecification of the model, and not because there is anything wrong with the data_.
+
+Influence
+===========================================================
+
+```{r,echo=FALSE}
+x <- c(2,3,3,3,4)
+y <- c(2,3,2,1,2)
+par(mfrow=c(1,2))
+plot(x,y,xlim=c(0,8),ylim=c(0,8))
+x1 <- c(x,7)
+y1 <- c(y,6)
+plot(x1,y1,xlim=c(0,8),ylim=c(0,8))
+abline(lm(y1~x1),col="blue")
+```
+
+***
+To reduce the influence of outlies, there are a number of modern techniques known as __robust regression__ 
+
+Influence
+===========================================================
+
+<small>
+```{r}
+influence(lm(y1~x1))
+```
+</small>
+
+Influence
+===========================================================
+
+<small>
+```{r}
+influence.measures(lm(y1~x1))
+```
+</small>
+
+Transformation
+========================================================
+
+Transformation of the explanatory variables often produces improvements in the model performance. The aim of transformation is pragmatic, namely to find a transformation that gives:  
+- constant error variance;
+- approximately normal errors;
+- additivity;
+- a linear relationship between the response variables and the explanatory variables;
+- straightforward scientific interpretation.
+
+Transformation
+========================================================
+
+The most frequently used transformations are __logs,powers and reciprocals__.
+
+Sometimes, it is not clear from theory what the optimal transformation of the response variable should be. In these circumstances, the __Box-Cox transformation__ offers a simple empirical solution.
+
+Transformation
+========================================================
+
+```{r,echo=FALSE}
+library(MASS)
+x=1:200
+y=x+rnorm(x,sd=x/20)
+par(mfrow=c(2,1))
+plot(y=y,x=log(x),main="before transformation")
+abline(lm(y~log(x)),col=2)
+plot(y=log(y),x=log(x),main="after transformation")
+abline(lm(log(y)~log(x)),col=2)
+```
+
+***
+
+```{r}
+par(mfrow=c(1,1))
+boxcox(y~log(x))
+```
+
+
+Akaike's Information Criterion
+=========================================================
+
+penalized loglikelihood
+
+__AIC=-2*log-likelihood+2(p+1)__
+
+where p is the number of parameters in the model.
+
+```{r}
+AIC(lm(y1~x1))
+```
+
+Model simplification by stepwise deletion
+=======================================================
+
+```{r}
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2, 10, 20, labels = c("Ctl","Trt"))
+weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
+```
+
+Model simplification by stepwise deletion
+=======================================================
+
+```{r}
+step(lm.D9) #you can also set forward selection
+```
+
+
