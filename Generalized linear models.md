@@ -1,0 +1,80 @@
+Generalized Linear Models
+========================================================
+author: Guochun Shen
+date: Tue Apr 29 18:00:32 2014
+
+Generalized Linear Modls
+========================================================
+
+We can use generalized linear models (__GLMs__) when __the variance is not constant, and/or when the errors are not normally distributed__. Specifically, we might consider using GLMs when the response variables is:  
+- count data expressed as propotions
+- count data that are not propotions
+- binary response variables
+
+Properties of the GLMs
+========================================================
+
+- the error structure;
+- the linear predictor;
+- the link function;
+
+Error structure of the GLMs
+========================================================
+
+Up to this point, we have dealt with the statistical analysis of data with normal errors. In practice, however, many kinds of data have non-normal errors: for example:
+- errors that are strongly skewed;
+- errors that are kurtotic;
+- errors that are strictly bounded (as in proportions);
+- errors that cannot lead to negative fitted values (as in counts);
+
+Error structure of the GLMs
+========================================================
+
+In the past, the only tools available to deal with these problems were 
+- _transformation of the response variables_ 
+- _or the adoption of non-parametric methods_.
+
+Error structure of the GLMs
+========================================================
+
+A GLM allows the specifications of a variety of different error distributions:
+- __Poisson errors__, useful with count data;
+- __binomial errors__, useful with data on proportions;
+- __gamma errors__, useful with data showing a constant coefficient of variation;
+- __exponential errors__, useful with data on time to death.
+
+Error structure of the GLMs
+========================================================
+
+The error structure is deined by means of the __family__ directively, used as part of the model formula in R:
+
+
+```r
+glm(y~z,family=poisson)
+```
+
+
+which means that the response variable y has Poisson errors
+
+Linear predictor of the GLMs
+=====================================================
+
+The structure of the model relates each observed y value to a predicted value. The predicted value is obtained by transformation of the value emerging from the __linear predictor__.
+
+The linear predictor, $\eta$, is a linear sum of the effects of one or more explanatory variables, $x_j$:
+$$\eta_i=\sum^p_{j=1}{x_{ij} \beta}$$
+where the $xs$ are the values of the _p_ different explanatory variables, and the $\beta s$ are unknown parameters to be estiamted from the data.
+
+Link function of the GLMs
+======================================================
+
+To determine the fit of a given model, a GLM evaluates the linear predictor for each value of the response
+variable, then compares the predicted value with a _transformed_ value of y. The transformation to be employed
+is specified in the __link function__. 
+
+The link function relates the mean value of y to its linear predictor:
+$$\eta=g(\mu)$$
+
+
+
+
