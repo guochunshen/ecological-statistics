@@ -1,7 +1,7 @@
 Classical Tests
 ========================================================
 author: Guochun Shen
-date: Wed Mar 26 11:05:55 2014
+date: Thu Apr 10 21:34:23 2014
 
 Occam's razor
 ========================================================
@@ -57,7 +57,7 @@ summary(y)
 
 ```
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
- -2.510  -0.824  -0.224  -0.052   0.755   3.300 
+ -3.390  -0.548   0.193   0.122   0.626   2.290 
 ```
 
 
@@ -86,7 +86,7 @@ shapiro.test(y)
 	Shapiro-Wilk normality test
 
 data:  y
-W = 0.9843, p-value = 0.2803
+W = 0.9835, p-value = 0.2474
 ```
 
 
@@ -103,7 +103,7 @@ shapiro.test(x)
 	Shapiro-Wilk normality test
 
 data:  x
-W = 0.884, p-value = 0.003495
+W = 0.5378, p-value = 1.375e-08
 ```
 
 
@@ -133,13 +133,13 @@ t.test(x,mu=0)
 	One Sample t-test
 
 data:  x
-t = 8.26, df = 99, p-value = 6.648e-13
+t = 12.91, df = 99, p-value < 2.2e-16
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- 0.745 1.216
+ 1.073 1.462
 sample estimates:
 mean of x 
-   0.9805 
+    1.268 
 ```
 
 
@@ -199,13 +199,13 @@ var.test(x,y)
 	F test to compare two variances
 
 data:  x and y
-F = 0.0443, num df = 99, denom df = 88, p-value < 2.2e-16
+F = 0.0423, num df = 99, denom df = 88, p-value < 2.2e-16
 alternative hypothesis: true ratio of variances is not equal to 1
 95 percent confidence interval:
- 0.02934 0.06643
+ 0.02807 0.06356
 sample estimates:
 ratio of variances 
-           0.04426 
+           0.04234 
 ```
 
 
@@ -226,7 +226,7 @@ fligner.test(y~g)
 	Fligner-Killeen test of homogeneity of variances
 
 data:  y by g
-Fligner-Killeen:med chi-squared = 87.36, df = 1, p-value < 2.2e-16
+Fligner-Killeen:med chi-squared = 81.94, df = 1, p-value < 2.2e-16
 ```
 
 
@@ -262,13 +262,13 @@ r1
 	Welch Two Sample t-test
 
 data:  x and y
-t = 1.412, df = 243.4, p-value = 0.1591
+t = 2.249, df = 240.5, p-value = 0.02539
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
- -0.2954  1.7924
+ 0.1438 2.1710
 sample estimates:
 mean of x mean of y 
-   1.1707    0.4222 
+  1.09861  -0.05879 
 ```
 
 
@@ -286,7 +286,7 @@ r2
 	Wilcoxon rank sum test with continuity correction
 
 data:  x and y
-W = 9854, p-value = 0.5505
+W = 10154, p-value = 0.2979
 alternative hypothesis: true location shift is not equal to 0
 ```
 
@@ -302,7 +302,7 @@ r1$p.value # pvalue of Student t test
 ```
 
 ```
-[1] 0.1591
+[1] 0.02539
 ```
 
 ```r
@@ -310,7 +310,7 @@ r2$p.value # pvalue of Wilcoxon test
 ```
 
 ```
-[1] 0.5505
+[1] 0.2979
 ```
 
 
@@ -596,7 +596,7 @@ ks.test(x, y)
 	Two-sample Kolmogorov-Smirnov test
 
 data:  x and y
-D = 0.4, p-value = 0.003526
+D = 0.4333, p-value = 0.001154
 alternative hypothesis: two-sided
 ```
 
@@ -618,7 +618,7 @@ ks.test(y, "pnorm",mean(y),sd(y))
 	One-sample Kolmogorov-Smirnov test
 
 data:  y
-D = 0.1216, p-value = 0.7215
+D = 0.0882, p-value = 0.9578
 alternative hypothesis: two-sided
 ```
 
@@ -637,7 +637,7 @@ shapiro.test(y)
 	Shapiro-Wilk normality test
 
 data:  y
-W = 0.9612, p-value = 0.3326
+W = 0.9532, p-value = 0.206
 ```
 
 
@@ -863,7 +863,7 @@ sum(null_r>obs_r)/(1000)
 ```
 
 ```
-[1] 0.01
+[1] 0.018
 ```
 
 ***
@@ -885,7 +885,7 @@ sum(abs(null_r)>abs(obs_r))/(1000)
 ```
 
 ```
-[1] 0.022
+[1] 0.034
 ```
 
 ***

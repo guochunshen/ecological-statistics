@@ -1,7 +1,7 @@
 Statistical Modeling
 ========================================================
 author: Guochun Shen
-date: Tue Apr  1 17:03:09 2014
+date: Tue Apr 08 21:49:07 2014
 
 Steps of statistical modeling
 ========================================================
@@ -408,4 +408,8 @@ Coefficients:
 ```
 
 
+Exercise
+=========================================================
+
+Is there any significant effect of habitat on spatial distribution of species in the BCI plot?
 

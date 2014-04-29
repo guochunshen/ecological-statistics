@@ -355,4 +355,8 @@ Model simplification by stepwise deletion
 step(lm.D9) #you can also set forward selection
 ```
 
+Exercise
+=========================================================
+
+Is there any significant effect of habitat on spatial distribution of species in the BCI plot?
 
