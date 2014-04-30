@@ -3,6 +3,54 @@ Generalized Linear Models
 author: Guochun Shen
 date: `r date()`
 
+Common problems
+======================================================
+
+sex ratios in insects, density dependent?
+```{r,echo=FALSE}
+numbers=read.table("./data//sexratio.txt",header=T)
+plot(x=numbers$density,y=numbers$males/(numbers$males+numbers$females),xlab="Density",ylab="Proportion male")
+```
+
+***
+problems to do simple linear regression
+
+- The response is bounded [0,1]
+- The variance is not constant
+- The errors are not normally distributed
+
+Common problems
+======================================================
+
+whether or not proximity to the reactor affects the number of cancer cases?  
+```{r,echo=FALSE}
+clusters=read.table("./data/clusters.txt",header=T)
+plot(x=clusters$Distance,y=clusters$Cancers,xlab="Distance",ylab="Number of cancers")
+```
+
+***
+problems to do simple linear regression
+
+- The response is integer
+- The response is bounded [0,Inf]
+- The variance is not constant
+- The errors are not normally distributed
+
+Common problems
+======================================================
+
+Test the island biogeography theory
+```{r,echo=FALSE}
+island=read.table("./data//isolation.txt",header=T)
+head(island)
+```
+
+problems to do simple linear regression
+
+- The response is either 0 or 1;
+- The variance is not constant;
+-  The errors are not normally distributed.
+
 Generalized Linear Models
 ========================================================
 
@@ -251,3 +299,153 @@ yv <- predict(model2,list(Distance=xv))
 plot(clusters$Cancers~clusters$Distance,pch=21,col="red",bg="orange")
 lines(xv,exp(yv),col="blue")
 ```
+
+Count Data - Example
+====================================================
+
+The response variable is a count of infected blood cells per square millimetre on microscope slides prepared from randomly selected individuals.
+<small>
+```{r}
+count=read.table("./data//cells.txt",header=T)
+str(count)
+```
+</small>
+
+Count Data - Example
+====================================================
+
+<small>
+```{r}
+model1=glm(cells~smoker*sex*age*weight,data=count,family=poisson)
+#summary(model1)
+model2=glm(cells~smoker*sex*age*weight,data=count,family=quasipoisson)
+#summary(model2)
+model3=update(model2,~.-smoker:sex:age:weight)
+model4=update(model3,~.-sex:weight:age)
+#anova(model4,model3,test="F")
+model5=update(model4,~.-smoker:age:weight-smoker:sex:weight)
+#anova(model5,model4,test="F")
+#the minimal adequate model might look something like
+#cells~smoker+weight+smoker:weight
+```
+</small>
+
+Propotion Data - Example
+===========================================================
+
+- studies on percentage mortality;
+- infection rates of diseases;
+- sex ratios
+
+Terminology:
+
+- __p__: the proportion of sucesses
+- __q__: the proportion of failures; q=1-p
+- __n__: number of attempts; the binomial denominator
+- __odds__: p/q
+
+Propotion Data - Example
+===========================================================
+
+In R, the family of error is binomial; the link function is log transformation of odds. 
+
+p is modeled by logistic function
+$$p=\frac{e^{a+bx}}{1+e^{a+bx}}$$
+
+Propotion Data - Example
+===========================================================
+
+sex ratios in insects, density dependent?
+```{r}
+head(numbers)
+```
+
+*** 
+
+```{r,echo=FALSE}
+plot(x=numbers$density,y=numbers$males/(numbers$males+numbers$females),xlab="Density",ylab="Proportion male")
+```
+
+Propotion Data - Example
+===========================================================
+
+step 1: generate response varaible with right format
+```{r}
+attach(numbers)
+y=cbind(males,females)
+head(y)
+```
+
+
+Propotion Data - Example
+===========================================================
+
+```{r}
+model=glm(y~density,binomial)
+#summary(model)
+model2=glm(y~log(density),binomial)
+#summary(model2)
+
+```
+
+Propotion Data - Example
+===========================================================
+
+```{r,eval=FALSE}
+xv=seq(0,6,0.1)
+p=males/(males+females)
+plot(log(density),p,
+ylab="Proportion male")
+lines(xv,predict(model2,
+list(density=exp(xv)),
+type="response"))
+```
+
+***
+<small>
+```{r,echo=FALSE}
+xv=seq(0,6,0.1)
+p=males/(males+females)
+plot(log(density),p,ylab="Proportion male")
+lines(xv,predict(model2,
+list(density=exp(xv)),type="response"))
+```
+</small>
+
+Binary Data - Example
+======================================================
+
+- dead or alive;
+- occupied or empty;
+- healthy or diseased;
+- male or female;
+- mature or immature.
+
+In R, family=binomial; link function can be logit or log-log
+
+Binary Data - Example
+======================================================
+
+```{r}
+head(island)
+```
+
+Is there any relationship between the occupation of a bird species on a island and the area/isolation of the island?
+
+Binary Data - Example
+======================================================
+
+```{r}
+attach(island)
+model1=glm(incidence~area*isolation,binomial)
+model2=glm(incidence~area+isolation,binomial)
+anova(model1,model2,test="Chi")
+```
+
+Binary Data - Example
+======================================================
+<small><small>
+```{r}
+summary(model2)
+```
+</small></small>

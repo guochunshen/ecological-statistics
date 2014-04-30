@@ -1,7 +1,58 @@
 Generalized Linear Models
 ========================================================
 author: Guochun Shen
-date: Tue Apr 29 22:18:09 2014
+date: Wed Apr 30 09:36:13 2014
+
+Common problems
+======================================================
+
+sex ratios in insects, density dependent?
+![plot of chunk unnamed-chunk-1](Generalized_linear_models-figure/unnamed-chunk-1.png) 
+
+
+***
+problems to do simple linear regression
+
+- The response is bounded [0,1]
+- The variance is not constant
+- The errors are not normally distributed
+
+Common problems
+======================================================
+
+whether or not proximity to the reactor affects the number of cancer cases?  
+![plot of chunk unnamed-chunk-2](Generalized_linear_models-figure/unnamed-chunk-2.png) 
+
+
+***
+problems to do simple linear regression
+
+- The response is integer
+- The response is bounded [0,Inf]
+- The variance is not constant
+- The errors are not normally distributed
+
+Common problems
+======================================================
+
+Test the island biogeography theory
+
+```
+  incidence  area isolation
+1         1 7.928     3.317
+2         0 1.925     7.554
+3         1 2.045     5.883
+4         0 4.781     5.932
+5         0 1.536     5.308
+6         1 7.369     4.934
+```
+
+
+problems to do simple linear regression
+
+- The response is either 0 or 1;
+- The variance is not constant;
+-  The errors are not normally distributed.
 
 Generalized Linear Models
 ========================================================
@@ -209,7 +260,7 @@ Count Data - Example
 ====================================================
 
 The question is whether or not proximity to the reactor affects the number of cancer cases.
-![plot of chunk unnamed-chunk-3](Generalized_linear_models-figure/unnamed-chunk-3.png) 
+![plot of chunk unnamed-chunk-6](Generalized_linear_models-figure/unnamed-chunk-6.png) 
 
 
 Count Data - Example
@@ -322,5 +373,241 @@ Number of Fisher Scoring iterations: 5
 Count Data - Example
 ====================================================
 
-![plot of chunk unnamed-chunk-8](Generalized_linear_models-figure/unnamed-chunk-8.png) 
+![plot of chunk unnamed-chunk-11](Generalized_linear_models-figure/unnamed-chunk-11.png) 
 
+
+Count Data - Example
+====================================================
+
+The response variable is a count of infected blood cells per square millimetre on microscope slides prepared from randomly selected individuals.
+<small>
+
+```r
+count=read.table("./data//cells.txt",header=T)
+str(count)
+```
+
+```
+'data.frame':	511 obs. of  5 variables:
+ $ cells : int  1 0 1 1 0 2 1 0 5 1 ...
+ $ smoker: logi  TRUE TRUE TRUE TRUE TRUE TRUE ...
+ $ age   : Factor w/ 3 levels "mid","old","young": 3 3 3 3 3 3 3 3 3 3 ...
+ $ sex   : Factor w/ 2 levels "female","male": 2 2 2 2 2 2 2 2 2 2 ...
+ $ weight: Factor w/ 3 levels "normal","obese",..: 1 1 1 1 1 1 1 1 1 1 ...
+```
+
+</small>
+
+Count Data - Example
+====================================================
+
+<small>
+
+```r
+model1=glm(cells~smoker*sex*age*weight,data=count,family=poisson)
+#summary(model1)
+model2=glm(cells~smoker*sex*age*weight,data=count,family=quasipoisson)
+#summary(model2)
+model3=update(model2,~.-smoker:sex:age:weight)
+model4=update(model3,~.-sex:weight:age)
+#anova(model4,model3,test="F")
+model5=update(model4,~.-smoker:age:weight-smoker:sex:weight)
+#anova(model5,model4,test="F")
+#the minimal adequate model might look something like
+#cells~smoker+weight+smoker:weight
+```
+
+</small>
+
+Propotion Data - Example
+===========================================================
+
+- studies on percentage mortality;
+- infection rates of diseases;
+- sex ratios
+
+Terminology:
+
+- __p__: the proportion of sucesses
+- __q__: the proportion of failures; q=1-p
+- __n__: number of attempts; the binomial denominator
+- __odds__: p/q
+
+Propotion Data - Example
+===========================================================
+
+In R, the family of error is binomial; the link function is log transformation of odds. 
+
+p is modeled by logistic function
+$$p=\frac{e^{a+bx}}{1+e^{a+bx}}$$
+
+Propotion Data - Example
+===========================================================
+
+sex ratios in insects, density dependent?
+
+```r
+head(numbers)
+```
+
+```
+  density females males
+1       1       1     0
+2       4       3     1
+3      10       7     3
+4      22      18     4
+5      55      22    33
+6     121      41    80
+```
+
+
+*** 
+
+![plot of chunk unnamed-chunk-15](Generalized_linear_models-figure/unnamed-chunk-15.png) 
+
+
+Propotion Data - Example
+===========================================================
+
+step 1: generate response varaible with right format
+
+```r
+attach(numbers)
+y=cbind(males,females)
+head(y)
+```
+
+```
+     males females
+[1,]     0       1
+[2,]     1       3
+[3,]     3       7
+[4,]     4      18
+[5,]    33      22
+[6,]    80      41
+```
+
+
+
+Propotion Data - Example
+===========================================================
+
+
+```r
+model=glm(y~density,binomial)
+#summary(model)
+model2=glm(y~log(density),binomial)
+#summary(model2)
+```
+
+
+Propotion Data - Example
+===========================================================
+
+
+```r
+xv=seq(0,6,0.1)
+p=males/(males+females)
+plot(log(density),p,
+ylab="Proportion male")
+lines(xv,predict(model2,
+list(density=exp(xv)),
+type="response"))
+```
+
+
+***
+<small>
+![plot of chunk unnamed-chunk-19](Generalized_linear_models-figure/unnamed-chunk-19.png) 
+
+</small>
+
+Binary Data - Example
+======================================================
+
+- dead or alive;
+- occupied or empty;
+- healthy or diseased;
+- male or female;
+- mature or immature.
+
+In R, family=binomial; link function can be logit or log-log
+
+Binary Data - Example
+======================================================
+
+
+```r
+head(island)
+```
+
+```
+  incidence  area isolation
+1         1 7.928     3.317
+2         0 1.925     7.554
+3         1 2.045     5.883
+4         0 4.781     5.932
+5         0 1.536     5.308
+6         1 7.369     4.934
+```
+
+
+Is there any relationship between the occupation of a bird species on a island and the area/isolation of the island?
+
+Binary Data - Example
+======================================================
+
+
+```r
+attach(island)
+model1=glm(incidence~area*isolation,binomial)
+model2=glm(incidence~area+isolation,binomial)
+anova(model1,model2,test="Chi")
+```
+
+```
+Analysis of Deviance Table
+
+Model 1: incidence ~ area * isolation
+Model 2: incidence ~ area + isolation
+  Resid. Df Resid. Dev Df Deviance Pr(>Chi)
+1        46       28.2                     
+2        47       28.4 -1    -0.15      0.7
+```
+
+
+Binary Data - Example
+======================================================
+<small><small>
+
+```r
+summary(model2)
+```
+
+```
+
+Call:
+glm(formula = incidence ~ area + isolation, family = binomial)
+
+Deviance Residuals: 
+   Min      1Q  Median      3Q     Max  
+-1.819  -0.309   0.049   0.363   2.119  
+
+Coefficients:
+            Estimate Std. Error z value Pr(>|z|)   
+(Intercept)    6.642      2.922    2.27    0.023 * 
+area           0.581      0.248    2.34    0.019 * 
+isolation     -1.372      0.477   -2.88    0.004 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 68.029  on 49  degrees of freedom
+Residual deviance: 28.402  on 47  degrees of freedom
+AIC: 34.4
+
+Number of Fisher Scoring iterations: 6
+```
+
+</small></small>
