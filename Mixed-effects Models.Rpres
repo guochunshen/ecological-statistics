@@ -1,0 +1,130 @@
+Mixed-Effects Models
+========================================================
+author: Guochun Shen
+date: `r date()`
+
+Two types of categorical explanatory variables
+========================================================
+
+Up to this point, we have treated all ategorical explanatory variables as if they were the same (e.g. analysis of variance).
+
+Eisenhart (1947) realized that there are actually two fundamentally different sorts of categorical explanatory variables:
+
+- __fixed effects__
+- __random effects__
+
+Fixed effects & Random effects
+========================================================
+
+Statistical explanation:
+
+- fixed effects: influence only the __mean__ of y;
+- random effects: influence only the __variance__ of y;
+
+Typical model:
+$$y=\alpha + \beta x + \epsilon, \epsilon \implies  N(0,\delta^2)$$
+
+Mixed effect model
+$$y=\alpha + \beta x + Z \zeta + \epsilon$$
+$$\zeta \implies  N(0,\theta^2)$$
+$$\epsilon \implies  N(0,\delta^2)$$
+
+
+Fixed effects & Random effects
+========================================================
+
+Ecological explanation:
+
+- fixed effects: have informative factor levels (e.g. male/female, upland/lowland,Nutrient added or not);
+- random effecst: often have uninformative factor levels (Genotype, block within a field,split plot within a plot,individuals with repeated measures);
+
+Random effects
+========================================================
+
+Sources of random effects:
+
+- observational studies with hierarchical structure;
+- designed experiments with different spatial or temporal scales.
+
+
+Random effects
+========================================================
+
+Random effects have factor levels that are drawn from a large population in which the individuals differ in many ways, but we do not know exactly how or why they differ.
+
+Therefore, there is not much point in concentrating on estimating means of our small subset of factor levels, and no point at all in comparing individual pairs of means for different factor levels.
+
+Random effects
+========================================================
+
+This is the _added_ variation caused by differences between the levels of the random effects.
+
+variance component analysis is used to work out percentage contribution of a random effect to the overal variaiton.
+
+Example
+=============================================================
+
+The following example refers to a designed field experiment on crop yield with three treatments: irrigation (with two levels, irrigated or not), sowing density (with three levels, low, medium and high) and fertilizer (with three levels, N, P and NP) application.
+```{r}
+yields=read.table("./data/splityield.txt",header=T)
+attach(yields)
+names(yields)
+```
+
+Example
+=============================================================
+
+```{r}
+library(nlme)
+model.lme=lme(yield~irrigation*density*fertilizer, random=~1|block/irrigation/density,method="ML")
+#summary(model.lme)
+model.lme.2=update(model.lme,~.-irrigation:density:fertilizer)
+anova(model.lme,model.lme.2)
+
+```
+
+Example
+=============================================================
+
+```{r}
+#summary(model.lme.2)
+model.lme.3=update(model.lme.2,~.-density:fertilizer)
+anova(model.lme.3,model.lme.2)
+#summary(model.lme.3)
+```
+
+Example
+=============================================================
+
+```{r}
+model.lme.4=update(model.lme.3,~.-irrigation:fertilizer)
+anova(model.lme.4,model.lme.3)
+
+```
+
+
+Example
+=============================================================
+
+```{r}
+model.lme.5=update(model.lme.3,~.-irrigation:density)
+anova(model.lme.5,model.lme.3)
+
+```
+
+Example
+============================================================
+
+compare with simple analysis of variance model
+```{r}
+model.simple=aov(yield~irrigation*density*fertilizer-irrigation:density:fertilizer-density:fertilizer+Error(block/irrigation/density))
+summary(model.simple)
+```
+
+Example
+============================================================
+
+variance component analysis 
+```{r}
+
+```

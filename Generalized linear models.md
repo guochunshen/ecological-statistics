@@ -1,7 +1,7 @@
 Generalized Linear Models
 ========================================================
 author: Guochun Shen
-date: Wed Apr 30 09:36:13 2014
+date: Wed May 07 07:57:39 2014
 
 Common problems
 ======================================================
@@ -175,7 +175,7 @@ Deviance: Measuring the goodness of fit of a GLM
 
 The measure of discrepancy in a GLM to assess the goodness of fit of the model to the data is called the __deviance__.
 
-__Deviance is defined as –2 times the difference in log-likelihood between the current model and a saturated model.__
+__Deviance is defined as ??? times the difference in log-likelihood between the current model and a saturated model.__
 
 Deviance is estimated in different ways for different families within glm.
 
@@ -185,9 +185,7 @@ Residuals
 After fitting a model to data, we should investigate how well the model describes the data. In particular, we
 should look to see if there are any systematic trends in the goodness of fit.
 
-Raw residuals:
-
-__residuals = response variable − fitted values.__
+Raw residuals: __response variable ???fitted values.__
 
 Standardized residuals:
 
@@ -216,12 +214,6 @@ available to deal with overdispersion:
 - use F tests with an empirical scale parameter instead of chi-squared;
 - use quasi-likelihood to specify a more appropriate variance function.
 
-Bootstrapping a GLM
-====================================================
-
-In order to obtain a distribution of parameter values for the model from which you can derive confidence intervals, two contrasting ways of using bootstrapping with statistical models exist:
-- Fit the model lots of times by selecting cases for inclusion at random with replacement, so that some data points are excluded and others appear more than once in any particular model fit.
-- Fit the model once and calculate the residuals and the fitted values, then shuffle the residuals lots of times and add them to the fitted values in different permutations, fitting the model to the many different data sets.
 
 Count Data
 ====================================================
@@ -260,7 +252,7 @@ Count Data - Example
 ====================================================
 
 The question is whether or not proximity to the reactor affects the number of cancer cases.
-![plot of chunk unnamed-chunk-6](Generalized_linear_models-figure/unnamed-chunk-6.png) 
+
 
 
 Count Data - Example
@@ -611,3 +603,49 @@ Number of Fisher Scoring iterations: 6
 ```
 
 </small></small>
+
+Bootstrapping a GLM
+====================================================
+
+In order to obtain a distribution of parameter values for the model from which you can derive confidence intervals, two contrasting ways of using bootstrapping with statistical models exist:
+- Fit the model lots of times by selecting cases for inclusion at random with replacement, so that some data points are excluded and others appear more than once in any particular model fit.
+- Fit the model once and calculate the residuals and the fitted values, then shuffle the residuals lots of times and add them to the fitted values in different permutations, fitting the model to the many different data sets.
+
+Bootstrapping a GLM
+====================================================
+
+The 1st Method
+
+```r
+library(boot)
+model.boot=function(data,indices){
+  sub.data=data[indices,]
+  model=glm(incidence~area+isolation,
+            family=binomial,data=sub.data)
+  coef(model)
+}
+#glim.boot=boot(island,model.boot,R=20)
+```
+
+
+Bootstrapping a GLM
+====================================================
+
+The 2nd Method
+
+```r
+model0=glm(incidence~area+isolation,
+            family=binomial,data=island)
+yhat=fitted(model0)
+resids=resid(model0)
+res.data=cbind(data.frame(resids,yhat),island)
+
+model.boot2=function(res.data,i){
+  y=res.data$yhat+res.data$resids[i]
+  model=glm(y~res.data$area+res.data$isolation,
+            family=binomial)
+  coef(model)
+}
+#glim.boot=boot(res.data,model.boot2,R=20)
+```
+
