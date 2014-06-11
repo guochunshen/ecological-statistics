@@ -1,7 +1,7 @@
 Generalized Linear Models
 ========================================================
 author: Guochun Shen
-date: Wed May 07 07:57:39 2014
+date: Wed May 07 10:41:40 2014
 
 Common problems
 ======================================================
@@ -646,6 +646,6 @@ model.boot2=function(res.data,i){
             family=binomial)
   coef(model)
 }
-#glim.boot=boot(res.data,model.boot2,R=20)
+#glim.boot=boot(res.data,model.boot2,R=20,sim="permutation")
 ```
 
