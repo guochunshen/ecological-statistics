@@ -1,7 +1,11 @@
 Mixed-Effects Models
 ========================================================
 author: Guochun Shen
+<<<<<<< HEAD
 date: Wed May 07 10:41:46 2014
+=======
+date: Wed May 28 15:57:31 2014
+>>>>>>> 53e6ddbed89f13e664768d418bc6f918502070ad
 
 Two types of categorical explanatory variables
 ========================================================
