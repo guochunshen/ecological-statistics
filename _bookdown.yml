@@ -1,0 +1,13 @@
+book_filename: "ecological-statistics"
+delete_merged_file: true
+language:
+  label:
+    fig: "图 "
+    tab: "表 "
+    eq: "公式 "
+output_dir: "docs"
+rmd_files: [
+  "index.Rmd",
+  "00-intro.Rmd",
+  "01-forest-survey.Rmd"
+]

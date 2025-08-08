@@ -1,0 +1,42 @@
+---
+title: "生态统计学"
+author: "沈国春、李勤"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "生态统计学课程教材，涵盖从基础到高级的生态数据分析方法"
+---
+
+# 前言 {-}
+
+这是一本关于生态统计学的教材，旨在为生态学研究者提供实用的数据分析方法。本书结合R语言，介绍生态学研究中常用的统计技术。
+
+本书特点：
+
+- 面向生态学研究实际问题
+- 基于R语言实现
+- 包含大量生态数据案例
+- 循序渐进的教学安排
+
+```{r include=FALSE}
+# 初始化设置
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center",
+  out.width = "80%"
+)
+```
+
+本书使用以下R包：
+
+```{r eval=FALSE}
+install.packages(c(
+  "tidyverse", "vegan", "lme4", "ggplot2", 
+  "bookdown", "knitr", "rmarkdown"
+))
+```
