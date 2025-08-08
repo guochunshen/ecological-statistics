@@ -1,0 +1,83 @@
+载入需要的命名空间：rmarkdown
+载入需要的命名空间：xaringan
+[[1]]
+NULL
+
+[[2]]
+NULL
+
+[[3]]
+NULL
+
+开始批量转换 3 个Rmd文件...
+正在处理: ./00-intro.Rmd
+
+
+processing file: 00-intro.Rmd
+1/17                  
+2/17 [unnamed-chunk-1]
+3/17                  
+4/17 [unnamed-chunk-2]
+5/17                  
+6/17 [unnamed-chunk-3]
+7/17                  
+8/17 [unnamed-chunk-4]
+9/17                  
+10/17 [unnamed-chunk-5]
+11/17                  
+12/17 [unnamed-chunk-6]
+13/17                  
+14/17 [unnamed-chunk-7]
+15/17                  
+16/17 [unnamed-chunk-8]
+17/17                  
+output file: 00-intro.knit.md
+
+/usr/bin/pandoc +RTS -K512m -RTS 00-intro.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output slides/00-intro.html --lua-filter /home/gcshen/R/x86_64-pc-linux-gnu-library/4.5/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/gcshen/R/x86_64-pc-linux-gnu-library/4.5/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --wrap none --variable transition=0.4 --css extra.css --template /home/gcshen/R/x86_64-pc-linux-gnu-library/4.5/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/Rtmp3rNY4s/rmarkdown-str4f2264b59ab.html 
+[WARNING] Could not fetch resource ./../../imgs/logo.png
+/usr/bin/pandoc +RTS -K512m -RTS 00-intro.knit.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+tex_math_single_backslash --output /tmp/Rtmp3rNY4s/ioslides-output4f227cffcba8.html --wrap none --slide-level 2 
+
+Output created: slides/00-intro.html
+成功生成: slides/00-intro.html
+正在处理: ./01-forest-survey.Rmd
+
+
+processing file: 01-forest-survey.Rmd
+1/10                  
+2/10 [unnamed-chunk-1]
+3/10                  
+4/10 [unnamed-chunk-2]
+5/10                  
+6/10 [unnamed-chunk-3]
+7/10                  
+8/10 [unnamed-chunk-4]
+9/10                  
+10/10 [unnamed-chunk-5]
+output file: 01-forest-survey.knit.md
+
+/usr/bin/pandoc +RTS -K512m -RTS 01-forest-survey.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output slides/01-forest-survey.html --lua-filter /home/gcshen/R/x86_64-pc-linux-gnu-library/4.5/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/gcshen/R/x86_64-pc-linux-gnu-library/4.5/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --wrap none --variable transition=0.4 --css extra.css --template /home/gcshen/R/x86_64-pc-linux-gnu-library/4.5/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/Rtmp3rNY4s/rmarkdown-str4f2261ad62e0.html 
+[WARNING] This document format requires a nonempty <title> element.
+  Defaulting to '01-forest-survey.knit' as the title.
+  To specify a title, use 'title' in metadata or --metadata title="...".
+[WARNING] Could not fetch resource ./../../imgs/logo.png
+/usr/bin/pandoc +RTS -K512m -RTS 01-forest-survey.knit.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+tex_math_single_backslash --output /tmp/Rtmp3rNY4s/ioslides-output4f2215bd845a.html --wrap none --slide-level 2 
+
+Output created: slides/01-forest-survey.html
+成功生成: slides/01-forest-survey.html
+正在处理: ./index.Rmd
+
+
+processing file: index.Rmd
+1/4                  
+2/4 [unnamed-chunk-1]
+3/4                  
+4/4 [unnamed-chunk-2]
+output file: index.knit.md
+
+/usr/bin/pandoc +RTS -K512m -RTS index.knit.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output slides/index.html --lua-filter /home/gcshen/R/x86_64-pc-linux-gnu-library/4.5/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /home/gcshen/R/x86_64-pc-linux-gnu-library/4.5/rmarkdown/rmarkdown/lua/latex-div.lua --embed-resources --standalone --wrap none --variable transition=0.4 --css extra.css --template /home/gcshen/R/x86_64-pc-linux-gnu-library/4.5/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url=https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --include-in-header /tmp/Rtmp3rNY4s/rmarkdown-str4f2216dc70e2.html --citeproc 
+[WARNING] Could not fetch resource ./../../imgs/logo.png
+/usr/bin/pandoc +RTS -K512m -RTS index.knit.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+tex_math_single_backslash --output /tmp/Rtmp3rNY4s/ioslides-output4f2237a0b3e5.html --wrap none --slide-level 2 --citeproc 
+
+Output created: slides/index.html
+成功生成: slides/index.html
+全部处理完成！生成的幻灯片在 slides/ 目录下

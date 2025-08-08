@@ -1,6 +1,18 @@
+---
+title: "R语言入门准备"
+author: "沈国春"
+institute: "华东师范大学生态与环境科学学院"
+course: "生态统计学"
+date: "`r format(Sys.Date(), '%Y年%m月%d日')`"
+output: 
+  ioslides_presentation:
+    css: extra.css
+---
+
 # R语言入门准备 {#intro}
 
 ## 学习目标
+
 - 理解为什么生态学专业需要学习R语言
 - 掌握R和RStudio的安装和配置
 - 建立良好的项目文件组织习惯
