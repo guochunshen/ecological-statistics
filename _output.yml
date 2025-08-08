@@ -1,6 +1,8 @@
 bookdown::gitbook:
   css: style.css
   lib_dir: libs
+  includes:
+    in_header: statistics-include.html
   config:
     toc:
       before: |
