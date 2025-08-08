@@ -261,6 +261,17 @@ convert_to_slides <- function(rmd_file) {
       dir.create(output_dir, showWarnings = FALSE)
     }
     
+    # 创建imgs符号链接和复制extra.css
+    imgs_link <- file.path(output_dir, "imgs")
+    if(!file.exists(imgs_link)) {
+      file.symlink("../imgs", imgs_link)
+    }
+    
+    # 复制extra.css到输出目录
+    if(file.exists("extra.css")) {
+      file.copy("extra.css", output_dir, overwrite = TRUE)
+    }
+    
     # 构造输出文件路径
     output_file <- normalizePath(file.path(output_dir,
                            paste0(tools::file_path_sans_ext(basename(rmd_file)),
