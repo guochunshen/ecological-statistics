@@ -67,6 +67,10 @@ preprocess_rmd <- function(input_file) {
   in_code_block <- FALSE  # 标记是否在代码块中
   in_table <- FALSE      # 标记是否在表格中
   table_lines <- c()     # 存储当前表格的行内容
+  # 标题状态跟踪
+  after_heading <- FALSE # 标记是否在标题后等待内容
+  after_heading_reset_pending <- FALSE # 标记是否需要重置after_heading状态
+  heading_text <- ""     # 存储上一级标题内容
   # 标题和分页相关变量
   current_section_lines <- 0  # 当前三级标题下的行数计数器
   heading_level <- 0          # 当前标题级别: 0=无标题, 1=#, 2=##, 3=###
@@ -82,20 +86,44 @@ preprocess_rmd <- function(input_file) {
     # 代码中的注释会影响markdown标题的判断，因此，当进入代码块时，不要判断标题
     if(!in_code_block){
       if (grepl("^### ", line)) {
-        # 遇到三级标题，重置计数器
+        # 遇到三级标题，重置所有状态
+        after_heading <- FALSE
+        after_heading_reset_pending <- FALSE
         current_section_lines <- 0
         heading_level <- 3
         last_heading_level <- 3
         last_h3_heading <- sub("^###\\s+", "", line)  # 存储三级标题文本
-      } else if (grepl("^## ", line)) {
-        heading_level <- 2
-        last_heading_level <- 2
-      } else if (grepl("^# ", line)) {
-        heading_level <- 1
-        last_heading_level <- 1
+    } else if (grepl("^## ", line)) {
+      heading_level <- 2
+      last_heading_level <- 2
+      after_heading <- TRUE
+      after_heading_reset_pending <- TRUE
+      heading_text <- sub("^#+\\s+", "", line)
+    } else if (grepl("^# ", line)) {
+      heading_level <- 1
+      last_heading_level <- 1
+      after_heading <- TRUE
+      after_heading_reset_pending <- TRUE
+      heading_text <- sub("^#+\\s+", "", line)
       }
     }
     
+    # 处理标题后的内容行（排除空行和标题行）
+    if (!in_code_block && after_heading && !grepl("^\\s*$", line) && !grepl("^#", line)) {
+      # 调试输出
+      message("检测到内容行: ", line)
+      message("当前状态: after_heading=", after_heading, " heading_text=", heading_text)
+      
+      new_content <- c(new_content, paste0("### ", heading_text))
+      last_heading_level <- 3
+      heading_level <- 3
+      last_h3_heading <- heading_text
+      current_section_lines <- 0
+      after_heading <- FALSE
+      
+      # 调试输出插入的三级标题
+      message("已插入三级标题: ### ", heading_text)
+    }
     
     # 处理图片
     # 2. 图片处理
@@ -214,7 +242,9 @@ convert_to_slides <- function(rmd_file) {
     if(file.exists("book.bib")) {
       file.copy("book.bib", tempdir())  # 复制参考文献文件到临时目录
     }
-    
+    if(file.exists("packages.bib")) {
+      file.copy("packages.bib", tempdir())  # 复制参考文献文件到临时目录
+    }
     # 使用rmarkdown渲染幻灯片
     # 关键配置：
     # - 使用ioslides格式
@@ -252,6 +282,9 @@ convert_to_slides <- function(rmd_file) {
     # 删除临时bib文件
     if(file.exists(file.path(tempdir(), "book.bib"))) {
       unlink(file.path(tempdir(), "book.bib"))
+    }
+    if(file.exists(file.path(tempdir(), "packages.bib"))) {
+      unlink(file.path(tempdir(), "packages.bib"))
     }
     # 删除临时Rmd文件
     unlink(temp_file)
