@@ -119,18 +119,21 @@ preprocess_rmd <- function(input_file) {
         heading_level <- 3
         last_heading_level <- 3
         last_h3_heading <- sub("^###\\s+", "", line)  # 存储三级标题文本
+        last_h3_heading <- sub("\\s*\\{.*?\\}", "", last_h3_heading)  # 移除花括号及其内容
     } else if (grepl("^## ", line)) {
       heading_level <- 2
       last_heading_level <- 2
       after_heading <- TRUE
       after_heading_reset_pending <- TRUE
       heading_text <- sub("^#+\\s+", "", line)
+      heading_text <- sub("\\s*\\{.*?\\}", "", heading_text)  # 移除花括号及其内容
     } else if (grepl("^# ", line)) {
       heading_level <- 1
       last_heading_level <- 1
       after_heading <- TRUE
       after_heading_reset_pending <- TRUE
       heading_text <- sub("^#+\\s+", "", line)
+      heading_text <- sub("\\s*\\{.*?\\}", "", heading_text)  # 移除花括号及其内容
       }
     }
     
