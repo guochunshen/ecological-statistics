@@ -1,13 +1,3 @@
----
-title: "R语言入门准备"
-author: "沈国春"
-institute: "华东师范大学生态与环境科学学院"
-course: "生态统计学"
-date: "`r format(Sys.Date(), '%Y年%m月%d日')`"
-output: 
-  ioslides_presentation:
-    css: extra.css
----
 
 # R语言入门准备 {#intro}
 

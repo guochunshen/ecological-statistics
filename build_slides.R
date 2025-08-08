@@ -39,17 +39,43 @@ process_large_table <- function(table_lines) {
   return(result) # 返回处理后的表格内容
 }
 
-# 4. RMD预处理函数
+# 4. YAML头生成函数
 # ------------------------------
-# 功能：预处理Rmd文件内容，包括：
-# - 处理标题级别
-# - 自动分页
-# - 图片大小调整
-# - 表格处理
-# - 代码块识别
-# 参数：input_file - 输入Rmd文件路径
-# 返回：处理后的内容
-# 5. RMD文件预处理函数
+# 功能：检测并生成标准YAML头
+# 参数：content - 文件内容向量
+# 返回：YAML头向量（若无则返回空）
+generate_yaml_header <- function(content) {
+  # 1. 检查YAML头是否存在
+  header_range <- 1:min(10, length(content))
+  if (any(grepl("^---\\s*$", content[header_range]))) {
+    return(character(0))  # 返回空字符向量
+  }
+  
+  # 2. 提取有效一级标题
+  header_lines <- grep("^#\\s+", content, value = TRUE)
+  if (length(header_lines) == 0) return(character(0))
+  
+  first_header <- header_lines[1]
+  title <- sub("^#\\s+", "", first_header)
+  title <- sub("\\s*\\{.+\\}$", "", title)  # 移除锚点
+  
+  # 3. 生成标准YAML头
+  c(
+    "---",
+    sprintf('title: "%s"', title),
+    'author: "沈国春"',
+    'institute: "华东师范大学生态与环境科学学院"',
+    'course: "生态统计学"',
+    'date: "`r format(Sys.Date(), \'%Y年%m月%d日\')`"',
+    'output:',
+    '  ioslides_presentation:',
+    '    css: extra.css',
+    '---',
+    ""  # 空行分隔
+  )
+}
+
+# 5. RMD预处理函数
 # ------------------------------
 # 功能：对Rmd文件内容进行预处理，包括：
 # - 标题级别处理
@@ -61,8 +87,8 @@ process_large_table <- function(table_lines) {
 #   input_file - 输入Rmd文件路径
 # 返回：处理后的内容向量
 preprocess_rmd <- function(input_file) {
-  content <- readLines(input_file)  # 读取原始文件内容
-  new_content <- c()  # 初始化处理后的内容向量
+  content <- readLines(input_file, encoding = "UTF-8")
+  new_content <- generate_yaml_header(content)  # 初始化并添加YAML头
   # 状态标志变量
   in_code_block <- FALSE  # 标记是否在代码块中
   in_table <- FALSE      # 标记是否在表格中
