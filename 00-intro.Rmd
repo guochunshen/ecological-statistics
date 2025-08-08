@@ -62,9 +62,57 @@ library(vegan)
 library(ggplot2)
 ```
 
+## R语言简介与趣味应用
+
+### 什么是R语言？
+- **统计计算语言**：专门为统计分析和数据可视化设计的编程语言
+- **开源免费**：由全球统计学家共同维护发展
+- **扩展性强**：超过18,000个专业扩展包
+
+### 趣味应用示例
+
+#### 生态数据动态可视化
+```{r eval=FALSE}
+# 安装必要包
+install.packages(c("ggplot2", "gganimate", "gapminder"))
+
+# 绘制动态变化图
+library(ggplot2)
+library(gganimate)
+ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent)) +
+  geom_point() +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  labs(title = '年份: {frame_time}', x = '人均GDP', y = '预期寿命') +
+  transition_time(year) +
+  ease_aes('linear')
+```
+
+#### 生成音乐
+```{r eval=FALSE}
+install.packages("audio")
+library(audio)
+play(sin(1:10000/10))
+```
+
+### 如何获取帮助？
+```{r eval=FALSE}
+# 查看函数帮助文档
+?plot
+help("plot")
+
+# 搜索帮助文档
+??"regression"
+
+# 在线资源：
+# - R官方文档：https://cran.r-project.org/manuals.html
+# - RStudio社区：https://community.rstudio.com
+```
+
 ## 课前准备检查清单
 - [ ] R软件安装成功
 - [ ] RStudio安装成功  
 - [ ] 能够运行简单的R代码
 - [ ] 创建了课程文件夹结构
 - [ ] 理解了学习R语言的重要性
+- [ ] 尝试运行了趣味示例代码
