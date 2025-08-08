@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 森林调查数据计算 | R语言入门准备</title>
+  <meta name="description" content="生态统计学课程教材，涵盖从基础到高级的生态数据分析方法" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 森林调查数据计算 | R语言入门准备" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="生态统计学课程教材，涵盖从基础到高级的生态数据分析方法" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 森林调查数据计算 | R语言入门准备" />
+  
+  <meta name="twitter:description" content="生态统计学课程教材，涵盖从基础到高级的生态数据分析方法" />
+  
+
+<meta name="author" content="沈国春" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">生态统计学</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> R语言入门准备</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#学习目标"><i class="fa fa-check"></i><b>1.1</b> 学习目标</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#为什么生态学专业需要学习r"><i class="fa fa-check"></i><b>1.2</b> 为什么生态学专业需要学习R？</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="intro.html"><a href="intro.html#数据分析能力的必要性"><i class="fa fa-check"></i><b>1.2.1</b> 数据分析能力的必要性</a></li>
+<li class="chapter" data-level="1.2.2" data-path="intro.html"><a href="intro.html#可重现研究的科学要求"><i class="fa fa-check"></i><b>1.2.2</b> 可重现研究的科学要求</a></li>
+<li class="chapter" data-level="1.2.3" data-path="intro.html"><a href="intro.html#环境设置和配置"><i class="fa fa-check"></i><b>1.2.3</b> 环境设置和配置</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#r语言简介与趣味应用"><i class="fa fa-check"></i><b>1.3</b> R语言简介与趣味应用</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#什么是r语言"><i class="fa fa-check"></i><b>1.3.1</b> 什么是R语言？</a></li>
+<li class="chapter" data-level="1.3.2" data-path="intro.html"><a href="intro.html#趣味应用示例"><i class="fa fa-check"></i><b>1.3.2</b> 趣味应用示例</a></li>
+<li class="chapter" data-level="1.3.3" data-path="intro.html"><a href="intro.html#如何获取帮助"><i class="fa fa-check"></i><b>1.3.3</b> 如何获取帮助？</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="intro.html"><a href="intro.html#课前准备检查清单"><i class="fa fa-check"></i><b>1.4</b> 课前准备检查清单</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="forest-survey.html"><a href="forest-survey.html"><i class="fa fa-check"></i><b>2</b> 森林调查数据计算</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="forest-survey.html"><a href="forest-survey.html#生态学背景"><i class="fa fa-check"></i><b>2.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="2.2" data-path="forest-survey.html"><a href="forest-survey.html#演示数据"><i class="fa fa-check"></i><b>2.2</b> 演示数据</a></li>
+<li class="chapter" data-level="2.3" data-path="forest-survey.html"><a href="forest-survey.html#课堂演示过程"><i class="fa fa-check"></i><b>2.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="2.4" data-path="forest-survey.html"><a href="forest-survey.html#r语言知识点详解"><i class="fa fa-check"></i><b>2.4</b> R语言知识点详解</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="forest-survey.html"><a href="forest-survey.html#向量创建函数-c"><i class="fa fa-check"></i><b>2.4.1</b> 向量创建函数 <code>c()</code></a></li>
+<li class="chapter" data-level="2.4.2" data-path="forest-survey.html"><a href="forest-survey.html#基本统计函数"><i class="fa fa-check"></i><b>2.4.2</b> 基本统计函数</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="forest-survey.html"><a href="forest-survey.html#课后练习"><i class="fa fa-check"></i><b>2.5</b> 课后练习</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://gitee.com/gcshen/ecological-statistics" target="blank">Gitee/a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R语言入门准备</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="forest-survey" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> 森林调查数据计算<a href="forest-survey.html#forest-survey" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="生态学背景" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> 生态学背景<a href="forest-survey.html#生态学背景" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>在野外森林调查中，测量树木胸径（DBH，距地面1.3米处的直径）是评估森林生长状况的基本方法。我们需要计算样地内树木的平均胸径来了解林分特征。</p>
+</div>
+<div id="演示数据" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> 演示数据<a href="forest-survey.html#演示数据" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="forest-survey.html#cb10-1" tabindex="-1"></a><span class="co"># 某样地内10棵马尾松的胸径测量值（单位：厘米）</span></span>
+<span id="cb10-2"><a href="forest-survey.html#cb10-2" tabindex="-1"></a>tree_dbh <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">15.2</span>, <span class="fl">18.7</span>, <span class="fl">22.1</span>, <span class="fl">19.5</span>, <span class="fl">16.8</span>, <span class="fl">20.3</span>, <span class="fl">17.9</span>, <span class="fl">21.4</span>, <span class="fl">19.2</span>, <span class="fl">18.6</span>)</span></code></pre></div>
+</div>
+<div id="课堂演示过程" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> 课堂演示过程<a href="forest-survey.html#课堂演示过程" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="forest-survey.html#cb11-1" tabindex="-1"></a><span class="co"># 1. 创建胸径数据向量</span></span>
+<span id="cb11-2"><a href="forest-survey.html#cb11-2" tabindex="-1"></a>tree_dbh <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">15.2</span>, <span class="fl">18.7</span>, <span class="fl">22.1</span>, <span class="fl">19.5</span>, <span class="fl">16.8</span>, <span class="fl">20.3</span>, <span class="fl">17.9</span>, <span class="fl">21.4</span>, <span class="fl">19.2</span>, <span class="fl">18.6</span>)</span>
+<span id="cb11-3"><a href="forest-survey.html#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="forest-survey.html#cb11-4" tabindex="-1"></a><span class="co"># 2. 查看数据</span></span>
+<span id="cb11-5"><a href="forest-survey.html#cb11-5" tabindex="-1"></a>tree_dbh</span></code></pre></div>
+<pre><code>##  [1] 15.2 18.7 22.1 19.5 16.8 20.3 17.9 21.4 19.2 18.6</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="forest-survey.html#cb13-1" tabindex="-1"></a><span class="fu">length</span>(tree_dbh)  <span class="co"># 查看测量了多少棵树</span></span></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="forest-survey.html#cb15-1" tabindex="-1"></a><span class="co"># 3. 计算平均胸径</span></span>
+<span id="cb15-2"><a href="forest-survey.html#cb15-2" tabindex="-1"></a>mean_dbh <span class="ot">&lt;-</span> <span class="fu">mean</span>(tree_dbh)</span>
+<span id="cb15-3"><a href="forest-survey.html#cb15-3" tabindex="-1"></a>mean_dbh</span></code></pre></div>
+<pre><code>## [1] 18.97</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="forest-survey.html#cb17-1" tabindex="-1"></a><span class="co"># 4. 计算总树数</span></span>
+<span id="cb17-2"><a href="forest-survey.html#cb17-2" tabindex="-1"></a>tree_count <span class="ot">&lt;-</span> <span class="fu">length</span>(tree_dbh)</span>
+<span id="cb17-3"><a href="forest-survey.html#cb17-3" tabindex="-1"></a>tree_count</span></code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="forest-survey.html#cb19-1" tabindex="-1"></a><span class="co"># 5. 简单的数学运算</span></span>
+<span id="cb19-2"><a href="forest-survey.html#cb19-2" tabindex="-1"></a>max_dbh <span class="ot">&lt;-</span> <span class="fu">max</span>(tree_dbh)  <span class="co"># 最大胸径</span></span>
+<span id="cb19-3"><a href="forest-survey.html#cb19-3" tabindex="-1"></a>min_dbh <span class="ot">&lt;-</span> <span class="fu">min</span>(tree_dbh)  <span class="co"># 最小胸径</span></span>
+<span id="cb19-4"><a href="forest-survey.html#cb19-4" tabindex="-1"></a>total_dbh <span class="ot">&lt;-</span> <span class="fu">sum</span>(tree_dbh)  <span class="co"># 胸径总和</span></span></code></pre></div>
+</div>
+<div id="r语言知识点详解" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> R语言知识点详解<a href="forest-survey.html#r语言知识点详解" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="向量创建函数-c" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> 向量创建函数 <code>c()</code><a href="forest-survey.html#向量创建函数-c" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><strong>是什么</strong>：<code>c()</code> 是combine的缩写，用于将多个值组合成一个向量</li>
+<li><strong>语法</strong>：<code>c(值1, 值2, 值3, ...)</code></li>
+<li><strong>重要特点</strong>：
+<ul>
+<li>向量中的所有元素必须是同一类型（数值、字符或逻辑）</li>
+<li>如果混合不同类型，R会自动转换为最通用的类型</li>
+<li>向量是R中最基本的数据结构</li>
+</ul></li>
+</ul>
+</div>
+<div id="基本统计函数" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> 基本统计函数<a href="forest-survey.html#基本统计函数" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="mean---计算平均值" class="section level4 hasAnchor" number="2.4.2.1">
+<h4><span class="header-section-number">2.4.2.1</span> <code>mean()</code> - 计算平均值<a href="forest-survey.html#mean---计算平均值" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="forest-survey.html#cb20-1" tabindex="-1"></a><span class="co"># 示例</span></span>
+<span id="cb20-2"><a href="forest-survey.html#cb20-2" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+</div>
+<div id="length---计算向量长度" class="section level4 hasAnchor" number="2.4.2.2">
+<h4><span class="header-section-number">2.4.2.2</span> <code>length()</code> - 计算向量长度<a href="forest-survey.html#length---计算向量长度" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="forest-survey.html#cb22-1" tabindex="-1"></a><span class="co"># 示例</span></span>
+<span id="cb22-2"><a href="forest-survey.html#cb22-2" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+</div>
+</div>
+</div>
+<div id="课后练习" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> 课后练习<a href="forest-survey.html#课后练习" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>题目</strong>：某湿地调查中测量了8棵柳树的树高（单位：米）： <code>tree_height &lt;- c(4.2, 5.1, 3.8, 4.7, 5.3, 4.9, 4.1, 4.6)</code></p>
+<p>请完成： 1. 创建树高向量并查看数据 2. 计算平均树高 3. 找出最高的树有多高 4. 统计总共测量了多少棵树 5. 计算所有树的总高度 6. 计算树高的标准差（提示：使用sd()函数）</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="forest-survey.html#cb24-1" tabindex="-1"></a><span class="co"># 在此处编写你的练习代码</span></span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": false,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["ecological-statistics.pdf", "ecological-statistics.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>

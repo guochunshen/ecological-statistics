@@ -1,0 +1,558 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% 中文支持
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Serif CJK SC}
+\setCJKsansfont{Noto Sans CJK SC} 
+\setCJKmonofont{Noto Sans Mono CJK SC}
+
+% 页面设置
+\usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=3cm]{geometry}
+
+% 数学支持
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}
+
+% 章节标题样式
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\Huge\bfseries\filcenter}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+% 图表标题
+\usepackage{caption}
+\DeclareCaptionFont{heiti}{\CJKfamily{hei}}
+\captionsetup{font=small,labelsep=quad}
+
+% 超链接
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  filecolor=magenta,      
+  urlcolor=cyan,
+  pdftitle={生态统计学},
+  pdfauthor={沈国春、李勤}
+}
+
+% 代码环境
+\usepackage{listings}
+\lstset{
+  basicstyle=\small\ttfamily,
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=5pt
+}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={生态统计学},
+  pdfauthor={沈国春、李勤},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{生态统计学}
+\author{沈国春、李勤}
+\date{2025-08-08}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{ux524dux8a00}{%
+\chapter*{前言}\label{ux524dux8a00}}
+\addcontentsline{toc}{chapter}{前言}
+
+这是一本关于生态统计学的教材，旨在为生态学研究者提供实用的数据分析方法。本书结合R语言，介绍生态学研究中常用的统计技术。
+
+本书特点：
+
+\begin{itemize}
+\tightlist
+\item
+  面向生态学研究实际问题
+\item
+  基于R语言实现
+\item
+  包含大量生态数据案例
+\item
+  循序渐进的教学安排
+\end{itemize}
+
+本书使用以下R包：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
+  \StringTok{"tidyverse"}\NormalTok{, }\StringTok{"vegan"}\NormalTok{, }\StringTok{"lme4"}\NormalTok{, }\StringTok{"ggplot2"}\NormalTok{, }
+  \StringTok{"bookdown"}\NormalTok{, }\StringTok{"knitr"}\NormalTok{, }\StringTok{"rmarkdown"}
+\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{intro}{%
+\chapter{R语言入门准备}\label{intro}}
+
+\hypertarget{ux5b66ux4e60ux76eeux6807}{%
+\section{学习目标}\label{ux5b66ux4e60ux76eeux6807}}
+
+\begin{itemize}
+\tightlist
+\item
+  理解为什么生态学专业需要学习R语言
+\item
+  掌握R和RStudio的安装和配置
+\item
+  建立良好的项目文件组织习惯
+\item
+  了解R包管理的基本方法
+\end{itemize}
+
+\hypertarget{ux4e3aux4ec0ux4e48ux751fux6001ux5b66ux4e13ux4e1aux9700ux8981ux5b66ux4e60r}{%
+\section{为什么生态学专业需要学习R？}\label{ux4e3aux4ec0ux4e48ux751fux6001ux5b66ux4e13ux4e1aux9700ux8981ux5b66ux4e60r}}
+
+\hypertarget{ux6570ux636eux5206ux6790ux80fdux529bux7684ux5fc5ux8981ux6027}{%
+\subsection{数据分析能力的必要性}\label{ux6570ux636eux5206ux6790ux80fdux529bux7684ux5fc5ux8981ux6027}}
+
+现代生态学研究产生海量数据：野外调查数据、实验室测量数据、遥感影像数据、基因序列数据等。传统的Excel已无法满足复杂的统计分析需求，而R语言提供了完整的数据科学工具链。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 示例：读取大型CSV文件}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"large\_ecological\_data.csv"}\NormalTok{, }\AttributeTok{nrows=}\DecValTok{100000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux53efux91cdux73b0ux7814ux7a76ux7684ux79d1ux5b66ux8981ux6c42}{%
+\subsection{可重现研究的科学要求}\label{ux53efux91cdux73b0ux7814ux7a76ux7684ux79d1ux5b66ux8981ux6c42}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{重现性危机}：越来越多的科学研究无法被重现，影响科学可信度
+\item
+  \textbf{R脚本的优势}：每一步分析都有记录，任何人都可以重现你的分析过程
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 示例：可重现的分析流程}
+\CommentTok{\# 1. 数据导入}
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"field\_data.csv"}\NormalTok{)}
+
+\CommentTok{\# 2. 数据清洗}
+\NormalTok{clean\_data }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(data)}
+
+\CommentTok{\# 3. 统计分析}
+\NormalTok{result }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(response }\SpecialCharTok{\textasciitilde{}}\NormalTok{ predictor, }\AttributeTok{data=}\NormalTok{clean\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux73afux5883ux8bbeux7f6eux548cux914dux7f6e}{%
+\subsection{环境设置和配置}\label{ux73afux5883ux8bbeux7f6eux548cux914dux7f6e}}
+
+\hypertarget{rux548crstudioux5b89ux88c5}{%
+\subsubsection{R和RStudio安装}\label{rux548crstudioux5b89ux88c5}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 检查R版本}
+\NormalTok{R.version.string}
+
+\CommentTok{\# 检查已安装的包}
+\FunctionTok{installed.packages}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux9879ux76eeux6587ux4ef6ux5939ux7ed3ux6784}{%
+\subsubsection{项目文件夹结构}\label{ux9879ux76eeux6587ux4ef6ux5939ux7ed3ux6784}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 创建项目目录结构示例}
+\FunctionTok{dir.create}\NormalTok{(}\StringTok{"生态学R语言课程"}\NormalTok{)}
+\FunctionTok{dir.create}\NormalTok{(}\StringTok{"生态学R语言课程/数据"}\NormalTok{)}
+\FunctionTok{dir.create}\NormalTok{(}\StringTok{"生态学R语言课程/脚本"}\NormalTok{)}
+\FunctionTok{dir.create}\NormalTok{(}\StringTok{"生态学R语言课程/结果"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5305ux7ba1ux7406}{%
+\subsubsection{包管理}\label{ux5305ux7ba1ux7406}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 安装生态学常用包}
+\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"vegan"}\NormalTok{, }\StringTok{"lme4"}\NormalTok{, }\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"dplyr"}\NormalTok{))}
+
+\CommentTok{\# 加载包}
+\FunctionTok{library}\NormalTok{(vegan)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rux8bedux8a00ux7b80ux4ecbux4e0eux8da3ux5473ux5e94ux7528}{%
+\section{R语言简介与趣味应用}\label{rux8bedux8a00ux7b80ux4ecbux4e0eux8da3ux5473ux5e94ux7528}}
+
+\hypertarget{ux4ec0ux4e48ux662frux8bedux8a00}{%
+\subsection{什么是R语言？}\label{ux4ec0ux4e48ux662frux8bedux8a00}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{统计计算语言}：专门为统计分析和数据可视化设计的编程语言
+\item
+  \textbf{开源免费}：由全球统计学家共同维护发展
+\item
+  \textbf{扩展性强}：超过18,000个专业扩展包
+\end{itemize}
+
+\hypertarget{ux8da3ux5473ux5e94ux7528ux793aux4f8b}{%
+\subsection{趣味应用示例}\label{ux8da3ux5473ux5e94ux7528ux793aux4f8b}}
+
+\hypertarget{ux751fux6001ux6570ux636eux52a8ux6001ux53efux89c6ux5316}{%
+\subsubsection{生态数据动态可视化}\label{ux751fux6001ux6570ux636eux52a8ux6001ux53efux89c6ux5316}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 安装必要包}
+\FunctionTok{install.packages}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"ggplot2"}\NormalTok{, }\StringTok{"gganimate"}\NormalTok{, }\StringTok{"gapminder"}\NormalTok{))}
+
+\CommentTok{\# 绘制动态变化图}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(gganimate)}
+\FunctionTok{ggplot}\NormalTok{(gapminder, }\FunctionTok{aes}\NormalTok{(gdpPercap, lifeExp, }\AttributeTok{size =}\NormalTok{ pop, }\AttributeTok{color =}\NormalTok{ continent)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_size}\NormalTok{(}\AttributeTok{range =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{12}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_log10}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{\textquotesingle{}年份: \{frame\_time\}\textquotesingle{}}\NormalTok{, }\AttributeTok{x =} \StringTok{\textquotesingle{}人均GDP\textquotesingle{}}\NormalTok{, }\AttributeTok{y =} \StringTok{\textquotesingle{}预期寿命\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{transition\_time}\NormalTok{(year) }\SpecialCharTok{+}
+  \FunctionTok{ease\_aes}\NormalTok{(}\StringTok{\textquotesingle{}linear\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux751fux6210ux97f3ux4e50}{%
+\subsubsection{生成音乐}\label{ux751fux6210ux97f3ux4e50}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"audio"}\NormalTok{)}
+\FunctionTok{library}\NormalTok{(audio)}
+\FunctionTok{play}\NormalTok{(}\FunctionTok{sin}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10000}\SpecialCharTok{/}\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5982ux4f55ux83b7ux53d6ux5e2eux52a9}{%
+\subsection{如何获取帮助？}\label{ux5982ux4f55ux83b7ux53d6ux5e2eux52a9}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 查看函数帮助文档}
+\NormalTok{?plot}
+\FunctionTok{help}\NormalTok{(}\StringTok{"plot"}\NormalTok{)}
+
+\CommentTok{\# 搜索帮助文档}
+\NormalTok{??}\StringTok{"regression"}
+
+\CommentTok{\# 在线资源：}
+\CommentTok{\# {-} R官方文档：https://cran.r{-}project.org/manuals.html}
+\CommentTok{\# {-} RStudio社区：https://community.rstudio.com}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux8bfeux524dux51c6ux5907ux68c0ux67e5ux6e05ux5355}{%
+\section{课前准备检查清单}\label{ux8bfeux524dux51c6ux5907ux68c0ux67e5ux6e05ux5355}}
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  R软件安装成功
+\item[$\square$]
+  RStudio安装成功\\
+\item[$\square$]
+  能够运行简单的R代码
+\item[$\square$]
+  创建了课程文件夹结构
+\item[$\square$]
+  理解了学习R语言的重要性
+\item[$\square$]
+  尝试运行了趣味示例代码
+\end{itemize}
+
+\hypertarget{forest-survey}{%
+\chapter{森林调查数据计算}\label{forest-survey}}
+
+\hypertarget{ux751fux6001ux5b66ux80ccux666f}{%
+\section{生态学背景}\label{ux751fux6001ux5b66ux80ccux666f}}
+
+在野外森林调查中，测量树木胸径（DBH，距地面1.3米处的直径）是评估森林生长状况的基本方法。我们需要计算样地内树木的平均胸径来了解林分特征。
+
+\hypertarget{ux6f14ux793aux6570ux636e}{%
+\section{演示数据}\label{ux6f14ux793aux6570ux636e}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 某样地内10棵马尾松的胸径测量值（单位：厘米）}
+\NormalTok{tree\_dbh }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{15.2}\NormalTok{, }\FloatTok{18.7}\NormalTok{, }\FloatTok{22.1}\NormalTok{, }\FloatTok{19.5}\NormalTok{, }\FloatTok{16.8}\NormalTok{, }\FloatTok{20.3}\NormalTok{, }\FloatTok{17.9}\NormalTok{, }\FloatTok{21.4}\NormalTok{, }\FloatTok{19.2}\NormalTok{, }\FloatTok{18.6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux8bfeux5802ux6f14ux793aux8fc7ux7a0b}{%
+\section{课堂演示过程}\label{ux8bfeux5802ux6f14ux793aux8fc7ux7a0b}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1. 创建胸径数据向量}
+\NormalTok{tree\_dbh }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{15.2}\NormalTok{, }\FloatTok{18.7}\NormalTok{, }\FloatTok{22.1}\NormalTok{, }\FloatTok{19.5}\NormalTok{, }\FloatTok{16.8}\NormalTok{, }\FloatTok{20.3}\NormalTok{, }\FloatTok{17.9}\NormalTok{, }\FloatTok{21.4}\NormalTok{, }\FloatTok{19.2}\NormalTok{, }\FloatTok{18.6}\NormalTok{)}
+
+\CommentTok{\# 2. 查看数据}
+\NormalTok{tree\_dbh}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 15.2 18.7 22.1 19.5 16.8 20.3 17.9 21.4 19.2 18.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(tree\_dbh)  }\CommentTok{\# 查看测量了多少棵树}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 3. 计算平均胸径}
+\NormalTok{mean\_dbh }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(tree\_dbh)}
+\NormalTok{mean\_dbh}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 18.97
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 4. 计算总树数}
+\NormalTok{tree\_count }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(tree\_dbh)}
+\NormalTok{tree\_count}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 5. 简单的数学运算}
+\NormalTok{max\_dbh }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(tree\_dbh)  }\CommentTok{\# 最大胸径}
+\NormalTok{min\_dbh }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(tree\_dbh)  }\CommentTok{\# 最小胸径}
+\NormalTok{total\_dbh }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(tree\_dbh)  }\CommentTok{\# 胸径总和}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{rux8bedux8a00ux77e5ux8bc6ux70b9ux8be6ux89e3}{%
+\section{R语言知识点详解}\label{rux8bedux8a00ux77e5ux8bc6ux70b9ux8be6ux89e3}}
+
+\hypertarget{ux5411ux91cfux521bux5efaux51fdux6570-c}{%
+\subsection{\texorpdfstring{向量创建函数 \texttt{c()}}{向量创建函数 c()}}\label{ux5411ux91cfux521bux5efaux51fdux6570-c}}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{是什么}：\texttt{c()} 是combine的缩写，用于将多个值组合成一个向量
+\item
+  \textbf{语法}：\texttt{c(值1,\ 值2,\ 值3,\ ...)}
+\item
+  \textbf{重要特点}：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    向量中的所有元素必须是同一类型（数值、字符或逻辑）
+  \item
+    如果混合不同类型，R会自动转换为最通用的类型
+  \item
+    向量是R中最基本的数据结构
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{ux57faux672cux7edfux8ba1ux51fdux6570}{%
+\subsection{基本统计函数}\label{ux57faux672cux7edfux8ba1ux51fdux6570}}
+
+\hypertarget{mean---ux8ba1ux7b97ux5e73ux5747ux503c}{%
+\subsubsection{\texorpdfstring{\texttt{mean()} - 计算平均值}{mean() - 计算平均值}}\label{mean---ux8ba1ux7b97ux5e73ux5747ux503c}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 示例}
+\FunctionTok{mean}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\hypertarget{length---ux8ba1ux7b97ux5411ux91cfux957fux5ea6}{%
+\subsubsection{\texorpdfstring{\texttt{length()} - 计算向量长度}{length() - 计算向量长度}}\label{length---ux8ba1ux7b97ux5411ux91cfux957fux5ea6}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 示例}
+\FunctionTok{length}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3
+\end{verbatim}
+
+\hypertarget{ux8bfeux540eux7ec3ux4e60}{%
+\section{课后练习}\label{ux8bfeux540eux7ec3ux4e60}}
+
+\textbf{题目}：某湿地调查中测量了8棵柳树的树高（单位：米）：
+\texttt{tree\_height\ \textless{}-\ c(4.2,\ 5.1,\ 3.8,\ 4.7,\ 5.3,\ 4.9,\ 4.1,\ 4.6)}
+
+请完成：
+1. 创建树高向量并查看数据
+2. 计算平均树高
+3. 找出最高的树有多高
+4. 统计总共测量了多少棵树
+5. 计算所有树的总高度
+6. 计算树高的标准差（提示：使用sd()函数）
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 在此处编写你的练习代码}
+\end{Highlighting}
+\end{Shaded}
+
+
+  \bibliography{book.bib,packages.bib}
+
+\end{document}
