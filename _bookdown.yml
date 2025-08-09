@@ -8,6 +8,5 @@ language:
 output_dir: "docs"
 rmd_files: [
   "index.Rmd",
-  "00-intro.Rmd",
-  "01-forest-survey.Rmd"
+  "01-statistical_programing.Rmd"
 ]
