@@ -54,7 +54,8 @@
 - **扩展性强**：超过18,000个专业扩展包
 
 #### 如何获取帮助？
-```{r eval=FALSE}
+
+``` r
 # 查看函数帮助文档
 ?plot
 help("plot")
@@ -73,7 +74,8 @@ example(plot)
 #### R语言的趣味应用示例
 
 ##### 生态数据动态可视化
-```{r eval=FALSE}
+
+``` r
 # 安装必要包(首次需要)
 install.packages(c("ggplot2", "gganimate", "gapminder"))
 library(ggplot2)
@@ -95,7 +97,8 @@ ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent)) +
 ```
 
 ##### 生成音乐
-```{r eval=FALSE}
+
+``` r
 install.packages("audio")
 library(audio)
 
@@ -121,25 +124,16 @@ play(notes, durations)
 ##### 下载和安装R
 
 **Windows系统:**
-
 1. 访问 https://cran.r-project.org/bin/windows/base/
-
 2. 下载最新版R安装包(.exe)
-
 3. 右键以管理员身份运行安装程序
-
 4. 安装路径不要包含中文或空格
-
 5. 勾选"创建桌面快捷方式"
 
 **macOS系统:**
-
 1. 访问 https://cran.r-project.org/bin/macosx/
-
 2. 下载最新版R安装包(.pkg)
-
 3. 双击安装，可能需要右键"打开"绕过Gatekeeper限制
-
 4. 或通过Homebrew安装: `brew install --cask r`
 
 **Linux系统:**
@@ -149,9 +143,7 @@ play(notes, durations)
 ##### 下载和安装RStudio
 
 1. 访问 https://www.rstudio.com/products/rstudio/download/
-
 2. 选择适合你系统的RStudio Desktop免费版
-
 3. 安装注意事项:
    - Windows: 确保已安装R后再安装RStudio
    - macOS: 可能需要允许来自"未识别开发者"的应用
@@ -162,7 +154,8 @@ play(notes, durations)
 - **中文路径问题**: 安装路径和用户名不要包含中文
 - **防火墙拦截**: 临时关闭防火墙或添加R/RStudio为例外
 - **镜像源设置**: 安装后运行:
-  ```{r eval=FALSE}
+  
+  ``` r
   options(repos = c(CRAN="https://mirrors.tuna.tsinghua.edu.cn/CRAN/"))
   ```
 - **依赖缺失**: 
@@ -171,7 +164,8 @@ play(notes, durations)
   - Linux: 安装开发工具链
 
 ##### 验证安装
-```{r eval=FALSE}
+
+``` r
 # 在RStudio中运行这行代码，应该显示R的版本信息
 R.version.string
 
@@ -213,7 +207,8 @@ plot(1:10)
 - **安装方法**：从CRAN下载对应R版本的Rtools安装包
 
 #### 包管理基础
-```{r eval=FALSE}
+
+``` r
 # 检查已安装的包
 installed.packages()
 
@@ -254,7 +249,8 @@ help(package="ggplot2")
 - **提高效率**：不用每次都输入完整文件路径
 
 #### 基本操作
-```{r eval=FALSE}
+
+``` r
 # 查看当前工作目录(就像查看你现在在哪个文件夹)
 getwd()
 
@@ -291,13 +287,15 @@ list.files()
 在野外森林调查中，测量树木胸径（DBH，距地面1.3米处的直径）是评估森林生长状况的基本方法。我们需要计算样地内树木的平均胸径来了解林分特征。
 
 ### 演示数据
-```{r eval=FALSE}
+
+``` r
 # 某样地内10棵马尾松的胸径测量值（单位：厘米）
 tree_dbh <- c(15.2, 18.7, 22.1, 19.5, 16.8, 20.3, 17.9, 21.4, 19.2, 18.6)
 ```
 
 ### 课堂演示过程
-```{r eval=FALSE}
+
+``` r
 # 1. 创建胸径数据向量
 tree_dbh <- c(15.2, 18.7, 22.1, 19.5, 16.8, 20.3, 17.9, 21.4, 19.2, 18.6)
 
@@ -379,15 +377,10 @@ total_dbh <- sum(tree_dbh)  # 胸径总和
 
 请完成（仅使用本课学过的向量和基本统计函数）：
 1. 创建树高向量并查看数据
-
 2. 计算平均树高
-
 3. 找出最高的树有多高
-
 4. 统计总共测量了多少棵树
-
 5. 计算所有树的总高度
-
 6. 计算树高的标准差（提示：使用sd()函数）
 
 
@@ -397,13 +390,15 @@ total_dbh <- sum(tree_dbh)  # 胸径总和
 在野外鸟类观察中，需要记录观察到的鸟类物种名单，这是生物多样性调查的基础工作。我们要学会如何在R中管理物种名称数据。
 
 ### 演示数据
-```{r eval=FALSE}
+
+``` r
 # 某公园早晨观察到的鸟类物种
 bird_species <- c("白头鹎", "麻雀", "喜鹊", "乌鸦", "红嘴蓝鹊", "大山雀")
 ```
 
 ### 课堂演示过程
-```{r eval=FALSE}
+
+``` r
 # 1. 创建鸟类物种名单
 bird_species <- c("白头鹎", "麻雀", "喜鹊", "乌鸦", "红嘴蓝鹊", "大山雀")
 
@@ -482,15 +477,10 @@ paste("今天观察到", length(bird_species), "种鸟类")
 
 请完成（使用向量、字符串操作、索引等已学内容）：
 1. 创建植物名称向量并显示所有植物名称
-
 2. 计算记录了多少种植物（使用length()函数）
-
 3. 显示第2种和第4种植物的名称（使用向量索引）
-
 4. 添加"慈姑"到植物名单中（使用c()函数合并）
-
 5. 用paste()函数创建一句完整的调查报告
-
 6. 尝试查找"芦苇"在向量中的位置（提示：使用which()函数和==运算符）
 
 
@@ -500,7 +490,8 @@ paste("今天观察到", length(bird_species), "种鸟类")
 在植物群落调查中，需要同时记录多种信息：样方编号、物种名称、株高、是否存活等。这些不同类型的数据需要组织在一个表格中，这就需要用到数据框。
 
 ### 演示数据
-```{r eval=FALSE}
+
+``` r
 # 某山坡5个样方的植物调查数据
 plot_data <- data.frame(
   plot_id = c("S001", "S002", "S003", "S004", "S005"),
@@ -512,7 +503,8 @@ plot_data <- data.frame(
 ```
 
 ### 课堂演示过程
-```{r eval=FALSE}
+
+``` r
 # 1. 创建植物调查数据框
 plot_data <- data.frame(
   plot_id = c("S001", "S002", "S003", "S004", "S005"),
@@ -628,7 +620,8 @@ sum(plot_data$alive)      # 存活植物数量
 
 ### 课后练习
 **题目**：某河流生态调查数据：
-```{r eval=FALSE}
+
+``` r
 river_survey <- data.frame(
   site_id = c("R01", "R02", "R03", "R04"),
   fish_species = c("草鱼", "鲤鱼", "鲫鱼", "青鱼"),
@@ -639,19 +632,12 @@ river_survey <- data.frame(
 ```
 
 请完成（使用数据框操作、向量计算等已学内容）：
-
 1. 创建数据框并显示整个数据框
-
 2. 使用str()函数查看数据框的结构
-
 3. 计算鱼类的平均长度和平均重量（使用mean()和$操作符）
-
 4. 统计有多少条成熟的鱼（使用sum()和逻辑值运算）
-
 5. 显示所有鱼类的名称（使用$操作符）
-
 6. 计算最大和最小的鱼重量（使用max()和min()函数）
-
 7. 创建一个包含调查总结的字符串（使用paste()函数）
 
 
@@ -661,7 +647,8 @@ river_survey <- data.frame(
 不同栖息地类型的物种多样性差异很大。我们需要比较森林、草地、湿地三种生境中的物种数量，这种多组数据的管理需要用到列表结构。
 
 ### 演示数据
-```{r eval=FALSE}
+
+``` r
 # 不同栖息地的物种数量调查（每个生境调查了4个样点）
 forest_species <- c(25, 30, 28, 32)
 grassland_species <- c(15, 18, 20, 16)  
@@ -669,7 +656,8 @@ wetland_species <- c(12, 14, 11, 13)
 ```
 
 ### 课堂演示过程
-```{r eval=FALSE}
+
+``` r
 # 1. 创建各栖息地物种数据
 forest_species <- c(25, 30, 28, 32)
 grassland_species <- c(15, 18, 20, 16)  
@@ -737,7 +725,8 @@ which.max(habitat_means)  # 物种最多的生境位置
   - 可以使用数字位置索引
   - 返回元素的原始类型
 - **示例**：
-  ```{r eval=FALSE}
+  
+  ``` r
   element_name <- "forest"
   habitats[[element_name]]  # 使用变量
   habitats[[1]]             # 使用位置
@@ -759,7 +748,8 @@ which.max(habitat_means)  # 物种最多的生境位置
   - 便于后续的数据访问和处理
   - 在图表中自动显示有意义的标签
 - **应用**：
-  ```{r eval=FALSE}
+  
+  ``` r
   # 创建时命名
   scores <- c(数学 = 95, 英语 = 88, 物理 = 92)
   
@@ -797,7 +787,8 @@ which.max(habitat_means)  # 物种最多的生境位置
 
 ### 课后练习
 **题目**：某保护区三个监测站的哺乳动物目击次数：
-```{r eval=FALSE}
+
+``` r
 station_a <- c(8, 12, 6, 10)
 station_b <- c(15, 18, 14, 16)
 station_c <- c(3, 5, 2, 4)
@@ -805,17 +796,11 @@ station_c <- c(3, 5, 2, 4)
 
 请完成（使用向量、列表、命名等已学内容）：
 1. 将三个监测站的数据组织成一个列表（使用list()函数）
-
 2. 计算每个监测站的平均目击次数（使用mean()和列表访问）
-
 3. 创建一个命名向量显示三个站点的平均值（使用names()函数）
-
 4. 找出哪个监测站的平均目击次数最高（使用which.max()函数）
-
 5. 计算所有监测站的总目击次数（使用sum()和向量合并）
-
 6. 创建一个数据框，包含站点名称和对应的平均目击次数
-
 7. 比较站点A和站点B的数据变异程度（使用sd()函数计算标准差）
 
 
@@ -839,7 +824,8 @@ date,month,species,count,observer
 ```
 
 ### 课堂演示过程
-```{r eval=FALSE}
+
+``` r
 # 1. 读取鸟类监测数据
 bird_data <- read.csv("bird_monitoring.csv", stringsAsFactors = FALSE)
 
@@ -974,17 +960,11 @@ paste("总观察个体数:", total_count, "平均每次观察:", round(mean_coun
 
 请完成（使用数据导入、数据框操作、条件筛选等已学内容）：
 1. 创建模拟数据或读取数据文件
-
 2. 查看数据的基本信息（使用nrow(), ncol(), str(), summary()）
-
 3. 筛选夏季的数据（使用subset()函数）
-
 4. 筛选植被覆盖度大于80%的记录（使用subset()函数和条件）
-
 5. 计算所有样地的平均植被覆盖度和平均高度（使用mean()函数）
-
 6. 找出覆盖度最高的样地（使用which.max()函数）
-
 7. 创建一个汇总报告（使用paste()函数）
 
 
@@ -995,7 +975,8 @@ paste("总观察个体数:", total_count, "平均每次观察:", round(mean_coun
 在水质监测中，由于仪器故障、人为记录错误等原因，经常出现缺失值和异常值。数据清理是生态学数据分析的重要步骤，需要识别和处理这些问题数据。
 
 ### 演示数据
-```{r eval=FALSE}
+
+``` r
 # 湖泊水质监测数据（包含缺失值和异常值）
 water_quality <- data.frame(
   site_id = c("湖心", "入水口", "出水口", "湖心", "入水口", "出水口"),
@@ -1007,7 +988,8 @@ water_quality <- data.frame(
 ```
 
 ### 课堂演示过程
-```{r eval=FALSE}
+
+``` r
 # 1. 创建包含问题的水质数据
 water_quality <- data.frame(
   site_id = c("湖心", "入水口", "出水口", "湖心", "入水口", "出水口"),
@@ -1075,7 +1057,8 @@ mean(clean_data$dissolved_oxygen)
 - **适用函数**：`mean()`, `sum()`, `max()`, `min()`, `sd()`등
 - **重要性**：不设置`na.rm = TRUE`时，有NA的计算结果都是NA
 - **示例对比**：
-  ```{r eval=FALSE}
+  
+  ``` r
   x <- c(1, 2, NA, 4)
   mean(x)           # 返回 NA
   mean(x, na.rm = TRUE)  # 返回 2.33
@@ -1099,11 +1082,8 @@ mean(clean_data$dissolved_oxygen)
 
 ##### 异常值处理策略
 1. **删除异常值**：适用于明显的录入错误
-
 2. **替换为NA**：保留数据结构，标记为缺失
-
 3. **替换为合理值**：用中位数、均值等替换
-
 4. **保留但标记**：在分析中特殊处理
 
 #### 条件替换技术
@@ -1111,7 +1091,8 @@ mean(clean_data$dissolved_oxygen)
 - **语法**：`data[condition] <- new_value`
 - **原理**：通过逻辑条件选择满足条件的元素进行替换
 - **示例**：
-  ```{r eval=FALSE}
+  
+  ``` r
   # 将所有负值替换为0
   data[data < 0] <- 0
   
@@ -1130,15 +1111,10 @@ mean(clean_data$dissolved_oxygen)
 #### 数据清理流程和最佳实践
 ##### 标准数据清理流程
 1. **数据探索**：使用`str()`, `summary()`, `head()`, `tail()`了解数据
-
 2. **缺失值检查**：使用`is.na()`, `sum(is.na())`统计缺失情况
-
 3. **异常值识别**：结合统计和专业知识识别异常值
-
 4. **清理决策**：选择合适的处理方法
-
 5. **执行清理**：应用处理方法
-
 6. **验证结果**：检查清理后的数据质量
 
 ##### 数据清理的注意事项
@@ -1156,7 +1132,8 @@ mean(clean_data$dissolved_oxygen)
 
 ### 课后练习
 **题目**：某森林土壤调查数据：
-```{r eval=FALSE}
+
+``` r
 soil_data <- data.frame(
   plot = c("A1", "A2", "A3", "B1", "B2", "B3"),
   organic_matter = c(3.2, NA, 2.8, 3.5, 2.9, 3.1),
@@ -1167,17 +1144,11 @@ soil_data <- data.frame(
 
 请完成（使用缺失值处理、条件判断、数据清理等已学内容）：
 1. 检查每列的缺失值个数（使用is.na()和sum()函数）
-
 2. 识别nitrogen_mg列中的异常值（使用逻辑判断和which()函数）
-
 3. 用均值填补organic_matter的缺失值（使用mean()和na.rm参数）
-
 4. 将nitrogen_mg中的异常值替换为NA（使用条件赋值）
-
 5. 创建一个完全没有缺失值的干净数据集（使用na.omit()）
-
 6. 计算清理后数据的各项平均值（使用mean()函数）
-
 7. 对比清理前后数据的summary()结果
 
 
@@ -1187,7 +1158,8 @@ soil_data <- data.frame(
 不同森林类型的物种多样性存在显著差异。通过比较松林、栎林、混交林的物种数量，我们可以了解森林结构对生物多样性的影响。这需要用到描述性统计和基础可视化。
 
 ### 演示数据
-```{r eval=FALSE}
+
+``` r
 # 三种森林类型各5个样地的物种数量
 pine_forest <- c(22, 25, 20, 28, 24)      # 松林
 oak_forest <- c(35, 32, 38, 30, 34)       # 栎林  
@@ -1195,7 +1167,8 @@ mixed_forest <- c(45, 42, 48, 40, 46)     # 混交林
 ```
 
 ### 课堂演示过程
-```{r eval=FALSE}
+
+``` r
 # 1. 创建三种森林类型数据
 pine_forest <- c(22, 25, 20, 28, 24)
 oak_forest <- c(35, 32, 38, 30, 34)  
@@ -1354,7 +1327,8 @@ forest_df <- data.frame(species_count = all_data, type = forest_type)
   - `each`：每个元素重复的次数
   - `length.out`：输出向量的长度
 - **示例**：
-  ```{r eval=FALSE}
+  
+  ``` r
   rep(c("A", "B"), times = 2)    # "A" "B" "A" "B"
   rep(c("A", "B"), each = 2)     # "A" "A" "B" "B"
   rep(c("A", "B"), length.out = 5) # "A" "B" "A" "B" "A"
@@ -1379,7 +1353,8 @@ forest_df <- data.frame(species_count = all_data, type = forest_type)
 
 ### 课后练习
 **题目**：某保护区三种植被类型的蝴蝶物种数调查：
-```{r eval=FALSE}
+
+``` r
 shrubland <- c(12, 15, 10, 14, 13)    # 灌丛
 meadow <- c(18, 22, 20, 19, 21)       # 草甸
 riparian <- c(25, 28, 23, 27, 26)     # 河岸林
@@ -1387,17 +1362,11 @@ riparian <- c(25, 28, 23, 27, 26)     # 河岸林
 
 请完成（使用描述统计、基础绘图等已学内容）：
 1. 计算三种植被类型的平均物种数和标准差（使用mean()和sd()函数）
-
 2. 创建一个汇总表显示基本统计信息（使用data.frame()）
-
 3. 绘制箱线图比较三种植被类型（使用boxplot()函数）
-
 4. 绘制条形图显示平均物种数（使用barplot()函数）
-
 5. 在箱线图上添加平均值点（使用points()函数）
-
 6. 判断哪种植被类型的蝴蝶多样性最高（使用which.max()和max()函数）
-
 7. 计算每种植被类型的变异系数（标准差/平均值×100）
 
 
@@ -1407,7 +1376,8 @@ riparian <- c(25, 28, 23, 27, 26)     # 河岸林
 在群落生态学研究中，经常需要根据不同条件对物种进行分类处理，或者对大量样地数据进行批量处理。这需要用到编程中的条件判断和循环结构，让R能够自动化完成重复性工作。
 
 ### 演示数据
-```{r eval=FALSE}
+
+``` r
 # 某自然保护区不同海拔的物种调查数据
 sites_data <- data.frame(
   site_id = paste0("S", 1:10),
@@ -1420,7 +1390,8 @@ sites_data <- data.frame(
 ### 课堂演示过程
 
 #### 条件判断基础
-```{r eval=FALSE}
+
+``` r
 # 创建示例数据
 sites_data <- data.frame(
   site_id = paste0("S", 1:10),
@@ -1448,7 +1419,8 @@ for (i in 1:nrow(sites_data)) {
 ```
 
 #### 向量化条件判断
-```{r eval=FALSE}
+
+``` r
 # 使用ifelse()函数进行向量化判断
 sites_data$elevation_zone <- ifelse(sites_data$elevation > 2000, "高海拔", "低海拔")
 print(sites_data[, c("site_id", "elevation", "elevation_zone")])
@@ -1460,7 +1432,8 @@ print(sites_data[, c("site_id", "elevation", "vegetation_type")])
 ```
 
 #### for循环处理
-```{r eval=FALSE}
+
+``` r
 # 计算每个样地的多样性指数类别
 diversity_categories <- character(nrow(sites_data))
 
@@ -1480,7 +1453,8 @@ print(sites_data[, c("site_id", "species_count", "diversity_category")])
 ```
 
 #### 自定义函数编写
-```{r eval=FALSE}
+
+``` r
 # 编写海拔带判断函数
 classify_elevation_zone <- function(elevation) {
   if (elevation < 1500) {
@@ -1502,7 +1476,8 @@ print(sites_data[, c("site_id", "elevation", "elevation_belt")])
 ```
 
 #### 复杂条件处理
-```{r eval=FALSE}
+
+``` r
 # 编写综合评估函数
 assess_conservation_value <- function(elevation, species_count, dominant_sp) {
   score <- 0
@@ -1560,7 +1535,8 @@ print(sites_data[, c("site_id", "conservation_value")])
 
 ##### `if-else` 语句
 - **语法**：
-  ```{r eval=FALSE}
+  
+  ``` r
   if (条件) {
     # 条件为TRUE时执行
   } else {
@@ -1584,7 +1560,8 @@ print(sites_data[, c("site_id", "conservation_value")])
 ##### `for` 循环
 - **语法**：`for (变量 in 序列) { 循环体 }`
 - **常见用法**：
-  ```{r eval=FALSE}
+  
+  ``` r
   # 按索引循环
   for (i in 1:10) { }
   
@@ -1606,7 +1583,8 @@ print(sites_data[, c("site_id", "conservation_value")])
 
 ##### 基本函数语法
 - **语法**：
-  ```{r eval=FALSE}
+  
+  ``` r
   函数名 <- function(参数1, 参数2 = 默认值) {
     # 函数体
     return(返回值)
@@ -1679,7 +1657,8 @@ print(sites_data[, c("site_id", "conservation_value")])
 ### 课后练习
 
 **题目**：某湿地鸟类监测数据包含以下信息：
-```{r eval=FALSE}
+
+``` r
 bird_monitoring <- data.frame(
   site = c("A1", "A2", "B1", "B2", "C1", "C2"),
   water_depth = c(15, 25, 45, 35, 65, 55),  # 水深(cm)
@@ -1690,15 +1669,10 @@ bird_monitoring <- data.frame(
 
 请完成（使用if-else、循环、函数等编程内容，结合之前学过的数据处理方法）：
 1. 使用`ifelse()`函数，根据水深将栖息地分类（<30cm浅水区，30-50cm中等深度，>50cm深水区）
-
 2. 编写函数`classify_habitat_quality()`，综合水深和鸟类丰度评估栖息地质量
-
 3. 使用`for`循环，计算每个季节的平均鸟类丰度
-
 4. 创建一个新列，标记高丰度样地（丰度>15为高丰度，使用ifelse()）
-
 5. 编写函数处理整个数据集，输出每个样地的综合评估报告
-
 6. 使用`apply`族函数重做第3题（比较循环和向量化方法的差异）
 
 
@@ -1709,7 +1683,8 @@ bird_monitoring <- data.frame(
 现代生态学研究产生的数据日益复杂，传统的基础R语法在处理复杂数据操作时略显繁琐。tidyverse是R语言的现代数据处理工具包，提供了更直观、更高效的数据处理方法，特别适合处理多变量、多时间点的生态学数据。
 
 ### 演示数据
-```{r eval=FALSE}
+
+``` r
 # 模拟某森林样地多年监测数据
 library(tidyverse)
 
@@ -1729,7 +1704,8 @@ forest_monitoring <- data.frame(
 ### 课堂演示过程
 
 #### tidyverse包的加载和数据查看
-```{r eval=FALSE}
+
+``` r
 # 安装和加载tidyverse
 # install.packages("tidyverse")
 library(tidyverse)
@@ -1751,7 +1727,8 @@ head(forest_data)
 ```
 
 #### 数据筛选与选择
-```{r eval=FALSE}
+
+``` r
 # 使用filter()筛选行
 summer_data <- forest_data %>%
   filter(season == "夏")
@@ -1776,7 +1753,8 @@ without_year <- forest_data %>%
 ```
 
 #### 数据变换与新变量创建
-```{r eval=FALSE}
+
+``` r
 # 使用mutate()创建新变量
 forest_enhanced <- forest_data %>%
   mutate(
@@ -1796,7 +1774,8 @@ forest_enhanced %>%
 ```
 
 #### 数据排序与分组汇总
-```{r eval=FALSE}
+
+``` r
 # 使用arrange()排序
 forest_data %>%
   arrange(desc(species_count)) %>%
@@ -1832,7 +1811,8 @@ print(season_plot_summary)
 ```
 
 #### 数据重塑：长宽格式转换
-```{r eval=FALSE}
+
+``` r
 # 宽格式转长格式（gather/pivot_longer）
 forest_long <- forest_data %>%
   pivot_longer(
@@ -1854,7 +1834,8 @@ head(forest_wide)
 ```
 
 #### 数据连接
-```{r eval=FALSE}
+
+``` r
 # 创建额外的样地信息
 plot_info <- tibble(
   plot_id = c("A", "B", "C", "D"),
@@ -1938,7 +1919,8 @@ print(management_analysis)
 
 ##### `case_when()` - 多条件分类
 - **语法**：
-  ```{r eval=FALSE}
+  
+  ``` r
   case_when(
     condition1 ~ value1,
     condition2 ~ value2,
@@ -2002,7 +1984,8 @@ print(management_analysis)
 ### 课后练习
 
 **题目**：某湿地生物多样性调查数据：
-```{r eval=FALSE}
+
+``` r
 wetland_survey <- tibble(
   site_id = rep(c("W1", "W2", "W3"), each = 8),
   date = rep(c("2022-05", "2022-08", "2022-05", "2022-08"), times = 6),
@@ -2020,17 +2003,11 @@ site_characteristics <- tibble(
 
 请完成（使用tidyverse工具链，结合之前学过的统计和可视化方法）：
 1. 筛选出5月份的调查数据，并计算植物和鸟类物种总数（使用filter()和mutate()）
-
 2. 按站点分组，计算各站点的平均物种数和水位变化范围（使用group_by()和summarise()）
-
 3. 连接站点特征数据，创建物种密度指标（物种数/面积）（使用left_join()和mutate()）
-
 4. 将数据从宽格式转换为长格式，便于后续统计分析（使用pivot_longer()）
-
 5. 根据保护状态和季节，分析不同组合下的生物多样性特征（使用group_by()和统计函数）
-
 6. 使用ggplot2创建专业的可视化图表展示分析结果
-
 7. 与第9课的传统方法对比，体会tidyverse的优势
 
 
@@ -2041,7 +2018,8 @@ site_characteristics <- tibble(
 数据可视化是生态学研究中传达发现和支持论证的关键工具。与基础R绘图相比，ggplot2采用图形语法，能够创建更加专业、美观的科学图表，满足期刊发表和学术报告的高标准要求。
 
 ### 演示数据
-```{r eval=FALSE}
+
+``` r
 # 某保护区多年生物多样性监测数据
 library(ggplot2)
 library(dplyr)
@@ -2059,7 +2037,8 @@ biodiversity_data <- data.frame(
 ### 课堂演示过程
 
 #### ggplot2基础语法
-```{r eval=FALSE}
+
+``` r
 library(ggplot2)
 library(dplyr)
 
@@ -2092,7 +2071,8 @@ ggplot(bird_data, aes(x = body_mass, y = abundance, color = habitat)) +
 ```
 
 #### 不同类型的图表
-```{r eval=FALSE}
+
+``` r
 # 创建时间序列数据
 time_series_data <- data.frame(
   month = rep(1:12, 3),
@@ -2155,7 +2135,8 @@ ggplot(bird_data, aes(x = habitat, y = abundance, fill = habitat)) +
 ```
 
 #### 多面板图形
-```{r eval=FALSE}
+
+``` r
 # 创建多组数据
 multi_species_data <- data.frame(
   species = rep(c("鸟类", "哺乳动物", "昆虫"), each = 24),
@@ -2187,7 +2168,8 @@ ggplot(multi_species_data, aes(x = month, y = abundance, color = year)) +
 ```
 
 #### 专业主题和自定义
-```{r eval=FALSE}
+
+``` r
 # 创建专业期刊风格的图表
 publication_plot <- ggplot(bird_data, aes(x = body_mass, y = abundance)) +
   geom_point(aes(color = habitat), size = 3, alpha = 0.7) +
@@ -2219,7 +2201,8 @@ ggsave("bird_analysis.png", publication_plot,
 ```
 
 #### 复杂的生态学可视化
-```{r eval=FALSE}
+
+``` r
 # 群落组成气泡图
 community_data <- data.frame(
   site = rep(c("样地A", "样地B", "样地C"), each = 6),
@@ -2262,7 +2245,8 @@ ggplot(community_data, aes(x = species, y = site)) +
 - **主题(Themes)**：控制图形整体外观
 
 ##### 基本语法结构
-```{r eval=FALSE}
+
+``` r
 ggplot(data, aes(x = var1, y = var2)) +
   geom_*() +
   scale_*() +
@@ -2395,7 +2379,8 @@ ggplot(data, aes(x = var1, y = var2)) +
 ### 课后练习
 
 **题目**：某国家公园植被多样性调查数据：
-```{r eval=FALSE}
+
+``` r
 vegetation_survey <- data.frame(
   transect = rep(c("山顶", "山腰", "山底"), each = 20),
   species_richness = c(rnorm(20, 15, 3), rnorm(20, 25, 4), rnorm(20, 35, 5)),
@@ -2407,17 +2392,10 @@ vegetation_survey <- data.frame(
 
 请完成（使用ggplot2高级功能，结合之前学过的所有内容）：
 1. 创建物种丰富度与植被覆盖度的散点图，用颜色区分不同海拔带（使用geom_point()和aes()）
-
 2. 绘制三个海拔带物种丰富度的箱线图，添加个体数据点（使用geom_boxplot()和geom_jitter()）
-
 3. 创建多面板图，展示不同海拔带的各项指标分布（使用facet_wrap()）
-
 4. 设计一个期刊级别的综合图表，展示海拔梯度上的植被特征变化（使用多个geom层）
-
 5. 自定义主题，确保图表符合学术发表标准（使用theme()函数）
-
 6. 保存高质量图片用于论文发表（使用ggsave()函数）
-
 7. 与第7课的基础绘图方法对比，总结ggplot2的优势
-
 8. 尝试创建动态或交互式可视化（选做，可查阅相关资料）

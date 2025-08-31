@@ -23,7 +23,7 @@
 <meta name="author" content="沈国春、李勤" />
 
 
-<meta name="date" content="2025-08-09" />
+<meta name="date" content="2025-08-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +33,7 @@
 <link rel="prev" href="index.html"/>
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://fastly.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -276,7 +276,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>建立良好的项目文件组织习惯</li>
 <li>了解R包管理的基本方法</li>
 </ul>
-<hr />
 <div id="为什么生态学专业需要学习r" class="section level3 hasAnchor" number="1.1.1">
 <h3><span class="header-section-number">1.1.1</span> 为什么生态学专业需要学习R？<a href="统计编程基础.html#为什么生态学专业需要学习r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="数据分析能力的必要性" class="section level4 hasAnchor" number="1.1.1.1">
@@ -287,9 +286,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">1.1.1.2</span> 可重现研究的科学要求<a href="统计编程基础.html#可重现研究的科学要求" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <ul>
 <li><strong>重现性危机</strong>：越来越多的科学研究无法被重现，影响科学可信度</li>
-<li><strong>R脚本的优势</strong>：每一步分析都有记录，任何人都可以重现你的分析过程</li>
-<li><strong>错误检查</strong>：代码可以被审查，减少人为错误</li>
-<li><strong>版本控制</strong>：分析过程的每次修改都有记录</li>
+<li><strong>R脚本的优势</strong>：
+<ul>
+<li>每一步分析都有记录，任何人都可以重现你的分析过程</li>
+<li>错误检查：代码可以被审查，减少人为错误</li>
+<li>版本控制：分析过程的每次修改都有记录</li>
+</ul></li>
 </ul>
 </div>
 <div id="职业发展的核心竞争力" class="section level4 hasAnchor" number="1.1.1.3">
@@ -327,7 +329,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>在线学习</strong>：全球最优秀的生态学分析教程都使用R</li>
 <li><strong>职业流动</strong>：掌握R可以在全球范围内寻求工作机会</li>
 </ul>
-<hr />
 </div>
 </div>
 <div id="r语言简介与趣味应用" class="section level3 hasAnchor" number="1.1.2">
@@ -399,7 +400,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>地图绘制</strong>：可视化物种分布</li>
 <li><strong>机器学习</strong>：预测生态变化趋势</li>
 </ul>
-<hr />
 </div>
 </div>
 </div>
@@ -409,16 +409,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">1.1.3.1</span> R和RStudio安装<a href="统计编程基础.html#r和rstudio安装" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <div id="下载和安装r" class="section level5 hasAnchor" number="1.1.3.1.1">
 <h5><span class="header-section-number">1.1.3.1.1</span> 下载和安装R<a href="统计编程基础.html#下载和安装r" class="anchor-section" aria-label="Anchor link to header"></a></h5>
-<p><strong>Windows系统:</strong> 1. 访问 <a href="https://cran.r-project.org/bin/windows/base/" class="uri">https://cran.r-project.org/bin/windows/base/</a> 2. 下载最新版R安装包(.exe) 3. 右键以管理员身份运行安装程序 4. 安装路径不要包含中文或空格 5. 勾选”创建桌面快捷方式”</p>
-<p><strong>macOS系统:</strong> 1. 访问 <a href="https://cran.r-project.org/bin/macosx/" class="uri">https://cran.r-project.org/bin/macosx/</a> 2. 下载最新版R安装包(.pkg) 3. 双击安装，可能需要右键”打开”绕过Gatekeeper限制 4. 或通过Homebrew安装: <code>brew install --cask r</code></p>
+<p><strong>Windows系统:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>访问 <a href="https://cran.r-project.org/bin/windows/base/" class="uri">https://cran.r-project.org/bin/windows/base/</a></p></li>
+<li><p>下载最新版R安装包(.exe)</p></li>
+<li><p>右键以管理员身份运行安装程序</p></li>
+<li><p>安装路径不要包含中文或空格</p></li>
+<li><p>勾选”创建桌面快捷方式”</p></li>
+</ol>
+<p><strong>macOS系统:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>访问 <a href="https://cran.r-project.org/bin/macosx/" class="uri">https://cran.r-project.org/bin/macosx/</a></p></li>
+<li><p>下载最新版R安装包(.pkg)</p></li>
+<li><p>双击安装，可能需要右键”打开”绕过Gatekeeper限制</p></li>
+<li><p>或通过Homebrew安装: <code>brew install --cask r</code></p></li>
+</ol>
 <p><strong>Linux系统:</strong> - Ubuntu/Debian: <code>sudo apt-get install r-base</code> - CentOS/RHEL: <code>sudo yum install R</code></p>
 </div>
 <div id="下载和安装rstudio" class="section level5 hasAnchor" number="1.1.3.1.2">
 <h5><span class="header-section-number">1.1.3.1.2</span> 下载和安装RStudio<a href="统计编程基础.html#下载和安装rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <ol style="list-style-type: decimal">
-<li>访问 <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a></li>
-<li>选择适合你系统的RStudio Desktop免费版</li>
-<li>安装注意事项:
+<li><p>访问 <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a></p></li>
+<li><p>选择适合你系统的RStudio Desktop免费版</p></li>
+<li><p>安装注意事项:</p>
 <ul>
 <li>Windows: 确保已安装R后再安装RStudio</li>
 <li>macOS: 可能需要允许来自”未识别开发者”的应用</li>
@@ -564,7 +577,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Windows系统使用正斜杠”/“或双反斜杠”\”</li>
 <li>建议为每节课创建单独的子文件夹</li>
 </ul>
-<hr />
 </div>
 </div>
 <div id="课前准备检查清单" class="section level3 hasAnchor" number="1.1.7">
@@ -702,7 +714,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="课后练习" class="section level3 hasAnchor" number="1.2.5">
 <h3><span class="header-section-number">1.2.5</span> 课后练习<a href="统计编程基础.html#课后练习" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>题目</strong>：某湿地调查中测量了8棵柳树的树高（单位：米）： <code>tree_height &lt;- c(4.2, 5.1, 3.8, 4.7, 5.3, 4.9, 4.1, 4.6)</code></p>
-<p>请完成（仅使用本课学过的向量和基本统计函数）： 1. 创建树高向量并查看数据 2. 计算平均树高 3. 找出最高的树有多高 4. 统计总共测量了多少棵树 5. 计算所有树的总高度 6. 计算树高的标准差（提示：使用sd()函数）</p>
+<p>请完成（仅使用本课学过的向量和基本统计函数）： 1. 创建树高向量并查看数据</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>计算平均树高</p></li>
+<li><p>找出最高的树有多高</p></li>
+<li><p>统计总共测量了多少棵树</p></li>
+<li><p>计算所有树的总高度</p></li>
+<li><p>计算树高的标准差（提示：使用sd()函数）</p></li>
+</ol>
 </div>
 </div>
 <div id="字符型数据处理与向量索引操作" class="section level2 hasAnchor" number="1.3">
@@ -822,7 +841,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="课后练习-1" class="section level3 hasAnchor" number="1.3.5">
 <h3><span class="header-section-number">1.3.5</span> 课后练习<a href="统计编程基础.html#课后练习-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>题目</strong>：某湿地调查中记录的水生植物： <code>water_plants &lt;- c("荷花", "芦苇", "菖蒲", "水葫芦", "睡莲")</code></p>
-<p>请完成（使用向量、字符串操作、索引等已学内容）： 1. 创建植物名称向量并显示所有植物名称 2. 计算记录了多少种植物（使用length()函数） 3. 显示第2种和第4种植物的名称（使用向量索引） 4. 添加”慈姑”到植物名单中（使用c()函数合并） 5. 用paste()函数创建一句完整的调查报告 6. 尝试查找”芦苇”在向量中的位置（提示：使用which()函数和==运算符）</p>
+<p>请完成（使用向量、字符串操作、索引等已学内容）： 1. 创建植物名称向量并显示所有植物名称</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>计算记录了多少种植物（使用length()函数）</p></li>
+<li><p>显示第2种和第4种植物的名称（使用向量索引）</p></li>
+<li><p>添加”慈姑”到植物名单中（使用c()函数合并）</p></li>
+<li><p>用paste()函数创建一句完整的调查报告</p></li>
+<li><p>尝试查找”芦苇”在向量中的位置（提示：使用which()函数和==运算符）</p></li>
+</ol>
 </div>
 </div>
 <div id="数据框结构理解与多类型数据管理" class="section level2 hasAnchor" number="1.4">
@@ -1017,7 +1043,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb16-5"><a href="统计编程基础.html#cb16-5" tabindex="-1"></a>  <span class="at">weight_g =</span> <span class="fu">c</span>(<span class="dv">680</span>, <span class="dv">420</span>, <span class="dv">180</span>, <span class="dv">1200</span>),</span>
 <span id="cb16-6"><a href="统计编程基础.html#cb16-6" tabindex="-1"></a>  <span class="at">mature =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
 <span id="cb16-7"><a href="统计编程基础.html#cb16-7" tabindex="-1"></a>)</span></code></pre></div>
-<p>请完成（使用数据框操作、向量计算等已学内容）： 1. 创建数据框并显示整个数据框 2. 使用str()函数查看数据框的结构 3. 计算鱼类的平均长度和平均重量（使用mean()和<span class="math inline">\(操作符） 4. 统计有多少条成熟的鱼（使用sum()和逻辑值运算） 5. 显示所有鱼类的名称（使用\)</span>操作符） 6. 计算最大和最小的鱼重量（使用max()和min()函数） 7. 创建一个包含调查总结的字符串（使用paste()函数）</p>
+<p>请完成（使用数据框操作、向量计算等已学内容）：</p>
+<ol style="list-style-type: decimal">
+<li><p>创建数据框并显示整个数据框</p></li>
+<li><p>使用str()函数查看数据框的结构</p></li>
+<li><p>计算鱼类的平均长度和平均重量（使用mean()和$操作符）</p></li>
+<li><p>统计有多少条成熟的鱼（使用sum()和逻辑值运算）</p></li>
+<li><p>显示所有鱼类的名称（使用$操作符）</p></li>
+<li><p>计算最大和最小的鱼重量（使用max()和min()函数）</p></li>
+<li><p>创建一个包含调查总结的字符串（使用paste()函数）</p></li>
+</ol>
 </div>
 </div>
 <div id="列表数据结构与数据分组管理" class="section level2 hasAnchor" number="1.5">
@@ -1210,7 +1245,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="统计编程基础.html#cb21-1" tabindex="-1"></a>station_a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">6</span>, <span class="dv">10</span>)</span>
 <span id="cb21-2"><a href="统计编程基础.html#cb21-2" tabindex="-1"></a>station_b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">18</span>, <span class="dv">14</span>, <span class="dv">16</span>)</span>
 <span id="cb21-3"><a href="统计编程基础.html#cb21-3" tabindex="-1"></a>station_c <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span></code></pre></div>
-<p>请完成（使用向量、列表、命名等已学内容）： 1. 将三个监测站的数据组织成一个列表（使用list()函数） 2. 计算每个监测站的平均目击次数（使用mean()和列表访问） 3. 创建一个命名向量显示三个站点的平均值（使用names()函数） 4. 找出哪个监测站的平均目击次数最高（使用which.max()函数） 5. 计算所有监测站的总目击次数（使用sum()和向量合并） 6. 创建一个数据框，包含站点名称和对应的平均目击次数 7. 比较站点A和站点B的数据变异程度（使用sd()函数计算标准差）</p>
+<p>请完成（使用向量、列表、命名等已学内容）： 1. 将三个监测站的数据组织成一个列表（使用list()函数）</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>计算每个监测站的平均目击次数（使用mean()和列表访问）</p></li>
+<li><p>创建一个命名向量显示三个站点的平均值（使用names()函数）</p></li>
+<li><p>找出哪个监测站的平均目击次数最高（使用which.max()函数）</p></li>
+<li><p>计算所有监测站的总目击次数（使用sum()和向量合并）</p></li>
+<li><p>创建一个数据框，包含站点名称和对应的平均目击次数</p></li>
+<li><p>比较站点A和站点B的数据变异程度（使用sd()函数计算标准差）</p></li>
+</ol>
 </div>
 </div>
 <div id="外部数据导入与条件筛选分析" class="section level2 hasAnchor" number="1.6">
@@ -1417,7 +1460,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">1.6.5</span> 课后练习<a href="统计编程基础.html#课后练习-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>题目</strong>：假设有一个植被监测数据文件包含以下列： - date：调查日期 - season：季节（春、夏、秋、冬）<br />
 - plot：样地编号 - coverage：植被覆盖度(%) - height：平均高度(cm)</p>
-<p>请完成（使用数据导入、数据框操作、条件筛选等已学内容）： 1. 创建模拟数据或读取数据文件 2. 查看数据的基本信息（使用nrow(), ncol(), str(), summary()） 3. 筛选夏季的数据（使用subset()函数） 4. 筛选植被覆盖度大于80%的记录（使用subset()函数和条件） 5. 计算所有样地的平均植被覆盖度和平均高度（使用mean()函数） 6. 找出覆盖度最高的样地（使用which.max()函数） 7. 创建一个汇总报告（使用paste()函数）</p>
+<p>请完成（使用数据导入、数据框操作、条件筛选等已学内容）： 1. 创建模拟数据或读取数据文件</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>查看数据的基本信息（使用nrow(), ncol(), str(), summary()）</p></li>
+<li><p>筛选夏季的数据（使用subset()函数）</p></li>
+<li><p>筛选植被覆盖度大于80%的记录（使用subset()函数和条件）</p></li>
+<li><p>计算所有样地的平均植被覆盖度和平均高度（使用mean()函数）</p></li>
+<li><p>找出覆盖度最高的样地（使用which.max()函数）</p></li>
+<li><p>创建一个汇总报告（使用paste()函数）</p></li>
+</ol>
 </div>
 </div>
 <div id="缺失值和异常值的识别处理" class="section level2 hasAnchor" number="1.7">
@@ -1552,10 +1603,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="异常值处理策略" class="section level5 hasAnchor" number="1.7.4.2.2">
 <h5><span class="header-section-number">1.7.4.2.2</span> 异常值处理策略<a href="统计编程基础.html#异常值处理策略" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <ol style="list-style-type: decimal">
-<li><strong>删除异常值</strong>：适用于明显的录入错误</li>
-<li><strong>替换为NA</strong>：保留数据结构，标记为缺失</li>
-<li><strong>替换为合理值</strong>：用中位数、均值等替换</li>
-<li><strong>保留但标记</strong>：在分析中特殊处理</li>
+<li><p><strong>删除异常值</strong>：适用于明显的录入错误</p></li>
+<li><p><strong>替换为NA</strong>：保留数据结构，标记为缺失</p></li>
+<li><p><strong>替换为合理值</strong>：用中位数、均值等替换</p></li>
+<li><p><strong>保留但标记</strong>：在分析中特殊处理</p></li>
 </ol>
 </div>
 </div>
@@ -1593,12 +1644,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="标准数据清理流程" class="section level5 hasAnchor" number="1.7.4.4.1">
 <h5><span class="header-section-number">1.7.4.4.1</span> 标准数据清理流程<a href="统计编程基础.html#标准数据清理流程" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <ol style="list-style-type: decimal">
-<li><strong>数据探索</strong>：使用<code>str()</code>, <code>summary()</code>, <code>head()</code>, <code>tail()</code>了解数据</li>
-<li><strong>缺失值检查</strong>：使用<code>is.na()</code>, <code>sum(is.na())</code>统计缺失情况</li>
-<li><strong>异常值识别</strong>：结合统计和专业知识识别异常值</li>
-<li><strong>清理决策</strong>：选择合适的处理方法</li>
-<li><strong>执行清理</strong>：应用处理方法</li>
-<li><strong>验证结果</strong>：检查清理后的数据质量</li>
+<li><p><strong>数据探索</strong>：使用<code>str()</code>, <code>summary()</code>, <code>head()</code>, <code>tail()</code>了解数据</p></li>
+<li><p><strong>缺失值检查</strong>：使用<code>is.na()</code>, <code>sum(is.na())</code>统计缺失情况</p></li>
+<li><p><strong>异常值识别</strong>：结合统计和专业知识识别异常值</p></li>
+<li><p><strong>清理决策</strong>：选择合适的处理方法</p></li>
+<li><p><strong>执行清理</strong>：应用处理方法</p></li>
+<li><p><strong>验证结果</strong>：检查清理后的数据质量</p></li>
 </ol>
 </div>
 <div id="数据清理的注意事项" class="section level5 hasAnchor" number="1.7.4.4.2">
@@ -1631,7 +1682,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb28-4"><a href="统计编程基础.html#cb28-4" tabindex="-1"></a>  <span class="at">nitrogen_mg =</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">52</span>, <span class="sc">-</span><span class="dv">10</span>, <span class="dv">48</span>, <span class="dv">51</span>, <span class="dv">49</span>),  <span class="co"># -10为异常负值</span></span>
 <span id="cb28-5"><a href="统计编程基础.html#cb28-5" tabindex="-1"></a>  <span class="at">moisture =</span> <span class="fu">c</span>(<span class="fl">25.5</span>, <span class="fl">28.2</span>, <span class="fl">22.1</span>, <span class="cn">NA</span>, <span class="fl">26.8</span>, <span class="fl">24.9</span>)</span>
 <span id="cb28-6"><a href="统计编程基础.html#cb28-6" tabindex="-1"></a>)</span></code></pre></div>
-<p>请完成（使用缺失值处理、条件判断、数据清理等已学内容）： 1. 检查每列的缺失值个数（使用is.na()和sum()函数） 2. 识别nitrogen_mg列中的异常值（使用逻辑判断和which()函数） 3. 用均值填补organic_matter的缺失值（使用mean()和na.rm参数） 4. 将nitrogen_mg中的异常值替换为NA（使用条件赋值） 5. 创建一个完全没有缺失值的干净数据集（使用na.omit()） 6. 计算清理后数据的各项平均值（使用mean()函数） 7. 对比清理前后数据的summary()结果</p>
+<p>请完成（使用缺失值处理、条件判断、数据清理等已学内容）： 1. 检查每列的缺失值个数（使用is.na()和sum()函数）</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>识别nitrogen_mg列中的异常值（使用逻辑判断和which()函数）</p></li>
+<li><p>用均值填补organic_matter的缺失值（使用mean()和na.rm参数）</p></li>
+<li><p>将nitrogen_mg中的异常值替换为NA（使用条件赋值）</p></li>
+<li><p>创建一个完全没有缺失值的干净数据集（使用na.omit()）</p></li>
+<li><p>计算清理后数据的各项平均值（使用mean()函数）</p></li>
+<li><p>对比清理前后数据的summary()结果</p></li>
+</ol>
 </div>
 </div>
 <div id="描述性统计分析与基础数据可视化" class="section level2 hasAnchor" number="1.8">
@@ -1907,7 +1966,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="统计编程基础.html#cb32-1" tabindex="-1"></a>shrubland <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">10</span>, <span class="dv">14</span>, <span class="dv">13</span>)    <span class="co"># 灌丛</span></span>
 <span id="cb32-2"><a href="统计编程基础.html#cb32-2" tabindex="-1"></a>meadow <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">18</span>, <span class="dv">22</span>, <span class="dv">20</span>, <span class="dv">19</span>, <span class="dv">21</span>)       <span class="co"># 草甸</span></span>
 <span id="cb32-3"><a href="统计编程基础.html#cb32-3" tabindex="-1"></a>riparian <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">28</span>, <span class="dv">23</span>, <span class="dv">27</span>, <span class="dv">26</span>)     <span class="co"># 河岸林</span></span></code></pre></div>
-<p>请完成（使用描述统计、基础绘图等已学内容）： 1. 计算三种植被类型的平均物种数和标准差（使用mean()和sd()函数） 2. 创建一个汇总表显示基本统计信息（使用data.frame()） 3. 绘制箱线图比较三种植被类型（使用boxplot()函数） 4. 绘制条形图显示平均物种数（使用barplot()函数） 5. 在箱线图上添加平均值点（使用points()函数） 6. 判断哪种植被类型的蝴蝶多样性最高（使用which.max()和max()函数） 7. 计算每种植被类型的变异系数（标准差/平均值×100）</p>
+<p>请完成（使用描述统计、基础绘图等已学内容）： 1. 计算三种植被类型的平均物种数和标准差（使用mean()和sd()函数）</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>创建一个汇总表显示基本统计信息（使用data.frame()）</p></li>
+<li><p>绘制箱线图比较三种植被类型（使用boxplot()函数）</p></li>
+<li><p>绘制条形图显示平均物种数（使用barplot()函数）</p></li>
+<li><p>在箱线图上添加平均值点（使用points()函数）</p></li>
+<li><p>判断哪种植被类型的蝴蝶多样性最高（使用which.max()和max()函数）</p></li>
+<li><p>计算每种植被类型的变异系数（标准差/平均值×100）</p></li>
+</ol>
 </div>
 </div>
 <div id="条件判断循环结构与函数编程" class="section level2 hasAnchor" number="1.9">
@@ -2243,7 +2310,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb42-4"><a href="统计编程基础.html#cb42-4" tabindex="-1"></a>  <span class="at">bird_abundance =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">20</span>, <span class="dv">16</span>, <span class="dv">5</span>, <span class="dv">8</span>),   <span class="co"># 鸟类丰度</span></span>
 <span id="cb42-5"><a href="统计编程基础.html#cb42-5" tabindex="-1"></a>  <span class="at">season =</span> <span class="fu">c</span>(<span class="st">&quot;春季&quot;</span>, <span class="st">&quot;春季&quot;</span>, <span class="st">&quot;夏季&quot;</span>, <span class="st">&quot;夏季&quot;</span>, <span class="st">&quot;秋季&quot;</span>, <span class="st">&quot;秋季&quot;</span>)</span>
 <span id="cb42-6"><a href="统计编程基础.html#cb42-6" tabindex="-1"></a>)</span></code></pre></div>
-<p>请完成（使用if-else、循环、函数等编程内容，结合之前学过的数据处理方法）： 1. 使用<code>ifelse()</code>函数，根据水深将栖息地分类（&lt;30cm浅水区，30-50cm中等深度，&gt;50cm深水区） 2. 编写函数<code>classify_habitat_quality()</code>，综合水深和鸟类丰度评估栖息地质量 3. 使用<code>for</code>循环，计算每个季节的平均鸟类丰度 4. 创建一个新列，标记高丰度样地（丰度&gt;15为高丰度，使用ifelse()） 5. 编写函数处理整个数据集，输出每个样地的综合评估报告 6. 使用<code>apply</code>族函数重做第3题（比较循环和向量化方法的差异）</p>
+<p>请完成（使用if-else、循环、函数等编程内容，结合之前学过的数据处理方法）： 1. 使用<code>ifelse()</code>函数，根据水深将栖息地分类（&lt;30cm浅水区，30-50cm中等深度，&gt;50cm深水区）</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>编写函数<code>classify_habitat_quality()</code>，综合水深和鸟类丰度评估栖息地质量</p></li>
+<li><p>使用<code>for</code>循环，计算每个季节的平均鸟类丰度</p></li>
+<li><p>创建一个新列，标记高丰度样地（丰度&gt;15为高丰度，使用ifelse()）</p></li>
+<li><p>编写函数处理整个数据集，输出每个样地的综合评估报告</p></li>
+<li><p>使用<code>apply</code>族函数重做第3题（比较循环和向量化方法的差异）</p></li>
+</ol>
 </div>
 </div>
 <div id="现代数据科学工具包应用" class="section level2 hasAnchor" number="1.10">
@@ -2617,7 +2691,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb51-11"><a href="统计编程基础.html#cb51-11" tabindex="-1"></a>  <span class="at">area_ha =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">8</span>, <span class="dv">15</span>),</span>
 <span id="cb51-12"><a href="统计编程基础.html#cb51-12" tabindex="-1"></a>  <span class="at">protection_status =</span> <span class="fu">c</span>(<span class="st">&quot;保护区&quot;</span>, <span class="st">&quot;缓冲区&quot;</span>, <span class="st">&quot;实验区&quot;</span>)</span>
 <span id="cb51-13"><a href="统计编程基础.html#cb51-13" tabindex="-1"></a>)</span></code></pre></div>
-<p>请完成（使用tidyverse工具链，结合之前学过的统计和可视化方法）： 1. 筛选出5月份的调查数据，并计算植物和鸟类物种总数（使用filter()和mutate()） 2. 按站点分组，计算各站点的平均物种数和水位变化范围（使用group_by()和summarise()） 3. 连接站点特征数据，创建物种密度指标（物种数/面积）（使用left_join()和mutate()） 4. 将数据从宽格式转换为长格式，便于后续统计分析（使用pivot_longer()） 5. 根据保护状态和季节，分析不同组合下的生物多样性特征（使用group_by()和统计函数） 6. 使用ggplot2创建专业的可视化图表展示分析结果 7. 与第9课的传统方法对比，体会tidyverse的优势</p>
+<p>请完成（使用tidyverse工具链，结合之前学过的统计和可视化方法）： 1. 筛选出5月份的调查数据，并计算植物和鸟类物种总数（使用filter()和mutate()）</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>按站点分组，计算各站点的平均物种数和水位变化范围（使用group_by()和summarise()）</p></li>
+<li><p>连接站点特征数据，创建物种密度指标（物种数/面积）（使用left_join()和mutate()）</p></li>
+<li><p>将数据从宽格式转换为长格式，便于后续统计分析（使用pivot_longer()）</p></li>
+<li><p>根据保护状态和季节，分析不同组合下的生物多样性特征（使用group_by()和统计函数）</p></li>
+<li><p>使用ggplot2创建专业的可视化图表展示分析结果</p></li>
+<li><p>与第9课的传统方法对比，体会tidyverse的优势</p></li>
+</ol>
 </div>
 </div>
 <div id="图形语法与科学绘图" class="section level2 hasAnchor" number="1.11">
@@ -3063,7 +3145,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb59-5"><a href="统计编程基础.html#cb59-5" tabindex="-1"></a>  <span class="at">slope_degree =</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">5</span>), <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">15</span>, <span class="dv">3</span>), <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">2</span>)),</span>
 <span id="cb59-6"><a href="统计编程基础.html#cb59-6" tabindex="-1"></a>  <span class="at">soil_depth =</span> <span class="fu">c</span>(<span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">15</span>, <span class="dv">3</span>), <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">4</span>), <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">6</span>))</span>
 <span id="cb59-7"><a href="统计编程基础.html#cb59-7" tabindex="-1"></a>)</span></code></pre></div>
-<p>请完成（使用ggplot2高级功能，结合之前学过的所有内容）： 1. 创建物种丰富度与植被覆盖度的散点图，用颜色区分不同海拔带（使用geom_point()和aes()） 2. 绘制三个海拔带物种丰富度的箱线图，添加个体数据点（使用geom_boxplot()和geom_jitter()） 3. 创建多面板图，展示不同海拔带的各项指标分布（使用facet_wrap()） 4. 设计一个期刊级别的综合图表，展示海拔梯度上的植被特征变化（使用多个geom层） 5. 自定义主题，确保图表符合学术发表标准（使用theme()函数） 6. 保存高质量图片用于论文发表（使用ggsave()函数） 7. 与第7课的基础绘图方法对比，总结ggplot2的优势 8. 尝试创建动态或交互式可视化（选做，可查阅相关资料）</p>
+<p>请完成（使用ggplot2高级功能，结合之前学过的所有内容）： 1. 创建物种丰富度与植被覆盖度的散点图，用颜色区分不同海拔带（使用geom_point()和aes()）</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>绘制三个海拔带物种丰富度的箱线图，添加个体数据点（使用geom_boxplot()和geom_jitter()）</p></li>
+<li><p>创建多面板图，展示不同海拔带的各项指标分布（使用facet_wrap()）</p></li>
+<li><p>设计一个期刊级别的综合图表，展示海拔梯度上的植被特征变化（使用多个geom层）</p></li>
+<li><p>自定义主题，确保图表符合学术发表标准（使用theme()函数）</p></li>
+<li><p>保存高质量图片用于论文发表（使用ggsave()函数）</p></li>
+<li><p>与第7课的基础绘图方法对比，总结ggplot2的优势</p></li>
+<li><p>尝试创建动态或交互式可视化（选做，可查阅相关资料）</p></li>
+</ol>
 
 </div>
 </div>
@@ -3118,20 +3209,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
