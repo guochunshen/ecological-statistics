@@ -47,3 +47,8 @@ install.packages(c(
 
 - 网页版 https://guochunshen.github.io/ecological-statistics
 - PDF版 https://gitee.com/gcshen/ecological-statistics/blob/master/docs/ecological-statistics.pdf
+
+## 学习方式
+
+![如何学习R语言](imgs/how to learn R.png)
+
