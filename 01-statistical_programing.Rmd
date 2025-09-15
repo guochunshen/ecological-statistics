@@ -116,7 +116,7 @@ play(notes, durations)
 
 ### 环境设置和配置
 
-#### R和RStudio安装
+#### R语言安装
 
 ##### 下载和安装R
 
@@ -180,6 +180,66 @@ R.version.string
 plot(1:10)
 ```
 
+##### 在VSCode中配置R环境
+
+**为什么选择VSCode？**
+- **轻量高效**：启动速度快，占用资源少
+- **扩展性强**：丰富的扩展生态系统
+- **多语言支持**：同时支持R、Python、Markdown等多种语言
+- **版本控制集成**：内置Git支持，便于代码管理
+- **远程开发**：支持SSH、容器、WSL等远程开发环境
+
+**VSCode安装和配置步骤：**
+
+1. **安装VSCode**
+   - 访问 https://code.visualstudio.com/
+   - 下载适合你操作系统的版本并安装
+
+2. **安装R扩展**
+   - 打开VSCode，点击左侧扩展图标（或按Ctrl+Shift+X）
+   - 搜索 "R" 并安装 "R" 扩展（由REditorSupport开发）
+   - 搜索 "R Debugger" 并安装调试器扩展
+
+3. **基本配置**
+   - 打开设置（Ctrl+,）
+   - 搜索 "r.rterm" 设置R执行路径
+   - 搜索 "r.rpath" 设置R语言服务器路径
+   - 推荐设置：
+     ```json
+     {
+       "r.rterm.windows": "C:\\Program Files\\R\\R-4.3.1\\bin\\x64\\R.exe",
+       "r.rterm.mac": "/usr/local/bin/R",
+       "r.rterm.linux": "/usr/bin/R",
+       "r.lsp.path": "/usr/lib/R/bin/R",
+       "r.sessionWatcher": true,
+       "r.bracketedPaste": true
+     }
+     ```
+
+4. **常用功能**
+   - **代码执行**：Ctrl+Enter 执行当前行或选中代码
+   - **代码补全**：自动提供函数和参数建议
+   - **语法高亮**：彩色显示代码结构
+   - **调试功能**：设置断点，逐步调试代码
+   - **绘图查看**：内置绘图查看器
+   - **Markdown支持**：直接编写和预览R Markdown文档
+
+5. **推荐扩展**
+   - **Rainbow CSV**：彩色显示CSV文件
+   - **GitLens**：增强的Git功能
+   - **Bracket Pair Colorizer**：彩色匹配括号
+   - **Project Manager**：项目管理工具
+   - **Live Share**：实时协作编程
+
+6. **优势对比**
+   - **相比RStudio**：更轻量，启动更快，扩展更多
+   - **相比纯文本编辑器**：提供完整的IDE功能
+   - **适合场景**：大型项目、多语言开发、远程开发
+
+**注意事项：**
+- 确保已安装R后再配置VSCode
+- 路径设置需要根据实际安装位置调整
+- 首次使用可能需要安装相关依赖包
 ### 项目文件夹结构设置
 建立良好的文件组织习惯是数据分析的基础：
 
