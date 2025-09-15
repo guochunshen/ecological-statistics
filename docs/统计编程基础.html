@@ -370,7 +370,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-6"><a href="统计编程基础.html#cb3-6" tabindex="-1"></a></span>
 <span id="cb3-7"><a href="统计编程基础.html#cb3-7" tabindex="-1"></a><span class="co"># 使用gapminder数据集(包含各国多年生态经济数据)</span></span>
 <span id="cb3-8"><a href="统计编程基础.html#cb3-8" tabindex="-1"></a><span class="co"># 绘制动态变化图</span></span>
-<span id="cb3-9"><a href="统计编程基础.html#cb3-9" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(gdpPercap, lifeExp, <span class="at">size =</span> pop, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="统计编程基础.html#cb3-9" tabindex="-1"></a>fig<span class="ot">&lt;-</span><span class="fu">ggplot</span>(gapminder, <span class="fu">aes</span>(gdpPercap, lifeExp, <span class="at">size =</span> pop, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
 <span id="cb3-10"><a href="统计编程基础.html#cb3-10" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb3-11"><a href="统计编程基础.html#cb3-11" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">12</span>)) <span class="sc">+</span></span>
 <span id="cb3-12"><a href="统计编程基础.html#cb3-12" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
@@ -384,13 +384,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="生成音乐" class="section level5 hasAnchor" number="1.1.2.3.2">
 <h5><span class="header-section-number">1.1.2.3.2</span> 生成音乐<a href="统计编程基础.html#生成音乐" class="anchor-section" aria-label="Anchor link to header"></a></h5>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="统计编程基础.html#cb4-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;audio&quot;</span>)</span>
-<span id="cb4-2"><a href="统计编程基础.html#cb4-2" tabindex="-1"></a><span class="fu">library</span>(audio)</span>
-<span id="cb4-3"><a href="统计编程基础.html#cb4-3" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="统计编程基础.html#cb4-4" tabindex="-1"></a><span class="co"># 创建简单旋律</span></span>
-<span id="cb4-5"><a href="统计编程基础.html#cb4-5" tabindex="-1"></a>notes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;C4&quot;</span>,<span class="st">&quot;D4&quot;</span>,<span class="st">&quot;E4&quot;</span>,<span class="st">&quot;F4&quot;</span>,<span class="st">&quot;G4&quot;</span>,<span class="st">&quot;A4&quot;</span>,<span class="st">&quot;B4&quot;</span>,<span class="st">&quot;C5&quot;</span>)</span>
-<span id="cb4-6"><a href="统计编程基础.html#cb4-6" tabindex="-1"></a>durations <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fl">0.3</span>, <span class="dv">8</span>)</span>
-<span id="cb4-7"><a href="统计编程基础.html#cb4-7" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="统计编程基础.html#cb4-8" tabindex="-1"></a><span class="fu">play</span>(notes, durations)</span></code></pre></div>
+<span id="cb4-2"><a href="统计编程基础.html#cb4-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb4-3"><a href="统计编程基础.html#cb4-3" tabindex="-1"></a><span class="fu">library</span>(audio)</span>
+<span id="cb4-4"><a href="统计编程基础.html#cb4-4" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-5"><a href="统计编程基础.html#cb4-5" tabindex="-1"></a>notes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="dv">0</span>, <span class="at">B =</span> <span class="dv">2</span>, <span class="at">C =</span> <span class="dv">3</span>, <span class="at">D =</span> <span class="dv">5</span>, <span class="at">E =</span> <span class="dv">7</span>, <span class="at">F =</span> <span class="dv">8</span>, <span class="at">G =</span> <span class="dv">10</span>)</span>
+<span id="cb4-6"><a href="统计编程基础.html#cb4-6" tabindex="-1"></a>pitch <span class="ot">&lt;-</span> <span class="st">&quot;D D E D G F# D D E D A G D D D5 B G F# E C5 C5 B G A G&quot;</span></span>
+<span id="cb4-7"><a href="统计编程基础.html#cb4-7" tabindex="-1"></a>duration <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">0.75</span>, <span class="fl">0.25</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">2</span>),</span>
+<span id="cb4-8"><a href="统计编程基础.html#cb4-8" tabindex="-1"></a>              <span class="fl">0.75</span>, <span class="fl">0.25</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">0.75</span>, <span class="fl">0.25</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb4-9"><a href="统计编程基础.html#cb4-9" tabindex="-1"></a>bday <span class="ot">&lt;-</span> <span class="fu">data_frame</span>(<span class="at">pitch =</span> <span class="fu">strsplit</span>(pitch, <span class="st">&quot; &quot;</span>)[[<span class="dv">1</span>]],</span>
+<span id="cb4-10"><a href="统计编程基础.html#cb4-10" tabindex="-1"></a>                   <span class="at">duration =</span> duration)</span>
+<span id="cb4-11"><a href="统计编程基础.html#cb4-11" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="统计编程基础.html#cb4-12" tabindex="-1"></a>bday <span class="ot">&lt;-</span></span>
+<span id="cb4-13"><a href="统计编程基础.html#cb4-13" tabindex="-1"></a>  bday <span class="sc">%&gt;%</span></span>
+<span id="cb4-14"><a href="统计编程基础.html#cb4-14" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">octave =</span> <span class="fu">substring</span>(pitch, <span class="fu">nchar</span>(pitch)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-15"><a href="统计编程基础.html#cb4-15" tabindex="-1"></a>  {<span class="fu">suppressWarnings</span>(<span class="fu">as.numeric</span>(.))} <span class="sc">%&gt;%</span></span>
+<span id="cb4-16"><a href="统计编程基础.html#cb4-16" tabindex="-1"></a>    <span class="fu">ifelse</span>(<span class="fu">is.na</span>(.), <span class="dv">4</span>, .),</span>
+<span id="cb4-17"><a href="统计编程基础.html#cb4-17" tabindex="-1"></a>  <span class="at">note =</span> notes[<span class="fu">substr</span>(pitch, <span class="dv">1</span>, <span class="dv">1</span>)],</span>
+<span id="cb4-18"><a href="统计编程基础.html#cb4-18" tabindex="-1"></a>  <span class="at">note =</span> note <span class="sc">+</span> <span class="fu">grepl</span>(<span class="st">&quot;#&quot;</span>, pitch) <span class="sc">-</span></span>
+<span id="cb4-19"><a href="统计编程基础.html#cb4-19" tabindex="-1"></a>    <span class="fu">grepl</span>(<span class="st">&quot;b&quot;</span>, pitch) <span class="sc">+</span> octave <span class="sc">*</span> <span class="dv">12</span> <span class="sc">+</span></span>
+<span id="cb4-20"><a href="统计编程基础.html#cb4-20" tabindex="-1"></a>    <span class="dv">12</span> <span class="sc">*</span> (note <span class="sc">&lt;</span> <span class="dv">3</span>),</span>
+<span id="cb4-21"><a href="统计编程基础.html#cb4-21" tabindex="-1"></a>  <span class="at">freq =</span> <span class="dv">2</span> <span class="sc">^</span> ((note <span class="sc">-</span> <span class="dv">60</span>) <span class="sc">/</span> <span class="dv">12</span>) <span class="sc">*</span> <span class="dv">440</span>)</span>
+<span id="cb4-22"><a href="统计编程基础.html#cb4-22" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="统计编程基础.html#cb4-23" tabindex="-1"></a>tempo <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb4-24"><a href="统计编程基础.html#cb4-24" tabindex="-1"></a>sample_rate <span class="ot">&lt;-</span> <span class="dv">44100</span></span>
+<span id="cb4-25"><a href="统计编程基础.html#cb4-25" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="统计编程基础.html#cb4-26" tabindex="-1"></a>make_sine <span class="ot">&lt;-</span> <span class="cf">function</span>(freq, duration) {</span>
+<span id="cb4-27"><a href="统计编程基础.html#cb4-27" tabindex="-1"></a>  wave <span class="ot">&lt;-</span> <span class="fu">sin</span>(<span class="fu">seq</span>(<span class="dv">0</span>, duration <span class="sc">/</span> tempo <span class="sc">*</span> <span class="dv">60</span>, <span class="dv">1</span> <span class="sc">/</span> sample_rate) <span class="sc">*</span></span>
+<span id="cb4-28"><a href="统计编程基础.html#cb4-28" tabindex="-1"></a>                freq <span class="sc">*</span> <span class="dv">2</span> <span class="sc">*</span> pi)</span>
+<span id="cb4-29"><a href="统计编程基础.html#cb4-29" tabindex="-1"></a>  fade <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">50</span> <span class="sc">/</span> sample_rate)</span>
+<span id="cb4-30"><a href="统计编程基础.html#cb4-30" tabindex="-1"></a>  wave <span class="sc">*</span> <span class="fu">c</span>(fade, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(wave) <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(fade)), <span class="fu">rev</span>(fade))</span>
+<span id="cb4-31"><a href="统计编程基础.html#cb4-31" tabindex="-1"></a>}</span>
+<span id="cb4-32"><a href="统计编程基础.html#cb4-32" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="统计编程基础.html#cb4-33" tabindex="-1"></a>bday_wave <span class="ot">&lt;-</span></span>
+<span id="cb4-34"><a href="统计编程基础.html#cb4-34" tabindex="-1"></a>  <span class="fu">mapply</span>(make_sine, bday<span class="sc">$</span>freq, bday<span class="sc">$</span>duration) <span class="sc">%&gt;%</span></span>
+<span id="cb4-35"><a href="统计编程基础.html#cb4-35" tabindex="-1"></a>  <span class="fu">do.call</span>(<span class="st">&quot;c&quot;</span>, .)</span>
+<span id="cb4-36"><a href="统计编程基础.html#cb4-36" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="统计编程基础.html#cb4-37" tabindex="-1"></a><span class="fu">play</span>(bday_wave)</span></code></pre></div>
 </div>
 <div id="更多有趣功能" class="section level5 hasAnchor" number="1.1.2.3.3">
 <h5><span class="header-section-number">1.1.2.3.3</span> 更多有趣功能<a href="统计编程基础.html#更多有趣功能" class="anchor-section" aria-label="Anchor link to header"></a></h5>
