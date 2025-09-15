@@ -168,7 +168,7 @@
 
 \title{生态统计学}
 \author{沈国春、李勤}
-\date{2025-08-09}
+\date{2025-09-15}
 
 \begin{document}
 \maketitle
@@ -221,8 +221,15 @@
   PDF版 \url{https://gitee.com/gcshen/ecological-statistics/blob/master/docs/ecological-statistics.pdf}
 \end{itemize}
 
-\hypertarget{ux7edfux8ba1ux7f16ux6210ux57faux7840}{%
-\chapter{统计编成基础}\label{ux7edfux8ba1ux7f16ux6210ux57faux7840}}
+\hypertarget{ux5b66ux4e60ux65b9ux5f0f}{%
+\section{学习方式}\label{ux5b66ux4e60ux65b9ux5f0f}}
+
+\includegraphics{imgs/how to learn R.png}
+
+\includegraphics{imgs/how to learn R 2.png}
+
+\hypertarget{ux7edfux8ba1ux7f16ux7a0bux57faux7840}{%
+\chapter{统计编程基础}\label{ux7edfux8ba1ux7f16ux7a0bux57faux7840}}
 
 \hypertarget{rux8bedux8a00ux4ecbux7ecd}{%
 \section{R语言介绍}\label{rux8bedux8a00ux4ecbux7ecd}}
@@ -238,8 +245,6 @@
 \item
   了解R包管理的基本方法
 \end{itemize}
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \hypertarget{ux4e3aux4ec0ux4e48ux751fux6001ux5b66ux4e13ux4e1aux9700ux8981ux5b66ux4e60r}{%
 \subsection{为什么生态学专业需要学习R？}\label{ux4e3aux4ec0ux4e48ux751fux6001ux5b66ux4e13ux4e1aux9700ux8981ux5b66ux4e60r}}
@@ -257,11 +262,17 @@
 \item
   \textbf{重现性危机}：越来越多的科学研究无法被重现，影响科学可信度
 \item
-  \textbf{R脚本的优势}：每一步分析都有记录，任何人都可以重现你的分析过程
-\item
-  \textbf{错误检查}：代码可以被审查，减少人为错误
-\item
-  \textbf{版本控制}：分析过程的每次修改都有记录
+  \textbf{R脚本的优势}：
+
+  \begin{itemize}
+  \tightlist
+  \item
+    每一步分析都有记录，任何人都可以重现你的分析过程
+  \item
+    错误检查：代码可以被审查，减少人为错误
+  \item
+    版本控制：分析过程的每次修改都有记录
+  \end{itemize}
 \end{itemize}
 
 \hypertarget{ux804cux4e1aux53d1ux5c55ux7684ux6838ux5fc3ux7adeux4e89ux529b}{%
@@ -323,8 +334,6 @@
 \item
   \textbf{职业流动}：掌握R可以在全球范围内寻求工作机会
 \end{itemize}
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \hypertarget{rux8bedux8a00ux7b80ux4ecbux4e0eux8da3ux5473ux5e94ux7528}{%
 \subsection{R语言简介与趣味应用}\label{rux8bedux8a00ux7b80ux4ecbux4e0eux8da3ux5473ux5e94ux7528}}
@@ -425,29 +434,44 @@
   \textbf{机器学习}：预测生态变化趋势
 \end{itemize}
 
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
-
 \hypertarget{ux73afux5883ux8bbeux7f6eux548cux914dux7f6e}{%
 \subsection{环境设置和配置}\label{ux73afux5883ux8bbeux7f6eux548cux914dux7f6e}}
 
-\hypertarget{rux548crstudioux5b89ux88c5}{%
-\subsubsection{R和RStudio安装}\label{rux548crstudioux5b89ux88c5}}
+\hypertarget{rux8bedux8a00ux5b89ux88c5}{%
+\subsubsection{R语言安装}\label{rux8bedux8a00ux5b89ux88c5}}
 
 \hypertarget{ux4e0bux8f7dux548cux5b89ux88c5r}{%
 \paragraph{下载和安装R}\label{ux4e0bux8f7dux548cux5b89ux88c5r}}
 
 \textbf{Windows系统:}
-1. 访问 \url{https://cran.r-project.org/bin/windows/base/}
-2. 下载最新版R安装包(.exe)
-3. 右键以管理员身份运行安装程序
-4. 安装路径不要包含中文或空格
-5. 勾选''创建桌面快捷方式''
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  访问 \url{https://cran.r-project.org/bin/windows/base/}
+\item
+  下载最新版R安装包(.exe)
+\item
+  右键以管理员身份运行安装程序
+\item
+  安装路径不要包含中文或空格
+\item
+  勾选''创建桌面快捷方式''
+\end{enumerate}
 
 \textbf{macOS系统:}
-1. 访问 \url{https://cran.r-project.org/bin/macosx/}
-2. 下载最新版R安装包(.pkg)
-3. 双击安装，可能需要右键''打开''绕过Gatekeeper限制
-4. 或通过Homebrew安装: \texttt{brew\ install\ -\/-cask\ r}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  访问 \url{https://cran.r-project.org/bin/macosx/}
+\item
+  下载最新版R安装包(.pkg)
+\item
+  双击安装，可能需要右键''打开''绕过Gatekeeper限制
+\item
+  或通过Homebrew安装: \texttt{brew\ install\ -\/-cask\ r}
+\end{enumerate}
 
 \textbf{Linux系统:}
 - Ubuntu/Debian: \texttt{sudo\ apt-get\ install\ r-base}
@@ -458,7 +482,6 @@
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   访问 \url{https://www.rstudio.com/products/rstudio/download/}
 \item
@@ -521,9 +544,122 @@
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{ux9879ux76eeux6587ux4ef6ux5939ux7ed3ux6784ux8bbeux7f6e}{%
-\subsection{项目文件夹结构设置}\label{ux9879ux76eeux6587ux4ef6ux5939ux7ed3ux6784ux8bbeux7f6e}}
+\hypertarget{ux5728vscodeux4e2dux914dux7f6erux73afux5883}{%
+\paragraph{在VSCode中配置R环境}\label{ux5728vscodeux4e2dux914dux7f6erux73afux5883}}
 
+\textbf{为什么选择VSCode？}
+- \textbf{轻量高效}：启动速度快，占用资源少
+- \textbf{扩展性强}：丰富的扩展生态系统
+- \textbf{多语言支持}：同时支持R、Python、Markdown等多种语言
+- \textbf{版本控制集成}：内置Git支持，便于代码管理
+- \textbf{远程开发}：支持SSH、容器、WSL等远程开发环境
+
+\textbf{VSCode安装和配置步骤：}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{安装VSCode}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    访问 \url{https://code.visualstudio.com/}
+  \item
+    下载适合你操作系统的版本并安装
+  \end{itemize}
+\item
+  \textbf{安装R扩展}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    打开VSCode，点击左侧扩展图标（或按Ctrl+Shift+X）
+  \item
+    搜索 ``R'' 并安装 ``R'' 扩展（由REditorSupport开发）
+  \item
+    搜索 ``R Debugger'' 并安装调试器扩展
+  \end{itemize}
+\item
+  \textbf{基本配置}
+
+  \begin{itemize}
+  \item
+    打开设置（Ctrl+,）
+  \item
+    搜索 ``r.rterm'' 设置R执行路径
+  \item
+    搜索 ``r.rpath'' 设置R语言服务器路径
+  \item
+    推荐设置：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{\{}
+  \DataTypeTok{"r.rterm.windows"}\FunctionTok{:} \StringTok{"C:}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{Program Files}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{R}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{R{-}4.3.1}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{bin}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{x64}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{R.exe"}\FunctionTok{,}
+  \DataTypeTok{"r.rterm.mac"}\FunctionTok{:} \StringTok{"/usr/local/bin/R"}\FunctionTok{,}
+  \DataTypeTok{"r.rterm.linux"}\FunctionTok{:} \StringTok{"/usr/bin/R"}\FunctionTok{,}
+  \DataTypeTok{"r.lsp.path"}\FunctionTok{:} \StringTok{"/usr/lib/R/bin/R"}\FunctionTok{,}
+  \DataTypeTok{"r.sessionWatcher"}\FunctionTok{:} \KeywordTok{true}\FunctionTok{,}
+  \DataTypeTok{"r.bracketedPaste"}\FunctionTok{:} \KeywordTok{true}
+\FunctionTok{\}}
+\end{Highlighting}
+\end{Shaded}
+  \end{itemize}
+\item
+  \textbf{常用功能}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{代码执行}：Ctrl+Enter 执行当前行或选中代码
+  \item
+    \textbf{代码补全}：自动提供函数和参数建议
+  \item
+    \textbf{语法高亮}：彩色显示代码结构
+  \item
+    \textbf{调试功能}：设置断点，逐步调试代码
+  \item
+    \textbf{绘图查看}：内置绘图查看器
+  \item
+    \textbf{Markdown支持}：直接编写和预览R Markdown文档
+  \end{itemize}
+\item
+  \textbf{推荐扩展}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Rainbow CSV}：彩色显示CSV文件
+  \item
+    \textbf{GitLens}：增强的Git功能
+  \item
+    \textbf{Bracket Pair Colorizer}：彩色匹配括号
+  \item
+    \textbf{Project Manager}：项目管理工具
+  \item
+    \textbf{Live Share}：实时协作编程
+  \end{itemize}
+\item
+  \textbf{优势对比}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{相比RStudio}：更轻量，启动更快，扩展更多
+  \item
+    \textbf{相比纯文本编辑器}：提供完整的IDE功能
+  \item
+    \textbf{适合场景}：大型项目、多语言开发、远程开发
+  \end{itemize}
+\end{enumerate}
+
+\textbf{注意事项：}
+- 确保已安装R后再配置VSCode
+- 路径设置需要根据实际安装位置调整
+- 首次使用可能需要安装相关依赖包
+\#\#\# 项目文件夹结构设置
 建立良好的文件组织习惯是数据分析的基础：
 
 \begin{verbatim}
@@ -687,8 +823,6 @@
 \item
   建议为每节课创建单独的子文件夹
 \end{itemize}
-
-\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \hypertarget{ux8bfeux524dux51c6ux5907ux68c0ux67e5ux6e05ux5355}{%
 \subsection{课前准备检查清单}\label{ux8bfeux524dux51c6ux5907ux68c0ux67e5ux6e05ux5355}}
@@ -907,11 +1041,21 @@
 
 请完成（仅使用本课学过的向量和基本统计函数）：
 1. 创建树高向量并查看数据
-2. 计算平均树高
-3. 找出最高的树有多高
-4. 统计总共测量了多少棵树
-5. 计算所有树的总高度
-6. 计算树高的标准差（提示：使用sd()函数）
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  计算平均树高
+\item
+  找出最高的树有多高
+\item
+  统计总共测量了多少棵树
+\item
+  计算所有树的总高度
+\item
+  计算树高的标准差（提示：使用sd()函数）
+\end{enumerate}
 
 \hypertarget{ux5b57ux7b26ux578bux6570ux636eux5904ux7406ux4e0eux5411ux91cfux7d22ux5f15ux64cdux4f5c}{%
 \section{字符型数据处理与向量索引操作}\label{ux5b57ux7b26ux578bux6570ux636eux5904ux7406ux4e0eux5411ux91cfux7d22ux5f15ux64cdux4f5c}}
@@ -1105,11 +1249,21 @@
 
 请完成（使用向量、字符串操作、索引等已学内容）：
 1. 创建植物名称向量并显示所有植物名称
-2. 计算记录了多少种植物（使用length()函数）
-3. 显示第2种和第4种植物的名称（使用向量索引）
-4. 添加''慈姑''到植物名单中（使用c()函数合并）
-5. 用paste()函数创建一句完整的调查报告
-6. 尝试查找''芦苇''在向量中的位置（提示：使用which()函数和==运算符）
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  计算记录了多少种植物（使用length()函数）
+\item
+  显示第2种和第4种植物的名称（使用向量索引）
+\item
+  添加''慈姑''到植物名单中（使用c()函数合并）
+\item
+  用paste()函数创建一句完整的调查报告
+\item
+  尝试查找''芦苇''在向量中的位置（提示：使用which()函数和==运算符）
+\end{enumerate}
 
 \hypertarget{ux6570ux636eux6846ux7ed3ux6784ux7406ux89e3ux4e0eux591aux7c7bux578bux6570ux636eux7ba1ux7406}{%
 \section{数据框结构理解与多类型数据管理}\label{ux6570ux636eux6846ux7ed3ux6784ux7406ux89e3ux4e0eux591aux7c7bux578bux6570ux636eux7ba1ux7406}}
@@ -1411,11 +1565,24 @@
 \end{Shaded}
 
 请完成（使用数据框操作、向量计算等已学内容）：
-1. 创建数据框并显示整个数据框
-2. 使用str()函数查看数据框的结构
-3. 计算鱼类的平均长度和平均重量（使用mean()和\(操作符） 4. 统计有多少条成熟的鱼（使用sum()和逻辑值运算） 5. 显示所有鱼类的名称（使用\)操作符）
-6. 计算最大和最小的鱼重量（使用max()和min()函数）
-7. 创建一个包含调查总结的字符串（使用paste()函数）
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  创建数据框并显示整个数据框
+\item
+  使用str()函数查看数据框的结构
+\item
+  计算鱼类的平均长度和平均重量（使用mean()和\$操作符）
+\item
+  统计有多少条成熟的鱼（使用sum()和逻辑值运算）
+\item
+  显示所有鱼类的名称（使用\$操作符）
+\item
+  计算最大和最小的鱼重量（使用max()和min()函数）
+\item
+  创建一个包含调查总结的字符串（使用paste()函数）
+\end{enumerate}
 
 \hypertarget{ux5217ux8868ux6570ux636eux7ed3ux6784ux4e0eux6570ux636eux5206ux7ec4ux7ba1ux7406}{%
 \section{列表数据结构与数据分组管理}\label{ux5217ux8868ux6570ux636eux7ed3ux6784ux4e0eux6570ux636eux5206ux7ec4ux7ba1ux7406}}
@@ -1725,12 +1892,23 @@
 
 请完成（使用向量、列表、命名等已学内容）：
 1. 将三个监测站的数据组织成一个列表（使用list()函数）
-2. 计算每个监测站的平均目击次数（使用mean()和列表访问）
-3. 创建一个命名向量显示三个站点的平均值（使用names()函数）
-4. 找出哪个监测站的平均目击次数最高（使用which.max()函数）
-5. 计算所有监测站的总目击次数（使用sum()和向量合并）
-6. 创建一个数据框，包含站点名称和对应的平均目击次数
-7. 比较站点A和站点B的数据变异程度（使用sd()函数计算标准差）
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  计算每个监测站的平均目击次数（使用mean()和列表访问）
+\item
+  创建一个命名向量显示三个站点的平均值（使用names()函数）
+\item
+  找出哪个监测站的平均目击次数最高（使用which.max()函数）
+\item
+  计算所有监测站的总目击次数（使用sum()和向量合并）
+\item
+  创建一个数据框，包含站点名称和对应的平均目击次数
+\item
+  比较站点A和站点B的数据变异程度（使用sd()函数计算标准差）
+\end{enumerate}
 
 \hypertarget{ux5916ux90e8ux6570ux636eux5bfcux5165ux4e0eux6761ux4ef6ux7b5bux9009ux5206ux6790}{%
 \section{外部数据导入与条件筛选分析}\label{ux5916ux90e8ux6570ux636eux5bfcux5165ux4e0eux6761ux4ef6ux7b5bux9009ux5206ux6790}}
@@ -2056,12 +2234,23 @@
 
 请完成（使用数据导入、数据框操作、条件筛选等已学内容）：
 1. 创建模拟数据或读取数据文件
-2. 查看数据的基本信息（使用nrow(), ncol(), str(), summary()）
-3. 筛选夏季的数据（使用subset()函数）
-4. 筛选植被覆盖度大于80\%的记录（使用subset()函数和条件）
-5. 计算所有样地的平均植被覆盖度和平均高度（使用mean()函数）
-6. 找出覆盖度最高的样地（使用which.max()函数）
-7. 创建一个汇总报告（使用paste()函数）
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  查看数据的基本信息（使用nrow(), ncol(), str(), summary()）
+\item
+  筛选夏季的数据（使用subset()函数）
+\item
+  筛选植被覆盖度大于80\%的记录（使用subset()函数和条件）
+\item
+  计算所有样地的平均植被覆盖度和平均高度（使用mean()函数）
+\item
+  找出覆盖度最高的样地（使用which.max()函数）
+\item
+  创建一个汇总报告（使用paste()函数）
+\end{enumerate}
 
 \hypertarget{ux7f3aux5931ux503cux548cux5f02ux5e38ux503cux7684ux8bc6ux522bux5904ux7406}{%
 \section{缺失值和异常值的识别处理}\label{ux7f3aux5931ux503cux548cux5f02ux5e38ux503cux7684ux8bc6ux522bux5904ux7406}}
@@ -2259,7 +2448,6 @@
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   \textbf{删除异常值}：适用于明显的录入错误
 \item
@@ -2326,7 +2514,6 @@
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
-\tightlist
 \item
   \textbf{数据探索}：使用\texttt{str()}, \texttt{summary()}, \texttt{head()}, \texttt{tail()}了解数据
 \item
@@ -2391,12 +2578,23 @@
 
 请完成（使用缺失值处理、条件判断、数据清理等已学内容）：
 1. 检查每列的缺失值个数（使用is.na()和sum()函数）
-2. 识别nitrogen\_mg列中的异常值（使用逻辑判断和which()函数）
-3. 用均值填补organic\_matter的缺失值（使用mean()和na.rm参数）
-4. 将nitrogen\_mg中的异常值替换为NA（使用条件赋值）
-5. 创建一个完全没有缺失值的干净数据集（使用na.omit()）
-6. 计算清理后数据的各项平均值（使用mean()函数）
-7. 对比清理前后数据的summary()结果
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  识别nitrogen\_mg列中的异常值（使用逻辑判断和which()函数）
+\item
+  用均值填补organic\_matter的缺失值（使用mean()和na.rm参数）
+\item
+  将nitrogen\_mg中的异常值替换为NA（使用条件赋值）
+\item
+  创建一个完全没有缺失值的干净数据集（使用na.omit()）
+\item
+  计算清理后数据的各项平均值（使用mean()函数）
+\item
+  对比清理前后数据的summary()结果
+\end{enumerate}
 
 \hypertarget{ux63cfux8ff0ux6027ux7edfux8ba1ux5206ux6790ux4e0eux57faux7840ux6570ux636eux53efux89c6ux5316}{%
 \section{描述性统计分析与基础数据可视化}\label{ux63cfux8ff0ux6027ux7edfux8ba1ux5206ux6790ux4e0eux57faux7840ux6570ux636eux53efux89c6ux5316}}
@@ -2831,12 +3029,23 @@
 
 请完成（使用描述统计、基础绘图等已学内容）：
 1. 计算三种植被类型的平均物种数和标准差（使用mean()和sd()函数）
-2. 创建一个汇总表显示基本统计信息（使用data.frame()）
-3. 绘制箱线图比较三种植被类型（使用boxplot()函数）
-4. 绘制条形图显示平均物种数（使用barplot()函数）
-5. 在箱线图上添加平均值点（使用points()函数）
-6. 判断哪种植被类型的蝴蝶多样性最高（使用which.max()和max()函数）
-7. 计算每种植被类型的变异系数（标准差/平均值×100）
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  创建一个汇总表显示基本统计信息（使用data.frame()）
+\item
+  绘制箱线图比较三种植被类型（使用boxplot()函数）
+\item
+  绘制条形图显示平均物种数（使用barplot()函数）
+\item
+  在箱线图上添加平均值点（使用points()函数）
+\item
+  判断哪种植被类型的蝴蝶多样性最高（使用which.max()和max()函数）
+\item
+  计算每种植被类型的变异系数（标准差/平均值×100）
+\end{enumerate}
 
 \hypertarget{ux6761ux4ef6ux5224ux65adux5faaux73afux7ed3ux6784ux4e0eux51fdux6570ux7f16ux7a0b}{%
 \section{条件判断、循环结构与函数编程}\label{ux6761ux4ef6ux5224ux65adux5faaux73afux7ed3ux6784ux4e0eux51fdux6570ux7f16ux7a0b}}
@@ -3325,11 +3534,21 @@
 
 请完成（使用if-else、循环、函数等编程内容，结合之前学过的数据处理方法）：
 1. 使用\texttt{ifelse()}函数，根据水深将栖息地分类（\textless30cm浅水区，30-50cm中等深度，\textgreater50cm深水区）
-2. 编写函数\texttt{classify\_habitat\_quality()}，综合水深和鸟类丰度评估栖息地质量
-3. 使用\texttt{for}循环，计算每个季节的平均鸟类丰度
-4. 创建一个新列，标记高丰度样地（丰度\textgreater15为高丰度，使用ifelse()）
-5. 编写函数处理整个数据集，输出每个样地的综合评估报告
-6. 使用\texttt{apply}族函数重做第3题（比较循环和向量化方法的差异）
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  编写函数\texttt{classify\_habitat\_quality()}，综合水深和鸟类丰度评估栖息地质量
+\item
+  使用\texttt{for}循环，计算每个季节的平均鸟类丰度
+\item
+  创建一个新列，标记高丰度样地（丰度\textgreater15为高丰度，使用ifelse()）
+\item
+  编写函数处理整个数据集，输出每个样地的综合评估报告
+\item
+  使用\texttt{apply}族函数重做第3题（比较循环和向量化方法的差异）
+\end{enumerate}
 
 \hypertarget{ux73b0ux4ee3ux6570ux636eux79d1ux5b66ux5de5ux5177ux5305ux5e94ux7528}{%
 \section{现代数据科学工具包应用}\label{ux73b0ux4ee3ux6570ux636eux79d1ux5b66ux5de5ux5177ux5305ux5e94ux7528}}
@@ -3869,12 +4088,23 @@
 
 请完成（使用tidyverse工具链，结合之前学过的统计和可视化方法）：
 1. 筛选出5月份的调查数据，并计算植物和鸟类物种总数（使用filter()和mutate()）
-2. 按站点分组，计算各站点的平均物种数和水位变化范围（使用group\_by()和summarise()）
-3. 连接站点特征数据，创建物种密度指标（物种数/面积）（使用left\_join()和mutate()）
-4. 将数据从宽格式转换为长格式，便于后续统计分析（使用pivot\_longer()）
-5. 根据保护状态和季节，分析不同组合下的生物多样性特征（使用group\_by()和统计函数）
-6. 使用ggplot2创建专业的可视化图表展示分析结果
-7. 与第9课的传统方法对比，体会tidyverse的优势
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  按站点分组，计算各站点的平均物种数和水位变化范围（使用group\_by()和summarise()）
+\item
+  连接站点特征数据，创建物种密度指标（物种数/面积）（使用left\_join()和mutate()）
+\item
+  将数据从宽格式转换为长格式，便于后续统计分析（使用pivot\_longer()）
+\item
+  根据保护状态和季节，分析不同组合下的生物多样性特征（使用group\_by()和统计函数）
+\item
+  使用ggplot2创建专业的可视化图表展示分析结果
+\item
+  与第9课的传统方法对比，体会tidyverse的优势
+\end{enumerate}
 
 \hypertarget{ux56feux5f62ux8bedux6cd5ux4e0eux79d1ux5b66ux7ed8ux56fe}{%
 \section{图形语法与科学绘图}\label{ux56feux5f62ux8bedux6cd5ux4e0eux79d1ux5b66ux7ed8ux56fe}}
@@ -4506,13 +4736,25 @@
 
 请完成（使用ggplot2高级功能，结合之前学过的所有内容）：
 1. 创建物种丰富度与植被覆盖度的散点图，用颜色区分不同海拔带（使用geom\_point()和aes()）
-2. 绘制三个海拔带物种丰富度的箱线图，添加个体数据点（使用geom\_boxplot()和geom\_jitter()）
-3. 创建多面板图，展示不同海拔带的各项指标分布（使用facet\_wrap()）
-4. 设计一个期刊级别的综合图表，展示海拔梯度上的植被特征变化（使用多个geom层）
-5. 自定义主题，确保图表符合学术发表标准（使用theme()函数）
-6. 保存高质量图片用于论文发表（使用ggsave()函数）
-7. 与第7课的基础绘图方法对比，总结ggplot2的优势
-8. 尝试创建动态或交互式可视化（选做，可查阅相关资料）
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  绘制三个海拔带物种丰富度的箱线图，添加个体数据点（使用geom\_boxplot()和geom\_jitter()）
+\item
+  创建多面板图，展示不同海拔带的各项指标分布（使用facet\_wrap()）
+\item
+  设计一个期刊级别的综合图表，展示海拔梯度上的植被特征变化（使用多个geom层）
+\item
+  自定义主题，确保图表符合学术发表标准（使用theme()函数）
+\item
+  保存高质量图片用于论文发表（使用ggsave()函数）
+\item
+  与第7课的基础绘图方法对比，总结ggplot2的优势
+\item
+  尝试创建动态或交互式可视化（选做，可查阅相关资料）
+\end{enumerate}
 
   \bibliography{book.bib,packages.bib}
 
