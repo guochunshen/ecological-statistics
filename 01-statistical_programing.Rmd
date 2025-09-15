@@ -240,9 +240,9 @@ play(bday_wave)
 
 4. 或通过Homebrew安装: `brew install --cask r`
 
-**Linux系统:**
-- Ubuntu/Debian: `sudo apt-get install r-base`
-- CentOS/RHEL: `sudo yum install R`
+**Linux系统:**  
+- Ubuntu/Debian: `sudo apt-get install r-base`  
+- CentOS/RHEL: `sudo yum install R`  
 
 ##### 下载和安装RStudio
 
@@ -279,6 +279,7 @@ plot(1:10)
 ```
 
 ##### 在VSCode中配置R环境
+
 
 **为什么选择VSCode？**  
 - **轻量高效**：启动速度快，占用资源少  
