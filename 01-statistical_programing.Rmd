@@ -64,6 +64,12 @@ help("plot")
 
 # 示例代码演示
 example(plot)
+example(lm)
+demo(persp)
+demo(graphics)
+demo(Hershey)
+demo(plotmath)
+
 
 # 在线资源：
 # - R官方文档：https://cran.r-project.org/manuals.html
@@ -99,7 +105,63 @@ animate(fig, renderer = gifski_renderer("./imgs/gapminder_animation.gif"),
 # 可以清楚地看到不同大陆国家生态经济指标的变化趋势
 ```
 
-![](imgs/gapminder_animation.gif)
+#### 电子水母
+
+```{r eval=FALSE}
+# 加载必要的包
+library(ggplot2)
+library(gganimate) # 用于创建动画
+library(dplyr)     # 用于数据处理
+
+# 设置参数 - 减少点数提高性能
+i <- 0:2000  # 从10000减少到2000个点
+x <- i %% 200      # R中的模运算
+y <- i / 43
+
+# 预计算固定变量（不依赖于t）
+k <- 5 * cos(x/14) * cos(y/30)
+e <- y/8 - 13
+d <- (k^2 + e^2)/59 + 4
+a <- atan2(k, e)   # 注意R中atan2的参数顺序是(y,x)
+
+# 预计算所有帧数据（向量化操作）
+t_values <- seq(0, 10 * pi, by = pi / 10)  # 减少帧数：从20π到10π，步长从π/20到π/10
+
+# 使用矩阵运算代替循环
+c_val_matrix <- outer(d / 2 + e / 99, -t_values / 18, "+")
+q_matrix <- 60 - 3 * sin(a * e) + outer(k * (3 + 4 / d), sin(d ^ 2 - 2 * t_values), "*")
+
+x_matrix <- q_matrix * sin(c_val_matrix) + 200
+y_matrix <- (q_matrix + 9 * d) * cos(c_val_matrix) + 200
+
+# 创建数据框（更高效的方式）
+all_frames <- data.frame(
+  t = rep(t_values, each = length(i)),
+  X = as.vector(x_matrix),
+  Y = as.vector(y_matrix)
+)
+
+# 创建动画
+anim <- ggplot(all_frames, aes(X, Y)) +
+  geom_point(size = 0.2, alpha = 0.2, color = "white") +
+  theme_void() +
+  theme(plot.background = element_rect(fill = "black", color = NA),
+        panel.background = element_rect(fill = "black", color = NA)) +
+  coord_cartesian(xlim = c(0, 400), ylim = c(0, 400)) +
+  transition_time(t) +
+  shadow_mark(past = FALSE, alpha = 0.05)  # 保留轨迹痕迹
+
+# 渲染动画（可能需要几分钟时间）
+animate(anim, 
+        fps = 20, 
+        duration = 30, 
+        width = 900, 
+        height = 900,
+        renderer = gifski_renderer())
+
+# 保存动画（可选）
+# anim_save("animation.gif", animation = last_animation())
+```
 
 ##### 生成音乐
 ```{r eval=FALSE}
