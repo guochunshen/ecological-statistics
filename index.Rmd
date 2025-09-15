@@ -12,7 +12,7 @@ description: "生态统计学课程教材，涵盖从基础到高级的生态数
 
 # 前言 {-}
 
-这是一本关于生态统计学的教材，旨在为生态学研究者提供实用的数据分析方法。本书结合R语言，介绍生态学研究中常用的统计技术。
+这是一本关于生态统计学的教材，旨在为生态学研究者提供实用的数据分析方法。本书结合R语言，介绍生态学研究中常用的统计方法。
 
 本书特点：
 
@@ -47,6 +47,7 @@ install.packages(c(
 
 - 网页版 https://guochunshen.github.io/ecological-statistics
 - PDF版 https://gitee.com/gcshen/ecological-statistics/blob/master/docs/ecological-statistics.pdf
+- 原代码 https://gitee.com/gcshen/ecological-statistics
 
 ## 学习方式
 

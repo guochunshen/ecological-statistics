@@ -82,7 +82,7 @@ library(gapminder)
 
 # 使用gapminder数据集(包含各国多年生态经济数据)
 # 绘制动态变化图
-fig<-ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent)) +
+fig <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent)) +
   geom_point() +
   scale_size(range = c(2, 12)) +
   scale_x_log10() +
@@ -90,9 +90,16 @@ fig<-ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent)) +
   transition_time(year) +
   ease_aes('linear')
 
+# 渲染并保存动画
+# 需要先安装gifski包: install.packages("gifski")
+animate(fig, renderer = gifski_renderer("./imgs/gapminder_animation.gif"), 
+        width = 800, height = 600, fps = 10, duration = 15)
+
 # 提示：运行后会生成展示生态经济数据随时间变化的动画
 # 可以清楚地看到不同大陆国家生态经济指标的变化趋势
 ```
+
+![](imgs/gapminder_animation.gif)
 
 ##### 生成音乐
 ```{r eval=FALSE}
@@ -211,12 +218,12 @@ plot(1:10)
 
 ##### 在VSCode中配置R环境
 
-**为什么选择VSCode？**
-- **轻量高效**：启动速度快，占用资源少
-- **扩展性强**：丰富的扩展生态系统
-- **多语言支持**：同时支持R、Python、Markdown等多种语言
-- **版本控制集成**：内置Git支持，便于代码管理
-- **远程开发**：支持SSH、容器、WSL等远程开发环境
+**为什么选择VSCode？**  
+- **轻量高效**：启动速度快，占用资源少  
+- **扩展性强**：丰富的扩展生态系统  
+- **多语言支持**：同时支持R、Python、Markdown等多种语言  
+- **版本控制集成**：内置Git支持，便于代码管理  
+- **远程开发**：支持SSH、容器、WSL等远程开发环境  
 
 **VSCode安装和配置步骤：**
 
@@ -265,10 +272,12 @@ plot(1:10)
    - **相比纯文本编辑器**：提供完整的IDE功能
    - **适合场景**：大型项目、多语言开发、远程开发
 
-**注意事项：**
-- 确保已安装R后再配置VSCode
-- 路径设置需要根据实际安装位置调整
-- 首次使用可能需要安装相关依赖包
+**注意事项：**  
+- 确保已安装R后再配置VSCode  
+- 路径设置需要根据实际安装位置调整  
+- 首次使用可能需要安装相关依赖包  
+
+
 ### 项目文件夹结构设置
 建立良好的文件组织习惯是数据分析的基础：
 
@@ -367,7 +376,6 @@ list.files()
 
 ### 课前准备检查清单
 - [ ] R软件安装成功
-- [ ] RStudio安装成功  
 - [ ] 能够运行简单的R代码
 - [ ] 创建了课程文件夹结构
 - [ ] 理解了学习R语言的重要性
@@ -1054,12 +1062,12 @@ paste("总观察个体数:", total_count, "平均每次观察:", round(mean_coun
 - **路径管理**：使用项目文件夹，保持文件路径的一致性
 
 ### 课后练习
-**题目**：假设有一个植被监测数据文件包含以下列：
-- date：调查日期
-- season：季节（春、夏、秋、冬）  
-- plot：样地编号
-- coverage：植被覆盖度(%)
-- height：平均高度(cm)
+**题目**：假设有一个植被监测数据文件包含以下列：  
+- date：调查日期  
+- season：季节（春、夏、秋、冬）   
+- plot：样地编号  
+- coverage：植被覆盖度(%)  
+- height：平均高度(cm)  
 
 请完成（使用数据导入、数据框操作、条件筛选等已学内容）：
 1. 创建模拟数据或读取数据文件
@@ -1475,6 +1483,7 @@ riparian <- c(25, 28, 23, 27, 26)     # 河岸林
 ```
 
 请完成（使用描述统计、基础绘图等已学内容）：
+
 1. 计算三种植被类型的平均物种数和标准差（使用mean()和sd()函数）
 
 2. 创建一个汇总表显示基本统计信息（使用data.frame()）
@@ -1778,6 +1787,7 @@ bird_monitoring <- data.frame(
 ```
 
 请完成（使用if-else、循环、函数等编程内容，结合之前学过的数据处理方法）：
+
 1. 使用`ifelse()`函数，根据水深将栖息地分类（<30cm浅水区，30-50cm中等深度，>50cm深水区）
 
 2. 编写函数`classify_habitat_quality()`，综合水深和鸟类丰度评估栖息地质量
@@ -2108,6 +2118,7 @@ site_characteristics <- tibble(
 ```
 
 请完成（使用tidyverse工具链，结合之前学过的统计和可视化方法）：
+
 1. 筛选出5月份的调查数据，并计算植物和鸟类物种总数（使用filter()和mutate()）
 
 2. 按站点分组，计算各站点的平均物种数和水位变化范围（使用group_by()和summarise()）
@@ -2495,6 +2506,7 @@ vegetation_survey <- data.frame(
 ```
 
 请完成（使用ggplot2高级功能，结合之前学过的所有内容）：
+
 1. 创建物种丰富度与植被覆盖度的散点图，用颜色区分不同海拔带（使用geom_point()和aes()）
 
 2. 绘制三个海拔带物种丰富度的箱线图，添加个体数据点（使用geom_boxplot()和geom_jitter()）
