@@ -16,7 +16,12 @@ if(!requireNamespace("xaringan")) install.packages("xaringan")    # 安装xaring
 # 如果目录已存在则不会重复创建
 dirs_to_create <- c("slides", "libs", "imgs")  # 需要创建的目录列表
 lapply(dirs_to_create, function(dir) {         # 遍历目录列表
-  if(!dir.exists(dir)) dir.create(dir)         # 如果目录不存在则创建
+  if(!dir.exists(dir)) {
+    dir.create(dir, showWarnings = FALSE, recursive = TRUE)         # 如果目录不存在则创建
+    message("创建目录: ", dir)
+  } else {
+    message("目录已存在: ", dir)
+  }
 })
 
 # 3. 表格分页处理函数
@@ -257,8 +262,13 @@ convert_to_slides <- function(rmd_file) {
     # ------------------
     # 确保输出目录存在
     output_dir <- "slides"
+    message("检查目录是否存在: ", output_dir, " - ", dir.exists(output_dir))
     if(!dir.exists(output_dir)) {
-      dir.create(output_dir, showWarnings = FALSE)
+      message("创建目录: ", output_dir)
+      dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
+      message("目录创建后是否存在: ", dir.exists(output_dir))
+    } else {
+      message("目录已存在: ", output_dir)
     }
     
     # 创建imgs符号链接和复制extra.css
@@ -272,24 +282,28 @@ convert_to_slides <- function(rmd_file) {
       file.copy("extra.css", output_dir, overwrite = TRUE)
     }
     
-    # 构造输出文件路径
-    output_file <- normalizePath(file.path(output_dir,
-                           paste0(tools::file_path_sans_ext(basename(rmd_file)),
-                                 ".html")), mustWork = FALSE)
+    # 构造输出文件路径 - 先渲染到当前目录再移动
+    output_file_base <- paste0(tools::file_path_sans_ext(basename(rmd_file)), ".html")
+    temp_output_file <- file.path(tempdir(), output_file_base)
+    final_output_file <- file.path(output_dir, output_file_base)
+    message("临时输出文件: ", temp_output_file)
+    message("最终输出文件: ", final_output_file)
     
-    # 设置资源路径并复制book.bib到临时目录
+    # 设置资源路径
     resource_path <- getwd()
-    if(file.exists("book.bib")) {
-      file.copy("book.bib", tempdir())  # 复制参考文献文件到临时目录
-    }
-    if(file.exists("packages.bib")) {
-      file.copy("packages.bib", tempdir())  # 复制参考文献文件到临时目录
-    }
     # 使用rmarkdown渲染幻灯片
     # 关键配置：
     # - 使用ioslides格式
     # - 设置三级标题为幻灯片级别
     # - 配置图片大小等参数
+    message("当前工作目录: ", getwd())
+    message("临时文件路径: ", temp_file)
+    message("开始渲染...")
+    
+    # 设置工作目录到项目根目录以确保资源路径正确
+    old_wd <- setwd(resource_path)
+    on.exit(setwd(old_wd))
+    
     result <- rmarkdown::render(
       input = temp_file,
       output_format = rmarkdown::ioslides_presentation(
@@ -305,30 +319,22 @@ convert_to_slides <- function(rmd_file) {
           out.width = "80%"
         )
       ),
-      output_file = output_file,
-      encoding = "UTF-8",  # 明确指定编码
-      output_options = list(
-        pandoc_args = c(
-          "--resource-path", 
-          paste0(resource_path, ":", 
-                file.path(resource_path, "slides"), ":", 
-                tempdir())
-        )
-      )
+      output_file = temp_output_file,
+      encoding = "UTF-8"  # 明确指定编码
     )
     
-    # 5. 资源清理
+    # 5. 移动文件并清理
     # ------------------
-    # 删除临时bib文件
-    if(file.exists(file.path(tempdir(), "book.bib"))) {
-      unlink(file.path(tempdir(), "book.bib"))
+    # 移动生成的HTML文件到slides目录
+    if (file.exists(temp_output_file)) {
+      file.rename(temp_output_file, final_output_file)
+      message("成功生成: ", normalizePath(final_output_file))
+    } else {
+      warning("输出文件未找到: ", temp_output_file)
     }
-    if(file.exists(file.path(tempdir(), "packages.bib"))) {
-      unlink(file.path(tempdir(), "packages.bib"))
-    }
+    
     # 删除临时Rmd文件
     unlink(temp_file)
-    message("成功生成: ", normalizePath(output_file))
   }, error = function(e) {
     warning("处理失败: ", rmd_file, "\n错误类型: ", class(e)[1], 
             "\n错误信息: ", e$message)
