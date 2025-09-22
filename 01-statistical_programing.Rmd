@@ -999,6 +999,26 @@ date,month,species,count,observer
 2023-07-12,7,喜鹊,10,李四
 ```
 
+```{r eval=FALSE}
+bird_data <- data.frame(
+    date = c("2023-03-15", "2023-03-15", "2023-04-20",
+  "2023-04-20",
+             "2023-05-10", "2023-06-05", "2023-06-05",
+  "2023-07-12"),
+    month = c(3, 3, 4, 4, 5, 6, 6, 7),
+    species = c("白头鹎", "麻雀", "喜鹊", "白头鹎", "燕子",
+  "麻雀", "白头鹎", "喜鹊"),
+    count = c(12, 25, 8, 15, 20, 18, 22, 10),
+    observer = c("张三", "张三", "李四", "李四", "王五", "张三",
+  "张三", "李四")
+  )
+
+# 保存为CSV文件
+write.csv(bird_data, "bird_observation_data.csv", row.names =
+  FALSE, fileEncoding = "UTF-8")
+#注意，这里的fileEcoding参数要依据OS系统编码设定
+```
+
 ### 课堂演示过程
 ```{r eval=FALSE}
 # 1. 读取鸟类监测数据
