@@ -106,11 +106,28 @@
 % 中文支持
 \usepackage{xeCJK}
 \setCJKmainfont{Noto Serif CJK SC}
-\setCJKsansfont{Noto Sans CJK SC} 
+\setCJKsansfont{Noto Sans CJK SC}
 \setCJKmonofont{Noto Sans Mono CJK SC}
+
+% 字体大小设置
+\usepackage{fontspec}
+\setmainfont{Noto Serif}
+\setsansfont{Noto Sans}
+\setmonofont{Noto Sans Mono}
+
+% 增大正文字体大小
+\usepackage[fontsize=13pt]{scrextend}
 
 % 页面设置
 \usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=3cm]{geometry}
+
+% 行间距设置
+\usepackage{setspace}
+\onehalfspacing  % 1.5倍行间距
+
+% 段落缩进设置
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}  % 每段开头空两格
 
 % 数学支持
 \usepackage{amsmath,amssymb,amsthm}
@@ -144,7 +161,7 @@
 % 代码环境
 \usepackage{listings}
 \lstset{
-  basicstyle=\small\ttfamily,
+  basicstyle=\footnotesize\ttfamily,  % 缩小代码字体
   breaklines=true,
   frame=single,
   numbers=left,
@@ -362,6 +379,29 @@
 
 \hypertarget{ux7f16ux7a0bux6838ux5fc3ux6982ux5ff5}{%
 \subsection{编程核心概念}\label{ux7f16ux7a0bux6838ux5fc3ux6982ux5ff5}}
+
+\hypertarget{ux8ba1ux7b97ux673aux4e3bux8981ux786cux4ef6ux4e0eux6570ux636eux6d41}{%
+\subsubsection{计算机主要硬件与数据流}\label{ux8ba1ux7b97ux673aux4e3bux8981ux786cux4ef6ux4e0eux6570ux636eux6d41}}
+
+从统计分析编程的角度理解计算机硬件组成，对于优化数据分析效率和解决计算瓶颈至关重要。计算机系统主要由四大核心硬件组件构成：中央处理器（CPU）、图形处理器（GPU）、内存（RAM）和硬盘（存储设备），每个组件在统计分析中扮演着独特而关键的角色。
+
+\textbf{中央处理器（CPU）}是计算机的''大脑''，负责执行程序指令和进行逻辑运算。在统计分析中，CPU的性能直接影响数据处理的效率。现代CPU通常包含多个核心，可以并行处理多个任务，这对于统计分析中的循环运算、矩阵计算等密集型操作尤为重要。例如，在执行蒙特卡洛模拟或Bootstrap重抽样时，多核CPU可以显著加速计算过程。CPU的时钟频率决定了单线程任务的执行速度，而缓存大小则影响数据访问的效率。在R语言分析中，CPU负责执行所有的统计函数调用、数据转换和模型拟合操作。
+
+\textbf{图形处理器（GPU）}最初设计用于图形渲染，但其高度并行的架构使其在特定类型的统计分析中表现出色。GPU包含数千个小型处理核心，能够同时执行大量简单的计算任务。在统计分析中，GPU特别适合处理大规模的矩阵运算、深度学习模型训练、以及需要大量并行计算的任务。例如，主成分分析（PCA）、奇异值分解（SVD）等线性代数运算在GPU上的执行速度可能比CPU快数十倍。然而，GPU编程需要特定的库和框架支持，如R语言的gpuR包或Python的CUDA工具包。
+
+\textbf{内存（RAM）}是计算机的临时工作空间，用于存储当前正在处理的数据和程序。在统计分析中，内存容量直接决定了能够处理的数据集大小。当数据分析师读取一个CSV文件或数据框时，整个数据集会被加载到内存中。如果数据集超过可用内存容量，系统将使用虚拟内存（硬盘空间），但这会显著降低性能。内存的速度也影响计算效率------更快的内存意味着CPU能够更快地访问数据。在R语言中，内存管理尤为重要，因为R通常将整个数据集保留在内存中进行分析。
+
+\textbf{硬盘（存储设备）}用于长期数据存储，包括原始数据文件、分析结果和程序代码。硬盘的性能影响数据读取和写入的速度。传统机械硬盘（HDD）速度较慢但容量大、成本低，适合存储大型历史数据集。固态硬盘（SSD）速度更快但价格较高，适合存储需要频繁访问的当前研究数据。在统计分析工作流中，合理的存储策略可以优化整体效率------将常用数据放在SSD上，将归档数据放在HDD上。
+
+\textbf{PCIe总线}是连接CPU、内存、硬盘和GPU等硬件组件的高速数据通道。PCIe（Peripheral Component Interconnect Express）的带宽决定了不同硬件间数据传输的速度。现代PCIe 4.0 x16接口提供约32GB/s的带宽，而PCIe 5.0 x16接口带宽可达64GB/s。在GPU加速计算中，PCIe总线的性能直接影响CPU与GPU之间的数据传输效率，是决定整体计算性能的关键因素之一。
+
+\textbf{程序运行的基本流程}涉及这些硬件组件间的协同工作。当执行一个统计分析程序时：首先，程序代码从硬盘被加载到内存中；然后，CPU从内存读取指令并逐条执行；在执行过程中，CPU可能需要从内存读取数据，进行计算后将结果写回内存；最后，分析结果被保存到硬盘中。这个过程中，数据在不同硬件间流动：硬盘→内存→CPU→内存→硬盘。
+
+\textbf{GPU加速计算的流程}与CPU有所不同。当程序需要利用GPU进行并行计算时：首先，CPU将需要处理的数据从系统内存通过PCIe总线传输到GPU显存；然后，GPU的数千个计算核心并行处理数据；计算结果暂存在GPU显存中；最后，CPU将结果从GPU显存传回系统内存，再保存到硬盘。这个过程中，数据流动为：硬盘→内存→GPU显存→GPU计算核心→GPU显存→内存→硬盘。GPU计算的关键在于减少CPU与GPU之间的数据传输次数，通过批处理和异步传输优化性能。
+
+在统计分析的具体场景中，这种数据流转体现得更加明显。例如，当运行一个线性回归分析时：R解释器从硬盘读取脚本文件到内存；数据文件从硬盘加载到内存的数据框中；CPU执行lm()函数，在内存中进行矩阵运算；计算结果（系数、p值等）存储在内存中的模型对象里；最终结果被写入硬盘的报告文件。如果分析涉及大规模数据，可能会出现内存瓶颈，此时需要采用分批处理或流式处理策略，让数据在硬盘和内存间分块流动。
+
+理解硬件组成和程序运行流程有助于统计分析人员优化工作流程。例如，知道CPU多核特性可以指导使用并行计算包（如parallel）来加速计算；了解GPU的并行能力可以指导选择适合GPU加速的算法；认识内存限制可以避免处理过大的数据集导致系统崩溃；理解硬盘性能差异可以优化数据存储策略。这种硬件意识是现代数据科学家必备的基础知识，它帮助研究者在技术约束下做出明智的决策，确保统计分析既高效又可靠。
 
 \hypertarget{ux53d8ux91cfux4e0eux5e38ux91cf}{%
 \subsubsection{变量与常量}\label{ux53d8ux91cfux4e0eux5e38ux91cf}}
@@ -946,8 +986,18 @@ OOP还显著提高了代码的可维护性。通过清晰的类接口隔离实�
 \hypertarget{ux6a21ux5757ux4e8cllmux534fux540cux7f16ux7a0bux6280ux80fd}{%
 \section{模块二：LLM协同编程技能}\label{ux6a21ux5757ux4e8cllmux534fux540cux7f16ux7a0bux6280ux80fd}}
 
-\hypertarget{ux534fux540cux7f16ux7a0bux6a21ux5757ux5b89ux88c5}{%
-\subsection{协同编程模块安装}\label{ux534fux540cux7f16ux7a0bux6a21ux5757ux5b89ux88c5}}
+\hypertarget{aiux7f16ux7a0bux6a21ux5757ux5b89ux88c5}{%
+\subsection{AI编程模块安装}\label{aiux7f16ux7a0bux6a21ux5757ux5b89ux88c5}}
+
+大语言模型辅助编程（AI-assisted programming）是当前最热门的AI技术之一，它通过大规模预训练语言模型（如GPT-4、Claude、Qwen等）来协助程序员编写代码。这种技术革命性地改变了编程工作的本质，将程序员从繁琐的语法记忆和重复性编码任务中解放出来，使其能够更专注于算法设计、系统架构和问题解决等高层次思维活动。
+
+然而，大模型训练和调用都需要大量计算资源，这使得AI协作编程的可行性在早期受到限制。直到2025年初DeepSeek等开源模型的出现，普通人AI协作编程的可行性才得到极大提升。随后这种AI辅助编程工具呈现爆发式增长，从最初的GitHub Copilot、DeepSeek，到后来的Claude Code、Codex、Cursor等，几乎每隔几天就有新的工具问世。这种快速迭代反映了AI技术在编程领域的巨大潜力和激烈竞争。
+
+当前AI协作编程工具的种类已经非常丰富，涵盖了从代码补全、错误修复、代码重构到完整功能实现的各个层面。但技术的快速演进也意味着任何具体工具的详细介绍都可能很快过时。因此，本章不追求对特定工具的详尽介绍，而是聚焦于通用的AI协作编程思维框架和核心技能培养。无论使用哪种具体工具，研究者都需要掌握精确提问、代码审查、迭代优化等基本能力。
+
+作为代表性工具，Qwen Code是一个基于大模型的AI协作编程工具，它借鉴了Claude Code的设计理念，支持通过Qwen Coder或Claude Code等大模型来协助编程工作。Qwen Code的特点包括命令行工作流设计、OAuth一键登录、会话管理等功能，为生态学研究者提供了便捷的AI编程协作体验。但更重要的是，通过学习和使用这类工具，研究者能够建立起与AI有效协作的思维模式，这种能力将超越具体工具的局限，成为AI时代生态学数据分析的核心竞争力。
+
+\includegraphics{imgs/qwen-code.jpg}
 
 Qwen Code（阿里通义：\textbf{qwen} 命令的 CLI）
 
