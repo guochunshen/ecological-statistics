@@ -168,7 +168,7 @@
 
 \title{生态统计学}
 \author{沈国春、李勤}
-\date{2025-09-21}
+\date{2025-09-26}
 
 \begin{document}
 \maketitle
@@ -2036,6 +2036,28 @@
 \NormalTok{2023{-}06{-}05,6,麻雀,18,张三}
 \NormalTok{2023{-}06{-}05,6,白头鹎,22,张三}
 \NormalTok{2023{-}07{-}12,7,喜鹊,10,李四}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bird\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+    \AttributeTok{date =} \FunctionTok{c}\NormalTok{(}\StringTok{"2023{-}03{-}15"}\NormalTok{, }\StringTok{"2023{-}03{-}15"}\NormalTok{, }\StringTok{"2023{-}04{-}20"}\NormalTok{,}
+  \StringTok{"2023{-}04{-}20"}\NormalTok{,}
+             \StringTok{"2023{-}05{-}10"}\NormalTok{, }\StringTok{"2023{-}06{-}05"}\NormalTok{, }\StringTok{"2023{-}06{-}05"}\NormalTok{,}
+  \StringTok{"2023{-}07{-}12"}\NormalTok{),}
+    \AttributeTok{month =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{),}
+    \AttributeTok{species =} \FunctionTok{c}\NormalTok{(}\StringTok{"白头鹎"}\NormalTok{, }\StringTok{"麻雀"}\NormalTok{, }\StringTok{"喜鹊"}\NormalTok{, }\StringTok{"白头鹎"}\NormalTok{, }\StringTok{"燕子"}\NormalTok{,}
+  \StringTok{"麻雀"}\NormalTok{, }\StringTok{"白头鹎"}\NormalTok{, }\StringTok{"喜鹊"}\NormalTok{),}
+    \AttributeTok{count =} \FunctionTok{c}\NormalTok{(}\DecValTok{12}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{15}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{10}\NormalTok{),}
+    \AttributeTok{observer =} \FunctionTok{c}\NormalTok{(}\StringTok{"张三"}\NormalTok{, }\StringTok{"张三"}\NormalTok{, }\StringTok{"李四"}\NormalTok{, }\StringTok{"李四"}\NormalTok{, }\StringTok{"王五"}\NormalTok{, }\StringTok{"张三"}\NormalTok{,}
+  \StringTok{"张三"}\NormalTok{, }\StringTok{"李四"}\NormalTok{)}
+\NormalTok{  )}
+
+\CommentTok{\# 保存为CSV文件}
+\FunctionTok{write.csv}\NormalTok{(bird\_data, }\StringTok{"bird\_observation\_data.csv"}\NormalTok{, }\AttributeTok{row.names =}
+  \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{fileEncoding =} \StringTok{"UTF{-}8"}\NormalTok{)}
+\CommentTok{\#注意，这里的fileEcoding参数要依据OS系统编码设定}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4869,6 +4891,17 @@
 请用上面所学产生一个斐波那契额序列的前46个值，其中斐波那契序列的具体定义如下：
 
 \[F_0=0, F_1=1, F_n=F_{n-1}+F_{n-2} (n \ge 2,n \in \mathbf{N})\]
+
+\hypertarget{ux7ec3ux4e602}{%
+\subsection{练习2}\label{ux7ec3ux4e602}}
+
+针对一段给定的字符串：ladjgl5ug6e6wjgl12saj98gd0la，请用R语言提取其中的数字并求和。
+要求，给出详细的编码过程及最终结果。
+
+\hypertarget{ux7ec3ux4e603}{%
+\subsection{练习3}\label{ux7ec3ux4e603}}
+
+在项目文件夹的data目录下，存在一个天童样地的数据Tiantong\_Sample.csv，其中包含7列，分别为：spCN（物种中文名）、sp（物种代码）、tag（个体编码）、gx（个体x坐标）、gy（个体y坐标）、dbh（胸径）、height（个体高度）。请读取该文件，并统计总共有多少个物种、胸径大于10的个体有多少个、平均胸径是多少、平均高度是多少。最后统计每个物种的在天童样地的个体数，并计算shannon多样性指数 。
 
   \bibliography{book.bib,packages.bib}
 
