@@ -191,10 +191,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="概率与分布.html"><a href="概率与分布.html#随机变量与分布"><i class="fa fa-check"></i><b>2.2</b> 随机变量与分布</a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="概率与分布.html"><a href="概率与分布.html#从事件到变量随机变量与概率分布"><i class="fa fa-check"></i><b>2.2.1</b> 从事件到变量——随机变量与概率分布</a></li>
-<li class="chapter" data-level="2.2.2" data-path="概率与分布.html"><a href="概率与分布.html#从一顿午餐到行为法则离散随机变量的分布家族"><i class="fa fa-check"></i><b>2.2.2</b> 从一顿午餐到行为法则：离散随机变量的分布家族</a></li>
-<li class="chapter" data-level="2.2.3" data-path="概率与分布.html"><a href="概率与分布.html#更大的世界-连续随机变量"><i class="fa fa-check"></i><b>2.2.3</b> 更大的世界-连续随机变量</a></li>
+<li class="chapter" data-level="2.2.1" data-path="概率与分布.html"><a href="概率与分布.html#概率分布"><i class="fa fa-check"></i><b>2.2.1</b> 概率分布</a></li>
+<li class="chapter" data-level="2.2.2" data-path="概率与分布.html"><a href="概率与分布.html#累积概率分布从可能性到确定性"><i class="fa fa-check"></i><b>2.2.2</b> 累积概率分布：从可能性到确定性</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="概率与分布.html"><a href="概率与分布.html#从一顿午餐到行为法则离散随机变量的分布家族"><i class="fa fa-check"></i><b>2.3</b> 从一顿午餐到行为法则：离散随机变量的分布家族</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="概率与分布.html"><a href="概率与分布.html#伯努利分布一个是或否的终极问题"><i class="fa fa-check"></i><b>2.3.1</b> 伯努利分布：一个”是”或”否”的终极问题</a></li>
+<li class="chapter" data-level="2.3.2" data-path="概率与分布.html"><a href="概率与分布.html#二项分布重复是非题的计数法则"><i class="fa fa-check"></i><b>2.3.2</b> 二项分布：重复”是非题”的计数法则</a></li>
+<li class="chapter" data-level="2.3.3" data-path="概率与分布.html"><a href="概率与分布.html#泊松分布罕见事件的低语者"><i class="fa fa-check"></i><b>2.3.3</b> 泊松分布：罕见事件的”低语者”</a></li>
+<li class="chapter" data-level="2.3.4" data-path="概率与分布.html"><a href="概率与分布.html#几何分布等待第一次成功的耐心"><i class="fa fa-check"></i><b>2.3.4</b> 几何分布：等待”第一次成功”的耐心</a></li>
+<li class="chapter" data-level="2.3.5" data-path="概率与分布.html"><a href="概率与分布.html#负二项分布等待最后一次成功的耐心"><i class="fa fa-check"></i><b>2.3.5</b> 负二项分布：等待”最后一次成功”的耐心</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="概率与分布.html"><a href="概率与分布.html#更大的世界-连续随机变量"><i class="fa fa-check"></i><b>2.4</b> 更大的世界-连续随机变量</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html"><i class="fa fa-check"></i><b>3</b> 附录1 R语言编程基础</a>
 <ul>
@@ -523,13 +531,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="随机变量与分布" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> 随机变量与分布<a href="概率与分布.html#随机变量与分布" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="从事件到变量随机变量与概率分布" class="section level3 hasAnchor" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> 从事件到变量——随机变量与概率分布<a href="概率与分布.html#从事件到变量随机变量与概率分布" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>现在，我想更系统地描述你这只”蚱蜢”的行为。作为一名生态学研究者，我面对的不仅仅是描述性的观察记录，而是需要建立一个能够量化、预测和分析的数学模型。“蚱蜢选择哪种植物进食”这个看似简单的行为，实际上蕴含着复杂的决策过程，受到营养需求、环境因素、个体偏好等多重影响。我需要一个强大的数学工具来捕捉这种不确定性，将模糊的行为模式转化为精确的概率描述。</p>
 <p>于是，我引入<strong>随机变量</strong>的概念，将其命名为X。随机变量是概率论中的核心工具，它就像一个数学翻译器，将现实世界中的随机现象转化为数学语言。我精心定义：当X=1时，代表你选择了营养丰富的黑麦草；当X=2时，代表你选择了环境复杂的混合草甸；当X=3时，代表你选择了相对稀少的三叶草。这种编码方式不仅简化了描述，更重要的是为后续的数学分析奠定了基础。</p>
 <p>随机变量的奇妙之处在于它的双重性：在每次具体观察之前，X的取值是完全不确定的——它可能是1、2或3中的任意一个，这种不确定性正是生态系统中生物行为的本质特征。然而，这种不确定性并非毫无规律可言。通过长期的观察和数据积累，我发现每个可能的取值都有其特定的发生概率。这种概率分布就像是你行为模式的”数学指纹”，精确地刻画了你在不同环境条件下的选择倾向。随机变量的引入，使我们能够从定性描述迈向定量分析，为理解生物决策机制提供了强有力的数学框架。</p>
-<div id="概率分布" class="section level4 hasAnchor" number="2.2.1.1">
-<h4><span class="header-section-number">2.2.1.1</span> 概率分布<a href="概率与分布.html#概率分布" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="概率分布" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> 概率分布<a href="概率与分布.html#概率分布" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>接下来，我把随机变量X所有可能的取值及其对应的概率，整理成一张表。</p>
 <table>
 <thead>
@@ -557,8 +563,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>如果我画成柱状图，就得到了一个<strong>概率分布图</strong>，直观地展示了这种”分布”情况。</p>
 <p><img src="ecological-statistics_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="累积概率分布从可能性到确定性" class="section level4 hasAnchor" number="2.2.1.2">
-<h4><span class="header-section-number">2.2.1.2</span> 累积概率分布：从可能性到确定性<a href="概率与分布.html#累积概率分布从可能性到确定性" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="累积概率分布从可能性到确定性" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> 累积概率分布：从可能性到确定性<a href="概率与分布.html#累积概率分布从可能性到确定性" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>除了了解每种植物被选择的概率，我们有时还需要回答这样的问题：“蚱蜢选择黑麦草或混合草甸的概率是多少？”或者”选择价值较低的植物（三叶草）的概率是多少？“这些问题引导我们认识<strong>累积概率分布</strong>。</p>
 <p>累积概率分布描述的是随机变量取值小于或等于某个特定值的概率。对于我们的蚱蜢午餐选择问题，我们可以构建如下的累积分布：</p>
 <table>
@@ -600,13 +606,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>在生态学中，累积概率分布广泛应用于风险评估、资源分配决策和种群管理策略制定。</p>
 </div>
 </div>
-<div id="从一顿午餐到行为法则离散随机变量的分布家族" class="section level3 hasAnchor" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> 从一顿午餐到行为法则：离散随机变量的分布家族<a href="概率与分布.html#从一顿午餐到行为法则离散随机变量的分布家族" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="从一顿午餐到行为法则离散随机变量的分布家族" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> 从一顿午餐到行为法则：离散随机变量的分布家族<a href="概率与分布.html#从一顿午餐到行为法则离散随机变量的分布家族" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>我们已经成功地为蚱蜢的午餐偏好创建了一个数学模型。我们定义了一个随机变量X，它就像一个聪明的代理人，将“吃哪种植物”这个文字问题，转化成了“X等于1，2，还是3？”这个数学问题。</p>
 <p>离散型随机变量的核心特征就是：它的可能取值是有限个或可数的无限个（就像整数一样，可以一个一个数出来）。蚱蜢的选择（1，2，3）就是有限的、分立的点，而不是连续的光滑区间。我们整理出的那张概率表格，正是这个随机变量的概率分布。它如同一份“行为密码”，精确地告诉我们这只蚱蜢的习性。</p>
 <p>不过，自然界的奥秘在于，许多看似不同的行为背后，可能隐藏着同一种“底层法则”。接下来，就让我们认识几位在生态学中无处不在的离散分布“明星”。</p>
-<div id="伯努利分布一个是或否的终极问题" class="section level4 hasAnchor" number="2.2.2.1">
-<h4><span class="header-section-number">2.2.2.1</span> 伯努利分布：一个”是”或”否”的终极问题<a href="概率与分布.html#伯努利分布一个是或否的终极问题" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="伯努利分布一个是或否的终极问题" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> 伯努利分布：一个”是”或”否”的终极问题<a href="概率与分布.html#伯努利分布一个是或否的终极问题" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>故事开端：</strong> 现在，我不再关心蚱蜢具体吃了三种植物中的哪一种，而是问一个更简单的问题：它这次进食是否选择了黑麦草？ 结果只有两种：“是”（成功） 或 “否”（失败）。这种简化的视角让我们能够专注于最本质的二元选择问题。</p>
 <p><strong>数学定义：</strong> 伯努利分布是描述单次伯努利试验结果的概率分布。伯努利试验具有三个基本特征： 1. 每次试验只有两种可能的结果（成功/失败） 2. 每次试验中成功的概率<span class="math inline">\(p\)</span>保持不变 3. 各次试验相互独立</p>
 <p><strong>概率函数表达式：</strong> 伯努利分布的概率质量函数为：</p>
@@ -636,8 +642,8 @@ p &amp; \text{如果 } x = 1 \\
 </ol>
 <p>伯努利分布的美妙之处在于它的简洁性和普适性。尽管生态系统的复杂性远超简单的二元选择，但通过将复杂问题分解为基本的伯努利试验，我们能够逐步建立起理解自然界的数学模型框架。</p>
 </div>
-<div id="二项分布重复是非题的计数法则" class="section level4 hasAnchor" number="2.2.2.2">
-<h4><span class="header-section-number">2.2.2.2</span> 二项分布：重复”是非题”的计数法则<a href="概率与分布.html#二项分布重复是非题的计数法则" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="二项分布重复是非题的计数法则" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> 二项分布：重复”是非题”的计数法则<a href="概率与分布.html#二项分布重复是非题的计数法则" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>故事延续：</strong> 现在，我连续观察蚱蜢的10次进食选择。每一次选择，都是一个独立的伯努利试验（是否吃黑麦草）。我关心的问题是：在这10次观察中，它总共有多大概率有恰好7次选择了黑麦草？或者，至少有8次？这种从单次试验扩展到多次试验的视角，引导我们认识二项分布。</p>
 <p><strong>数学定义：</strong> 二项分布描述的是在<span class="math inline">\(n\)</span>次独立的伯努利试验中，成功次数<span class="math inline">\(k\)</span>的概率分布。二项试验满足以下条件： 1. 试验由<span class="math inline">\(n\)</span>次相同的伯努利试验组成 2. 每次试验只有两种可能的结果（成功/失败） 3. 每次试验的成功概率<span class="math inline">\(p\)</span>保持不变 4. 各次试验相互独立</p>
 <p><strong>概率函数表达式：</strong> 二项分布的概率质量函数为：</p>
@@ -665,8 +671,8 @@ p &amp; \text{如果 } x = 1 \\
 </ol>
 <p>二项分布的美妙之处在于它将复杂的生态计数问题简化为基本的概率计算，为我们提供了量化生态现象的有力工具。</p>
 </div>
-<div id="泊松分布罕见事件的低语者" class="section level4 hasAnchor" number="2.2.2.3">
-<h4><span class="header-section-number">2.2.2.3</span> 泊松分布：罕见事件的”低语者”<a href="概率与分布.html#泊松分布罕见事件的低语者" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="泊松分布罕见事件的低语者" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> 泊松分布：罕见事件的”低语者”<a href="概率与分布.html#泊松分布罕见事件的低语者" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>故事新篇：</strong> 这次，我不固定观察次数，而是固定观察时间。我坐在草地上，用一个小时的时间，记录下这只蚱蜢做出剧烈警戒性跳跃的次数。这种跳跃并不频繁，可能一次，可能两次，也可能一次都没有。在一个很短的时间间隔内，发生一次跳跃的概率很小，且事件彼此独立。这种对稀有事件计数的需求，引导我们认识泊松分布。</p>
 <p><strong>数学定义：</strong> 泊松分布描述的是在固定时间间隔、固定面积或固定体积内，稀有事件发生次数的概率分布。泊松过程满足以下条件： 1. 事件在任意小的时间间隔内发生的概率与时间间隔长度成正比 2. 在不相交的时间间隔内，事件发生次数相互独立 3. 事件在任意时间点发生的概率相同（平稳性） 4. 在极短时间间隔内，发生两次或以上事件的概率可以忽略</p>
 <p><strong>概率函数表达式：</strong> 泊松分布的概率质量函数为：</p>
@@ -694,8 +700,8 @@ p &amp; \text{如果 } x = 1 \\
 </ol>
 <p>泊松分布的美妙之处在于它用一个简单的参数<span class="math inline">\(\lambda\)</span>就描述了复杂生态现象的概率规律，为我们理解自然界的随机性提供了简洁而强大的数学工具。</p>
 </div>
-<div id="几何分布等待第一次成功的耐心" class="section level4 hasAnchor" number="2.2.2.4">
-<h4><span class="header-section-number">2.2.2.4</span> 几何分布：等待”第一次成功”的耐心<a href="概率与分布.html#几何分布等待第一次成功的耐心" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="几何分布等待第一次成功的耐心" class="section level3 hasAnchor" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> 几何分布：等待”第一次成功”的耐心<a href="概率与分布.html#几何分布等待第一次成功的耐心" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>故事视角转换：</strong> 想象现在是清晨，蚱蜢开始了它的第一次觅食。我好奇的是：它需要尝试多少次，才能第一次成功吃到它最爱的黑麦草？ 也许第一次就成功了（X=1），也许前两次都去了别处，第三次才成功（X=3）。这种对”第一次成功”等待时间的关注，引导我们认识几何分布。</p>
 <p><strong>数学定义：</strong> 几何分布描述的是在一系列独立的伯努利试验中，首次获得成功所需要的试验次数。几何分布满足以下条件： 1. 试验由一系列相同的伯努利试验组成 2. 每次试验只有两种可能的结果（成功/失败） 3. 每次试验的成功概率<span class="math inline">\(p\)</span>保持不变 4. 各次试验相互独立 5. 试验持续进行直到第一次成功出现</p>
 <p><strong>概率函数表达式：</strong> 几何分布的概率质量函数为：</p>
@@ -723,9 +729,38 @@ p &amp; \text{如果 } x = 1 \\
 </ol>
 <p>几何分布的美妙之处在于它用一个简单的参数<span class="math inline">\(p\)</span>就描述了复杂生态过程中的等待时间规律，特别是其”无记忆性”特征，使得我们可以专注于当前的生态过程而不受历史影响。</p>
 </div>
+<div id="负二项分布等待最后一次成功的耐心" class="section level3 hasAnchor" number="2.3.5">
+<h3><span class="header-section-number">2.3.5</span> 负二项分布：等待”最后一次成功”的耐心<a href="概率与分布.html#负二项分布等待最后一次成功的耐心" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>故事视角深化：</strong> 几何分布关注的是”第一次成功”，但生态学中我们常常需要更复杂的等待模式。比如，我想知道：这只蚱蜢需要尝试多少次，才能<strong>第三次</strong>成功吃到黑麦草？这种对”第r次成功”等待时间的关注，引导我们认识负二项分布。</p>
+<p><strong>数学定义：</strong> 负二项分布描述的是在一系列独立的伯努利试验中，获得第r次成功所需要的试验次数。负二项分布满足以下条件： 1. 试验由一系列相同的伯努利试验组成 2. 每次试验只有两种可能的结果（成功/失败） 3. 每次试验的成功概率<span class="math inline">\(p\)</span>保持不变 4. 各次试验相互独立 5. 试验持续进行直到第r次成功出现</p>
+<p><strong>概率函数表达式：</strong> 负二项分布的概率质量函数为：</p>
+<p><span class="math display">\[P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots\]</span></p>
+<p>其中： - <span class="math inline">\(X\)</span>是负二项随机变量，表示第r次成功所需的试验次数 - <span class="math inline">\(k\)</span>是总的试验次数（<span class="math inline">\(k \geq r\)</span>） - <span class="math inline">\(r\)</span>是期望的成功次数 - <span class="math inline">\(p\)</span>是每次试验的成功概率 - <span class="math inline">\(\binom{k-1}{r-1}\)</span>是组合数，表示前<span class="math inline">\(k-1\)</span>次试验中安排<span class="math inline">\(r-1\)</span>次成功的方式数</p>
+<p><strong>分布特性：</strong> - 期望值：<span class="math inline">\(E[X] = \frac{r}{p}\)</span> - 方差：<span class="math inline">\(Var(X) = \frac{r(1-p)}{p^2}\)</span> - 当<span class="math inline">\(r=1\)</span>时，负二项分布退化为几何分布 - 分布形状取决于<span class="math inline">\(r\)</span>和<span class="math inline">\(p\)</span>的值，可以呈现不同的偏斜形态</p>
+<p><img src="ecological-statistics_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><strong>生态学肖像：</strong></p>
+<p>负二项分布在生态学中广泛应用于需要多次成功才能达到目标的场景：</p>
+<ul>
+<li><strong>一只捕食者需要捕获多少只猎物，才能满足其能量需求（第r次成功捕食）</strong> - 描述捕食效率的累积效应</li>
+<li><strong>一个植物种群需要经过多少代，才能积累到足够的有利突变（第r次有利突变）</strong> - 分析进化过程的累积性</li>
+<li><strong>一次生态调查需要设置多少个样方，才能第r次发现目标稀有物种</strong> - 优化稀有物种监测方案</li>
+<li><strong>一个生态系统需要经历多少次干扰，才会达到第r次显著的结构变化</strong> - 研究生态系统的累积响应</li>
+<li><strong>一个保护项目需要实施多少项措施，才能第r次观察到种群恢复迹象</strong> - 评估保护措施的有效性</li>
+</ul>
+<p><strong>生态学意义：</strong></p>
+<p>负二项分布是几何分布的自然推广，它将单次成功的等待时间模型扩展到多次成功的累积等待时间模型。在生态学研究中，负二项分布帮助我们：</p>
+<ol style="list-style-type: decimal">
+<li><strong>资源管理</strong>：预测达到特定资源积累目标所需的时间或努力</li>
+<li><strong>种群监测</strong>：设计合理的监测方案来发现稀有物种</li>
+<li><strong>保护规划</strong>：评估保护措施实施的时间框架和效果</li>
+<li><strong>进化研究</strong>：分析适应性特征积累的时间尺度</li>
+<li><strong>风险评估</strong>：评估生态系统达到临界状态所需的干扰次数</li>
+</ol>
+<p>负二项分布的美妙之处在于它能够描述生态系统中”累积成功”的复杂模式，为我们理解生态过程的渐进性和累积性提供了有力的数学工具。</p>
 </div>
-<div id="更大的世界-连续随机变量" class="section level3 hasAnchor" number="2.2.3">
-<h3><span class="header-section-number">2.2.3</span> 更大的世界-连续随机变量<a href="概率与分布.html#更大的世界-连续随机变量" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="更大的世界-连续随机变量" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> 更大的世界-连续随机变量<a href="概率与分布.html#更大的世界-连续随机变量" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>从跳跃到体长：描绘连续世界的概率地图</p>
 <p>我们已经为蚱蜢的“午餐选择”绘制了一张清晰的概率分布图，那是由一根根独立的柱子组成的，因为它的选择是分门别类的（植物A、B、C）。这类变量被称为离散型随机变量，它们的取值是可数的。</p>
 <p>但现在，让我们拿起尺子和高速摄像机，关注一些更细微、更流畅的特征。比如，这只蚱蜢的体长是多少厘米？或者它受到惊吓时，一次跳跃的距离是多少米？这些数值，可以是3.15厘米，也可以是3.151厘米，甚至在理论上可以是3.1515926…厘米。它们的取值充满了无限的可能性，充满了“连续性”。 从柱子到光滑的曲线：概率密度函数</p>
@@ -751,7 +786,6 @@ p &amp; \text{如果 } x = 1 \\
  模拟生态学实验时，计算机生成的随机数，理想情况下就是均匀分布的。</code></pre></li>
 </ol>
 
-</div>
 </div>
 </div>
             </section>
