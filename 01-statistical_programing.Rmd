@@ -961,6 +961,8 @@ calculate_shannon_diversity <- function(species_vector) {
 # 复杂度曲线可视化
 library(ggplot2)
 library(dplyr)
+library(showtext)
+showtext_auto()
 
 # 创建数据框
 n <- 1:20  # 数据规模

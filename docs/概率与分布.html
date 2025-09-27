@@ -189,7 +189,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1.3" data-path="概率与分布.html"><a href="概率与分布.html#数据的语言频率概率"><i class="fa fa-check"></i><b>2.1.3</b> 数据的语言——频率概率</a></li>
 <li class="chapter" data-level="2.1.4" data-path="概率与分布.html"><a href="概率与分布.html#动态的更新贝叶斯概率"><i class="fa fa-check"></i><b>2.1.4</b> 动态的更新——贝叶斯概率</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="概率与分布.html"><a href="概率与分布.html#随机变量与分布"><i class="fa fa-check"></i><b>2.2</b> 随机变量与分布</a></li>
+<li class="chapter" data-level="2.2" data-path="概率与分布.html"><a href="概率与分布.html#随机变量与分布"><i class="fa fa-check"></i><b>2.2</b> 随机变量与分布</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="概率与分布.html"><a href="概率与分布.html#从事件到变量随机变量与概率分布"><i class="fa fa-check"></i><b>2.2.1</b> 从事件到变量——随机变量与概率分布</a></li>
+<li class="chapter" data-level="2.2.2" data-path="概率与分布.html"><a href="概率与分布.html#从一顿午餐到行为法则离散随机变量的分布家族"><i class="fa fa-check"></i><b>2.2.2</b> 从一顿午餐到行为法则：离散随机变量的分布家族</a></li>
+<li class="chapter" data-level="2.2.3" data-path="概率与分布.html"><a href="概率与分布.html#更大的世界-连续随机变量"><i class="fa fa-check"></i><b>2.2.3</b> 更大的世界-连续随机变量</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html"><i class="fa fa-check"></i><b>3</b> 附录1 R语言编程基础</a>
 <ul>
@@ -342,11 +347,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>构建样本空间需要仔细考虑试验的所有可能结果。例如，在蚱蜢选择植物的例子中，样本空间包含三个基本事件：{选择黑麦草，选择混合草甸，选择三叶草}。每个基本事件都是互斥且完备的——互斥意味着不可能同时发生两个事件，完备意味着涵盖了所有可能性。</p>
 <p>古典概率的定义公式简洁而优美：</p>
 <p><span class="math display">\[P(A) = \frac{\text{事件A包含的基本事件个数}}{\text{样本空间中基本事件的总数}}\]</span></p>
-<pre><code>$P(A)$： 事件A发生的概率。
-
-分子： 你关心的事件A包含了多少种可能的结果。
-
-分母： 整个试验一共有多少种可能的结果。</code></pre>
+<p><span class="math inline">\(P(A)\)</span>： 事件A发生的概率。分子： 你关心的事件A包含了多少种可能的结果。分母： 整个试验一共有多少种可能的结果。</p>
 <p>这个公式计算出的概率，是一个介于0和1之间的数。<span class="math inline">\(P(A)=0\)</span>表示事件A不可能发生；<span class="math inline">\(P(A)=1\)</span>表示事件A必然发生。概率的归一化条件要求所有基本事件的概率之和等于1。</p>
 </div>
 <div id="生态学中的古典概率应用" class="section level4 hasAnchor" number="2.1.2.3">
@@ -430,20 +431,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="频率概率的优势与局限性" class="section level4 hasAnchor" number="2.1.3.4">
 <h4><span class="header-section-number">2.1.3.4</span> 频率概率的优势与局限性<a href="概率与分布.html#频率概率的优势与局限性" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p><strong>优势：</strong></p>
-<ol style="list-style-type: decimal">
-<li><p><strong>客观性</strong>：基于实际观察数据，避免了主观假设。</p></li>
-<li><p><strong>可验证性</strong>：结果可以通过重复试验来验证。</p></li>
-<li><p><strong>实用性</strong>：适用于各种现实世界的概率估计问题。</p></li>
-<li><p><strong>渐进精确性</strong>：随着样本量的增加，估计会越来越准确。</p></li>
-</ol>
-<p><strong>局限性：</strong></p>
-<ol style="list-style-type: decimal">
-<li><p><strong>需要大量数据</strong>：为了获得可靠的估计，通常需要大量的观察数据。</p></li>
-<li><p><strong>无法处理一次性事件</strong>：对于无法重复的事件（如特定物种的灭绝），频率概率难以应用。</p></li>
-<li><p><strong>历史依赖性</strong>：基于历史数据的概率估计可能无法反映未来的变化。</p></li>
-<li><p><strong>样本偏差</strong>：如果样本不具有代表性，频率估计会产生偏差。</p></li>
-</ol>
+<p>频率概率方法在生态学研究中展现出显著的优势。首先，其<strong>客观性</strong>确保了概率估计基于实际观察数据而非主观臆断，这为生态学研究提供了坚实的实证基础。通过系统记录生物行为或环境变化，研究者能够获得反映真实世界规律的量化结果。其次，频率概率具有<strong>可验证性</strong>，任何研究者都可以通过重复相同的观察或实验来验证结果的可靠性，这符合科学研究的可重复性原则。在<strong>实用性</strong>方面，频率概率适用于各种现实世界的概率估计问题，从物种分布调查到种群动态监测，都能提供有效的量化工具。最重要的是，频率概率具有<strong>渐进精确性</strong>，随着样本量的增加，根据大数定律，频率估计会越来越接近真实的概率值，这种自我修正的特性使其成为长期生态监测的理想工具。</p>
+<p>然而，频率概率方法也存在明显的局限性。<strong>需要大量数据</strong>是其最突出的限制，为了获得可靠的估计，通常需要大量的观察数据，这在某些稀有物种或难以观察的行为研究中可能难以实现。<strong>无法处理一次性事件</strong>是另一个重要局限，对于无法重复的事件（如特定物种的灭绝、罕见自然灾害等），频率概率难以提供有意义的估计。<strong>历史依赖性</strong>使得基于历史数据的概率估计可能无法准确反映未来的变化，特别是在环境快速变化的背景下，过去的数据可能无法预测未来的趋势。此外，<strong>样本偏差</strong>问题不容忽视，如果样本选择不具有代表性，或者观察过程中存在系统性偏差，频率估计会产生误导性的结果。这些局限性提醒我们在应用频率概率时需要谨慎考虑其适用条件，并在必要时结合其他概率方法进行综合分析。</p>
 </div>
 <div id="从频率概率到现代统计学" class="section level4 hasAnchor" number="2.1.3.5">
 <h4><span class="header-section-number">2.1.3.5</span> 从频率概率到现代统计学<a href="概率与分布.html#从频率概率到现代统计学" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -465,7 +454,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>贝叶斯定理的数学基础</strong></p>
 <p>贝叶斯定理是贝叶斯概率的理论核心。这个定理提供了一个数学框架，用于在获得新证据时更新我们对某个假设的信念。其基本形式为：</p>
 <p><span class="math display">\[P(H|E) = \frac{P(E|H) \times P(H)}{P(E)}\]</span></p>
-<p>其中： - <span class="math inline">\(P(H|E)\)</span> 是后验概率（在证据E条件下假设H的概率） - <span class="math inline">\(P(H)\)</span> 是先验概率（在获得证据前对假设H的初始信念） - <span class="math inline">\(P(E|H)\)</span> 是似然函数（在假设H成立时观察到证据E的概率） - <span class="math inline">\(P(E)\)</span> 是证据的边际概率</p>
+<p>其中：<br />
+- <span class="math inline">\(P(H|E)\)</span> 是后验概率（在证据E条件下假设H的概率）<br />
+- <span class="math inline">\(P(H)\)</span> 是先验概率（在获得证据前对假设H的初始信念）<br />
+- <span class="math inline">\(P(E|H)\)</span> 是似然函数（在假设H成立时观察到证据E的概率）<br />
+- <span class="math inline">\(P(E)\)</span> 是证据的边际概率</p>
 <p><strong>贝叶斯概率的哲学基础</strong></p>
 <p>贝叶斯概率体现了”学习”的本质。我们不是从零开始认识世界，而是基于已有的知识（先验），结合新的观察（证据），不断更新我们的认知（后验）。这种思维方式更接近人类实际的认知过程。</p>
 <p><strong>贝叶斯概率的现实类比</strong></p>
@@ -506,22 +499,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="贝叶斯概率的优势与局限性" class="section level4 hasAnchor" number="2.1.4.4">
 <h4><span class="header-section-number">2.1.4.4</span> 贝叶斯概率的优势与局限性<a href="概率与分布.html#贝叶斯概率的优势与局限性" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p><strong>优势：</strong></p>
-<ol style="list-style-type: decimal">
-<li><p><strong>灵活性</strong>：能够结合先验知识和新证据</p></li>
-<li><p><strong>不确定性量化</strong>：能够明确表达参数的不确定性</p></li>
-<li><p><strong>小样本适用性</strong>：在数据有限时仍然可以使用</p></li>
-<li><p><strong>模型复杂性处理</strong>：能够处理复杂的层次模型</p></li>
-<li><p><strong>决策支持</strong>：直接提供决策所需的概率信息</p></li>
-</ol>
-<p><strong>局限性：</strong></p>
-<ol style="list-style-type: decimal">
-<li><p><strong>主观性</strong>：先验概率的选择可能带有主观性</p></li>
-<li><p><strong>计算复杂性</strong>：复杂的模型需要大量的计算资源</p></li>
-<li><p><strong>先验敏感性</strong>：结果可能对先验选择敏感</p></li>
-<li><p><strong>收敛问题</strong>：马尔可夫链蒙特卡洛方法可能出现收敛问题</p></li>
-<li><p><strong>解释难度</strong>：结果的理解和解释需要一定的统计背景</p></li>
-</ol>
+<p>贝叶斯概率方法在现代生态学研究中展现出独特的优势。其<strong>灵活性</strong>体现在能够有机地结合先验知识和新的观测证据，这种动态更新的特性使其特别适合处理环境变化和物种适应性研究。通过贝叶斯定理，研究者可以将专家经验、历史数据与最新的实地观察相结合，形成更加全面的认知。<strong>不确定性量化</strong>是贝叶斯方法的另一重要优势，它不仅提供点估计，还能明确表达参数的不确定性范围，这对于生态风险评估和保护决策具有重要意义。在<strong>小样本适用性</strong>方面，贝叶斯方法在数据有限的情况下仍然能够发挥作用，这对于研究稀有物种或难以大规模观察的生态现象尤为宝贵。<strong>模型复杂性处理</strong>能力使贝叶斯方法能够应对生态学中常见的多层次、多变量复杂系统，如考虑个体差异、空间异质性和时间动态的生态模型。最重要的是，贝叶斯方法提供<strong>决策支持</strong>，直接输出决策所需的概率信息，如物种灭绝风险、保护措施效果等，为生态管理提供科学依据。</p>
+<p>然而，贝叶斯概率方法也存在不容忽视的局限性。<strong>主观性</strong>是其最受争议的方面，先验概率的选择往往依赖于研究者的主观判断，不同专家可能会给出不同的先验设定。<strong>计算复杂性</strong>是实际应用中的主要障碍，复杂的贝叶斯模型需要大量的计算资源，特别是使用马尔可夫链蒙特卡洛方法时，计算时间可能相当可观。<strong>先验敏感性</strong>问题意味着结果可能对先验选择高度敏感，不恰当的先验设定可能导致有偏的结论。<strong>收敛问题</strong>是MCMC方法特有的挑战，在复杂模型中可能出现收敛困难或收敛到局部最优解的情况。此外，<strong>解释难度</strong>限制了贝叶斯方法的普及，后验分布的理解和解释需要研究者具备相当的统计背景，这在一定程度上阻碍了其在生态学实践中的广泛应用。这些局限性提示我们在使用贝叶斯方法时需要谨慎处理先验设定，并充分考虑计算可行性和结果解释的清晰性。</p>
 </div>
 <div id="从贝叶斯概率到现代数据分析" class="section level4 hasAnchor" number="2.1.4.5">
 <h4><span class="header-section-number">2.1.4.5</span> 从贝叶斯概率到现代数据分析<a href="概率与分布.html#从贝叶斯概率到现代数据分析" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -532,14 +511,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="随机变量与分布" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> 随机变量与分布<a href="概率与分布.html#随机变量与分布" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="第四幕从事件到变量随机变量与概率分布" class="section level4 hasAnchor" number="2.2.0.1">
-<h4><span class="header-section-number">2.2.0.1</span> <strong>第四幕：从事件到变量——随机变量与概率分布</strong><a href="概率与分布.html#第四幕从事件到变量随机变量与概率分布" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>现在，我想更系统地描述你的行为。我需要一个数学工具来代表你“午餐选择”这个不确定的结果。</p>
-<ul>
-<li>于是，我定义一个<strong>随机变量</strong>，比如叫X。我规定：X=1 代表选择黑麦草，X=2代表混合草甸，X=3代表三叶草。</li>
-<li>X的奇妙之处在于，在观察之前，它的值是不确定的（随机的），但每个值都有其特定的发生概率。</li>
-</ul>
-<p>接下来，我把随机变量X所有可能的取值及其对应的概率，整理成一张表或一幅图。</p>
+<div id="从事件到变量随机变量与概率分布" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> 从事件到变量——随机变量与概率分布<a href="概率与分布.html#从事件到变量随机变量与概率分布" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>现在，我想更系统地描述你这只”蚱蜢”的行为。作为一名生态学研究者，我面对的不仅仅是描述性的观察记录，而是需要建立一个能够量化、预测和分析的数学模型。“蚱蜢选择哪种植物进食”这个看似简单的行为，实际上蕴含着复杂的决策过程，受到营养需求、环境因素、个体偏好等多重影响。我需要一个强大的数学工具来捕捉这种不确定性，将模糊的行为模式转化为精确的概率描述。</p>
+<p>于是，我引入<strong>随机变量</strong>的概念，将其命名为X。随机变量是概率论中的核心工具，它就像一个数学翻译器，将现实世界中的随机现象转化为数学语言。我精心定义：当X=1时，代表你选择了营养丰富的黑麦草；当X=2时，代表你选择了环境复杂的混合草甸；当X=3时，代表你选择了相对稀少的三叶草。这种编码方式不仅简化了描述，更重要的是为后续的数学分析奠定了基础。</p>
+<p>随机变量的奇妙之处在于它的双重性：在每次具体观察之前，X的取值是完全不确定的——它可能是1、2或3中的任意一个，这种不确定性正是生态系统中生物行为的本质特征。然而，这种不确定性并非毫无规律可言。通过长期的观察和数据积累，我发现每个可能的取值都有其特定的发生概率。这种概率分布就像是你行为模式的”数学指纹”，精确地刻画了你在不同环境条件下的选择倾向。随机变量的引入，使我们能够从定性描述迈向定量分析，为理解生物决策机制提供了强有力的数学框架。</p>
+<div id="概率分布" class="section level4 hasAnchor" number="2.2.1.1">
+<h4><span class="header-section-number">2.2.1.1</span> 概率分布<a href="概率与分布.html#概率分布" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>接下来，我把随机变量X所有可能的取值及其对应的概率，整理成一张表。</p>
 <table>
 <thead>
 <tr class="header">
@@ -562,61 +541,137 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<ul>
-<li>这张表，就构成了一个<strong>概率分布</strong>！它完整地描绘了你的选择偏好全景。它清晰地显示，你最可能去哪（黑麦草），最不可能去哪（三叶草）。</li>
-<li>如果我画成柱状图，就得到了一个<strong>概率分布图</strong>，直观地展示了这种“分布”情况。</li>
-</ul>
-<p>从一顿午餐到行为法则：离散随机变量的分布家族</p>
+<p>这张表，就构成了一个<strong>概率分布</strong>！它完整地描绘了你的选择偏好全景。它清晰地显示，你最可能去哪（黑麦草），最不可能去哪（三叶草）。</p>
+<p>如果我画成柱状图，就得到了一个<strong>概率分布图</strong>，直观地展示了这种”分布”情况。</p>
+<p><img src="ecological-statistics_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="累积概率分布从可能性到确定性" class="section level4 hasAnchor" number="2.2.1.2">
+<h4><span class="header-section-number">2.2.1.2</span> 累积概率分布：从可能性到确定性<a href="概率与分布.html#累积概率分布从可能性到确定性" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>除了了解每种植物被选择的概率，我们有时还需要回答这样的问题：“蚱蜢选择黑麦草或混合草甸的概率是多少？”或者”选择价值较低的植物（三叶草）的概率是多少？“这些问题引导我们认识<strong>累积概率分布</strong>。</p>
+<p>累积概率分布描述的是随机变量取值小于或等于某个特定值的概率。对于我们的蚱蜢午餐选择问题，我们可以构建如下的累积分布：</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">随机变量 X 的取值</th>
+<th align="left">概率 P(X)</th>
+<th align="left">累积概率 F(x) = P(X ≤ x)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1 (黑麦草)</td>
+<td align="left">0.64</td>
+<td align="left">0.64</td>
+</tr>
+<tr class="even">
+<td align="left">2 (混合草甸)</td>
+<td align="left">0.29</td>
+<td align="left">0.93</td>
+</tr>
+<tr class="odd">
+<td align="left">3 (三叶草)</td>
+<td align="left">0.07</td>
+<td align="left">1.00</td>
+</tr>
+</tbody>
+</table>
+<p>这里的累积概率告诉我们： - 蚱蜢选择黑麦草的概率是 0.64 - 蚱蜢选择黑麦草<strong>或</strong>混合草甸的概率是 0.64 + 0.29 = 0.93 - 蚱蜢选择任意一种植物的概率是 1.00（必然事件）</p>
+<p><img src="ecological-statistics_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>累积概率分布图呈现为阶梯函数，在每个可能的取值处跳跃，跳跃的高度等于该取值的概率。这种分布特别有用，因为它：</p>
+<ol style="list-style-type: decimal">
+<li><strong>回答区间概率问题</strong>：我们可以直接读出 P(X ≤ 2) = 0.93<br />
+</li>
+<li><strong>计算任意事件的概率</strong>：P(X &gt; 2) = 1 - P(X ≤ 2) = 1 - 0.93 = 0.07<br />
+</li>
+<li><strong>提供决策支持</strong>：如果我们想知道”蚱蜢选择营养价值较高的植物（黑麦草或混合草甸）的概率”，累积分布直接给出了答案：0.93</li>
+</ol>
+<p>在生态学中，累积概率分布广泛应用于风险评估、资源分配决策和种群管理策略制定。</p>
+</div>
+</div>
+<div id="从一顿午餐到行为法则离散随机变量的分布家族" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> 从一顿午餐到行为法则：离散随机变量的分布家族<a href="概率与分布.html#从一顿午餐到行为法则离散随机变量的分布家族" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>我们已经成功地为蚱蜢的午餐偏好创建了一个数学模型。我们定义了一个随机变量X，它就像一个聪明的代理人，将“吃哪种植物”这个文字问题，转化成了“X等于1，2，还是3？”这个数学问题。</p>
-<pre><code>离散型随机变量的核心特征就是：它的可能取值是有限个或可数的无限个（就像整数一样，可以一个一个数出来）。蚱蜢的选择（1，2，3）就是有限的、分立的点，而不是连续的光滑区间。</code></pre>
-<p>我们整理出的那张概率表格，正是这个随机变量的概率分布。它如同一份“行为密码”，精确地告诉我们这只蚱蜢的习性。但自然界的奥秘在于，许多看似不同的行为背后，可能隐藏着同一种“底层法则”。接下来，就让我们认识几位在生态学中无处不在的离散分布“明星”。 1. 伯努利分布：一个“是”或“否”的终极问题</p>
-<pre><code>故事开端： 现在，我不再关心蚱蜢具体吃了三种植物中的哪一种，而是问一个更简单的问题：它这次进食是否选择了黑麦草？ 结果只有两种：“是”（成功） 或 “否”（失败）。
+<p>离散型随机变量的核心特征就是：它的可能取值是有限个或可数的无限个（就像整数一样，可以一个一个数出来）。蚱蜢的选择（1，2，3）就是有限的、分立的点，而不是连续的光滑区间。我们整理出的那张概率表格，正是这个随机变量的概率分布。它如同一份“行为密码”，精确地告诉我们这只蚱蜢的习性。</p>
+<p>不过，自然界的奥秘在于，许多看似不同的行为背后，可能隐藏着同一种“底层法则”。接下来，就让我们认识几位在生态学中无处不在的离散分布“明星”。</p>
+<div id="伯努利分布一个是或否的终极问题" class="section level4 hasAnchor" number="2.2.2.1">
+<h4><span class="header-section-number">2.2.2.1</span> 伯努利分布：一个”是”或”否”的终极问题<a href="概率与分布.html#伯努利分布一个是或否的终极问题" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>故事开端：</strong> 现在，我不再关心蚱蜢具体吃了三种植物中的哪一种，而是问一个更简单的问题：它这次进食是否选择了黑麦草？ 结果只有两种：“是”（成功） 或 “否”（失败）。这种简化的视角让我们能够专注于最本质的二元选择问题。</p>
+<p><strong>数学定义：</strong> 伯努利分布是描述单次伯努利试验结果的概率分布。伯努利试验具有三个基本特征： 1. 每次试验只有两种可能的结果（成功/失败） 2. 每次试验中成功的概率<span class="math inline">\(p\)</span>保持不变 3. 各次试验相互独立</p>
+<p><strong>概率函数表达式：</strong> 伯努利分布的概率质量函数为：</p>
+<p><span class="math display">\[P(X = x) = \begin{cases}
+p &amp; \text{如果 } x = 1 \\
+1-p &amp; \text{如果 } x = 0
+\end{cases}\]</span></p>
+<p>或者更简洁地表示为： <span class="math display">\[P(X = x) = p^x(1-p)^{1-x}, \quad x = 0,1\]</span></p>
+<p>其中，<span class="math inline">\(X\)</span>是伯努利随机变量，<span class="math inline">\(p\)</span>是成功的概率（<span class="math inline">\(0 \leq p \leq 1\)</span>）。</p>
+<p><strong>分布特性：</strong> - 期望值：<span class="math inline">\(E[X] = p\)</span> - 方差：<span class="math inline">\(Var(X) = p(1-p)\)</span> - 当<span class="math inline">\(p=0.5\)</span>时，方差最大为0.25</p>
+<p><img src="ecological-statistics_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><strong>生态学肖像：</strong></p>
+<p>伯努利分布在生态学中无处不在，它描述的是那些具有二元结局的自然现象：</p>
+<ul>
+<li><strong>一颗种子是否发芽？</strong> - 发芽（成功）或不发芽（失败）</li>
+<li><strong>一只雏鸟能否成功活到离巢？</strong> - 存活（成功）或死亡（失败）</li>
+<li><strong>一次野外调查中，一个样方里是否出现了目标物种？</strong> - 出现（成功）或不出现（失败）</li>
+<li><strong>一只昆虫是否被天敌捕食？</strong> - 被捕食（成功）或逃脱（失败）</li>
+<li><strong>一片叶子是否被昆虫取食？</strong> - 被取食（成功）或完好（失败）</li>
+</ul>
+<p><strong>生态学意义：</strong></p>
+<p>伯努利分布虽然简单，但它是构建更复杂生态学模型的基础。许多重要的生态学分布，如二项分布、几何分布、负二项分布等，都是建立在多次独立伯努利试验的基础之上。理解伯努利分布有助于我们：</p>
+<ol style="list-style-type: decimal">
+<li><strong>量化二元生态过程</strong>：将定性的生态现象转化为可量化的概率</li>
+<li><strong>建立基准模型</strong>：为更复杂的生态模型提供理论基础</li>
+<li><strong>进行统计推断</strong>：基于二元数据估计生态过程的参数</li>
+<li><strong>风险评估</strong>：评估生态事件发生的可能性</li>
+</ol>
+<p>伯努利分布的美妙之处在于它的简洁性和普适性。尽管生态系统的复杂性远超简单的二元选择，但通过将复杂问题分解为基本的伯努利试验，我们能够逐步建立起理解自然界的数学模型框架。</p>
+</div>
+<div id="二项分布重复是非题的计数法则" class="section level4 hasAnchor" number="2.2.2.2">
+<h4><span class="header-section-number">2.2.2.2</span> 二项分布：重复“是非题”的计数法则<a href="概率与分布.html#二项分布重复是非题的计数法则" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>故事延续： 现在，我连续观察蚱蜢的10次进食选择。每一次选择，都是一个独立的伯努利试验（是否吃黑麦草）。我关心的问题是：在这10次观察中，它总共有多大概率有恰好7次选择了黑麦草？或者，至少有8次？
 
-分布肖像： 这种只有两种可能结果的试验，称为伯努利试验。其对应的随机变量X（比如，X=1代表“是”，X=0代表“否”）就服从伯努利分布。它只有一个参数 $p$，即每次试验中&quot;成功&quot;的概率（$P(X=1) = p$）。
+分布肖像： 二项分布描述的就是在$n$次独立的伯努利试验中，出现&quot;成功&quot;次数（记为$k$）的概率分布。它有两个参数：试验次数 $n$ 和每次成功的概率 $p$。
 
 生态学肖像：
 
-    一颗种子是否发芽？
+    播种100颗同种种子，最终成功发芽的数量$k$服从二项分布（$n=100$， $p=$发芽率）。
 
-    一只雏鸟能否成功活到离巢？
+    从一个大种群中随机捕获并标记50只动物，放回后再次随机捕获50只，其中被标记个体的数量$k$也服从二项分布。这正是标记重捕法的理论核心！
 
-    一次野外调查中，一个样方里是否出现了目标物种？
-
-    所有这些“二元结局”的事件，都是伯努利分布的用武之地。它是构建更复杂模型的基石。</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li><p>二项分布：重复“是非题”的计数法则</p>
-<p>故事延续： 现在，我连续观察蚱蜢的10次进食选择。每一次选择，都是一个独立的伯努利试验（是否吃黑麦草）。我关心的问题是：在这10次观察中，它总共有多大概率有恰好7次选择了黑麦草？或者，至少有8次？</p>
-<p>分布肖像： 二项分布描述的就是在<span class="math inline">\(n\)</span>次独立的伯努利试验中，出现”成功”次数（记为<span class="math inline">\(k\)</span>）的概率分布。它有两个参数：试验次数 <span class="math inline">\(n\)</span> 和每次成功的概率 <span class="math inline">\(p\)</span>。</p>
-<p>生态学肖像：</p>
-<pre><code> 播种100颗同种种子，最终成功发芽的数量$k$服从二项分布（$n=100$， $p=$发芽率）。
-
- 从一个大种群中随机捕获并标记50只动物，放回后再次随机捕获50只，其中被标记个体的数量$k$也服从二项分布。这正是标记重捕法的理论核心！
-
- 二项分布帮我们回答的是：在固定的尝试次数下，获得特定次数“成功”的概率有多大。</code></pre></li>
-<li><p>泊松分布：罕见事件的“低语者”</p>
-<p>故事新篇： 这次，我不固定观察次数，而是固定观察时间。我坐在草地上，用一个小时的时间，记录下这只蚱蜢做出剧烈警戒性跳跃的次数。这种跳跃并不频繁，可能一次，可能两次，也可能一次都没有。在一个很短的时间间隔内，发生一次跳跃的概率很小，且事件彼此独立。</p>
-<p>分布肖像： 泊松分布专门用来描述单位时间、单位面积或单位体积内，稀有事件发生次数的概率分布。它的特点是只有一个参数 <span class="math inline">\(\lambda\)</span>，它代表了事件发生的平均速率（例如，平均每小时跳跃2.5次）。它的分布形状由<span class="math inline">\(\lambda\)</span>决定，<span class="math inline">\(\lambda\)</span>较小则偏向右侧，<span class="math inline">\(\lambda\)</span>增大后逐渐变得对称。</p>
-<p>生态学肖像：</p>
-<pre><code> 一平方米的森林样地中，某种珍稀兰花的株数。
-
- 一台红外相机在一天内，拍摄到某种神秘夜行兽的次数。
-
- 一毫升海水中的浮游生物数量。
-
- 泊松分布是生态学中描述物种多度、空间分布点模式的黄金标准之一。</code></pre></li>
-<li><p>几何分布：等待“第一次成功”的耐心</p>
-<p>故事视角转换： 想象现在是清晨，蚱蜢开始了它的第一次觅食。我好奇的是：它需要尝试多少次，才能第一次成功吃到它最爱的黑麦草？ 也许第一次就成功了（X=1），也许前两次都去了别处，第三次才成功（X=3）。</p>
-<p>分布肖像： 几何分布描述的是在一系列独立的伯努利试验中，首次获得”成功”所需要的试验次数。它的参数仍然是每次试验的成功概率 <span class="math inline">\(p\)</span>。<span class="math inline">\(p\)</span>越大，意味着你很快就能成功，所以需要等待的次数的期望值越小。</p>
-<p>生态学肖像：</p>
-<pre><code> 一只捕食者需要巡视几个洞穴，才能发现第一个有猎物的。
-
- 一只传粉昆虫需要访问多少朵花，才能第一次成功获得花蜜。
-
- 几何分布刻画的是那种“守得云开见月明”的等待过程。</code></pre></li>
-</ol>
+    二项分布帮我们回答的是：在固定的尝试次数下，获得特定次数“成功”的概率有多大。</code></pre>
 </div>
-<div id="更大的世界" class="section level4 hasAnchor" number="2.2.0.2">
-<h4><span class="header-section-number">2.2.0.2</span> ** 更大的世界**<a href="概率与分布.html#更大的世界" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="泊松分布罕见事件的低语者" class="section level4 hasAnchor" number="2.2.2.3">
+<h4><span class="header-section-number">2.2.2.3</span> 泊松分布：罕见事件的“低语者”<a href="概率与分布.html#泊松分布罕见事件的低语者" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>故事新篇： 这次，我不固定观察次数，而是固定观察时间。我坐在草地上，用一个小时的时间，记录下这只蚱蜢做出剧烈警戒性跳跃的次数。这种跳跃并不频繁，可能一次，可能两次，也可能一次都没有。在一个很短的时间间隔内，发生一次跳跃的概率很小，且事件彼此独立。
+
+分布肖像： 泊松分布专门用来描述单位时间、单位面积或单位体积内，稀有事件发生次数的概率分布。它的特点是只有一个参数 $\lambda$，它代表了事件发生的平均速率（例如，平均每小时跳跃2.5次）。它的分布形状由$\lambda$决定，$\lambda$较小则偏向右侧，$\lambda$增大后逐渐变得对称。
+
+生态学肖像：
+
+    一平方米的森林样地中，某种珍稀兰花的株数。
+
+    一台红外相机在一天内，拍摄到某种神秘夜行兽的次数。
+
+    一毫升海水中的浮游生物数量。
+
+    泊松分布是生态学中描述物种多度、空间分布点模式的黄金标准之一。</code></pre>
+</div>
+<div id="几何分布等待第一次成功的耐心" class="section level4 hasAnchor" number="2.2.2.4">
+<h4><span class="header-section-number">2.2.2.4</span> 几何分布：等待“第一次成功”的耐心<a href="概率与分布.html#几何分布等待第一次成功的耐心" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>故事视角转换： 想象现在是清晨，蚱蜢开始了它的第一次觅食。我好奇的是：它需要尝试多少次，才能第一次成功吃到它最爱的黑麦草？ 也许第一次就成功了（X=1），也许前两次都去了别处，第三次才成功（X=3）。
+
+分布肖像： 几何分布描述的是在一系列独立的伯努利试验中，首次获得&quot;成功&quot;所需要的试验次数。它的参数仍然是每次试验的成功概率 $p$。$p$越大，意味着你很快就能成功，所以需要等待的次数的期望值越小。
+
+生态学肖像：
+
+    一只捕食者需要巡视几个洞穴，才能发现第一个有猎物的。
+
+    一只传粉昆虫需要访问多少朵花，才能第一次成功获得花蜜。
+
+    几何分布刻画的是那种“守得云开见月明”的等待过程。</code></pre>
+</div>
+</div>
+<div id="更大的世界-连续随机变量" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> 更大的世界-连续随机变量<a href="概率与分布.html#更大的世界-连续随机变量" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>从跳跃到体长：描绘连续世界的概率地图</p>
 <p>我们已经为蚱蜢的“午餐选择”绘制了一张清晰的概率分布图，那是由一根根独立的柱子组成的，因为它的选择是分门别类的（植物A、B、C）。这类变量被称为离散型随机变量，它们的取值是可数的。</p>
 <p>但现在，让我们拿起尺子和高速摄像机，关注一些更细微、更流畅的特征。比如，这只蚱蜢的体长是多少厘米？或者它受到惊吓时，一次跳跃的距离是多少米？这些数值，可以是3.15厘米，也可以是3.151厘米，甚至在理论上可以是3.1515926…厘米。它们的取值充满了无限的可能性，充满了“连续性”。 从柱子到光滑的曲线：概率密度函数</p>

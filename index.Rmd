@@ -68,7 +68,8 @@ knitr::opts_chunk$set(
 ```{r eval=FALSE}
 install.packages(c(
   "tidyverse", "vegan", "lme4", "ggplot2", 
-  "bookdown", "knitr", "rmarkdown", "DiagrammeR"
+  "bookdown", "knitr", "rmarkdown", "DiagrammeR",
+  "showtext"
 ))
 ```
 
