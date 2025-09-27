@@ -9,5 +9,6 @@ output_dir: "docs"
 rmd_files: [
   "index.Rmd",
   "01-statistical_programing.Rmd",
+  "02-probability_and_distribution.Rmd",
   "15-Appendix1_statistical_programing.Rmd"
 ]
