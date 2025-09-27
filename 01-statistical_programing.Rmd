@@ -966,7 +966,8 @@ library(dplyr)
 n <- 1:20  # 数据规模
 complexity_data <- data.frame(
   n = rep(n, 6),
-  complexity = rep(c("O(1)", "O(log n)", "O(n)", "O(n log n)", "O(n²)", "O(2^n)"), each = length(n)),
+  complexity = rep(c("O(1)", "O(log n)", "O(n)", "O(n log n)", "O(n²)", 
+    "O(2^n)"), each = length(n)),
   value = c(
     rep(1, length(n)),  # O(1)
     log(n),             # O(log n)
@@ -1009,7 +1010,7 @@ ggplot(complexity_data, aes(x = n, y = value, color = complexity)) +
 
 
 
-## 模块二：LLM协同编程技能
+## 模块二：AI协同编程技能
 
 ### AI编程模块安装
 
