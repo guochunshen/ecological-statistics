@@ -426,7 +426,7 @@ ggplot() +
 
 在生态学中，累积概率分布广泛应用于风险评估、资源分配决策和种群管理策略制定。
 
-## 从一顿午餐到行为法则：离散随机变量的分布家族
+## 一顿午餐的法则：离散随机变量的分布家族
 
 我们已经成功地为蚱蜢的午餐偏好创建了一个数学模型。我们定义了一个随机变量X，它就像一个聪明的代理人，将“吃哪种植物”这个文字问题，转化成了“X等于1，2，还是3？”这个数学问题。
 
@@ -606,6 +606,109 @@ ggplot(binomial_data, aes(x = k, y = probability, fill = factor(p_value))) +
 5. **抽样设计**：优化生态调查的样本大小设计
 
 二项分布的美妙之处在于它将复杂的生态计数问题简化为基本的概率计算，为我们提供了量化生态现象的有力工具。
+
+### 多项式分布：多元选择的"全景图"
+
+**故事视角扩展：** 二项分布处理的是"是/否"的二元选择，但生态学中我们常常面临更复杂的多元选择。回到蚱蜢的午餐选择，现在我想知道：在10次进食观察中，它恰好有6次选择黑麦草、3次选择混合草甸、1次选择三叶草的概率是多少？这种对多个类别同时计数的需求，引导我们认识多项式分布。
+
+**数学定义：** 多项式分布是二项分布向多个类别的自然推广，描述的是在$n$次独立试验中，每个类别出现特定次数的联合概率分布。多项式试验满足以下条件：
+1. 每次试验有$k$个可能的结果（类别）
+2. 每个结果发生的概率分别为$p_1, p_2, \ldots, p_k$，且$\sum_{i=1}^k p_i = 1$
+3. 各次试验相互独立
+4. 试验结果互斥且完备
+
+**概率函数表达式：** 多项式分布的概率质量函数为：
+
+$$P(X_1 = x_1, X_2 = x_2, \ldots, X_k = x_k) = \frac{n!}{x_1! x_2! \cdots x_k!} p_1^{x_1} p_2^{x_2} \cdots p_k^{x_k}$$
+
+其中：
+- $X_i$表示第$i$个类别出现的次数
+- $x_i$是第$i$个类别的实际观察次数，且$\sum_{i=1}^k x_i = n$
+- $n$是总的试验次数
+- $p_i$是第$i$个类别发生的概率
+- $\frac{n!}{x_1! x_2! \cdots x_k!}$是多项式系数
+
+**分布特性：**
+- 每个类别的边际分布都是二项分布：$X_i \sim \text{Binomial}(n, p_i)$
+- 期望值：$E[X_i] = np_i$
+- 方差：$Var(X_i) = np_i(1-p_i)$
+- 协方差：$Cov(X_i, X_j) = -np_i p_j$（$i \neq j$）
+- 当$k=2$时，多项式分布退化为二项分布
+
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# 绘制多项式分布图
+library(ggplot2)
+library(showtext)
+library(dplyr)
+library(tidyr)
+showtext_auto()
+
+# 定义参数：蚱蜢选择三种植物的概率
+probabilities <- c(0.64, 0.29, 0.07)  # 黑麦草、混合草甸、三叶草
+plant_names <- c("黑麦草", "混合草甸", "三叶草")
+n <- 10  # 观察次数
+
+# 生成一些典型的组合示例
+multinomial_examples <- data.frame(
+  组合 = c("6-3-1", "5-4-1", "7-2-1", "4-4-2"),
+  黑麦草 = c(6, 5, 7, 4),
+  混合草甸 = c(3, 4, 2, 4),
+  三叶草 = c(1, 1, 1, 2),
+  概率 = c(
+    dmultinom(c(6, 3, 1), prob = probabilities),
+    dmultinom(c(5, 4, 1), prob = probabilities),
+    dmultinom(c(7, 2, 1), prob = probabilities),
+    dmultinom(c(4, 4, 2), prob = probabilities)
+  )
+)
+
+# 转换为长格式用于绘图
+multinomial_long <- multinomial_examples %>%
+  pivot_longer(cols = c(黑麦草, 混合草甸, 三叶草),
+               names_to = "植物类型",
+               values_to = "次数") %>%
+  mutate(植物类型 = factor(植物类型, levels = plant_names))
+
+# 绘制ggplot图形
+ggplot(multinomial_long, aes(x = 植物类型, y = 次数, fill = 植物类型)) +
+  geom_col(width = 0.6) +
+  facet_wrap(~ paste("组合:", 组合, " 概率:", round(概率, 4)), nrow = 2) +
+  geom_text(aes(label = 次数), vjust = -0.5, size = 3) +
+  scale_fill_manual(values = c("#4CAF50", "#FFC107", "#E91E63"),
+                    name = "植物类型") +
+  labs(title = paste("多项式分布：10次观察中不同组合的概率 (n =", n, ")"),
+       x = "植物类型", y = "出现次数") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9),
+    legend.position = "bottom"
+  ) +
+  ylim(0, 8)
+```
+
+**生态学肖像：**
+
+多项式分布在生态学中广泛应用于多类别计数数据的建模：
+
+- **一片森林中，不同树种幼苗数量的联合分布** - 描述植物群落的组成结构
+- **一次鸟类调查中，不同物种出现次数的联合概率** - 分析鸟类群落的多样性模式
+- **一个湖泊中，不同浮游生物类群数量的分布** - 研究水生生态系统的营养结构
+- **一次昆虫采集样本中，不同科属昆虫数量的分布** - 量化昆虫群落的分类组成
+- **一个动物种群的年龄结构分布** - 分析种群动态的多类别特征
+
+**生态学意义：**
+
+多项式分布是生态学中描述多变量计数数据的核心工具，它帮助我们：
+
+1. **群落生态学**：量化物种组成的联合概率分布
+2. **多样性研究**：分析多物种共存模式的概率特征
+3. **资源分配**：研究生物对不同资源的选择偏好
+4. **种群结构**：描述年龄、性别等多类别特征的分布
+5. **生态监测**：设计多变量生态调查的统计框架
+
+多项式分布的美妙之处在于它能够同时捕捉多个生态类别的联合分布模式，为我们理解生态系统的复杂性和多样性提供了全面的数学框架。
 
 ### 泊松分布：罕见事件的"低语者"
 
@@ -881,44 +984,418 @@ ggplot(negative_binomial_data,
 
 ## 更大的世界-连续随机变量
 
-从跳跃到体长：描绘连续世界的概率地图
+### 从跳跃到体长：描绘连续世界的概率地图
 
-我们已经为蚱蜢的“午餐选择”绘制了一张清晰的概率分布图，那是由一根根独立的柱子组成的，因为它的选择是分门别类的（植物A、B、C）。这类变量被称为离散型随机变量，它们的取值是可数的。
+我们已经为蚱蜢的"午餐选择"绘制了一张清晰的概率分布图，那是由一根根独立的柱子组成的，因为它的选择是分门别类的（植物A、B、C）。这类变量被称为离散型随机变量，它们的取值是可数的。
 
-但现在，让我们拿起尺子和高速摄像机，关注一些更细微、更流畅的特征。比如，这只蚱蜢的体长是多少厘米？或者它受到惊吓时，一次跳跃的距离是多少米？这些数值，可以是3.15厘米，也可以是3.151厘米，甚至在理论上可以是3.1515926...厘米。它们的取值充满了无限的可能性，充满了“连续性”。
-从柱子到光滑的曲线：概率密度函数
+但现在，让我们拿起尺子和高速摄像机，关注一些更细微、更流畅的特征。比如，这只蚱蜢的体长是多少厘米？或者它受到惊吓时，一次跳跃的距离是多少米？这些数值，可以是3.15厘米，也可以是3.151厘米，甚至在理论上可以是3.1515926...厘米。它们的取值充满了无限的可能性，充满了"连续性"。
 
-当我们面对这样一个连续型随机变量时，之前那种“给每个特定值分配一个概率”的方法就失效了。因为任何一个精确值的概率（比如P(体长=3.15厘米)）在无限的可能性面前，都几乎等于零！这就像问“在一根无限长的线上，恰好选中某个点的概率是多少？”——答案是零。
+连续型随机变量的核心特征就是：它的可能取值构成一个连续的区间，无法一一列举。在生态学中，绝大多数测量值都是连续的——温度、湿度、海拔、生物量、生长速率等等。这些变量构成了我们对自然界的量化认知基础。
 
-那么，我们该如何描述它的概率分布呢？聪明的做法是，我们不再关心“点”的概率，而是关心“区间”的概率。我们问的是：“这只蚱蜢的体长在3.1厘米到3.2厘米之间的概率是多少？” 这时，概率就不再是柱子的高度，而是曲线下某一块区域的面积。
+### 从柱子到光滑的曲线：概率密度函数
 
-这条至关重要的曲线，就叫做概率密度函数 曲线。曲线本身在任意一点的高度（概率密度）并不直接代表概率，但它决定了概率的大小：曲线越高、越“胖”的区域，对应的区间概率就越大。曲线下的总面积，被定义为1，代表了所有可能性的总和（100%）。
-常见的连续分布“家族肖像”
+当我们面对这样一个连续型随机变量时，之前那种"给每个特定值分配一个概率"的方法就失效了。因为任何一个精确值的概率（比如P(体长=3.15厘米)）在无限的可能性面前，都几乎等于零！这就像问"在一根无限长的线上，恰好选中某个点的概率是多少？"——答案是零。
 
-在连续变量的世界里，有几个声名显赫的“家族”，它们以特定的形态描绘了不同自然现象背后的概率规律。
+那么，我们该如何描述它的概率分布呢？聪明的做法是，我们不再关心"点"的概率，而是关心"区间"的概率。我们问的是："这只蚱蜢的体长在3.1厘米到3.2厘米之间的概率是多少？" 这时，概率就不再是柱子的高度，而是曲线下某一块区域的面积。
 
-1. 正态分布（高斯分布）：自然界的“钟形”法则
+这条至关重要的曲线，就叫做**概率密度函数** 曲线。曲线本身在任意一点的高度（概率密度）并不直接代表概率，但它决定了概率的大小：曲线越高、越"胖"的区域，对应的区间概率就越大。曲线下的总面积，被定义为1，代表了所有可能性的总和（100%）。
 
-    特征： 这就是我们最熟悉的"钟形曲线"。它以其完美的对称性著称，中间有一个峰值（均值，$\mu$），决定了曲线的中心位置；曲线的"胖瘦"或"宽窄"则由标准差（$\sigma$）决定。$\sigma$越大，曲线越扁平，数据越分散。
+**数学定义：** 对于连续随机变量X，其概率密度函数$f(x)$满足：
 
-    生态学肖像： 这只蚱蜢所在的种群，其体长、体重、跳跃距离的分布，很可能就近似于一个正态分布。大部分个体的测量值都聚集在平均值附近，极端过大或过小的个体都很少。这几乎是生物特征测量的“默认”分布。
+1. 非负性：$f(x) \geq 0$ 对所有$x$
+2. 规范性：$\int_{-\infty}^{\infty} f(x) dx = 1$
+3. 区间概率：$P(a \leq X \leq b) = \int_a^b f(x) dx$
 
-2. 指数分布：等待的艺术
+### 累积分布函数：连续世界的"阶梯"
 
-    特征： 这条曲线从最高点开始，向右下方呈“断崖式”下降，然后拖着长长的尾巴逐渐趋近于零。它描述的是“等待时间”的概率。
+与离散随机变量类似，连续随机变量也有其累积分布函数，定义为：
 
-    生态学肖像：
+$$F(x) = P(X \leq x) = \int_{-\infty}^x f(t) dt$$
 
-        这只蚱蜢的寿命？ 对于在野外面临各种风险的生物，其寿命分布常符合指数分布——在幼年时期死亡风险最高，存活下来的个体，其“剩余寿命”的分布依然是指数形式。
+累积分布函数$F(x)$给出了随机变量取值小于或等于$x$的概率。它具有以下重要性质：
 
-        下一次降雨事件发生的时间间隔？ 或者，在森林中行走，发现下一个动物粪便需要等待的时间？这些“无记忆性”的等待事件，都适合用指数分布来建模。
+1. 单调不减：如果$x_1 < x_2$，则$F(x_1) \leq F(x_2)$
+2. 边界条件：$\lim_{x \to -\infty} F(x) = 0$，$\lim_{x \to \infty} F(x) = 1$
+3. 右连续性：$F(x)$在任意点$x$处右连续
 
-3. 均匀分布：纯粹的平等
+通过累积分布函数，我们可以方便地计算各种概率：
+- $P(a < X \leq b) = F(b) - F(a)$
+- $P(X > x) = 1 - F(x)$
 
-    特征： 在一个特定的区间内，这条曲线是一条平坦的直线。意味着在这个区间内，任何子区间发生的概率，只和这个子区间的“长度”有关，而和它的“位置”无关。
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# 绘制连续随机变量的PDF和CDF示例
+library(ggplot2)
+library(showtext)
+showtext_auto()
 
-    生态学肖像：
+# 生成正态分布数据
+x <- seq(-3, 3, length.out = 200)
+pdf <- dnorm(x)
+cdf <- pnorm(x)
 
-        如果你在校园里完全随机地选择一个地点来放置你的样方，那么样方中心的经纬度坐标，在每个可能的位置上就是均匀分布的。
+# 创建数据框
+continuous_data <- data.frame(x = x, PDF = pdf, CDF = cdf)
 
-        模拟生态学实验时，计算机生成的随机数，理想情况下就是均匀分布的。
+# 绘制PDF和CDF对比图
+p1 <- ggplot(continuous_data, aes(x = x, y = PDF)) +
+  geom_line(color = "#2196F3", linewidth = 1.2) +
+  geom_area(fill = "#2196F3", alpha = 0.3) +
+  labs(title = "概率密度函数 (PDF)",
+       x = "随机变量取值", y = "概率密度") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+
+p2 <- ggplot(continuous_data, aes(x = x, y = CDF)) +
+  geom_line(color = "#E91E63", linewidth = 1.2) +
+  labs(title = "累积分布函数 (CDF)",
+       x = "随机变量取值", y = "累积概率") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+
+# 使用patchwork包组合图形（如果可用）
+if (requireNamespace("patchwork", quietly = TRUE)) {
+  library(patchwork)
+  p1 + p2
+} else {
+  # 如果不安装patchwork，分别显示两个图
+  print(p1)
+  print(p2)
+}
+```
+
+## 连续分布家族：描绘自然界的数学肖像
+
+在连续变量的世界里，有几个声名显赫的"家族"，它们以特定的形态描绘了不同自然现象背后的概率规律。每个分布都有其独特的数学特性和生态学意义，共同构成了我们理解连续生态变量的工具箱。
+
+### 均匀分布：纯粹的平等
+
+**故事引入：** 想象你在校园里完全随机地选择一个地点来测量土壤pH值。每个位置被选中的可能性完全相同，没有任何偏好。这种"完全随机"的选择过程，就是均匀分布的典型场景。
+
+**数学定义：** 均匀分布描述的是在区间$[a, b]$内，所有取值等可能出现的概率分布。其概率密度函数为：
+
+$$f(x) = \begin{cases}
+\frac{1}{b-a} & \text{如果 } a \leq x \leq b \\
+0 & \text{其他}
+\end{cases}$$
+
+**分布特性：**
+- 期望值：$E[X] = \frac{a+b}{2}$
+- 方差：$Var(X) = \frac{(b-a)^2}{12}$
+- 在区间$[a, b]$内，概率密度恒定
+
+**生态学肖像：**
+- **随机抽样设计**：在生态调查中，完全随机选择的样方位置服从均匀分布
+- **环境变量的基准模型**：当缺乏先验信息时，可以假设某些环境变量在特定范围内均匀分布
+- **模拟实验**：计算机生成的随机数在理想情况下服从均匀分布
+
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# 绘制均匀分布图
+library(ggplot2)
+library(showtext)
+showtext_auto()
+
+# 定义不同的均匀分布参数
+uniform_params <- list(
+  c(0, 1),    # [0,1]
+  c(-2, 2),   # [-2,2]
+  c(1, 3)     # [1,3]
+)
+
+# 创建数据框
+uniform_data <- data.frame()
+for (i in 1:3) {
+  a <- uniform_params[[i]][1]
+  b <- uniform_params[[i]][2]
+  x <- seq(a - 0.5, b + 0.5, length.out = 200)
+  pdf <- ifelse(x >= a & x <= b, 1 / (b - a), 0)
+
+  uniform_data <- rbind(uniform_data,
+                        data.frame(a = a, b = b, x = x, PDF = pdf,
+                                   label = paste0("U(", a, ",", b, ")")))
+}
+
+# 绘制ggplot图形
+ggplot(uniform_data, aes(x = x, y = PDF, color = label)) +
+  geom_line(linewidth = 1.2) +
+  facet_wrap(~ label, nrow = 1) +
+  scale_color_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
+                     guide = "none") +
+  labs(title = "均匀分布：不同区间参数的概率密度函数",
+       x = "随机变量取值", y = "概率密度") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9)
+  )
+```
+
+### 指数分布：等待的艺术
+
+**故事引入：** 现在让我们关注时间维度。这只蚱蜢在草地上觅食时，下一次被天敌发现需要等待多长时间？或者，下一次降雨事件会在多久之后发生？这些"等待时间"问题，正是指数分布的用武之地。
+
+**数学定义：** 指数分布描述的是泊松过程中事件发生的时间间隔。其概率密度函数为：
+
+$$f(x) = \lambda e^{-\lambda x}, \quad x \geq 0$$
+
+其中$\lambda > 0$是速率参数，表示单位时间内事件发生的平均次数。
+
+**分布特性：**
+- 期望值：$E[X] = \frac{1}{\lambda}$
+- 方差：$Var(X) = \frac{1}{\lambda^2}$
+- **无记忆性**：$P(X > s + t \mid X > s) = P(X > t)$，即过去的等待不影响未来的等待时间
+- 分布呈右偏，具有长尾特征
+
+**生态学肖像：**
+- **生物寿命**：许多野外生物的寿命分布近似指数分布，特别是在高死亡风险环境下
+- **事件间隔时间**：降雨间隔、物种发现间隔、干扰事件间隔等
+- **种群动态**：个体出生或死亡的时间间隔
+- **行为生态学**：动物觅食、休息等行为的时间模式
+
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# 绘制指数分布图
+library(ggplot2)
+library(showtext)
+showtext_auto()
+
+# 定义不同的lambda值
+lambda_values <- c(0.5, 1, 2)  # 不同速率参数
+x_max <- 8  # x轴最大值
+
+# 创建数据框
+exponential_data <- data.frame()
+for (lambda in lambda_values) {
+  x <- seq(0, x_max, length.out = 200)
+  pdf <- dexp(x, rate = lambda)
+
+  exponential_data <- rbind(exponential_data,
+                            data.frame(lambda = lambda, x = x, PDF = pdf,
+                                       label = paste0("Exp(λ=", lambda, ")")))
+}
+
+# 绘制ggplot图形
+ggplot(exponential_data, aes(x = x, y = PDF, color = label)) +
+  geom_line(linewidth = 1.2) +
+  facet_wrap(~ label, nrow = 1) +
+  scale_color_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
+                     guide = "none") +
+  labs(title = "指数分布：不同速率参数的概率密度函数",
+       x = "等待时间", y = "概率密度") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9)
+  )
+```
+
+### 正态分布（高斯分布）：自然界的"钟形"法则
+
+**故事引入：** 测量这只蚱蜢所在种群的100个个体的体长，你会发现大部分个体的体长都集中在某个平均值附近，极端过大或过小的个体很少。这种"中间多，两头少"的分布模式，就是正态分布的典型特征。
+
+**数学定义：** 正态分布的概率密度函数为：
+
+$$f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \quad -\infty < x < \infty$$
+
+其中$\mu$是均值（决定分布的中心位置），$\sigma$是标准差（决定分布的离散程度）。
+
+**分布特性：**
+- 期望值：$E[X] = \mu$
+- 方差：$Var(X) = \sigma^2$
+- 对称性：分布关于均值$\mu$对称
+- 68-95-99.7法则：约68%的数据落在$\mu \pm \sigma$内，95%落在$\mu \pm 2\sigma$内，99.7%落在$\mu \pm 3\sigma$内
+- 中心极限定理：大量独立随机变量的和近似服从正态分布
+
+**生态学肖像：**
+- **生物特征测量**：体长、体重、叶面积、生长速率等连续性状
+- **环境变量**：温度、湿度、海拔等自然梯度
+- **测量误差**：生态测量中的随机误差通常服从正态分布
+- **种群参数估计**：样本均值的抽样分布近似正态分布
+
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# 绘制正态分布图
+library(ggplot2)
+library(showtext)
+showtext_auto()
+
+# 定义不同的参数组合
+normal_params <- list(
+  c(0, 1),
+  c(0, 2),
+  c(2, 1)
+)
+
+# 创建数据框
+normal_data <- data.frame()
+for (i in 1:3) {
+  mu <- normal_params[[i]][1]
+  sigma <- normal_params[[i]][2]
+  x <- seq(mu - 4 * sigma, mu + 4 * sigma, length.out = 200)
+  pdf <- dnorm(x, mean = mu, sd = sigma)
+
+  normal_data <- rbind(normal_data,
+                       data.frame(mu = mu, sigma = sigma, x = x, PDF = pdf,
+                                  label = paste0("N(", mu, ",", sigma^2, ")")))
+}
+
+# 绘制ggplot图形
+ggplot(normal_data, aes(x = x, y = PDF, color = label)) +
+  geom_line(linewidth = 1.2) +
+  facet_wrap(~ label, nrow = 1) +
+  scale_color_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
+                     guide = "none") +
+  labs(title = "正态分布：不同参数组合的概率密度函数",
+       x = "随机变量取值", y = "概率密度") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9)
+  )
+```
+
+### 伽马分布：更一般的等待时间模型
+
+**故事引入：** 指数分布描述了"第一次事件发生"的等待时间，但如果我们需要描述"第r次事件发生"的等待时间呢？比如，这只蚱蜢需要等待多久才能完成第3次成功的觅食？伽马分布提供了这个问题的答案。
+
+**数学定义：** 伽马分布的概率密度函数为：
+
+$$f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}, \quad x > 0$$
+
+其中$\alpha > 0$是形状参数，$\beta > 0$是速率参数，$\Gamma(\alpha)$是伽马函数。
+
+**分布特性：**
+- 期望值：$E[X] = \frac{\alpha}{\beta}$
+- 方差：$Var(X) = \frac{\alpha}{\beta^2}$
+- 当$\alpha = 1$时，伽马分布退化为指数分布
+- 当$\alpha$为整数时，伽马分布描述的是第$\alpha$次泊松事件发生的等待时间
+- 分布形状灵活，可以呈现不同的偏斜形态
+
+**生态学肖像：**
+- **累积等待时间**：完成多次成功行为所需的总时间
+- **生物量积累**：植物生长、动物体重增加的过程
+- **降雨量分布**：特定时间段内的总降雨量
+- **种群增长**：在一定时间内种群数量的累积增长
+
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# 绘制伽马分布图
+library(ggplot2)
+library(showtext)
+showtext_auto()
+
+# 定义不同的参数组合
+gamma_params <- list(
+  c(1, 1),
+  c(2, 1),
+  c(3, 2)
+)
+
+# 创建数据框
+gamma_data <- data.frame()
+for (i in 1:3) {
+  alpha <- gamma_params[[i]][1]
+  beta <- gamma_params[[i]][2]
+  x <- seq(0, 8, length.out = 200)
+  pdf <- dgamma(x, shape = alpha, rate = beta)
+
+  gamma_data <- rbind(gamma_data,
+                      data.frame(alpha = alpha, beta = beta, x = x, PDF = pdf,
+                                 label = paste0("Gamma(", alpha, ",", beta, ")")))
+}
+
+# 绘制ggplot图形
+ggplot(gamma_data, aes(x = x, y = PDF, color = label)) +
+  geom_line(linewidth = 1.2) +
+  facet_wrap(~ label, nrow = 1) +
+  scale_color_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
+                     guide = "none") +
+  labs(title = "伽马分布：不同参数组合的概率密度函数",
+       x = "随机变量取值", y = "概率密度") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9)
+  )
+```
+
+### 贝塔分布：比例变量的天然选择
+
+**故事引入：** 在生态学中，我们经常需要处理比例数据，比如这片森林中某种树种的比例，或者这只蚱蜢在一天中用于觅食的时间比例。这些比例值总是在0和1之间，贝塔分布是描述这类变量的理想选择。
+
+**数学定义：** 贝塔分布的概率密度函数为：
+
+$$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha, \beta)}, \quad 0 \leq x \leq 1$$
+
+其中$\alpha > 0$和$\beta > 0$是形状参数，$B(\alpha, \beta)$是贝塔函数。
+
+**分布特性：**
+- 期望值：$E[X] = \frac{\alpha}{\alpha + \beta}$
+- 方差：$Var(X) = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$
+- 分布形状极其灵活，可以呈现U形、J形、钟形等多种形态
+- 当$\alpha = \beta = 1$时，贝塔分布退化为均匀分布
+- 贝塔分布是二项分布和伯努利分布的共轭先验
+
+**生态学肖像：**
+- **物种比例**：群落中不同物种的相对丰度
+- **行为时间分配**：动物在不同行为上花费的时间比例
+- **栖息地利用**：物种在不同生境类型中的出现比例
+- **基因频率**：种群中特定等位基因的频率
+- **模型参数**：作为比例参数的先验分布
+
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# 绘制贝塔分布图
+library(ggplot2)
+library(showtext)
+showtext_auto()
+
+# 定义不同的参数组合
+beta_params <- list(
+  c(0.5, 0.5),
+  c(2, 2),
+  c(5, 1)
+)
+
+# 创建数据框
+beta_data <- data.frame()
+for (i in 1:3) {
+  alpha <- beta_params[[i]][1]
+  beta_val <- beta_params[[i]][2]
+  x <- seq(0.01, 0.99, length.out = 200)
+  pdf <- dbeta(x, shape1 = alpha, shape2 = beta_val)
+
+  beta_data <- rbind(beta_data,
+                     data.frame(alpha = alpha, beta = beta_val,
+                                x = x, PDF = pdf,
+                                label = paste0("Beta(", alpha, ",",
+                                               beta_val, ")")))
+}
+
+# 绘制ggplot图形
+ggplot(beta_data, aes(x = x, y = PDF, color = label)) +
+  geom_line(linewidth = 1.2) +
+  facet_wrap(~ label, nrow = 1) +
+  scale_color_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
+                     guide = "none") +
+  labs(title = "贝塔分布：不同参数组合的概率密度函数",
+       x = "比例值 (0-1)", y = "概率密度") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9)
+  )
+```
+
+## 连续分布在生态学中的应用价值
+
+连续概率分布为生态学研究提供了强大的数学工具，帮助我们：
+
+1. **量化自然变异**：将生物和环境的连续变异转化为可计算的概率模型
+2. **参数估计**：基于观测数据估计种群参数和环境变量
+3. **假设检验**：检验生态学理论和模型的合理性
+4. **预测建模**：预测物种分布、种群动态和生态系统变化
+5. **风险评估**：评估生态风险和不确定性
+6. **实验设计**：优化生态调查和实验的样本设计
+
+通过理解和应用这些连续分布，我们能够更精确地描述自然界的连续变异模式，为生态学研究的定量化发展奠定坚实的数学基础。
