@@ -437,7 +437,7 @@ $$P(X = x) = p^x(1-p)^{1-x}, \quad x = 0,1$$
 其中，$X$是伯努利随机变量，$p$是成功的概率（$0 \leq p \leq 1$）。
 
 
-```{r, echo=FALSE, fig.width=5, fig.height=4}
+```{r, echo=FALSE, fig.width=4.5, fig.height=3.5}
 # 绘制伯努利分布图
 library(ggplot2)
 library(showtext)
