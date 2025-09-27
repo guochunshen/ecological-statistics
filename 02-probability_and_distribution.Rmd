@@ -331,7 +331,8 @@ $$P(H|E) = \frac{P(E|H) \times P(H)}{P(E|H) \times P(H) + P(E|\neg H) \times P(\
 
 如果我画成柱状图，就得到了一个**概率分布图**，直观地展示了这种"分布"情况。
 
-```{r, echo=FALSE, fig.width=4.5, fig.height=3}
+```{r, echo=FALSE, fig.width=6, fig.height=4}
+library(ggplot2)
 library(showtext)
 showtext_auto()
 # 创建概率分布柱状图
@@ -340,20 +341,20 @@ plant_data <- data.frame(
   概率 = c(0.64, 0.29, 0.07)
 )
 
-# 绘制柱状图
-barplot(plant_data$概率,
-        names.arg = plant_data$植物类型,
-        col = c("#4CAF50", "#FFC107", "#E91E63"),
-        main = "蚱蜢午餐选择的概率分布",
-        xlab = "植物类型",
-        ylab = "概率",
-        ylim = c(0, 0.7),
-        border = "white")
-
-# 添加数值标签
-text(x = 1:3, y = plant_data$概率 + 0.03,
-     labels = plant_data$概率,
-     col = "black")
+# 绘制ggplot柱状图
+ggplot(plant_data, aes(x = 植物类型, y = 概率, fill = 植物类型)) +
+  geom_col(width = 0.6) +
+  geom_text(aes(label = 概率), vjust = -0.5, size = 3.5) +
+  scale_fill_manual(values = c("#4CAF50", "#FFC107", "#E91E63"), guide = "none") +
+  labs(title = "蚱蜢午餐选择的概率分布",
+       x = "植物类型", y = "概率") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9)
+  ) +
+  ylim(0, 0.7)
 ```
 
 #### 累积概率分布：从可能性到确定性
@@ -373,29 +374,50 @@ text(x = 1:3, y = plant_data$概率 + 0.03,
 - 蚱蜢选择黑麦草**或**混合草甸的概率是 0.64 + 0.29 = 0.93
 - 蚱蜢选择任意一种植物的概率是 1.00（必然事件）
 
-```{r, echo=FALSE, fig.width=4.5, fig.height=3}
+```{r, echo=FALSE, fig.width=6, fig.height=4}
+library(ggplot2)
 library(showtext)
 showtext_auto()
 # 绘制累积概率分布图
-cumulative_prob <- cumsum(plant_data$概率)
+cumulative_data <- data.frame(
+  植物类型 = plant_data$植物类型,
+  累积概率 = cumsum(plant_data$概率),
+  x_position = 1:3
+)
 
-plot(1:3, cumulative_prob, type = "s", lwd = 3, col = "#2196F3",
-     main = "蚱蜢午餐选择的累积概率分布",
-     xlab = "植物类型", ylab = "累积概率",
-     xlim = c(0.5, 3.5), ylim = c(0, 1),
-     xaxt = "n")
-axis(1, at = 1:3, labels = plant_data$植物类型)
+# 创建阶梯函数数据
+step_data <- data.frame()
+for (i in 1:3) {
+  if (i == 1) {
+    step_data <- rbind(step_data,
+                      data.frame(x = c(0.5, 1), y = c(0, 0)))
+  }
+  step_data <- rbind(step_data,
+                    data.frame(x = c(i, i+0.5), y = rep(cumulative_data$累积概率[i], 2)))
+}
 
-# 添加点标记
-points(1:3, cumulative_prob, pch = 19, col = "#2196F3", cex = 1.5)
-
-# 添加水平参考线
-abline(h = c(0.64, 0.93, 1.00), lty = 2, col = "gray")
-
-# 添加数值标签
-text(1:3, cumulative_prob + 0.05,
-     labels = paste("F(", 1:3, ") =", cumulative_prob),
-     col = "black")
+# 绘制ggplot累积分布图
+ggplot() +
+  geom_step(data = step_data, aes(x = x, y = y),
+            color = "#2196F3", linewidth = 1.2) +
+  geom_point(data = cumulative_data, aes(x = x_position, y = 累积概率),
+             color = "#2196F3", size = 3) +
+  geom_hline(yintercept = c(0.64, 0.93, 1.00),
+             linetype = "dashed", color = "gray", alpha = 0.7) +
+  geom_text(data = cumulative_data,
+            aes(x = x_position, y = 累积概率 + 0.05,
+                label = paste("F(", x_position, ") =", 累积概率)),
+            size = 3.5) +
+  scale_x_continuous(breaks = 1:3, labels = plant_data$植物类型) +
+  labs(title = "蚱蜢午餐选择的累积概率分布",
+       x = "植物类型", y = "累积概率") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9)
+  ) +
+  coord_cartesian(xlim = c(0.5, 3.5), ylim = c(0, 1))
 ```
 
 累积概率分布图呈现为阶梯函数，在每个可能的取值处跳跃，跳跃的高度等于该取值的概率。这种分布特别有用，因为它：
@@ -454,14 +476,15 @@ for (i in 1:3) {
   temp_data <- data.frame(
     p_value = p,
     outcome = c("失败", "成功"),
-    probability = c(1-p, p),
+    probability = c(1 - p, p),
     color = colors[i]
   )
   bernoulli_data <- rbind(bernoulli_data, temp_data)
 }
 
 # 创建ggplot图形
-ggplot(bernoulli_data, aes(x = outcome, y = probability, fill = factor(p_value))) +
+ggplot(bernoulli_data,
+       aes(x = outcome, y = probability, fill = factor(p_value))) +
   geom_col(position = "dodge", width = 0.7) +
   geom_text(aes(label = sprintf("%.2f", probability)),
             position = position_dodge(width = 0.7),
@@ -500,49 +523,264 @@ ggplot(bernoulli_data, aes(x = outcome, y = probability, fill = factor(p_value))
 
 伯努利分布的美妙之处在于它的简洁性和普适性。尽管生态系统的复杂性远超简单的二元选择，但通过将复杂问题分解为基本的伯努利试验，我们能够逐步建立起理解自然界的数学模型框架。
 
-#### 二项分布：重复“是非题”的计数法则
+#### 二项分布：重复"是非题"的计数法则
 
-    故事延续： 现在，我连续观察蚱蜢的10次进食选择。每一次选择，都是一个独立的伯努利试验（是否吃黑麦草）。我关心的问题是：在这10次观察中，它总共有多大概率有恰好7次选择了黑麦草？或者，至少有8次？
+**故事延续：** 现在，我连续观察蚱蜢的10次进食选择。每一次选择，都是一个独立的伯努利试验（是否吃黑麦草）。我关心的问题是：在这10次观察中，它总共有多大概率有恰好7次选择了黑麦草？或者，至少有8次？这种从单次试验扩展到多次试验的视角，引导我们认识二项分布。
 
-    分布肖像： 二项分布描述的就是在$n$次独立的伯努利试验中，出现"成功"次数（记为$k$）的概率分布。它有两个参数：试验次数 $n$ 和每次成功的概率 $p$。
+**数学定义：** 二项分布描述的是在$n$次独立的伯努利试验中，成功次数$k$的概率分布。二项试验满足以下条件：
+1. 试验由$n$次相同的伯努利试验组成
+2. 每次试验只有两种可能的结果（成功/失败）
+3. 每次试验的成功概率$p$保持不变
+4. 各次试验相互独立
 
-    生态学肖像：
+**概率函数表达式：** 二项分布的概率质量函数为：
 
-        播种100颗同种种子，最终成功发芽的数量$k$服从二项分布（$n=100$， $p=$发芽率）。
+$$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, 2, \ldots, n$$
 
-        从一个大种群中随机捕获并标记50只动物，放回后再次随机捕获50只，其中被标记个体的数量$k$也服从二项分布。这正是标记重捕法的理论核心！
+其中：
+- $X$是二项随机变量，表示成功的次数
+- $n$是试验总次数
+- $k$是成功次数
+- $p$是每次试验的成功概率
+- $\binom{n}{k} = \frac{n!}{k!(n-k)!}$是二项系数
 
-        二项分布帮我们回答的是：在固定的尝试次数下，获得特定次数“成功”的概率有多大。
+**分布特性：**
+- 期望值：$E[X] = np$
+- 方差：$Var(X) = np(1-p)$
+- 当$p=0.5$时，分布对称；当$p<0.5$时右偏，$p>0.5$时左偏
 
-#### 泊松分布：罕见事件的“低语者”
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# 绘制二项分布图
+library(ggplot2)
+library(showtext)
+showtext_auto()
 
-    故事新篇： 这次，我不固定观察次数，而是固定观察时间。我坐在草地上，用一个小时的时间，记录下这只蚱蜢做出剧烈警戒性跳跃的次数。这种跳跃并不频繁，可能一次，可能两次，也可能一次都没有。在一个很短的时间间隔内，发生一次跳跃的概率很小，且事件彼此独立。
+# 定义参数
+n <- 10  # 试验次数
+p_values <- c(0.2, 0.5, 0.8)  # 不同成功概率
 
-    分布肖像： 泊松分布专门用来描述单位时间、单位面积或单位体积内，稀有事件发生次数的概率分布。它的特点是只有一个参数 $\lambda$，它代表了事件发生的平均速率（例如，平均每小时跳跃2.5次）。它的分布形状由$\lambda$决定，$\lambda$较小则偏向右侧，$\lambda$增大后逐渐变得对称。
+# 创建数据框
+binomial_data <- data.frame()
+for (p in p_values) {
+  for (k in 0:n) {
+    prob <- dbinom(k, size = n, prob = p)
+    binomial_data <- rbind(binomial_data,
+                          data.frame(p_value = p, k = k, probability = prob))
+  }
+}
 
-    生态学肖像：
+# 绘制ggplot图形
+ggplot(binomial_data, aes(x = k, y = probability, fill = factor(p_value))) +
+  geom_col(position = "dodge", width = 0.7) +
+  facet_wrap(~ paste("二项分布 (n =", n, ", p =", p_value, ")"), nrow = 1) +
+  scale_fill_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
+                    name = "成功概率 p") +
+  labs(title = paste("二项分布 (n =", n, ")"),
+       x = "成功次数 k", y = "概率 P(X = k)") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9),
+    legend.position = "bottom"
+  ) +
+  scale_x_continuous(breaks = 0:n)
+```
 
-        一平方米的森林样地中，某种珍稀兰花的株数。
+**生态学肖像：**
 
-        一台红外相机在一天内，拍摄到某种神秘夜行兽的次数。
+二项分布在生态学中广泛应用于计数型数据的建模：
 
-        一毫升海水中的浮游生物数量。
+- **播种100颗同种种子，最终成功发芽的数量$k$服从二项分布**（$n=100$，$p=$发芽率）
+- **从一个大种群中随机捕获并标记50只动物，放回后再次随机捕获50只，其中被标记个体的数量$k$也服从二项分布**。这正是标记重捕法的理论核心！
+- **一片森林中，随机选择的100棵树中有病害的树木数量**
+- **一次生态调查中，在50个样方中发现目标物种的样方数量**
+- **一个鸟类种群中，在繁殖季节成功孵化的雏鸟数量**
 
-        泊松分布是生态学中描述物种多度、空间分布点模式的黄金标准之一。
+**生态学意义：**
 
-#### 几何分布：等待“第一次成功”的耐心
+二项分布是伯努利分布的自然延伸，它将单个二元事件的概率模型扩展到多个独立事件的计数模型。在生态学研究中，二项分布帮助我们：
 
-    故事视角转换： 想象现在是清晨，蚱蜢开始了它的第一次觅食。我好奇的是：它需要尝试多少次，才能第一次成功吃到它最爱的黑麦草？ 也许第一次就成功了（X=1），也许前两次都去了别处，第三次才成功（X=3）。
+1. **种群估计**：通过标记重捕法估计种群大小
+2. **患病率研究**：估计疾病在种群中的传播程度
+3. **物种分布**：量化物种在特定区域的分布概率
+4. **繁殖成功率**：评估物种的繁殖表现
+5. **抽样设计**：优化生态调查的样本大小设计
 
-    分布肖像： 几何分布描述的是在一系列独立的伯努利试验中，首次获得"成功"所需要的试验次数。它的参数仍然是每次试验的成功概率 $p$。$p$越大，意味着你很快就能成功，所以需要等待的次数的期望值越小。
+二项分布的美妙之处在于它将复杂的生态计数问题简化为基本的概率计算，为我们提供了量化生态现象的有力工具。
 
-    生态学肖像：
+#### 泊松分布：罕见事件的"低语者"
 
-        一只捕食者需要巡视几个洞穴，才能发现第一个有猎物的。
+**故事新篇：** 这次，我不固定观察次数，而是固定观察时间。我坐在草地上，用一个小时的时间，记录下这只蚱蜢做出剧烈警戒性跳跃的次数。这种跳跃并不频繁，可能一次，可能两次，也可能一次都没有。在一个很短的时间间隔内，发生一次跳跃的概率很小，且事件彼此独立。这种对稀有事件计数的需求，引导我们认识泊松分布。
 
-        一只传粉昆虫需要访问多少朵花，才能第一次成功获得花蜜。
+**数学定义：** 泊松分布描述的是在固定时间间隔、固定面积或固定体积内，稀有事件发生次数的概率分布。泊松过程满足以下条件：
+1. 事件在任意小的时间间隔内发生的概率与时间间隔长度成正比
+2. 在不相交的时间间隔内，事件发生次数相互独立
+3. 事件在任意时间点发生的概率相同（平稳性）
+4. 在极短时间间隔内，发生两次或以上事件的概率可以忽略
 
-        几何分布刻画的是那种“守得云开见月明”的等待过程。
+**概率函数表达式：** 泊松分布的概率质量函数为：
+
+$$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots$$
+
+其中：
+- $X$是泊松随机变量，表示事件发生的次数
+- $\lambda$是单位时间（或单位面积/体积）内事件发生的平均次数
+- $k$是实际观察到的事件次数
+- $e$是自然对数的底（约等于2.71828）
+
+**分布特性：**
+- 期望值：$E[X] = \lambda$
+- 方差：$Var(X) = \lambda$（期望等于方差是泊松分布的重要特征）
+- 当$\lambda$较小时，分布右偏；当$\lambda$增大时，分布逐渐接近正态分布
+- 泊松分布是二项分布在$n \to \infty$，$p \to 0$，且$np = \lambda$时的极限情况
+
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# 绘制泊松分布图
+library(ggplot2)
+library(showtext)
+showtext_auto()
+
+# 定义不同的lambda值
+lambda_values <- c(1, 3, 8)  # 不同平均发生率
+max_k <- 15  # 最大显示的事件次数
+
+# 创建数据框
+poisson_data <- data.frame()
+for (lambda in lambda_values) {
+  for (k in 0:max_k) {
+    prob <- dpois(k, lambda = lambda)
+    poisson_data <- rbind(poisson_data,
+                          data.frame(lambda_value = lambda, k = k, probability = prob))
+  }
+}
+
+# 绘制ggplot图形
+ggplot(poisson_data, aes(x = k, y = probability, fill = factor(lambda_value))) +
+  geom_col(position = "dodge", width = 0.7) +
+  facet_wrap(~ paste("泊松分布 (λ =", lambda_value, ")"), nrow = 1) +
+  scale_fill_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
+                    name = "平均发生率 λ") +
+  labs(title = "泊松分布：不同平均发生率下的概率分布",
+       x = "事件发生次数 k", y = "概率 P(X = k)") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9),
+    legend.position = "bottom"
+  ) +
+  scale_x_continuous(breaks = seq(0, max_k, by = 2))
+```
+
+**生态学肖像：**
+
+泊松分布在生态学中广泛应用于稀有事件和空间分布的研究：
+
+- **一平方米的森林样地中，某种珍稀兰花的株数** - 描述稀有物种的空间分布
+- **一台红外相机在一天内，拍摄到某种神秘夜行兽的次数** - 监测稀有动物的活动频率
+- **一毫升海水中的浮游生物数量** - 量化微生物的密度分布
+- **一片草原上，单位面积内某种昆虫的巢穴数量** - 研究昆虫的空间分布模式
+- **一个湖泊中，特定时间段内鱼类跃出水面的次数** - 记录稀有行为的发生频率
+
+**生态学意义：**
+
+泊松分布是生态学中描述随机分布模式的重要工具，它帮助我们：
+
+1. **物种分布研究**：判断物种在空间上是否随机分布
+2. **种群密度估计**：通过单位面积内的个体数估计总体密度
+3. **行为生态学**：量化稀有行为的发生频率
+4. **保护生物学**：评估稀有物种的分布状况
+5. **生态监测**：设计合理的监测方案和样本大小
+
+泊松分布的美妙之处在于它用一个简单的参数$\lambda$就描述了复杂生态现象的概率规律，为我们理解自然界的随机性提供了简洁而强大的数学工具。
+
+#### 几何分布：等待"第一次成功"的耐心
+
+**故事视角转换：** 想象现在是清晨，蚱蜢开始了它的第一次觅食。我好奇的是：它需要尝试多少次，才能第一次成功吃到它最爱的黑麦草？ 也许第一次就成功了（X=1），也许前两次都去了别处，第三次才成功（X=3）。这种对"第一次成功"等待时间的关注，引导我们认识几何分布。
+
+**数学定义：** 几何分布描述的是在一系列独立的伯努利试验中，首次获得成功所需要的试验次数。几何分布满足以下条件：
+1. 试验由一系列相同的伯努利试验组成
+2. 每次试验只有两种可能的结果（成功/失败）
+3. 每次试验的成功概率$p$保持不变
+4. 各次试验相互独立
+5. 试验持续进行直到第一次成功出现
+
+**概率函数表达式：** 几何分布的概率质量函数为：
+
+$$P(X = k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots$$
+
+其中：
+- $X$是几何随机变量，表示首次成功所需的试验次数
+- $k$是试验次数（$k \geq 1$）
+- $p$是每次试验的成功概率
+- $(1-p)^{k-1}$表示前$k-1$次都失败的概率
+
+**分布特性：**
+- 期望值：$E[X] = \frac{1}{p}$
+- 方差：$Var(X) = \frac{1-p}{p^2}$
+- 无记忆性：$P(X > m+n \mid X > m) = P(X > n)$，即过去的失败不影响未来的成功概率
+- 当$p$较小时，分布右偏严重；当$p$接近1时，分布集中在较小的$k$值
+
+```{r, echo=FALSE, fig.width=8, fig.height=5}
+# 绘制几何分布图
+library(ggplot2)
+library(showtext)
+showtext_auto()
+
+# 定义不同的成功概率
+p_values <- c(0.2, 0.5, 0.8)  # 不同成功概率
+max_k <- 10  # 最大显示的试验次数
+
+# 创建数据框
+geometric_data <- data.frame()
+for (p in p_values) {
+  for (k in 1:max_k) {
+    prob <- dgeom(k - 1, prob = p)  # R中的dgeom从0开始计数
+    geometric_data <- rbind(geometric_data,
+                            data.frame(p_value = p, k = k, probability = prob))
+  }
+}
+
+# 绘制ggplot图形
+ggplot(geometric_data, aes(x = k, y = probability, fill = factor(p_value))) +
+  geom_col(position = "dodge", width = 0.7) +
+  facet_wrap(~ paste("几何分布 (p =", p_value, ")"), nrow = 1) +
+  scale_fill_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
+                    name = "成功概率 p") +
+  labs(title = "几何分布：不同成功概率下的等待时间分布",
+       x = "首次成功所需的试验次数 k", y = "概率 P(X = k)") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9),
+    legend.position = "bottom"
+  ) +
+  scale_x_continuous(breaks = 1:max_k)
+```
+
+**生态学肖像：**
+
+几何分布在生态学中广泛应用于"等待时间"和"首次成功"的研究：
+
+- **一只捕食者需要巡视几个洞穴，才能发现第一个有猎物的** - 描述捕食效率
+- **一只传粉昆虫需要访问多少朵花，才能第一次成功获得花蜜** - 研究传粉行为效率
+- **一颗种子需要经历多少个雨季，才能第一次成功发芽** - 分析种子萌发模式
+- **一只候鸟需要尝试多少次，才能第一次成功找到迁徙路线** - 研究学习行为
+- **一个植物种群需要经过多少代，才能第一次出现抗病突变** - 分析进化过程
+
+**生态学意义：**
+
+几何分布是生态学中描述"等待过程"的重要工具，它帮助我们：
+
+1. **行为生态学**：量化动物行为的效率和成功率
+2. **种群动态**：分析种群恢复和重建的时间过程
+3. **进化生态学**：研究适应性特征的进化时间尺度
+4. **保护生物学**：评估濒危物种恢复的可能性
+5. **生态恢复**：预测生态系统恢复所需的时间
+
+几何分布的美妙之处在于它用一个简单的参数$p$就描述了复杂生态过程中的等待时间规律，特别是其"无记忆性"特征，使得我们可以专注于当前的生态过程而不受历史影响。
 
 ### 更大的世界-连续随机变量
 

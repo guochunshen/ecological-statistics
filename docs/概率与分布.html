@@ -637,48 +637,91 @@ p &amp; \text{如果 } x = 1 \\
 <p>伯努利分布的美妙之处在于它的简洁性和普适性。尽管生态系统的复杂性远超简单的二元选择，但通过将复杂问题分解为基本的伯努利试验，我们能够逐步建立起理解自然界的数学模型框架。</p>
 </div>
 <div id="二项分布重复是非题的计数法则" class="section level4 hasAnchor" number="2.2.2.2">
-<h4><span class="header-section-number">2.2.2.2</span> 二项分布：重复“是非题”的计数法则<a href="概率与分布.html#二项分布重复是非题的计数法则" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>故事延续： 现在，我连续观察蚱蜢的10次进食选择。每一次选择，都是一个独立的伯努利试验（是否吃黑麦草）。我关心的问题是：在这10次观察中，它总共有多大概率有恰好7次选择了黑麦草？或者，至少有8次？
-
-分布肖像： 二项分布描述的就是在$n$次独立的伯努利试验中，出现&quot;成功&quot;次数（记为$k$）的概率分布。它有两个参数：试验次数 $n$ 和每次成功的概率 $p$。
-
-生态学肖像：
-
-    播种100颗同种种子，最终成功发芽的数量$k$服从二项分布（$n=100$， $p=$发芽率）。
-
-    从一个大种群中随机捕获并标记50只动物，放回后再次随机捕获50只，其中被标记个体的数量$k$也服从二项分布。这正是标记重捕法的理论核心！
-
-    二项分布帮我们回答的是：在固定的尝试次数下，获得特定次数“成功”的概率有多大。</code></pre>
+<h4><span class="header-section-number">2.2.2.2</span> 二项分布：重复”是非题”的计数法则<a href="概率与分布.html#二项分布重复是非题的计数法则" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>故事延续：</strong> 现在，我连续观察蚱蜢的10次进食选择。每一次选择，都是一个独立的伯努利试验（是否吃黑麦草）。我关心的问题是：在这10次观察中，它总共有多大概率有恰好7次选择了黑麦草？或者，至少有8次？这种从单次试验扩展到多次试验的视角，引导我们认识二项分布。</p>
+<p><strong>数学定义：</strong> 二项分布描述的是在<span class="math inline">\(n\)</span>次独立的伯努利试验中，成功次数<span class="math inline">\(k\)</span>的概率分布。二项试验满足以下条件： 1. 试验由<span class="math inline">\(n\)</span>次相同的伯努利试验组成 2. 每次试验只有两种可能的结果（成功/失败） 3. 每次试验的成功概率<span class="math inline">\(p\)</span>保持不变 4. 各次试验相互独立</p>
+<p><strong>概率函数表达式：</strong> 二项分布的概率质量函数为：</p>
+<p><span class="math display">\[P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, 2, \ldots, n\]</span></p>
+<p>其中： - <span class="math inline">\(X\)</span>是二项随机变量，表示成功的次数 - <span class="math inline">\(n\)</span>是试验总次数 - <span class="math inline">\(k\)</span>是成功次数 - <span class="math inline">\(p\)</span>是每次试验的成功概率 - <span class="math inline">\(\binom{n}{k} = \frac{n!}{k!(n-k)!}\)</span>是二项系数</p>
+<p><strong>分布特性：</strong> - 期望值：<span class="math inline">\(E[X] = np\)</span> - 方差：<span class="math inline">\(Var(X) = np(1-p)\)</span> - 当<span class="math inline">\(p=0.5\)</span>时，分布对称；当<span class="math inline">\(p&lt;0.5\)</span>时右偏，<span class="math inline">\(p&gt;0.5\)</span>时左偏</p>
+<p><img src="ecological-statistics_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><strong>生态学肖像：</strong></p>
+<p>二项分布在生态学中广泛应用于计数型数据的建模：</p>
+<ul>
+<li><strong>播种100颗同种种子，最终成功发芽的数量<span class="math inline">\(k\)</span>服从二项分布</strong>（<span class="math inline">\(n=100\)</span>，<span class="math inline">\(p=\)</span>发芽率）</li>
+<li><strong>从一个大种群中随机捕获并标记50只动物，放回后再次随机捕获50只，其中被标记个体的数量<span class="math inline">\(k\)</span>也服从二项分布</strong>。这正是标记重捕法的理论核心！</li>
+<li><strong>一片森林中，随机选择的100棵树中有病害的树木数量</strong></li>
+<li><strong>一次生态调查中，在50个样方中发现目标物种的样方数量</strong></li>
+<li><strong>一个鸟类种群中，在繁殖季节成功孵化的雏鸟数量</strong></li>
+</ul>
+<p><strong>生态学意义：</strong></p>
+<p>二项分布是伯努利分布的自然延伸，它将单个二元事件的概率模型扩展到多个独立事件的计数模型。在生态学研究中，二项分布帮助我们：</p>
+<ol style="list-style-type: decimal">
+<li><strong>种群估计</strong>：通过标记重捕法估计种群大小</li>
+<li><strong>患病率研究</strong>：估计疾病在种群中的传播程度</li>
+<li><strong>物种分布</strong>：量化物种在特定区域的分布概率</li>
+<li><strong>繁殖成功率</strong>：评估物种的繁殖表现</li>
+<li><strong>抽样设计</strong>：优化生态调查的样本大小设计</li>
+</ol>
+<p>二项分布的美妙之处在于它将复杂的生态计数问题简化为基本的概率计算，为我们提供了量化生态现象的有力工具。</p>
 </div>
 <div id="泊松分布罕见事件的低语者" class="section level4 hasAnchor" number="2.2.2.3">
-<h4><span class="header-section-number">2.2.2.3</span> 泊松分布：罕见事件的“低语者”<a href="概率与分布.html#泊松分布罕见事件的低语者" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>故事新篇： 这次，我不固定观察次数，而是固定观察时间。我坐在草地上，用一个小时的时间，记录下这只蚱蜢做出剧烈警戒性跳跃的次数。这种跳跃并不频繁，可能一次，可能两次，也可能一次都没有。在一个很短的时间间隔内，发生一次跳跃的概率很小，且事件彼此独立。
-
-分布肖像： 泊松分布专门用来描述单位时间、单位面积或单位体积内，稀有事件发生次数的概率分布。它的特点是只有一个参数 $\lambda$，它代表了事件发生的平均速率（例如，平均每小时跳跃2.5次）。它的分布形状由$\lambda$决定，$\lambda$较小则偏向右侧，$\lambda$增大后逐渐变得对称。
-
-生态学肖像：
-
-    一平方米的森林样地中，某种珍稀兰花的株数。
-
-    一台红外相机在一天内，拍摄到某种神秘夜行兽的次数。
-
-    一毫升海水中的浮游生物数量。
-
-    泊松分布是生态学中描述物种多度、空间分布点模式的黄金标准之一。</code></pre>
+<h4><span class="header-section-number">2.2.2.3</span> 泊松分布：罕见事件的”低语者”<a href="概率与分布.html#泊松分布罕见事件的低语者" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>故事新篇：</strong> 这次，我不固定观察次数，而是固定观察时间。我坐在草地上，用一个小时的时间，记录下这只蚱蜢做出剧烈警戒性跳跃的次数。这种跳跃并不频繁，可能一次，可能两次，也可能一次都没有。在一个很短的时间间隔内，发生一次跳跃的概率很小，且事件彼此独立。这种对稀有事件计数的需求，引导我们认识泊松分布。</p>
+<p><strong>数学定义：</strong> 泊松分布描述的是在固定时间间隔、固定面积或固定体积内，稀有事件发生次数的概率分布。泊松过程满足以下条件： 1. 事件在任意小的时间间隔内发生的概率与时间间隔长度成正比 2. 在不相交的时间间隔内，事件发生次数相互独立 3. 事件在任意时间点发生的概率相同（平稳性） 4. 在极短时间间隔内，发生两次或以上事件的概率可以忽略</p>
+<p><strong>概率函数表达式：</strong> 泊松分布的概率质量函数为：</p>
+<p><span class="math display">\[P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots\]</span></p>
+<p>其中： - <span class="math inline">\(X\)</span>是泊松随机变量，表示事件发生的次数 - <span class="math inline">\(\lambda\)</span>是单位时间（或单位面积/体积）内事件发生的平均次数 - <span class="math inline">\(k\)</span>是实际观察到的事件次数 - <span class="math inline">\(e\)</span>是自然对数的底（约等于2.71828）</p>
+<p><strong>分布特性：</strong> - 期望值：<span class="math inline">\(E[X] = \lambda\)</span> - 方差：<span class="math inline">\(Var(X) = \lambda\)</span>（期望等于方差是泊松分布的重要特征） - 当<span class="math inline">\(\lambda\)</span>较小时，分布右偏；当<span class="math inline">\(\lambda\)</span>增大时，分布逐渐接近正态分布 - 泊松分布是二项分布在<span class="math inline">\(n \to \infty\)</span>，<span class="math inline">\(p \to 0\)</span>，且<span class="math inline">\(np = \lambda\)</span>时的极限情况</p>
+<p><img src="ecological-statistics_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><strong>生态学肖像：</strong></p>
+<p>泊松分布在生态学中广泛应用于稀有事件和空间分布的研究：</p>
+<ul>
+<li><strong>一平方米的森林样地中，某种珍稀兰花的株数</strong> - 描述稀有物种的空间分布</li>
+<li><strong>一台红外相机在一天内，拍摄到某种神秘夜行兽的次数</strong> - 监测稀有动物的活动频率</li>
+<li><strong>一毫升海水中的浮游生物数量</strong> - 量化微生物的密度分布</li>
+<li><strong>一片草原上，单位面积内某种昆虫的巢穴数量</strong> - 研究昆虫的空间分布模式</li>
+<li><strong>一个湖泊中，特定时间段内鱼类跃出水面的次数</strong> - 记录稀有行为的发生频率</li>
+</ul>
+<p><strong>生态学意义：</strong></p>
+<p>泊松分布是生态学中描述随机分布模式的重要工具，它帮助我们：</p>
+<ol style="list-style-type: decimal">
+<li><strong>物种分布研究</strong>：判断物种在空间上是否随机分布</li>
+<li><strong>种群密度估计</strong>：通过单位面积内的个体数估计总体密度</li>
+<li><strong>行为生态学</strong>：量化稀有行为的发生频率</li>
+<li><strong>保护生物学</strong>：评估稀有物种的分布状况</li>
+<li><strong>生态监测</strong>：设计合理的监测方案和样本大小</li>
+</ol>
+<p>泊松分布的美妙之处在于它用一个简单的参数<span class="math inline">\(\lambda\)</span>就描述了复杂生态现象的概率规律，为我们理解自然界的随机性提供了简洁而强大的数学工具。</p>
 </div>
 <div id="几何分布等待第一次成功的耐心" class="section level4 hasAnchor" number="2.2.2.4">
-<h4><span class="header-section-number">2.2.2.4</span> 几何分布：等待“第一次成功”的耐心<a href="概率与分布.html#几何分布等待第一次成功的耐心" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>故事视角转换： 想象现在是清晨，蚱蜢开始了它的第一次觅食。我好奇的是：它需要尝试多少次，才能第一次成功吃到它最爱的黑麦草？ 也许第一次就成功了（X=1），也许前两次都去了别处，第三次才成功（X=3）。
-
-分布肖像： 几何分布描述的是在一系列独立的伯努利试验中，首次获得&quot;成功&quot;所需要的试验次数。它的参数仍然是每次试验的成功概率 $p$。$p$越大，意味着你很快就能成功，所以需要等待的次数的期望值越小。
-
-生态学肖像：
-
-    一只捕食者需要巡视几个洞穴，才能发现第一个有猎物的。
-
-    一只传粉昆虫需要访问多少朵花，才能第一次成功获得花蜜。
-
-    几何分布刻画的是那种“守得云开见月明”的等待过程。</code></pre>
+<h4><span class="header-section-number">2.2.2.4</span> 几何分布：等待”第一次成功”的耐心<a href="概率与分布.html#几何分布等待第一次成功的耐心" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>故事视角转换：</strong> 想象现在是清晨，蚱蜢开始了它的第一次觅食。我好奇的是：它需要尝试多少次，才能第一次成功吃到它最爱的黑麦草？ 也许第一次就成功了（X=1），也许前两次都去了别处，第三次才成功（X=3）。这种对”第一次成功”等待时间的关注，引导我们认识几何分布。</p>
+<p><strong>数学定义：</strong> 几何分布描述的是在一系列独立的伯努利试验中，首次获得成功所需要的试验次数。几何分布满足以下条件： 1. 试验由一系列相同的伯努利试验组成 2. 每次试验只有两种可能的结果（成功/失败） 3. 每次试验的成功概率<span class="math inline">\(p\)</span>保持不变 4. 各次试验相互独立 5. 试验持续进行直到第一次成功出现</p>
+<p><strong>概率函数表达式：</strong> 几何分布的概率质量函数为：</p>
+<p><span class="math display">\[P(X = k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots\]</span></p>
+<p>其中： - <span class="math inline">\(X\)</span>是几何随机变量，表示首次成功所需的试验次数 - <span class="math inline">\(k\)</span>是试验次数（<span class="math inline">\(k \geq 1\)</span>） - <span class="math inline">\(p\)</span>是每次试验的成功概率 - <span class="math inline">\((1-p)^{k-1}\)</span>表示前<span class="math inline">\(k-1\)</span>次都失败的概率</p>
+<p><strong>分布特性：</strong> - 期望值：<span class="math inline">\(E[X] = \frac{1}{p}\)</span> - 方差：<span class="math inline">\(Var(X) = \frac{1-p}{p^2}\)</span> - 无记忆性：<span class="math inline">\(P(X &gt; m+n \mid X &gt; m) = P(X &gt; n)\)</span>，即过去的失败不影响未来的成功概率 - 当<span class="math inline">\(p\)</span>较小时，分布右偏严重；当<span class="math inline">\(p\)</span>接近1时，分布集中在较小的<span class="math inline">\(k\)</span>值</p>
+<p><img src="ecological-statistics_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><strong>生态学肖像：</strong></p>
+<p>几何分布在生态学中广泛应用于”等待时间”和”首次成功”的研究：</p>
+<ul>
+<li><strong>一只捕食者需要巡视几个洞穴，才能发现第一个有猎物的</strong> - 描述捕食效率</li>
+<li><strong>一只传粉昆虫需要访问多少朵花，才能第一次成功获得花蜜</strong> - 研究传粉行为效率</li>
+<li><strong>一颗种子需要经历多少个雨季，才能第一次成功发芽</strong> - 分析种子萌发模式</li>
+<li><strong>一只候鸟需要尝试多少次，才能第一次成功找到迁徙路线</strong> - 研究学习行为</li>
+<li><strong>一个植物种群需要经过多少代，才能第一次出现抗病突变</strong> - 分析进化过程</li>
+</ul>
+<p><strong>生态学意义：</strong></p>
+<p>几何分布是生态学中描述”等待过程”的重要工具，它帮助我们：</p>
+<ol style="list-style-type: decimal">
+<li><strong>行为生态学</strong>：量化动物行为的效率和成功率</li>
+<li><strong>种群动态</strong>：分析种群恢复和重建的时间过程</li>
+<li><strong>进化生态学</strong>：研究适应性特征的进化时间尺度</li>
+<li><strong>保护生物学</strong>：评估濒危物种恢复的可能性</li>
+<li><strong>生态恢复</strong>：预测生态系统恢复所需的时间</li>
+</ol>
+<p>几何分布的美妙之处在于它用一个简单的参数<span class="math inline">\(p\)</span>就描述了复杂生态过程中的等待时间规律，特别是其”无记忆性”特征，使得我们可以专注于当前的生态过程而不受历史影响。</p>
 </div>
 </div>
 <div id="更大的世界-连续随机变量" class="section level3 hasAnchor" number="2.2.3">
