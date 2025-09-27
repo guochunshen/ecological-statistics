@@ -23,7 +23,7 @@
 <meta name="author" content="沈国春、李勤" />
 
 
-<meta name="date" content="2025-09-26" />
+<meta name="date" content="2025-09-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -395,6 +395,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>PCIe总线</strong>是连接CPU、内存、硬盘和GPU等硬件组件的高速数据通道。PCIe（Peripheral Component Interconnect Express）的带宽决定了不同硬件间数据传输的速度。现代PCIe 4.0 x16接口提供约32GB/s的带宽，而PCIe 5.0 x16接口带宽可达64GB/s。在GPU加速计算中，PCIe总线的性能直接影响CPU与GPU之间的数据传输效率，是决定整体计算性能的关键因素之一。</p>
 <p><strong>程序运行的基本流程</strong>涉及这些硬件组件间的协同工作。当执行一个统计分析程序时：首先，程序代码从硬盘被加载到内存中；然后，CPU从内存读取指令并逐条执行；在执行过程中，CPU可能需要从内存读取数据，进行计算后将结果写回内存；最后，分析结果被保存到硬盘中。这个过程中，数据在不同硬件间流动：硬盘→内存→CPU→内存→硬盘。</p>
 <p><strong>GPU加速计算的流程</strong>与CPU有所不同。当程序需要利用GPU进行并行计算时：首先，CPU将需要处理的数据从系统内存通过PCIe总线传输到GPU显存；然后，GPU的数千个计算核心并行处理数据；计算结果暂存在GPU显存中；最后，CPU将结果从GPU显存传回系统内存，再保存到硬盘。这个过程中，数据流动为：硬盘→内存→GPU显存→GPU计算核心→GPU显存→内存→硬盘。GPU计算的关键在于减少CPU与GPU之间的数据传输次数，通过批处理和异步传输优化性能。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:hardware-flow"></span>
+<img src="imgs/hardware_flow.png" alt="程序运行中的数据流动示意图" width="80%" />
+<p class="caption">
+图 1.1: 程序运行中的数据流动示意图
+</p>
+</div>
 <p>在统计分析的具体场景中，这种数据流转体现得更加明显。例如，当运行一个线性回归分析时：R解释器从硬盘读取脚本文件到内存；数据文件从硬盘加载到内存的数据框中；CPU执行lm()函数，在内存中进行矩阵运算；计算结果（系数、p值等）存储在内存中的模型对象里；最终结果被写入硬盘的报告文件。如果分析涉及大规模数据，可能会出现内存瓶颈，此时需要采用分批处理或流式处理策略，让数据在硬盘和内存间分块流动。</p>
 <p>理解硬件组成和程序运行流程有助于统计分析人员优化工作流程。例如，知道CPU多核特性可以指导使用并行计算包（如parallel）来加速计算；了解GPU的并行能力可以指导选择适合GPU加速的算法；认识内存限制可以避免处理过大的数据集导致系统崩溃；理解硬盘性能差异可以优化数据存储策略。这种硬件意识是现代数据科学家必备的基础知识，它帮助研究者在技术约束下做出明智的决策，确保统计分析既高效又可靠。</p>
 </div>

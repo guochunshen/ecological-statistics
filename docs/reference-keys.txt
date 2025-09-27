@@ -1,3 +1,4 @@
+fig:hardware-flow
 课程在线资源
 学习方式
 统计编程基础

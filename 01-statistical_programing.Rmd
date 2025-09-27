@@ -132,6 +132,70 @@
 
 **GPU加速计算的流程**与CPU有所不同。当程序需要利用GPU进行并行计算时：首先，CPU将需要处理的数据从系统内存通过PCIe总线传输到GPU显存；然后，GPU的数千个计算核心并行处理数据；计算结果暂存在GPU显存中；最后，CPU将结果从GPU显存传回系统内存，再保存到硬盘。这个过程中，数据流动为：硬盘→内存→GPU显存→GPU计算核心→GPU显存→内存→硬盘。GPU计算的关键在于减少CPU与GPU之间的数据传输次数，通过批处理和异步传输优化性能。
 
+```{r hardware-flow, fig.cap="程序运行中的数据流动示意图", fig.width=10, fig.height=6, echo=FALSE}
+library(DiagrammeR)
+
+# 创建流程图
+graph <- create_graph() %>%
+  add_node("硬盘", label = "硬盘",
+           node_aes = node_aes(shape = "rectangle",
+                              style = "filled",
+                              fillcolor = "lightblue")) %>%
+  add_node("内存", label = "内存",
+           node_aes = node_aes(shape = "rectangle",
+                              style = "filled",
+                              fillcolor = "lightgreen")) %>%
+  add_node("CPU", label = "CPU",
+           node_aes = node_aes(shape = "ellipse",
+                              style = "filled",
+                              fillcolor = "lightcoral")) %>%
+  add_node("GPU显存", label = "GPU显存",
+           node_aes = node_aes(shape = "rectangle",
+                              style = "filled",
+                              fillcolor = "lightyellow")) %>%
+  add_node("GPU计算核心", label = "GPU计算核心",
+           node_aes = node_aes(shape = "ellipse",
+                              style = "filled",
+                              fillcolor = "lightpink")) %>%
+
+  # CPU流程
+  add_edge(from = "硬盘", to = "内存",
+           edge_aes = edge_aes(label = "加载数据")) %>%
+  add_edge(from = "内存", to = "CPU",
+           edge_aes = edge_aes(label = "读取指令")) %>%
+  add_edge(from = "CPU", to = "内存",
+           edge_aes = edge_aes(label = "写回结果")) %>%
+  add_edge(from = "内存", to = "硬盘",
+           edge_aes = edge_aes(label = "保存结果")) %>%
+
+  # GPU流程
+  add_edge(from = "内存", to = "GPU显存",
+           edge_aes = edge_aes(label = "传输数据",
+                              style = "dashed")) %>%
+  add_edge(from = "GPU显存", to = "GPU计算核心",
+           edge_aes = edge_aes(label = "并行计算",
+                              style = "dashed")) %>%
+  add_edge(from = "GPU计算核心", to = "GPU显存",
+           edge_aes = edge_aes(label = "暂存结果",
+                              style = "dashed")) %>%
+  add_edge(from = "GPU显存", to = "内存",
+           edge_aes = edge_aes(label = "传回结果",
+                              style = "dashed"))
+
+# 确保imgs目录存在
+if (!dir.exists("imgs")) {
+  dir.create("imgs")
+}
+
+# 生成高清晰度静态图片文件
+img_file <- "imgs/hardware_flow.png"
+export_graph(graph, file_name = img_file, file_type = "png",
+             width = 2000, height = 1200)
+
+# 显示图片
+knitr::include_graphics(img_file)
+```
+
 在统计分析的具体场景中，这种数据流转体现得更加明显。例如，当运行一个线性回归分析时：R解释器从硬盘读取脚本文件到内存；数据文件从硬盘加载到内存的数据框中；CPU执行lm()函数，在内存中进行矩阵运算；计算结果（系数、p值等）存储在内存中的模型对象里；最终结果被写入硬盘的报告文件。如果分析涉及大规模数据，可能会出现内存瓶颈，此时需要采用分批处理或流式处理策略，让数据在硬盘和内存间分块流动。
 
 理解硬件组成和程序运行流程有助于统计分析人员优化工作流程。例如，知道CPU多核特性可以指导使用并行计算包（如parallel）来加速计算；了解GPU的并行能力可以指导选择适合GPU加速的算法；认识内存限制可以避免处理过大的数据集导致系统崩溃；理解硬盘性能差异可以优化数据存储策略。这种硬件意识是现代数据科学家必备的基础知识，它帮助研究者在技术约束下做出明智的决策，确保统计分析既高效又可靠。
