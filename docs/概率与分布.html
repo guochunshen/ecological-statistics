@@ -151,11 +151,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
 <ul>
-<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#在不确定的世界中寻找规律"><i class="fa fa-check"></i><b>0.1</b> 在不确定的世界中寻找规律</a></li>
-<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#ai时代的机遇与陷阱"><i class="fa fa-check"></i><b>0.2</b> AI时代的机遇与陷阱</a></li>
-<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#本书介绍"><i class="fa fa-check"></i><b>0.3</b> 本书介绍</a></li>
-<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#课程在线资源"><i class="fa fa-check"></i><b>0.4</b> 课程在线资源</a></li>
-<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#学习方式"><i class="fa fa-check"></i><b>0.5</b> 学习方式</a></li>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#为什么要学生态统计"><i class="fa fa-check"></i><b>0.1</b> 为什么要学生态统计</a>
+<ul>
+<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#在不确定的世界中寻找规律"><i class="fa fa-check"></i><b>0.1.1</b> 在不确定的世界中寻找规律</a></li>
+<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#ai时代的机遇与陷阱"><i class="fa fa-check"></i><b>0.1.2</b> AI时代的机遇与陷阱</a></li>
+</ul></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#本书介绍"><i class="fa fa-check"></i><b>0.2</b> 本书介绍</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#课程在线资源"><i class="fa fa-check"></i><b>0.3</b> 课程在线资源</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#学习方式"><i class="fa fa-check"></i><b>0.4</b> 学习方式</a></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="统计编程基础.html"><a href="统计编程基础.html"><i class="fa fa-check"></i><b>1</b> 统计编程基础</a>
 <ul>
@@ -775,22 +778,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>贝叶斯方法为现代数据分析提供了强大的工具。随着计算技术的发展，马尔可夫链蒙特卡洛（MCMC）等方法使得复杂的贝叶斯模型变得可行。在生态学中，贝叶斯方法已经成为处理不确定性、整合多源数据的重要工具。</p>
 <p>总结来说，贝叶斯概率如同生态学家的”学习机器”，让我们能够基于不断积累的证据来更新对自然界的认识。它教会我们”在不确定性中学习”的重要性，培养了我们对知识动态更新的敏感度。当我们面对快速变化的环境和有限的数据时，贝叶斯概率为我们提供了灵活应对不确定性的智慧工具，帮助我们做出更加理性的决策。</p>
 <p><strong>贝叶斯统计的挑战</strong></p>
-<p>贝叶斯框架在概念上非常优雅，但在计算上有一个巨大的挑战：<strong>分母 <span class="math inline">\(P(D)\)</span> 通常极其难以计算。</strong></p>
-<p><span class="math display">\[ P(D) = \int P(D \mid \theta) P(\theta) \, d\theta \]</span></p>
+<p>贝叶斯框架在概念上非常优雅，但在计算上有一个巨大的挑战：<strong>分母 <span class="math inline">\(P(E)\)</span> 通常极其难以计算。</strong></p>
+<p><span class="math display">\[ P(E) = \int P(E \mid \theta) P(\theta) \, d\theta \]</span></p>
 <p>这个积分在高维空间（即参数<span class="math inline">\(\theta\)</span>包含多个变量时）往往没有解析解（即无法用公式直接写出结果）。在MCMC出现之前，这严重限制了贝叶斯方法的应用，人们只能对那些具有“共轭先验”的特殊模型进行分析（即先验和后验属于同一分布家族，从而可以避开积分计算）。</p>
-<p><strong>所以，问题的核心变成了：如何有效地从复杂的、高维的后验分布 <span class="math inline">\(P(\theta \mid D)\)</span> 中获取信息（例如，计算均值、方差、分位数等），而无需知道那个讨厌的分母 <span class="math inline">\(P(D)\)</span>？</strong></p>
+<p><strong>所以，问题的核心变成了：如何有效地从复杂的、高维的后验分布 <span class="math inline">\(P(\theta \mid E)\)</span> 中获取信息（例如，计算均值、方差、分位数等），而无需知道那个讨厌的分母 <span class="math inline">\(P(E)\)</span>？</strong></p>
 <p><strong>马尔可夫模拟（MCMC）的核心思想</strong></p>
 <p>MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心思想是：</p>
-<p><strong>与其直接计算后验分布，不如我们构造一个马尔可夫链，使其平稳分布恰好就是我们想要的后验分布 <span class="math inline">\(P(\theta \mid D)\)</span>。然后，我们从这个链中生成大量的样本，用这些样本来近似（模拟）后验分布。</strong></p>
+<p><strong>与其直接计算后验分布，不如我们构造一个马尔可夫链，使其平稳分布恰好就是我们想要的后验分布 <span class="math inline">\(P(\theta \mid E)\)</span>。然后，我们从这个链中生成大量的样本，用这些样本来近似（模拟）后验分布。</strong></p>
 <p>我们来分解这个思想：</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>蒙特卡洛（Monte Carlo）</strong>： 泛指通过随机抽样来解决问题的方法。基本思想是：如果你想知道一个分布的属性（比如均值），就从该分布中抽取大量样本，然后计算这些样本的均值。<strong>问题在于</strong>：我们无法直接从复杂的后验分布中抽样。</p></li>
 <li><p><strong>马尔可夫链（Markov Chain）</strong>： 这是一个具有“无记忆”性质的随机过程，下一个状态只取决于当前状态，而与过去的状态无关。关键点是，在满足一定条件下，马尔可夫链会收敛到一个唯一的<strong>平稳分布</strong>。这意味着无论链从何处开始，经过足够长的步骤后，它停留在每个状态的概率是固定的。</p></li>
 <li><p><strong>MCMC的巧妙结合</strong>：</p>
 <ul>
-<li><strong>目标</strong>： 让后验分布 <span class="math inline">\(P(\theta \mid D)\)</span> 成为马尔可夫链的平稳分布。</li>
-<li><strong>方法</strong>： 设计特定的规则（如Metropolis-Hastings算法或Gibbs抽样），来构建这样一个链。这些规则的伟大之处在于，它们在计算时，<strong>分母 <span class="math inline">\(P(D)\)</span> 会被约掉！</strong> 因为规则中只涉及后验分布的<em>比值</em>： <span class="math display">\[ \frac{P(\theta_{\text{新}} \mid D)}{P(\theta_{\text{旧}} \mid D)} = \frac{\frac{P(D \mid \theta_{\text{新}})P(\theta_{\text{新}})}{P(D)}}{\frac{P(D \mid \theta_{\text{旧}})P(\theta_{\text{旧}})}{P(D)}} = \frac{P(D \mid \theta_{\text{新}})P(\theta_{\text{新}})}{P(D \mid \theta_{\text{旧}})P(\theta_{\text{旧}})} \]</span> <span class="math inline">\(P(D)\)</span> 被完美地消去了。所以我们可以在完全不知道 <span class="math inline">\(P(D)\)</span> 的情况下，判断是否应该从当前参数 <span class="math inline">\(\theta_{\text{旧}}\)</span> 移动到新参数 <span class="math inline">\(\theta_{\text{新}}\)</span>。</li>
-<li><strong>过程</strong>： 算法从某个初始值开始，然后根据规则随机游走。经过一段“预烧期”后，链会收敛到平稳分布。之后产生的样本，虽然彼此相关（因为是马尔可夫链），但可以看作是来自后验分布 <span class="math inline">\(P(\theta \mid D)\)</span> 的（近似）样本。</li>
+<li><strong>目标</strong>： 让后验分布 <span class="math inline">\(P(\theta \mid E)\)</span> 成为马尔可夫链的平稳分布。</li>
+<li><strong>方法</strong>： 设计特定的规则（如Metropolis-Hastings算法或Gibbs抽样），来构建这样一个链。这些规则的伟大之处在于，它们在计算时，<strong>分母 <span class="math inline">\(P(E)\)</span> 会被约掉！</strong> 因为规则中只涉及后验分布的<em>比值</em>： <span class="math display">\[ \frac{P(\theta_{\text{新}} \mid E)}{P(\theta_{\text{旧}} \mid E)} = \frac{\frac{P(E \mid \theta_{\text{新}})P(\theta_{\text{新}})}{P(E)}}{\frac{P(E \mid \theta_{\text{旧}})P(\theta_{\text{旧}})}{P(E)}} = \frac{P(E \mid \theta_{\text{新}})P(\theta_{\text{新}})}{P(E \mid \theta_{\text{旧}})P(\theta_{\text{旧}})} \]</span> <span class="math inline">\(P(E)\)</span> 被完美地消去了。所以我们可以在完全不知道 <span class="math inline">\(P(E)\)</span> 的情况下，判断是否应该从当前参数 <span class="math inline">\(\theta_{\text{旧}}\)</span> 移动到新参数 <span class="math inline">\(\theta_{\text{新}}\)</span>。</li>
+<li><strong>过程</strong>： 算法从某个初始值开始，然后根据规则随机游走。经过一段”预烧期”后，链会收敛到平稳分布。之后产生的样本，虽然彼此相关（因为是马尔可夫链），但可以看作是来自后验分布 <span class="math inline">\(P(\theta \mid E)\)</span> 的（近似）样本。</li>
 </ul></li>
 </ol>
 <p><strong>两者的关系——完美的共生</strong></p>
@@ -804,11 +807,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><strong>计算上的突破</strong>： MCMC的出现（特别是在1990年代以后）是贝叶斯统计复兴和广泛应用的根本原因。它使得分析者可以自由地构建复杂的、非共轭的、高维的模型，而无需担心无法计算的积分。几乎所有现代的贝叶斯软件（如Stan, PyMC, JAGS）的核心都是MCMC算法。</p></li>
 <li><p><strong>工作流程示例</strong>： 一个典型的贝叶斯数据分析流程如下：</p>
 <ul>
-<li><strong>步骤1（贝叶斯）</strong>： 建立模型。设定似然函数 <span class="math inline">\(P(D \mid \theta)\)</span> 和先验分布 <span class="math inline">\(P(\theta)\)</span>。</li>
-<li><strong>步骤2（MCMC）</strong>： 计算后验。使用MCMC算法（如Metropolis-Hastings， Gibbs抽样， Hamiltonian Monte Carlo）从后验分布 <span class="math inline">\(P(\theta \mid D)\)</span> 中生成大量样本 <span class="math inline">\(\theta^{(1)}, \theta^{(2)}, ..., \theta^{(N)}\)</span>。</li>
+<li><strong>步骤1（贝叶斯）</strong>： 建立模型。设定似然函数 <span class="math inline">\(P(E \mid \theta)\)</span> 和先验分布 <span class="math inline">\(P(\theta)\)</span>。</li>
+<li><strong>步骤2（MCMC）</strong>： 计算后验。使用MCMC算法（如Metropolis-Hastings， Gibbs抽样， Hamiltonian Monte Carlo）从后验分布 <span class="math inline">\(P(\theta \mid E)\)</span> 中生成大量样本 <span class="math inline">\(\theta^{(1)}, \theta^{(2)}, ..., \theta^{(N)}\)</span>。</li>
 <li><strong>步骤3（贝叶斯+蒙特卡洛）</strong>： 后验推断。利用生成的样本进行蒙特卡洛积分：
 <ul>
-<li>后验均值： <span class="math inline">\(E[\theta \mid D] \approx \frac{1}{N} \sum_{i=1}^N \theta^{(i)}\)</span></li>
+<li>后验均值： <span class="math inline">\(E[\theta \mid E] \approx \frac{1}{N} \sum_{i=1}^N \theta^{(i)}\)</span></li>
 <li>后验区间： 使用样本的分位数来构造可信区间。</li>
 <li>后验预测： 也可以轻松生成对新数据的预测。</li>
 </ul></li>
