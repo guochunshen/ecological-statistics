@@ -2097,10 +2097,136 @@ ggplot(normal_data, aes(x = x, y = PDF, color = label)) +
 ```
 
 
+### 威布尔分布：生存分析的"时间法则"
 
-### 威布尔分布：生存分析的利器
+**故事引入：** 观察这只蚱蜢的生存历程，你会发现它的死亡风险并非一成不变。在生命的早期，由于适应环境的能力较弱，死亡风险相对较高；进入成年期后，风险逐渐稳定；而到了老年期，由于生理机能衰退，死亡风险又会显著上升。这种随时间变化的死亡风险模式，正是威布尔分布能够精确描述的。蚱蜢的生存时间受到多种风险因素的综合影响，最终呈现出这种"浴盆曲线"的风险特征。
 
-威布尔分布在生存分析和可靠性研究中具有重要地位，特别适合描述生物寿命和生存时间。
+**数学定义：** 威布尔分布的概率密度函数为：
+
+$$f(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1} e^{-(x/\lambda)^k}, \quad x \geq 0$$
+
+其中$k$是形状参数（决定分布形态），$\lambda$是尺度参数（决定分布范围）。
+
+**分布特性：**
+- 期望值：$E[X] = \lambda \Gamma(1 + 1/k)$
+- 方差：$Var(X) = \lambda^2 [\Gamma(1 + 2/k) - \Gamma^2(1 + 1/k)]$
+- 生存函数：$S(x) = e^{-(x/\lambda)^k}$
+- 风险函数：$h(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1}$
+- 当$k=1$时退化为指数分布（恒定风险）
+- 当$k>1$时风险随时间增加（老化效应）
+- 当$k<1$时风险随时间减少（早期适应期）
+
+**生态学肖像：**
+- **生存分析研究**：蚱蜢的生存时间服从威布尔分布，反映其生命周期的风险变化模式
+- **种群动态建模**：通过威布尔分布可以估计种群的死亡率模式和期望寿命
+- **保护生物学**：濒危物种的生存时间分析有助于制定保护策略
+- **物候学研究**：植物开花时间、动物迁徙时间等时间事件的分析
+
+```r
+# 威布尔分布：生存分析和寿命数据的分布
+# 生态学应用：动物寿命、设备故障时间、种子萌发时间等
+
+# 参数：形状参数k，尺度参数λ
+shape_param <- 2.5
+scale_param <- 10
+
+# 模拟蚱蜢生存时间数据
+survival_times <- rweibull(200, shape = shape_param, scale = scale_param)
+
+# 描述统计
+print(paste("样本均值:", round(mean(survival_times), 2)))
+print(paste("样本标准差:", round(sd(survival_times), 2)))
+
+# 理论均值和方差
+# 威布尔分布的均值和方差公式
+# E[X] = λΓ(1 + 1/k)
+# Var(X) = λ²[Γ(1 + 2/k) - Γ²(1 + 1/k)]
+theoretical_mean <- scale_param * gamma(1 + 1/shape_param)
+theoretical_var <- scale_param^2 * (gamma(1 + 2/shape_param) - gamma(1 + 1/shape_param)^2)
+
+print(paste("理论均值:", round(theoretical_mean, 2)))
+print(paste("理论方差:", round(theoretical_var, 2)))
+
+# 可视化威布尔分布
+hist(survival_times, breaks = 30, freq = FALSE,
+     main = "蚱蜢生存时间分布（威布尔分布）",
+     xlab = "生存时间（天）", ylab = "密度",
+     col = "lightblue", xlim = c(0, 25))
+
+# 添加理论威布尔曲线
+x_vals <- seq(0, 25, 0.1)
+y_vals <- dweibull(x_vals, shape = shape_param, scale = scale_param)
+lines(x_vals, y_vals, col = "red", lwd = 2)
+
+# 添加生存函数曲线
+survival_vals <- 1 - pweibull(x_vals, shape = shape_param, scale = scale_param)
+lines(x_vals, survival_vals, col = "blue", lwd = 2, lty = 2)
+
+legend("topright", legend = c("概率密度", "生存函数"),
+       col = c("red", "blue"), lty = 1:2, lwd = 2)
+
+# 参数估计：使用最大似然估计拟合威布尔分布
+library(fitdistrplus)
+fit_weibull <- fitdist(survival_times, "weibull")
+print("威布尔分布参数估计结果:")
+print(summary(fit_weibull))
+
+# 比较不同形状参数的威布尔分布
+par(mfrow = c(2, 2))
+
+# 不同形状参数的比较
+shape_values <- c(0.5, 1, 2, 3)
+scale_fixed <- 10
+
+for (shape_val in shape_values) {
+  x_range <- seq(0, 25, 0.1)
+  density_vals <- dweibull(x_range, shape = shape_val, scale = scale_fixed)
+
+  plot(x_range, density_vals, type = "l", lwd = 2,
+       main = paste("形状参数 k =", shape_val),
+       xlab = "生存时间", ylab = "概率密度",
+       col = "darkred", ylim = c(0, 0.25))
+
+  # 添加风险函数
+  hazard_vals <- (shape_val/scale_fixed) * (x_range/scale_fixed)^(shape_val-1)
+  lines(x_range, hazard_vals, col = "blue", lwd = 2, lty = 2)
+
+  legend("topright", legend = c("概率密度", "风险函数"),
+         col = c("darkred", "blue"), lty = 1:2, lwd = 2)
+}
+
+par(mfrow = c(1, 1))
+
+# 威布尔分布在生态学中的实际应用示例
+print("生态学应用：蚱蜢种群生存分析")
+
+# 计算关键生存指标
+median_survival <- qweibull(0.5, shape = shape_param, scale = scale_param)
+survival_90_days <- 1 - pweibull(90, shape = shape_param, scale = scale_param)
+hazard_at_30_days <- (shape_param/scale_param) * (30/scale_param)^(shape_param-1)
+
+print(paste("中位生存时间:", round(median_survival, 2), "天"))
+print(paste("90天生存概率:", round(survival_90_days, 4)))
+print(paste("30天时的瞬时死亡率:", round(hazard_at_30_days, 4)))
+
+# 与正态分布的比较
+print("与正态分布的比较:")
+normal_fit <- fitdist(survival_times, "norm")
+print("正态分布拟合:")
+print(summary(normal_fit))
+print("威布尔分布拟合:")
+print(summary(fit_weibull))
+
+# AIC比较
+print(paste("正态分布AIC:", round(normal_fit$aic, 2)))
+print(paste("威布尔分布AIC:", round(fit_weibull$aic, 2)))
+
+if (fit_weibull$aic < normal_fit$aic) {
+  print("威布尔分布拟合效果更好（AIC更小）")
+} else {
+  print("正态分布拟合效果更好")
+}
+```
 
 
 ### 伽马分布：更一般的等待时间模型
@@ -2420,7 +2546,7 @@ cat("偏度和峰度随样本量的变化:\n")
 print(skewness_kurtosis)
 ```
 
-### 蚱蜢午餐中的中心极限定理
+#### 蚱蜢午餐中的中心极限定理
 
 让我们回到蚱蜢的午餐世界，看看中心极限定理如何发挥作用：
 
@@ -2433,7 +2559,7 @@ print(skewness_kurtosis)
 **场景3：行为偏好的研究**
 即使蚱蜢对植物的选择偏好本身不是正态分布，但当我们研究多个样本的平均偏好时，结果将趋于正态分布。
 
-### 中心极限定理的生态学意义
+#### 中心极限定理的生态学意义
 
 中心极限定理为生态学研究提供了强大的理论支撑：
 
@@ -2449,7 +2575,7 @@ print(skewness_kurtosis)
 4. **大样本理论的基石**
 中心极限定理是许多大样本统计方法的基础，使得我们能够在样本量足够时做出可靠的统计推断。
 
-### 中心极限定理的局限性
+#### 中心极限定理的局限性
 
 尽管中心极限定理非常强大，但在应用时也需要注意其局限性：
 
@@ -2476,7 +2602,7 @@ print(skewness_kurtosis)
 **行为生态学实验**
 在控制实验中测量动物的行为参数，通过中心极限定理，我们可以基于样本均值进行可靠的统计推断。
 
-### 总结
+#### 总结
 
 中心极限定理是连接概率论与统计推断的桥梁，它解释了为什么正态分布在统计学中占据核心地位。在蚱蜢午餐的研究中，这个定理确保了即使面对复杂的生态数据，我们仍然能够使用基于正态分布的统计方法来获得可靠的科学结论。
 

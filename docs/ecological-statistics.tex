@@ -3652,10 +3652,139 @@ p & \text{如果 } x = 1 \\
 
 \begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-29-1} \end{center}
 
-\hypertarget{ux5a01ux5e03ux5c14ux5206ux5e03ux751fux5b58ux5206ux6790ux7684ux5229ux5668}{%
-\subsection{威布尔分布：生存分析的利器}\label{ux5a01ux5e03ux5c14ux5206ux5e03ux751fux5b58ux5206ux6790ux7684ux5229ux5668}}
+\hypertarget{ux5a01ux5e03ux5c14ux5206ux5e03ux751fux5b58ux5206ux6790ux7684ux65f6ux95f4ux6cd5ux5219}{%
+\subsection{威布尔分布：生存分析的''时间法则''}\label{ux5a01ux5e03ux5c14ux5206ux5e03ux751fux5b58ux5206ux6790ux7684ux65f6ux95f4ux6cd5ux5219}}
 
-威布尔分布在生存分析和可靠性研究中具有重要地位，特别适合描述生物寿命和生存时间。
+\textbf{故事引入：} 观察这只蚱蜢的生存历程，你会发现它的死亡风险并非一成不变。在生命的早期，由于适应环境的能力较弱，死亡风险相对较高；进入成年期后，风险逐渐稳定；而到了老年期，由于生理机能衰退，死亡风险又会显著上升。这种随时间变化的死亡风险模式，正是威布尔分布能够精确描述的。蚱蜢的生存时间受到多种风险因素的综合影响，最终呈现出这种''浴盆曲线''的风险特征。
+
+\textbf{数学定义：} 威布尔分布的概率密度函数为：
+
+\[f(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1} e^{-(x/\lambda)^k}, \quad x \geq 0\]
+
+其中\(k\)是形状参数（决定分布形态），\(\lambda\)是尺度参数（决定分布范围）。
+
+\textbf{分布特性：}
+- 期望值：\(E[X] = \lambda \Gamma(1 + 1/k)\)
+- 方差：\(Var(X) = \lambda^2 [\Gamma(1 + 2/k) - \Gamma^2(1 + 1/k)]\)
+- 生存函数：\(S(x) = e^{-(x/\lambda)^k}\)
+- 风险函数：\(h(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1}\)
+- 当\(k=1\)时退化为指数分布（恒定风险）
+- 当\(k>1\)时风险随时间增加（老化效应）
+- 当\(k<1\)时风险随时间减少（早期适应期）
+
+\textbf{生态学肖像：}
+- \textbf{生存分析研究}：蚱蜢的生存时间服从威布尔分布，反映其生命周期的风险变化模式
+- \textbf{种群动态建模}：通过威布尔分布可以估计种群的死亡率模式和期望寿命
+- \textbf{保护生物学}：濒危物种的生存时间分析有助于制定保护策略
+- \textbf{物候学研究}：植物开花时间、动物迁徙时间等时间事件的分析
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 威布尔分布：生存分析和寿命数据的分布}
+\CommentTok{\# 生态学应用：动物寿命、设备故障时间、种子萌发时间等}
+
+\CommentTok{\# 参数：形状参数k，尺度参数λ}
+\NormalTok{shape\_param }\OtherTok{\textless{}{-}} \FloatTok{2.5}
+\NormalTok{scale\_param }\OtherTok{\textless{}{-}} \DecValTok{10}
+
+\CommentTok{\# 模拟蚱蜢生存时间数据}
+\NormalTok{survival\_times }\OtherTok{\textless{}{-}} \FunctionTok{rweibull}\NormalTok{(}\DecValTok{200}\NormalTok{, }\AttributeTok{shape =}\NormalTok{ shape\_param, }\AttributeTok{scale =}\NormalTok{ scale\_param)}
+
+\CommentTok{\# 描述统计}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"样本均值:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(survival\_times), }\DecValTok{2}\NormalTok{)))}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"样本标准差:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{sd}\NormalTok{(survival\_times), }\DecValTok{2}\NormalTok{)))}
+
+\CommentTok{\# 理论均值和方差}
+\CommentTok{\# 威布尔分布的均值和方差公式}
+\CommentTok{\# E[X] = λΓ(1 + 1/k)}
+\CommentTok{\# Var(X) = λ²[Γ(1 + 2/k) {-} Γ²(1 + 1/k)]}
+\NormalTok{theoretical\_mean }\OtherTok{\textless{}{-}}\NormalTok{ scale\_param }\SpecialCharTok{*} \FunctionTok{gamma}\NormalTok{(}\DecValTok{1} \SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{/}\NormalTok{shape\_param)}
+\NormalTok{theoretical\_var }\OtherTok{\textless{}{-}}\NormalTok{ scale\_param}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ (}\FunctionTok{gamma}\NormalTok{(}\DecValTok{1} \SpecialCharTok{+} \DecValTok{2}\SpecialCharTok{/}\NormalTok{shape\_param) }\SpecialCharTok{{-}} \FunctionTok{gamma}\NormalTok{(}\DecValTok{1} \SpecialCharTok{+} \DecValTok{1}\SpecialCharTok{/}\NormalTok{shape\_param)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"理论均值:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(theoretical\_mean, }\DecValTok{2}\NormalTok{)))}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"理论方差:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(theoretical\_var, }\DecValTok{2}\NormalTok{)))}
+
+\CommentTok{\# 可视化威布尔分布}
+\FunctionTok{hist}\NormalTok{(survival\_times, }\AttributeTok{breaks =} \DecValTok{30}\NormalTok{, }\AttributeTok{freq =} \ConstantTok{FALSE}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"蚱蜢生存时间分布（威布尔分布）"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"生存时间（天）"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"密度"}\NormalTok{,}
+     \AttributeTok{col =} \StringTok{"lightblue"}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{25}\NormalTok{))}
+
+\CommentTok{\# 添加理论威布尔曲线}
+\NormalTok{x\_vals }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{25}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
+\NormalTok{y\_vals }\OtherTok{\textless{}{-}} \FunctionTok{dweibull}\NormalTok{(x\_vals, }\AttributeTok{shape =}\NormalTok{ shape\_param, }\AttributeTok{scale =}\NormalTok{ scale\_param)}
+\FunctionTok{lines}\NormalTok{(x\_vals, y\_vals, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+
+\CommentTok{\# 添加生存函数曲线}
+\NormalTok{survival\_vals }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pweibull}\NormalTok{(x\_vals, }\AttributeTok{shape =}\NormalTok{ shape\_param, }\AttributeTok{scale =}\NormalTok{ scale\_param)}
+\FunctionTok{lines}\NormalTok{(x\_vals, survival\_vals, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"概率密度"}\NormalTok{, }\StringTok{"生存函数"}\NormalTok{),}
+       \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\StringTok{"blue"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+
+\CommentTok{\# 参数估计：使用最大似然估计拟合威布尔分布}
+\FunctionTok{library}\NormalTok{(fitdistrplus)}
+\NormalTok{fit\_weibull }\OtherTok{\textless{}{-}} \FunctionTok{fitdist}\NormalTok{(survival\_times, }\StringTok{"weibull"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\StringTok{"威布尔分布参数估计结果:"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{summary}\NormalTok{(fit\_weibull))}
+
+\CommentTok{\# 比较不同形状参数的威布尔分布}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+
+\CommentTok{\# 不同形状参数的比较}
+\NormalTok{shape\_values }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\NormalTok{scale\_fixed }\OtherTok{\textless{}{-}} \DecValTok{10}
+
+\ControlFlowTok{for}\NormalTok{ (shape\_val }\ControlFlowTok{in}\NormalTok{ shape\_values) \{}
+\NormalTok{  x\_range }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{25}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
+\NormalTok{  density\_vals }\OtherTok{\textless{}{-}} \FunctionTok{dweibull}\NormalTok{(x\_range, }\AttributeTok{shape =}\NormalTok{ shape\_val, }\AttributeTok{scale =}\NormalTok{ scale\_fixed)}
+
+  \FunctionTok{plot}\NormalTok{(x\_range, density\_vals, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{,}
+       \AttributeTok{main =} \FunctionTok{paste}\NormalTok{(}\StringTok{"形状参数 k ="}\NormalTok{, shape\_val),}
+       \AttributeTok{xlab =} \StringTok{"生存时间"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"概率密度"}\NormalTok{,}
+       \AttributeTok{col =} \StringTok{"darkred"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{))}
+
+  \CommentTok{\# 添加风险函数}
+\NormalTok{  hazard\_vals }\OtherTok{\textless{}{-}}\NormalTok{ (shape\_val}\SpecialCharTok{/}\NormalTok{scale\_fixed) }\SpecialCharTok{*}\NormalTok{ (x\_range}\SpecialCharTok{/}\NormalTok{scale\_fixed)}\SpecialCharTok{\^{}}\NormalTok{(shape\_val}\DecValTok{{-}1}\NormalTok{)}
+  \FunctionTok{lines}\NormalTok{(x\_range, hazard\_vals, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+
+  \FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"概率密度"}\NormalTok{, }\StringTok{"风险函数"}\NormalTok{),}
+         \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"darkred"}\NormalTok{, }\StringTok{"blue"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\NormalTok{\}}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
+\CommentTok{\# 威布尔分布在生态学中的实际应用示例}
+\FunctionTok{print}\NormalTok{(}\StringTok{"生态学应用：蚱蜢种群生存分析"}\NormalTok{)}
+
+\CommentTok{\# 计算关键生存指标}
+\NormalTok{median\_survival }\OtherTok{\textless{}{-}} \FunctionTok{qweibull}\NormalTok{(}\FloatTok{0.5}\NormalTok{, }\AttributeTok{shape =}\NormalTok{ shape\_param, }\AttributeTok{scale =}\NormalTok{ scale\_param)}
+\NormalTok{survival\_90\_days }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pweibull}\NormalTok{(}\DecValTok{90}\NormalTok{, }\AttributeTok{shape =}\NormalTok{ shape\_param, }\AttributeTok{scale =}\NormalTok{ scale\_param)}
+\NormalTok{hazard\_at\_30\_days }\OtherTok{\textless{}{-}}\NormalTok{ (shape\_param}\SpecialCharTok{/}\NormalTok{scale\_param) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{30}\SpecialCharTok{/}\NormalTok{scale\_param)}\SpecialCharTok{\^{}}\NormalTok{(shape\_param}\DecValTok{{-}1}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"中位生存时间:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(median\_survival, }\DecValTok{2}\NormalTok{), }\StringTok{"天"}\NormalTok{))}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"90天生存概率:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(survival\_90\_days, }\DecValTok{4}\NormalTok{)))}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"30天时的瞬时死亡率:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(hazard\_at\_30\_days, }\DecValTok{4}\NormalTok{)))}
+
+\CommentTok{\# 与正态分布的比较}
+\FunctionTok{print}\NormalTok{(}\StringTok{"与正态分布的比较:"}\NormalTok{)}
+\NormalTok{normal\_fit }\OtherTok{\textless{}{-}} \FunctionTok{fitdist}\NormalTok{(survival\_times, }\StringTok{"norm"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\StringTok{"正态分布拟合:"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{summary}\NormalTok{(normal\_fit))}
+\FunctionTok{print}\NormalTok{(}\StringTok{"威布尔分布拟合:"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{summary}\NormalTok{(fit\_weibull))}
+
+\CommentTok{\# AIC比较}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"正态分布AIC:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(normal\_fit}\SpecialCharTok{$}\NormalTok{aic, }\DecValTok{2}\NormalTok{)))}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{paste}\NormalTok{(}\StringTok{"威布尔分布AIC:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(fit\_weibull}\SpecialCharTok{$}\NormalTok{aic, }\DecValTok{2}\NormalTok{)))}
+
+\ControlFlowTok{if}\NormalTok{ (fit\_weibull}\SpecialCharTok{$}\NormalTok{aic }\SpecialCharTok{\textless{}}\NormalTok{ normal\_fit}\SpecialCharTok{$}\NormalTok{aic) \{}
+  \FunctionTok{print}\NormalTok{(}\StringTok{"威布尔分布拟合效果更好（AIC更小）"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+  \FunctionTok{print}\NormalTok{(}\StringTok{"正态分布拟合效果更好"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{ux4f3dux9a6cux5206ux5e03ux66f4ux4e00ux822cux7684ux7b49ux5f85ux65f6ux95f4ux6a21ux578b}{%
 \subsection{伽马分布：更一般的等待时间模型}\label{ux4f3dux9a6cux5206ux5e03ux66f4ux4e00ux822cux7684ux7b49ux5f85ux65f6ux95f4ux6a21ux578b}}
@@ -3777,7 +3906,7 @@ p & \text{如果 } x = 1 \\
 \end{verbatim}
 
 \hypertarget{ux86b1ux8722ux5348ux9910ux4e2dux7684ux4e2dux5fc3ux6781ux9650ux5b9aux7406}{%
-\subsection{蚱蜢午餐中的中心极限定理}\label{ux86b1ux8722ux5348ux9910ux4e2dux7684ux4e2dux5fc3ux6781ux9650ux5b9aux7406}}
+\subsubsection{蚱蜢午餐中的中心极限定理}\label{ux86b1ux8722ux5348ux9910ux4e2dux7684ux4e2dux5fc3ux6781ux9650ux5b9aux7406}}
 
 让我们回到蚱蜢的午餐世界，看看中心极限定理如何发挥作用：
 
@@ -3791,7 +3920,7 @@ p & \text{如果 } x = 1 \\
 即使蚱蜢对植物的选择偏好本身不是正态分布，但当我们研究多个样本的平均偏好时，结果将趋于正态分布。
 
 \hypertarget{ux4e2dux5fc3ux6781ux9650ux5b9aux7406ux7684ux751fux6001ux5b66ux610fux4e49}{%
-\subsection{中心极限定理的生态学意义}\label{ux4e2dux5fc3ux6781ux9650ux5b9aux7406ux7684ux751fux6001ux5b66ux610fux4e49}}
+\subsubsection{中心极限定理的生态学意义}\label{ux4e2dux5fc3ux6781ux9650ux5b9aux7406ux7684ux751fux6001ux5b66ux610fux4e49}}
 
 中心极限定理为生态学研究提供了强大的理论支撑：
 
@@ -3812,7 +3941,7 @@ p & \text{如果 } x = 1 \\
 \end{enumerate}
 
 \hypertarget{ux4e2dux5fc3ux6781ux9650ux5b9aux7406ux7684ux5c40ux9650ux6027}{%
-\subsection{中心极限定理的局限性}\label{ux4e2dux5fc3ux6781ux9650ux5b9aux7406ux7684ux5c40ux9650ux6027}}
+\subsubsection{中心极限定理的局限性}\label{ux4e2dux5fc3ux6781ux9650ux5b9aux7406ux7684ux5c40ux9650ux6027}}
 
 尽管中心极限定理非常强大，但在应用时也需要注意其局限性：
 
@@ -3845,7 +3974,7 @@ p & \text{如果 } x = 1 \\
 在控制实验中测量动物的行为参数，通过中心极限定理，我们可以基于样本均值进行可靠的统计推断。
 
 \hypertarget{ux603bux7ed3-1}{%
-\subsection{总结}\label{ux603bux7ed3-1}}
+\subsubsection{总结}\label{ux603bux7ed3-1}}
 
 中心极限定理是连接概率论与统计推断的桥梁，它解释了为什么正态分布在统计学中占据核心地位。在蚱蜢午餐的研究中，这个定理确保了即使面对复杂的生态数据，我们仍然能够使用基于正态分布的统计方法来获得可靠的科学结论。
 
