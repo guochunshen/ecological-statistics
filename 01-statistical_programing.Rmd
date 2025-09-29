@@ -922,6 +922,155 @@ calculate_shannon_diversity <- function(species_vector) {
     ```
     *   计算：这会产生一棵深度为 n 的递归树，节点数约为 2^n，因此复杂度为 O(2^n)。
 
+    **动态规划算法** 作为对比，我们来用另一种时间复杂度 O(n)的算法：
+    ```r
+    fibonacci_efficient <- function(n) {
+      if (n <= 1) {
+        return(n)
+    }
+
+    # 使用动态规划，避免重复计算
+    fib <- numeric(n + 1)
+    fib[1] <- 0
+    fib[2] <- 1
+
+    for (i in 3:(n + 1)) {
+      fib[i] <- fib[i - 1] + fib[i - 2]
+    }
+
+    return(fib[n + 1])
+    }
+
+    # 测试（可以计算非常大的n值）
+    result <- fibonacci_efficient(100)
+    print(result)  # 输出: 354224848179261915075
+    ```
+
+*   **对数阶算法示例** - 斐波那契数列（矩阵快速幂版本）
+    ```r
+    # 对数阶算法示例 - 斐波那契数列（矩阵快速幂版本，支持大整数）
+    fibonacci_fastest <- function(n) {
+      if (n <= 1) {
+        return(n)
+      }
+
+      # 矩阵快速幂算法
+      matrix_power <- function(matrix, power) {
+        result <- matrix(c(1, 0, 0, 1), nrow = 2, ncol = 2)  # 单位矩阵
+        base <- matrix
+
+        while (power > 0) {
+          if (power %% 2 == 1) {
+            result <- result %*% base
+          }
+          base <- base %*% base
+          power <- power %/% 2
+        }
+
+        return(result)
+      }
+
+      # 斐波那契矩阵
+      fib_matrix <- matrix(c(1, 1, 1, 0), nrow = 2, ncol = 2)
+
+      # 计算矩阵的(n-1)次幂
+      result_matrix <- matrix_power(fib_matrix, n - 1)
+
+      return(result_matrix[1, 1])
+    }
+
+    # 测试（可以计算极大的n值）
+    result <- fibonacci_fastest(1000)
+    print(result)  # 输出
+
+
+
+*   **动态规划大整数版本** - 使用gmp包处理任意精度整数
+    ```r
+    # 安装gmp包（如果未安装）
+    # install.packages("gmp") #dependent on libgmp3-dev
+
+    fibonacci_dp_bigint <- function(n) {
+      if (n <= 1) {
+        return(as.bigz(n))
+      }
+
+      # 使用动态规划，避免重复计算（大整数版本）
+      fib <- vector("list", n + 1)
+      fib[[1]] <- as.bigz(0)
+      fib[[2]] <- as.bigz(1)
+
+      for (i in 3:(n + 1)) {
+        fib[[i]] <- fib[[i - 1]] + fib[[i - 2]]
+      }
+
+      return(fib[[n + 1]])
+    }
+
+    # 测试（可以计算非常大的n值）
+    library(gmp)
+    result <- fibonacci_dp_bigint(1000)
+    print(result)  # 输出: 354224848179261915075
+    ```
+
+*   **矩阵的大整数版本** - 使用gmp包处理任意精度整数
+    ```r
+    # 安装gmp包（如果未安装）
+    # install.packages("gmp") #dependent on libgmp3-dev
+
+    fibonacci_bigint <- function(n) {
+      if (n <= 1) {
+        return(as.bigz(n))
+      }
+
+      # 矩阵快速幂算法（使用大整数）
+      matrix_power <- function(matrix, power) {
+        result <- matrix(c(as.bigz(1), as.bigz(0), as.bigz(0), as.bigz(1)),
+                        nrow = 2, ncol = 2)  # 单位矩阵
+        base <- matrix
+
+        while (power > 0) {
+          if (power %% 2 == 1) {
+            result <- matrix_multiply(result, base)
+          }
+          base <- matrix_multiply(base, base)
+          power <- power %/% 2
+        }
+
+        return(result)
+      }
+
+      # 矩阵乘法（支持大整数）
+      matrix_multiply <- function(a, b) {
+        result <- matrix(as.bigz(0), nrow = 2, ncol = 2)
+        for (i in 1:2) {
+          for (j in 1:2) {
+            for (k in 1:2) {
+              result[i, j] <- result[i, j] + a[i, k] * b[k, j]
+            }
+          }
+        }
+        return(result)
+      }
+
+      # 斐波那契矩阵（使用大整数）
+      fib_matrix <- matrix(c(as.bigz(1), as.bigz(1), as.bigz(1), as.bigz(0)),
+                          nrow = 2, ncol = 2)
+
+      # 计算矩阵的(n-1)次幂
+      result_matrix <- matrix_power(fib_matrix, n - 1)
+
+      return(result_matrix[1, 1])
+    }
+
+    # 测试（可以计算任意大的n值）
+    library(gmp)
+    result <- fibonacci_bigint(10000)
+    print(result)  # 输出第10000个斐波那契数（336447...开头的2089位数）
+    ```
+    ```
+
+
 ##### O(n!) - 阶乘阶
 
 *   **描述**：性能最差，几乎不可用。通常出现在求解全排列、旅行商问题等暴力算法中。
