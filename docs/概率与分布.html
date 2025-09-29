@@ -23,7 +23,7 @@
 <meta name="author" content="沈国春、李勤" />
 
 
-<meta name="date" content="2025-09-28" />
+<meta name="date" content="2025-09-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -412,28 +412,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>一只青蛙选择池塘： 池塘的大小、水深、水质、是否有天敌、食物丰富度等因素必然会影响其选择，使得”等可能性”的假设不成立。</p>
 <p><strong>2. 样本空间必须是有限集合</strong></p>
 <p>古典概率要求可能的结果是有限可数的。对于连续性的问题（如蚱蜢的精确跳跃距离是1.253米），因为结果有无限多个，古典概率便无能为力。生态学中的许多测量值都是连续变量，如温度、湿度、生物量等，这些都需要连续概率分布来描述。古典概率还要求明确知道总体大小，但生态学中总体往往无限或未知：</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="概率与分布.html#cb31-1" tabindex="-1"></a><span class="co"># 有限总体问题示例：估计森林中濒危物种的数量</span></span>
-<span id="cb31-2"><a href="概率与分布.html#cb31-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">222</span>)</span>
-<span id="cb31-3"><a href="概率与分布.html#cb31-3" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="概率与分布.html#cb31-4" tabindex="-1"></a><span class="co"># 实际濒危物种数量（未知）</span></span>
-<span id="cb31-5"><a href="概率与分布.html#cb31-5" tabindex="-1"></a>true_rare_species <span class="ot">&lt;-</span> <span class="dv">15</span></span>
-<span id="cb31-6"><a href="概率与分布.html#cb31-6" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="概率与分布.html#cb31-7" tabindex="-1"></a><span class="co"># 调查发现的物种数量（抽样偏差）</span></span>
-<span id="cb31-8"><a href="概率与分布.html#cb31-8" tabindex="-1"></a>observed_species <span class="ot">&lt;-</span> <span class="dv">8</span></span>
-<span id="cb31-9"><a href="概率与分布.html#cb31-9" tabindex="-1"></a>survey_effort <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># 调查努力程度</span></span>
-<span id="cb31-10"><a href="概率与分布.html#cb31-10" tabindex="-1"></a></span>
-<span id="cb31-11"><a href="概率与分布.html#cb31-11" tabindex="-1"></a>detection_prob <span class="ot">&lt;-</span> observed_species <span class="sc">/</span> survey_effort</span>
-<span id="cb31-12"><a href="概率与分布.html#cb31-12" tabindex="-1"></a>estimated_total <span class="ot">&lt;-</span> observed_species <span class="sc">/</span> detection_prob</span>
-<span id="cb31-13"><a href="概率与分布.html#cb31-13" tabindex="-1"></a></span>
-<span id="cb31-14"><a href="概率与分布.html#cb31-14" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;实际濒危物种数量:&quot;</span>, true_rare_species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="概率与分布.html#cb35-1" tabindex="-1"></a><span class="co"># 有限总体问题示例：估计森林中濒危物种的数量</span></span>
+<span id="cb35-2"><a href="概率与分布.html#cb35-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">222</span>)</span>
+<span id="cb35-3"><a href="概率与分布.html#cb35-3" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="概率与分布.html#cb35-4" tabindex="-1"></a><span class="co"># 实际濒危物种数量（未知）</span></span>
+<span id="cb35-5"><a href="概率与分布.html#cb35-5" tabindex="-1"></a>true_rare_species <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb35-6"><a href="概率与分布.html#cb35-6" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="概率与分布.html#cb35-7" tabindex="-1"></a><span class="co"># 调查发现的物种数量（抽样偏差）</span></span>
+<span id="cb35-8"><a href="概率与分布.html#cb35-8" tabindex="-1"></a>observed_species <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb35-9"><a href="概率与分布.html#cb35-9" tabindex="-1"></a>survey_effort <span class="ot">&lt;-</span> <span class="dv">50</span>  <span class="co"># 调查努力程度</span></span>
+<span id="cb35-10"><a href="概率与分布.html#cb35-10" tabindex="-1"></a></span>
+<span id="cb35-11"><a href="概率与分布.html#cb35-11" tabindex="-1"></a>detection_prob <span class="ot">&lt;-</span> observed_species <span class="sc">/</span> survey_effort</span>
+<span id="cb35-12"><a href="概率与分布.html#cb35-12" tabindex="-1"></a>estimated_total <span class="ot">&lt;-</span> observed_species <span class="sc">/</span> detection_prob</span>
+<span id="cb35-13"><a href="概率与分布.html#cb35-13" tabindex="-1"></a></span>
+<span id="cb35-14"><a href="概率与分布.html#cb35-14" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;实际濒危物种数量:&quot;</span>, true_rare_species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 实际濒危物种数量: 15</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="概率与分布.html#cb33-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;观测到的物种数量:&quot;</span>, observed_species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="概率与分布.html#cb37-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;观测到的物种数量:&quot;</span>, observed_species, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 观测到的物种数量: 8</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="概率与分布.html#cb35-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;检测概率:&quot;</span>, <span class="fu">round</span>(detection_prob, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="概率与分布.html#cb39-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;检测概率:&quot;</span>, <span class="fu">round</span>(detection_prob, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 检测概率: 0.16</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="概率与分布.html#cb37-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;估计的物种总数:&quot;</span>, <span class="fu">round</span>(estimated_total, <span class="dv">1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="概率与分布.html#cb41-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;估计的物种总数:&quot;</span>, <span class="fu">round</span>(estimated_total, <span class="dv">1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 估计的物种总数: 50</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="概率与分布.html#cb39-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;估计误差:&quot;</span>, <span class="fu">round</span>(<span class="fu">abs</span>(estimated_total <span class="sc">-</span> true_rare_species), <span class="dv">1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="概率与分布.html#cb43-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;估计误差:&quot;</span>, <span class="fu">round</span>(<span class="fu">abs</span>(estimated_total <span class="sc">-</span> true_rare_species), <span class="dv">1</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 估计误差: 35</code></pre>
 <p><strong>3. 无法处理主观概率</strong></p>
 <p>古典概率是客观的，基于计数。但它无法处理如”我认为明天会下雨的可能性是70%“这种基于个人知识、经验和信念的主观判断。在生态学预测中，专家意见和经验判断往往很重要，但这些主观因素无法用古典概率来量化。</p>
@@ -570,33 +570,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>先验概率的选择</strong></p>
 <p>在贝叶斯分析中，先验概率的选择很重要。常用的先验包括： - <strong>无信息先验</strong>：当缺乏先验知识时使用 - <strong>共轭先验</strong>：数学上方便计算的后验分布 - <strong>经验先验</strong>：基于历史数据或专家意见</p>
 <p><strong>贝叶斯定理基础演示</strong></p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="概率与分布.html#cb41-1" tabindex="-1"></a><span class="co"># 贝叶斯定理基础演示</span></span>
-<span id="cb41-2"><a href="概率与分布.html#cb41-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1111</span>)</span>
-<span id="cb41-3"><a href="概率与分布.html#cb41-3" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="概率与分布.html#cb41-4" tabindex="-1"></a><span class="co"># 先验概率：疾病在种群中的 prevalence</span></span>
-<span id="cb41-5"><a href="概率与分布.html#cb41-5" tabindex="-1"></a>prior_prob <span class="ot">&lt;-</span> <span class="fl">0.05</span>  <span class="co"># 5%的个体患病</span></span>
-<span id="cb41-6"><a href="概率与分布.html#cb41-6" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="概率与分布.html#cb41-7" tabindex="-1"></a><span class="co"># 检测准确性</span></span>
-<span id="cb41-8"><a href="概率与分布.html#cb41-8" tabindex="-1"></a>sensitivity <span class="ot">&lt;-</span> <span class="fl">0.95</span>  <span class="co"># 真阳性率</span></span>
-<span id="cb41-9"><a href="概率与分布.html#cb41-9" tabindex="-1"></a>specificity <span class="ot">&lt;-</span> <span class="fl">0.90</span>  <span class="co"># 真阴性率</span></span>
-<span id="cb41-10"><a href="概率与分布.html#cb41-10" tabindex="-1"></a></span>
-<span id="cb41-11"><a href="概率与分布.html#cb41-11" tabindex="-1"></a><span class="co"># 计算边际概率: P(阳性)</span></span>
-<span id="cb41-12"><a href="概率与分布.html#cb41-12" tabindex="-1"></a>marginal_positive <span class="ot">&lt;-</span> prior_prob <span class="sc">*</span> sensitivity <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> prior_prob) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> specificity)</span>
-<span id="cb41-13"><a href="概率与分布.html#cb41-13" tabindex="-1"></a></span>
-<span id="cb41-14"><a href="概率与分布.html#cb41-14" tabindex="-1"></a><span class="co"># 使用贝叶斯定理计算后验概率: P(患病|阳性)</span></span>
-<span id="cb41-15"><a href="概率与分布.html#cb41-15" tabindex="-1"></a>posterior_prob <span class="ot">&lt;-</span> (sensitivity <span class="sc">*</span> prior_prob) <span class="sc">/</span> marginal_positive</span>
-<span id="cb41-16"><a href="概率与分布.html#cb41-16" tabindex="-1"></a></span>
-<span id="cb41-17"><a href="概率与分布.html#cb41-17" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;贝叶斯定理基础演示（疾病检测）:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="概率与分布.html#cb45-1" tabindex="-1"></a><span class="co"># 贝叶斯定理基础演示</span></span>
+<span id="cb45-2"><a href="概率与分布.html#cb45-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1111</span>)</span>
+<span id="cb45-3"><a href="概率与分布.html#cb45-3" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="概率与分布.html#cb45-4" tabindex="-1"></a><span class="co"># 先验概率：疾病在种群中的 prevalence</span></span>
+<span id="cb45-5"><a href="概率与分布.html#cb45-5" tabindex="-1"></a>prior_prob <span class="ot">&lt;-</span> <span class="fl">0.05</span>  <span class="co"># 5%的个体患病</span></span>
+<span id="cb45-6"><a href="概率与分布.html#cb45-6" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="概率与分布.html#cb45-7" tabindex="-1"></a><span class="co"># 检测准确性</span></span>
+<span id="cb45-8"><a href="概率与分布.html#cb45-8" tabindex="-1"></a>sensitivity <span class="ot">&lt;-</span> <span class="fl">0.95</span>  <span class="co"># 真阳性率</span></span>
+<span id="cb45-9"><a href="概率与分布.html#cb45-9" tabindex="-1"></a>specificity <span class="ot">&lt;-</span> <span class="fl">0.90</span>  <span class="co"># 真阴性率</span></span>
+<span id="cb45-10"><a href="概率与分布.html#cb45-10" tabindex="-1"></a></span>
+<span id="cb45-11"><a href="概率与分布.html#cb45-11" tabindex="-1"></a><span class="co"># 计算边际概率: P(阳性)</span></span>
+<span id="cb45-12"><a href="概率与分布.html#cb45-12" tabindex="-1"></a>marginal_positive <span class="ot">&lt;-</span> prior_prob <span class="sc">*</span> sensitivity <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> prior_prob) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> specificity)</span>
+<span id="cb45-13"><a href="概率与分布.html#cb45-13" tabindex="-1"></a></span>
+<span id="cb45-14"><a href="概率与分布.html#cb45-14" tabindex="-1"></a><span class="co"># 使用贝叶斯定理计算后验概率: P(患病|阳性)</span></span>
+<span id="cb45-15"><a href="概率与分布.html#cb45-15" tabindex="-1"></a>posterior_prob <span class="ot">&lt;-</span> (sensitivity <span class="sc">*</span> prior_prob) <span class="sc">/</span> marginal_positive</span>
+<span id="cb45-16"><a href="概率与分布.html#cb45-16" tabindex="-1"></a></span>
+<span id="cb45-17"><a href="概率与分布.html#cb45-17" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;贝叶斯定理基础演示（疾病检测）:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 贝叶斯定理基础演示（疾病检测）:</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="概率与分布.html#cb43-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;先验概率 P(患病):&quot;</span>, prior_prob, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="概率与分布.html#cb47-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;先验概率 P(患病):&quot;</span>, prior_prob, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 先验概率 P(患病): 0.05</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="概率与分布.html#cb45-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;检测灵敏度 P(阳性|患病):&quot;</span>, sensitivity, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="概率与分布.html#cb49-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;检测灵敏度 P(阳性|患病):&quot;</span>, sensitivity, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 检测灵敏度 P(阳性|患病): 0.95</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="概率与分布.html#cb47-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;检测特异度 P(阴性|健康):&quot;</span>, specificity, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="概率与分布.html#cb51-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;检测特异度 P(阴性|健康):&quot;</span>, specificity, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 检测特异度 P(阴性|健康): 0.9</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="概率与分布.html#cb49-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;边际概率 P(阳性):&quot;</span>, <span class="fu">round</span>(marginal_positive, <span class="dv">4</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="概率与分布.html#cb53-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;边际概率 P(阳性):&quot;</span>, <span class="fu">round</span>(marginal_positive, <span class="dv">4</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 边际概率 P(阳性): 0.1425</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="概率与分布.html#cb51-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;后验概率 P(患病|阳性):&quot;</span>, <span class="fu">round</span>(posterior_prob, <span class="dv">4</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="概率与分布.html#cb55-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;后验概率 P(患病|阳性):&quot;</span>, <span class="fu">round</span>(posterior_prob, <span class="dv">4</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 后验概率 P(患病|阳性): 0.3333</code></pre>
 </div>
 <div id="生态学中的贝叶斯概率应用" class="section level4 hasAnchor" number="2.1.4.7">
@@ -605,56 +605,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>1. 物种分布模型</strong></p>
 <p>结合专家知识和观测数据，建立更准确的物种分布预测模型。先验可以反映物种的生态习性，后验则结合了实际的分布数据。</p>
 <p>贝叶斯方法在物种分布建模中具有独特优势，能够结合专家知识和观测数据：</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="概率与分布.html#cb53-1" tabindex="-1"></a><span class="co"># 贝叶斯物种分布模型</span></span>
-<span id="cb53-2"><a href="概率与分布.html#cb53-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1414</span>)</span>
-<span id="cb53-3"><a href="概率与分布.html#cb53-3" tabindex="-1"></a></span>
-<span id="cb53-4"><a href="概率与分布.html#cb53-4" tabindex="-1"></a><span class="co"># 先验信息：专家对物种偏好的信念</span></span>
-<span id="cb53-5"><a href="概率与分布.html#cb53-5" tabindex="-1"></a>expert_prior <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>)  <span class="co"># 喜欢森林、草地、湿地的先验概率</span></span>
-<span id="cb53-6"><a href="概率与分布.html#cb53-6" tabindex="-1"></a>habitat_types <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;森林&quot;</span>, <span class="st">&quot;草地&quot;</span>, <span class="st">&quot;湿地&quot;</span>)</span>
-<span id="cb53-7"><a href="概率与分布.html#cb53-7" tabindex="-1"></a></span>
-<span id="cb53-8"><a href="概率与分布.html#cb53-8" tabindex="-1"></a><span class="co"># 观测数据：在不同栖息地中发现物种的次数</span></span>
-<span id="cb53-9"><a href="概率与分布.html#cb53-9" tabindex="-1"></a>observations <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">20</span>, <span class="dv">5</span>)      <span class="co"># 在森林、草地、湿地中的观测次数</span></span>
-<span id="cb53-10"><a href="概率与分布.html#cb53-10" tabindex="-1"></a>total_observations <span class="ot">&lt;-</span> <span class="fu">sum</span>(observations)</span>
-<span id="cb53-11"><a href="概率与分布.html#cb53-11" tabindex="-1"></a></span>
-<span id="cb53-12"><a href="概率与分布.html#cb53-12" tabindex="-1"></a><span class="co"># 计算似然函数（基于观测数据）</span></span>
-<span id="cb53-13"><a href="概率与分布.html#cb53-13" tabindex="-1"></a>likelihood <span class="ot">&lt;-</span> observations <span class="sc">/</span> total_observations</span>
-<span id="cb53-14"><a href="概率与分布.html#cb53-14" tabindex="-1"></a></span>
-<span id="cb53-15"><a href="概率与分布.html#cb53-15" tabindex="-1"></a><span class="co"># 计算证据概率</span></span>
-<span id="cb53-16"><a href="概率与分布.html#cb53-16" tabindex="-1"></a>evidence <span class="ot">&lt;-</span> <span class="fu">sum</span>(expert_prior <span class="sc">*</span> likelihood)</span>
-<span id="cb53-17"><a href="概率与分布.html#cb53-17" tabindex="-1"></a></span>
-<span id="cb53-18"><a href="概率与分布.html#cb53-18" tabindex="-1"></a><span class="co"># 贝叶斯更新</span></span>
-<span id="cb53-19"><a href="概率与分布.html#cb53-19" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> (expert_prior <span class="sc">*</span> likelihood) <span class="sc">/</span> evidence</span>
-<span id="cb53-20"><a href="概率与分布.html#cb53-20" tabindex="-1"></a></span>
-<span id="cb53-21"><a href="概率与分布.html#cb53-21" tabindex="-1"></a><span class="co"># 结果分析</span></span>
-<span id="cb53-22"><a href="概率与分布.html#cb53-22" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb53-23"><a href="概率与分布.html#cb53-23" tabindex="-1"></a>  栖息地类型 <span class="ot">=</span> habitat_types,</span>
-<span id="cb53-24"><a href="概率与分布.html#cb53-24" tabindex="-1"></a>  专家先验 <span class="ot">=</span> <span class="fu">round</span>(expert_prior, <span class="dv">3</span>),</span>
-<span id="cb53-25"><a href="概率与分布.html#cb53-25" tabindex="-1"></a>  观测似然 <span class="ot">=</span> <span class="fu">round</span>(likelihood, <span class="dv">3</span>),</span>
-<span id="cb53-26"><a href="概率与分布.html#cb53-26" tabindex="-1"></a>  贝叶斯后验 <span class="ot">=</span> <span class="fu">round</span>(posterior, <span class="dv">3</span>)</span>
-<span id="cb53-27"><a href="概率与分布.html#cb53-27" tabindex="-1"></a>)</span>
-<span id="cb53-28"><a href="概率与分布.html#cb53-28" tabindex="-1"></a></span>
-<span id="cb53-29"><a href="概率与分布.html#cb53-29" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;贝叶斯物种分布模型结果:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="概率与分布.html#cb57-1" tabindex="-1"></a><span class="co"># 贝叶斯物种分布模型</span></span>
+<span id="cb57-2"><a href="概率与分布.html#cb57-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1414</span>)</span>
+<span id="cb57-3"><a href="概率与分布.html#cb57-3" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="概率与分布.html#cb57-4" tabindex="-1"></a><span class="co"># 先验信息：专家对物种偏好的信念</span></span>
+<span id="cb57-5"><a href="概率与分布.html#cb57-5" tabindex="-1"></a>expert_prior <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.3</span>, <span class="fl">0.1</span>)  <span class="co"># 喜欢森林、草地、湿地的先验概率</span></span>
+<span id="cb57-6"><a href="概率与分布.html#cb57-6" tabindex="-1"></a>habitat_types <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;森林&quot;</span>, <span class="st">&quot;草地&quot;</span>, <span class="st">&quot;湿地&quot;</span>)</span>
+<span id="cb57-7"><a href="概率与分布.html#cb57-7" tabindex="-1"></a></span>
+<span id="cb57-8"><a href="概率与分布.html#cb57-8" tabindex="-1"></a><span class="co"># 观测数据：在不同栖息地中发现物种的次数</span></span>
+<span id="cb57-9"><a href="概率与分布.html#cb57-9" tabindex="-1"></a>observations <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, <span class="dv">20</span>, <span class="dv">5</span>)      <span class="co"># 在森林、草地、湿地中的观测次数</span></span>
+<span id="cb57-10"><a href="概率与分布.html#cb57-10" tabindex="-1"></a>total_observations <span class="ot">&lt;-</span> <span class="fu">sum</span>(observations)</span>
+<span id="cb57-11"><a href="概率与分布.html#cb57-11" tabindex="-1"></a></span>
+<span id="cb57-12"><a href="概率与分布.html#cb57-12" tabindex="-1"></a><span class="co"># 计算似然函数（基于观测数据）</span></span>
+<span id="cb57-13"><a href="概率与分布.html#cb57-13" tabindex="-1"></a>likelihood <span class="ot">&lt;-</span> observations <span class="sc">/</span> total_observations</span>
+<span id="cb57-14"><a href="概率与分布.html#cb57-14" tabindex="-1"></a></span>
+<span id="cb57-15"><a href="概率与分布.html#cb57-15" tabindex="-1"></a><span class="co"># 计算证据概率</span></span>
+<span id="cb57-16"><a href="概率与分布.html#cb57-16" tabindex="-1"></a>evidence <span class="ot">&lt;-</span> <span class="fu">sum</span>(expert_prior <span class="sc">*</span> likelihood)</span>
+<span id="cb57-17"><a href="概率与分布.html#cb57-17" tabindex="-1"></a></span>
+<span id="cb57-18"><a href="概率与分布.html#cb57-18" tabindex="-1"></a><span class="co"># 贝叶斯更新</span></span>
+<span id="cb57-19"><a href="概率与分布.html#cb57-19" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> (expert_prior <span class="sc">*</span> likelihood) <span class="sc">/</span> evidence</span>
+<span id="cb57-20"><a href="概率与分布.html#cb57-20" tabindex="-1"></a></span>
+<span id="cb57-21"><a href="概率与分布.html#cb57-21" tabindex="-1"></a><span class="co"># 结果分析</span></span>
+<span id="cb57-22"><a href="概率与分布.html#cb57-22" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb57-23"><a href="概率与分布.html#cb57-23" tabindex="-1"></a>  栖息地类型 <span class="ot">=</span> habitat_types,</span>
+<span id="cb57-24"><a href="概率与分布.html#cb57-24" tabindex="-1"></a>  专家先验 <span class="ot">=</span> <span class="fu">round</span>(expert_prior, <span class="dv">3</span>),</span>
+<span id="cb57-25"><a href="概率与分布.html#cb57-25" tabindex="-1"></a>  观测似然 <span class="ot">=</span> <span class="fu">round</span>(likelihood, <span class="dv">3</span>),</span>
+<span id="cb57-26"><a href="概率与分布.html#cb57-26" tabindex="-1"></a>  贝叶斯后验 <span class="ot">=</span> <span class="fu">round</span>(posterior, <span class="dv">3</span>)</span>
+<span id="cb57-27"><a href="概率与分布.html#cb57-27" tabindex="-1"></a>)</span>
+<span id="cb57-28"><a href="概率与分布.html#cb57-28" tabindex="-1"></a></span>
+<span id="cb57-29"><a href="概率与分布.html#cb57-29" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;贝叶斯物种分布模型结果:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 贝叶斯物种分布模型结果:</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="概率与分布.html#cb55-1" tabindex="-1"></a><span class="fu">print</span>(results)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="概率与分布.html#cb59-1" tabindex="-1"></a><span class="fu">print</span>(results)</span></code></pre></div>
 <pre><code>##   栖息地类型 专家先验 观测似然 贝叶斯后验
 ## 1       森林      0.6    0.643      0.806
 ## 2       草地      0.3    0.286      0.179
 ## 3       湿地      0.1    0.071      0.015</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="概率与分布.html#cb57-1" tabindex="-1"></a><span class="co"># 计算信息增益（KL散度）</span></span>
-<span id="cb57-2"><a href="概率与分布.html#cb57-2" tabindex="-1"></a>kl_divergence <span class="ot">&lt;-</span> <span class="fu">sum</span>(posterior <span class="sc">*</span> <span class="fu">log</span>(posterior <span class="sc">/</span> expert_prior))</span>
-<span id="cb57-3"><a href="概率与分布.html#cb57-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;KL散度（信息增益）:&quot;</span>, <span class="fu">round</span>(kl_divergence, <span class="dv">4</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="概率与分布.html#cb61-1" tabindex="-1"></a><span class="co"># 计算信息增益（KL散度）</span></span>
+<span id="cb61-2"><a href="概率与分布.html#cb61-2" tabindex="-1"></a>kl_divergence <span class="ot">&lt;-</span> <span class="fu">sum</span>(posterior <span class="sc">*</span> <span class="fu">log</span>(posterior <span class="sc">/</span> expert_prior))</span>
+<span id="cb61-3"><a href="概率与分布.html#cb61-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;KL散度（信息增益）:&quot;</span>, <span class="fu">round</span>(kl_divergence, <span class="dv">4</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## KL散度（信息增益）: 0.1171</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="概率与分布.html#cb59-1" tabindex="-1"></a><span class="co"># 贝叶斯因子计算</span></span>
-<span id="cb59-2"><a href="概率与分布.html#cb59-2" tabindex="-1"></a>bayes_factor <span class="ot">&lt;-</span> (posterior[<span class="dv">1</span>] <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> posterior[<span class="dv">1</span>])) <span class="sc">/</span> (expert_prior[<span class="dv">1</span>] <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> expert_prior[<span class="dv">1</span>]))</span>
-<span id="cb59-3"><a href="概率与分布.html#cb59-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;贝叶斯因子（森林偏好）:&quot;</span>, <span class="fu">round</span>(bayes_factor, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="概率与分布.html#cb63-1" tabindex="-1"></a><span class="co"># 贝叶斯因子计算</span></span>
+<span id="cb63-2"><a href="概率与分布.html#cb63-2" tabindex="-1"></a>bayes_factor <span class="ot">&lt;-</span> (posterior[<span class="dv">1</span>] <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> posterior[<span class="dv">1</span>])) <span class="sc">/</span> (expert_prior[<span class="dv">1</span>] <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> expert_prior[<span class="dv">1</span>]))</span>
+<span id="cb63-3"><a href="概率与分布.html#cb63-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;贝叶斯因子（森林偏好）:&quot;</span>, <span class="fu">round</span>(bayes_factor, <span class="dv">2</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 贝叶斯因子（森林偏好）: 2.77</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="概率与分布.html#cb61-1" tabindex="-1"></a><span class="cf">if</span> (bayes_factor <span class="sc">&gt;</span> <span class="dv">3</span>) {</span>
-<span id="cb61-2"><a href="概率与分布.html#cb61-2" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;强烈支持物种偏好森林的假设</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb61-3"><a href="概率与分布.html#cb61-3" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (bayes_factor <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
-<span id="cb61-4"><a href="概率与分布.html#cb61-4" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;微弱支持物种偏好森林的假设</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb61-5"><a href="概率与分布.html#cb61-5" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb61-6"><a href="概率与分布.html#cb61-6" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;证据不支持物种偏好森林的假设</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb61-7"><a href="概率与分布.html#cb61-7" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="概率与分布.html#cb65-1" tabindex="-1"></a><span class="cf">if</span> (bayes_factor <span class="sc">&gt;</span> <span class="dv">3</span>) {</span>
+<span id="cb65-2"><a href="概率与分布.html#cb65-2" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;强烈支持物种偏好森林的假设</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb65-3"><a href="概率与分布.html#cb65-3" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (bayes_factor <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb65-4"><a href="概率与分布.html#cb65-4" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;微弱支持物种偏好森林的假设</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb65-5"><a href="概率与分布.html#cb65-5" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb65-6"><a href="概率与分布.html#cb65-6" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;证据不支持物种偏好森林的假设</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb65-7"><a href="概率与分布.html#cb65-7" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>## 微弱支持物种偏好森林的假设</code></pre>
 <p><strong>2. 种群动态预测</strong></p>
 <p>基于历史种群数据和环境变化信息，预测未来种群数量的变化趋势。贝叶斯方法能够处理参数的不确定性。</p>
@@ -672,44 +672,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 2 季节模型 1.036188e-47   13980.76</code></pre>
 <p><img src="ecological-statistics_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>敏感性分析与稳健性检验</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="概率与分布.html#cb65-1" tabindex="-1"></a><span class="co"># 贝叶斯敏感性分析</span></span>
-<span id="cb65-2"><a href="概率与分布.html#cb65-2" tabindex="-1"></a>sensitivity_analysis <span class="ot">&lt;-</span> <span class="cf">function</span>(prior_strength) {</span>
-<span id="cb65-3"><a href="概率与分布.html#cb65-3" tabindex="-1"></a>  <span class="co"># 不同先验强度下的后验分析</span></span>
-<span id="cb65-4"><a href="概率与分布.html#cb65-4" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">1717</span>)</span>
-<span id="cb65-5"><a href="概率与分布.html#cb65-5" tabindex="-1"></a></span>
-<span id="cb65-6"><a href="概率与分布.html#cb65-6" tabindex="-1"></a>  <span class="co"># 生成生态数据</span></span>
-<span id="cb65-7"><a href="概率与分布.html#cb65-7" tabindex="-1"></a>  true_effect <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
-<span id="cb65-8"><a href="概率与分布.html#cb65-8" tabindex="-1"></a>  observed_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, true_effect, <span class="fl">0.5</span>)</span>
-<span id="cb65-9"><a href="概率与分布.html#cb65-9" tabindex="-1"></a></span>
-<span id="cb65-10"><a href="概率与分布.html#cb65-10" tabindex="-1"></a>  <span class="co"># 不同先验强度</span></span>
-<span id="cb65-11"><a href="概率与分布.html#cb65-11" tabindex="-1"></a>  prior_sd <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="sc">/</span> prior_strength  <span class="co"># 先验标准差随强度变化</span></span>
-<span id="cb65-12"><a href="概率与分布.html#cb65-12" tabindex="-1"></a></span>
-<span id="cb65-13"><a href="概率与分布.html#cb65-13" tabindex="-1"></a>  <span class="co"># 简单贝叶斯更新</span></span>
-<span id="cb65-14"><a href="概率与分布.html#cb65-14" tabindex="-1"></a>  prior_mean <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb65-15"><a href="概率与分布.html#cb65-15" tabindex="-1"></a>  sample_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(observed_data)</span>
-<span id="cb65-16"><a href="概率与分布.html#cb65-16" tabindex="-1"></a>  sample_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(observed_data) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(observed_data))</span>
-<span id="cb65-17"><a href="概率与分布.html#cb65-17" tabindex="-1"></a></span>
-<span id="cb65-18"><a href="概率与分布.html#cb65-18" tabindex="-1"></a>  <span class="co"># 后验计算（正态-正态共轭）</span></span>
-<span id="cb65-19"><a href="概率与分布.html#cb65-19" tabindex="-1"></a>  posterior_precision <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>prior_sd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>sample_sd<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb65-20"><a href="概率与分布.html#cb65-20" tabindex="-1"></a>  posterior_mean <span class="ot">&lt;-</span> (prior_mean<span class="sc">/</span>prior_sd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> sample_mean<span class="sc">/</span>sample_sd<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> posterior_precision</span>
-<span id="cb65-21"><a href="概率与分布.html#cb65-21" tabindex="-1"></a>  posterior_sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">/</span> posterior_precision)</span>
-<span id="cb65-22"><a href="概率与分布.html#cb65-22" tabindex="-1"></a></span>
-<span id="cb65-23"><a href="概率与分布.html#cb65-23" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(posterior_mean, posterior_sd))</span>
-<span id="cb65-24"><a href="概率与分布.html#cb65-24" tabindex="-1"></a>}</span>
-<span id="cb65-25"><a href="概率与分布.html#cb65-25" tabindex="-1"></a></span>
-<span id="cb65-26"><a href="概率与分布.html#cb65-26" tabindex="-1"></a><span class="co"># 测试不同先验强度</span></span>
-<span id="cb65-27"><a href="概率与分布.html#cb65-27" tabindex="-1"></a>prior_strengths <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>)</span>
-<span id="cb65-28"><a href="概率与分布.html#cb65-28" tabindex="-1"></a>sensitivity_results <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">sapply</span>(prior_strengths, sensitivity_analysis))</span>
-<span id="cb65-29"><a href="概率与分布.html#cb65-29" tabindex="-1"></a></span>
-<span id="cb65-30"><a href="概率与分布.html#cb65-30" tabindex="-1"></a>sensitivity_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb65-31"><a href="概率与分布.html#cb65-31" tabindex="-1"></a>  先验强度 <span class="ot">=</span> prior_strengths,</span>
-<span id="cb65-32"><a href="概率与分布.html#cb65-32" tabindex="-1"></a>  后验均值 <span class="ot">=</span> <span class="fu">round</span>(sensitivity_results[,<span class="dv">1</span>], <span class="dv">3</span>),</span>
-<span id="cb65-33"><a href="概率与分布.html#cb65-33" tabindex="-1"></a>  后验标准差 <span class="ot">=</span> <span class="fu">round</span>(sensitivity_results[,<span class="dv">2</span>], <span class="dv">3</span>)</span>
-<span id="cb65-34"><a href="概率与分布.html#cb65-34" tabindex="-1"></a>)</span>
-<span id="cb65-35"><a href="概率与分布.html#cb65-35" tabindex="-1"></a></span>
-<span id="cb65-36"><a href="概率与分布.html#cb65-36" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;贝叶斯敏感性分析结果:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="概率与分布.html#cb69-1" tabindex="-1"></a><span class="co"># 贝叶斯敏感性分析</span></span>
+<span id="cb69-2"><a href="概率与分布.html#cb69-2" tabindex="-1"></a>sensitivity_analysis <span class="ot">&lt;-</span> <span class="cf">function</span>(prior_strength) {</span>
+<span id="cb69-3"><a href="概率与分布.html#cb69-3" tabindex="-1"></a>  <span class="co"># 不同先验强度下的后验分析</span></span>
+<span id="cb69-4"><a href="概率与分布.html#cb69-4" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">1717</span>)</span>
+<span id="cb69-5"><a href="概率与分布.html#cb69-5" tabindex="-1"></a></span>
+<span id="cb69-6"><a href="概率与分布.html#cb69-6" tabindex="-1"></a>  <span class="co"># 生成生态数据</span></span>
+<span id="cb69-7"><a href="概率与分布.html#cb69-7" tabindex="-1"></a>  true_effect <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
+<span id="cb69-8"><a href="概率与分布.html#cb69-8" tabindex="-1"></a>  observed_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, true_effect, <span class="fl">0.5</span>)</span>
+<span id="cb69-9"><a href="概率与分布.html#cb69-9" tabindex="-1"></a></span>
+<span id="cb69-10"><a href="概率与分布.html#cb69-10" tabindex="-1"></a>  <span class="co"># 不同先验强度</span></span>
+<span id="cb69-11"><a href="概率与分布.html#cb69-11" tabindex="-1"></a>  prior_sd <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="sc">/</span> prior_strength  <span class="co"># 先验标准差随强度变化</span></span>
+<span id="cb69-12"><a href="概率与分布.html#cb69-12" tabindex="-1"></a></span>
+<span id="cb69-13"><a href="概率与分布.html#cb69-13" tabindex="-1"></a>  <span class="co"># 简单贝叶斯更新</span></span>
+<span id="cb69-14"><a href="概率与分布.html#cb69-14" tabindex="-1"></a>  prior_mean <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb69-15"><a href="概率与分布.html#cb69-15" tabindex="-1"></a>  sample_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(observed_data)</span>
+<span id="cb69-16"><a href="概率与分布.html#cb69-16" tabindex="-1"></a>  sample_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(observed_data) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(observed_data))</span>
+<span id="cb69-17"><a href="概率与分布.html#cb69-17" tabindex="-1"></a></span>
+<span id="cb69-18"><a href="概率与分布.html#cb69-18" tabindex="-1"></a>  <span class="co"># 后验计算（正态-正态共轭）</span></span>
+<span id="cb69-19"><a href="概率与分布.html#cb69-19" tabindex="-1"></a>  posterior_precision <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>prior_sd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>sample_sd<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb69-20"><a href="概率与分布.html#cb69-20" tabindex="-1"></a>  posterior_mean <span class="ot">&lt;-</span> (prior_mean<span class="sc">/</span>prior_sd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> sample_mean<span class="sc">/</span>sample_sd<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> posterior_precision</span>
+<span id="cb69-21"><a href="概率与分布.html#cb69-21" tabindex="-1"></a>  posterior_sd <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">/</span> posterior_precision)</span>
+<span id="cb69-22"><a href="概率与分布.html#cb69-22" tabindex="-1"></a></span>
+<span id="cb69-23"><a href="概率与分布.html#cb69-23" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">c</span>(posterior_mean, posterior_sd))</span>
+<span id="cb69-24"><a href="概率与分布.html#cb69-24" tabindex="-1"></a>}</span>
+<span id="cb69-25"><a href="概率与分布.html#cb69-25" tabindex="-1"></a></span>
+<span id="cb69-26"><a href="概率与分布.html#cb69-26" tabindex="-1"></a><span class="co"># 测试不同先验强度</span></span>
+<span id="cb69-27"><a href="概率与分布.html#cb69-27" tabindex="-1"></a>prior_strengths <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>)</span>
+<span id="cb69-28"><a href="概率与分布.html#cb69-28" tabindex="-1"></a>sensitivity_results <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">sapply</span>(prior_strengths, sensitivity_analysis))</span>
+<span id="cb69-29"><a href="概率与分布.html#cb69-29" tabindex="-1"></a></span>
+<span id="cb69-30"><a href="概率与分布.html#cb69-30" tabindex="-1"></a>sensitivity_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb69-31"><a href="概率与分布.html#cb69-31" tabindex="-1"></a>  先验强度 <span class="ot">=</span> prior_strengths,</span>
+<span id="cb69-32"><a href="概率与分布.html#cb69-32" tabindex="-1"></a>  后验均值 <span class="ot">=</span> <span class="fu">round</span>(sensitivity_results[,<span class="dv">1</span>], <span class="dv">3</span>),</span>
+<span id="cb69-33"><a href="概率与分布.html#cb69-33" tabindex="-1"></a>  后验标准差 <span class="ot">=</span> <span class="fu">round</span>(sensitivity_results[,<span class="dv">2</span>], <span class="dv">3</span>)</span>
+<span id="cb69-34"><a href="概率与分布.html#cb69-34" tabindex="-1"></a>)</span>
+<span id="cb69-35"><a href="概率与分布.html#cb69-35" tabindex="-1"></a></span>
+<span id="cb69-36"><a href="概率与分布.html#cb69-36" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;贝叶斯敏感性分析结果:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 贝叶斯敏感性分析结果:</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="概率与分布.html#cb67-1" tabindex="-1"></a><span class="fu">print</span>(sensitivity_df)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="概率与分布.html#cb71-1" tabindex="-1"></a><span class="fu">print</span>(sensitivity_df)</span></code></pre></div>
 <pre><code>##   先验强度 后验均值 后验标准差
 ## 1      0.1    0.708      0.097
 ## 2      0.5    0.708      0.097
@@ -717,49 +717,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4      2.0    0.708      0.097
 ## 5      5.0    0.706      0.097
 ## 6     10.0    0.702      0.096</code></pre>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="概率与分布.html#cb69-1" tabindex="-1"></a><span class="co"># 稳健性检验</span></span>
-<span id="cb69-2"><a href="概率与分布.html#cb69-2" tabindex="-1"></a>robustness_check <span class="ot">&lt;-</span> <span class="cf">function</span>(data_contamination) {</span>
-<span id="cb69-3"><a href="概率与分布.html#cb69-3" tabindex="-1"></a>  <span class="co"># 检验数据污染对结果的影响</span></span>
-<span id="cb69-4"><a href="概率与分布.html#cb69-4" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">1818</span>)</span>
-<span id="cb69-5"><a href="概率与分布.html#cb69-5" tabindex="-1"></a></span>
-<span id="cb69-6"><a href="概率与分布.html#cb69-6" tabindex="-1"></a>  <span class="co"># 生成清洁数据</span></span>
-<span id="cb69-7"><a href="概率与分布.html#cb69-7" tabindex="-1"></a>  clean_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>)</span>
-<span id="cb69-8"><a href="概率与分布.html#cb69-8" tabindex="-1"></a></span>
-<span id="cb69-9"><a href="概率与分布.html#cb69-9" tabindex="-1"></a>  <span class="co"># 添加污染数据</span></span>
-<span id="cb69-10"><a href="概率与分布.html#cb69-10" tabindex="-1"></a>  n_contaminated <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">length</span>(clean_data) <span class="sc">*</span> data_contamination)</span>
-<span id="cb69-11"><a href="概率与分布.html#cb69-11" tabindex="-1"></a>  <span class="cf">if</span> (n_contaminated <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb69-12"><a href="概率与分布.html#cb69-12" tabindex="-1"></a>    contaminated_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_contaminated, <span class="fl">2.0</span>, <span class="fl">0.5</span>)  <span class="co"># 异常值</span></span>
-<span id="cb69-13"><a href="概率与分布.html#cb69-13" tabindex="-1"></a>    all_data <span class="ot">&lt;-</span> <span class="fu">c</span>(clean_data, contaminated_data)</span>
-<span id="cb69-14"><a href="概率与分布.html#cb69-14" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb69-15"><a href="概率与分布.html#cb69-15" tabindex="-1"></a>    all_data <span class="ot">&lt;-</span> clean_data</span>
-<span id="cb69-16"><a href="概率与分布.html#cb69-16" tabindex="-1"></a>  }</span>
-<span id="cb69-17"><a href="概率与分布.html#cb69-17" tabindex="-1"></a></span>
-<span id="cb69-18"><a href="概率与分布.html#cb69-18" tabindex="-1"></a>  <span class="co"># 贝叶斯分析</span></span>
-<span id="cb69-19"><a href="概率与分布.html#cb69-19" tabindex="-1"></a>  prior_mean <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb69-20"><a href="概率与分布.html#cb69-20" tabindex="-1"></a>  prior_sd <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb69-21"><a href="概率与分布.html#cb69-21" tabindex="-1"></a></span>
-<span id="cb69-22"><a href="概率与分布.html#cb69-22" tabindex="-1"></a>  sample_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(all_data)</span>
-<span id="cb69-23"><a href="概率与分布.html#cb69-23" tabindex="-1"></a>  sample_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(all_data) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(all_data))</span>
-<span id="cb69-24"><a href="概率与分布.html#cb69-24" tabindex="-1"></a></span>
-<span id="cb69-25"><a href="概率与分布.html#cb69-25" tabindex="-1"></a>  posterior_precision <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>prior_sd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>sample_sd<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb69-26"><a href="概率与分布.html#cb69-26" tabindex="-1"></a>  posterior_mean <span class="ot">&lt;-</span> (prior_mean<span class="sc">/</span>prior_sd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> sample_mean<span class="sc">/</span>sample_sd<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> posterior_precision</span>
-<span id="cb69-27"><a href="概率与分布.html#cb69-27" tabindex="-1"></a></span>
-<span id="cb69-28"><a href="概率与分布.html#cb69-28" tabindex="-1"></a>  <span class="fu">return</span>(posterior_mean)</span>
-<span id="cb69-29"><a href="概率与分布.html#cb69-29" tabindex="-1"></a>}</span>
-<span id="cb69-30"><a href="概率与分布.html#cb69-30" tabindex="-1"></a></span>
-<span id="cb69-31"><a href="概率与分布.html#cb69-31" tabindex="-1"></a><span class="co"># 测试不同污染水平</span></span>
-<span id="cb69-32"><a href="概率与分布.html#cb69-32" tabindex="-1"></a>contamination_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>)</span>
-<span id="cb69-33"><a href="概率与分布.html#cb69-33" tabindex="-1"></a>robustness_results <span class="ot">&lt;-</span> <span class="fu">sapply</span>(contamination_levels, robustness_check)</span>
-<span id="cb69-34"><a href="概率与分布.html#cb69-34" tabindex="-1"></a></span>
-<span id="cb69-35"><a href="概率与分布.html#cb69-35" tabindex="-1"></a>robustness_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb69-36"><a href="概率与分布.html#cb69-36" tabindex="-1"></a>  污染比例 <span class="ot">=</span> contamination_levels,</span>
-<span id="cb69-37"><a href="概率与分布.html#cb69-37" tabindex="-1"></a>  后验均值 <span class="ot">=</span> <span class="fu">round</span>(robustness_results, <span class="dv">3</span>)</span>
-<span id="cb69-38"><a href="概率与分布.html#cb69-38" tabindex="-1"></a>)</span>
-<span id="cb69-39"><a href="概率与分布.html#cb69-39" tabindex="-1"></a></span>
-<span id="cb69-40"><a href="概率与分布.html#cb69-40" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">贝叶斯稳健性检验结果:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="概率与分布.html#cb73-1" tabindex="-1"></a><span class="co"># 稳健性检验</span></span>
+<span id="cb73-2"><a href="概率与分布.html#cb73-2" tabindex="-1"></a>robustness_check <span class="ot">&lt;-</span> <span class="cf">function</span>(data_contamination) {</span>
+<span id="cb73-3"><a href="概率与分布.html#cb73-3" tabindex="-1"></a>  <span class="co"># 检验数据污染对结果的影响</span></span>
+<span id="cb73-4"><a href="概率与分布.html#cb73-4" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">1818</span>)</span>
+<span id="cb73-5"><a href="概率与分布.html#cb73-5" tabindex="-1"></a></span>
+<span id="cb73-6"><a href="概率与分布.html#cb73-6" tabindex="-1"></a>  <span class="co"># 生成清洁数据</span></span>
+<span id="cb73-7"><a href="概率与分布.html#cb73-7" tabindex="-1"></a>  clean_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>)</span>
+<span id="cb73-8"><a href="概率与分布.html#cb73-8" tabindex="-1"></a></span>
+<span id="cb73-9"><a href="概率与分布.html#cb73-9" tabindex="-1"></a>  <span class="co"># 添加污染数据</span></span>
+<span id="cb73-10"><a href="概率与分布.html#cb73-10" tabindex="-1"></a>  n_contaminated <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">length</span>(clean_data) <span class="sc">*</span> data_contamination)</span>
+<span id="cb73-11"><a href="概率与分布.html#cb73-11" tabindex="-1"></a>  <span class="cf">if</span> (n_contaminated <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb73-12"><a href="概率与分布.html#cb73-12" tabindex="-1"></a>    contaminated_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_contaminated, <span class="fl">2.0</span>, <span class="fl">0.5</span>)  <span class="co"># 异常值</span></span>
+<span id="cb73-13"><a href="概率与分布.html#cb73-13" tabindex="-1"></a>    all_data <span class="ot">&lt;-</span> <span class="fu">c</span>(clean_data, contaminated_data)</span>
+<span id="cb73-14"><a href="概率与分布.html#cb73-14" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb73-15"><a href="概率与分布.html#cb73-15" tabindex="-1"></a>    all_data <span class="ot">&lt;-</span> clean_data</span>
+<span id="cb73-16"><a href="概率与分布.html#cb73-16" tabindex="-1"></a>  }</span>
+<span id="cb73-17"><a href="概率与分布.html#cb73-17" tabindex="-1"></a></span>
+<span id="cb73-18"><a href="概率与分布.html#cb73-18" tabindex="-1"></a>  <span class="co"># 贝叶斯分析</span></span>
+<span id="cb73-19"><a href="概率与分布.html#cb73-19" tabindex="-1"></a>  prior_mean <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb73-20"><a href="概率与分布.html#cb73-20" tabindex="-1"></a>  prior_sd <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb73-21"><a href="概率与分布.html#cb73-21" tabindex="-1"></a></span>
+<span id="cb73-22"><a href="概率与分布.html#cb73-22" tabindex="-1"></a>  sample_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(all_data)</span>
+<span id="cb73-23"><a href="概率与分布.html#cb73-23" tabindex="-1"></a>  sample_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(all_data) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(all_data))</span>
+<span id="cb73-24"><a href="概率与分布.html#cb73-24" tabindex="-1"></a></span>
+<span id="cb73-25"><a href="概率与分布.html#cb73-25" tabindex="-1"></a>  posterior_precision <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>prior_sd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>sample_sd<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb73-26"><a href="概率与分布.html#cb73-26" tabindex="-1"></a>  posterior_mean <span class="ot">&lt;-</span> (prior_mean<span class="sc">/</span>prior_sd<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> sample_mean<span class="sc">/</span>sample_sd<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> posterior_precision</span>
+<span id="cb73-27"><a href="概率与分布.html#cb73-27" tabindex="-1"></a></span>
+<span id="cb73-28"><a href="概率与分布.html#cb73-28" tabindex="-1"></a>  <span class="fu">return</span>(posterior_mean)</span>
+<span id="cb73-29"><a href="概率与分布.html#cb73-29" tabindex="-1"></a>}</span>
+<span id="cb73-30"><a href="概率与分布.html#cb73-30" tabindex="-1"></a></span>
+<span id="cb73-31"><a href="概率与分布.html#cb73-31" tabindex="-1"></a><span class="co"># 测试不同污染水平</span></span>
+<span id="cb73-32"><a href="概率与分布.html#cb73-32" tabindex="-1"></a>contamination_levels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>)</span>
+<span id="cb73-33"><a href="概率与分布.html#cb73-33" tabindex="-1"></a>robustness_results <span class="ot">&lt;-</span> <span class="fu">sapply</span>(contamination_levels, robustness_check)</span>
+<span id="cb73-34"><a href="概率与分布.html#cb73-34" tabindex="-1"></a></span>
+<span id="cb73-35"><a href="概率与分布.html#cb73-35" tabindex="-1"></a>robustness_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb73-36"><a href="概率与分布.html#cb73-36" tabindex="-1"></a>  污染比例 <span class="ot">=</span> contamination_levels,</span>
+<span id="cb73-37"><a href="概率与分布.html#cb73-37" tabindex="-1"></a>  后验均值 <span class="ot">=</span> <span class="fu">round</span>(robustness_results, <span class="dv">3</span>)</span>
+<span id="cb73-38"><a href="概率与分布.html#cb73-38" tabindex="-1"></a>)</span>
+<span id="cb73-39"><a href="概率与分布.html#cb73-39" tabindex="-1"></a></span>
+<span id="cb73-40"><a href="概率与分布.html#cb73-40" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">贝叶斯稳健性检验结果:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## 贝叶斯稳健性检验结果:</code></pre>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="概率与分布.html#cb71-1" tabindex="-1"></a><span class="fu">print</span>(robustness_df)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="概率与分布.html#cb75-1" tabindex="-1"></a><span class="fu">print</span>(robustness_df)</span></code></pre></div>
 <pre><code>##   污染比例 后验均值
 ## 1     0.00    0.539
 ## 2     0.05    0.604
@@ -866,66 +866,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="简单mcmc演示" class="section level4 hasAnchor" number="2.1.4.10">
 <h4><span class="header-section-number">2.1.4.10</span> 简单MCMC演示<a href="概率与分布.html#简单mcmc演示" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>马尔可夫链蒙特卡洛（MCMC）方法是贝叶斯计算的核心工具：</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="概率与分布.html#cb73-1" tabindex="-1"></a><span class="co"># 简单MCMC采样演示</span></span>
-<span id="cb73-2"><a href="概率与分布.html#cb73-2" tabindex="-1"></a>simple_mcmc <span class="ot">&lt;-</span> <span class="cf">function</span>(n_iterations, prior_mean, prior_sd, data, likelihood_sd) {</span>
-<span id="cb73-3"><a href="概率与分布.html#cb73-3" tabindex="-1"></a>  <span class="co"># 初始化</span></span>
-<span id="cb73-4"><a href="概率与分布.html#cb73-4" tabindex="-1"></a>  current_value <span class="ot">&lt;-</span> prior_mean</span>
-<span id="cb73-5"><a href="概率与分布.html#cb73-5" tabindex="-1"></a>  samples <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_iterations)</span>
-<span id="cb73-6"><a href="概率与分布.html#cb73-6" tabindex="-1"></a>  accepts <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb73-7"><a href="概率与分布.html#cb73-7" tabindex="-1"></a></span>
-<span id="cb73-8"><a href="概率与分布.html#cb73-8" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_iterations) {</span>
-<span id="cb73-9"><a href="概率与分布.html#cb73-9" tabindex="-1"></a>    <span class="co"># 建议新值</span></span>
-<span id="cb73-10"><a href="概率与分布.html#cb73-10" tabindex="-1"></a>    proposal <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, current_value, <span class="fl">0.1</span>)</span>
-<span id="cb73-11"><a href="概率与分布.html#cb73-11" tabindex="-1"></a></span>
-<span id="cb73-12"><a href="概率与分布.html#cb73-12" tabindex="-1"></a>    <span class="co"># 计算先验概率</span></span>
-<span id="cb73-13"><a href="概率与分布.html#cb73-13" tabindex="-1"></a>    prior_current <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(current_value, prior_mean, prior_sd)</span>
-<span id="cb73-14"><a href="概率与分布.html#cb73-14" tabindex="-1"></a>    prior_proposal <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(proposal, prior_mean, prior_sd)</span>
-<span id="cb73-15"><a href="概率与分布.html#cb73-15" tabindex="-1"></a></span>
-<span id="cb73-16"><a href="概率与分布.html#cb73-16" tabindex="-1"></a>    <span class="co"># 计算似然概率</span></span>
-<span id="cb73-17"><a href="概率与分布.html#cb73-17" tabindex="-1"></a>    likelihood_current <span class="ot">&lt;-</span> <span class="fu">prod</span>(<span class="fu">dnorm</span>(data, current_value, likelihood_sd))</span>
-<span id="cb73-18"><a href="概率与分布.html#cb73-18" tabindex="-1"></a>    likelihood_proposal <span class="ot">&lt;-</span> <span class="fu">prod</span>(<span class="fu">dnorm</span>(data, proposal, likelihood_sd))</span>
-<span id="cb73-19"><a href="概率与分布.html#cb73-19" tabindex="-1"></a></span>
-<span id="cb73-20"><a href="概率与分布.html#cb73-20" tabindex="-1"></a>    <span class="co"># 计算接受概率</span></span>
-<span id="cb73-21"><a href="概率与分布.html#cb73-21" tabindex="-1"></a>    acceptance_ratio <span class="ot">&lt;-</span> (prior_proposal <span class="sc">*</span> likelihood_proposal) <span class="sc">/</span> (prior_current <span class="sc">*</span> likelihood_current)</span>
-<span id="cb73-22"><a href="概率与分布.html#cb73-22" tabindex="-1"></a>    acceptance_prob <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="dv">1</span>, acceptance_ratio)</span>
-<span id="cb73-23"><a href="概率与分布.html#cb73-23" tabindex="-1"></a></span>
-<span id="cb73-24"><a href="概率与分布.html#cb73-24" tabindex="-1"></a>    <span class="co"># 决定是否接受</span></span>
-<span id="cb73-25"><a href="概率与分布.html#cb73-25" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> acceptance_prob) {</span>
-<span id="cb73-26"><a href="概率与分布.html#cb73-26" tabindex="-1"></a>      current_value <span class="ot">&lt;-</span> proposal</span>
-<span id="cb73-27"><a href="概率与分布.html#cb73-27" tabindex="-1"></a>      accepts <span class="ot">&lt;-</span> accepts <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb73-28"><a href="概率与分布.html#cb73-28" tabindex="-1"></a>    }</span>
-<span id="cb73-29"><a href="概率与分布.html#cb73-29" tabindex="-1"></a></span>
-<span id="cb73-30"><a href="概率与分布.html#cb73-30" tabindex="-1"></a>    samples[i] <span class="ot">&lt;-</span> current_value</span>
-<span id="cb73-31"><a href="概率与分布.html#cb73-31" tabindex="-1"></a>  }</span>
-<span id="cb73-32"><a href="概率与分布.html#cb73-32" tabindex="-1"></a></span>
-<span id="cb73-33"><a href="概率与分布.html#cb73-33" tabindex="-1"></a>  acceptance_rate <span class="ot">&lt;-</span> accepts <span class="sc">/</span> n_iterations</span>
-<span id="cb73-34"><a href="概率与分布.html#cb73-34" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">samples =</span> samples, <span class="at">acceptance_rate =</span> acceptance_rate))</span>
-<span id="cb73-35"><a href="概率与分布.html#cb73-35" tabindex="-1"></a>}</span>
-<span id="cb73-36"><a href="概率与分布.html#cb73-36" tabindex="-1"></a></span>
-<span id="cb73-37"><a href="概率与分布.html#cb73-37" tabindex="-1"></a><span class="co"># 生成生态测试数据：树木平均高度</span></span>
-<span id="cb73-38"><a href="概率与分布.html#cb73-38" tabindex="-1"></a>true_value <span class="ot">&lt;-</span> <span class="fl">15.0</span></span>
-<span id="cb73-39"><a href="概率与分布.html#cb73-39" tabindex="-1"></a>observed_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, true_value, <span class="fl">1.0</span>)</span>
-<span id="cb73-40"><a href="概率与分布.html#cb73-40" tabindex="-1"></a></span>
-<span id="cb73-41"><a href="概率与分布.html#cb73-41" tabindex="-1"></a><span class="co"># 运行MCMC</span></span>
-<span id="cb73-42"><a href="概率与分布.html#cb73-42" tabindex="-1"></a>mcmc_result <span class="ot">&lt;-</span> <span class="fu">simple_mcmc</span>(<span class="dv">5000</span>, <span class="at">prior_mean =</span> <span class="dv">10</span>, <span class="at">prior_sd =</span> <span class="dv">5</span>,</span>
-<span id="cb73-43"><a href="概率与分布.html#cb73-43" tabindex="-1"></a>                           <span class="at">data =</span> observed_data, <span class="at">likelihood_sd =</span> <span class="fl">1.0</span>)</span>
-<span id="cb73-44"><a href="概率与分布.html#cb73-44" tabindex="-1"></a></span>
-<span id="cb73-45"><a href="概率与分布.html#cb73-45" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;MCMC采样结果:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="概率与分布.html#cb77-1" tabindex="-1"></a><span class="co"># 简单MCMC采样演示</span></span>
+<span id="cb77-2"><a href="概率与分布.html#cb77-2" tabindex="-1"></a>simple_mcmc <span class="ot">&lt;-</span> <span class="cf">function</span>(n_iterations, prior_mean, prior_sd, data, likelihood_sd) {</span>
+<span id="cb77-3"><a href="概率与分布.html#cb77-3" tabindex="-1"></a>  <span class="co"># 初始化</span></span>
+<span id="cb77-4"><a href="概率与分布.html#cb77-4" tabindex="-1"></a>  current_value <span class="ot">&lt;-</span> prior_mean</span>
+<span id="cb77-5"><a href="概率与分布.html#cb77-5" tabindex="-1"></a>  samples <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_iterations)</span>
+<span id="cb77-6"><a href="概率与分布.html#cb77-6" tabindex="-1"></a>  accepts <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb77-7"><a href="概率与分布.html#cb77-7" tabindex="-1"></a></span>
+<span id="cb77-8"><a href="概率与分布.html#cb77-8" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_iterations) {</span>
+<span id="cb77-9"><a href="概率与分布.html#cb77-9" tabindex="-1"></a>    <span class="co"># 建议新值</span></span>
+<span id="cb77-10"><a href="概率与分布.html#cb77-10" tabindex="-1"></a>    proposal <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, current_value, <span class="fl">0.1</span>)</span>
+<span id="cb77-11"><a href="概率与分布.html#cb77-11" tabindex="-1"></a></span>
+<span id="cb77-12"><a href="概率与分布.html#cb77-12" tabindex="-1"></a>    <span class="co"># 计算先验概率</span></span>
+<span id="cb77-13"><a href="概率与分布.html#cb77-13" tabindex="-1"></a>    prior_current <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(current_value, prior_mean, prior_sd)</span>
+<span id="cb77-14"><a href="概率与分布.html#cb77-14" tabindex="-1"></a>    prior_proposal <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(proposal, prior_mean, prior_sd)</span>
+<span id="cb77-15"><a href="概率与分布.html#cb77-15" tabindex="-1"></a></span>
+<span id="cb77-16"><a href="概率与分布.html#cb77-16" tabindex="-1"></a>    <span class="co"># 计算似然概率</span></span>
+<span id="cb77-17"><a href="概率与分布.html#cb77-17" tabindex="-1"></a>    likelihood_current <span class="ot">&lt;-</span> <span class="fu">prod</span>(<span class="fu">dnorm</span>(data, current_value, likelihood_sd))</span>
+<span id="cb77-18"><a href="概率与分布.html#cb77-18" tabindex="-1"></a>    likelihood_proposal <span class="ot">&lt;-</span> <span class="fu">prod</span>(<span class="fu">dnorm</span>(data, proposal, likelihood_sd))</span>
+<span id="cb77-19"><a href="概率与分布.html#cb77-19" tabindex="-1"></a></span>
+<span id="cb77-20"><a href="概率与分布.html#cb77-20" tabindex="-1"></a>    <span class="co"># 计算接受概率</span></span>
+<span id="cb77-21"><a href="概率与分布.html#cb77-21" tabindex="-1"></a>    acceptance_ratio <span class="ot">&lt;-</span> (prior_proposal <span class="sc">*</span> likelihood_proposal) <span class="sc">/</span> (prior_current <span class="sc">*</span> likelihood_current)</span>
+<span id="cb77-22"><a href="概率与分布.html#cb77-22" tabindex="-1"></a>    acceptance_prob <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="dv">1</span>, acceptance_ratio)</span>
+<span id="cb77-23"><a href="概率与分布.html#cb77-23" tabindex="-1"></a></span>
+<span id="cb77-24"><a href="概率与分布.html#cb77-24" tabindex="-1"></a>    <span class="co"># 决定是否接受</span></span>
+<span id="cb77-25"><a href="概率与分布.html#cb77-25" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> acceptance_prob) {</span>
+<span id="cb77-26"><a href="概率与分布.html#cb77-26" tabindex="-1"></a>      current_value <span class="ot">&lt;-</span> proposal</span>
+<span id="cb77-27"><a href="概率与分布.html#cb77-27" tabindex="-1"></a>      accepts <span class="ot">&lt;-</span> accepts <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb77-28"><a href="概率与分布.html#cb77-28" tabindex="-1"></a>    }</span>
+<span id="cb77-29"><a href="概率与分布.html#cb77-29" tabindex="-1"></a></span>
+<span id="cb77-30"><a href="概率与分布.html#cb77-30" tabindex="-1"></a>    samples[i] <span class="ot">&lt;-</span> current_value</span>
+<span id="cb77-31"><a href="概率与分布.html#cb77-31" tabindex="-1"></a>  }</span>
+<span id="cb77-32"><a href="概率与分布.html#cb77-32" tabindex="-1"></a></span>
+<span id="cb77-33"><a href="概率与分布.html#cb77-33" tabindex="-1"></a>  acceptance_rate <span class="ot">&lt;-</span> accepts <span class="sc">/</span> n_iterations</span>
+<span id="cb77-34"><a href="概率与分布.html#cb77-34" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">samples =</span> samples, <span class="at">acceptance_rate =</span> acceptance_rate))</span>
+<span id="cb77-35"><a href="概率与分布.html#cb77-35" tabindex="-1"></a>}</span>
+<span id="cb77-36"><a href="概率与分布.html#cb77-36" tabindex="-1"></a></span>
+<span id="cb77-37"><a href="概率与分布.html#cb77-37" tabindex="-1"></a><span class="co"># 生成生态测试数据：树木平均高度</span></span>
+<span id="cb77-38"><a href="概率与分布.html#cb77-38" tabindex="-1"></a>true_value <span class="ot">&lt;-</span> <span class="fl">15.0</span></span>
+<span id="cb77-39"><a href="概率与分布.html#cb77-39" tabindex="-1"></a>observed_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, true_value, <span class="fl">1.0</span>)</span>
+<span id="cb77-40"><a href="概率与分布.html#cb77-40" tabindex="-1"></a></span>
+<span id="cb77-41"><a href="概率与分布.html#cb77-41" tabindex="-1"></a><span class="co"># 运行MCMC</span></span>
+<span id="cb77-42"><a href="概率与分布.html#cb77-42" tabindex="-1"></a>mcmc_result <span class="ot">&lt;-</span> <span class="fu">simple_mcmc</span>(<span class="dv">5000</span>, <span class="at">prior_mean =</span> <span class="dv">10</span>, <span class="at">prior_sd =</span> <span class="dv">5</span>,</span>
+<span id="cb77-43"><a href="概率与分布.html#cb77-43" tabindex="-1"></a>                           <span class="at">data =</span> observed_data, <span class="at">likelihood_sd =</span> <span class="fl">1.0</span>)</span>
+<span id="cb77-44"><a href="概率与分布.html#cb77-44" tabindex="-1"></a></span>
+<span id="cb77-45"><a href="概率与分布.html#cb77-45" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;MCMC采样结果:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## MCMC采样结果:</code></pre>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="概率与分布.html#cb75-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;接受率:&quot;</span>, <span class="fu">round</span>(mcmc_result<span class="sc">$</span>acceptance_rate, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="概率与分布.html#cb79-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;接受率:&quot;</span>, <span class="fu">round</span>(mcmc_result<span class="sc">$</span>acceptance_rate, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 接受率: 0.848</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="概率与分布.html#cb77-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;后验均值:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(mcmc_result<span class="sc">$</span>samples), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="概率与分布.html#cb81-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;后验均值:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(mcmc_result<span class="sc">$</span>samples), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 后验均值: 14.835</code></pre>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="概率与分布.html#cb79-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;后验标准差:&quot;</span>, <span class="fu">round</span>(<span class="fu">sd</span>(mcmc_result<span class="sc">$</span>samples), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="概率与分布.html#cb83-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;后验标准差:&quot;</span>, <span class="fu">round</span>(<span class="fu">sd</span>(mcmc_result<span class="sc">$</span>samples), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 后验标准差: 0.472</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="概率与分布.html#cb81-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;真实值:&quot;</span>, true_value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="概率与分布.html#cb85-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;真实值:&quot;</span>, true_value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 真实值: 15</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="概率与分布.html#cb83-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;样本均值:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(observed_data), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="概率与分布.html#cb87-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;样本均值:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(observed_data), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 样本均值: 14.92</code></pre>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="概率与分布.html#cb85-1" tabindex="-1"></a><span class="co"># 计算95%置信区间</span></span>
-<span id="cb85-2"><a href="概率与分布.html#cb85-2" tabindex="-1"></a>ci_lower <span class="ot">&lt;-</span> <span class="fu">quantile</span>(mcmc_result<span class="sc">$</span>samples, <span class="fl">0.025</span>)</span>
-<span id="cb85-3"><a href="概率与分布.html#cb85-3" tabindex="-1"></a>ci_upper <span class="ot">&lt;-</span> <span class="fu">quantile</span>(mcmc_result<span class="sc">$</span>samples, <span class="fl">0.975</span>)</span>
-<span id="cb85-4"><a href="概率与分布.html#cb85-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;95%置信区间: [&quot;</span>, <span class="fu">round</span>(ci_lower, <span class="dv">3</span>), <span class="st">&quot;, &quot;</span>, <span class="fu">round</span>(ci_upper, <span class="dv">3</span>), <span class="st">&quot;]</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="概率与分布.html#cb89-1" tabindex="-1"></a><span class="co"># 计算95%置信区间</span></span>
+<span id="cb89-2"><a href="概率与分布.html#cb89-2" tabindex="-1"></a>ci_lower <span class="ot">&lt;-</span> <span class="fu">quantile</span>(mcmc_result<span class="sc">$</span>samples, <span class="fl">0.025</span>)</span>
+<span id="cb89-3"><a href="概率与分布.html#cb89-3" tabindex="-1"></a>ci_upper <span class="ot">&lt;-</span> <span class="fu">quantile</span>(mcmc_result<span class="sc">$</span>samples, <span class="fl">0.975</span>)</span>
+<span id="cb89-4"><a href="概率与分布.html#cb89-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;95%置信区间: [&quot;</span>, <span class="fu">round</span>(ci_lower, <span class="dv">3</span>), <span class="st">&quot;, &quot;</span>, <span class="fu">round</span>(ci_upper, <span class="dv">3</span>), <span class="st">&quot;]</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 95%置信区间: [ 14.345 ,  15.342 ]</code></pre>
 </div>
 <div id="从贝叶斯概率到现代数据分析" class="section level4 hasAnchor" number="2.1.4.11">
@@ -940,38 +940,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>现在，我想更系统地描述你这只”蚱蜢”的行为。作为一名生态学研究者，我面对的不仅仅是描述性的观察记录，而是需要建立一个能够量化、预测和分析的数学模型。“蚱蜢选择哪种植物进食”这个看似简单的行为，实际上蕴含着复杂的决策过程，受到营养需求、环境因素、个体偏好等多重影响。我需要一个强大的数学工具来捕捉这种不确定性，将模糊的行为模式转化为精确的概率描述。</p>
 <p>于是，我引入<strong>随机变量</strong>的概念，将其命名为X。随机变量是概率论中的核心工具，它就像一个数学翻译器，将现实世界中的随机现象转化为数学语言。我精心定义：当X=1时，代表你选择了营养丰富的黑麦草；当X=2时，代表你选择了环境复杂的混合草甸；当X=3时，代表你选择了相对稀少的三叶草。这种编码方式不仅简化了描述，更重要的是为后续的数学分析奠定了基础。</p>
 <p>随机变量的奇妙之处在于它的双重性：在每次具体观察之前，X的取值是完全不确定的——它可能是1、2或3中的任意一个，这种不确定性正是生态系统中生物行为的本质特征。然而，这种不确定性并非毫无规律可言。通过长期的观察和数据积累，我发现每个可能的取值都有其特定的发生概率。这种概率分布就像是你行为模式的”数学指纹”，精确地刻画了你在不同环境条件下的选择倾向。随机变量的引入，使我们能够从定性描述迈向定量分析，为理解生物决策机制提供了强有力的数学框架。</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="概率与分布.html#cb87-1" tabindex="-1"></a><span class="co"># 用R语言演示随机变量的不确定性与规律性</span></span>
-<span id="cb87-2"><a href="概率与分布.html#cb87-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># 设置随机种子确保结果可重现</span></span>
-<span id="cb87-3"><a href="概率与分布.html#cb87-3" tabindex="-1"></a></span>
-<span id="cb87-4"><a href="概率与分布.html#cb87-4" tabindex="-1"></a><span class="co"># 定义随机变量X的可能取值和概率分布</span></span>
-<span id="cb87-5"><a href="概率与分布.html#cb87-5" tabindex="-1"></a>x_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)  <span class="co"># 1=黑麦草, 2=混合草甸, 3=三叶草</span></span>
-<span id="cb87-6"><a href="概率与分布.html#cb87-6" tabindex="-1"></a>probabilities <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.64</span>, <span class="fl">0.29</span>, <span class="fl">0.07</span>)</span>
-<span id="cb87-7"><a href="概率与分布.html#cb87-7" tabindex="-1"></a></span>
-<span id="cb87-8"><a href="概率与分布.html#cb87-8" tabindex="-1"></a><span class="co"># 模拟100次蚱蜢的植物选择行为</span></span>
-<span id="cb87-9"><a href="概率与分布.html#cb87-9" tabindex="-1"></a>n_simulations <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb87-10"><a href="概率与分布.html#cb87-10" tabindex="-1"></a>simulated_choices <span class="ot">&lt;-</span> <span class="fu">sample</span>(x_values, <span class="at">size =</span> n_simulations,</span>
-<span id="cb87-11"><a href="概率与分布.html#cb87-11" tabindex="-1"></a>                            <span class="at">prob =</span> probabilities, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb87-12"><a href="概率与分布.html#cb87-12" tabindex="-1"></a></span>
-<span id="cb87-13"><a href="概率与分布.html#cb87-13" tabindex="-1"></a><span class="co"># 统计每次模拟的结果</span></span>
-<span id="cb87-14"><a href="概率与分布.html#cb87-14" tabindex="-1"></a>choice_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(simulated_choices)</span>
-<span id="cb87-15"><a href="概率与分布.html#cb87-15" tabindex="-1"></a></span>
-<span id="cb87-16"><a href="概率与分布.html#cb87-16" tabindex="-1"></a><span class="co"># 可视化模拟结果</span></span>
-<span id="cb87-17"><a href="概率与分布.html#cb87-17" tabindex="-1"></a><span class="fu">barplot</span>(choice_counts,</span>
-<span id="cb87-18"><a href="概率与分布.html#cb87-18" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;蚱蜢植物选择行为的随机模拟&quot;</span>,</span>
-<span id="cb87-19"><a href="概率与分布.html#cb87-19" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;植物类型 (1=黑麦草, 2=混合草甸, 3=三叶草)&quot;</span>,</span>
-<span id="cb87-20"><a href="概率与分布.html#cb87-20" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;选择次数&quot;</span>,</span>
-<span id="cb87-21"><a href="概率与分布.html#cb87-21" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;lightgreen&quot;</span>, <span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;lightyellow&quot;</span>))</span>
-<span id="cb87-22"><a href="概率与分布.html#cb87-22" tabindex="-1"></a></span>
-<span id="cb87-23"><a href="概率与分布.html#cb87-23" tabindex="-1"></a><span class="co"># 显示理论概率与实际频率的对比</span></span>
-<span id="cb87-24"><a href="概率与分布.html#cb87-24" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;理论概率分布:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb87-25"><a href="概率与分布.html#cb87-25" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;黑麦草 (X=1):&quot;</span>, probabilities[<span class="dv">1</span>], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb87-26"><a href="概率与分布.html#cb87-26" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;混合草甸 (X=2):&quot;</span>, probabilities[<span class="dv">2</span>], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb87-27"><a href="概率与分布.html#cb87-27" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;三叶草 (X=3):&quot;</span>, probabilities[<span class="dv">3</span>], <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
-<span id="cb87-28"><a href="概率与分布.html#cb87-28" tabindex="-1"></a></span>
-<span id="cb87-29"><a href="概率与分布.html#cb87-29" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;模拟100次的实际频率:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb87-30"><a href="概率与分布.html#cb87-30" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;黑麦草 (X=1):&quot;</span>, choice_counts[<span class="st">&quot;1&quot;</span>] <span class="sc">/</span> n_simulations, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb87-31"><a href="概率与分布.html#cb87-31" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;混合草甸 (X=2):&quot;</span>, choice_counts[<span class="st">&quot;2&quot;</span>] <span class="sc">/</span> n_simulations, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb87-32"><a href="概率与分布.html#cb87-32" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;三叶草 (X=3):&quot;</span>, choice_counts[<span class="st">&quot;3&quot;</span>] <span class="sc">/</span> n_simulations, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="概率与分布.html#cb91-1" tabindex="-1"></a><span class="co"># 用R语言演示随机变量的不确定性与规律性</span></span>
+<span id="cb91-2"><a href="概率与分布.html#cb91-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># 设置随机种子确保结果可重现</span></span>
+<span id="cb91-3"><a href="概率与分布.html#cb91-3" tabindex="-1"></a></span>
+<span id="cb91-4"><a href="概率与分布.html#cb91-4" tabindex="-1"></a><span class="co"># 定义随机变量X的可能取值和概率分布</span></span>
+<span id="cb91-5"><a href="概率与分布.html#cb91-5" tabindex="-1"></a>x_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)  <span class="co"># 1=黑麦草, 2=混合草甸, 3=三叶草</span></span>
+<span id="cb91-6"><a href="概率与分布.html#cb91-6" tabindex="-1"></a>probabilities <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.64</span>, <span class="fl">0.29</span>, <span class="fl">0.07</span>)</span>
+<span id="cb91-7"><a href="概率与分布.html#cb91-7" tabindex="-1"></a></span>
+<span id="cb91-8"><a href="概率与分布.html#cb91-8" tabindex="-1"></a><span class="co"># 模拟100次蚱蜢的植物选择行为</span></span>
+<span id="cb91-9"><a href="概率与分布.html#cb91-9" tabindex="-1"></a>n_simulations <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb91-10"><a href="概率与分布.html#cb91-10" tabindex="-1"></a>simulated_choices <span class="ot">&lt;-</span> <span class="fu">sample</span>(x_values, <span class="at">size =</span> n_simulations,</span>
+<span id="cb91-11"><a href="概率与分布.html#cb91-11" tabindex="-1"></a>                            <span class="at">prob =</span> probabilities, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb91-12"><a href="概率与分布.html#cb91-12" tabindex="-1"></a></span>
+<span id="cb91-13"><a href="概率与分布.html#cb91-13" tabindex="-1"></a><span class="co"># 统计每次模拟的结果</span></span>
+<span id="cb91-14"><a href="概率与分布.html#cb91-14" tabindex="-1"></a>choice_counts <span class="ot">&lt;-</span> <span class="fu">table</span>(simulated_choices)</span>
+<span id="cb91-15"><a href="概率与分布.html#cb91-15" tabindex="-1"></a></span>
+<span id="cb91-16"><a href="概率与分布.html#cb91-16" tabindex="-1"></a><span class="co"># 可视化模拟结果</span></span>
+<span id="cb91-17"><a href="概率与分布.html#cb91-17" tabindex="-1"></a><span class="fu">barplot</span>(choice_counts,</span>
+<span id="cb91-18"><a href="概率与分布.html#cb91-18" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;蚱蜢植物选择行为的随机模拟&quot;</span>,</span>
+<span id="cb91-19"><a href="概率与分布.html#cb91-19" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;植物类型 (1=黑麦草, 2=混合草甸, 3=三叶草)&quot;</span>,</span>
+<span id="cb91-20"><a href="概率与分布.html#cb91-20" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">&quot;选择次数&quot;</span>,</span>
+<span id="cb91-21"><a href="概率与分布.html#cb91-21" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;lightgreen&quot;</span>, <span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;lightyellow&quot;</span>))</span>
+<span id="cb91-22"><a href="概率与分布.html#cb91-22" tabindex="-1"></a></span>
+<span id="cb91-23"><a href="概率与分布.html#cb91-23" tabindex="-1"></a><span class="co"># 显示理论概率与实际频率的对比</span></span>
+<span id="cb91-24"><a href="概率与分布.html#cb91-24" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;理论概率分布:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb91-25"><a href="概率与分布.html#cb91-25" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;黑麦草 (X=1):&quot;</span>, probabilities[<span class="dv">1</span>], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb91-26"><a href="概率与分布.html#cb91-26" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;混合草甸 (X=2):&quot;</span>, probabilities[<span class="dv">2</span>], <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb91-27"><a href="概率与分布.html#cb91-27" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;三叶草 (X=3):&quot;</span>, probabilities[<span class="dv">3</span>], <span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span>
+<span id="cb91-28"><a href="概率与分布.html#cb91-28" tabindex="-1"></a></span>
+<span id="cb91-29"><a href="概率与分布.html#cb91-29" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;模拟100次的实际频率:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb91-30"><a href="概率与分布.html#cb91-30" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;黑麦草 (X=1):&quot;</span>, choice_counts[<span class="st">&quot;1&quot;</span>] <span class="sc">/</span> n_simulations, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb91-31"><a href="概率与分布.html#cb91-31" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;混合草甸 (X=2):&quot;</span>, choice_counts[<span class="st">&quot;2&quot;</span>] <span class="sc">/</span> n_simulations, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb91-32"><a href="概率与分布.html#cb91-32" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;三叶草 (X=3):&quot;</span>, choice_counts[<span class="st">&quot;3&quot;</span>] <span class="sc">/</span> n_simulations, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <div id="概率分布" class="section level3 hasAnchor" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> 概率分布<a href="概率与分布.html#概率分布" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>接下来，我把随机变量X所有可能的取值及其对应的概率，整理成一张表。</p>
@@ -1042,28 +1042,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><strong>提供决策支持</strong>：如果我们想知道”蚱蜢选择营养价值较高的植物（黑麦草或混合草甸）的概率”，累积分布直接给出了答案：0.93</li>
 </ol>
 <p>在生态学中，累积概率分布广泛应用于风险评估、资源分配决策和种群管理策略制定。</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="概率与分布.html#cb88-1" tabindex="-1"></a><span class="co"># R语言中的概率分布函数家族</span></span>
-<span id="cb88-2"><a href="概率与分布.html#cb88-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;R为各种概率分布提供了完整的函数家族，每个分布都包含四类核心函数：</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="概率与分布.html#cb92-1" tabindex="-1"></a><span class="co"># R语言中的概率分布函数家族</span></span>
+<span id="cb92-2"><a href="概率与分布.html#cb92-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;R为各种概率分布提供了完整的函数家族，每个分布都包含四类核心函数：</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## R为各种概率分布提供了完整的函数家族，每个分布都包含四类核心函数：</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="概率与分布.html#cb90-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;- d*: 概率密度/质量函数 (density)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="概率与分布.html#cb94-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;- d*: 概率密度/质量函数 (density)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## - d*: 概率密度/质量函数 (density)</code></pre>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="概率与分布.html#cb92-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;- p*: 累积分布函数 (probability)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="概率与分布.html#cb96-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;- p*: 累积分布函数 (probability)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## - p*: 累积分布函数 (probability)</code></pre>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="概率与分布.html#cb94-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;- q*: 分位数函数 (quantile)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="概率与分布.html#cb98-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;- q*: 分位数函数 (quantile)</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## - q*: 分位数函数 (quantile)</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="概率与分布.html#cb96-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;- r*: 随机数生成函数 (random)</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="概率与分布.html#cb100-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;- r*: 随机数生成函数 (random)</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## - r*: 随机数生成函数 (random)</code></pre>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="概率与分布.html#cb98-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;例如，对于正态分布：</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="概率与分布.html#cb102-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;例如，对于正态分布：</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 例如，对于正态分布：</code></pre>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="概率与分布.html#cb100-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;dnorm(x, mean, sd)    # 概率密度函数</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="概率与分布.html#cb104-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;dnorm(x, mean, sd)    # 概率密度函数</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## dnorm(x, mean, sd)    # 概率密度函数</code></pre>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="概率与分布.html#cb102-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;pnorm(q, mean, sd)    # 累积分布函数</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="概率与分布.html#cb106-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;pnorm(q, mean, sd)    # 累积分布函数</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## pnorm(q, mean, sd)    # 累积分布函数</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="概率与分布.html#cb104-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;qnorm(p, mean, sd)    # 分位数函数</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="概率与分布.html#cb108-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;qnorm(p, mean, sd)    # 分位数函数</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## qnorm(p, mean, sd)    # 分位数函数</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="概率与分布.html#cb106-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;rnorm(n, mean, sd)    # 随机数生成</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="概率与分布.html#cb110-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;rnorm(n, mean, sd)    # 随机数生成</span><span class="sc">\n\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## rnorm(n, mean, sd)    # 随机数生成</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="概率与分布.html#cb108-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;这种统一的命名约定使得在R中学习和使用各种分布变得非常直观</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="概率与分布.html#cb112-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;这种统一的命名约定使得在R中学习和使用各种分布变得非常直观</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 这种统一的命名约定使得在R中学习和使用各种分布变得非常直观</code></pre>
 <p>R语言为概率分布提供了强大的支持，内置了数十种常见的概率分布函数。每种分布都遵循统一的命名模式，包含四个核心函数：</p>
 <ul>
@@ -1473,58 +1473,58 @@ p &amp; \text{如果 } x = 1 \\
 <div id="零膨胀分布处理零值过多的数据" class="section level3 hasAnchor" number="2.5.1">
 <h3><span class="header-section-number">2.5.1</span> 零膨胀分布：处理零值过多的数据<a href="概率与分布.html#零膨胀分布处理零值过多的数据" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>在生态学中，许多计数数据存在大量的零值，零膨胀分布专门处理这类数据。</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="概率与分布.html#cb122-1" tabindex="-1"></a><span class="co"># 零膨胀分布概念演示</span></span>
-<span id="cb122-2"><a href="概率与分布.html#cb122-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2323</span>)</span>
-<span id="cb122-3"><a href="概率与分布.html#cb122-3" tabindex="-1"></a></span>
-<span id="cb122-4"><a href="概率与分布.html#cb122-4" tabindex="-1"></a><span class="co"># 模拟零膨胀数据：80%的零值和20%的泊松分布</span></span>
-<span id="cb122-5"><a href="概率与分布.html#cb122-5" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
-<span id="cb122-6"><a href="概率与分布.html#cb122-6" tabindex="-1"></a>zero_prob <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
-<span id="cb122-7"><a href="概率与分布.html#cb122-7" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb122-8"><a href="概率与分布.html#cb122-8" tabindex="-1"></a></span>
-<span id="cb122-9"><a href="概率与分布.html#cb122-9" tabindex="-1"></a><span class="co"># 生成零膨胀泊松数据</span></span>
-<span id="cb122-10"><a href="概率与分布.html#cb122-10" tabindex="-1"></a>zip_data <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_samples)</span>
-<span id="cb122-11"><a href="概率与分布.html#cb122-11" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_samples) {</span>
-<span id="cb122-12"><a href="概率与分布.html#cb122-12" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> zero_prob) {</span>
-<span id="cb122-13"><a href="概率与分布.html#cb122-13" tabindex="-1"></a>    zip_data[i] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb122-14"><a href="概率与分布.html#cb122-14" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb122-15"><a href="概率与分布.html#cb122-15" tabindex="-1"></a>    zip_data[i] <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">1</span>, lambda)</span>
-<span id="cb122-16"><a href="概率与分布.html#cb122-16" tabindex="-1"></a>  }</span>
-<span id="cb122-17"><a href="概率与分布.html#cb122-17" tabindex="-1"></a>}</span>
-<span id="cb122-18"><a href="概率与分布.html#cb122-18" tabindex="-1"></a></span>
-<span id="cb122-19"><a href="概率与分布.html#cb122-19" tabindex="-1"></a><span class="co"># 统计零值比例</span></span>
-<span id="cb122-20"><a href="概率与分布.html#cb122-20" tabindex="-1"></a>zero_proportion <span class="ot">&lt;-</span> <span class="fu">mean</span>(zip_data <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb122-21"><a href="概率与分布.html#cb122-21" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;零膨胀数据统计:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="概率与分布.html#cb126-1" tabindex="-1"></a><span class="co"># 零膨胀分布概念演示</span></span>
+<span id="cb126-2"><a href="概率与分布.html#cb126-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2323</span>)</span>
+<span id="cb126-3"><a href="概率与分布.html#cb126-3" tabindex="-1"></a></span>
+<span id="cb126-4"><a href="概率与分布.html#cb126-4" tabindex="-1"></a><span class="co"># 模拟零膨胀数据：80%的零值和20%的泊松分布</span></span>
+<span id="cb126-5"><a href="概率与分布.html#cb126-5" tabindex="-1"></a>n_samples <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb126-6"><a href="概率与分布.html#cb126-6" tabindex="-1"></a>zero_prob <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
+<span id="cb126-7"><a href="概率与分布.html#cb126-7" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb126-8"><a href="概率与分布.html#cb126-8" tabindex="-1"></a></span>
+<span id="cb126-9"><a href="概率与分布.html#cb126-9" tabindex="-1"></a><span class="co"># 生成零膨胀泊松数据</span></span>
+<span id="cb126-10"><a href="概率与分布.html#cb126-10" tabindex="-1"></a>zip_data <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_samples)</span>
+<span id="cb126-11"><a href="概率与分布.html#cb126-11" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_samples) {</span>
+<span id="cb126-12"><a href="概率与分布.html#cb126-12" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> zero_prob) {</span>
+<span id="cb126-13"><a href="概率与分布.html#cb126-13" tabindex="-1"></a>    zip_data[i] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb126-14"><a href="概率与分布.html#cb126-14" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb126-15"><a href="概率与分布.html#cb126-15" tabindex="-1"></a>    zip_data[i] <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">1</span>, lambda)</span>
+<span id="cb126-16"><a href="概率与分布.html#cb126-16" tabindex="-1"></a>  }</span>
+<span id="cb126-17"><a href="概率与分布.html#cb126-17" tabindex="-1"></a>}</span>
+<span id="cb126-18"><a href="概率与分布.html#cb126-18" tabindex="-1"></a></span>
+<span id="cb126-19"><a href="概率与分布.html#cb126-19" tabindex="-1"></a><span class="co"># 统计零值比例</span></span>
+<span id="cb126-20"><a href="概率与分布.html#cb126-20" tabindex="-1"></a>zero_proportion <span class="ot">&lt;-</span> <span class="fu">mean</span>(zip_data <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb126-21"><a href="概率与分布.html#cb126-21" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;零膨胀数据统计:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 零膨胀数据统计:</code></pre>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="概率与分布.html#cb124-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;零值比例:&quot;</span>, <span class="fu">round</span>(zero_proportion, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="概率与分布.html#cb128-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;零值比例:&quot;</span>, <span class="fu">round</span>(zero_proportion, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 零值比例: 0.793</code></pre>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="概率与分布.html#cb126-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;非零值均值:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(zip_data[zip_data <span class="sc">&gt;</span> <span class="dv">0</span>]), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="概率与分布.html#cb130-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;非零值均值:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(zip_data[zip_data <span class="sc">&gt;</span> <span class="dv">0</span>]), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 非零值均值: 3.266</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="概率与分布.html#cb128-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;总体均值:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(zip_data), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="概率与分布.html#cb132-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;总体均值:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(zip_data), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 总体均值: 0.676</code></pre>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="概率与分布.html#cb130-1" tabindex="-1"></a><span class="co"># 与普通泊松分布比较</span></span>
-<span id="cb130-2"><a href="概率与分布.html#cb130-2" tabindex="-1"></a>poisson_data <span class="ot">&lt;-</span> <span class="fu">rpois</span>(n_samples, <span class="at">lambda =</span> <span class="fu">mean</span>(zip_data))</span>
-<span id="cb130-3"><a href="概率与分布.html#cb130-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">与普通泊松分布比较:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="概率与分布.html#cb134-1" tabindex="-1"></a><span class="co"># 与普通泊松分布比较</span></span>
+<span id="cb134-2"><a href="概率与分布.html#cb134-2" tabindex="-1"></a>poisson_data <span class="ot">&lt;-</span> <span class="fu">rpois</span>(n_samples, <span class="at">lambda =</span> <span class="fu">mean</span>(zip_data))</span>
+<span id="cb134-3"><a href="概率与分布.html#cb134-3" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">与普通泊松分布比较:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## 与普通泊松分布比较:</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="概率与分布.html#cb132-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;泊松零值比例:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(poisson_data <span class="sc">==</span> <span class="dv">0</span>), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="概率与分布.html#cb136-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;泊松零值比例:&quot;</span>, <span class="fu">round</span>(<span class="fu">mean</span>(poisson_data <span class="sc">==</span> <span class="dv">0</span>), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 泊松零值比例: 0.534</code></pre>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="概率与分布.html#cb134-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;泊松方差:&quot;</span>, <span class="fu">round</span>(<span class="fu">var</span>(poisson_data), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="概率与分布.html#cb138-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;泊松方差:&quot;</span>, <span class="fu">round</span>(<span class="fu">var</span>(poisson_data), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 泊松方差: 0.657</code></pre>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="概率与分布.html#cb136-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;零膨胀方差:&quot;</span>, <span class="fu">round</span>(<span class="fu">var</span>(zip_data), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="概率与分布.html#cb140-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;零膨胀方差:&quot;</span>, <span class="fu">round</span>(<span class="fu">var</span>(zip_data), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 零膨胀方差: 2.361</code></pre>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="概率与分布.html#cb138-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;过度分散指数:&quot;</span>, <span class="fu">round</span>(<span class="fu">var</span>(zip_data)<span class="sc">/</span><span class="fu">mean</span>(zip_data), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="概率与分布.html#cb142-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;过度分散指数:&quot;</span>, <span class="fu">round</span>(<span class="fu">var</span>(zip_data)<span class="sc">/</span><span class="fu">mean</span>(zip_data), <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 过度分散指数: 3.493</code></pre>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="概率与分布.html#cb140-1" tabindex="-1"></a><span class="co"># 零膨胀分布的生态学意义</span></span>
-<span id="cb140-2"><a href="概率与分布.html#cb140-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">零膨胀分布的生态学应用:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="概率与分布.html#cb144-1" tabindex="-1"></a><span class="co"># 零膨胀分布的生态学意义</span></span>
+<span id="cb144-2"><a href="概率与分布.html#cb144-2" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">零膨胀分布的生态学应用:</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 
 ## 零膨胀分布的生态学应用:</code></pre>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="概率与分布.html#cb142-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;1. 稀有物种的出现数据</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="概率与分布.html#cb146-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;1. 稀有物种的出现数据</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 1. 稀有物种的出现数据</code></pre>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="概率与分布.html#cb144-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;2. 低密度种群的分布数据</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="概率与分布.html#cb148-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;2. 低密度种群的分布数据</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 2. 低密度种群的分布数据</code></pre>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="概率与分布.html#cb146-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;3. 间歇性生态过程记录</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="概率与分布.html#cb150-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;3. 间歇性生态过程记录</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 3. 间歇性生态过程记录</code></pre>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="概率与分布.html#cb148-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;4. 不完全调查的观测数据</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="概率与分布.html#cb152-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;4. 不完全调查的观测数据</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 4. 不完全调查的观测数据</code></pre>
 
 </div>

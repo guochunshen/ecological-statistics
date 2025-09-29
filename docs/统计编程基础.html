@@ -23,7 +23,7 @@
 <meta name="author" content="沈国春、李勤" />
 
 
-<meta name="date" content="2025-09-28" />
+<meta name="date" content="2025-09-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -1084,7 +1084,124 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb21-11"><a href="统计编程基础.html#cb21-11" tabindex="-1"></a><span class="fu">print</span>(result)  <span class="co"># 输出: 55</span></span></code></pre></div>
 <ul>
 <li>计算：这会产生一棵深度为 n 的递归树，节点数约为 2^n，因此复杂度为 O(2^n)。</li>
-</ul></li>
+</ul>
+<p><strong>动态规划算法</strong> 作为对比，我们来用另一种时间复杂度 O(n)的算法：</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="统计编程基础.html#cb22-1" tabindex="-1"></a>fibonacci_efficient <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb22-2"><a href="统计编程基础.html#cb22-2" tabindex="-1"></a>  <span class="cf">if</span> (n <span class="sc">&lt;=</span> <span class="dv">1</span>) {</span>
+<span id="cb22-3"><a href="统计编程基础.html#cb22-3" tabindex="-1"></a>    <span class="fu">return</span>(n)</span>
+<span id="cb22-4"><a href="统计编程基础.html#cb22-4" tabindex="-1"></a>}</span>
+<span id="cb22-5"><a href="统计编程基础.html#cb22-5" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="统计编程基础.html#cb22-6" tabindex="-1"></a><span class="co"># 使用动态规划，避免重复计算</span></span>
+<span id="cb22-7"><a href="统计编程基础.html#cb22-7" tabindex="-1"></a>fib <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb22-8"><a href="统计编程基础.html#cb22-8" tabindex="-1"></a>fib[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb22-9"><a href="统计编程基础.html#cb22-9" tabindex="-1"></a>fib[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb22-10"><a href="统计编程基础.html#cb22-10" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="统计编程基础.html#cb22-11" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span>(n <span class="sc">+</span> <span class="dv">1</span>)) {</span>
+<span id="cb22-12"><a href="统计编程基础.html#cb22-12" tabindex="-1"></a>  fib[i] <span class="ot">&lt;-</span> fib[i <span class="sc">-</span> <span class="dv">1</span>] <span class="sc">+</span> fib[i <span class="sc">-</span> <span class="dv">2</span>]</span>
+<span id="cb22-13"><a href="统计编程基础.html#cb22-13" tabindex="-1"></a>}</span>
+<span id="cb22-14"><a href="统计编程基础.html#cb22-14" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="统计编程基础.html#cb22-15" tabindex="-1"></a><span class="fu">return</span>(fib[n <span class="sc">+</span> <span class="dv">1</span>])</span>
+<span id="cb22-16"><a href="统计编程基础.html#cb22-16" tabindex="-1"></a>}</span>
+<span id="cb22-17"><a href="统计编程基础.html#cb22-17" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="统计编程基础.html#cb22-18" tabindex="-1"></a><span class="co"># 测试（可以计算非常大的n值）</span></span>
+<span id="cb22-19"><a href="统计编程基础.html#cb22-19" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">fibonacci_efficient</span>(<span class="dv">100</span>)</span>
+<span id="cb22-20"><a href="统计编程基础.html#cb22-20" tabindex="-1"></a><span class="fu">print</span>(result)  <span class="co"># 输出: 354224848179261915075</span></span></code></pre></div></li>
+<li><p><strong>对数阶算法示例</strong> - 斐波那契数列（矩阵快速幂版本） ```r # 对数阶算法示例 - 斐波那契数列（矩阵快速幂版本，支持大整数） fibonacci_fastest &lt;- function(n) { if (n &lt;= 1) { return(n) }</p>
+<p># 矩阵快速幂算法 matrix_power &lt;- function(matrix, power) { result &lt;- matrix(c(1, 0, 0, 1), nrow = 2, ncol = 2) # 单位矩阵 base &lt;- matrix</p>
+<pre><code>while (power &gt; 0) {
+  if (power %% 2 == 1) {
+    result &lt;- result %*% base
+  }
+  base &lt;- base %*% base
+  power &lt;- power %/% 2
+}
+
+return(result)</code></pre>
+<p>}</p>
+<p># 斐波那契矩阵 fib_matrix &lt;- matrix(c(1, 1, 1, 0), nrow = 2, ncol = 2)</p>
+<p># 计算矩阵的(n-1)次幂 result_matrix &lt;- matrix_power(fib_matrix, n - 1)</p>
+<p>return(result_matrix[1, 1]) }</p>
+<h1 id="测试可以计算极大的n值" class="hasAnchor">测试（可以计算极大的n值）<a href="统计编程基础.html#测试可以计算极大的n值" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>result &lt;- fibonacci_fastest(1000) print(result) # 输出</p></li>
+<li><p><strong>动态规划大整数版本</strong> - 使用gmp包处理任意精度整数</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="统计编程基础.html#cb24-1" tabindex="-1"></a><span class="co"># 安装gmp包（如果未安装）</span></span>
+<span id="cb24-2"><a href="统计编程基础.html#cb24-2" tabindex="-1"></a><span class="co"># install.packages(&quot;gmp&quot;) #dependent on libgmp3-dev</span></span>
+<span id="cb24-3"><a href="统计编程基础.html#cb24-3" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="统计编程基础.html#cb24-4" tabindex="-1"></a>fibonacci_dp_bigint <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb24-5"><a href="统计编程基础.html#cb24-5" tabindex="-1"></a>  <span class="cf">if</span> (n <span class="sc">&lt;=</span> <span class="dv">1</span>) {</span>
+<span id="cb24-6"><a href="统计编程基础.html#cb24-6" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">as.bigz</span>(n))</span>
+<span id="cb24-7"><a href="统计编程基础.html#cb24-7" tabindex="-1"></a>  }</span>
+<span id="cb24-8"><a href="统计编程基础.html#cb24-8" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="统计编程基础.html#cb24-9" tabindex="-1"></a>  <span class="co"># 使用动态规划，避免重复计算（大整数版本）</span></span>
+<span id="cb24-10"><a href="统计编程基础.html#cb24-10" tabindex="-1"></a>  fib <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">&quot;list&quot;</span>, n <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb24-11"><a href="统计编程基础.html#cb24-11" tabindex="-1"></a>  fib[[<span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">as.bigz</span>(<span class="dv">0</span>)</span>
+<span id="cb24-12"><a href="统计编程基础.html#cb24-12" tabindex="-1"></a>  fib[[<span class="dv">2</span>]] <span class="ot">&lt;-</span> <span class="fu">as.bigz</span>(<span class="dv">1</span>)</span>
+<span id="cb24-13"><a href="统计编程基础.html#cb24-13" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="统计编程基础.html#cb24-14" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span>(n <span class="sc">+</span> <span class="dv">1</span>)) {</span>
+<span id="cb24-15"><a href="统计编程基础.html#cb24-15" tabindex="-1"></a>    fib[[i]] <span class="ot">&lt;-</span> fib[[i <span class="sc">-</span> <span class="dv">1</span>]] <span class="sc">+</span> fib[[i <span class="sc">-</span> <span class="dv">2</span>]]</span>
+<span id="cb24-16"><a href="统计编程基础.html#cb24-16" tabindex="-1"></a>  }</span>
+<span id="cb24-17"><a href="统计编程基础.html#cb24-17" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="统计编程基础.html#cb24-18" tabindex="-1"></a>  <span class="fu">return</span>(fib[[n <span class="sc">+</span> <span class="dv">1</span>]])</span>
+<span id="cb24-19"><a href="统计编程基础.html#cb24-19" tabindex="-1"></a>}</span>
+<span id="cb24-20"><a href="统计编程基础.html#cb24-20" tabindex="-1"></a></span>
+<span id="cb24-21"><a href="统计编程基础.html#cb24-21" tabindex="-1"></a><span class="co"># 测试（可以计算非常大的n值）</span></span>
+<span id="cb24-22"><a href="统计编程基础.html#cb24-22" tabindex="-1"></a><span class="fu">library</span>(gmp)</span>
+<span id="cb24-23"><a href="统计编程基础.html#cb24-23" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">fibonacci_dp_bigint</span>(<span class="dv">1000</span>)</span>
+<span id="cb24-24"><a href="统计编程基础.html#cb24-24" tabindex="-1"></a><span class="fu">print</span>(result)  <span class="co"># 输出: 354224848179261915075</span></span></code></pre></div></li>
+<li><p><strong>矩阵的大整数版本</strong> - 使用gmp包处理任意精度整数</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="统计编程基础.html#cb25-1" tabindex="-1"></a><span class="co"># 安装gmp包（如果未安装）</span></span>
+<span id="cb25-2"><a href="统计编程基础.html#cb25-2" tabindex="-1"></a><span class="co"># install.packages(&quot;gmp&quot;) #dependent on libgmp3-dev</span></span>
+<span id="cb25-3"><a href="统计编程基础.html#cb25-3" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="统计编程基础.html#cb25-4" tabindex="-1"></a>fibonacci_bigint <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb25-5"><a href="统计编程基础.html#cb25-5" tabindex="-1"></a>  <span class="cf">if</span> (n <span class="sc">&lt;=</span> <span class="dv">1</span>) {</span>
+<span id="cb25-6"><a href="统计编程基础.html#cb25-6" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">as.bigz</span>(n))</span>
+<span id="cb25-7"><a href="统计编程基础.html#cb25-7" tabindex="-1"></a>  }</span>
+<span id="cb25-8"><a href="统计编程基础.html#cb25-8" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="统计编程基础.html#cb25-9" tabindex="-1"></a>  <span class="co"># 矩阵快速幂算法（使用大整数）</span></span>
+<span id="cb25-10"><a href="统计编程基础.html#cb25-10" tabindex="-1"></a>  matrix_power <span class="ot">&lt;-</span> <span class="cf">function</span>(matrix, power) {</span>
+<span id="cb25-11"><a href="统计编程基础.html#cb25-11" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fu">as.bigz</span>(<span class="dv">1</span>), <span class="fu">as.bigz</span>(<span class="dv">0</span>), <span class="fu">as.bigz</span>(<span class="dv">0</span>), <span class="fu">as.bigz</span>(<span class="dv">1</span>)),</span>
+<span id="cb25-12"><a href="统计编程基础.html#cb25-12" tabindex="-1"></a>                    <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)  <span class="co"># 单位矩阵</span></span>
+<span id="cb25-13"><a href="统计编程基础.html#cb25-13" tabindex="-1"></a>    base <span class="ot">&lt;-</span> matrix</span>
+<span id="cb25-14"><a href="统计编程基础.html#cb25-14" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="统计编程基础.html#cb25-15" tabindex="-1"></a>    <span class="cf">while</span> (power <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb25-16"><a href="统计编程基础.html#cb25-16" tabindex="-1"></a>      <span class="cf">if</span> (power <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">1</span>) {</span>
+<span id="cb25-17"><a href="统计编程基础.html#cb25-17" tabindex="-1"></a>        result <span class="ot">&lt;-</span> <span class="fu">matrix_multiply</span>(result, base)</span>
+<span id="cb25-18"><a href="统计编程基础.html#cb25-18" tabindex="-1"></a>      }</span>
+<span id="cb25-19"><a href="统计编程基础.html#cb25-19" tabindex="-1"></a>      base <span class="ot">&lt;-</span> <span class="fu">matrix_multiply</span>(base, base)</span>
+<span id="cb25-20"><a href="统计编程基础.html#cb25-20" tabindex="-1"></a>      power <span class="ot">&lt;-</span> power <span class="sc">%/%</span> <span class="dv">2</span></span>
+<span id="cb25-21"><a href="统计编程基础.html#cb25-21" tabindex="-1"></a>    }</span>
+<span id="cb25-22"><a href="统计编程基础.html#cb25-22" tabindex="-1"></a></span>
+<span id="cb25-23"><a href="统计编程基础.html#cb25-23" tabindex="-1"></a>    <span class="fu">return</span>(result)</span>
+<span id="cb25-24"><a href="统计编程基础.html#cb25-24" tabindex="-1"></a>  }</span>
+<span id="cb25-25"><a href="统计编程基础.html#cb25-25" tabindex="-1"></a></span>
+<span id="cb25-26"><a href="统计编程基础.html#cb25-26" tabindex="-1"></a>  <span class="co"># 矩阵乘法（支持大整数）</span></span>
+<span id="cb25-27"><a href="统计编程基础.html#cb25-27" tabindex="-1"></a>  matrix_multiply <span class="ot">&lt;-</span> <span class="cf">function</span>(a, b) {</span>
+<span id="cb25-28"><a href="统计编程基础.html#cb25-28" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">as.bigz</span>(<span class="dv">0</span>), <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb25-29"><a href="统计编程基础.html#cb25-29" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb25-30"><a href="统计编程基础.html#cb25-30" tabindex="-1"></a>      <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb25-31"><a href="统计编程基础.html#cb25-31" tabindex="-1"></a>        <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb25-32"><a href="统计编程基础.html#cb25-32" tabindex="-1"></a>          result[i, j] <span class="ot">&lt;-</span> result[i, j] <span class="sc">+</span> a[i, k] <span class="sc">*</span> b[k, j]</span>
+<span id="cb25-33"><a href="统计编程基础.html#cb25-33" tabindex="-1"></a>        }</span>
+<span id="cb25-34"><a href="统计编程基础.html#cb25-34" tabindex="-1"></a>      }</span>
+<span id="cb25-35"><a href="统计编程基础.html#cb25-35" tabindex="-1"></a>    }</span>
+<span id="cb25-36"><a href="统计编程基础.html#cb25-36" tabindex="-1"></a>    <span class="fu">return</span>(result)</span>
+<span id="cb25-37"><a href="统计编程基础.html#cb25-37" tabindex="-1"></a>  }</span>
+<span id="cb25-38"><a href="统计编程基础.html#cb25-38" tabindex="-1"></a></span>
+<span id="cb25-39"><a href="统计编程基础.html#cb25-39" tabindex="-1"></a>  <span class="co"># 斐波那契矩阵（使用大整数）</span></span>
+<span id="cb25-40"><a href="统计编程基础.html#cb25-40" tabindex="-1"></a>  fib_matrix <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fu">as.bigz</span>(<span class="dv">1</span>), <span class="fu">as.bigz</span>(<span class="dv">1</span>), <span class="fu">as.bigz</span>(<span class="dv">1</span>), <span class="fu">as.bigz</span>(<span class="dv">0</span>)),</span>
+<span id="cb25-41"><a href="统计编程基础.html#cb25-41" tabindex="-1"></a>                      <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb25-42"><a href="统计编程基础.html#cb25-42" tabindex="-1"></a></span>
+<span id="cb25-43"><a href="统计编程基础.html#cb25-43" tabindex="-1"></a>  <span class="co"># 计算矩阵的(n-1)次幂</span></span>
+<span id="cb25-44"><a href="统计编程基础.html#cb25-44" tabindex="-1"></a>  result_matrix <span class="ot">&lt;-</span> <span class="fu">matrix_power</span>(fib_matrix, n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb25-45"><a href="统计编程基础.html#cb25-45" tabindex="-1"></a></span>
+<span id="cb25-46"><a href="统计编程基础.html#cb25-46" tabindex="-1"></a>  <span class="fu">return</span>(result_matrix[<span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb25-47"><a href="统计编程基础.html#cb25-47" tabindex="-1"></a>}</span>
+<span id="cb25-48"><a href="统计编程基础.html#cb25-48" tabindex="-1"></a></span>
+<span id="cb25-49"><a href="统计编程基础.html#cb25-49" tabindex="-1"></a><span class="co"># 测试（可以计算任意大的n值）</span></span>
+<span id="cb25-50"><a href="统计编程基础.html#cb25-50" tabindex="-1"></a><span class="fu">library</span>(gmp)</span>
+<span id="cb25-51"><a href="统计编程基础.html#cb25-51" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">fibonacci_bigint</span>(<span class="dv">10000</span>)</span>
+<span id="cb25-52"><a href="统计编程基础.html#cb25-52" tabindex="-1"></a><span class="fu">print</span>(result)  <span class="co"># 输出第10000个斐波那契数（336447...开头的2089位数）</span></span></code></pre></div>
+<p>```</p></li>
 </ul>
 </div>
 <div id="on---阶乘阶" class="section level5 hasAnchor" number="1.3.2.4.7">
@@ -1092,29 +1209,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p><strong>描述</strong>：性能最差，几乎不可用。通常出现在求解全排列、旅行商问题等暴力算法中。</p></li>
 <li><p><strong>R示例</strong>：生成全排列</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="统计编程基础.html#cb22-1" tabindex="-1"></a><span class="co"># 阶乘阶算法示例 - 生成全排列</span></span>
-<span id="cb22-2"><a href="统计编程基础.html#cb22-2" tabindex="-1"></a>generate_permutations <span class="ot">&lt;-</span> <span class="cf">function</span>(elements) {</span>
-<span id="cb22-3"><a href="统计编程基础.html#cb22-3" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(elements) <span class="sc">==</span> <span class="dv">1</span>) {</span>
-<span id="cb22-4"><a href="统计编程基础.html#cb22-4" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(elements))</span>
-<span id="cb22-5"><a href="统计编程基础.html#cb22-5" tabindex="-1"></a>  }</span>
-<span id="cb22-6"><a href="统计编程基础.html#cb22-6" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="统计编程基础.html#cb22-7" tabindex="-1"></a>  permutations <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb22-8"><a href="统计编程基础.html#cb22-8" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(elements)) {</span>
-<span id="cb22-9"><a href="统计编程基础.html#cb22-9" tabindex="-1"></a>    first <span class="ot">&lt;-</span> elements[i]</span>
-<span id="cb22-10"><a href="统计编程基础.html#cb22-10" tabindex="-1"></a>    rest <span class="ot">&lt;-</span> elements[<span class="sc">-</span>i]</span>
-<span id="cb22-11"><a href="统计编程基础.html#cb22-11" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="统计编程基础.html#cb22-12" tabindex="-1"></a>    <span class="cf">for</span> (p <span class="cf">in</span> <span class="fu">generate_permutations</span>(rest)) {</span>
-<span id="cb22-13"><a href="统计编程基础.html#cb22-13" tabindex="-1"></a>      permutations <span class="ot">&lt;-</span> <span class="fu">c</span>(permutations, <span class="fu">list</span>(<span class="fu">c</span>(first, p)))</span>
-<span id="cb22-14"><a href="统计编程基础.html#cb22-14" tabindex="-1"></a>    }</span>
-<span id="cb22-15"><a href="统计编程基础.html#cb22-15" tabindex="-1"></a>  }</span>
-<span id="cb22-16"><a href="统计编程基础.html#cb22-16" tabindex="-1"></a></span>
-<span id="cb22-17"><a href="统计编程基础.html#cb22-17" tabindex="-1"></a>  <span class="fu">return</span>(permutations)</span>
-<span id="cb22-18"><a href="统计编程基础.html#cb22-18" tabindex="-1"></a>}</span>
-<span id="cb22-19"><a href="统计编程基础.html#cb22-19" tabindex="-1"></a></span>
-<span id="cb22-20"><a href="统计编程基础.html#cb22-20" tabindex="-1"></a><span class="co"># 测试（使用小数据集）</span></span>
-<span id="cb22-21"><a href="统计编程基础.html#cb22-21" tabindex="-1"></a>small_set <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
-<span id="cb22-22"><a href="统计编程基础.html#cb22-22" tabindex="-1"></a>perms <span class="ot">&lt;-</span> <span class="fu">generate_permutations</span>(small_set)</span>
-<span id="cb22-23"><a href="统计编程基础.html#cb22-23" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(perms))  <span class="co"># 输出: 6 (3! = 6)</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="统计编程基础.html#cb26-1" tabindex="-1"></a><span class="co"># 阶乘阶算法示例 - 生成全排列</span></span>
+<span id="cb26-2"><a href="统计编程基础.html#cb26-2" tabindex="-1"></a>generate_permutations <span class="ot">&lt;-</span> <span class="cf">function</span>(elements) {</span>
+<span id="cb26-3"><a href="统计编程基础.html#cb26-3" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(elements) <span class="sc">==</span> <span class="dv">1</span>) {</span>
+<span id="cb26-4"><a href="统计编程基础.html#cb26-4" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(elements))</span>
+<span id="cb26-5"><a href="统计编程基础.html#cb26-5" tabindex="-1"></a>  }</span>
+<span id="cb26-6"><a href="统计编程基础.html#cb26-6" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="统计编程基础.html#cb26-7" tabindex="-1"></a>  permutations <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb26-8"><a href="统计编程基础.html#cb26-8" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(elements)) {</span>
+<span id="cb26-9"><a href="统计编程基础.html#cb26-9" tabindex="-1"></a>    first <span class="ot">&lt;-</span> elements[i]</span>
+<span id="cb26-10"><a href="统计编程基础.html#cb26-10" tabindex="-1"></a>    rest <span class="ot">&lt;-</span> elements[<span class="sc">-</span>i]</span>
+<span id="cb26-11"><a href="统计编程基础.html#cb26-11" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="统计编程基础.html#cb26-12" tabindex="-1"></a>    <span class="cf">for</span> (p <span class="cf">in</span> <span class="fu">generate_permutations</span>(rest)) {</span>
+<span id="cb26-13"><a href="统计编程基础.html#cb26-13" tabindex="-1"></a>      permutations <span class="ot">&lt;-</span> <span class="fu">c</span>(permutations, <span class="fu">list</span>(<span class="fu">c</span>(first, p)))</span>
+<span id="cb26-14"><a href="统计编程基础.html#cb26-14" tabindex="-1"></a>    }</span>
+<span id="cb26-15"><a href="统计编程基础.html#cb26-15" tabindex="-1"></a>  }</span>
+<span id="cb26-16"><a href="统计编程基础.html#cb26-16" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="统计编程基础.html#cb26-17" tabindex="-1"></a>  <span class="fu">return</span>(permutations)</span>
+<span id="cb26-18"><a href="统计编程基础.html#cb26-18" tabindex="-1"></a>}</span>
+<span id="cb26-19"><a href="统计编程基础.html#cb26-19" tabindex="-1"></a></span>
+<span id="cb26-20"><a href="统计编程基础.html#cb26-20" tabindex="-1"></a><span class="co"># 测试（使用小数据集）</span></span>
+<span id="cb26-21"><a href="统计编程基础.html#cb26-21" tabindex="-1"></a>small_set <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>)</span>
+<span id="cb26-22"><a href="统计编程基础.html#cb26-22" tabindex="-1"></a>perms <span class="ot">&lt;-</span> <span class="fu">generate_permutations</span>(small_set)</span>
+<span id="cb26-23"><a href="统计编程基础.html#cb26-23" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(perms))  <span class="co"># 输出: 6 (3! = 6)</span></span></code></pre></div>
 <ul>
 <li>计算：n 个元素的全排列有 n! 种可能，因此复杂度为 O(n!)。</li>
 </ul></li>
@@ -1150,30 +1267,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>明确对标 Claude Code 的命令行工作流工具，对 <strong>Qwen3-Coder</strong> 优化；支持 <strong>OAuth 一键登录</strong>（国际/国内均有渠道），也支持 OpenAI-兼容 API；提供 <code>/compress</code>、<code>/stats</code> 等会话管理命令。([GitHub][8])</p>
 </blockquote>
 <p><strong>安装</strong></p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="统计编程基础.html#cb23-1" tabindex="-1"></a><span class="co"># 需 Node.js 20+</span></span>
-<span id="cb23-2"><a href="统计编程基础.html#cb23-2" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @qwen-code/qwen-code@latest</span>
-<span id="cb23-3"><a href="统计编程基础.html#cb23-3" tabindex="-1"></a><span class="ex">qwen</span> <span class="at">--version</span></span>
-<span id="cb23-4"><a href="统计编程基础.html#cb23-4" tabindex="-1"></a><span class="co"># 或 Homebrew（macOS/Linux）</span></span>
-<span id="cb23-5"><a href="统计编程基础.html#cb23-5" tabindex="-1"></a><span class="ex">brew</span> install qwen-code</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="统计编程基础.html#cb27-1" tabindex="-1"></a><span class="co"># 需 Node.js 20+</span></span>
+<span id="cb27-2"><a href="统计编程基础.html#cb27-2" tabindex="-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @qwen-code/qwen-code@latest</span>
+<span id="cb27-3"><a href="统计编程基础.html#cb27-3" tabindex="-1"></a><span class="ex">qwen</span> <span class="at">--version</span></span>
+<span id="cb27-4"><a href="统计编程基础.html#cb27-4" tabindex="-1"></a><span class="co"># 或 Homebrew（macOS/Linux）</span></span>
+<span id="cb27-5"><a href="统计编程基础.html#cb27-5" tabindex="-1"></a><span class="ex">brew</span> install qwen-code</span></code></pre></div>
 <p>([GitHub][8])</p>
 <p><strong>登录（两种模式）</strong></p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="统计编程基础.html#cb24-1" tabindex="-1"></a><span class="co"># 方式1：Qwen OAuth（零配置，推荐）</span></span>
-<span id="cb24-2"><a href="统计编程基础.html#cb24-2" tabindex="-1"></a><span class="ex">qwen</span>    <span class="co"># 会自动弹浏览器登录 qwen.ai 账户并缓存凭证</span></span>
-<span id="cb24-3"><a href="统计编程基础.html#cb24-3" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="统计编程基础.html#cb24-4" tabindex="-1"></a><span class="co"># 方式2：OpenAI 兼容 API（适合私有部署/跨地区）</span></span>
-<span id="cb24-5"><a href="统计编程基础.html#cb24-5" tabindex="-1"></a><span class="bu">export</span> <span class="va">OPENAI_API_KEY</span><span class="op">=</span>...</span>
-<span id="cb24-6"><a href="统计编程基础.html#cb24-6" tabindex="-1"></a><span class="bu">export</span> <span class="va">OPENAI_BASE_URL</span><span class="op">=</span>...    <span class="co"># 例：DashScope/ModelScope/OpenRouter</span></span>
-<span id="cb24-7"><a href="统计编程基础.html#cb24-7" tabindex="-1"></a><span class="bu">export</span> <span class="va">OPENAI_MODEL</span><span class="op">=</span>qwen3-coder-plus</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="统计编程基础.html#cb28-1" tabindex="-1"></a><span class="co"># 方式1：Qwen OAuth（零配置，推荐）</span></span>
+<span id="cb28-2"><a href="统计编程基础.html#cb28-2" tabindex="-1"></a><span class="ex">qwen</span>    <span class="co"># 会自动弹浏览器登录 qwen.ai 账户并缓存凭证</span></span>
+<span id="cb28-3"><a href="统计编程基础.html#cb28-3" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="统计编程基础.html#cb28-4" tabindex="-1"></a><span class="co"># 方式2：OpenAI 兼容 API（适合私有部署/跨地区）</span></span>
+<span id="cb28-5"><a href="统计编程基础.html#cb28-5" tabindex="-1"></a><span class="bu">export</span> <span class="va">OPENAI_API_KEY</span><span class="op">=</span>...</span>
+<span id="cb28-6"><a href="统计编程基础.html#cb28-6" tabindex="-1"></a><span class="bu">export</span> <span class="va">OPENAI_BASE_URL</span><span class="op">=</span>...    <span class="co"># 例：DashScope/ModelScope/OpenRouter</span></span>
+<span id="cb28-7"><a href="统计编程基础.html#cb28-7" tabindex="-1"></a><span class="bu">export</span> <span class="va">OPENAI_MODEL</span><span class="op">=</span>qwen3-coder-plus</span></code></pre></div>
 <p><strong>上手 &amp; 常用命令</strong></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="统计编程基础.html#cb25-1" tabindex="-1"></a><span class="bu">cd</span> your-project</span>
-<span id="cb25-2"><a href="统计编程基础.html#cb25-2" tabindex="-1"></a><span class="ex">qwen</span></span>
-<span id="cb25-3"><a href="统计编程基础.html#cb25-3" tabindex="-1"></a><span class="co"># 交互里可以直接自然语言：</span></span>
-<span id="cb25-4"><a href="统计编程基础.html#cb25-4" tabindex="-1"></a><span class="op">&gt;</span> Explain <span class="ex">the</span> codebase structure</span>
-<span id="cb25-5"><a href="统计编程基础.html#cb25-5" tabindex="-1"></a><span class="op">&gt;</span> Refactor <span class="ex">this</span> function</span>
-<span id="cb25-6"><a href="统计编程基础.html#cb25-6" tabindex="-1"></a><span class="op">&gt;</span> Generate <span class="ex">unit</span> tests</span>
-<span id="cb25-7"><a href="统计编程基础.html#cb25-7" tabindex="-1"></a></span>
-<span id="cb25-8"><a href="统计编程基础.html#cb25-8" tabindex="-1"></a><span class="co"># 会话管理</span></span>
-<span id="cb25-9"><a href="统计编程基础.html#cb25-9" tabindex="-1"></a><span class="ex">/clear</span>   /compress   /stats   /exit</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="统计编程基础.html#cb29-1" tabindex="-1"></a><span class="bu">cd</span> your-project</span>
+<span id="cb29-2"><a href="统计编程基础.html#cb29-2" tabindex="-1"></a><span class="ex">qwen</span></span>
+<span id="cb29-3"><a href="统计编程基础.html#cb29-3" tabindex="-1"></a><span class="co"># 交互里可以直接自然语言：</span></span>
+<span id="cb29-4"><a href="统计编程基础.html#cb29-4" tabindex="-1"></a><span class="op">&gt;</span> Explain <span class="ex">the</span> codebase structure</span>
+<span id="cb29-5"><a href="统计编程基础.html#cb29-5" tabindex="-1"></a><span class="op">&gt;</span> Refactor <span class="ex">this</span> function</span>
+<span id="cb29-6"><a href="统计编程基础.html#cb29-6" tabindex="-1"></a><span class="op">&gt;</span> Generate <span class="ex">unit</span> tests</span>
+<span id="cb29-7"><a href="统计编程基础.html#cb29-7" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="统计编程基础.html#cb29-8" tabindex="-1"></a><span class="co"># 会话管理</span></span>
+<span id="cb29-9"><a href="统计编程基础.html#cb29-9" tabindex="-1"></a><span class="ex">/clear</span>   /compress   /stats   /exit</span></code></pre></div>
 <p><strong>VS Code中集成</strong></p>
 <p>在插件市场吗，搜索 <strong>Qwen Code</strong> 安装即可。</p>
 </div>
@@ -1221,104 +1338,104 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">1.4.3</span> 代码审查能力<a href="统计编程基础.html#代码审查能力" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="llm输出代码的常见错误类型" class="section level4 hasAnchor" number="1.4.3.1">
 <h4><span class="header-section-number">1.4.3.1</span> LLM输出代码的常见错误类型<a href="统计编程基础.html#llm输出代码的常见错误类型" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="统计编程基础.html#cb28-1" tabindex="-1"></a><span class="co"># LLM可能生成的有问题的代码示例</span></span>
-<span id="cb28-2"><a href="统计编程基础.html#cb28-2" tabindex="-1"></a><span class="co"># 问题1：缺乏错误处理</span></span>
-<span id="cb28-3"><a href="统计编程基础.html#cb28-3" tabindex="-1"></a>calculate_density <span class="ot">&lt;-</span> <span class="cf">function</span>(area, count) {</span>
-<span id="cb28-4"><a href="统计编程基础.html#cb28-4" tabindex="-1"></a>  density <span class="ot">&lt;-</span> count <span class="sc">/</span> area  <span class="co"># 如果area为0会出错</span></span>
-<span id="cb28-5"><a href="统计编程基础.html#cb28-5" tabindex="-1"></a>  <span class="fu">return</span>(density)</span>
-<span id="cb28-6"><a href="统计编程基础.html#cb28-6" tabindex="-1"></a>}</span>
-<span id="cb28-7"><a href="统计编程基础.html#cb28-7" tabindex="-1"></a></span>
-<span id="cb28-8"><a href="统计编程基础.html#cb28-8" tabindex="-1"></a><span class="co"># 改进版本</span></span>
-<span id="cb28-9"><a href="统计编程基础.html#cb28-9" tabindex="-1"></a>calculate_density_safe <span class="ot">&lt;-</span> <span class="cf">function</span>(area, count) {</span>
-<span id="cb28-10"><a href="统计编程基础.html#cb28-10" tabindex="-1"></a>  <span class="cf">if</span> (area <span class="sc">&lt;=</span> <span class="dv">0</span>) {</span>
-<span id="cb28-11"><a href="统计编程基础.html#cb28-11" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;面积必须大于0&quot;</span>)</span>
-<span id="cb28-12"><a href="统计编程基础.html#cb28-12" tabindex="-1"></a>  }</span>
-<span id="cb28-13"><a href="统计编程基础.html#cb28-13" tabindex="-1"></a>  density <span class="ot">&lt;-</span> count <span class="sc">/</span> area</span>
-<span id="cb28-14"><a href="统计编程基础.html#cb28-14" tabindex="-1"></a>  <span class="fu">return</span>(density)</span>
-<span id="cb28-15"><a href="统计编程基础.html#cb28-15" tabindex="-1"></a>}</span>
-<span id="cb28-16"><a href="统计编程基础.html#cb28-16" tabindex="-1"></a></span>
-<span id="cb28-17"><a href="统计编程基础.html#cb28-17" tabindex="-1"></a><span class="co"># 问题2：使用过时的函数</span></span>
-<span id="cb28-18"><a href="统计编程基础.html#cb28-18" tabindex="-1"></a><span class="co"># LLM可能推荐使用旧的函数版本</span></span>
-<span id="cb28-19"><a href="统计编程基础.html#cb28-19" tabindex="-1"></a>old_way <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data.csv&quot;</span>)  <span class="co"># 较老的函数</span></span>
-<span id="cb28-20"><a href="统计编程基础.html#cb28-20" tabindex="-1"></a></span>
-<span id="cb28-21"><a href="统计编程基础.html#cb28-21" tabindex="-1"></a><span class="co"># 改进：使用更现代的tidyverse方法</span></span>
-<span id="cb28-22"><a href="统计编程基础.html#cb28-22" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb28-23"><a href="统计编程基础.html#cb28-23" tabindex="-1"></a>modern_way <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data.csv&quot;</span>)  <span class="co"># 更简洁的语法</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="统计编程基础.html#cb32-1" tabindex="-1"></a><span class="co"># LLM可能生成的有问题的代码示例</span></span>
+<span id="cb32-2"><a href="统计编程基础.html#cb32-2" tabindex="-1"></a><span class="co"># 问题1：缺乏错误处理</span></span>
+<span id="cb32-3"><a href="统计编程基础.html#cb32-3" tabindex="-1"></a>calculate_density <span class="ot">&lt;-</span> <span class="cf">function</span>(area, count) {</span>
+<span id="cb32-4"><a href="统计编程基础.html#cb32-4" tabindex="-1"></a>  density <span class="ot">&lt;-</span> count <span class="sc">/</span> area  <span class="co"># 如果area为0会出错</span></span>
+<span id="cb32-5"><a href="统计编程基础.html#cb32-5" tabindex="-1"></a>  <span class="fu">return</span>(density)</span>
+<span id="cb32-6"><a href="统计编程基础.html#cb32-6" tabindex="-1"></a>}</span>
+<span id="cb32-7"><a href="统计编程基础.html#cb32-7" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="统计编程基础.html#cb32-8" tabindex="-1"></a><span class="co"># 改进版本</span></span>
+<span id="cb32-9"><a href="统计编程基础.html#cb32-9" tabindex="-1"></a>calculate_density_safe <span class="ot">&lt;-</span> <span class="cf">function</span>(area, count) {</span>
+<span id="cb32-10"><a href="统计编程基础.html#cb32-10" tabindex="-1"></a>  <span class="cf">if</span> (area <span class="sc">&lt;=</span> <span class="dv">0</span>) {</span>
+<span id="cb32-11"><a href="统计编程基础.html#cb32-11" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;面积必须大于0&quot;</span>)</span>
+<span id="cb32-12"><a href="统计编程基础.html#cb32-12" tabindex="-1"></a>  }</span>
+<span id="cb32-13"><a href="统计编程基础.html#cb32-13" tabindex="-1"></a>  density <span class="ot">&lt;-</span> count <span class="sc">/</span> area</span>
+<span id="cb32-14"><a href="统计编程基础.html#cb32-14" tabindex="-1"></a>  <span class="fu">return</span>(density)</span>
+<span id="cb32-15"><a href="统计编程基础.html#cb32-15" tabindex="-1"></a>}</span>
+<span id="cb32-16"><a href="统计编程基础.html#cb32-16" tabindex="-1"></a></span>
+<span id="cb32-17"><a href="统计编程基础.html#cb32-17" tabindex="-1"></a><span class="co"># 问题2：使用过时的函数</span></span>
+<span id="cb32-18"><a href="统计编程基础.html#cb32-18" tabindex="-1"></a><span class="co"># LLM可能推荐使用旧的函数版本</span></span>
+<span id="cb32-19"><a href="统计编程基础.html#cb32-19" tabindex="-1"></a>old_way <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;data.csv&quot;</span>)  <span class="co"># 较老的函数</span></span>
+<span id="cb32-20"><a href="统计编程基础.html#cb32-20" tabindex="-1"></a></span>
+<span id="cb32-21"><a href="统计编程基础.html#cb32-21" tabindex="-1"></a><span class="co"># 改进：使用更现代的tidyverse方法</span></span>
+<span id="cb32-22"><a href="统计编程基础.html#cb32-22" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb32-23"><a href="统计编程基础.html#cb32-23" tabindex="-1"></a>modern_way <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data.csv&quot;</span>)  <span class="co"># 更简洁的语法</span></span></code></pre></div>
 </div>
 <div id="功能正确性验证方法" class="section level4 hasAnchor" number="1.4.3.2">
 <h4><span class="header-section-number">1.4.3.2</span> 功能正确性验证方法<a href="统计编程基础.html#功能正确性验证方法" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="统计编程基础.html#cb29-1" tabindex="-1"></a><span class="co"># 创建测试用例验证函数正确性</span></span>
-<span id="cb29-2"><a href="统计编程基础.html#cb29-2" tabindex="-1"></a>test_diversity_calculation <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
-<span id="cb29-3"><a href="统计编程基础.html#cb29-3" tabindex="-1"></a>  <span class="co"># 测试用例1：单一物种</span></span>
-<span id="cb29-4"><a href="统计编程基础.html#cb29-4" tabindex="-1"></a>  single_species <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;Oak&quot;</span>, <span class="dv">10</span>)</span>
-<span id="cb29-5"><a href="统计编程基础.html#cb29-5" tabindex="-1"></a>  result1 <span class="ot">&lt;-</span> <span class="fu">calculate_diversity</span>(single_species)</span>
-<span id="cb29-6"><a href="统计编程基础.html#cb29-6" tabindex="-1"></a></span>
-<span id="cb29-7"><a href="统计编程基础.html#cb29-7" tabindex="-1"></a>  <span class="co"># 单一物种的Shannon指数应该为0</span></span>
-<span id="cb29-8"><a href="统计编程基础.html#cb29-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">abs</span>(result1<span class="sc">$</span>shannon <span class="sc">-</span> <span class="dv">0</span>) <span class="sc">&gt;</span> <span class="fl">1e-10</span>) {</span>
-<span id="cb29-9"><a href="统计编程基础.html#cb29-9" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;单一物种测试失败&quot;</span>)</span>
-<span id="cb29-10"><a href="统计编程基础.html#cb29-10" tabindex="-1"></a>  }</span>
-<span id="cb29-11"><a href="统计编程基础.html#cb29-11" tabindex="-1"></a></span>
-<span id="cb29-12"><a href="统计编程基础.html#cb29-12" tabindex="-1"></a>  <span class="co"># 测试用例2：两个物种各占一半</span></span>
-<span id="cb29-13"><a href="统计编程基础.html#cb29-13" tabindex="-1"></a>  two_species <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Oak&quot;</span>, <span class="st">&quot;Pine&quot;</span>), <span class="at">each =</span> <span class="dv">5</span>)</span>
-<span id="cb29-14"><a href="统计编程基础.html#cb29-14" tabindex="-1"></a>  result2 <span class="ot">&lt;-</span> <span class="fu">calculate_diversity</span>(two_species)</span>
-<span id="cb29-15"><a href="统计编程基础.html#cb29-15" tabindex="-1"></a></span>
-<span id="cb29-16"><a href="统计编程基础.html#cb29-16" tabindex="-1"></a>  <span class="co"># 两个物种各占一半的Shannon指数应该为log(2)</span></span>
-<span id="cb29-17"><a href="统计编程基础.html#cb29-17" tabindex="-1"></a>  expected <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="dv">2</span>)</span>
-<span id="cb29-18"><a href="统计编程基础.html#cb29-18" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">abs</span>(result2<span class="sc">$</span>shannon <span class="sc">-</span> expected) <span class="sc">&gt;</span> <span class="fl">1e-10</span>) {</span>
-<span id="cb29-19"><a href="统计编程基础.html#cb29-19" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;两个物种测试失败&quot;</span>)</span>
-<span id="cb29-20"><a href="统计编程基础.html#cb29-20" tabindex="-1"></a>  }</span>
-<span id="cb29-21"><a href="统计编程基础.html#cb29-21" tabindex="-1"></a></span>
-<span id="cb29-22"><a href="统计编程基础.html#cb29-22" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;所有测试通过！</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb29-23"><a href="统计编程基础.html#cb29-23" tabindex="-1"></a>}</span>
-<span id="cb29-24"><a href="统计编程基础.html#cb29-24" tabindex="-1"></a></span>
-<span id="cb29-25"><a href="统计编程基础.html#cb29-25" tabindex="-1"></a><span class="co"># 运行测试</span></span>
-<span id="cb29-26"><a href="统计编程基础.html#cb29-26" tabindex="-1"></a><span class="fu">test_diversity_calculation</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="统计编程基础.html#cb33-1" tabindex="-1"></a><span class="co"># 创建测试用例验证函数正确性</span></span>
+<span id="cb33-2"><a href="统计编程基础.html#cb33-2" tabindex="-1"></a>test_diversity_calculation <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb33-3"><a href="统计编程基础.html#cb33-3" tabindex="-1"></a>  <span class="co"># 测试用例1：单一物种</span></span>
+<span id="cb33-4"><a href="统计编程基础.html#cb33-4" tabindex="-1"></a>  single_species <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;Oak&quot;</span>, <span class="dv">10</span>)</span>
+<span id="cb33-5"><a href="统计编程基础.html#cb33-5" tabindex="-1"></a>  result1 <span class="ot">&lt;-</span> <span class="fu">calculate_diversity</span>(single_species)</span>
+<span id="cb33-6"><a href="统计编程基础.html#cb33-6" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="统计编程基础.html#cb33-7" tabindex="-1"></a>  <span class="co"># 单一物种的Shannon指数应该为0</span></span>
+<span id="cb33-8"><a href="统计编程基础.html#cb33-8" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">abs</span>(result1<span class="sc">$</span>shannon <span class="sc">-</span> <span class="dv">0</span>) <span class="sc">&gt;</span> <span class="fl">1e-10</span>) {</span>
+<span id="cb33-9"><a href="统计编程基础.html#cb33-9" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;单一物种测试失败&quot;</span>)</span>
+<span id="cb33-10"><a href="统计编程基础.html#cb33-10" tabindex="-1"></a>  }</span>
+<span id="cb33-11"><a href="统计编程基础.html#cb33-11" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="统计编程基础.html#cb33-12" tabindex="-1"></a>  <span class="co"># 测试用例2：两个物种各占一半</span></span>
+<span id="cb33-13"><a href="统计编程基础.html#cb33-13" tabindex="-1"></a>  two_species <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Oak&quot;</span>, <span class="st">&quot;Pine&quot;</span>), <span class="at">each =</span> <span class="dv">5</span>)</span>
+<span id="cb33-14"><a href="统计编程基础.html#cb33-14" tabindex="-1"></a>  result2 <span class="ot">&lt;-</span> <span class="fu">calculate_diversity</span>(two_species)</span>
+<span id="cb33-15"><a href="统计编程基础.html#cb33-15" tabindex="-1"></a></span>
+<span id="cb33-16"><a href="统计编程基础.html#cb33-16" tabindex="-1"></a>  <span class="co"># 两个物种各占一半的Shannon指数应该为log(2)</span></span>
+<span id="cb33-17"><a href="统计编程基础.html#cb33-17" tabindex="-1"></a>  expected <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="dv">2</span>)</span>
+<span id="cb33-18"><a href="统计编程基础.html#cb33-18" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">abs</span>(result2<span class="sc">$</span>shannon <span class="sc">-</span> expected) <span class="sc">&gt;</span> <span class="fl">1e-10</span>) {</span>
+<span id="cb33-19"><a href="统计编程基础.html#cb33-19" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">&quot;两个物种测试失败&quot;</span>)</span>
+<span id="cb33-20"><a href="统计编程基础.html#cb33-20" tabindex="-1"></a>  }</span>
+<span id="cb33-21"><a href="统计编程基础.html#cb33-21" tabindex="-1"></a></span>
+<span id="cb33-22"><a href="统计编程基础.html#cb33-22" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;所有测试通过！</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb33-23"><a href="统计编程基础.html#cb33-23" tabindex="-1"></a>}</span>
+<span id="cb33-24"><a href="统计编程基础.html#cb33-24" tabindex="-1"></a></span>
+<span id="cb33-25"><a href="统计编程基础.html#cb33-25" tabindex="-1"></a><span class="co"># 运行测试</span></span>
+<span id="cb33-26"><a href="统计编程基础.html#cb33-26" tabindex="-1"></a><span class="fu">test_diversity_calculation</span>()</span></code></pre></div>
 </div>
 </div>
 <div id="调试与错误处理" class="section level3 hasAnchor" number="1.4.4">
 <h3><span class="header-section-number">1.4.4</span> 调试与错误处理<a href="统计编程基础.html#调试与错误处理" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="错误信息解读与定位" class="section level4 hasAnchor" number="1.4.4.1">
 <h4><span class="header-section-number">1.4.4.1</span> 错误信息解读与定位<a href="统计编程基础.html#错误信息解读与定位" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="统计编程基础.html#cb30-1" tabindex="-1"></a><span class="co"># 常见的R错误信息及解决方法</span></span>
-<span id="cb30-2"><a href="统计编程基础.html#cb30-2" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="统计编程基础.html#cb30-3" tabindex="-1"></a><span class="co"># 错误1：对象未找到</span></span>
-<span id="cb30-4"><a href="统计编程基础.html#cb30-4" tabindex="-1"></a><span class="co"># Error: object &#39;x&#39; not found</span></span>
-<span id="cb30-5"><a href="统计编程基础.html#cb30-5" tabindex="-1"></a><span class="co"># 解决方法：检查变量名拼写，确保变量已赋值</span></span>
-<span id="cb30-6"><a href="统计编程基础.html#cb30-6" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="统计编程基础.html#cb30-7" tabindex="-1"></a><span class="co"># 错误2：函数参数不匹配</span></span>
-<span id="cb30-8"><a href="统计编程基础.html#cb30-8" tabindex="-1"></a><span class="co"># Error in mean(x) : 参数不是数值也不是逻辑值：回传NA</span></span>
-<span id="cb30-9"><a href="统计编程基础.html#cb30-9" tabindex="-1"></a><span class="co"># 解决方法：检查数据类型，确保输入是数值型</span></span>
-<span id="cb30-10"><a href="统计编程基础.html#cb30-10" tabindex="-1"></a></span>
-<span id="cb30-11"><a href="统计编程基础.html#cb30-11" tabindex="-1"></a><span class="co"># 错误3：下标越界</span></span>
-<span id="cb30-12"><a href="统计编程基础.html#cb30-12" tabindex="-1"></a><span class="co"># Error in x[5] : 下标出界</span></span>
-<span id="cb30-13"><a href="统计编程基础.html#cb30-13" tabindex="-1"></a><span class="co"># 解决方法：检查向量长度，确保索引在有效范围内</span></span>
-<span id="cb30-14"><a href="统计编程基础.html#cb30-14" tabindex="-1"></a></span>
-<span id="cb30-15"><a href="统计编程基础.html#cb30-15" tabindex="-1"></a><span class="co"># 实用的调试技巧</span></span>
-<span id="cb30-16"><a href="统计编程基础.html#cb30-16" tabindex="-1"></a>debug_calculation <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
-<span id="cb30-17"><a href="统计编程基础.html#cb30-17" tabindex="-1"></a>  <span class="co"># 使用browser()进行交互式调试</span></span>
-<span id="cb30-18"><a href="统计编程基础.html#cb30-18" tabindex="-1"></a>  <span class="fu">browser</span>()</span>
-<span id="cb30-19"><a href="统计编程基础.html#cb30-19" tabindex="-1"></a></span>
-<span id="cb30-20"><a href="统计编程基础.html#cb30-20" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">complex_calculation</span>(data)</span>
-<span id="cb30-21"><a href="统计编程基础.html#cb30-21" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
-<span id="cb30-22"><a href="统计编程基础.html#cb30-22" tabindex="-1"></a>}</span>
-<span id="cb30-23"><a href="统计编程基础.html#cb30-23" tabindex="-1"></a></span>
-<span id="cb30-24"><a href="统计编程基础.html#cb30-24" tabindex="-1"></a><span class="co"># 使用tryCatch处理错误</span></span>
-<span id="cb30-25"><a href="统计编程基础.html#cb30-25" tabindex="-1"></a>safe_calculation <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
-<span id="cb30-26"><a href="统计编程基础.html#cb30-26" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>({</span>
-<span id="cb30-27"><a href="统计编程基础.html#cb30-27" tabindex="-1"></a>    <span class="co"># 尝试执行可能出错的操作</span></span>
-<span id="cb30-28"><a href="统计编程基础.html#cb30-28" tabindex="-1"></a>    <span class="fu">calculate_diversity</span>(data)</span>
-<span id="cb30-29"><a href="统计编程基础.html#cb30-29" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
-<span id="cb30-30"><a href="统计编程基础.html#cb30-30" tabindex="-1"></a>    <span class="co"># 错误处理</span></span>
-<span id="cb30-31"><a href="统计编程基础.html#cb30-31" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">&quot;计算失败:&quot;</span>, e<span class="sc">$</span>message, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb30-32"><a href="统计编程基础.html#cb30-32" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
-<span id="cb30-33"><a href="统计编程基础.html#cb30-33" tabindex="-1"></a>  }, <span class="at">warning =</span> <span class="cf">function</span>(w) {</span>
-<span id="cb30-34"><a href="统计编程基础.html#cb30-34" tabindex="-1"></a>    <span class="co"># 警告处理</span></span>
-<span id="cb30-35"><a href="统计编程基础.html#cb30-35" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">&quot;警告:&quot;</span>, w<span class="sc">$</span>message, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
-<span id="cb30-36"><a href="统计编程基础.html#cb30-36" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">calculate_diversity</span>(data))  <span class="co"># 继续执行</span></span>
-<span id="cb30-37"><a href="统计编程基础.html#cb30-37" tabindex="-1"></a>  })</span>
-<span id="cb30-38"><a href="统计编程基础.html#cb30-38" tabindex="-1"></a></span>
-<span id="cb30-39"><a href="统计编程基础.html#cb30-39" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
-<span id="cb30-40"><a href="统计编程基础.html#cb30-40" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="统计编程基础.html#cb34-1" tabindex="-1"></a><span class="co"># 常见的R错误信息及解决方法</span></span>
+<span id="cb34-2"><a href="统计编程基础.html#cb34-2" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="统计编程基础.html#cb34-3" tabindex="-1"></a><span class="co"># 错误1：对象未找到</span></span>
+<span id="cb34-4"><a href="统计编程基础.html#cb34-4" tabindex="-1"></a><span class="co"># Error: object &#39;x&#39; not found</span></span>
+<span id="cb34-5"><a href="统计编程基础.html#cb34-5" tabindex="-1"></a><span class="co"># 解决方法：检查变量名拼写，确保变量已赋值</span></span>
+<span id="cb34-6"><a href="统计编程基础.html#cb34-6" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="统计编程基础.html#cb34-7" tabindex="-1"></a><span class="co"># 错误2：函数参数不匹配</span></span>
+<span id="cb34-8"><a href="统计编程基础.html#cb34-8" tabindex="-1"></a><span class="co"># Error in mean(x) : 参数不是数值也不是逻辑值：回传NA</span></span>
+<span id="cb34-9"><a href="统计编程基础.html#cb34-9" tabindex="-1"></a><span class="co"># 解决方法：检查数据类型，确保输入是数值型</span></span>
+<span id="cb34-10"><a href="统计编程基础.html#cb34-10" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="统计编程基础.html#cb34-11" tabindex="-1"></a><span class="co"># 错误3：下标越界</span></span>
+<span id="cb34-12"><a href="统计编程基础.html#cb34-12" tabindex="-1"></a><span class="co"># Error in x[5] : 下标出界</span></span>
+<span id="cb34-13"><a href="统计编程基础.html#cb34-13" tabindex="-1"></a><span class="co"># 解决方法：检查向量长度，确保索引在有效范围内</span></span>
+<span id="cb34-14"><a href="统计编程基础.html#cb34-14" tabindex="-1"></a></span>
+<span id="cb34-15"><a href="统计编程基础.html#cb34-15" tabindex="-1"></a><span class="co"># 实用的调试技巧</span></span>
+<span id="cb34-16"><a href="统计编程基础.html#cb34-16" tabindex="-1"></a>debug_calculation <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb34-17"><a href="统计编程基础.html#cb34-17" tabindex="-1"></a>  <span class="co"># 使用browser()进行交互式调试</span></span>
+<span id="cb34-18"><a href="统计编程基础.html#cb34-18" tabindex="-1"></a>  <span class="fu">browser</span>()</span>
+<span id="cb34-19"><a href="统计编程基础.html#cb34-19" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="统计编程基础.html#cb34-20" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">complex_calculation</span>(data)</span>
+<span id="cb34-21"><a href="统计编程基础.html#cb34-21" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb34-22"><a href="统计编程基础.html#cb34-22" tabindex="-1"></a>}</span>
+<span id="cb34-23"><a href="统计编程基础.html#cb34-23" tabindex="-1"></a></span>
+<span id="cb34-24"><a href="统计编程基础.html#cb34-24" tabindex="-1"></a><span class="co"># 使用tryCatch处理错误</span></span>
+<span id="cb34-25"><a href="统计编程基础.html#cb34-25" tabindex="-1"></a>safe_calculation <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb34-26"><a href="统计编程基础.html#cb34-26" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>({</span>
+<span id="cb34-27"><a href="统计编程基础.html#cb34-27" tabindex="-1"></a>    <span class="co"># 尝试执行可能出错的操作</span></span>
+<span id="cb34-28"><a href="统计编程基础.html#cb34-28" tabindex="-1"></a>    <span class="fu">calculate_diversity</span>(data)</span>
+<span id="cb34-29"><a href="统计编程基础.html#cb34-29" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb34-30"><a href="统计编程基础.html#cb34-30" tabindex="-1"></a>    <span class="co"># 错误处理</span></span>
+<span id="cb34-31"><a href="统计编程基础.html#cb34-31" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">&quot;计算失败:&quot;</span>, e<span class="sc">$</span>message, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb34-32"><a href="统计编程基础.html#cb34-32" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb34-33"><a href="统计编程基础.html#cb34-33" tabindex="-1"></a>  }, <span class="at">warning =</span> <span class="cf">function</span>(w) {</span>
+<span id="cb34-34"><a href="统计编程基础.html#cb34-34" tabindex="-1"></a>    <span class="co"># 警告处理</span></span>
+<span id="cb34-35"><a href="统计编程基础.html#cb34-35" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">&quot;警告:&quot;</span>, w<span class="sc">$</span>message, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb34-36"><a href="统计编程基础.html#cb34-36" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">calculate_diversity</span>(data))  <span class="co"># 继续执行</span></span>
+<span id="cb34-37"><a href="统计编程基础.html#cb34-37" tabindex="-1"></a>  })</span>
+<span id="cb34-38"><a href="统计编程基础.html#cb34-38" tabindex="-1"></a></span>
+<span id="cb34-39"><a href="统计编程基础.html#cb34-39" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
+<span id="cb34-40"><a href="统计编程基础.html#cb34-40" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 </div>
 </div>
