@@ -1369,7 +1369,11 @@ p &amp; \text{如果 } x = 1 \\
 <p><span class="math display">\[f(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1} e^{-(x/\lambda)^k}, \quad x \geq 0\]</span></p>
 <p>其中<span class="math inline">\(k\)</span>是形状参数（决定分布形态），<span class="math inline">\(\lambda\)</span>是尺度参数（决定分布范围）。</p>
 <p><strong>分布特性：</strong> - 期望值：<span class="math inline">\(E[X] = \lambda \Gamma(1 + 1/k)\)</span> - 方差：<span class="math inline">\(Var(X) = \lambda^2 [\Gamma(1 + 2/k) - \Gamma^2(1 + 1/k)]\)</span> - 生存函数：<span class="math inline">\(S(x) = e^{-(x/\lambda)^k}\)</span> - 风险函数：<span class="math inline">\(h(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1}\)</span> - 当<span class="math inline">\(k=1\)</span>时退化为指数分布（恒定风险） - 当<span class="math inline">\(k&gt;1\)</span>时风险随时间增加（老化效应） - 当<span class="math inline">\(k&lt;1\)</span>时风险随时间减少（早期适应期）</p>
-<p><strong>生态学肖像：</strong> - <strong>生存分析研究</strong>：蚱蜢的生存时间服从威布尔分布，反映其生命周期的风险变化模式 - <strong>种群动态建模</strong>：通过威布尔分布可以估计种群的死亡率模式和期望寿命 - <strong>保护生物学</strong>：濒危物种的生存时间分析有助于制定保护策略 - <strong>物候学研究</strong>：植物开花时间、动物迁徙时间等时间事件的分析</p>
+<p><strong>生态学肖像：</strong><br />
+- <strong>生存分析研究</strong>：蚱蜢的生存时间服从威布尔分布，反映其生命周期的风险变化模式<br />
+- <strong>种群动态建模</strong>：通过威布尔分布可以估计种群的死亡率模式和期望寿命<br />
+- <strong>保护生物学</strong>：濒危物种的生存时间分析有助于制定保护策略<br />
+- <strong>物候学研究</strong>：植物开花时间、动物迁徙时间等时间事件的分析</p>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="概率与分布.html#cb114-1" tabindex="-1"></a><span class="co"># 威布尔分布：生存分析和寿命数据的分布</span></span>
 <span id="cb114-2"><a href="概率与分布.html#cb114-2" tabindex="-1"></a><span class="co"># 生态学应用：动物寿命、设备故障时间、种子萌发时间等</span></span>
 <span id="cb114-3"><a href="概率与分布.html#cb114-3" tabindex="-1"></a></span>
