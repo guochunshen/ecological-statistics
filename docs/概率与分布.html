@@ -511,7 +511,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="动态的更新贝叶斯概率" class="section level3 hasAnchor" number="2.1.4">
 <h3><span class="header-section-number">2.1.4</span> 动态的更新——贝叶斯概率<a href="概率与分布.html#动态的更新贝叶斯概率" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>然而，故事还没结束。一位植物学家同学告诉我，昨天刚下过雨，三叶草在雨后会特别鲜嫩多汁，营养价值更高。这条新信息（证据）改变了我对你的判断。我不能完全忽略我之前70次观察的结论（先验知识），但我也必须考虑“雨后三叶草更诱人”这个新事实。</p>
+<p>然而，故事还没结束。一位植物学家告诉我，昨天刚下过雨，三叶草在雨后会特别鲜嫩多汁，营养价值更高。这条新信息（证据）改变了我对你的判断。我不能完全忽略我之前70次观察的结论（先验知识），但我也必须考虑“雨后三叶草更诱人”这个新事实。</p>
 <ul>
 <li><strong>贝叶斯概率登场了。</strong> 它是一种“信仰”的概率，代表着在<strong>考虑了新证据之后，我对某个假设（你会选择三叶草）的置信度</strong>。</li>
 <li><strong>它的思维是动态更新的：</strong> 我原来的信念（<span class="math inline">\(P(\text{选择三叶草}) = 0.07\)</span>）是<strong>先验概率</strong>。得到”昨天下过雨”这个<strong>证据</strong>后，我利用一个公式（贝叶斯定理）将先验概率和证据结合起来，得到一个更新后的<strong>后验概率</strong>。</li>
@@ -532,7 +532,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="事件独立性相互不影响的关系" class="section level4 hasAnchor" number="2.1.4.3">
 <h4><span class="header-section-number">2.1.4.3</span> 事件独立性：相互不影响的关系<a href="概率与分布.html#事件独立性相互不影响的关系" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>两个事件A和B是<strong>独立的</strong>，如果其中一个事件的发生不影响另一个事件发生的概率。</p>
-<p><strong>定义</strong>：事件A和B独立当且仅当 <span class="math display">\[P(A \cap B) = P(A) \times P(B)\]</span> 等价地，当 <span class="math inline">\(P(B) &gt; 0\)</span> 时，<span class="math inline">\(P(A|B) = P(A)\)</span></p>
+<p><strong>定义</strong>：事件A和B独立当且仅当 <span class="math display">\[P(A \cap B) = P(A) \times P(B)\]</span> 等价地，当 <span class="math inline">\(P(B) &gt; 0\)</span> 且A和B独立时，<span class="math inline">\(P(A|B) = P(A)\)</span></p>
 <p><strong>生态学示例</strong>： - 如果蚱蜢每天的选择相互独立，那么昨天的选择不影响今天的选择 - 但如果雨后三叶草变得更有吸引力，那么”下雨”和”选择三叶草”就不是独立事件</p>
 </div>
 <div id="贝叶斯定理的数学基础" class="section level4 hasAnchor" number="2.1.4.4">
@@ -547,7 +547,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>全概率公式</strong>：如果事件<span class="math inline">\(B_1, B_2, \ldots, B_n\)</span>构成一个完备事件组（即它们互斥且并集为样本空间），且<span class="math inline">\(P(B_i) &gt; 0\)</span>，则对任意事件A有： <span class="math display">\[P(A) = \sum_{i=1}^{n} P(A|B_i) \times P(B_i)\]</span></p>
 <p><strong>生态学示例</strong>： 假设我们想知道”蚱蜢选择营养价值高的植物”的概率<span class="math inline">\(P(\text{高营养})\)</span>。我们可以将其分解为： <span class="math display">\[P(\text{高营养}) = P(\text{高营养}|\text{晴天}) \times P(\text{晴天}) + P(\text{高营养}|\text{雨天}) \times P(\text{雨天})\]</span></p>
 <p><img src="ecological-statistics_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p><strong>在贝叶斯定理中的应用</strong>： 在贝叶斯定理中，<span class="math inline">\(P(E)\)</span>可以通过全概率公式计算： <span class="math display">\[P(E) = P(E|H) \times P(H) + P(E|\neg H) \times P(\neg H)\]</span></p>
+<p><strong>在贝叶斯定理中的应用</strong>： 在贝叶斯定理中，<span class="math inline">\(P(E)\)</span>可以通过全概率公式计算： <span class="math display">\[P(E) = P(E|H) \times P(H) + P(E|\neg H) \times P(\neg H)\]</span> 其中符号<span class="math inline">\(\neg H\)</span>表示”假设H不成立”，即事件H的补集。</p>
 <p>这就得到了贝叶斯定理的完整形式： <span class="math display">\[P(H|E) = \frac{P(E|H) \times P(H)}{P(E|H) \times P(H) + P(E|\neg H) \times P(\neg H)}\]</span></p>
 <p><strong>贝叶斯概率的哲学基础</strong></p>
 <p>贝叶斯概率体现了”学习”的本质。我们不是从零开始认识世界，而是基于已有的知识（先验），结合新的观察（证据），不断更新我们的认知（后验）。这种思维方式更接近人类实际的认知过程。</p>
@@ -773,19 +773,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>然而，贝叶斯概率方法也存在不容忽视的局限性。<strong>主观性</strong>是其最受争议的方面，先验概率的选择往往依赖于研究者的主观判断，不同专家可能会给出不同的先验设定。<strong>计算复杂性</strong>是实际应用中的主要障碍，复杂的贝叶斯模型需要大量的计算资源，特别是使用马尔可夫链蒙特卡洛方法时，计算时间可能相当可观。<strong>先验敏感性</strong>问题意味着结果可能对先验选择高度敏感，不恰当的先验设定可能导致有偏的结论。<strong>收敛问题</strong>是MCMC方法特有的挑战，在复杂模型中可能出现收敛困难或收敛到局部最优解的情况。此外，<strong>解释难度</strong>限制了贝叶斯方法的普及，后验分布的理解和解释需要研究者具备相当的统计背景，这在一定程度上阻碍了其在生态学实践中的广泛应用。这些局限性提示我们在使用贝叶斯方法时需要谨慎处理先验设定，并充分考虑计算可行性和结果解释的清晰性。</p>
 <p><img src="ecological-statistics_files/figure-html/unnamed-chunk-14-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="从贝叶斯概率到现代数据分析" class="section level4 hasAnchor" number="2.1.4.9">
-<h4><span class="header-section-number">2.1.4.9</span> 从贝叶斯概率到现代数据分析<a href="概率与分布.html#从贝叶斯概率到现代数据分析" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>贝叶斯方法为现代数据分析提供了强大的工具。随着计算技术的发展，马尔可夫链蒙特卡洛（MCMC）等方法使得复杂的贝叶斯模型变得可行。在生态学中，贝叶斯方法已经成为处理不确定性、整合多源数据的重要工具。</p>
-<p>总结来说，贝叶斯概率如同生态学家的”学习机器”，让我们能够基于不断积累的证据来更新对自然界的认识。它教会我们”在不确定性中学习”的重要性，培养了我们对知识动态更新的敏感度。当我们面对快速变化的环境和有限的数据时，贝叶斯概率为我们提供了灵活应对不确定性的智慧工具，帮助我们做出更加理性的决策。</p>
-<p><strong>贝叶斯统计的挑战</strong></p>
+<div id="贝叶斯统计的挑战及解决方案" class="section level4 hasAnchor" number="2.1.4.9">
+<h4><span class="header-section-number">2.1.4.9</span> 贝叶斯统计的挑战及解决方案<a href="概率与分布.html#贝叶斯统计的挑战及解决方案" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>贝叶斯框架在概念上非常优雅，但在计算上有一个巨大的挑战：<strong>分母 <span class="math inline">\(P(E)\)</span> 通常极其难以计算。</strong></p>
 <p><span class="math display">\[ P(E) = \int P(E \mid \theta) P(\theta) \, d\theta \]</span></p>
-<p>这个积分在高维空间（即参数<span class="math inline">\(\theta\)</span>包含多个变量时）往往没有解析解（即无法用公式直接写出结果）。在MCMC出现之前，这严重限制了贝叶斯方法的应用，人们只能对那些具有“共轭先验”的特殊模型进行分析（即先验和后验属于同一分布家族，从而可以避开积分计算）。</p>
+<p>这个积分在高维空间（即参数<span class="math inline">\(\theta\)</span>包含多个变量时）往往没有解析解（即无法用公式直接写出结果）。这严重限制了贝叶斯方法的应用，人们只能对那些具有“共轭先验”的特殊模型进行分析（即先验和后验属于同一分布家族，从而可以避开积分计算）。</p>
 <p><strong>所以，问题的核心变成了：如何有效地从复杂的、高维的后验分布 <span class="math inline">\(P(\theta \mid E)\)</span> 中获取信息（例如，计算均值、方差、分位数等），而无需知道那个讨厌的分母 <span class="math inline">\(P(E)\)</span>？</strong></p>
 <p><strong>马尔可夫模拟（MCMC）的核心思想</strong></p>
 <p>MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心思想是：</p>
 <p><strong>与其直接计算后验分布，不如我们构造一个马尔可夫链，使其平稳分布恰好就是我们想要的后验分布 <span class="math inline">\(P(\theta \mid E)\)</span>。然后，我们从这个链中生成大量的样本，用这些样本来近似（模拟）后验分布。</strong></p>
-<p>我们来分解这个思想：</p>
+<p>想象一下，你是一个盲人，想要了解一头大象的形状。这头大象就是贝叶斯统计中的<strong>后验分布</strong>——我们想要了解但无法直接看到的复杂概率分布。</p>
+<p><strong>贝叶斯的难题</strong>：大象的形状太复杂了，你无法用数学公式精确描述它（就像无法直接计算分母P(E)一样）。</p>
+<p><strong>MCMC的解决方案</strong>：你不需要知道大象的精确形状，只需要通过”触摸”来了解它：</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>马尔可夫链</strong>：你开始在大象周围随机走动，但遵循一个聪明的规则——每次移动时，你更倾向于走向大象”更胖”的区域（高概率区域），而不是”更瘦”的区域（低概率区域）。</p></li>
+<li><p><strong>蒙特卡洛抽样</strong>：你边走边触摸大象，记录下每个位置的感受。虽然每次触摸只能了解一小部分，但经过成千上万次触摸后，你就能在心中构建出大象的整体形状。</p></li>
+<li><p><strong>巧妙之处</strong>：你根本不需要知道大象的确切形状！你只需要比较当前位置和下一个位置哪个”更胖”（通过概率比值），这个比值中讨厌的分母P(E)会自动抵消掉。</p></li>
+</ol>
+<p><strong>结果</strong>：经过足够多的”触摸”后，你收集到的位置样本就精确地反映了大象的真实形状。你可以通过这些样本计算大象的平均高度（后验均值）、宽度（后验方差），甚至画出大象的轮廓（后验分布图）。</p>
+<p>就像盲人通过系统性的触摸来了解复杂的大象形状一样，MCMC通过系统性的随机游走来探索复杂的生态学后验分布，让我们能够在不知道精确数学解的情况下，仍然能够对生态系统的参数做出可靠的贝叶斯推断。</p>
+<p>我们来用正式的语言分解MCMC这个思想：</p>
 <ol style="list-style-type: decimal">
 <li><p><strong>蒙特卡洛（Monte Carlo）</strong>： 泛指通过随机抽样来解决问题的方法。基本思想是：如果你想知道一个分布的属性（比如均值），就从该分布中抽取大量样本，然后计算这些样本的均值。<strong>问题在于</strong>：我们无法直接从复杂的后验分布中抽样。</p></li>
 <li><p><strong>马尔可夫链（Markov Chain）</strong>： 这是一个具有“无记忆”性质的随机过程，下一个状态只取决于当前状态，而与过去的状态无关。关键点是，在满足一定条件下，马尔可夫链会收敛到一个唯一的<strong>平稳分布</strong>。这意味着无论链从何处开始，经过足够长的步骤后，它停留在每个状态的概率是固定的。</p></li>
@@ -920,6 +927,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb85-3"><a href="概率与分布.html#cb85-3" tabindex="-1"></a>ci_upper <span class="ot">&lt;-</span> <span class="fu">quantile</span>(mcmc_result<span class="sc">$</span>samples, <span class="fl">0.975</span>)</span>
 <span id="cb85-4"><a href="概率与分布.html#cb85-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;95%置信区间: [&quot;</span>, <span class="fu">round</span>(ci_lower, <span class="dv">3</span>), <span class="st">&quot;, &quot;</span>, <span class="fu">round</span>(ci_upper, <span class="dv">3</span>), <span class="st">&quot;]</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
 <pre><code>## 95%置信区间: [ 14.345 ,  15.342 ]</code></pre>
+</div>
+<div id="从贝叶斯概率到现代数据分析" class="section level4 hasAnchor" number="2.1.4.11">
+<h4><span class="header-section-number">2.1.4.11</span> 从贝叶斯概率到现代数据分析<a href="概率与分布.html#从贝叶斯概率到现代数据分析" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>贝叶斯方法为现代数据分析提供了强大的工具。随着计算技术的发展，马尔可夫链蒙特卡洛（MCMC）等方法使得复杂的贝叶斯模型变得可行。在生态学中，贝叶斯方法已经成为处理不确定性、整合多源数据的重要工具。</p>
+<p>总结来说，贝叶斯概率如同生态学家的”学习机器”，让我们能够基于不断积累的证据来更新对自然界的认识。它教会我们”在不确定性中学习”的重要性，培养了我们对知识动态更新的敏感度。当我们面对快速变化的环境和有限的数据时，贝叶斯概率为我们提供了灵活应对不确定性的智慧工具，帮助我们做出更加理性的决策。</p>
 </div>
 </div>
 </div>

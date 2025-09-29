@@ -61,6 +61,8 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   fig.align = "center",
+  fig.width = 4.5,
+  fig.height = 3,
   out.width = "80%"
 )
 ```
@@ -69,9 +71,10 @@ knitr::opts_chunk$set(
 
 ```{r eval=FALSE}
 install.packages(c(
-  "tidyverse", "vegan", "lme4", "ggplot2", 
+  "tidyverse", "vegan", "lme4", "ggplot2",
   "bookdown", "knitr", "rmarkdown", "DiagrammeR",
-  "showtext", "gridExtra", "moments"
+  "showtext", "gridExtra", "moments",
+  "gganimate", "gapminder", "audio", "patchwork"
 ))
 ```
 
