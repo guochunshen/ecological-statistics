@@ -1,14 +1,5 @@
 % 中文支持 - 使用 ctex 包提供更好的中文排版
-\usepackage[UTF8,fontset=none,heading=true,zihao=-4,scheme=plain]{ctex}
-
-% 中文排版优化
-\ctexset{
-    chapter/name = {第,章},
-%    section/name = {,、},
-%    subsection/name = {（,）},
-    punct=quanjiao,
-    space=auto
-}
+\usepackage{ctex}
 
 % 中文字体设置 - 提供多个选项，取消注释其中一个配置
 
@@ -18,9 +9,9 @@
 % \setCJKmonofont{Noto Sans Mono CJK SC}
 
 % 选项2：文鼎字体系列（传统、优雅的中文字体）
-\setCJKmainfont{AR PL UMing CN}[BoldFont={AR PL UMing CN},ItalicFont={AR PL KaitiM GB}]
-\setCJKsansfont{AR PL SungtiL GB}
-\setCJKmonofont{Noto Sans Mono CJK SC}
+%\setCJKmainfont{AR PL UMing CN}[BoldFont={AR PL UMing CN},ItalicFont={AR PL KaitiM GB}]
+%\setCJKsansfont{AR PL SungtiL GB}
+%\setCJKmonofont{Noto Sans Mono CJK SC}
 
 % 选项3：系统默认字体（确保兼容性）
 % \setCJKmainfont{}
@@ -29,10 +20,10 @@
 
 
 % 英文字体设置
-\usepackage{fontspec}
-\setmainfont{DejaVu Serif}
-\setsansfont{DejaVu Sans}
-\setmonofont{DejaVu Sans Mono}
+%\usepackage{fontspec}
+%\setmainfont{DejaVu Serif}
+%\setsansfont{DejaVu Sans}
+%\setmonofont{DejaVu Sans Mono}
 
 % 正文字体大小设置 - ctex 已处理中英文字体大小匹配
 
@@ -50,6 +41,15 @@
 % 数学支持
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{bm}
+\usepackage{booktabs}
+\usepackage{longtable}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
 
 % 章节标题样式 - ctex 已提供优化的中文标题样式
 % 如果需要自定义，可以取消注释以下设置：
