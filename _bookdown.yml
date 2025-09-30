@@ -14,6 +14,7 @@ language:
     chapter_name: ''
 fig_height: 3
 fig_width: 4.5
+fig_align: 'center'
 output_dir: "docs"
 rmd_files: [
   "index.Rmd",
