@@ -3,8 +3,9 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-]{book}
+  twoside]{book}
 \usepackage{amsmath,amssymb}
+\usepackage{setspace}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -103,20 +104,43 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
-% 中文支持
-\usepackage{xeCJK}
-\setCJKmainfont{Noto Serif CJK SC}
-\setCJKsansfont{Noto Sans CJK SC}
+% 中文支持 - 使用 ctex 包提供更好的中文排版
+\usepackage[UTF8,fontset=none,heading=true,zihao=-4,scheme=plain]{ctex}
+
+% 中文排版优化
+\ctexset{
+    chapter/name = {第,章},
+%    section/name = {,、},
+%    subsection/name = {（,）},
+    punct=quanjiao,
+    space=auto
+}
+
+% 中文字体设置 - 提供多个选项，取消注释其中一个配置
+
+% 选项1：思源宋体 + 思源黑体（现代、清晰的专业字体）
+% \setCJKmainfont{Noto Serif CJK SC}[BoldFont={Noto Serif CJK SC Bold},ItalicFont={AR PL KaitiM GB}]
+% \setCJKsansfont{Noto Sans CJK SC}
+% \setCJKmonofont{Noto Sans Mono CJK SC}
+
+% 选项2：文鼎字体系列（传统、优雅的中文字体）
+\setCJKmainfont{AR PL UMing CN}[BoldFont={AR PL UMing CN},ItalicFont={AR PL KaitiM GB}]
+\setCJKsansfont{AR PL SungtiL GB}
 \setCJKmonofont{Noto Sans Mono CJK SC}
 
-% 字体大小设置
-\usepackage{fontspec}
-\setmainfont{Noto Serif}
-\setsansfont{Noto Sans}
-\setmonofont{Noto Sans Mono}
+% 选项3：系统默认字体（确保兼容性）
+% \setCJKmainfont{}
+% \setCJKsansfont{}
+% \setCJKmonofont{}
 
-% 增大正文字体大小
-\usepackage[fontsize=12pt]{scrextend}
+
+% 英文字体设置
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+
+% 正文字体大小设置 - ctex 已处理中英文字体大小匹配
 
 % 页面设置
 \usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=3cm]{geometry}
@@ -133,18 +157,18 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{bm}
 
-% 章节标题样式
-\usepackage{titlesec}
-\titleformat{\chapter}[display]
-  {\normalfont\Huge\bfseries\filcenter}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-\titleformat{\section}
-  {\normalfont\Large\bfseries}{\thesection}{1em}{}
-\titleformat{\subsection}
-  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+% 章节标题样式 - ctex 已提供优化的中文标题样式
+% 如果需要自定义，可以取消注释以下设置：
+% \usepackage{titlesec}
+% \titleformat{\chapter}[display]
+%   {\normalfont\Huge\bfseries\filcenter}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+% \titleformat{\section}
+%   {\normalfont\Large\bfseries}{\thesection}{1em}{}
+% \titleformat{\subsection}
+%   {\normalfont\large\bfseries}{\thesubsection}{1em}{}
 
-% 图表标题
+% 图表标题 - ctex 已优化中文标题
 \usepackage{caption}
-\DeclareCaptionFont{heiti}{\CJKfamily{hei}}
 \captionsetup{font=small,labelsep=quad}
 
 % 超链接
@@ -185,7 +209,7 @@
 
 \title{生态统计学}
 \author{沈国春、李勤}
-\date{2025-09-29}
+\date{2025-09-30}
 
 \begin{document}
 \maketitle
@@ -194,6 +218,9 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
+\listoffigures
+\listoftables
+\setstretch{1.5}
 \hypertarget{ux524dux8a00}{%
 \chapter*{前言}\label{ux524dux8a00}}
 \addcontentsline{toc}{chapter}{前言}
@@ -298,6 +325,8 @@
 在新的AI时代，编程教育的核心价值不再体现在''知道多少语法''，而是体现在''能够解决什么问题''和''如何设计分析方案''。学生需要培养的是更高层次的思维能力：如何将一个复杂的现实问题分解成可计算的分析步骤，如何选择合适的统计方法和数据处理技术，如何设计清晰的分析流程，如何与AI进行有效协作以验证和优化分析结果。这些能力构成了AI时代统计编程人员的核心竞争力。
 
 具体而言，统计编程教育应该着重培养以下几个关键能力：首先是问题分解与抽象建模能力，这要求学生能够将复杂的统计问题转化为可计算的数学模型；其次是算法思维，理解不同统计方法的计算原理和适用条件；再次是数据处理能力，从数据收集、清洗到分析的完整流程设计；最后是与AI协作的能力，包括精准提问、代码审查和迭代优化。这些能力的培养需要项目驱动的教学方法，让学生在解决真实统计问题的过程中逐步建立编程思维框架。
+
+对于生态学专业的你来说，理解全球AI竞争中的算法核心地位，就如同理解生态系统中的关键物种------它虽不直接可见，却足以重塑整个环境格局。DeepSeek作为中国AI企业，正是凭借算法的突破性创新，改写了全球AI产业长期以来依赖``堆算力''的发展路径。它通过自研的混合专家模型（MoE）架构和最新的DeepSeek稀疏注意力（DSA） 等算法，在保证模型高性能的同时，大幅提升了训练和推理效率，并将API成本降低了超过50\%。这种``效能革命''证明了高效的算法设计本身可以成为一种强大的竞争力，打破了由算力规模构筑的壁垒。
 
 这种教育重心的转移对学生提出了新的要求，也带来了新的机遇。学生不再需要为记忆琐碎的语法细节而苦恼，可以将更多精力投入到统计建模和数据分析中。教师的教学方法也需要相应调整，从传统的''语法讲解+练习题''模式转向''数据分析项目实践+统计思维训练''模式。通过这种转变，统计编程教育将更好地服务于培养学生的数据科学思维和统计分析能力这一根本目标，为他们在AI时代的科研和数据分析工作奠定坚实基础。
 
@@ -410,8 +439,8 @@
 
 \textbf{生态学案例}：在应对气候变化对生物多样性影响的研究中，持续学习能力发挥着关键作用。假设一位研究者十年前主要使用传统的物种分布模型（如BIOCLIM、DOMAIN）来预测气候变化的影响。随着技术的发展，他需要主动学习新的建模方法------首先学习基于最大熵的MaxEnt模型，理解其相对于传统方法的优势；然后掌握集成建模方法（如ensemble forecasting），学会组合多个模型的预测结果；接着探索机器学习方法（如随机森林、支持向量机）在生态学中的应用；最近可能需要学习深度学习技术（如卷积神经网络）处理高分辨率的遥感数据。在这个过程中，研究者不仅需要学习技术本身，还需要批判性评估每种方法的适用条件------MaxEnt适合小样本数据，但可能过度依赖环境变量；机器学习方法预测性能好，但可解释性较差；深度学习方法能够捕捉复杂模式，但需要大量数据和计算资源。通过这种持续的学习过程，研究者能够根据具体的研究问题和数据条件，选择最合适的技术方法，确保研究成果既技术先进又科学可靠。更重要的是，这种学习过程本身会激发新的研究思路------比如将网络分析方法应用于物种互作研究，或将时间序列分析技术应用于长期生态监测数据，从而推动生态学研究的创新发展。
 
-\hypertarget{ux6a21ux5757ux4e00ux901aux7528ux7f16ux7a0bux601dux7ef4ux57faux7840}{%
-\section{模块一：通用编程思维基础}\label{ux6a21ux5757ux4e00ux901aux7528ux7f16ux7a0bux601dux7ef4ux57faux7840}}
+\hypertarget{ux901aux7528ux7f16ux7a0bux601dux7ef4ux57faux7840}{%
+\section{通用编程思维基础}\label{ux901aux7528ux7f16ux7a0bux601dux7ef4ux57faux7840}}
 
 在AI时代，编程教育的重点已从特定语言的语法细节转向通用的编程思维框架。通用编程思维基础之所以重要，是因为它提供了跨语言、跨工具的问题解决能力。无论使用R、Python还是其他编程语言，无论与哪种AI工具协作，扎实的编程思维都是有效沟通和高效解决问题的基石。这种思维框架确保学生能够理解计算的基本原理，而不仅仅是记忆特定API的使用方法。
 
@@ -440,12 +469,9 @@
 \textbf{GPU加速计算的流程}与CPU有所不同。当程序需要利用GPU进行并行计算时：首先，CPU将需要处理的数据从系统内存通过PCIe总线传输到GPU显存；然后，GPU的数千个计算核心并行处理数据；计算结果暂存在GPU显存中；最后，CPU将结果从GPU显存传回系统内存，再保存到硬盘。这个过程中，数据流动为：硬盘→内存→GPU显存→GPU计算核心→GPU显存→内存→硬盘。GPU计算的关键在于减少CPU与GPU之间的数据传输次数，通过批处理和异步传输优化性能。
 
 \begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{imgs/hardware_flow} 
-
-}
-
-\caption{程序运行中的数据流动示意图}\label{fig:hardware-flow}
+\centering
+\includegraphics{imgs/hardware_flow.png}
+\caption{\label{fig:hardware-flow}程序运行中的数据流动示意图}
 \end{figure}
 
 在统计分析的具体场景中，这种数据流转体现得更加明显。例如，当运行一个线性回归分析时：R解释器从硬盘读取脚本文件到内存；数据文件从硬盘加载到内存的数据框中；CPU执行lm()函数，在内存中进行矩阵运算；计算结果（系数、p值等）存储在内存中的模型对象里；最终结果被写入硬盘的报告文件。如果分析涉及大规模数据，可能会出现内存瓶颈，此时需要采用分批处理或流式处理策略，让数据在硬盘和内存间分块流动。
@@ -1341,46 +1367,45 @@ OOP还显著提高了代码的可维护性。通过清晰的类接口隔离实�
 \end{Shaded}
 \item
   \textbf{对数阶算法示例} - 斐波那契数列（矩阵快速幂版本）
-  ```r
-  \# 对数阶算法示例 - 斐波那契数列（矩阵快速幂版本，支持大整数）
-  fibonacci\_fastest \textless- function(n) \{
-  if (n \textless= 1) \{
-  return(n)
-  \}
 
-  \# 矩阵快速幂算法
-  matrix\_power \textless- function(matrix, power) \{
-  result \textless- matrix(c(1, 0, 0, 1), nrow = 2, ncol = 2) \# 单位矩阵
-  base \textless- matrix
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 对数阶算法示例 {-} 斐波那契数列（矩阵快速幂版本，支持大整数）}
+\NormalTok{fibonacci\_fastest }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n) \{}
+  \ControlFlowTok{if}\NormalTok{ (n }\SpecialCharTok{\textless{}=} \DecValTok{1}\NormalTok{) \{}
+    \FunctionTok{return}\NormalTok{(n)}
+\NormalTok{  \}}
 
-\begin{verbatim}
-while (power > 0) {
-  if (power %% 2 == 1) {
-    result <- result %*% base
-  }
-  base <- base %*% base
-  power <- power %/% 2
-}
+  \CommentTok{\# 矩阵快速幂算法}
+\NormalTok{  matrix\_power }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(matrix, power) \{}
+\NormalTok{    result }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)  }\CommentTok{\# 单位矩阵}
+\NormalTok{    base }\OtherTok{\textless{}{-}}\NormalTok{ matrix}
 
-return(result)
-\end{verbatim}
+    \ControlFlowTok{while}\NormalTok{ (power }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+      \ControlFlowTok{if}\NormalTok{ (power }\SpecialCharTok{\%\%} \DecValTok{2} \SpecialCharTok{==} \DecValTok{1}\NormalTok{) \{}
+\NormalTok{        result }\OtherTok{\textless{}{-}}\NormalTok{ result }\SpecialCharTok{\%*\%}\NormalTok{ base}
+\NormalTok{      \}}
+\NormalTok{      base }\OtherTok{\textless{}{-}}\NormalTok{ base }\SpecialCharTok{\%*\%}\NormalTok{ base}
+\NormalTok{      power }\OtherTok{\textless{}{-}}\NormalTok{ power }\SpecialCharTok{\%/\%} \DecValTok{2}
+\NormalTok{    \}}
 
-  \}
+    \FunctionTok{return}\NormalTok{(result)}
+\NormalTok{  \}}
 
-  \# 斐波那契矩阵
-  fib\_matrix \textless- matrix(c(1, 1, 1, 0), nrow = 2, ncol = 2)
+  \CommentTok{\# 斐波那契矩阵}
+\NormalTok{  fib\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{2}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{)}
 
-  \# 计算矩阵的(n-1)次幂
-  result\_matrix \textless- matrix\_power(fib\_matrix, n - 1)
+  \CommentTok{\# 计算矩阵的(n{-}1)次幂}
+\NormalTok{  result\_matrix }\OtherTok{\textless{}{-}} \FunctionTok{matrix\_power}\NormalTok{(fib\_matrix, n }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}
 
-  return(result\_matrix{[}1, 1{]})
-  \}
+  \FunctionTok{return}\NormalTok{(result\_matrix[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{])}
+\NormalTok{\}}
 
-  \hypertarget{ux6d4bux8bd5ux53efux4ee5ux8ba1ux7b97ux6781ux5927ux7684nux503c}{%
-  \chapter{测试（可以计算极大的n值）}\label{ux6d4bux8bd5ux53efux4ee5ux8ba1ux7b97ux6781ux5927ux7684nux503c}}
-
-  result \textless- fibonacci\_fastest(1000)
-  print(result) \# 输出
+\CommentTok{\# 测试（可以计算极大的n值）}
+\NormalTok{result }\OtherTok{\textless{}{-}} \FunctionTok{fibonacci\_fastest}\NormalTok{(}\DecValTok{1000}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(result)  }\CommentTok{\# 输出}
+\end{Highlighting}
+\end{Shaded}
 \item
   \textbf{动态规划大整数版本} - 使用gmp包处理任意精度整数
 
@@ -1524,7 +1549,43 @@ return(result)
 
 下面这张图直观地展示了不同复杂度随数据量增长的趋势。\textbf{Y轴可以理解为时间或空间消耗}。
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-3-1} \end{center}
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: sysfonts
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: showtextdb
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## i Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in scale_y_log10(): log-10 transformation introduced infinite values.
+\end{verbatim}
+
+\includegraphics{01-statistical_programing_files/figure-latex/unnamed-chunk-1-1.pdf}
 
 \textbf{结论}：O(1) 和 O(log n) 是极其高效的，O(n) 和 O(n log n) 是优秀的，O(n²) 在 n 较小时可以接受，而 O(2\^{}n) 和 O(n!) 应尽量避免。
 
@@ -1539,8 +1600,8 @@ return(result)
 
 \textbf{练习}：尝试分析你写过的一些数据处理脚本，找出其中循环和操作，估算其时间复杂度和空间复杂度。这将极大地提升你的代码质量和性能优化能力。
 
-\hypertarget{ux6a21ux5757ux4e8caiux534fux540cux7f16ux7a0bux6280ux80fd}{%
-\section{模块二：AI协同编程技能}\label{ux6a21ux5757ux4e8caiux534fux540cux7f16ux7a0bux6280ux80fd}}
+\hypertarget{aiux534fux540cux7f16ux7a0bux6280ux80fd}{%
+\section{AI协同编程技能}\label{aiux534fux540cux7f16ux7a0bux6280ux80fd}}
 
 \hypertarget{aiux7f16ux7a0bux6a21ux5757ux5b89ux88c5}{%
 \subsection{AI编程模块安装}\label{aiux7f16ux7a0bux6a21ux5757ux5b89ux88c5}}
@@ -1791,6 +1852,14 @@ Qwen Code（阿里通义：\textbf{qwen} 命令的 CLI）
 
 在后续章节中，我们将基于本章建立的编程思维框架，深入探讨更专业的生态统计方法。但无论技术工具如何发展，本章所强调的分析思维、问题解决能力和AI协作素养，都将成为生态学研究者应对技术变革、推动学科发展的核心竞争优势。这种以思维为导向的编程教育，正是培养未来生态学创新人才的关键路径。
 
+\hypertarget{ux7efcux5408ux7ec3ux4e60}{%
+\section{综合练习}\label{ux7efcux5408ux7ec3ux4e60}}
+
+\hypertarget{ux7ec3ux4e601}{%
+\subsection{练习1}\label{ux7ec3ux4e601}}
+
+请在AI的协助下，判断项目data目录下的Tiantong\_Sample.CSV文件内的所有树木空间位置是否是随机分布？请注意，写完代码和出了结果后，并不代表该习题的结束。你需要在AI的协助下，理解其分析思路，每行代码的意思。下堂课会随机请人上来讲解。
+
 \hypertarget{ux6982ux7387ux4e0eux5206ux5e03}{%
 \chapter{概率与分布}\label{ux6982ux7387ux4e0eux5206ux5e03}}
 
@@ -2021,7 +2090,15 @@ Qwen Code（阿里通义：\textbf{qwen} 命令的 CLI）
 
 概率收敛理论是统计推断的数学基础，帮助我们理解样本统计量如何趋近于总体参数。
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-5-1} \end{center}
+\begin{verbatim}
+## Loading required package: sysfonts
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: showtextdb
+\end{verbatim}
+
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-2-1.pdf}
 
 \textbf{频率概率的现实类比}
 
@@ -2092,7 +2169,7 @@ Qwen Code（阿里通义：\textbf{qwen} 命令的 CLI）
 
 频率概率需要大量重复试验，但生态学调查往往样本量有限：
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-6-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-3-1.pdf}
 
 \hypertarget{ux4eceux9891ux7387ux6982ux7387ux5230ux73b0ux4ee3ux7edfux8ba1ux5b66}{%
 \subsubsection{从频率概率到现代统计学}\label{ux4eceux9891ux7387ux6982ux7387ux5230ux73b0ux4ee3ux7edfux8ba1ux5b66}}
@@ -2175,7 +2252,7 @@ Qwen Code（阿里通义：\textbf{qwen} 命令的 CLI）
 假设我们想知道''蚱蜢选择营养价值高的植物''的概率\(P(\text{高营养})\)。我们可以将其分解为：
 \[P(\text{高营养}) = P(\text{高营养}|\text{晴天}) \times P(\text{晴天}) + P(\text{高营养}|\text{雨天}) \times P(\text{雨天})\]
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-7-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-4-1.pdf}
 
 \textbf{在贝叶斯定理中的应用}：
 在贝叶斯定理中，\(P(E)\)可以通过全概率公式计算：
@@ -2413,15 +2490,13 @@ Qwen Code（阿里通义：\textbf{qwen} 命令的 CLI）
 
 结合多种证据（如栖息地质量、种群趋势、威胁因素）来评估物种的保护优先级。
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-10-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-7-1.pdf}
 
 \textbf{4. 生态风险评估}
 
 在数据有限的情况下，结合专家判断和有限观测来评估生态风险。
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-11-1} \end{center}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-11-2} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-8-1.pdf} \includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-8-2.pdf}
 
 \textbf{5. 模型选择与平均}
 
@@ -2437,7 +2512,7 @@ Qwen Code（阿里通义：\textbf{qwen} 命令的 CLI）
 ## 2 季节模型 1.036188e-47   13980.76
 \end{verbatim}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-12-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-9-1.pdf}
 
 敏感性分析与稳健性检验
 
@@ -2574,7 +2649,7 @@ Qwen Code（阿里通义：\textbf{qwen} 命令的 CLI）
 
 然而，贝叶斯概率方法也存在不容忽视的局限性。\textbf{主观性}是其最受争议的方面，先验概率的选择往往依赖于研究者的主观判断，不同专家可能会给出不同的先验设定。\textbf{计算复杂性}是实际应用中的主要障碍，复杂的贝叶斯模型需要大量的计算资源，特别是使用马尔可夫链蒙特卡洛方法时，计算时间可能相当可观。\textbf{先验敏感性}问题意味着结果可能对先验选择高度敏感，不恰当的先验设定可能导致有偏的结论。\textbf{收敛问题}是MCMC方法特有的挑战，在复杂模型中可能出现收敛困难或收敛到局部最优解的情况。此外，\textbf{解释难度}限制了贝叶斯方法的普及，后验分布的理解和解释需要研究者具备相当的统计背景，这在一定程度上阻碍了其在生态学实践中的广泛应用。这些局限性提示我们在使用贝叶斯方法时需要谨慎处理先验设定，并充分考虑计算可行性和结果解释的清晰性。
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-14-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-11-1.pdf}
 
 \hypertarget{ux8d1dux53f6ux65afux7edfux8ba1ux7684ux6311ux6218ux53caux89e3ux51b3ux65b9ux6848}{%
 \subsubsection{贝叶斯统计的挑战及解决方案}\label{ux8d1dux53f6ux65afux7edfux8ba1ux7684ux6311ux6218ux53caux89e3ux51b3ux65b9ux6848}}
@@ -2903,7 +2978,7 @@ MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心�
 
 如果我画成柱状图，就得到了一个\textbf{概率分布图}，直观地展示了这种''分布''情况。
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-17-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-14-1.pdf}
 
 \hypertarget{ux7d2fux79efux6982ux7387ux5206ux5e03ux4eceux53efux80fdux6027ux5230ux786eux5b9aux6027}{%
 \subsection{累积概率分布：从可能性到确定性}\label{ux7d2fux79efux6982ux7387ux5206ux5e03ux4eceux53efux80fdux6027ux5230ux786eux5b9aux6027}}
@@ -2929,7 +3004,7 @@ MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心�
 - 蚱蜢选择黑麦草\textbf{或}混合草甸的概率是 0.64 + 0.29 = 0.93
 - 蚱蜢选择任意一种植物的概率是 1.00（必然事件）
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-18-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-15-1.pdf}
 
 累积概率分布图呈现为阶梯函数，在每个可能的取值处跳跃，跳跃的高度等于该取值的概率。这种分布特别有用，因为它：
 
@@ -3132,7 +3207,7 @@ p & \text{如果 } x = 1 \\
 
 其中，\(X\)是伯努利随机变量，\(p\)是成功的概率（\(0 \leq p \leq 1\)）。
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-20-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-17-1.pdf}
 
 \textbf{生态学肖像：}
 
@@ -3198,7 +3273,7 @@ p & \text{如果 } x = 1 \\
 - 方差：\(Var(X) = np(1-p)\)
 - 当\(p=0.5\)时，分布对称；当\(p<0.5\)时右偏，\(p>0.5\)时左偏
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-18-1.pdf}
 
 \textbf{生态学肖像：}
 
@@ -3268,7 +3343,24 @@ p & \text{如果 } x = 1 \\
 - 协方差：\(Cov(X_i, X_j) = -np_i p_j\)（\(i \neq j\)）
 - 当\(k=2\)时，多项式分布退化为二项分布
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-19-1.pdf}
 
 \textbf{生态学肖像：}
 
@@ -3336,7 +3428,7 @@ p & \text{如果 } x = 1 \\
 - 当\(\lambda\)较小时，分布右偏；当\(\lambda\)增大时，分布逐渐接近正态分布
 - 泊松分布是二项分布在\(n \to \infty\)，\(p \to 0\)，且\(np = \lambda\)时的极限情况
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-23-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-20-1.pdf}
 
 \textbf{生态学肖像：}
 
@@ -3405,7 +3497,7 @@ p & \text{如果 } x = 1 \\
 - 无记忆性：\(P(X > m+n \mid X > m) = P(X > n)\)，即过去的失败不影响未来的成功概率
 - 当\(p\)较小时，分布右偏严重；当\(p\)接近1时，分布集中在较小的\(k\)值
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-24-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-21-1.pdf}
 
 \textbf{生态学肖像：}
 
@@ -3475,7 +3567,7 @@ p & \text{如果 } x = 1 \\
 - 当\(r=1\)时，负二项分布退化为几何分布
 - 分布形状取决于\(r\)和\(p\)的值，可以呈现不同的偏斜形态
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-25-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-22-1.pdf}
 
 \textbf{生态学肖像：}
 
@@ -3571,9 +3663,7 @@ p & \text{如果 } x = 1 \\
 - \(P(a < X \leq b) = F(b) - F(a)\)
 - \(P(X > x) = 1 - F(x)\)
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-26-1} \end{center}
-
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-26-2} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-23-1.pdf} \includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-23-2.pdf}
 
 在连续变量的世界里，有几个声名显赫的''家族''，它们以特定的形态描绘了不同自然现象背后的概率规律。每个分布都有其独特的数学特性和生态学意义，共同构成了我们理解连续生态变量的工具箱。
 
@@ -3599,7 +3689,7 @@ p & \text{如果 } x = 1 \\
 - \textbf{资源利用模式}：当食物资源分布均匀时，动物的觅食位置选择可以建模为均匀分布
 - \textbf{行为生态学实验}：在控制实验中，动物的随机选择行为可以用均匀分布来描述
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-24-1.pdf}
 
 \hypertarget{ux6307ux6570ux5206ux5e03ux7b49ux5f85ux7684ux827aux672f}{%
 \subsection{指数分布：等待的艺术}\label{ux6307ux6570ux5206ux5e03ux7b49ux5f85ux7684ux827aux672f}}
@@ -3624,7 +3714,7 @@ p & \text{如果 } x = 1 \\
 - \textbf{行为时间模式}：动物在危险环境中的活动间隔可以用指数分布来描述
 - \textbf{种群生存分析}：在高捕食压力下，个体的生存时间分布近似指数分布
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-25-1.pdf}
 
 \hypertarget{ux6b63ux6001ux5206ux5e03ux9ad8ux65afux5206ux5e03ux81eaux7136ux754cux7684ux949fux5f62ux6cd5ux5219}{%
 \subsection{正态分布（高斯分布）：自然界的''钟形''法则}\label{ux6b63ux6001ux5206ux5e03ux9ad8ux65afux5206ux5e03ux81eaux7136ux754cux7684ux949fux5f62ux6cd5ux5219}}
@@ -3650,7 +3740,7 @@ p & \text{如果 } x = 1 \\
 - \textbf{行为生态学}：动物的许多连续行为特征（如觅食时间、移动距离）近似正态分布
 - \textbf{种群能量学}：通过摄食量的正态分布可以估计种群的能量摄入模式
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-29-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-26-1.pdf}
 
 \hypertarget{ux5a01ux5e03ux5c14ux5206ux5e03ux751fux5b58ux5206ux6790ux7684ux65f6ux95f4ux6cd5ux5219}{%
 \subsection{威布尔分布：生存分析的''时间法则''}\label{ux5a01ux5e03ux5c14ux5206ux5e03ux751fux5b58ux5206ux6790ux7684ux65f6ux95f4ux6cd5ux5219}}
@@ -3672,10 +3762,10 @@ p & \text{如果 } x = 1 \\
 - 当\(k>1\)时风险随时间增加（老化效应）
 - 当\(k<1\)时风险随时间减少（早期适应期）
 
-\textbf{生态学肖像：}
-- \textbf{生存分析研究}：蚱蜢的生存时间服从威布尔分布，反映其生命周期的风险变化模式
-- \textbf{种群动态建模}：通过威布尔分布可以估计种群的死亡率模式和期望寿命
-- \textbf{保护生物学}：濒危物种的生存时间分析有助于制定保护策略
+\textbf{生态学肖像：}\\
+- \textbf{生存分析研究}：蚱蜢的生存时间服从威布尔分布，反映其生命周期的风险变化模式\\
+- \textbf{种群动态建模}：通过威布尔分布可以估计种群的死亡率模式和期望寿命\\
+- \textbf{保护生物学}：濒危物种的生存时间分析有助于制定保护策略\\
 - \textbf{物候学研究}：植物开花时间、动物迁徙时间等时间事件的分析
 
 \begin{Shaded}
@@ -3810,7 +3900,7 @@ p & \text{如果 } x = 1 \\
 - \textbf{降雨量分布}：特定时间段内的总降雨量
 - \textbf{种群增长}：在一定时间内种群数量的累积增长
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-30-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-27-1.pdf}
 
 \hypertarget{ux8d1dux5854ux5206ux5e03ux6bd4ux4f8bux53d8ux91cfux7684ux5929ux7136ux9009ux62e9}{%
 \subsection{贝塔分布：比例变量的天然选择}\label{ux8d1dux5854ux5206ux5e03ux6bd4ux4f8bux53d8ux91cfux7684ux5929ux7136ux9009ux62e9}}
@@ -3836,7 +3926,7 @@ p & \text{如果 } x = 1 \\
 - \textbf{能量预算分析}：通过时间分配比例研究蚱蜢的能量摄入与消耗平衡
 - \textbf{适应性行为研究}：贝塔分布的灵活性使其适合描述动物在不同环境下的行为调整
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-31-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-28-1.pdf}
 
 \hypertarget{ux6b63ux6001ux7684ux9b54ux529bux4e2dux5fc3ux6781ux9650ux5b9aux7406}{%
 \subsection{正态的魔力：中心极限定理}\label{ux6b63ux6001ux7684ux9b54ux529bux4e2dux5fc3ux6781ux9650ux5b9aux7406}}
@@ -3865,7 +3955,25 @@ p & \text{如果 } x = 1 \\
 
 其中\(\bar{X} = \frac{1}{n}\sum_{i=1}^n X_i\)是样本均值，\(\xrightarrow{d}\)表示依分布收敛。
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-32-1} \end{center}
+\begin{verbatim}
+## 
+## Attaching package: 'gridExtra'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+## i Please use `after_stat(density)` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+\end{verbatim}
+
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-29-1.pdf}
 
 \begin{verbatim}
 ## 中心极限定理正态性检验结果:
@@ -3890,7 +3998,7 @@ p & \text{如果 } x = 1 \\
 \hypertarget{ux6837ux672cux91cfux5bf9ux4e2dux5fc3ux6781ux9650ux5b9aux7406ux7684ux5f71ux54cd}{%
 \subsubsection{样本量对中心极限定理的影响}\label{ux6837ux672cux91cfux5bf9ux4e2dux5fc3ux6781ux9650ux5b9aux7406ux7684ux5f71ux54cd}}
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-30-1.pdf}
 
 \begin{verbatim}
 ## 偏度和峰度随样本量的变化:
@@ -3985,7 +4093,7 @@ p & \text{如果 } x = 1 \\
 
 混合分布能够描述来自不同子总体的数据，在生态学中处理异质性非常有用。
 
-\begin{center}\includegraphics[width=0.8\linewidth]{ecological-statistics_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\includegraphics{02-probability_and_distribution_files/figure-latex/unnamed-chunk-31-1.pdf}
 
 \begin{verbatim}
 ## 混合分布的生态学应用:
@@ -8829,11 +8937,11 @@ p & \text{如果 } x = 1 \\
   尝试创建动态或交互式可视化（选做，可查阅相关资料）
 \end{enumerate}
 
-\hypertarget{ux7efcux5408ux7ec3ux4e60}{%
-\section{综合练习}\label{ux7efcux5408ux7ec3ux4e60}}
+\hypertarget{ux7efcux5408ux7ec3ux4e60-1}{%
+\section{综合练习}\label{ux7efcux5408ux7ec3ux4e60-1}}
 
-\hypertarget{ux7ec3ux4e601}{%
-\subsection{练习1}\label{ux7ec3ux4e601}}
+\hypertarget{ux7ec3ux4e601-1}{%
+\subsection{练习1}\label{ux7ec3ux4e601-1}}
 
 请用上面所学产生一个斐波那契序列的前46个值，其中斐波那契序列的具体定义如下：
 

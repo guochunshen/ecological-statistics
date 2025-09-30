@@ -1,17 +1,40 @@
-% 中文支持
-\usepackage{xeCJK}
-\setCJKmainfont{Noto Serif CJK SC}
-\setCJKsansfont{Noto Sans CJK SC}
+% 中文支持 - 使用 ctex 包提供更好的中文排版
+\usepackage[UTF8,fontset=none,heading=true,zihao=-4,scheme=plain]{ctex}
+
+% 中文排版优化
+\ctexset{
+    chapter/name = {第,章},
+%    section/name = {,、},
+%    subsection/name = {（,）},
+    punct=quanjiao,
+    space=auto
+}
+
+% 中文字体设置 - 提供多个选项，取消注释其中一个配置
+
+% 选项1：思源宋体 + 思源黑体（现代、清晰的专业字体）
+% \setCJKmainfont{Noto Serif CJK SC}[BoldFont={Noto Serif CJK SC Bold},ItalicFont={AR PL KaitiM GB}]
+% \setCJKsansfont{Noto Sans CJK SC}
+% \setCJKmonofont{Noto Sans Mono CJK SC}
+
+% 选项2：文鼎字体系列（传统、优雅的中文字体）
+\setCJKmainfont{AR PL UMing CN}[BoldFont={AR PL UMing CN},ItalicFont={AR PL KaitiM GB}]
+\setCJKsansfont{AR PL SungtiL GB}
 \setCJKmonofont{Noto Sans Mono CJK SC}
 
-% 字体大小设置
-\usepackage{fontspec}
-\setmainfont{Noto Serif}
-\setsansfont{Noto Sans}
-\setmonofont{Noto Sans Mono}
+% 选项3：系统默认字体（确保兼容性）
+% \setCJKmainfont{}
+% \setCJKsansfont{}
+% \setCJKmonofont{}
 
-% 增大正文字体大小
-\usepackage[fontsize=12pt]{scrextend}
+
+% 英文字体设置
+\usepackage{fontspec}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+
+% 正文字体大小设置 - ctex 已处理中英文字体大小匹配
 
 % 页面设置
 \usepackage[top=2.5cm, bottom=2.5cm, left=3cm, right=3cm]{geometry}
@@ -28,18 +51,18 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{bm}
 
-% 章节标题样式
-\usepackage{titlesec}
-\titleformat{\chapter}[display]
-  {\normalfont\Huge\bfseries\filcenter}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-\titleformat{\section}
-  {\normalfont\Large\bfseries}{\thesection}{1em}{}
-\titleformat{\subsection}
-  {\normalfont\large\bfseries}{\thesubsection}{1em}{}
+% 章节标题样式 - ctex 已提供优化的中文标题样式
+% 如果需要自定义，可以取消注释以下设置：
+% \usepackage{titlesec}
+% \titleformat{\chapter}[display]
+%   {\normalfont\Huge\bfseries\filcenter}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+% \titleformat{\section}
+%   {\normalfont\Large\bfseries}{\thesection}{1em}{}
+% \titleformat{\subsection}
+%   {\normalfont\large\bfseries}{\thesubsection}{1em}{}
 
-% 图表标题
+% 图表标题 - ctex 已优化中文标题
 \usepackage{caption}
-\DeclareCaptionFont{heiti}{\CJKfamily{hei}}
 \captionsetup{font=small,labelsep=quad}
 
 % 超链接

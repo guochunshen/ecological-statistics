@@ -1,10 +1,19 @@
 book_filename: "ecological-statistics"
+new_session: true
 delete_merged_file: true
 language:
   label:
-    fig: "图 "
-    tab: "表 "
-    eq: "公式 "
+    thm: '定理'
+    def: '定义'
+    exm: '例'
+    proof: '证明: '
+    solution: '解: '
+    fig: '图'
+    tab: '表'
+  ui:
+    chapter_name: ''
+fig_height: 3
+fig_width: 4.5
 output_dir: "docs"
 rmd_files: [
   "index.Rmd",

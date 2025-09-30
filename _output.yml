@@ -12,8 +12,6 @@ bookdown::gitbook:
     download: ["pdf", "epub"]
     sharing: no
   pandoc_args: ["--wrap=none"]
-  fig_height: 3
-  fig_width: 4.5
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
