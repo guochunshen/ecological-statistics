@@ -1208,7 +1208,7 @@ print(length(perms)) # 输出: 6 (3! = 6)
 
 下面这张图直观地展示了不同复杂度随数据量增长的趋势。**Y轴可以理解为时间或空间消耗**。
 
-```{r, echo=FALSE}
+```{r complexity-curve, fig.cap="算法复杂度随数据规模增长的趋势图", echo=FALSE}
 # 复杂度曲线可视化
 library(ggplot2)
 library(dplyr)

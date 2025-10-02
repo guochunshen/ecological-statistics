@@ -96,8 +96,8 @@
 ``` r
 # 模拟数据：保护区内外物种丰富度
 set.seed(123)
-protected <- rpois(20, lambda = 15)  # 保护区内
-unprotected <- rpois(20, lambda = 10)  # 保护区外
+protected <- rpois(20, lambda = 15) # 保护区内
+unprotected <- rpois(20, lambda = 10) # 保护区外
 
 # 计算观测差异
 obs_diff <- mean(protected) - mean(unprotected)
@@ -321,7 +321,7 @@ independence_test(value ~ group, data = data, distribution = approximate(nresamp
 ``` r
 # 检验物种空间分布是否随机
 set.seed(123)
-observed_pattern <- matrix(runif(100), ncol = 2)  # 观测空间点
+observed_pattern <- matrix(runif(100), ncol = 2) # 观测空间点
 
 # 蒙特卡洛模拟：完全空间随机过程
 n_sim <- 1000
@@ -540,14 +540,16 @@ print(boot_ci)
 ``` r
 # Hardy-Weinberg平衡的蒙特卡洛检验
 set.seed(123)
-observed <- c(AA = 2, AB = 5, BB = 8)  # 观测基因型频数
-allele_freq <- c(A = 0.3, B = 0.7)      # 等位基因频率
+observed <- c(AA = 2, AB = 5, BB = 8) # 观测基因型频数
+allele_freq <- c(A = 0.3, B = 0.7) # 等位基因频率
 n_individuals <- 15
 
 # 计算观测卡方统计量
-expected <- c(AA = n_individuals * allele_freq["A"]^2,
-              AB = n_individuals * 2 * allele_freq["A"] * allele_freq["B"],
-              BB = n_individuals * allele_freq["B"]^2)
+expected <- c(
+  AA = n_individuals * allele_freq["A"]^2,
+  AB = n_individuals * 2 * allele_freq["A"] * allele_freq["B"],
+  BB = n_individuals * allele_freq["B"]^2
+)
 
 obs_chisq <- sum((observed - expected)^2 / expected)
 
@@ -557,11 +559,15 @@ sim_chisq <- numeric(n_sim)
 
 for (i in 1:n_sim) {
   # 基于Hardy-Weinberg平衡生成模拟基因型
-  sim_genotypes <- sample(c("AA", "AB", "BB"), size = n_individuals,
-                         replace = TRUE,
-                         prob = c(allele_freq["A"]^2,
-                                  2 * allele_freq["A"] * allele_freq["B"],
-                                  allele_freq["B"]^2))
+  sim_genotypes <- sample(c("AA", "AB", "BB"),
+    size = n_individuals,
+    replace = TRUE,
+    prob = c(
+      allele_freq["A"]^2,
+      2 * allele_freq["A"] * allele_freq["B"],
+      allele_freq["B"]^2
+    )
+  )
 
   sim_counts <- table(sim_genotypes)
   sim_expected <- expected[names(sim_counts)]
@@ -654,9 +660,9 @@ perm_D_prime <- numeric(n_perm)
 
 for (i in 1:n_perm) {
   # 随机重排位点间的关联
-  locus1 <- substr(haplotypes, 1, 1)  # 第一个位点
-  locus2 <- substr(haplotypes, 2, 2)  # 第二个位点
-  perm_locus2 <- sample(locus2)       # 随机重排第二个位点
+  locus1 <- substr(haplotypes, 1, 1) # 第一个位点
+  locus2 <- substr(haplotypes, 2, 2) # 第二个位点
+  perm_locus2 <- sample(locus2) # 随机重排第二个位点
   perm_haplotypes <- paste0(locus1, perm_locus2)
   perm_D_prime[i] <- calc_D_prime(perm_haplotypes)
 }
@@ -739,33 +745,39 @@ set.seed(123)
 
 # 模拟鸟类调查数据（简化示例）
 # 5年恢复林
-forest_5yr <- c(rep("物种1", 8), rep("物种2", 5), rep("物种3", 3),
-                rep("物种4", 2), rep("物种5", 1), rep("物种6", 1),
-                rep("物种7", 1), rep("物种8", 1), rep("物种9", 1),
-                rep("物种10", 1), rep("物种11", 1), rep("物种12", 1),
-                rep("物种13", 1), rep("物种14", 1), rep("物种15", 1))
+forest_5yr <- c(
+  rep("物种1", 8), rep("物种2", 5), rep("物种3", 3),
+  rep("物种4", 2), rep("物种5", 1), rep("物种6", 1),
+  rep("物种7", 1), rep("物种8", 1), rep("物种9", 1),
+  rep("物种10", 1), rep("物种11", 1), rep("物种12", 1),
+  rep("物种13", 1), rep("物种14", 1), rep("物种15", 1)
+)
 
 # 10年恢复林
-forest_10yr <- c(rep("物种1", 12), rep("物种2", 8), rep("物种3", 6),
-                 rep("物种4", 4), rep("物种5", 3), rep("物种6", 2),
-                 rep("物种7", 2), rep("物种8", 2), rep("物种9", 2),
-                 rep("物种10", 2), rep("物种11", 1), rep("物种12", 1),
-                 rep("物种13", 1), rep("物种14", 1), rep("物种15", 1),
-                 rep("物种16", 1), rep("物种17", 1), rep("物种18", 1),
-                 rep("物种19", 1), rep("物种20", 1), rep("物种21", 1),
-                 rep("物种22", 1))
+forest_10yr <- c(
+  rep("物种1", 12), rep("物种2", 8), rep("物种3", 6),
+  rep("物种4", 4), rep("物种5", 3), rep("物种6", 2),
+  rep("物种7", 2), rep("物种8", 2), rep("物种9", 2),
+  rep("物种10", 2), rep("物种11", 1), rep("物种12", 1),
+  rep("物种13", 1), rep("物种14", 1), rep("物种15", 1),
+  rep("物种16", 1), rep("物种17", 1), rep("物种18", 1),
+  rep("物种19", 1), rep("物种20", 1), rep("物种21", 1),
+  rep("物种22", 1)
+)
 
 # 原生林
-primary_forest <- c(rep("物种1", 15), rep("物种2", 10), rep("物种3", 8),
-                    rep("物种4", 6), rep("物种5", 5), rep("物种6", 4),
-                    rep("物种7", 3), rep("物种8", 3), rep("物种9", 2),
-                    rep("物种10", 2), rep("物种11", 2), rep("物种12", 2),
-                    rep("物种13", 1), rep("物种14", 1), rep("物种15", 1),
-                    rep("物种16", 1), rep("物种17", 1), rep("物种18", 1),
-                    rep("物种19", 1), rep("物种20", 1), rep("物种21", 1),
-                    rep("物种22", 1), rep("物种23", 1), rep("物种24", 1),
-                    rep("物种25", 1), rep("物种26", 1), rep("物种27", 1),
-                    rep("物种28", 1))
+primary_forest <- c(
+  rep("物种1", 15), rep("物种2", 10), rep("物种3", 8),
+  rep("物种4", 6), rep("物种5", 5), rep("物种6", 4),
+  rep("物种7", 3), rep("物种8", 3), rep("物种9", 2),
+  rep("物种10", 2), rep("物种11", 2), rep("物种12", 2),
+  rep("物种13", 1), rep("物种14", 1), rep("物种15", 1),
+  rep("物种16", 1), rep("物种17", 1), rep("物种18", 1),
+  rep("物种19", 1), rep("物种20", 1), rep("物种21", 1),
+  rep("物种22", 1), rep("物种23", 1), rep("物种24", 1),
+  rep("物种25", 1), rep("物种26", 1), rep("物种27", 1),
+  rep("物种28", 1)
+)
 
 # 自助法函数
 bootstrap_diversity <- function(data, n_boot = 1000) {
@@ -773,7 +785,7 @@ bootstrap_diversity <- function(data, n_boot = 1000) {
   for (i in 1:n_boot) {
     boot_sample <- sample(data, replace = TRUE)
     species_table <- table(boot_sample)
-    boot_diversity[i] <- diversity(species_table, index = "shannon")
+    boot_diversity[i] <- vegan::diversity(species_table, index = "shannon")
   }
   return(boot_diversity)
 }
@@ -789,8 +801,10 @@ ci_10yr <- quantile(boot_10yr, c(0.025, 0.975))
 ci_primary <- quantile(boot_primary, c(0.025, 0.975))
 
 # 输出结果
-cat("5年恢复林 Shannon多样性: ", round(mean(boot_5yr), 3),
-    " 95%CI:[", round(ci_5yr[1], 3), ",", round(ci_5yr[2], 3), "]\n")
+cat(
+  "5年恢复林 Shannon多样性: ", round(mean(boot_5yr), 3),
+  " 95%CI:[", round(ci_5yr[1], 3), ",", round(ci_5yr[2], 3), "]\n"
+)
 ```
 
 ```
@@ -798,8 +812,10 @@ cat("5年恢复林 Shannon多样性: ", round(mean(boot_5yr), 3),
 ```
 
 ``` r
-cat("10年恢复林 Shannon多样性: ", round(mean(boot_10yr), 3),
-    " 95%CI:[", round(ci_10yr[1], 3), ",", round(ci_10yr[2], 3), "]\n")
+cat(
+  "10年恢复林 Shannon多样性: ", round(mean(boot_10yr), 3),
+  " 95%CI:[", round(ci_10yr[1], 3), ",", round(ci_10yr[2], 3), "]\n"
+)
 ```
 
 ```
@@ -807,8 +823,10 @@ cat("10年恢复林 Shannon多样性: ", round(mean(boot_10yr), 3),
 ```
 
 ``` r
-cat("原生林 Shannon多样性: ", round(mean(boot_primary), 3),
-    " 95%CI:[", round(ci_primary[1], 3), ",", round(ci_primary[2], 3), "]\n")
+cat(
+  "原生林 Shannon多样性: ", round(mean(boot_primary), 3),
+  " 95%CI:[", round(ci_primary[1], 3), ",", round(ci_primary[2], 3), "]\n"
+)
 ```
 
 ```
@@ -908,7 +926,10 @@ plot(anosim_result, main = "ANOSIM分析：不同河段底栖动物群落差异"
 ## notches went outside hinges ('box'): maybe set notch=FALSE
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-10-1.png" alt="ANOSIM分析：不同河段底栖动物群落差异检验结果" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10-1)ANOSIM分析：不同河段底栖动物群落差异检验结果</p>
+</div>
 
 ``` r
 # 补充分析：群落组成排序图
@@ -952,7 +973,10 @@ ordiellipse(nmds_result, groups, col = 1:3, lwd = 2)
 legend("topright", legend = levels(groups), col = 1:3, pch = 16)
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-10-2.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-10-2.png" alt="ANOSIM分析：不同河段底栖动物群落差异检验结果" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10-2)ANOSIM分析：不同河段底栖动物群落差异检验结果</p>
+</div>
 
 **结果解释**：
 - **R统计量**：取值范围-1到1，值越大表示组间差异越明显
@@ -1119,8 +1143,10 @@ set.seed(123)
 
 # 创建观测点模式（简化示例）
 # 假设在100m×100m的样地中有85棵树
-observed_pattern <- ppp(x = runif(85, 0, 100), y = runif(85, 0, 100),
-                        window = owin(c(0, 100), c(0, 100)))
+observed_pattern <- ppp(
+  x = runif(85, 0, 100), y = runif(85, 0, 100),
+  window = owin(c(0, 100), c(0, 100))
+)
 
 # 计算观测Ripley's K函数
 obs_K <- Kest(observed_pattern, correction = "border")
@@ -1132,15 +1158,17 @@ sim_K <- list()
 
 for (i in 1:n_sim) {
   # 生成完全空间随机点模式
-  sim_pattern <- rpoispp(85/10000, win = observed_pattern$window)
+  sim_pattern <- rpoispp(85 / 10000, win = observed_pattern$window)
   sim_patterns[[i]] <- sim_pattern
   sim_K[[i]] <- Kest(sim_pattern, correction = "border")
 }
 
 # 构建包络线
-K_envelope <- envelope(observed_pattern, Kest, nsim = 999,
-                       correction = "border",
-                       simulate = expression(rpoispp(85/10000)))
+K_envelope <- envelope(observed_pattern, Kest,
+  nsim = 999,
+  correction = "border",
+  simulate = expression(rpoispp(85 / 10000))
+)
 ```
 
 ```
@@ -1167,17 +1195,24 @@ K_envelope <- envelope(observed_pattern, Kest, nsim = 999,
 
 ``` r
 # 可视化结果
-plot(K_envelope, main = "巴西坚果树空间分布模式检验",
-     xlab = "距离 (m)", ylab = "K(r)",
-     legend = FALSE)
+plot(K_envelope,
+  main = "巴西坚果树空间分布模式检验",
+  xlab = "距离 (m)", ylab = "K(r)",
+  legend = FALSE
+)
 
 # 添加理论期望线（完全空间随机性）
 curve(pi * x^2, from = 0, to = 25, add = TRUE, col = "red", lwd = 2)
-legend("topleft", legend = c("观测K函数", "模拟包络", "理论CSR"),
-       col = c("black", "grey", "red"), lwd = c(1, 1, 2), lty = c(1, 1, 1))
+legend("topleft",
+  legend = c("观测K函数", "模拟包络", "理论CSR"),
+  col = c("black", "grey", "red"), lwd = c(1, 1, 2), lty = c(1, 1, 1)
+)
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-11-1.png" alt="巴西坚果树空间分布模式检验：Ripley's K函数包络分析" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-11)巴西坚果树空间分布模式检验：Ripley's K函数包络分析</p>
+</div>
 
 ``` r
 # 计算显著性
@@ -1232,11 +1267,11 @@ set.seed(123)
 # 模拟小丑鱼分布数据
 # 创建环境协变量（珊瑚覆盖率）
 coral_coverage <- as.im(function(x, y) {
-  0.7 * exp(-((x-50)^2 + (y-50)^2)/1000) + 0.3
+  0.7 * exp(-((x - 50)^2 + (y - 50)^2) / 1000) + 0.3
 }, W = owin(c(0, 100), c(0, 100)))
 
 # 生成基于环境的小丑鱼分布（非齐次泊松过程）
-lambda0 <- 0.01  # 基础强度
+lambda0 <- 0.01 # 基础强度
 intensity <- eval.im(lambda0 * (1 + 2 * coral_coverage))
 observed_fish <- rpoispp(intensity)
 
@@ -1359,7 +1394,10 @@ plot(coral_coverage, main = "珊瑚覆盖率分布")
 plot(observed_fish, add = TRUE, cols = "red", pch = 16, cex = 0.8)
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-12-1.png" alt="小丑鱼分布与环境关系的点过程模型拟合优度检验" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-12-1)小丑鱼分布与环境关系的点过程模型拟合优度检验</p>
+</div>
 
 ``` r
 # 模型预测强度图
@@ -1368,7 +1406,10 @@ plot(predicted_intensity, main = "预测的小丑鱼分布强度")
 plot(observed_fish, add = TRUE, cols = "white", pch = 1, cex = 0.6)
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-12-2.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-12-2.png" alt="小丑鱼分布与环境关系的点过程模型拟合优度检验" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-12-2)小丑鱼分布与环境关系的点过程模型拟合优度检验</p>
+</div>
 
 **生态学意义**：如果拟合优度检验显示模型拟合良好（p值不显著），表明小丑鱼的分布主要受珊瑚覆盖率的影响。这支持了"栖息地选择"假说——小丑鱼倾向于选择珊瑚覆盖率高的区域。如果模型拟合不佳，可能表明存在其他重要因素，如：
 - 种内竞争导致的空间排斥
@@ -1399,9 +1440,9 @@ plot(observed_fish, add = TRUE, cols = "white", pch = 1, cex = 0.6)
 
 ``` r
 # 常用的空间分析包
-library(spatstat)    # 点模式分析
-library(spdep)       # 空间依赖性分析
-library(gstat)       # 地统计学
+library(spatstat) # 点模式分析
+library(spdep) # 空间依赖性分析
+library(gstat) # 地统计学
 ```
 
 ```
@@ -1416,7 +1457,7 @@ library(gstat)       # 地统计学
 ```
 
 ``` r
-library(geoR)        # 地统计学
+library(geoR) # 地统计学
 ```
 
 ```
@@ -1432,7 +1473,7 @@ library(geoR)        # 地统计学
 ```
 
 ``` r
-library(adespatial)  # 空间生态学
+library(adespatial) # 空间生态学
 ```
 
 ```
@@ -1586,8 +1627,8 @@ library(picante)
 
 # 模拟系统发育树和性状数据
 set.seed(123)
-tree <- rtree(30)  # 生成30个物种的系统发育树
-trait_data <- rnorm(30, mean = 10, sd = 2)  # 模拟性状数据
+tree <- rtree(30) # 生成30个物种的系统发育树
+trait_data <- rnorm(30, mean = 10, sd = 2) # 模拟性状数据
 names(trait_data) <- tree$tip.label
 
 # 计算观测Blomberg's K统计量
@@ -1667,15 +1708,22 @@ print(lambda_test)
 # 可视化系统发育信号
 # 绘制系统发育树和性状值
 plotTree(tree, type = "fan", fsize = 0.8)
-tiplabels(pch = 21, bg = colorRampPalette(c("blue", "red"))(30)[rank(trait_data)],
-          cex = 1.5)
+tiplabels(
+  pch = 21, bg = colorRampPalette(c("blue", "red"))(30)[rank(trait_data)],
+  cex = 1.5
+)
 
 # 添加性状值颜色图例
-legend("bottomleft", legend = c("低性状值", "高性状值"),
-       fill = c("blue", "red"), bty = "n")
+legend("bottomleft",
+  legend = c("低性状值", "高性状值"),
+  fill = c("blue", "red"), bty = "n"
+)
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-14-1.png" alt="植物功能性状系统发育信号检验与可视化" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-14)植物功能性状系统发育信号检验与可视化</p>
+</div>
 
 **生态学意义**：如果检验显示显著的系统发育信号（p < 0.05），表明这些功能性状在亲缘关系较近的物种间更为相似。这支持了"系统发育生态位保守性"假说——物种倾向于保留祖先的生态特性。这种信息对于理解群落组装机制、预测物种对气候变化的响应以及设计基于系统发育多样性的保护策略都具有重要价值。
 
@@ -1714,7 +1762,7 @@ library(geiger)
 
 # 模拟系统发育树和性状数据
 set.seed(123)
-tree <- rtree(40)  # 40个物种的系统发育树
+tree <- rtree(40) # 40个物种的系统发育树
 
 # 模拟相关性状（受系统发育影响）
 defense_trait <- rTraitCont(tree, model = "BM", sigma = 1)
@@ -1764,23 +1812,32 @@ cat("经验p值:", p_value, "\n")
 par(mfrow = c(1, 2))
 
 # 原始性状的相关性图
-plot(defense_trait, growth_rate, pch = 16, col = "blue",
-     xlab = "防御物质含量", ylab = "生长速率",
-     main = "原始性状相关性")
+plot(defense_trait, growth_rate,
+  pch = 16, col = "blue",
+  xlab = "防御物质含量", ylab = "生长速率",
+  main = "原始性状相关性"
+)
 abline(lm(growth_rate ~ defense_trait), col = "red", lwd = 2)
 
 # 系统发育独立对比的相关性图
-plot(pic_defense, pic_growth, pch = 16, col = "darkgreen",
-     xlab = "防御物质PIC", ylab = "生长速率PIC",
-     main = "系统发育独立对比相关性")
+plot(pic_defense, pic_growth,
+  pch = 16, col = "darkgreen",
+  xlab = "防御物质PIC", ylab = "生长速率PIC",
+  main = "系统发育独立对比相关性"
+)
 abline(lm(pic_growth ~ pic_defense), col = "red", lwd = 2)
 
 # 添加相关性系数
 text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
-     paste("r =", round(obs_cor, 3)), col = "red")
+  paste("r =", round(obs_cor, 3)),
+  col = "red"
+)
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-15-1.png" alt="植物防御性状与生长速率关系的系统发育独立对比分析" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-15)植物防御性状与生长速率关系的系统发育独立对比分析</p>
+</div>
 
 **生态学意义**：通过系统发育独立对比的置换检验，我们可以更可靠地推断防御性状与生长速率之间的生态权衡关系。如果检验显示显著的正相关（p < 0.05），表明在去除系统发育影响后，防御物质含量高的物种确实具有较慢的生长速率，支持了"生长-防御权衡"假说。这种分析为理解植物生活史策略的进化提供了重要证据。
 
@@ -1989,8 +2046,8 @@ calc_c_score <- function(mat) {
   c_scores <- numeric(choose(n_spp, 2))
   idx <- 1
 
-  for (i in 1:(n_spp-1)) {
-    for (j in (i+1):n_spp) {
+  for (i in 1:(n_spp - 1)) {
+    for (j in (i + 1):n_spp) {
       # 计算物种i和j的共现模式
       both_present <- sum(mat[i, ] == 1 & mat[j, ] == 1)
       only_i <- sum(mat[i, ] == 1 & mat[j, ] == 0)
@@ -2048,24 +2105,31 @@ null_dist_df <- data.frame(c_score = sim_c_scores)
 ggplot(null_dist_df, aes(x = c_score)) +
   geom_histogram(fill = "lightblue", alpha = 0.7, bins = 30) +
   geom_vline(xintercept = obs_c_score, color = "red", size = 1) +
-  annotate("text", x = obs_c_score * 1.1, y = 50,
-           label = paste("观测C-score =", round(obs_c_score, 2)), color = "red") +
-  labs(title = "群落组装零模型检验",
-       x = "C-score", y = "频数",
-       subtitle = paste("p值 =", round(p_value, 4))) +
+  annotate("text",
+    x = obs_c_score * 1.1, y = 50,
+    label = paste("观测C-score =", round(obs_c_score, 2)), color = "red"
+  ) +
+  labs(
+    title = "群落组装零模型检验",
+    x = "C-score", y = "频数",
+    subtitle = paste("p值 =", round(p_value, 4))
+  ) +
   theme_minimal()
 ```
 
 ```
-## Warning: Using `size` aesthetic for lines was
-## deprecated in ggplot2 3.4.0.
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2
+## 3.4.0.
 ## ℹ Please use `linewidth` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()`
-## to see where this warning was generated.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this
+## warning was generated.
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-16-1.png" alt="热带雨林群落组装零模型检验：C-score分布与物种分布热图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-16-1)热带雨林群落组装零模型检验：C-score分布与物种分布热图</p>
+</div>
 
 ``` r
 # 群落矩阵热图
@@ -2076,14 +2140,21 @@ colnames(comm_melt) <- c("物种", "样点", "存在")
 ggplot(comm_melt, aes(x = 样点, y = 物种, fill = factor(存在))) +
   geom_tile() +
   scale_fill_manual(values = c("white", "darkgreen")) +
-  labs(title = "热带雨林群落物种分布",
-       x = "样点", y = "物种", fill = "存在") +
+  labs(
+    title = "热带雨林群落物种分布",
+    x = "样点", y = "物种", fill = "存在"
+  ) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),
-        axis.text.y = element_text(size = 6))
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.text.y = element_text(size = 6)
+  )
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-16-2.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-16-2.png" alt="热带雨林群落组装零模型检验：C-score分布与物种分布热图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-16-2)热带雨林群落组装零模型检验：C-score分布与物种分布热图</p>
+</div>
 
 **生态学意义**：如果零模型检验显示显著的C-score（p < 0.05），表明树种的共现模式显著偏离随机期望。较高的C-score通常表示物种间存在竞争排斥——物种倾向于避免在相同的样点中共存。这支持了"竞争排斥"假说在热带雨林群落组装中的重要性。
 
@@ -2225,8 +2296,10 @@ for (i in 1:n_sim) {
   sim_network <- pollination_network
 
   # 保持行和列总和不变的随机化
-  sim_network <- r2dtable(1, rowSums(pollination_network),
-                         colSums(pollination_network))[[1]]
+  sim_network <- r2dtable(
+    1, rowSums(pollination_network),
+    colSums(pollination_network)
+  )[[1]]
   sim_network[sim_network > 0] <- 1
 
   sim_nestedness[i] <- nested(sim_network, method = "NODF2")
@@ -2259,15 +2332,22 @@ null_dist_df <- data.frame(nestedness = sim_nestedness)
 ggplot(null_dist_df, aes(x = nestedness)) +
   geom_histogram(fill = "lightblue", alpha = 0.7, bins = 30) +
   geom_vline(xintercept = obs_nestedness, color = "red", size = 1) +
-  annotate("text", x = obs_nestedness * 1.1, y = 50,
-           label = paste("观测嵌套性 =", round(obs_nestedness, 2)), color = "red") +
-  labs(title = "传粉网络嵌套性零模型检验",
-       x = "嵌套性(NODF)", y = "频数",
-       subtitle = paste("p值 =", round(p_value, 4))) +
+  annotate("text",
+    x = obs_nestedness * 1.1, y = 50,
+    label = paste("观测嵌套性 =", round(obs_nestedness, 2)), color = "red"
+  ) +
+  labs(
+    title = "传粉网络嵌套性零模型检验",
+    x = "嵌套性(NODF)", y = "频数",
+    subtitle = paste("p值 =", round(p_value, 4))
+  ) +
   theme_minimal()
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-17-1.png" alt="传粉网络嵌套性零模型检验：嵌套性分布与网络结构可视化" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-17-1)传粉网络嵌套性零模型检验：嵌套性分布与网络结构可视化</p>
+</div>
 
 ``` r
 # 网络可视化
@@ -2278,13 +2358,11 @@ bipartite_graph <- graph.incidence(pollination_network)
 ```
 
 ```
-## Warning: `graph.incidence()` was deprecated in igraph
-## 2.0.0.
-## ℹ Please use
-##   `graph_from_biadjacency_matrix()` instead.
+## Warning: `graph.incidence()` was deprecated in igraph 2.0.0.
+## ℹ Please use `graph_from_biadjacency_matrix()` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()`
-## to see where this warning was generated.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this
+## warning was generated.
 ```
 
 ``` r
@@ -2296,19 +2374,24 @@ V(bipartite_graph)$label.cex <- 0.7
 
 # 绘制网络图
 plot(bipartite_graph,
-     layout = layout.bipartite,
-     main = "传粉网络结构",
-     vertex.label = NA)
+  layout = layout.bipartite,
+  main = "传粉网络结构",
+  vertex.label = NA
+)
 
 # 添加图例
 legend("bottomleft",
-       legend = c("植物", "传粉者"),
-       pch = c(15, 16),
-       col = c("lightgreen", "yellow"),
-       bty = "n")
+  legend = c("植物", "传粉者"),
+  pch = c(15, 16),
+  col = c("lightgreen", "yellow"),
+  bty = "n"
+)
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-17-2.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-17-2.png" alt="传粉网络嵌套性零模型检验：嵌套性分布与网络结构可视化" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-17-2)传粉网络嵌套性零模型检验：嵌套性分布与网络结构可视化</p>
+</div>
 
 ``` r
 # 网络矩阵热图
@@ -2319,14 +2402,21 @@ colnames(network_melt) <- c("植物", "传粉者", "相互作用")
 ggplot(network_melt, aes(x = 传粉者, y = 植物, fill = factor(相互作用))) +
   geom_tile() +
   scale_fill_manual(values = c("white", "purple")) +
-  labs(title = "传粉网络相互作用矩阵",
-       x = "传粉者", y = "植物", fill = "相互作用") +
+  labs(
+    title = "传粉网络相互作用矩阵",
+    x = "传粉者", y = "植物", fill = "相互作用"
+  ) +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
-        axis.text.y = element_text(size = 8))
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    axis.text.y = element_text(size = 8)
+  )
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-17-3.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-17-3.png" alt="传粉网络嵌套性零模型检验：嵌套性分布与网络结构可视化" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-17-3)传粉网络嵌套性零模型检验：嵌套性分布与网络结构可视化</p>
+</div>
 
 **生态学意义**：如果零模型检验显示显著的嵌套性（p < 0.05），表明传粉网络的结构确实具有嵌套模式。嵌套结构通常被认为能够增强生态网络的稳定性和韧性——当某些物种消失时，嵌套结构有助于维持网络的连接性。这种结构信息对于理解传粉服务的稳定性和设计保护策略具有重要意义。
 
@@ -2361,10 +2451,10 @@ ggplot(network_melt, aes(x = 传粉者, y = 植物, fill = factor(相互作用))
 
 ``` r
 # 常用的零模型分析包
-library(vegan)      # 群落生态学零模型
-library(bipartite)  # 二分网络零模型
-library(igraph)     # 网络分析
-library(EcoSimR)    # 生态学零模型
+library(vegan) # 群落生态学零模型
+library(bipartite) # 二分网络零模型
+library(igraph) # 网络分析
+library(EcoSimR) # 生态学零模型
 ```
 
 ```
@@ -2383,7 +2473,7 @@ library(EcoSimR)    # 生态学零模型
 ```
 
 ``` r
-library(spaa)       # 物种关联分析
+library(spaa) # 物种关联分析
 ```
 
 ```
@@ -2404,8 +2494,9 @@ library(EcoSimR)
 # 物种共现零模型
 # 使用固定行和列总和的算法
 cooc_null <- cooc_null_model(comm_matrix,
-                            algo = "sim9",
-                            nReps = 1000)
+  algo = "sim9",
+  nReps = 1000
+)
 ```
 
 ```
@@ -2420,10 +2511,10 @@ summary(cooc_null)
 ```
 
 ```
-## Time Stamp:  Thu Oct  2 10:49:06 2025 
+## Time Stamp:  Thu Oct  2 15:12:46 2025 
 ## Reproducible:  
 ## Number of Replications:  
-## Elapsed Time:  0.19 secs 
+## Elapsed Time:  0.21 secs 
 ## Metric:  c_score 
 ## Algorithm:  sim9 
 ## Observed Index:  13.671 
@@ -2445,7 +2536,10 @@ summary(cooc_null)
 plot(cooc_null)
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-18-1.png" alt="物种共现零模型检验结果与嵌套性零分布可视化" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-18-1)物种共现零模型检验结果与嵌套性零分布可视化</p>
+</div>
 
 ``` r
 # 网络嵌套性零模型
@@ -2483,7 +2577,10 @@ hist(null_results, main = "嵌套性零分布", xlab = "嵌套性指数")
 abline(v = obs_nestedness, col = "red", lwd = 2)
 ```
 
-<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-18-2.png" width="672" />
+<div class="figure">
+<img src="07-hypothesis_test_part2_files/figure-html/unnamed-chunk-18-2.png" alt="物种共现零模型检验结果与嵌套性零分布可视化" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-18-2)物种共现零模型检验结果与嵌套性零分布可视化</p>
+</div>
 
 ### 生态学应用与保护意义
 

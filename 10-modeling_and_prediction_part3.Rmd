@@ -241,7 +241,7 @@ gam(y ~ s(x1) + s(x2) + ... + s(xp), data = dataset)
 
 让我们通过一个具体的生态学例子来演示可加性模型的应用。假设我们研究湖泊中浮游植物生物量（叶绿素a浓度）与环境因子的关系：
 
-```{r}
+```{r, fig.cap="浮游植物生物量与环境因子关系的可加性模型平滑效应图"}
 # 加载必要的包
 library(mgcv)
 library(ggplot2)
@@ -301,7 +301,7 @@ AIC(phyto_am, phyto_lm)
 
 平滑复杂度通过基函数维度(k)来控制，k值决定了平滑函数能够捕捉的"摆动"程度。如果k值太小，模型可能无法充分捕捉数据的非线性模式；如果k值太大，则可能导致过度拟合。
 
-```{r}
+```{r, fig.cap="可加性模型平滑复杂度诊断图"}
 # 检查平滑复杂度是否足够
 gam.check(phyto_am)
 
@@ -324,7 +324,7 @@ gam.check(phyto_am_adj)
 
 可加性模型的残差诊断需要检查残差的独立性、同方差性和分布假设。
 
-```{r}
+```{r, fig.cap="可加性模型残差诊断图"}
 # 残差诊断图
 par(mfrow = c(2, 2))
 
@@ -394,7 +394,7 @@ AIC(model_tp, model_cr)
 
 评估模型在新数据上的预测性能。
 
-```{r}
+```{r, fig.cap="温度对浮游植物生物量影响的预测曲线（含95%置信区间）"}
 # 交叉验证评估
 library(mgcv)
 set.seed(123)
@@ -689,7 +689,7 @@ $$g(\mu) = \log\left(\frac{\mu}{1-\mu}\right) = \eta$$
 
 4. **生态学应用**：在生态学中，比例数据常见于存活率研究、资源利用效率、栖息地选择等场景。
 
-```{r}
+```{r, fig.cap="土壤湿度对植物存活率影响的预测曲线（含95%置信区间）"}
 # 比例数据回归示例：研究环境因子对植物存活率的影响
 # 模拟生态学数据：植物存活率与环境因子的关系
 set.seed(123)
@@ -770,7 +770,7 @@ exp(coef(proportion_model))
 
 **工作残差（Working Residuals）**：在迭代加权最小二乘算法中使用的残差，通常用于诊断连接函数是否合适。
 
-```{r}
+```{r, fig.cap="逻辑回归模型残差诊断图"}
 # 残差诊断示例
 par(mfrow = c(2, 2))
 
@@ -827,7 +827,7 @@ if (dispersion_param > 1.5) {
 
 评估GLM的拟合优度需要使用适合特定分布的指标：
 
-```{r}
+```{r, fig.cap="逻辑回归模型ROC曲线"}
 # 模型拟合优度评估
 # 空模型和完整模型的偏差比较
 null_deviance <- logistic_model$null.deviance
@@ -893,7 +893,7 @@ print(rate_ratios)
 
 识别对模型有过度影响的观测值：
 
-```{r}
+```{r, fig.cap="逻辑回归模型影响点诊断图"}
 # 影响点检测
 # Cook距离
 cooks_d <- cooks.distance(logistic_model)
@@ -919,7 +919,7 @@ influencePlot(logistic_model)
 
 #### 预测与置信区间
 
-```{r}
+```{r, fig.cap="温度对物种出现概率影响的预测曲线（含95%置信区间）"}
 # 预测新数据
 new_data <- data.frame(
   temperature = seq(5, 30, length = 50),
@@ -1009,7 +1009,7 @@ $$g(\mu) = \beta_0 + f_1(x_1) + f_2(x_2) + \cdots + f_p(x_p)$$
 
 让我们通过一个具体的生态学例子来演示GAM的应用。假设我们研究鸟类物种丰富度与环境因子的关系：
 
-```{r}
+```{r, fig.cap="鸟类物种丰富度与环境因子关系的广义可加模型分析"}
 # 加载必要的包
 library(mgcv)
 library(ggplot2)
@@ -1145,7 +1145,7 @@ AIC(bird_gam, bird_gam_nb)
 
 GAM的平滑复杂度诊断与可加性模型类似，但需要考虑分布特性的影响。
 
-```{r}
+```{r, fig.cap="广义可加模型平滑复杂度诊断图"}
 # 检查平滑复杂度是否足够
 gam.check(bird_gam)
 
@@ -1167,7 +1167,7 @@ gam.check(bird_gam_adj)
 
 GAM的残差诊断需要考虑分布特性和连接函数的影响。
 
-```{r}
+```{r, fig.cap="广义可加模型残差诊断图"}
 # 残差诊断图
 par(mfrow = c(2, 2))
 
@@ -1352,7 +1352,7 @@ lmer(y ~ x1 + x2 + (1 + x1 | group), data = dataset)
 
 让我们通过一个具体的生态学例子来演示混合效应模型的应用。假设我们研究不同森林样地中树木直径生长对环境因子的响应：
 
-```r
+```{r, fig.cap="混合效应模型诊断图"}
 # 加载必要的包
 library(lme4)
 library(lmerTest)  # 提供p值
@@ -1518,7 +1518,7 @@ model_simple <- glmer(success ~ temperature + rainfall + predator_pressure + (1 
 
 让我们进一步演示统计筛选的具体方法：
 
-```{r}
+```{r, fig.cap="混合效应模型统计筛选诊断图"}
 # 统计筛选方法演示
 
 # 1. 固定效应筛选：检验温度效应是否显著
@@ -1666,7 +1666,7 @@ check_overdispersion(final_model)
 
 让我们通过一个空间生态学的例子来展示混合效应模型的应用价值：
 
-```{r}
+```{r, fig.cap="空间混合模型随机效应分布图"}
 # 空间混合模型示例：研究不同流域中溪流鱼类丰富度与环境因子的关系
 set.seed(123)
 n_watersheds <- 15
@@ -1744,7 +1744,7 @@ ggplot(data.frame(effect = random_effects[[1]]), aes(x = effect)) +
 混合效应模型的诊断比普通回归模型更为复杂，需要特别关注随机效应的分布假设、模型收敛性和奇异拟合问题。
 
 **随机效应诊断**：
-```{r}
+```{r, fig.cap="混合效应模型诊断示例图"}
 # 重新创建混合效应模型用于诊断示例
 library(lme4)
 set.seed(123)
@@ -1893,7 +1893,7 @@ $$y_i | y_{-i} \sim N(\mu_i + \sum_{j\neq i} c_{ij}(y_j - \mu_j), \tau_i^2)$$
 
 在R语言中，时空自相关模型主要通过多个包实现，包括`spdep`、`spatialreg`、`spTimer`、`INLA`等。这些包提供了不同的建模方法和计算算法。
 
-```{r}
+```{r, fig.cap="湖泊叶绿素浓度空间分布图"}
 # 加载必要的包
 library(spdep)
 library(spatialreg)
@@ -2060,7 +2060,7 @@ ggplot(spatial_data, aes(x = x_coord, y = y_coord, color = chlorophyll)) +
 
 让我们通过一个具体的生态学应用例子来展示时空模型的价值：
 
-```{r}
+```{r, fig.cap="鸟类物种丰富度空间预测格局图"}
 # 鸟类种群动态的时空建模示例（简化版本）
 set.seed(123)
 n_sites <- 30 # 30个观测点
@@ -2149,7 +2149,7 @@ cat("提供更准确的物种丰富度预测。\n")
 时空自相关模型的诊断比传统回归模型更为复杂，需要特别关注空间残差的相关性、模型设定的合理性和计算可行性。
 
 **空间残差诊断**：
-```{r}
+```{r, fig.cap="空间模型残差分布图"}
 # 检查残差的空间自相关
 residuals_moran <- moran.test(residuals(sar_model), W_list)
 cat("残差的空间自相关检验:\n")
@@ -2350,7 +2350,7 @@ tryCatch({
 
 让我们可视化模型结果并分析直接效应和间接效应：
 
-```{r}
+```{r, fig.cap="森林生态系统结构方程模型路径图"}
 # 可视化结构方程模型
 semPaths(fit,
   what = "est", whatLabels = "std",

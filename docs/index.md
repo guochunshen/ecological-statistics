@@ -79,7 +79,7 @@ install.packages(c(
   "MuMIn", "caret", "car", "BMS", "monomvn", "BayesFactor",
   "gratia", "AER", "lmerTest", "performance",
   "spatialreg", "spTimer", "lavaan", "semPlot",
-  "rpart.plot", "pdp", "torch"
+  "rpart.plot", "pdp", "torch", "DHARMa"
 ))
 
 devtools::install_github("GotelliLab/EcoSimR")

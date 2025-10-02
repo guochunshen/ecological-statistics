@@ -80,7 +80,7 @@
 
 让我们通过一个流程图来直观展示这个通用流程：
 
-```{r hypothesis-testing-flowchart, echo=FALSE, fig.width=8, fig.height=6, fig.cap="假设检验通用流程图"}
+```{r hypothesis-testing-flowchart, echo=FALSE, fig.width=8, fig.height=6, fig.cap="假设检验通用流程图：展示从明确研究问题到解释结果的完整统计推断过程"}
 # 加载必要的包
 library(DiagrammeR)
 
@@ -168,7 +168,7 @@ grViz("digraph hypothesis_testing {
 
 为了更好地理解零假设与备择假设的分布关系，让我们通过R代码生成一个可视化图表：
 
-```{r null-alternative-distribution, echo=TRUE, fig.width=8, fig.height=5, fig.cap="零假设与备择假设分布比较"}
+```{r null-alternative-distribution, echo=TRUE, fig.width=8, fig.height=5, fig.cap="零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值"}
 # 加载必要的包
 library(ggplot2)
 
@@ -225,7 +225,7 @@ p值的解释需要特别注意：
 
 为了更直观地理解p值的概念，让我们通过R代码生成一个可视化图表：
 
-```{r p-value-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="p值的可视化解释"}
+```{r p-value-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率"}
 # 模拟在零假设下的检验统计量分布
 null_test_stats <- rnorm(10000, mean = 0, sd = 1)
 
@@ -330,7 +330,7 @@ ggplot(p_value_df, aes(x = test_stat)) +
 
 为了更好地理解第一类错误和第二类错误的概念，让我们通过R代码生成一个可视化图表：
 
-```{r error-types-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="第一类错误与第二类错误的可视化"}
+```{r error-types-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布"}
 # 设置参数
 alpha <- 0.05 # 显著性水平
 effect_size <- 1.5 # 效应大小
@@ -394,7 +394,7 @@ ggplot(error_df, aes(x = x, y = density, color = distribution)) +
 
 统计功效受到多个因素的影响，其中样本量是一个关键因素。让我们通过R代码生成一个图表来展示样本量如何影响统计功效：
 
-```{r power-sample-size-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="样本量对统计功效的影响"}
+```{r power-sample-size-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效"}
 # 模拟不同样本量下的统计功效
 sample_sizes <- seq(10, 200, by = 10)
 effect_sizes <- c(0.2, 0.5, 0.8) # 小、中、大效应
@@ -475,7 +475,7 @@ ggplot(power_df, aes(
 
 让我们通过R代码生成一个可视化图表来理解效应大小和置信区间的概念：
 
-```{r effect-size-ci-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="效应大小与置信区间的可视化"}
+```{r effect-size-ci-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围"}
 # 模拟多个研究的效应大小和置信区间
 set.seed(123)
 studies <- 10
@@ -604,7 +604,7 @@ $t$分布与正态分布形状相似，都是钟形曲线，但$t$分布的尾�
 
 为了更好地理解单样本t检验的原理，让我们通过R代码生成一个可视化图表：
 
-```{r one-sample-t-test-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="单样本t检验的可视化解释"}
+```{r one-sample-t-test-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域"}
 # 设置参数
 set.seed(123)
 mu0 <- 7.0 # 理论值 $\mu_0$（中性pH）
@@ -705,7 +705,7 @@ ggplot(t_df, aes(x = x, y = density)) +
 
 为了更好地理解单样本符号检验的原理，让我们通过R代码生成一个可视化图表：
 
-```{r sign-test-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="单样本符号检验的可视化解释"}
+```{r sign-test-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量"}
 # 设置参数
 set.seed(123)
 m0 <- 50 # 理论中位值 $M_0$（环境标准）
@@ -806,7 +806,7 @@ $$s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$$
 
 为了更好地理解独立样本t检验的原理，让我们通过R代码生成一个可视化图表：
 
-```{r independent-t-test-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="独立样本t检验的可视化解释"}
+```{r independent-t-test-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域"}
 # 设置参数
 set.seed(123)
 
@@ -919,7 +919,7 @@ $$t = \frac{\bar{d}}{s_d / \sqrt{n}}$$
 
 为了更好地理解配对样本t检验的原理，让我们通过R代码生成一个可视化图表：
 
-```{r paired-t-test-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="配对样本t检验的可视化解释"}
+```{r paired-t-test-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域"}
 # 设置参数
 set.seed(123)
 
@@ -1026,7 +1026,7 @@ Mann-Whitney U检验的主要优点是它对分布形态没有要求，对极端
 
 为了更好地理解Mann-Whitney U检验的原理，让我们通过R代码生成一个可视化图表：
 
-```{r mann-whitney-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="Mann-Whitney U检验的可视化解释"}
+```{r mann-whitney-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较"}
 # 设置参数
 set.seed(123)
 
@@ -1151,7 +1151,7 @@ $$H_1: \text{至少有一对组的均值不相等}$$
 
 让我们通过R代码生成一个可视化图表来直观理解这个问题：
 
-```{r multiple-t-test-vs-anova, echo=TRUE, fig.width=10, fig.height=6, fig.cap="多个t检验与方差分析的比较"}
+```{r multiple-t-test-vs-anova, echo=TRUE, fig.width=10, fig.height=6, fig.cap="多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案"}
 # 设置参数
 set.seed(123)
 
@@ -1313,7 +1313,7 @@ p1 + p2 + plot_annotation(
 
 为了更好地理解方差分析的原理，让我们通过R代码生成一个可视化图表：
 
-```{r anova-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="方差分析的可视化解释"}
+```{r anova-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域"}
 # 设置参数
 set.seed(123)
 
@@ -1427,7 +1427,7 @@ Kruskal-Wallis检验的主要优点是它对分布形态没有要求，对极端
 
 为了更好地理解Kruskal-Wallis检验的原理，让我们通过R代码生成一个可视化图表：
 
-```{r kruskal-wallis-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="Kruskal-Wallis检验的可视化解释"}
+```{r kruskal-wallis-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较"}
 # 设置参数
 set.seed(123)
 
@@ -1503,7 +1503,7 @@ $$\alpha_{family} = 1 - (1 - \alpha)^m$$
 
 让我们通过一个流程图来理解完整的分析流程：
 
-```{r multiple-comparison-flowchart, echo=FALSE, fig.width=8, fig.height=4, fig.cap="多重比较分析流程图"}
+```{r multiple-comparison-flowchart, echo=FALSE, fig.width=8, fig.height=4, fig.cap="多重比较分析流程图：展示从方差分析到多重比较校正的完整统计分析流程"}
 # 加载必要的包
 library(DiagrammeR)
 
@@ -1610,7 +1610,7 @@ Tukey HSD检验是生态学中最常用的多重比较方法之一，特别适�
 
 **R代码实现**：
 
-```{r multiple-comparison-example, echo=TRUE, fig.width=10, fig.height=6, fig.cap="多重比较校正实例分析"}
+```{r multiple-comparison-example, echo=TRUE, fig.width=10, fig.height=6, fig.cap="多重比较校正实例分析：展示不同森林类型鸟类物种丰富度的多重比较结果及其可视化"}
 # 设置参数
 set.seed(123)
 
@@ -1731,7 +1731,7 @@ p1 + p2 + plot_layout(guides = "collect") &
 
 让我们通过另一个可视化来理解多重比较校正如何影响p值的解释：
 
-```{r multiple-comparison-visualization, echo=TRUE, fig.width=10, fig.height=6, fig.cap="多重比较校正效果的可视化"}
+```{r multiple-comparison-visualization, echo=TRUE, fig.width=10, fig.height=6, fig.cap="多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响"}
 # 模拟多个比较的p值
 set.seed(123)
 num_tests <- 20
@@ -2086,7 +2086,7 @@ print(chisq_power)
 
 功效曲线可以直观地展示样本量与统计功效之间的关系，帮助我们理解样本量选择的权衡：
 
-```{r power-curve-plotting, echo=TRUE, fig.width=8, fig.height=5, fig.cap="样本量对统计功效的影响"}
+```{r power-curve-plotting, echo=TRUE, fig.width=8, fig.height=5, fig.cap="样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效"}
 # 加载绘图包
 library(ggplot2)
 
@@ -2146,7 +2146,7 @@ ggplot(power_curve, aes(x = sample_size, y = power)) +
 
 由于效应大小的估计往往存在不确定性，进行敏感性分析是明智的做法：
 
-```{r sensitivity-analysis, echo=TRUE, fig.width=8, fig.height=5, fig.cap="效应大小对所需样本量的影响"}
+```{r sensitivity-analysis, echo=TRUE, fig.width=8, fig.height=5, fig.cap="效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量"}
 # 测试不同效应大小下的样本量需求
 effect_sizes <- c(0.2, 0.3, 0.5, 0.8) # 小、中小、中、大效应
 sample_needs <- sapply(effect_sizes, function(d) {

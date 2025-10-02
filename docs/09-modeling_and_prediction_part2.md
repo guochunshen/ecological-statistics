@@ -75,7 +75,7 @@ eco_data <- data.frame(
 model_linear <- lm(biomass ~ nutrient, data = eco_data)
 model_quadratic <- lm(biomass ~ poly(nutrient, 2), data = eco_data)
 model_cubic <- lm(biomass ~ poly(nutrient, 3), data = eco_data)
-model_overfit <- lm(biomass ~ poly(nutrient, 10), data = eco_data)  # 过度拟合
+model_overfit <- lm(biomass ~ poly(nutrient, 10), data = eco_data) # 过度拟合
 
 # 计算拟合优度（$R^2$）
 r2_linear <- summary(model_linear)$r.squared
@@ -93,35 +93,46 @@ aic_overfit <- AIC(model_overfit)
 par(mfrow = c(2, 2))
 
 # 线性模型
-plot(biomass ~ nutrient, data = eco_data,
-     main = paste("线性模型\n$R^2$ =", round(r2_linear, 3), "$\\text{AIC}$ =", round(aic_linear, 1)),
-     xlab = "土壤养分", ylab = "植物生物量",
-     pch = 16, col = "blue")
+plot(biomass ~ nutrient,
+  data = eco_data,
+  main = paste("线性模型\n$R^2$ =", round(r2_linear, 3), "$\\text{AIC}$ =", round(aic_linear, 1)),
+  xlab = "土壤养分", ylab = "植物生物量",
+  pch = 16, col = "blue"
+)
 lines(soil_nutrient, predict(model_linear), col = "red", lwd = 2)
 
 # 二次模型
-plot(biomass ~ nutrient, data = eco_data,
-     main = paste("二次模型\n$R^2$ =", round(r2_quadratic, 3), "$\\text{AIC}$ =", round(aic_quadratic, 1)),
-     xlab = "土壤养分", ylab = "植物生物量",
-     pch = 16, col = "blue")
+plot(biomass ~ nutrient,
+  data = eco_data,
+  main = paste("二次模型\n$R^2$ =", round(r2_quadratic, 3), "$\\text{AIC}$ =", round(aic_quadratic, 1)),
+  xlab = "土壤养分", ylab = "植物生物量",
+  pch = 16, col = "blue"
+)
 lines(soil_nutrient, predict(model_quadratic), col = "red", lwd = 2)
 
 # 三次模型
-plot(biomass ~ nutrient, data = eco_data,
-     main = paste("三次模型\n$R^2$ =", round(r2_cubic, 3), "$\\text{AIC}$ =", round(aic_cubic, 1)),
-     xlab = "土壤养分", ylab = "植物生物量",
-     pch = 16, col = "blue")
+plot(biomass ~ nutrient,
+  data = eco_data,
+  main = paste("三次模型\n$R^2$ =", round(r2_cubic, 3), "$\\text{AIC}$ =", round(aic_cubic, 1)),
+  xlab = "土壤养分", ylab = "植物生物量",
+  pch = 16, col = "blue"
+)
 lines(soil_nutrient, predict(model_cubic), col = "red", lwd = 2)
 
 # 过度拟合模型
-plot(biomass ~ nutrient, data = eco_data,
-     main = paste("10次多项式\n$R^2$ =", round(r2_overfit, 3), "$\\text{AIC}$ =", round(aic_overfit, 1)),
-     xlab = "土壤养分", ylab = "植物生物量",
-     pch = 16, col = "blue")
+plot(biomass ~ nutrient,
+  data = eco_data,
+  main = paste("10次多项式\n$R^2$ =", round(r2_overfit, 3), "$\\text{AIC}$ =", round(aic_overfit, 1)),
+  xlab = "土壤养分", ylab = "植物生物量",
+  pch = 16, col = "blue"
+)
 lines(soil_nutrient, predict(model_overfit), col = "red", lwd = 2)
 ```
 
-<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-1-1.png" width="672" />
+<div class="figure">
+<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-1-1.png" alt="模型复杂度与拟合优度的平衡：比较线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-1)模型复杂度与拟合优度的平衡：比较线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -315,17 +326,19 @@ set.seed(456)
 n <- 100
 
 # 真实环境因子
-habitat_area <- runif(n, 1, 100)           # 栖息地面积
-vegetation_density <- runif(n, 0.1, 0.9)   # 植被密度
-distance_to_water <- runif(n, 0.1, 5)      # 距水源距离
-soil_ph <- runif(n, 4.5, 8.5)              # 土壤pH值
+habitat_area <- runif(n, 1, 100) # 栖息地面积
+vegetation_density <- runif(n, 0.1, 0.9) # 植被密度
+distance_to_water <- runif(n, 0.1, 5) # 距水源距离
+soil_ph <- runif(n, 4.5, 8.5) # 土壤pH值
 
 # 生成鸟类丰富度（只有部分变量有真实影响）
 # 真实关系：丰富度 ~ 面积 + 植被密度 + 距水源距离
-bird_richness <- rpois(n,
-                       exp(1.5 + 0.02 * habitat_area +
-                           1.2 * vegetation_density - 0.3 * distance_to_water +
-                           rnorm(n, 0, 0.3)))
+bird_richness <- rpois(
+  n,
+  exp(1.5 + 0.02 * habitat_area +
+    1.2 * vegetation_density - 0.3 * distance_to_water +
+    rnorm(n, 0, 0.3))
+)
 
 # 创建数据框
 bird_data <- data.frame(
@@ -350,7 +363,7 @@ models[["area_water"]] <- lm(richness ~ area + water_distance, data = bird_data)
 # 复杂模型
 models[["full_model"]] <- lm(richness ~ area + vegetation + water_distance + soil_ph, data = bird_data)
 models[["overfit_model"]] <- lm(richness ~ area + vegetation + water_distance + soil_ph +
-                                 I(area^2) + I(vegetation^2), data = bird_data)
+  I(area^2) + I(vegetation^2), data = bird_data)
 
 # 计算信息准则
 model_comparison <- data.frame(
@@ -367,7 +380,7 @@ model_comparison$delta_BIC <- model_comparison$BIC - min(model_comparison$BIC)
 
 # 计算$\\text{AIC}$权重
 model_comparison$AIC_weight <- exp(-0.5 * model_comparison$delta_AIC) /
-                               sum(exp(-0.5 * model_comparison$delta_AIC))
+  sum(exp(-0.5 * model_comparison$delta_AIC))
 
 # 排序
 model_comparison <- model_comparison[order(model_comparison$AIC), ]
@@ -498,27 +511,36 @@ cat("- 过度拟合模型虽然R²更高，但信息准则惩罚了其复杂度\
 par(mfrow = c(1, 2))
 
 # AIC比较
-barplot(model_comparison$delta_AIC, names.arg = model_comparison$Model,
-        main = expression(paste(Delta, "AIC差异比较")),
-        xlab = "模型", ylab = expression(paste(Delta, "AIC")),
-        col = ifelse(model_comparison$delta_AIC < 2, "green",
-                    ifelse(model_comparison$delta_AIC < 7, "yellow", "red")),
-        las = 2, cex.names = 0.7)
+barplot(model_comparison$delta_AIC,
+  names.arg = model_comparison$Model,
+  main = expression(paste(Delta, "AIC差异比较")),
+  xlab = "模型", ylab = expression(paste(Delta, "AIC")),
+  col = ifelse(model_comparison$delta_AIC < 2, "green",
+    ifelse(model_comparison$delta_AIC < 7, "yellow", "red")
+  ),
+  las = 2, cex.names = 0.7
+)
 abline(h = 2, lty = 2, col = "blue")
 abline(h = 7, lty = 2, col = "red")
 
 # BIC比较
-barplot(model_comparison$delta_BIC, names.arg = model_comparison$Model,
-        main = expression(paste(Delta, "BIC差异比较")),
-        xlab = "模型", ylab = expression(paste(Delta, "BIC")),
-        col = ifelse(model_comparison$delta_BIC < 2, "green",
-                    ifelse(model_comparison$delta_BIC < 7, "yellow", "red")),
-        las = 2, cex.names = 0.7)
+barplot(model_comparison$delta_BIC,
+  names.arg = model_comparison$Model,
+  main = expression(paste(Delta, "BIC差异比较")),
+  xlab = "模型", ylab = expression(paste(Delta, "BIC")),
+  col = ifelse(model_comparison$delta_BIC < 2, "green",
+    ifelse(model_comparison$delta_BIC < 7, "yellow", "red")
+  ),
+  las = 2, cex.names = 0.7
+)
 abline(h = 2, lty = 2, col = "blue")
 abline(h = 7, lty = 2, col = "red")
 ```
 
-<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<div class="figure">
+<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-2-1.png" alt="信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-2)信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -584,12 +606,12 @@ set.seed(789)
 # 生成生态学数据：植物生长与温度、光照的关系
 n <- 80
 
-temperature <- runif(n, 15, 30)        # 温度(°C)
+temperature <- runif(n, 15, 30) # 温度(°C)
 light_intensity <- runif(n, 100, 1000) # 光照强度(lux)
 
 # 生成植物生长数据（存在温度-光照交互作用）
 growth_rate <- 2 + 0.1 * temperature + 0.002 * light_intensity +
-               0.0001 * temperature * light_intensity + rnorm(n, 0, 0.5)
+  0.0001 * temperature * light_intensity + rnorm(n, 0, 0.5)
 
 # 创建数据框
 plant_data <- data.frame(
@@ -814,7 +836,7 @@ cat("\n=== 交互作用可视化 ===\n")
 # 创建预测网格
 pred_grid <- expand.grid(
   temp = seq(15, 30, length.out = 20),
-  light = c(300, 600, 900)  # 低、中、高光照
+  light = c(300, 600, 900) # 低、中、高光照
 )
 
 # 使用复杂模型进行预测
@@ -824,24 +846,29 @@ pred_grid$pred_growth <- predict(model_complex, newdata = pred_grid)
 library(ggplot2)
 ggplot(pred_grid, aes(x = temp, y = pred_growth, color = factor(light))) +
   geom_line(size = 1) +
-  labs(title = "温度与光照对植物生长的交互作用",
-       x = "温度 (°C)",
-       y = "预测生长速率",
-       color = "光照强度 (lux)") +
+  labs(
+    title = "温度与光照对植物生长的交互作用",
+    x = "温度 (°C)",
+    y = "预测生长速率",
+    color = "光照强度 (lux)"
+  ) +
   theme_minimal() +
   scale_color_manual(values = c("300" = "blue", "600" = "green", "900" = "red"))
 ```
 
 ```
-## Warning: Using `size` aesthetic for lines was
-## deprecated in ggplot2 3.4.0.
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2
+## 3.4.0.
 ## ℹ Please use `linewidth` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()`
-## to see where this warning was generated.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this
+## warning was generated.
 ```
 
-<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<div class="figure">
+<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-3-1.png" alt="温度与光照对植物生长的交互作用：在不同光照强度下温度对植物生长速率的影响" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-3)温度与光照对植物生长的交互作用：在不同光照强度下温度对植物生长速率的影响</p>
+</div>
 
 ``` r
 # 生态学机制解释
@@ -951,17 +978,19 @@ set.seed(101)
 n <- 120
 
 # 环境因子
-water_temp <- runif(n, 10, 25)          # 水温(°C)
-dissolved_oxygen <- runif(n, 2, 10)     # 溶解氧(mg/L)
-ph_level <- runif(n, 6.5, 8.5)          # pH值
-turbidity <- runif(n, 1, 50)            # 浊度(NTU)
+water_temp <- runif(n, 10, 25) # 水温(°C)
+dissolved_oxygen <- runif(n, 2, 10) # 溶解氧(mg/L)
+ph_level <- runif(n, 6.5, 8.5) # pH值
+turbidity <- runif(n, 1, 50) # 浊度(NTU)
 
 # 生成鱼类丰度数据
 # 真实关系：丰度 ~ 水温 + 溶解氧 + pH
-fish_abundance <- rpois(n,
-                        exp(2.0 + 0.05 * water_temp +
-                            0.15 * dissolved_oxygen + 0.8 * ph_level +
-                            rnorm(n, 0, 0.2)))
+fish_abundance <- rpois(
+  n,
+  exp(2.0 + 0.05 * water_temp +
+    0.15 * dissolved_oxygen + 0.8 * ph_level +
+    rnorm(n, 0, 0.2))
+)
 
 # 创建数据框
 fish_data <- data.frame(
@@ -1037,7 +1066,8 @@ library(MuMIn)
 
 # 使用dredge函数自动生成所有可能的模型组合
 full_model <- lm(log(abundance + 1) ~ temp + oxygen + ph + turbidity,
-                 data = fish_data, na.action = "na.fail")
+  data = fish_data, na.action = "na.fail"
+)
 
 # 生成所有子模型
 all_models <- dredge(full_model)
@@ -1172,18 +1202,24 @@ par(mfrow = c(1, 2))
 
 # 变量重要性图
 barplot(var_importance[order(var_importance, decreasing = TRUE)],
-        main = "变量重要性",
-        xlab = "环境因子", ylab = "重要性",
-        col = "lightblue", las = 2)
+  main = "变量重要性",
+  xlab = "环境因子", ylab = "重要性",
+  col = "lightblue", las = 2
+)
 
 # 模型权重分布
-barplot(model_comparison$AIC_Weight, names.arg = model_comparison$Model,
-        main = "模型权重分布",
-        xlab = "模型", ylab = "$\\text{AIC}$权重",
-        col = "lightgreen", las = 2)
+barplot(model_comparison$AIC_Weight,
+  names.arg = model_comparison$Model,
+  main = "模型权重分布",
+  xlab = "模型", ylab = "$\\text{AIC}$权重",
+  col = "lightgreen", las = 2
+)
 ```
 
-<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<div class="figure">
+<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-7-1.png" alt="模型平均结果：变量重要性和模型权重分布" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-7)模型平均结果：变量重要性和模型权重分布</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -1274,9 +1310,11 @@ boot_results <- boot(fish_data, predict_function, R = 1000)
 # 计算置信区间
 ci <- boot.ci(boot_results, type = "perc")
 
-cat("Bootstrap 95% 预测区间: [",
-    round(ci$percent[4], 1), ", ",
-    round(ci$percent[5], 1), "] 条鱼\n")
+cat(
+  "Bootstrap 95% 预测区间: [",
+  round(ci$percent[4], 1), ", ",
+  round(ci$percent[5], 1), "] 条鱼\n"
+)
 ```
 
 ```
@@ -1345,16 +1383,18 @@ set.seed(2024)
 n <- 150
 
 # 环境因子
-lake_area <- runif(n, 1, 100)           # 湖泊面积(公顷)
-water_depth <- runif(n, 1, 20)          # 平均水深(米)
-water_temp <- runif(n, 10, 25)          # 水温(°C)
-ph_level <- runif(n, 6.0, 8.5)          # pH值
+lake_area <- runif(n, 1, 100) # 湖泊面积(公顷)
+water_depth <- runif(n, 1, 20) # 平均水深(米)
+water_temp <- runif(n, 10, 25) # 水温(°C)
+ph_level <- runif(n, 6.0, 8.5) # pH值
 
 # 生成鱼类丰富度数据
-fish_richness <- rpois(n,
-                      exp(1.2 + 0.015 * lake_area +
-                          0.08 * water_depth + 0.05 * water_temp +
-                          0.3 * ph_level + rnorm(n, 0, 0.2)))
+fish_richness <- rpois(
+  n,
+  exp(1.2 + 0.015 * lake_area +
+    0.08 * water_depth + 0.05 * water_temp +
+    0.3 * ph_level + rnorm(n, 0, 0.2))
+)
 
 # 创建数据框
 lake_data <- data.frame(
@@ -1395,9 +1435,10 @@ ctrl <- trainControl(method = "cv", number = 10)
 
 # 训练线性回归模型
 cv_model <- train(log(richness + 1) ~ area + depth + temp + ph,
-                  data = lake_data,
-                  method = "lm",
-                  trControl = ctrl)
+  data = lake_data,
+  method = "lm",
+  trControl = ctrl
+)
 
 # 输出交叉验证结果
 cat("=== 10折交叉验证结果 ===\n")
@@ -1480,14 +1521,21 @@ cv_performance <- data.frame(
 ggplot(cv_performance, aes(x = Fold, y = RMSE)) +
   geom_point(size = 3, color = "blue") +
   geom_line(color = "blue", alpha = 0.7) +
-  labs(title = "10折交叉验证：RMSE变化",
-       x = "折数", y = "RMSE") +
+  labs(
+    title = "10折交叉验证：RMSE变化",
+    x = "折数", y = "RMSE"
+  ) +
   theme_minimal() +
-  geom_hline(yintercept = mean(cv_performance$RMSE),
-             linetype = "dashed", color = "red")
+  geom_hline(
+    yintercept = mean(cv_performance$RMSE),
+    linetype = "dashed", color = "red"
+  )
 ```
 
-<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<div class="figure">
+<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-12-1.png" alt="10折交叉验证：RMSE在不同数据子集上的变化" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-12)10折交叉验证：RMSE在不同数据子集上的变化</p>
+</div>
 
 **模型评估要点**：训练集和测试集性能的比较是检测过度拟合的直接方法。如果测试集性能明显差于训练集，说明模型可能过度适应训练数据的噪声。
 
@@ -1567,15 +1615,17 @@ set.seed(3030)
 # 生成训练数据集（模拟某个地区的植物调查）
 n_train <- 100
 
-elevation_train <- runif(n_train, 100, 2000)      # 海拔(m)
-precipitation_train <- runif(n_train, 500, 2000)  # 年降水量(mm)
-soil_n_train <- runif(n_train, 0.1, 0.5)          # 土壤氮含量(%)
+elevation_train <- runif(n_train, 100, 2000) # 海拔(m)
+precipitation_train <- runif(n_train, 500, 2000) # 年降水量(mm)
+soil_n_train <- runif(n_train, 0.1, 0.5) # 土壤氮含量(%)
 
 # 生成植物物种丰富度（训练集）
-plant_richness_train <- rpois(n_train,
-                             exp(2.0 + 0.001 * elevation_train +
-                                 0.0008 * precipitation_train +
-                                 2.5 * soil_n_train + rnorm(n_train, 0, 0.3)))
+plant_richness_train <- rpois(
+  n_train,
+  exp(2.0 + 0.001 * elevation_train +
+    0.0008 * precipitation_train +
+    2.5 * soil_n_train + rnorm(n_train, 0, 0.3))
+)
 
 train_data <- data.frame(
   richness = plant_richness_train,
@@ -1587,15 +1637,17 @@ train_data <- data.frame(
 # 生成测试数据集（模拟另一个地区的植物调查）
 n_test <- 50
 
-elevation_test <- runif(n_test, 800, 2500)        # 海拔范围略有不同
-precipitation_test <- runif(n_test, 600, 1800)    # 降水量范围不同
-soil_n_test <- runif(n_test, 0.05, 0.4)           # 土壤氮含量范围不同
+elevation_test <- runif(n_test, 800, 2500) # 海拔范围略有不同
+precipitation_test <- runif(n_test, 600, 1800) # 降水量范围不同
+soil_n_test <- runif(n_test, 0.05, 0.4) # 土壤氮含量范围不同
 
 # 生成植物物种丰富度（测试集）
-plant_richness_test <- rpois(n_test,
-                            exp(1.8 + 0.0012 * elevation_test +
-                                0.0009 * precipitation_test +
-                                2.8 * soil_n_test + rnorm(n_test, 0, 0.4)))
+plant_richness_test <- rpois(
+  n_test,
+  exp(1.8 + 0.0012 * elevation_test +
+    0.0009 * precipitation_test +
+    2.8 * soil_n_test + rnorm(n_test, 0, 0.4))
+)
 
 test_data <- data.frame(
   richness = plant_richness_test,
@@ -1606,7 +1658,8 @@ test_data <- data.frame(
 
 # 在训练集上构建模型
 model_external <- lm(log(richness + 1) ~ elevation + precipitation + soil_n,
-                    data = train_data)
+  data = train_data
+)
 
 # 在训练集上评估模型
 train_pred <- predict(model_external)
@@ -1723,26 +1776,35 @@ library(ggplot2)
 
 # 创建预测 vs 观测图
 validation_plot_data <- rbind(
-  data.frame(Type = "训练集",
-             Observed = log(train_data$richness + 1),
-             Predicted = train_pred),
-  data.frame(Type = "测试集",
-             Observed = log(test_data$richness + 1),
-             Predicted = test_pred)
+  data.frame(
+    Type = "训练集",
+    Observed = log(train_data$richness + 1),
+    Predicted = train_pred
+  ),
+  data.frame(
+    Type = "测试集",
+    Observed = log(test_data$richness + 1),
+    Predicted = test_pred
+  )
 )
 
 ggplot(validation_plot_data, aes(x = Observed, y = Predicted, color = Type)) +
   geom_point(alpha = 0.7) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "black") +
-  labs(title = "外部验证：预测 vs 观测",
-       x = "观测值（对数丰富度）",
-       y = "预测值（对数丰富度）") +
+  labs(
+    title = "外部验证：预测 vs 观测",
+    x = "观测值（对数丰富度）",
+    y = "预测值（对数丰富度）"
+  ) +
   theme_minimal() +
   scale_color_manual(values = c("训练集" = "blue", "测试集" = "red")) +
-  facet_wrap(~ Type)
+  facet_wrap(~Type)
 ```
 
-<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<div class="figure">
+<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-14-1.png" alt="外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-14)外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较</p>
+</div>
 
 ``` r
 # 生态学解释
@@ -1865,14 +1927,14 @@ set.seed(4040)
 # 生成生态学数据：河流无脊椎动物多样性与水质的关系
 n <- 120
 
-water_temp <- runif(n, 8, 22)           # 水温(°C)
-dissolved_oxygen <- runif(n, 4, 12)     # 溶解氧(mg/L)
-conductivity <- runif(n, 50, 800)       # 电导率(μS/cm)
-flow_velocity <- runif(n, 0.1, 1.5)     # 流速(m/s)
+water_temp <- runif(n, 8, 22) # 水温(°C)
+dissolved_oxygen <- runif(n, 4, 12) # 溶解氧(mg/L)
+conductivity <- runif(n, 50, 800) # 电导率(μS/cm)
+flow_velocity <- runif(n, 0.1, 1.5) # 流速(m/s)
 
 # 生成无脊椎动物多样性数据（包含一些异常观测）
 invert_diversity <- 15 + 0.3 * water_temp + 1.2 * dissolved_oxygen -
-                   0.005 * conductivity + 8 * flow_velocity + rnorm(n, 0, 3)
+  0.005 * conductivity + 8 * flow_velocity + rnorm(n, 0, 3)
 
 # 人为添加一些异常观测
 # 异常点1：极端高多样性（可能代表特殊生境）
@@ -1894,7 +1956,8 @@ river_data <- data.frame(
 
 # 构建线性回归模型
 model_diagnostic <- lm(diversity ~ temp + oxygen + conductivity + flow,
-                      data = river_data)
+  data = river_data
+)
 ```
 
 **模型评估要点**：残差分析是模型诊断的核心内容。残差是观测值与模型预测值之间的差异，理想的残差应该随机分布，没有明显的模式。通过残差分析，我们可以检验模型是否充分捕捉了数据中的生态关系，是否存在未被解释的系统性变异。
@@ -1925,7 +1988,10 @@ par(mfrow = c(2, 2))
 plot(model_diagnostic)
 ```
 
-<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<div class="figure">
+<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-16-1.png" alt="模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-16)模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -2154,15 +2220,22 @@ library(ggplot2)
 cook_data <- data.frame(Observation = 1:n, CooksD = cooks_d)
 ggplot(cook_data, aes(x = Observation, y = CooksD)) +
   geom_point(color = "blue") +
-  geom_hline(yintercept = 4/(n-p), linetype = "dashed", color = "red") +
-  labs(title = "Cook's Distance影响分析",
-       x = "观测编号", y = "Cook's Distance") +
+  geom_hline(yintercept = 4 / (n - p), linetype = "dashed", color = "red") +
+  labs(
+    title = "Cook's Distance影响分析",
+    x = "观测编号", y = "Cook's Distance"
+  ) +
   theme_minimal() +
-  geom_text(data = cook_data[influential_points, ],
-            aes(label = Observation), vjust = -0.5, color = "red")
+  geom_text(
+    data = cook_data[influential_points, ],
+    aes(label = Observation), vjust = -0.5, color = "red"
+  )
 ```
 
-<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<div class="figure">
+<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-19-1.png" alt="Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-19)Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点</p>
+</div>
 
 **模型评估要点**：在生态学中，异常观测往往具有重要的生态学意义。高杠杆点可能代表极端环境条件，异常残差点可能反映特殊的生态情境。通过识别这些点，我们不仅能够确保模型的统计稳健性，还能够发现值得深入研究的生态学现象。
 
@@ -2233,7 +2306,8 @@ if (length(influential_points) > 0) {
 
   robust_data <- river_data[-influential_points, ]
   robust_model <- lm(diversity ~ temp + oxygen + conductivity + flow,
-                    data = robust_data)
+    data = robust_data
+  )
 
   cat("原始模型系数：\n")
   print(round(coef(model_diagnostic), 3))
@@ -2458,15 +2532,17 @@ set.seed(5050)
 n <- 80
 
 # 环境因子
-habitat_area <- runif(n, 1, 100)           # 栖息地面积
-vegetation_density <- runif(n, 0.1, 0.9)   # 植被密度
-distance_to_water <- runif(n, 0.1, 5)      # 距水源距离
+habitat_area <- runif(n, 1, 100) # 栖息地面积
+vegetation_density <- runif(n, 0.1, 0.9) # 植被密度
+distance_to_water <- runif(n, 0.1, 5) # 距水源距离
 
 # 生成鸟类丰富度数据
-bird_richness <- rpois(n,
-                        exp(1.5 + 0.02 * habitat_area +
-                            1.2 * vegetation_density - 0.3 * distance_to_water +
-                            rnorm(n, 0, 0.3)))
+bird_richness <- rpois(
+  n,
+  exp(1.5 + 0.02 * habitat_area +
+    1.2 * vegetation_density - 0.3 * distance_to_water +
+    rnorm(n, 0, 0.3))
+)
 
 # 创建数据框
 bird_data_bayes <- data.frame(
@@ -2513,7 +2589,8 @@ model2 <- lmBF(richness ~ area + vegetation, data = bird_data_bayes)
 
 # 模型3：栖息地面积 + 植被密度 + 距水源距离
 model3 <- lmBF(richness ~ area + vegetation + water_distance,
-               data = bird_data_bayes)
+  data = bird_data_bayes
+)
 
 # 计算贝叶斯因子
 bf_12 <- model2 / model1
@@ -2605,8 +2682,10 @@ cat(">100: 决定性证据\n")
 # 计算后验模型概率
 # 假设等先验概率
 prior_prob <- c(1 / 3, 1 / 3, 1 / 3)
-bf_vector <- c(1, exp(bf_12@bayesFactor$bf),
-               exp(bf_23@bayesFactor$bf) * exp(bf_12@bayesFactor$bf))
+bf_vector <- c(
+  1, exp(bf_12@bayesFactor$bf),
+  exp(bf_23@bayesFactor$bf) * exp(bf_12@bayesFactor$bf)
+)
 posterior_prob <- bf_vector * prior_prob / sum(bf_vector * prior_prob)
 
 cat("\n=== 后验模型概率 ===\n")
@@ -2669,7 +2748,7 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 ## vegetation     0.9444822  9.8845073 4.31007528             1   2
 ## 
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"  "0.008863688 secs" 
+##            "2.9445"                 "8"                 "0"  "0.008618355 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -2677,7 +2756,7 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 ##     Shrinkage-Stats 
 ##         "Av=0.9877" 
 ## 
-## Time difference of 0.008863688 secs
+## Time difference of 0.008618355 secs
 ```
 
 <img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-25-1.png" width="672" />
@@ -2697,7 +2776,7 @@ print(summary(bma_result))
 
 ```
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"  "0.008863688 secs" 
+##            "2.9445"                 "8"                 "0"  "0.008618355 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -2817,12 +2896,15 @@ library(brms)
 
 # 拟合贝叶斯泊松回归模型
 bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
-                     data = bird_data_bayes,
-                     family = poisson(),
-                     prior = c(prior(normal(0, 2.5), class = "b"),
-                              prior(normal(0, 5), class = "Intercept")),
-                     chains = 2, iter = 2000, warmup = 1000,
-                     seed = 1234)
+  data = bird_data_bayes,
+  family = poisson(),
+  prior = c(
+    prior(normal(0, 2.5), class = "b"),
+    prior(normal(0, 5), class = "Intercept")
+  ),
+  chains = 2, iter = 2000, warmup = 1000,
+  seed = 1234
+)
 ```
 
 ```
@@ -2837,8 +2919,8 @@ bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 ## Chain 1: 
-## Chain 1: Gradient evaluation took 1e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.1 seconds.
+## Chain 1: Gradient evaluation took 1.4e-05 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.14 seconds.
 ## Chain 1: Adjust your expectations accordingly!
 ## Chain 1: 
 ## Chain 1: 
@@ -2862,8 +2944,8 @@ bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 ## Chain 2: 
-## Chain 2: Gradient evaluation took 5e-06 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+## Chain 2: Gradient evaluation took 6e-06 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 ## Chain 2: Adjust your expectations accordingly!
 ## Chain 2: 
 ## Chain 2: 
@@ -2881,8 +2963,8 @@ bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
 ## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 2: 
 ## Chain 2:  Elapsed Time: 0.073 seconds (Warm-up)
-## Chain 2:                0.047 seconds (Sampling)
-## Chain 2:                0.12 seconds (Total)
+## Chain 2:                0.046 seconds (Sampling)
+## Chain 2:                0.119 seconds (Total)
 ## Chain 2:
 ```
 
@@ -2907,13 +2989,18 @@ ggplot(pred_data, aes(x = Observed, y = Predicted)) +
   geom_point(alpha = 0.7, color = "blue") +
   geom_errorbar(aes(ymin = Lower, ymax = Upper), alpha = 0.3, width = 0) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "red") +
-  labs(title = "贝叶斯预测：观测值 vs 预测值",
-       x = "观测鸟类丰富度",
-       y = "预测鸟类丰富度") +
+  labs(
+    title = "贝叶斯预测：观测值 vs 预测值",
+    x = "观测鸟类丰富度",
+    y = "预测鸟类丰富度"
+  ) +
   theme_minimal()
 ```
 
-<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+<div class="figure">
+<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-26-1.png" alt="贝叶斯预测：观测值与预测值的比较，包含95%预测区间" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-26-1)贝叶斯预测：观测值与预测值的比较，包含95%预测区间</p>
+</div>
 
 ``` r
 # 后验预测检查
@@ -2937,7 +3024,10 @@ pp_check <- pp_check(bayes_poisson)
 print(pp_check)
 ```
 
-<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-26-2.png" width="672" />
+<div class="figure">
+<img src="09-modeling_and_prediction_part2_files/figure-html/unnamed-chunk-26-2.png" alt="贝叶斯预测：观测值与预测值的比较，包含95%预测区间" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-26-2)贝叶斯预测：观测值与预测值的比较，包含95%预测区间</p>
+</div>
 
 ``` r
 # 解释后验预测检查
@@ -3013,14 +3103,16 @@ library(monomvn)
 # 创建包含冗余变量的扩展数据集
 set.seed(6060)
 bird_data_extended <- bird_data_bayes
-bird_data_extended$redundant1 <- rnorm(n, 0, 1)  # 冗余变量1
-bird_data_extended$redundant2 <- rnorm(n, 0, 1)  # 冗余变量2
+bird_data_extended$redundant1 <- rnorm(n, 0, 1) # 冗余变量1
+bird_data_extended$redundant2 <- rnorm(n, 0, 1) # 冗余变量2
 
 # 贝叶斯LASSO变量选择
 # 使用monomvn包的blasso函数
-blasso_result <- blasso(X = as.matrix(bird_data_extended[, -1]),
-                        y = bird_data_extended$richness,
-                        T = 5000, verb = 0)
+blasso_result <- blasso(
+  X = as.matrix(bird_data_extended[, -1]),
+  y = bird_data_extended$richness,
+  T = 5000, verb = 0
+)
 
 # 提取后验包含概率
 posterior_inclusion <- colMeans(blasso_result$beta != 0)
@@ -3034,8 +3126,10 @@ cat("=== 贝叶斯LASSO变量选择结果 ===\n")
 
 ``` r
 for (i in seq_along(posterior_inclusion)) {
-  cat(names(posterior_inclusion)[i], ":",
-      round(posterior_inclusion[i], 3), "\n")
+  cat(
+    names(posterior_inclusion)[i], ":",
+    round(posterior_inclusion[i], 3), "\n"
+  )
 }
 ```
 

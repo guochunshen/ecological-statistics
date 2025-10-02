@@ -176,7 +176,10 @@ rpart.plot(forest_tree,
            ))
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-2-1.png" alt="森林类型分类决策树可视化，基于海拔、年降水量和土壤pH值等环境因子构建的决策树模型" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-2)森林类型分类决策树可视化，基于海拔、年降水量和土壤pH值等环境因子构建的决策树模型</p>
+</div>
 
 ``` r
 # 模型性能评估
@@ -229,7 +232,10 @@ ggplot() +
   theme_minimal()
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-3-1.png" alt="决策树分类边界可视化，展示基于海拔和年降水量的森林类型分类结果" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-3)决策树分类边界可视化，展示基于海拔和年降水量的森林类型分类结果</p>
+</div>
 
 #### 停止条件的重要性
 
@@ -337,7 +343,10 @@ rpart.plot(class_tree,
            ))
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-4-1.png" alt="鸟类物种识别分类树，基于羽毛颜色、喙长度和栖息地等特征构建的分类模型" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-4)鸟类物种识别分类树，基于羽毛颜色、喙长度和栖息地等特征构建的分类模型</p>
+</div>
 
 ``` r
 # 模型评估
@@ -417,7 +426,10 @@ rpart.plot(reg_tree,
            box.palette = "Blues")
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-5-1.png" alt="森林生物量预测回归树，基于树高、胸径和林分密度等特征构建的回归模型" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-5-1)森林生物量预测回归树，基于树高、胸径和林分密度等特征构建的回归模型</p>
+</div>
 
 ``` r
 # 模型评估
@@ -465,7 +477,10 @@ ggplot(plot_data, aes(x = 实际值, y = 预测值)) +
   theme_minimal()
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-5-2.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-5-2.png" alt="森林生物量预测回归树，基于树高、胸径和林分密度等特征构建的回归模型" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-5-2)森林生物量预测回归树，基于树高、胸径和林分密度等特征构建的回归模型</p>
+</div>
 
 #### 生态学应用特点
 
@@ -557,7 +572,10 @@ rpart.plot(tree_model,
            box.palette = "auto")
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-6-1.png" alt="鸢尾花物种分类决策树，基于花萼和花瓣形态特征构建的分类模型" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-6)鸢尾花物种分类决策树，基于花萼和花瓣形态特征构建的分类模型</p>
+</div>
 
 ``` r
 # 模型评估
@@ -844,7 +862,10 @@ ggplot(importance_df, aes(x = reorder(特征, 重要性), y = 重要性)) +
   theme_minimal()
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-7-1.png" alt="随机森林特征重要性分析，展示鸢尾花数据集中各形态特征对物种分类的贡献度" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-7)随机森林特征重要性分析，展示鸢尾花数据集中各形态特征对物种分类的贡献度</p>
+</div>
 
 ### 代码详细说明
 
@@ -917,7 +938,10 @@ legend("topright",
        lty = 1)
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-8-1.png" alt="随机森林袋外误差随树数量变化曲线，展示模型收敛过程和泛化能力" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-8)随机森林袋外误差随树数量变化曲线，展示模型收敛过程和泛化能力</p>
+</div>
 
 #### 2. 变量重要性评估
 
@@ -980,7 +1004,10 @@ ggplot(importance_df, aes(x = reorder(特征, 基尼重要性), y = 基尼重要
   theme_minimal()
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-9-1.png" alt="随机森林变量重要性分析，基于基尼不纯度和准确率两种指标评估特征重要性" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-9-1)随机森林变量重要性分析，基于基尼不纯度和准确率两种指标评估特征重要性</p>
+</div>
 
 ``` r
 # 基于准确率重要性的可视化
@@ -993,7 +1020,10 @@ ggplot(importance_df, aes(x = reorder(特征, 准确率重要性), y = 准确率
   theme_minimal()
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-9-2.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-9-2.png" alt="随机森林变量重要性分析，基于基尼不纯度和准确率两种指标评估特征重要性" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-9-2)随机森林变量重要性分析，基于基尼不纯度和准确率两种指标评估特征重要性</p>
+</div>
 
 #### 3. 部分依赖图（Partial Dependence Plots）
 
@@ -1028,7 +1058,10 @@ plotPartial(pd_petal_length,
             ylab = "预测概率")
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-10-1.png" alt="随机森林部分依赖图，展示花瓣长度对物种分类的影响以及花瓣长度与宽度的交互作用" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10-1)随机森林部分依赖图，展示花瓣长度对物种分类的影响以及花瓣长度与宽度的交互作用</p>
+</div>
 
 ``` r
 # 对多个特征绘制部分依赖图
@@ -1045,7 +1078,10 @@ plotPartial(pd_interaction,
             ylab = "花瓣宽度 (cm)")
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-10-2.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-10-2.png" alt="随机森林部分依赖图，展示花瓣长度对物种分类的影响以及花瓣长度与宽度的交互作用" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10-2)随机森林部分依赖图，展示花瓣长度对物种分类的影响以及花瓣长度与宽度的交互作用</p>
+</div>
 
 #### 4. 模型性能综合评估
 
@@ -1209,7 +1245,10 @@ legend("bottomright",
        lty = 1)
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-11-1.png" alt="随机森林多分类ROC曲线，评估模型对鸢尾花三个物种的分类性能" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-11)随机森林多分类ROC曲线，评估模型对鸢尾花三个物种的分类性能</p>
+</div>
 
 #### 5. 模型稳定性评估
 
@@ -1305,7 +1344,10 @@ ggplot(stability_summary, aes(x = reorder(特征, 均值重要性), y = 均值�
   theme_minimal()
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-12-1.png" alt="随机森林变量重要性稳定性分析，展示多次运行模型的特征重要性变化范围" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-12)随机森林变量重要性稳定性分析，展示多次运行模型的特征重要性变化范围</p>
+</div>
 
 ### 生态学应用实例
 
@@ -1659,7 +1701,10 @@ ggplot() +
   theme_minimal()
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-13-1.png" alt="支持向量机决策边界可视化，基于花瓣长度和花瓣宽度对鸢尾花物种进行分类" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-13)支持向量机决策边界可视化，基于花瓣长度和花瓣宽度对鸢尾花物种进行分类</p>
+</div>
 
 ### 代码详细说明
 
@@ -1747,7 +1792,10 @@ print(svm_tune$bestTune)
 plot(svm_tune, main = "支持向量机参数调优")
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-14-1.png" alt="支持向量机参数调优结果，展示不同参数组合对模型性能的影响" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-14)支持向量机参数调优结果，展示不同参数组合对模型性能的影响</p>
+</div>
 
 ``` r
 # 最终模型性能
@@ -1811,7 +1859,10 @@ ggplot(combined_data, aes(x = Petal.Length, fill = 类型)) +
   theme_minimal()
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-15-1.png" alt="支持向量分析，比较支持向量与所有样本的特征分布及空间分布" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-15-1)支持向量分析，比较支持向量与所有样本的特征分布及空间分布</p>
+</div>
 
 ``` r
 # 支持向量的物种分布
@@ -1846,7 +1897,10 @@ ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
   theme_minimal()
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-15-2.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-15-2.png" alt="支持向量分析，比较支持向量与所有样本的特征分布及空间分布" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-15-2)支持向量分析，比较支持向量与所有样本的特征分布及空间分布</p>
+</div>
 
 #### 3. 决策边界分析
 
@@ -1907,7 +1961,10 @@ ggplot() +
   theme(legend.position = "bottom")
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-16-1.png" alt="支持向量机详细决策边界分析，包含支持向量标记和分类置信度信息" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-16)支持向量机详细决策边界分析，包含支持向量标记和分类置信度信息</p>
+</div>
 
 #### 4. 模型性能综合评估
 
@@ -2057,7 +2114,10 @@ legend("bottomright",
        lty = 1)
 ```
 
-<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<div class="figure">
+<img src="11-modeling_and_prediction_part4_files/figure-html/unnamed-chunk-17-1.png" alt="支持向量机多分类ROC曲线，评估模型对鸢尾花三个物种的分类性能" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-17)支持向量机多分类ROC曲线，评估模型对鸢尾花三个物种的分类性能</p>
+</div>
 
 ``` r
 # 计算平均AUC

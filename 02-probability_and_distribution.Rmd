@@ -187,7 +187,7 @@ cat("估计误差:", round(abs(estimated_total - true_rare_species), 1), "\n")
 
 概率收敛理论是统计推断的数学基础，帮助我们理解样本统计量如何趋近于总体参数。
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="大数定律可视化：样本均值随样本量增加收敛于总体均值"}
 # 大数定律可视化
 library(ggplot2)
 library(showtext)
@@ -295,7 +295,7 @@ $$P(A) \approx \frac{\text{事件A发生的次数}}{\text{总试验次数}}$$
 
 频率概率需要大量重复试验，但生态学调查往往样本量有限：
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="样本量对概率估计精度的影响：样本量越大，估计误差越小"}
 # 大数定律实践限制演示
 set.seed(333)
 true_prob <- 0.35
@@ -402,7 +402,7 @@ $$P(A) = \sum_{i=1}^{n} P(A|B_i) \times P(B_i)$$
 $$P(\text{高营养}) = P(\text{高营养}|\text{晴天}) \times P(\text{晴天}) + P(\text{高营养}|\text{雨天}) \times P(\text{雨天})$$
 
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="全概率公式应用：各情景对总体灭绝概率的贡献分解"}
 # 全概率公式应用
 set.seed(1010)
 
@@ -584,7 +584,7 @@ if (bayes_factor > 3) {
 结合多种证据（如栖息地质量、种群趋势、威胁因素）来评估物种的保护优先级。
 
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变"}
 # 贝叶斯更新过程演示
 library(ggplot2)
 library(showtext)
@@ -644,7 +644,7 @@ ggplot(belief_df, aes(x = 健康状态, y = 概率, fill = 类型)) +
 在数据有限的情况下，结合专家判断和有限观测来评估生态风险。
 
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策"}
 # 贝叶斯风险评估
 library(ggplot2)
 library(showtext)
@@ -747,7 +747,7 @@ if (requireNamespace("patchwork", quietly = TRUE)) {
 使用贝叶斯模型平均方法，综合考虑多个竞争模型的预测结果。
 
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比"}
 # 贝叶斯模型比较
 library(ggplot2)
 library(showtext)
@@ -932,7 +932,7 @@ print(robustness_df)
 
 然而，贝叶斯概率方法也存在不容忽视的局限性。**主观性**是其最受争议的方面，先验概率的选择往往依赖于研究者的主观判断，不同专家可能会给出不同的先验设定。**计算复杂性**是实际应用中的主要障碍，复杂的贝叶斯模型需要大量的计算资源，特别是使用马尔可夫链蒙特卡洛方法时，计算时间可能相当可观。**先验敏感性**问题意味着结果可能对先验选择高度敏感，不恰当的先验设定可能导致有偏的结论。**收敛问题**是MCMC方法特有的挑战，在复杂模型中可能出现收敛困难或收敛到局部最优解的情况。此外，**解释难度**限制了贝叶斯方法的普及，后验分布的理解和解释需要研究者具备相当的统计背景，这在一定程度上阻碍了其在生态学实践中的广泛应用。这些局限性提示我们在使用贝叶斯方法时需要谨慎处理先验设定，并充分考虑计算可行性和结果解释的清晰性。
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="主观偏见问题：不同群体对同一生态风险评估的差异"}
 # 主观偏见问题演示
 set.seed(555)
 
@@ -1185,7 +1185,7 @@ cat("三叶草 (X=3):", choice_counts["3"] / n_simulations, "\n")
 
 如果我画成柱状图，就得到了一个**概率分布图**，直观地展示了这种"分布"情况。
 
-```{r, echo=FALSE, fig.width=6, fig.height=4}
+```{r, echo=FALSE, fig.width=6, fig.height=4, fig.cap="蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比"}
 library(ggplot2)
 library(showtext)
 showtext_auto()
@@ -1230,7 +1230,7 @@ ggplot(plant_data, aes(x = 植物类型, y = 概率, fill = 植物类型)) +
 - 蚱蜢选择黑麦草**或**混合草甸的概率是 0.64 + 0.29 = 0.93
 - 蚱蜢选择任意一种植物的概率是 1.00（必然事件）
 
-```{r, echo=FALSE, fig.width=6, fig.height=4}
+```{r, echo=FALSE, fig.width=6, fig.height=4, fig.cap="蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程"}
 library(ggplot2)
 library(showtext)
 showtext_auto()
@@ -1367,7 +1367,7 @@ $$P(X = x) = p^x(1-p)^{1-x}, \quad x = 0,1$$
 其中，$X$是伯努利随机变量，$p$是成功的概率（$0 \leq p \leq 1$）。
 
 
-```{r, echo=FALSE, fig.width=4.5, fig.height=3.5}
+```{r, echo=FALSE, fig.width=4.5, fig.height=3.5, fig.cap="伯努利分布：不同成功概率下的二元选择概率分布"}
 # 绘制伯努利分布图
 library(ggplot2)
 library(showtext)
@@ -1460,7 +1460,7 @@ $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, 2, \ldots, n$$
 - 方差：$Var(X) = np(1-p)$
 - 当$p=0.5$时，分布对称；当$p<0.5$时右偏，$p>0.5$时左偏
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="二项分布：不同成功概率下多次试验中成功次数的概率分布"}
 # 绘制二项分布图
 library(ggplot2)
 library(showtext)
@@ -1554,7 +1554,7 @@ $$P(X_1 = x_1, X_2 = x_2, \ldots, X_k = x_k) = \frac{n!}{x_1! x_2! \cdots x_k!} 
 - 协方差：$Cov(X_i, X_j) = -np_i p_j$（$i \neq j$）
 - 当$k=2$时，多项式分布退化为二项分布
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布"}
 # 绘制多项式分布图
 library(ggplot2)
 library(showtext)
@@ -1661,7 +1661,7 @@ $$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots$$
 - 当$\lambda$较小时，分布右偏；当$\lambda$增大时，分布逐渐接近正态分布
 - 泊松分布是二项分布在$n \to \infty$，$p \to 0$，且$np = \lambda$时的极限情况
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="泊松分布：不同平均发生率下稀有事件发生次数的概率分布"}
 # 绘制泊松分布图
 library(ggplot2)
 library(showtext)
@@ -1758,7 +1758,7 @@ $$P(X = k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots$$
 - 无记忆性：$P(X > m+n \mid X > m) = P(X > n)$，即过去的失败不影响未来的成功概率
 - 当$p$较小时，分布右偏严重；当$p$接近1时，分布集中在较小的$k$值
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="几何分布：不同成功概率下首次成功所需试验次数的概率分布"}
 # 绘制几何分布图
 library(ggplot2)
 library(showtext)
@@ -1852,7 +1852,7 @@ $$P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots$$
 - 当$r=1$时，负二项分布退化为几何分布
 - 分布形状取决于$r$和$p$的值，可以呈现不同的偏斜形态
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="负二项分布：不同参数组合下第r次成功所需试验次数的概率分布"}
 # 绘制负二项分布图
 library(ggplot2)
 library(showtext)
@@ -1971,7 +1971,7 @@ $$F(x) = P(X \leq x) = \int_{-\infty}^x f(t) dt$$
 - $P(a < X \leq b) = F(b) - F(a)$
 - $P(X > x) = 1 - F(x)$
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="连续随机变量的概率密度函数与累积分布函数对比"}
 # 绘制连续随机变量的PDF和CDF示例
 library(ggplot2)
 library(showtext)
@@ -2040,7 +2040,7 @@ $$f(x) = \begin{cases}
 - **资源利用模式**：当食物资源分布均匀时，动物的觅食位置选择可以建模为均匀分布
 - **行为生态学实验**：在控制实验中，动物的随机选择行为可以用均匀分布来描述
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="均匀分布：不同区间参数下的概率密度函数"}
 # 绘制均匀分布图
 library(ggplot2)
 library(showtext)
@@ -2112,7 +2112,7 @@ $$f(x) = \lambda e^{-\lambda x}, \quad x \geq 0$$
 - **行为时间模式**：动物在危险环境中的活动间隔可以用指数分布来描述
 - **种群生存分析**：在高捕食压力下，个体的生存时间分布近似指数分布
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="指数分布：不同速率参数下等待时间的概率密度函数"}
 # 绘制指数分布图
 library(ggplot2)
 library(showtext)
@@ -2180,7 +2180,7 @@ $$f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \quad -\i
 - **行为生态学**：动物的许多连续行为特征（如觅食时间、移动距离）近似正态分布
 - **种群能量学**：通过摄食量的正态分布可以估计种群的能量摄入模式
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="正态分布：不同参数组合下的概率密度函数"}
 # 绘制正态分布图
 library(ggplot2)
 library(showtext)
@@ -2394,7 +2394,7 @@ $$f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}, \quad x 
 - **降雨量分布**：特定时间段内的总降雨量
 - **种群增长**：在一定时间内种群数量的累积增长
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="伽马分布：不同参数组合下的概率密度函数"}
 # 绘制伽马分布图
 library(ggplot2)
 library(showtext)
@@ -2467,7 +2467,7 @@ $$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha, \beta)}, \quad 0 \leq x \l
 - **能量预算分析**：通过时间分配比例研究蚱蜢的能量摄入与消耗平衡
 - **适应性行为研究**：贝塔分布的灵活性使其适合描述动物在不同环境下的行为调整
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="贝塔分布：不同参数组合下的概率密度函数"}
 # 绘制贝塔分布图
 library(ggplot2)
 library(showtext)
@@ -2546,7 +2546,7 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
 
 
 
-```{r, echo=FALSE, fig.width=10, fig.height=6}
+```{r, echo=FALSE, fig.width=10, fig.height=6, fig.cap="中心极限定理演示：不同总体分布下样本均值的正态收敛过程"}
 # 中心极限定理的详细演示
 library(ggplot2)
 library(showtext)
@@ -2659,7 +2659,7 @@ cat(
 
 #### 样本量对中心极限定理的影响
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态"}
 # 样本量对中心极限定理的影响演示
 set.seed(1818)
 
@@ -2789,7 +2789,7 @@ print(skewness_kurtosis)
 
 混合分布能够描述来自不同子总体的数据，在生态学中处理异质性非常有用。
 
-```{r, echo=FALSE, fig.width=8, fig.height=5}
+```{r, echo=FALSE, fig.width=8, fig.height=5, fig.cap="混合分布：双峰数据的概率密度函数"}
 # 混合分布演示
 set.seed(2424)
 

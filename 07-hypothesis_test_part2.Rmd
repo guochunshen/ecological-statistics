@@ -688,7 +688,7 @@ cat(
 
 **R语言实现示例**：
 
-```{r}
+```{r, fig.cap="ANOSIM分析：不同河段底栖动物群落差异检验结果"}
 # ANOSIM分析：污染对底栖动物群落的影响
 library(vegan)
 set.seed(123)
@@ -811,7 +811,7 @@ legend("topright", legend = levels(groups), col = 1:3, pch = 16)
 
 **R语言实现示例**：
 
-```{r}
+```{r, fig.cap="巴西坚果树空间分布模式检验：Ripley's K函数包络分析"}
 # 物种空间分布模式的蒙特卡洛检验
 library(spatstat)
 set.seed(123)
@@ -902,7 +902,7 @@ legend("topleft",
 
 **R语言实现示例**：
 
-```{r}
+```{r, fig.cap="小丑鱼分布与环境关系的点过程模型拟合优度检验"}
 # 点过程模型的蒙特卡洛拟合优度检验
 library(spatstat)
 set.seed(123)
@@ -1067,7 +1067,7 @@ print(moran_test)
 
 **R语言实现示例**：
 
-```{r}
+```{r, fig.cap="植物功能性状系统发育信号检验与可视化"}
 # 系统发育信号检验的蒙特卡洛模拟
 library(ape)
 library(picante)
@@ -1150,7 +1150,7 @@ legend("bottomleft",
 
 **R语言实现示例**：
 
-```{r}
+```{r, fig.cap="植物防御性状与生长速率关系的系统发育独立对比分析"}
 # 系统发育独立对比的置换检验
 library(ape)
 library(geiger)
@@ -1298,7 +1298,7 @@ text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
 
 **R语言实现示例**：
 
-```{r}
+```{r, fig.cap="热带雨林群落组装零模型检验：C-score分布与物种分布热图"}
 # 群落组装零模型检验
 library(vegan)
 library(bipartite)
@@ -1449,7 +1449,7 @@ ggplot(comm_melt, aes(x = 样点, y = 物种, fill = factor(存在))) +
 
 **R语言实现示例**：
 
-```{r}
+```{r, fig.cap="传粉网络嵌套性零模型检验：嵌套性分布与网络结构可视化"}
 # 生态网络零模型检验：传粉网络嵌套性
 library(bipartite)
 library(igraph)
@@ -1595,7 +1595,7 @@ ggplot(network_melt, aes(x = 传粉者, y = 植物, fill = factor(相互作用))
 
 **R语言中的零模型分析工具**：
 
-```{r}
+```{r, fig.cap="物种共现零模型检验结果与嵌套性零分布可视化"}
 # 常用的零模型分析包
 library(vegan) # 群落生态学零模型
 library(bipartite) # 二分网络零模型
