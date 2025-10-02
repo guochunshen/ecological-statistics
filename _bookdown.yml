@@ -23,11 +23,11 @@ rmd_files: [
   "03-summary_statistics.Rmd",
   "04-parameter_estimation.Rmd",
   "05-correlation.Rmd",
-  "06-hypothesis_test_part1.Rmd",
-  "07-hypothesis_test_part2.Rmd",
-  "08-modeling_and_prediction_part1.Rmd",
-  "09-modeling_and_prediction_part2.Rmd",
-  "10-modeling_and_prediction_part3.Rmd",
-  "11-modeling_and_prediction_part4.Rmd",
-  "15-Appendix1_statistical_programing.Rmd"
+  "06-classical_hypothesis_tests.Rmd",
+  "07-simulation_based_tests.Rmd",
+  "08-simple_linear_regressions.Rmd",
+  "09-model_selection_and_evaluation.Rmd",
+  "10-advanced_regressions.Rmd",
+  "11-machine_learning.Rmd",
+  "15-Appendix1_R_language.Rmd"
 ]
