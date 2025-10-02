@@ -48,12 +48,14 @@ $$H = \frac{n}{\sum_{i=1}^{n}\frac{1}{x_i}}$$
 
 想象你正在研究一片温带森林中红松的胸径分布。你随机测量了100棵红松的胸径（单位：厘米），得到了以下数据：
 
-```r
+```{r}
 # 模拟红松胸径数据
-pine_diameter <- c(25, 28, 32, 35, 38, 40, 42, 45, 48, 50,
-                   52, 55, 58, 60, 62, 65, 68, 70, 72, 75,
-                   30, 33, 36, 39, 41, 43, 46, 49, 51, 53,
-                   56, 59, 61, 63, 66, 69, 71, 73, 76, 78)
+pine_diameter <- c(
+  25, 28, 32, 35, 38, 40, 42, 45, 48, 50,
+  52, 55, 58, 60, 62, 65, 68, 70, 72, 75,
+  30, 33, 36, 39, 41, 43, 46, 49, 51, 53,
+  56, 59, 61, 63, 66, 69, 71, 73, 76, 78
+)
 
 # 计算算术平均
 mean_diameter <- mean(pine_diameter)
@@ -64,23 +66,23 @@ print(paste("红松胸径的算术平均值：", round(mean_diameter, 2), "厘�
 
 几何平均特别适用于分析增长率数据。假设你研究一个湖泊中浮游植物生物量的年增长率：
 
-```r
+```{r}
 # 浮游植物年增长率（百分比）
-growth_rates <- c(1.05, 1.08, 1.12, 0.95, 1.15)  # 1.05表示5%增长
+growth_rates <- c(1.05, 1.08, 1.12, 0.95, 1.15) # 1.05表示5%增长
 
 # 计算几何平均
-geometric_mean <- prod(growth_rates)^(1/length(growth_rates))
+geometric_mean <- prod(growth_rates)^(1 / length(growth_rates))
 print(paste("浮游植物年增长率的几何平均值：", round(geometric_mean, 3)))
 ```
 
 调和平均适用于速率数据，比如研究鸟类在不同生境中的飞行速度：
 
-```r
+```{r}
 # 鸟类在不同生境中的飞行速度（米/秒）
 flight_speeds <- c(8, 12, 15, 10, 9)
 
 # 计算调和平均
-harmonic_mean <- length(flight_speeds) / sum(1/flight_speeds)
+harmonic_mean <- length(flight_speeds) / sum(1 / flight_speeds)
 print(paste("鸟类飞行速度的调和平均值：", round(harmonic_mean, 2), "米/秒"))
 ```
 
@@ -95,7 +97,7 @@ x_{(\frac{n+1}{2})} & \text{如果 } n \text{ 是奇数} \\
 
 中位数对异常值不敏感，在生态学中特别有用。考虑一个受污染的河流中鱼类体内重金属含量的研究：
 
-```r
+```{r}
 # 鱼类体内汞含量（微克/克），包含一个异常高值
 mercury_content <- c(0.12, 0.15, 0.18, 0.21, 0.25, 0.28, 0.32, 0.35, 0.38, 2.50)
 
@@ -119,7 +121,7 @@ $$\text{Mode} = \arg\max_{x} f(x)$$
 
 众数告诉我们数据中最常见的值。在研究鸟类群落时，我们可能对不同物种的出现频率感兴趣：
 
-```r
+```{r}
 # 不同鸟类物种在样方中的出现次数
 bird_species <- c("麻雀", "乌鸦", "麻雀", "鸽子", "麻雀", "乌鸦", "麻雀", "鸽子", "麻雀")
 
@@ -151,7 +153,7 @@ $$s = \sqrt{s^2} = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2}$$
 
 方差和标准差量化了数据点相对于均值的平均偏离程度。考虑研究两个不同湖泊中鲤鱼体长的变异：
 
-```r
+```{r}
 # 湖泊A和湖泊B中鲤鱼体长（厘米）
 lake_a_lengths <- c(25, 26, 27, 28, 29, 30, 31, 32, 33, 34)
 lake_b_lengths <- c(20, 22, 25, 28, 30, 32, 35, 38, 40, 45)
@@ -178,7 +180,7 @@ $$CV = \frac{s}{\bar{x}} \times 100\%$$
 
 变异系数允许我们比较不同量纲数据的相对变异程度。假设我们想比较不同物种的生长速率和体重的变异：
 
-```r
+```{r}
 # 物种A和物种B的生长速率（厘米/年）和成年体重（公斤）
 growth_rate_a <- c(15, 16, 17, 18, 19, 20)
 weight_a <- c(8, 9, 10, 11, 12, 13)
@@ -213,7 +215,7 @@ $$SE = \frac{s}{\sqrt{n}}$$
 
 考虑研究一片森林中树木高度的抽样调查：
 
-```r
+```{r}
 # 模拟不同样本量下树木高度的标准误
 set.seed(123)
 # 假设总体树木高度服从正态分布，均值为20米，标准差为5米
@@ -223,7 +225,7 @@ population_height <- rnorm(10000, mean = 20, sd = 5)
 sample_sizes <- c(10, 30, 50, 100)
 standard_errors <- numeric(length(sample_sizes))
 
-for(i in 1:length(sample_sizes)) {
+for (i in 1:length(sample_sizes)) {
   sample_data <- sample(population_height, sample_sizes[i])
   standard_errors[i] <- sd(sample_data) / sqrt(sample_sizes[i])
 }
@@ -236,15 +238,17 @@ results <- data.frame(
 print(results)
 
 # 可视化标准误随样本量的变化
-plot(sample_sizes, standard_errors, type = "b",
-     xlab = "样本量", ylab = "标准误",
-     main = "标准误随样本量的变化",
-     col = "blue", lwd = 2, pch = 16)
+plot(sample_sizes, standard_errors,
+  type = "b",
+  xlab = "样本量", ylab = "标准误",
+  main = "标准误随样本量的变化",
+  col = "blue", lwd = 2, pch = 16
+)
 ```
 
 标准误随着样本量的增加而减小，这意味着更大的样本量能够提供更精确的总体均值估计。在生态学研究中，标准误常用于构建置信区间：
 
-```r
+```{r}
 # 计算树木高度的95%置信区间
 sample_data <- sample(population_height, 50)
 sample_mean <- mean(sample_data)
@@ -275,9 +279,9 @@ $$IQR = Q_3 - Q_1$$
 
 四分位距是描述数据中间50%范围的稳健度量，对异常值不敏感。在研究物种分布范围时特别有用：
 
-```r
+```{r}
 # 某鸟类物种在不同样点的数量记录
-bird_counts <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 50)  # 包含一个异常高值
+bird_counts <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 50) # 包含一个异常高值
 
 # 计算四分位距
 q1 <- quantile(bird_counts, 0.25)
@@ -311,7 +315,7 @@ $$g_1 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^3}{s^3}$$
 
 偏度量化了分布的不对称性。在生态学中，许多自然现象都表现出偏斜分布。考虑研究森林中树木胸径的分布：
 
-```r
+```{r}
 # 安装并加载moments包（如果未安装）
 # install.packages("moments")
 library(moments)
@@ -324,8 +328,10 @@ skewness_value <- skewness(tree_diameter)
 print(paste("树木胸径分布的偏度：", round(skewness_value, 2)))
 
 # 可视化分布
-hist(tree_diameter, breaks = 20, main = "树木胸径分布（右偏）",
-     xlab = "胸径（厘米）", col = "lightgreen", border = "darkgreen")
+hist(tree_diameter,
+  breaks = 20, main = "树木胸径分布（右偏）",
+  xlab = "胸径（厘米）", col = "lightgreen", border = "darkgreen"
+)
 abline(v = mean(tree_diameter), col = "red", lwd = 2, lty = 2)
 abline(v = median(tree_diameter), col = "blue", lwd = 2, lty = 2)
 legend("topright", legend = c("均值", "中位数"), col = c("red", "blue"), lty = 2, lwd = 2)
@@ -343,7 +349,7 @@ $$g_2 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^4}{s^4} - 3$$
 
 峰度描述了分布的尖峰程度和尾部厚度。在研究极端生态事件时特别重要：
 
-```r
+```{r}
 # 模拟两种不同的物种多度分布
 # 分布A：尖峰分布（高峰度）
 abundance_a <- c(rep(10, 8), rep(15, 2), rep(20, 25), rep(25, 2), rep(30, 8))
@@ -377,13 +383,13 @@ $$m_k = \frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^k$$
 
 矩提供了描述分布特征的系统框架。让我们用一个完整的例子来展示四个主要矩：
 
-```r
+```{r}
 # 研究湿地中不同水鸟物种的个体数量
 waterbird_counts <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 25, 35, 50)
 
 # 计算四个主要矩
-mean_count <- mean(waterbird_counts)        # 一阶矩：均值
-variance_count <- var(waterbird_counts)     # 二阶矩：方差
+mean_count <- mean(waterbird_counts) # 一阶矩：均值
+variance_count <- var(waterbird_counts) # 二阶矩：方差
 skewness_count <- skewness(waterbird_counts) # 三阶矩：偏度
 kurtosis_count <- kurtosis(waterbird_counts) # 四阶矩：峰度
 
@@ -396,14 +402,14 @@ print(paste("四阶矩（峰度）：", round(kurtosis_count, 2)))
 cat("\n水鸟物种个体数量分布特征：\n")
 cat("- 平均每个物种有", round(mean_count, 1), "个个体\n")
 cat("- 个体数量变异较大（方差=", round(variance_count, 1), "）\n")
-if(skewness_count > 0.5) {
+if (skewness_count > 0.5) {
   cat("- 分布右偏，表明少数物种具有大量个体\n")
-} else if(skewness_count < -0.5) {
+} else if (skewness_count < -0.5) {
   cat("- 分布左偏，表明多数物种个体数量较少\n")
 } else {
   cat("- 分布基本对称\n")
 }
-if(kurtosis_count > 3) {
+if (kurtosis_count > 3) {
   cat("- 分布尖峰，表明极端多度物种出现概率较高\n")
 } else {
   cat("- 分布相对平缓\n")
@@ -418,7 +424,7 @@ if(kurtosis_count > 3) {
 
 为了更好地理解这些统计概念，让我们在一个典型的概率分布图上可视化它们：
 
-```r
+```{r}
 # 创建一个综合的可视化，展示所有统计概念
 library(ggplot2)
 library(gridExtra)
@@ -431,22 +437,25 @@ y <- dnorm(x)
 # 创建基础分布图
 base_plot <- ggplot(data.frame(x = x, y = y), aes(x = x, y = y)) +
   geom_line(color = "blue", linewidth = 1) +
-  labs(title = "统计概念在正态分布上的可视化",
-       x = "变量值", y = "概率密度") +
+  labs(
+    title = "统计概念在正态分布上的可视化",
+    x = "变量值", y = "概率密度"
+  ) +
   theme_minimal()
 
 # 添加均值线
 mean_plot <- base_plot +
   geom_vline(xintercept = 0, color = "red", linewidth = 1, linetype = "solid") +
-  annotate("text", x = 0, y = max(y)*0.9, label = "均值", color = "red", vjust = -1)
+  annotate("text", x = 0, y = max(y) * 0.9, label = "均值", color = "red", vjust = -1)
 
 # 添加标准差范围
 sd_plot <- mean_plot +
   geom_vline(xintercept = c(-1, 1), color = "orange", linewidth = 0.8, linetype = "dashed") +
-  annotate("text", x = -1, y = max(y)*0.8, label = "-1σ", color = "orange", vjust = -1) +
-  annotate("text", x = 1, y = max(y)*0.8, label = "+1σ", color = "orange", vjust = -1) +
+  annotate("text", x = -1, y = max(y) * 0.8, label = "-1σ", color = "orange", vjust = -1) +
+  annotate("text", x = 1, y = max(y) * 0.8, label = "+1σ", color = "orange", vjust = -1) +
   geom_segment(aes(x = -1, y = 0.1, xend = 1, yend = 0.1),
-               color = "green", linewidth = 2, arrow = arrow(ends = "both")) +
+    color = "green", linewidth = 2, arrow = arrow(ends = "both")
+  ) +
   annotate("text", x = 0, y = 0.15, label = "标准差范围", color = "green")
 
 # 显示图形
@@ -462,7 +471,7 @@ print(sd_plot)
 
 为了理解标准误的概念，让我们通过抽样模拟来展示标准误的意义：
 
-```r
+```{r}
 # 标准误的可视化：抽样变异性
 set.seed(456)
 # 假设总体服从正态分布
@@ -474,7 +483,7 @@ sample_size <- 30
 sample_means <- numeric(n_samples)
 sample_ses <- numeric(n_samples)
 
-for(i in 1:n_samples) {
+for (i in 1:n_samples) {
   sample_data <- sample(population, sample_size)
   sample_means[i] <- mean(sample_data)
   sample_ses[i] <- sd(sample_data) / sqrt(sample_size)
@@ -484,15 +493,19 @@ for(i in 1:n_samples) {
 par(mfrow = c(1, 2))
 
 # 左图：样本均值的分布
-hist(sample_means, breaks = 20, col = "lightblue", border = "darkblue",
-     main = "样本均值的分布", xlab = "样本均值", ylab = "频率")
+hist(sample_means,
+  breaks = 20, col = "lightblue", border = "darkblue",
+  main = "样本均值的分布", xlab = "样本均值", ylab = "频率"
+)
 abline(v = mean(population), col = "red", lwd = 3, lty = 2)
 legend("topright", legend = "总体均值", col = "red", lwd = 3, lty = 2)
 
 # 右图：标准误与样本均值的关系
-plot(sample_means, sample_ses, pch = 16, col = "darkgreen",
-     xlab = "样本均值", ylab = "标准误",
-     main = "标准误与样本均值的关系")
+plot(sample_means, sample_ses,
+  pch = 16, col = "darkgreen",
+  xlab = "样本均值", ylab = "标准误",
+  main = "标准误与样本均值的关系"
+)
 abline(h = mean(sample_ses), col = "orange", lwd = 2, lty = 2)
 legend("topright", legend = "平均标准误", col = "orange", lwd = 2, lty = 2)
 
@@ -517,7 +530,7 @@ cat("95%置信区间：[ ", round(ci_lower, 2), ", ", round(ci_upper, 2), " ]\n"
 
 现在让我们比较不同统计参数值对应的分布形状：
 
-```r
+```{r}
 # 比较不同均值的分布
 x_range <- seq(-5, 10, length.out = 1000)
 df_means <- data.frame(
@@ -675,10 +688,12 @@ df_combined <- rbind(df_low, df_high)
 p1 <- ggplot(df_combined, aes(x = position, y = nutrient, color = type)) +
   geom_line(size = 1) +
   geom_point(size = 3) +
-  facet_wrap(~ type, ncol = 1, scales = "free_y") +
-  labs(title = "环境异质性对比",
-       x = "空间位置", y = "土壤养分值",
-       subtitle = sprintf("低异质性CV: %.1f%%, 高异质性CV: %.1f%%", cv_low, cv_high)) +
+  facet_wrap(~type, ncol = 1, scales = "free_y") +
+  labs(
+    title = "环境异质性对比",
+    x = "空间位置", y = "土壤养分值",
+    subtitle = sprintf("低异质性CV: %.1f%%, 高异质性CV: %.1f%%", cv_low, cv_high)
+  ) +
   theme_minimal() +
   theme(legend.position = "none")
 
@@ -686,8 +701,10 @@ p1 <- ggplot(df_combined, aes(x = position, y = nutrient, color = type)) +
 p2 <- ggplot(df_combined, aes(x = type, y = nutrient, fill = type)) +
   geom_boxplot(alpha = 0.7) +
   geom_jitter(width = 0.2, size = 2, alpha = 0.6) +
-  labs(title = "土壤养分值分布对比",
-       x = "环境异质性类型", y = "土壤养分值") +
+  labs(
+    title = "土壤养分值分布对比",
+    x = "环境异质性类型", y = "土壤养分值"
+  ) +
   theme_minimal() +
   theme(legend.position = "none")
 
@@ -764,7 +781,7 @@ $$H = -\sum_{i=1}^{S} p_i \ln(p_i)$$
 **R代码实现：**
 ```{r}
 # 示例数据：4种生境类型的面积比例
-habitat_proportions <- c(0.4, 0.3, 0.2, 0.1)  # 森林、草地、湿地、农田
+habitat_proportions <- c(0.4, 0.3, 0.2, 0.1) # 森林、草地、湿地、农田
 
 # 计算环境异质性指数
 heterogeneity_index <- -sum(habitat_proportions * log(habitat_proportions))
@@ -780,9 +797,11 @@ habitat_data <- data.frame(
 
 ggplot(habitat_data, aes(x = type, y = proportion, fill = type)) +
   geom_col() +
-  labs(title = "环境异质性组成",
-       subtitle = paste("异质性指数 =", round(heterogeneity_index, 3)),
-       x = "生境类型", y = "面积比例") +
+  labs(
+    title = "环境异质性组成",
+    subtitle = paste("异质性指数 =", round(heterogeneity_index, 3)),
+    x = "生境类型", y = "面积比例"
+  ) +
   theme_minimal()
 ```
 
@@ -830,8 +849,10 @@ variance_data <- data.frame(
 ggplot(variance_data, aes(x = "", y = value, fill = component)) +
   geom_bar(stat = "identity", width = 1) +
   coord_polar("y", start = 0) +
-  labs(title = "空间变异分解",
-       subtitle = paste("空间变异比例 =", round(spatial_proportion, 1), "%")) +
+  labs(
+    title = "空间变异分解",
+    subtitle = paste("空间变异比例 =", round(spatial_proportion, 1), "%")
+  ) +
   theme_void()
 ```
 
@@ -855,7 +876,7 @@ $$D = \lim_{\epsilon \to 0} \frac{\log N(\epsilon)}{\log(1/\epsilon)}$$
 ```{r}
 # 盒计数法计算分形维数
 calculate_fractal_dimension <- function(surface_matrix) {
-  sizes <- 2^(1:6)  # 网格大小序列
+  sizes <- 2^(1:6) # 网格大小序列
   counts <- numeric(length(sizes))
 
   for (i in seq_along(sizes)) {
@@ -868,9 +889,9 @@ calculate_fractal_dimension <- function(surface_matrix) {
     # 计算每个网格中是否有数据点
     for (r in 1:grid_rows) {
       for (c in 1:grid_cols) {
-        row_start <- (r-1)*size + 1
+        row_start <- (r - 1) * size + 1
         row_end <- min(row_start + size - 1, nrow(surface_matrix))
-        col_start <- (c-1)*size + 1
+        col_start <- (c - 1) * size + 1
         col_end <- min(col_start + size - 1, ncol(surface_matrix))
 
         sub_matrix <- surface_matrix[row_start:row_end, col_start:col_end]
@@ -883,16 +904,16 @@ calculate_fractal_dimension <- function(surface_matrix) {
   }
 
   # 线性回归估计分形维数
-  model <- lm(log(counts) ~ log(1/sizes))
+  model <- lm(log(counts) ~ log(1 / sizes))
   return(coef(model)[2])
 }
 
 # 示例：创建不同复杂程度的环境表面
 set.seed(123)
 # 平滑表面（低分形维数）
-smooth_surface <- matrix(rnorm(64*64, mean = 50, sd = 5), 64, 64)
+smooth_surface <- matrix(rnorm(64 * 64, mean = 50, sd = 5), 64, 64)
 # 复杂表面（高分形维数）
-complex_surface <- matrix(rnorm(64*64, mean = 50, sd = 20), 64, 64)
+complex_surface <- matrix(rnorm(64 * 64, mean = 50, sd = 20), 64, 64)
 
 # 计算分形维数
 fd_smooth <- calculate_fractal_dimension(smooth_surface)
@@ -912,17 +933,21 @@ complex_df <- melt(complex_surface[1:32, 1:32])
 p1 <- ggplot(smooth_df, aes(x = Var1, y = Var2, fill = value)) +
   geom_tile() +
   scale_fill_viridis_c() +
-  labs(title = "平滑环境表面",
-       subtitle = paste("分形维数 =", round(fd_smooth, 3)),
-       x = "", y = "") +
+  labs(
+    title = "平滑环境表面",
+    subtitle = paste("分形维数 =", round(fd_smooth, 3)),
+    x = "", y = ""
+  ) +
   theme_void()
 
 p2 <- ggplot(complex_df, aes(x = Var1, y = Var2, fill = value)) +
   geom_tile() +
   scale_fill_viridis_c() +
-  labs(title = "复杂环境表面",
-       subtitle = paste("分形维数 =", round(fd_complex, 3)),
-       x = "", y = "") +
+  labs(
+    title = "复杂环境表面",
+    subtitle = paste("分形维数 =", round(fd_complex, 3)),
+    x = "", y = ""
+  ) +
   theme_void()
 
 library(patchwork)
@@ -955,18 +980,22 @@ $$S(t) = P(T > t) = 1 - F(t)$$
 **R代码实现：**
 ```{r}
 # 示例数据：鸟类个体的存活时间（天）
-survival_times <- c(45, 67, 89, 102, 120, 145, 167, 189, 210, 234,
-                    56, 78, 95, 110, 128, 150, 172, 195, 218, 240)
-status <- rep(1, 20)  # 1表示观测到死亡事件
+survival_times <- c(
+  45, 67, 89, 102, 120, 145, 167, 189, 210, 234,
+  56, 78, 95, 110, 128, 150, 172, 195, 218, 240
+)
+status <- rep(1, 20) # 1表示观测到死亡事件
 
 # 使用Kaplan-Meier方法估计生存函数
 library(survival)
 fit <- survfit(Surv(survival_times, status) ~ 1)
 
 # 绘制生存函数曲线
-plot(fit, main = "鸟类个体生存函数",
-     xlab = "时间（天）", ylab = "生存概率",
-     col = "blue", lwd = 2)
+plot(fit,
+  main = "鸟类个体生存函数",
+  xlab = "时间（天）", ylab = "生存概率",
+  col = "blue", lwd = 2
+)
 
 # 输出关键统计量
 cat("中位生存时间:", round(quantile(fit, probs = 0.5)$quantile, 1), "天\n")
@@ -1007,8 +1036,10 @@ library(ggplot2)
 ggplot(hazard_data, aes(x = time, y = hazard)) +
   geom_line(color = "red", size = 1) +
   geom_point(color = "red", size = 2) +
-  labs(title = "瞬时死亡风险函数",
-       x = "时间（天）", y = "死亡风险率") +
+  labs(
+    title = "瞬时死亡风险函数",
+    x = "时间（天）", y = "死亡风险率"
+  ) +
   theme_minimal()
 
 cat("死亡风险随时间变化模式:\n")
@@ -1047,16 +1078,20 @@ cum_hazard_data <- cumulative_hazard(seq(0, 250, by = 25), fit)
 ggplot(cum_hazard_data, aes(x = time, y = cum_hazard)) +
   geom_line(color = "darkgreen", size = 1) +
   geom_point(color = "darkgreen", size = 1.5) +
-  labs(title = "累积风险函数",
-       x = "时间（天）", y = "累积死亡风险") +
+  labs(
+    title = "累积风险函数",
+    x = "时间（天）", y = "累积死亡风险"
+  ) +
   theme_minimal()
 
 # 综合展示三个函数
 library(patchwork)
 
 # 创建综合图形
-p1 <- ggplot(data.frame(time = fit$time, surv = fit$surv),
-             aes(x = time, y = surv)) +
+p1 <- ggplot(
+  data.frame(time = fit$time, surv = fit$surv),
+  aes(x = time, y = surv)
+) +
   geom_step(color = "blue", size = 1) +
   labs(title = "生存函数", x = "时间", y = "生存概率") +
   theme_minimal()
@@ -1098,8 +1133,10 @@ $$G = \frac{\sum_{i=1}^{n}\sum_{j=1}^{n}|x_i - x_j|}{2n^2\bar{x}}$$
 **R代码实现：**
 ```{r}
 # 示例数据：森林中树木的胸径（cm）
-tree_diameters <- c(15.2, 18.5, 22.1, 25.8, 28.3, 32.6, 35.9, 40.2,
-                    45.7, 50.3, 12.8, 16.4, 19.7, 23.5, 27.9)
+tree_diameters <- c(
+  15.2, 18.5, 22.1, 25.8, 28.3, 32.6, 35.9, 40.2,
+  45.7, 50.3, 12.8, 16.4, 19.7, 23.5, 27.9
+)
 
 # 计算Gini系数
 calculate_gini <- function(x) {
@@ -1126,9 +1163,11 @@ tree_data <- data.frame(diameter = tree_diameters, rank = rank(tree_diameters))
 ggplot(tree_data, aes(x = rank, y = diameter)) +
   geom_point(size = 3, color = "blue", alpha = 0.7) +
   geom_hline(yintercept = mean(tree_diameters), linetype = "dashed", color = "red") +
-  labs(title = "树木胸径分布",
-       subtitle = paste("Gini系数 =", round(gini_index, 3)),
-       x = "个体排序", y = "胸径 (cm)") +
+  labs(
+    title = "树木胸径分布",
+    subtitle = paste("Gini系数 =", round(gini_index, 3)),
+    x = "个体排序", y = "胸径 (cm)"
+  ) +
   theme_minimal()
 ```
 
@@ -1150,8 +1189,8 @@ Lorenz曲线上的点 $(p, L(p))$ 表示：
 calculate_lorenz <- function(x) {
   x_sorted <- sort(x)
   n <- length(x)
-  p <- (1:n) / n  # 累积个体比例
-  L <- cumsum(x_sorted) / sum(x_sorted)  # 累积资源比例
+  p <- (1:n) / n # 累积个体比例
+  L <- cumsum(x_sorted) / sum(x_sorted) # 累积资源比例
   return(data.frame(p = p, L = L))
 }
 
@@ -1161,11 +1200,15 @@ lorenz_data <- calculate_lorenz(tree_diameters)
 ggplot(lorenz_data, aes(x = p, y = L)) +
   geom_line(color = "darkgreen", size = 1.5) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  geom_polygon(data = data.frame(x = c(0, lorenz_data$p, 1), y = c(0, lorenz_data$L, 0)),
-               aes(x = x, y = y), fill = "lightgreen", alpha = 0.3) +
-  labs(title = "Lorenz曲线",
-       subtitle = paste("Gini系数 =", round(gini_index, 3)),
-       x = "累积个体比例", y = "累积资源比例") +
+  geom_polygon(
+    data = data.frame(x = c(0, lorenz_data$p, 1), y = c(0, lorenz_data$L, 0)),
+    aes(x = x, y = y), fill = "lightgreen", alpha = 0.3
+  ) +
+  labs(
+    title = "Lorenz曲线",
+    subtitle = paste("Gini系数 =", round(gini_index, 3)),
+    x = "累积个体比例", y = "累积资源比例"
+  ) +
   theme_minimal() +
   coord_equal()
 
@@ -1184,8 +1227,8 @@ Lorenz曲线直观地展示了种群内资源分配的不均等性。曲线越�
 **评估种内竞争强度：**
 ```{r}
 # 比较不同种群的竞争强度
-population_A <- c(12, 15, 18, 22, 25, 28, 32, 35, 40, 45)  # 竞争较弱
-population_B <- c(8, 10, 12, 15, 20, 30, 42, 55, 68, 80)   # 竞争较强
+population_A <- c(12, 15, 18, 22, 25, 28, 32, 35, 40, 45) # 竞争较弱
+population_B <- c(8, 10, 12, 15, 20, 30, 42, 55, 68, 80) # 竞争较强
 
 gini_A <- calculate_gini(population_A)
 gini_B <- calculate_gini(population_B)
@@ -1202,9 +1245,11 @@ comparison_data <- rbind(
 ggplot(comparison_data, aes(x = population, y = value, fill = population)) +
   geom_boxplot(alpha = 0.7) +
   geom_jitter(width = 0.2, size = 2, alpha = 0.6) +
-  labs(title = "不同种群的个体大小分布比较",
-       subtitle = paste("Gini系数: A =", round(gini_A, 3), ", B =", round(gini_B, 3)),
-       x = "种群", y = "个体大小") +
+  labs(
+    title = "不同种群的个体大小分布比较",
+    subtitle = paste("Gini系数: A =", round(gini_A, 3), ", B =", round(gini_B, 3)),
+    x = "种群", y = "个体大小"
+  ) +
   theme_minimal()
 ```
 
@@ -1215,8 +1260,8 @@ ggplot(comparison_data, aes(x = population, y = value, fill = population)) +
 ```{r}
 # 模拟不同环境条件下的种群分布
 set.seed(123)
-resource_rich <- rnorm(50, mean = 30, sd = 5)    # 资源丰富环境
-resource_poor <- rnorm(50, mean = 20, sd = 8)    # 资源贫乏环境
+resource_rich <- rnorm(50, mean = 30, sd = 5) # 资源丰富环境
+resource_poor <- rnorm(50, mean = 20, sd = 8) # 资源贫乏环境
 
 gini_rich <- calculate_gini(resource_rich)
 gini_poor <- calculate_gini(resource_poor)
@@ -1229,8 +1274,10 @@ efficiency_analysis <- data.frame(
   环境条件 = c("资源丰富", "资源贫乏"),
   Gini系数 = c(gini_rich, gini_poor),
   平均大小 = c(mean(resource_rich), mean(resource_poor)),
-  变异系数 = c(sd(resource_rich)/mean(resource_rich),
-               sd(resource_poor)/mean(resource_poor))
+  变异系数 = c(
+    sd(resource_rich) / mean(resource_rich),
+    sd(resource_poor) / mean(resource_poor)
+  )
 )
 
 print("不同环境条件下的种群特征比较:")
@@ -1262,12 +1309,12 @@ $$S = \alpha \ln(1 + \frac{N}{\alpha})$$
 **R代码实现：**
 ```{r}
 # 示例数据：森林群落中不同树种的个体数量
-species_abundance <- c(25, 18, 12, 8, 5)  # 各树种的个体数量
+species_abundance <- c(25, 18, 12, 8, 5) # 各树种的个体数量
 
 # 计算Fisher's α
 calculate_fisher_alpha <- function(abundance) {
-  S <- length(abundance)  # 物种数
-  N <- sum(abundance)     # 总个体数
+  S <- length(abundance) # 物种数
+  N <- sum(abundance) # 总个体数
 
   # 使用迭代法求解Fisher's α
   alpha_est <- 1
@@ -1360,9 +1407,11 @@ species_data <- data.frame(
 
 ggplot(species_data, aes(x = species, y = abundance, fill = species)) +
   geom_col() +
-  labs(title = "森林群落物种组成",
-       subtitle = paste("Shannon指数 =", round(shannon_index, 3)),
-       x = "树种", y = "个体数量") +
+  labs(
+    title = "森林群落物种组成",
+    subtitle = paste("Shannon指数 =", round(shannon_index, 3)),
+    x = "树种", y = "个体数量"
+  ) +
   theme_minimal()
 ```
 
@@ -1399,8 +1448,8 @@ simpson_vegan <- vegan::diversity(species_abundance, index = "simpson")
 cat("使用vegan包计算的Simpson指数:", round(simpson_vegan, 3), "\n")
 
 # 比较不同群落的多样性
-community_A <- c(30, 25, 20, 15, 10)  # 多样性较高
-community_B <- c(50, 20, 15, 10, 5)   # 多样性较低
+community_A <- c(30, 25, 20, 15, 10) # 多样性较高
+community_B <- c(50, 20, 15, 10, 5) # 多样性较低
 
 shannon_A <- calculate_shannon(community_A)
 shannon_B <- calculate_shannon(community_B)
@@ -1447,7 +1496,7 @@ pielou_index <- calculate_pielou(species_abundance)
 cat("Pielou均匀度指数:", round(pielou_index, 3), "\n")
 
 # 比较不同均匀度的群落
-even_community <- c(20, 18, 22, 19, 21)  # 均匀分布
+even_community <- c(20, 18, 22, 19, 21) # 均匀分布
 uneven_community <- c(50, 15, 10, 12, 13) # 不均匀分布
 
 pielou_even <- calculate_pielou(even_community)
@@ -1461,10 +1510,14 @@ uniformity_data <- rbind(
 
 ggplot(uniformity_data, aes(x = factor(物种), y = 多度, fill = 群落类型)) +
   geom_col(position = "dodge") +
-  labs(title = "群落均匀度比较",
-       subtitle = paste("均匀度指数: 均匀 =", round(pielou_even, 3),
-                       ", 不均匀 =", round(pielou_uneven, 3)),
-       x = "物种", y = "个体数量") +
+  labs(
+    title = "群落均匀度比较",
+    subtitle = paste(
+      "均匀度指数: 均匀 =", round(pielou_even, 3),
+      ", 不均匀 =", round(pielou_uneven, 3)
+    ),
+    x = "物种", y = "个体数量"
+  ) +
   theme_minimal() +
   facet_wrap(~群落类型, ncol = 2)
 
@@ -1574,11 +1627,11 @@ library(igraph)
 
 # 创建植物-传粉者相互作用矩阵
 plant_pollinator_matrix <- matrix(c(
-  1, 1, 1, 0, 0,  # 植物1
-  1, 1, 1, 1, 0,  # 植物2
-  0, 1, 1, 1, 1,  # 植物3
-  0, 0, 1, 1, 1,  # 植物4
-  0, 0, 0, 1, 1   # 植物5
+  1, 1, 1, 0, 0, # 植物1
+  1, 1, 1, 1, 0, # 植物2
+  0, 1, 1, 1, 1, # 植物3
+  0, 0, 1, 1, 1, # 植物4
+  0, 0, 0, 1, 1 # 植物5
 ), nrow = 5, byrow = TRUE)
 
 rownames(plant_pollinator_matrix) <- paste("植物", 1:5)
@@ -1604,15 +1657,18 @@ cat("网络嵌套性(NODF):", round(nestedness, 3), "\n")
 # 可视化网络
 set.seed(123)
 plot(net,
-     layout = layout_with_fr,
-     vertex.color = ifelse(V(net)$type, "lightblue", "lightgreen"),
-     vertex.size = 8,
-     vertex.label.cex = 0.8,
-     edge.width = 2,
-     main = "植物-传粉者相互作用网络",
-     sub = paste("连接度:", round(connectance, 3),
-                "模块性:", round(modularity, 3),
-                "嵌套性:", round(nestedness, 3)))
+  layout = layout_with_fr,
+  vertex.color = ifelse(V(net)$type, "lightblue", "lightgreen"),
+  vertex.size = 8,
+  vertex.label.cex = 0.8,
+  edge.width = 2,
+  main = "植物-传粉者相互作用网络",
+  sub = paste(
+    "连接度:", round(connectance, 3),
+    "模块性:", round(modularity, 3),
+    "嵌套性:", round(nestedness, 3)
+  )
+)
 
 # 网络拓扑指标综合分析
 network_metrics <- data.frame(
@@ -1658,10 +1714,10 @@ $$CC = \frac{L}{S^2}$$
 # 示例数据：简化食物网
 # 物种类型：1-生产者，2-初级消费者，3-次级消费者，4-顶级捕食者
 food_web_matrix <- matrix(c(
-  0, 1, 0, 0,  # 物种1（生产者）
-  0, 0, 1, 0,  # 物种2（草食动物）
-  0, 0, 0, 1,  # 物种3（初级捕食者）
-  0, 0, 0, 0   # 物种4（顶级捕食者）
+  0, 1, 0, 0, # 物种1（生产者）
+  0, 0, 1, 0, # 物种2（草食动物）
+  0, 0, 0, 1, # 物种3（初级捕食者）
+  0, 0, 0, 0 # 物种4（顶级捕食者）
 ), nrow = 4, byrow = TRUE)
 
 rownames(food_web_matrix) <- c("生产者", "草食动物", "初级捕食者", "顶级捕食者")
@@ -1690,15 +1746,18 @@ cat("连接复杂性:", round(connectance_complexity, 3), "\n")
 # 可视化食物网
 set.seed(123)
 plot(food_net,
-     layout = layout_with_sugiyama,
-     vertex.color = c("green", "yellow", "orange", "red"),
-     vertex.size = 15,
-     vertex.label.cex = 1.2,
-     edge.arrow.size = 0.8,
-     edge.width = 2,
-     main = "简化食物网结构",
-     sub = paste("平均链长:", round(avg_chain_length, 2),
-                "连接复杂性:", round(connectance_complexity, 3)))
+  layout = layout_with_sugiyama,
+  vertex.color = c("green", "yellow", "orange", "red"),
+  vertex.size = 15,
+  vertex.label.cex = 1.2,
+  edge.arrow.size = 0.8,
+  edge.width = 2,
+  main = "简化食物网结构",
+  sub = paste(
+    "平均链长:", round(avg_chain_length, 2),
+    "连接复杂性:", round(connectance_complexity, 3)
+  )
+)
 
 # 食物网特征综合分析
 food_web_analysis <- data.frame(
@@ -1712,9 +1771,9 @@ print(food_web_analysis)
 
 # 比较不同复杂度的食物网
 # 简单食物网
-simple_food_web <- matrix(c(0,1,0,0,0,1,0,0), nrow = 3)
+simple_food_web <- matrix(c(0, 1, 0, 0, 0, 1, 0, 0), nrow = 3)
 # 复杂食物网
-complex_food_web <- matrix(c(0,1,1,0,0,0,1,1,0,0,0,1,0,0,0,0), nrow = 4)
+complex_food_web <- matrix(c(0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0), nrow = 4)
 
 simple_complexity <- sum(simple_food_web) / (nrow(simple_food_web)^2)
 complex_complexity <- sum(complex_food_web) / (nrow(complex_food_web)^2)
@@ -1787,9 +1846,11 @@ resistance_data <- data.frame(
 ggplot(resistance_data, aes(x = 时间点, y = 生物量, color = 条件)) +
   geom_line(size = 1) +
   geom_point(size = 2) +
-  labs(title = "生态系统抵抗力分析",
-       subtitle = paste("抵抗力指数 =", round(resistance_index, 3)),
-       x = "时间点", y = "生物量 (吨/公顷)") +
+  labs(
+    title = "生态系统抵抗力分析",
+    subtitle = paste("抵抗力指数 =", round(resistance_index, 3)),
+    x = "时间点", y = "生物量 (吨/公顷)"
+  ) +
   theme_minimal()
 
 # 比较不同生态系统的抵抗力
@@ -1824,7 +1885,7 @@ $$\lambda = \frac{\ln(X_{final} / X_{before})}{t}$$
 # 示例数据：模拟火灾后森林群落的恢复过程
 set.seed(123)
 # 火灾前的生物量
-pre_fire_biomass <- 100  # 吨/公顷
+pre_fire_biomass <- 100 # 吨/公顷
 # 火灾后的恢复过程（年际生物量变化）
 years_post_fire <- 0:10
 biomass_recovery <- c(20, 35, 50, 65, 78, 88, 95, 98, 99, 100, 101)
@@ -1857,9 +1918,11 @@ ggplot(recovery_data, aes(x = 年份, y = 恢复比例)) +
   geom_line(color = "blue", size = 1.5) +
   geom_point(color = "blue", size = 2) +
   geom_hline(yintercept = 95, linetype = "dashed", color = "red") +
-  labs(title = "生态系统恢复力分析",
-       subtitle = paste("恢复时间 =", resilience_result$recovery_time, "年"),
-       x = "火灾后年份", y = "生物量恢复比例 (%)") +
+  labs(
+    title = "生态系统恢复力分析",
+    subtitle = paste("恢复时间 =", resilience_result$recovery_time, "年"),
+    x = "火灾后年份", y = "生物量恢复比例 (%)"
+  ) +
   theme_minimal()
 
 # 比较不同干扰类型的恢复力
@@ -1920,18 +1983,23 @@ persistence_data <- data.frame(
   年份 = years,
   营养水平 = nutrient_levels,
   状态 = ifelse(nutrient_levels >= stable_threshold_low &
-                 nutrient_levels <= stable_threshold_high,
-                "稳定", "不稳定")
+    nutrient_levels <= stable_threshold_high,
+  "稳定", "不稳定"
+  )
 )
 
 ggplot(persistence_data, aes(x = 年份, y = 营养水平, color = 状态)) +
   geom_line(size = 1) +
   geom_point(size = 1.5) +
-  geom_hline(yintercept = c(stable_threshold_low, stable_threshold_high),
-             linetype = "dashed", color = "gray") +
-  labs(title = "生态系统持久性分析",
-       subtitle = paste("持久性指数 =", round(persistence_index, 3)),
-       x = "年份", y = "总磷浓度 (mg/L)") +
+  geom_hline(
+    yintercept = c(stable_threshold_low, stable_threshold_high),
+    linetype = "dashed", color = "gray"
+  ) +
+  labs(
+    title = "生态系统持久性分析",
+    subtitle = paste("持久性指数 =", round(persistence_index, 3)),
+    x = "年份", y = "总磷浓度 (mg/L)"
+  ) +
   theme_minimal()
 
 # 比较不同生态系统的持久性

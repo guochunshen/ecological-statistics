@@ -138,7 +138,7 @@ true_rare_species <- 15
 
 # 调查发现的物种数量（抽样偏差）
 observed_species <- 8
-survey_effort <- 50  # 调查努力程度
+survey_effort <- 50 # 调查努力程度
 
 detection_prob <- observed_species / survey_effort
 estimated_total <- observed_species / detection_prob
@@ -215,10 +215,13 @@ convergence_df <- data.frame(
 ggplot(convergence_df, aes(x = 样本量, y = 估计概率)) +
   geom_line(color = "#2196F3", linewidth = 1) +
   geom_hline(aes(yintercept = 真实概率, color = "真实概率"),
-             linewidth = 1.2, linetype = "dashed") +
+    linewidth = 1.2, linetype = "dashed"
+  ) +
   scale_color_manual(values = c("真实概率" = "#E91E63")) +
-  labs(title = "大数定律：样本均值收敛于总体均值",
-       x = "样本量", y = "估计概率", color = "") +
+  labs(
+    title = "大数定律：样本均值收敛于总体均值",
+    x = "样本量", y = "估计概率", color = ""
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -317,8 +320,10 @@ results_df <- data.frame(
 ggplot(results_df, aes(x = 样本量, y = 估计误差)) +
   geom_line(color = "#2196F3", linewidth = 1.2) +
   geom_point(color = "#2196F3", size = 3) +
-  labs(title = "样本量对概率估计精度的影响",
-       x = "样本量", y = "估计误差") +
+  labs(
+    title = "样本量对概率估计精度的影响",
+    x = "样本量", y = "估计误差"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -403,10 +408,10 @@ set.seed(1010)
 
 # 定义不同的生态情景（划分样本空间）
 scenarios <- c("正常", "干旱", "洪水")
-scenario_probs <- c(0.7, 0.2, 0.1)  # 情景概率
+scenario_probs <- c(0.7, 0.2, 0.1) # 情景概率
 
 # 不同情景下物种灭绝的概率
-extinction_probs <- c(0.1, 0.6, 0.3)  # 正常、干旱、洪水下的灭绝概率
+extinction_probs <- c(0.1, 0.6, 0.3) # 正常、干旱、洪水下的灭绝概率
 
 # 使用全概率公式计算总体灭绝概率
 total_extinction_prob <- sum(scenario_probs * extinction_probs)
@@ -424,9 +429,11 @@ ggplot(contribution_df, aes(x = 情景, y = 贡献度, fill = 情景)) +
   geom_col(width = 0.6) +
   geom_text(aes(label = round(贡献度, 3)), vjust = -0.5, size = 3) +
   scale_fill_manual(values = c("#4CAF50", "#FFC107", "#E91E63")) +
-  labs(title = "各情景对总体灭绝概率的贡献",
-       subtitle = paste("总体灭绝概率 =", round(total_extinction_prob, 3)),
-       x = "生态情景", y = "贡献度") +
+  labs(
+    title = "各情景对总体灭绝概率的贡献",
+    subtitle = paste("总体灭绝概率 =", round(total_extinction_prob, 3)),
+    x = "生态情景", y = "贡献度"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -488,11 +495,11 @@ $$P(H|E) = \frac{P(E|H) \times P(H)}{P(E|H) \times P(H) + P(E|\neg H) \times P(\
 set.seed(1111)
 
 # 先验概率：疾病在种群中的 prevalence
-prior_prob <- 0.05  # 5%的个体患病
+prior_prob <- 0.05 # 5%的个体患病
 
 # 检测准确性
-sensitivity <- 0.95  # 真阳性率
-specificity <- 0.90  # 真阴性率
+sensitivity <- 0.95 # 真阳性率
+specificity <- 0.90 # 真阴性率
 
 # 计算边际概率: P(阳性)
 marginal_positive <- prior_prob * sensitivity + (1 - prior_prob) * (1 - specificity)
@@ -524,11 +531,11 @@ cat("后验概率 P(患病|阳性):", round(posterior_prob, 4), "\n")
 set.seed(1414)
 
 # 先验信息：专家对物种偏好的信念
-expert_prior <- c(0.6, 0.3, 0.1)  # 喜欢森林、草地、湿地的先验概率
+expert_prior <- c(0.6, 0.3, 0.1) # 喜欢森林、草地、湿地的先验概率
 habitat_types <- c("森林", "草地", "湿地")
 
 # 观测数据：在不同栖息地中发现物种的次数
-observations <- c(45, 20, 5)      # 在森林、草地、湿地中的观测次数
+observations <- c(45, 20, 5) # 在森林、草地、湿地中的观测次数
 total_observations <- sum(observations)
 
 # 计算似然函数（基于观测数据）
@@ -584,12 +591,12 @@ library(showtext)
 showtext_auto()
 
 # 初始先验：对森林健康的信念
-prior_belief <- c(0.3, 0.5, 0.2)  # 差、中、好的概率
+prior_belief <- c(0.3, 0.5, 0.2) # 差、中、好的概率
 health_states <- c("差", "中", "好")
 
 # 收集证据：树木死亡率观测
 # 不同健康状态下的死亡率似然
-mortality_likelihood <- c(0.8, 0.3, 0.1)  # 差、中、好状态下的死亡率
+mortality_likelihood <- c(0.8, 0.3, 0.1) # 差、中、好状态下的死亡率
 
 # 观测到的死亡率证据
 observed_mortality <- 0.4
@@ -611,12 +618,15 @@ belief_df <- data.frame(
 ggplot(belief_df, aes(x = 健康状态, y = 概率, fill = 类型)) +
   geom_col(position = "dodge", width = 0.6) +
   geom_text(aes(label = round(概率, 3)),
-            position = position_dodge(width = 0.6),
-            vjust = -0.5, size = 3) +
+    position = position_dodge(width = 0.6),
+    vjust = -0.5, size = 3
+  ) +
   scale_fill_manual(values = c("#4CAF50", "#2196F3")) +
-  labs(title = "贝叶斯更新：森林健康评估",
-       subtitle = paste("观测到死亡率:", observed_mortality),
-       x = "健康状态", y = "概率", fill = "信念类型") +
+  labs(
+    title = "贝叶斯更新：森林健康评估",
+    subtitle = paste("观测到死亡率:", observed_mortality),
+    x = "健康状态", y = "概率", fill = "信念类型"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -641,7 +651,7 @@ library(showtext)
 showtext_auto()
 
 # 先验风险分布
-risk_prior <- c(0.2, 0.5, 0.3)  # 低、中、高风险先验
+risk_prior <- c(0.2, 0.5, 0.3) # 低、中、高风险先验
 risk_levels <- c("低", "中", "高")
 
 # 新证据：气候指标异常
@@ -656,12 +666,12 @@ if (observed_anomaly) {
   evidence_prob <- sum(risk_prior * anomaly_likelihood)
   risk_posterior <- (risk_prior * anomaly_likelihood) / evidence_prob
 } else {
-  risk_posterior <- risk_prior  # 无新证据，后验=先验
+  risk_posterior <- risk_prior # 无新证据，后验=先验
 }
 
 # 决策分析：是否采取保护措施
 protection_cost <- 100000
-damage_cost <- c(50000, 200000, 500000)  # 低、中、高风险下的损失
+damage_cost <- c(50000, 200000, 500000) # 低、中、高风险下的损失
 
 expected_damage <- sum(risk_posterior * damage_cost)
 decision <- ifelse(expected_damage > protection_cost, "采取保护措施", "不采取措施")
@@ -677,11 +687,14 @@ risk_df <- data.frame(
 p1 <- ggplot(risk_df, aes(x = 风险等级, y = 概率, fill = 类型)) +
   geom_col(position = "dodge", width = 0.6) +
   geom_text(aes(label = round(概率, 3)),
-            position = position_dodge(width = 0.6),
-            vjust = -0.5, size = 3) +
+    position = position_dodge(width = 0.6),
+    vjust = -0.5, size = 3
+  ) +
   scale_fill_manual(values = c("#FFC107", "#E91E63")) +
-  labs(title = "贝叶斯风险评估更新",
-       x = "风险等级", y = "概率", fill = "信念类型") +
+  labs(
+    title = "贝叶斯风险评估更新",
+    x = "风险等级", y = "概率", fill = "信念类型"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -699,12 +712,15 @@ decision_df <- data.frame(
 
 p2 <- ggplot(decision_df, aes(x = 选项, y = 数值, fill = 选项)) +
   geom_col(width = 0.5) +
-  geom_text(aes(label = paste(round(数值/1000, 0), "千元")),
-            vjust = -0.5, size = 3) +
+  geom_text(aes(label = paste(round(数值 / 1000, 0), "千元")),
+    vjust = -0.5, size = 3
+  ) +
   scale_fill_manual(values = c("#4CAF50", "#2196F3")) +
-  labs(title = "决策分析",
-       subtitle = paste("决策结果:", decision),
-       x = "", y = "成本（元）") +
+  labs(
+    title = "决策分析",
+    subtitle = paste("决策结果:", decision),
+    x = "", y = "成本（元）"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -806,12 +822,16 @@ plot_data <- data.frame(
 ggplot(plot_data, aes(x = 时间, y = 数值, color = 类型)) +
   geom_line(data = subset(plot_data, 类型 == "观测数据"), alpha = 0.5) +
   geom_line(data = subset(plot_data, 类型 != "观测数据"), linewidth = 1.2) +
-  scale_color_manual(values = c("观测数据" = "gray",
-                               "线性模型" = "#E74C3C",
-                               "季节模型" = "#3498DB")) +
-  labs(title = "贝叶斯模型比较：种群增长模式",
-       subtitle = paste("贝叶斯因子 =", round(bayes_factor, 2)),
-       x = "时间", y = "种群数量", color = "") +
+  scale_color_manual(values = c(
+    "观测数据" = "gray",
+    "线性模型" = "#E74C3C",
+    "季节模型" = "#3498DB"
+  )) +
+  labs(
+    title = "贝叶斯模型比较：种群增长模式",
+    subtitle = paste("贝叶斯因子 =", round(bayes_factor, 2)),
+    x = "时间", y = "种群数量", color = ""
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -835,7 +855,7 @@ sensitivity_analysis <- function(prior_strength) {
   observed_data <- rnorm(30, true_effect, 0.5)
 
   # 不同先验强度
-  prior_sd <- 10 / prior_strength  # 先验标准差随强度变化
+  prior_sd <- 10 / prior_strength # 先验标准差随强度变化
 
   # 简单贝叶斯更新
   prior_mean <- 0
@@ -843,8 +863,8 @@ sensitivity_analysis <- function(prior_strength) {
   sample_sd <- sd(observed_data) / sqrt(length(observed_data))
 
   # 后验计算（正态-正态共轭）
-  posterior_precision <- 1/prior_sd^2 + 1/sample_sd^2
-  posterior_mean <- (prior_mean/prior_sd^2 + sample_mean/sample_sd^2) / posterior_precision
+  posterior_precision <- 1 / prior_sd^2 + 1 / sample_sd^2
+  posterior_mean <- (prior_mean / prior_sd^2 + sample_mean / sample_sd^2) / posterior_precision
   posterior_sd <- sqrt(1 / posterior_precision)
 
   return(c(posterior_mean, posterior_sd))
@@ -856,8 +876,8 @@ sensitivity_results <- t(sapply(prior_strengths, sensitivity_analysis))
 
 sensitivity_df <- data.frame(
   先验强度 = prior_strengths,
-  后验均值 = round(sensitivity_results[,1], 3),
-  后验标准差 = round(sensitivity_results[,2], 3)
+  后验均值 = round(sensitivity_results[, 1], 3),
+  后验标准差 = round(sensitivity_results[, 2], 3)
 )
 
 cat("贝叶斯敏感性分析结果:\n")
@@ -874,7 +894,7 @@ robustness_check <- function(data_contamination) {
   # 添加污染数据
   n_contaminated <- round(length(clean_data) * data_contamination)
   if (n_contaminated > 0) {
-    contaminated_data <- rnorm(n_contaminated, 2.0, 0.5)  # 异常值
+    contaminated_data <- rnorm(n_contaminated, 2.0, 0.5) # 异常值
     all_data <- c(clean_data, contaminated_data)
   } else {
     all_data <- clean_data
@@ -887,8 +907,8 @@ robustness_check <- function(data_contamination) {
   sample_mean <- mean(all_data)
   sample_sd <- sd(all_data) / sqrt(length(all_data))
 
-  posterior_precision <- 1/prior_sd^2 + 1/sample_sd^2
-  posterior_mean <- (prior_mean/prior_sd^2 + sample_mean/sample_sd^2) / posterior_precision
+  posterior_precision <- 1 / prior_sd^2 + 1 / sample_sd^2
+  posterior_mean <- (prior_mean / prior_sd^2 + sample_mean / sample_sd^2) / posterior_precision
 
   return(posterior_mean)
 }
@@ -919,10 +939,10 @@ set.seed(555)
 # 不同专家对同一生态风险的评估
 experts <- c("生态学家A", "生态学家B", "森林管理者", "当地社区")
 risk_assessments <- list(
-  c(0.7, 0.8, 0.6),  # 生态学家A的多次评估
-  c(0.4, 0.5, 0.3),  # 生态学家B的评估
+  c(0.7, 0.8, 0.6), # 生态学家A的多次评估
+  c(0.4, 0.5, 0.3), # 生态学家B的评估
   c(0.9, 0.85, 0.95), # 森林管理者的评估
-  c(0.2, 0.3, 0.25)   # 当地社区的评估
+  c(0.2, 0.3, 0.25) # 当地社区的评估
 )
 
 # 计算每个群体的平均评估
@@ -942,8 +962,10 @@ ggplot(bias_df, aes(x = 群体, y = 平均风险评估, fill = 群体)) +
   geom_col(width = 0.6) +
   geom_text(aes(label = 平均风险评估), vjust = -0.5, size = 3) +
   scale_fill_manual(values = c("#E74C3C", "#3498DB", "#2ECC71", "#9C27B0")) +
-  labs(title = "不同群体的风险评估（显示主观偏见）",
-       x = "评估群体", y = "平均风险评估") +
+  labs(
+    title = "不同群体的风险评估（显示主观偏见）",
+    x = "评估群体", y = "平均风险评估"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -1078,8 +1100,10 @@ true_value <- 15.0
 observed_data <- rnorm(20, true_value, 1.0)
 
 # 运行MCMC
-mcmc_result <- simple_mcmc(5000, prior_mean = 10, prior_sd = 5,
-                           data = observed_data, likelihood_sd = 1.0)
+mcmc_result <- simple_mcmc(5000,
+  prior_mean = 10, prior_sd = 5,
+  data = observed_data, likelihood_sd = 1.0
+)
 
 cat("MCMC采样结果:\n")
 cat("接受率:", round(mcmc_result$acceptance_rate, 3), "\n")
@@ -1111,26 +1135,29 @@ cat("95%置信区间: [", round(ci_lower, 3), ", ", round(ci_upper, 3), "]\n")
 
 ```{r, eval=FALSE}
 # 用R语言演示随机变量的不确定性与规律性
-set.seed(123)  # 设置随机种子确保结果可重现
+set.seed(123) # 设置随机种子确保结果可重现
 
 # 定义随机变量X的可能取值和概率分布
-x_values <- c(1, 2, 3)  # 1=黑麦草, 2=混合草甸, 3=三叶草
+x_values <- c(1, 2, 3) # 1=黑麦草, 2=混合草甸, 3=三叶草
 probabilities <- c(0.64, 0.29, 0.07)
 
 # 模拟100次蚱蜢的植物选择行为
 n_simulations <- 100
-simulated_choices <- sample(x_values, size = n_simulations,
-                            prob = probabilities, replace = TRUE)
+simulated_choices <- sample(x_values,
+  size = n_simulations,
+  prob = probabilities, replace = TRUE
+)
 
 # 统计每次模拟的结果
 choice_counts <- table(simulated_choices)
 
 # 可视化模拟结果
 barplot(choice_counts,
-        main = "蚱蜢植物选择行为的随机模拟",
-        xlab = "植物类型 (1=黑麦草, 2=混合草甸, 3=三叶草)",
-        ylab = "选择次数",
-        col = c("lightgreen", "lightblue", "lightyellow"))
+  main = "蚱蜢植物选择行为的随机模拟",
+  xlab = "植物类型 (1=黑麦草, 2=混合草甸, 3=三叶草)",
+  ylab = "选择次数",
+  col = c("lightgreen", "lightblue", "lightyellow")
+)
 
 # 显示理论概率与实际频率的对比
 cat("理论概率分布:\n")
@@ -1173,8 +1200,10 @@ ggplot(plant_data, aes(x = 植物类型, y = 概率, fill = 植物类型)) +
   geom_col(width = 0.6) +
   geom_text(aes(label = 概率), vjust = -0.5, size = 3.5) +
   scale_fill_manual(values = c("#4CAF50", "#FFC107", "#E91E63"), guide = "none") +
-  labs(title = "蚱蜢午餐选择的概率分布",
-       x = "植物类型", y = "概率") +
+  labs(
+    title = "蚱蜢午餐选择的概率分布",
+    x = "植物类型", y = "概率"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -1216,28 +1245,44 @@ cumulative_data <- data.frame(
 step_data <- data.frame()
 for (i in 1:3) {
   if (i == 1) {
-    step_data <- rbind(step_data,
-                       data.frame(x = c(0.5, 1), y = c(0, 0)))
+    step_data <- rbind(
+      step_data,
+      data.frame(x = c(0.5, 1), y = c(0, 0))
+    )
   }
-  step_data <- rbind(step_data,
-                     data.frame(x = c(i, i + 0.5), y = rep(cumulative_data$累积概率[i], 2)))
+  step_data <- rbind(
+    step_data,
+    data.frame(x = c(i, i + 0.5), y = rep(cumulative_data$累积概率[i], 2))
+  )
 }
 
 # 绘制ggplot累积分布图
 ggplot() +
-  geom_step(data = step_data, aes(x = x, y = y),
-            color = "#2196F3", linewidth = 1.2) +
-  geom_point(data = cumulative_data, aes(x = x_position, y = 累积概率),
-             color = "#2196F3", size = 3) +
-  geom_hline(yintercept = c(0.64, 0.93, 1.00),
-             linetype = "dashed", color = "gray", alpha = 0.7) +
-  geom_text(data = cumulative_data,
-            aes(x = x_position, y = 累积概率 + 0.05,
-                label = paste("F(", x_position, ") =", 累积概率)),
-            size = 3.5) +
+  geom_step(
+    data = step_data, aes(x = x, y = y),
+    color = "#2196F3", linewidth = 1.2
+  ) +
+  geom_point(
+    data = cumulative_data, aes(x = x_position, y = 累积概率),
+    color = "#2196F3", size = 3
+  ) +
+  geom_hline(
+    yintercept = c(0.64, 0.93, 1.00),
+    linetype = "dashed", color = "gray", alpha = 0.7
+  ) +
+  geom_text(
+    data = cumulative_data,
+    aes(
+      x = x_position, y = 累积概率 + 0.05,
+      label = paste("F(", x_position, ") =", 累积概率)
+    ),
+    size = 3.5
+  ) +
   scale_x_continuous(breaks = 1:3, labels = plant_data$植物类型) +
-  labs(title = "蚱蜢午餐选择的累积概率分布",
-       x = "植物类型", y = "累积概率") +
+  labs(
+    title = "蚱蜢午餐选择的累积概率分布",
+    x = "植物类型", y = "累积概率"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -1346,12 +1391,15 @@ for (i in 1:3) {
 }
 
 # 创建ggplot图形
-ggplot(bernoulli_data,
-       aes(x = outcome, y = probability, fill = factor(p_value))) +
+ggplot(
+  bernoulli_data,
+  aes(x = outcome, y = probability, fill = factor(p_value))
+) +
   geom_col(position = "dodge", width = 0.7) +
   geom_text(aes(label = sprintf("%.2f", probability)),
-            position = position_dodge(width = 0.7),
-            vjust = -0.5, size = 3) +
+    position = position_dodge(width = 0.7),
+    vjust = -0.5, size = 3
+  ) +
   facet_wrap(~ paste("伯努利分布 (p =", p_value, ")"), nrow = 1) +
   scale_fill_manual(values = colors, guide = "none") +
   labs(x = "结果", y = "概率") +
@@ -1419,16 +1467,18 @@ library(showtext)
 showtext_auto()
 
 # 定义参数
-n <- 10  # 试验次数
-p_values <- c(0.2, 0.5, 0.8)  # 不同成功概率
+n <- 10 # 试验次数
+p_values <- c(0.2, 0.5, 0.8) # 不同成功概率
 
 # 创建数据框
 binomial_data <- data.frame()
 for (p in p_values) {
   for (k in 0:n) {
     prob <- dbinom(k, size = n, prob = p)
-    binomial_data <- rbind(binomial_data,
-                           data.frame(p_value = p, k = k, probability = prob))
+    binomial_data <- rbind(
+      binomial_data,
+      data.frame(p_value = p, k = k, probability = prob)
+    )
   }
 }
 
@@ -1436,10 +1486,14 @@ for (p in p_values) {
 ggplot(binomial_data, aes(x = k, y = probability, fill = factor(p_value))) +
   geom_col(position = "dodge", width = 0.7) +
   facet_wrap(~ paste("二项分布 (n =", n, ", p =", p_value, ")"), nrow = 1) +
-  scale_fill_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
-                    name = "成功概率 p") +
-  labs(title = paste("二项分布 (n =", n, ")"),
-       x = "成功次数 k", y = "概率 P(X = k)") +
+  scale_fill_manual(
+    values = c("#E74C3C", "#3498DB", "#2ECC71"),
+    name = "成功概率 p"
+  ) +
+  labs(
+    title = paste("二项分布 (n =", n, ")"),
+    x = "成功次数 k", y = "概率 P(X = k)"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -1509,9 +1563,9 @@ library(tidyr)
 showtext_auto()
 
 # 定义参数：蚱蜢选择三种植物的概率
-probabilities <- c(0.64, 0.29, 0.07)  # 黑麦草、混合草甸、三叶草
+probabilities <- c(0.64, 0.29, 0.07) # 黑麦草、混合草甸、三叶草
 plant_names <- c("黑麦草", "混合草甸", "三叶草")
-n <- 10  # 观察次数
+n <- 10 # 观察次数
 
 # 生成一些典型的组合示例
 multinomial_examples <- data.frame(
@@ -1529,9 +1583,11 @@ multinomial_examples <- data.frame(
 
 # 转换为长格式用于绘图
 multinomial_long <- multinomial_examples %>%
-  pivot_longer(cols = c(黑麦草, 混合草甸, 三叶草),
-               names_to = "植物类型",
-               values_to = "次数") %>%
+  pivot_longer(
+    cols = c(黑麦草, 混合草甸, 三叶草),
+    names_to = "植物类型",
+    values_to = "次数"
+  ) %>%
   mutate(植物类型 = factor(植物类型, levels = plant_names))
 
 # 绘制ggplot图形
@@ -1539,10 +1595,14 @@ ggplot(multinomial_long, aes(x = 植物类型, y = 次数, fill = 植物类型))
   geom_col(width = 0.6) +
   facet_wrap(~ paste("组合:", 组合, " 概率:", round(概率, 4)), nrow = 2) +
   geom_text(aes(label = 次数), vjust = -0.5, size = 3) +
-  scale_fill_manual(values = c("#4CAF50", "#FFC107", "#E91E63"),
-                    name = "植物类型") +
-  labs(title = paste("多项式分布：10次观察中不同组合的概率 (n =", n, ")"),
-       x = "植物类型", y = "出现次数") +
+  scale_fill_manual(
+    values = c("#4CAF50", "#FFC107", "#E91E63"),
+    name = "植物类型"
+  ) +
+  labs(
+    title = paste("多项式分布：10次观察中不同组合的概率 (n =", n, ")"),
+    x = "植物类型", y = "出现次数"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -1608,18 +1668,22 @@ library(showtext)
 showtext_auto()
 
 # 定义不同的lambda值
-lambda_values <- c(1, 3, 8)  # 不同平均发生率
-max_k <- 15  # 最大显示的事件次数
+lambda_values <- c(1, 3, 8) # 不同平均发生率
+max_k <- 15 # 最大显示的事件次数
 
 # 创建数据框
 poisson_data <- data.frame()
 for (lambda in lambda_values) {
   for (k in 0:max_k) {
     prob <- dpois(k, lambda = lambda)
-    poisson_data <- rbind(poisson_data,
-                          data.frame(lambda_value = lambda,
-                                     k = k,
-                                     probability = prob))
+    poisson_data <- rbind(
+      poisson_data,
+      data.frame(
+        lambda_value = lambda,
+        k = k,
+        probability = prob
+      )
+    )
   }
 }
 
@@ -1627,10 +1691,14 @@ for (lambda in lambda_values) {
 ggplot(poisson_data, aes(x = k, y = probability, fill = factor(lambda_value))) +
   geom_col(position = "dodge", width = 0.7) +
   facet_wrap(~ paste("泊松分布 (λ =", lambda_value, ")"), nrow = 1) +
-  scale_fill_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
-                    name = "平均发生率 λ") +
-  labs(title = "泊松分布：不同平均发生率下的概率分布",
-       x = "事件发生次数 k", y = "概率 P(X = k)") +
+  scale_fill_manual(
+    values = c("#E74C3C", "#3498DB", "#2ECC71"),
+    name = "平均发生率 λ"
+  ) +
+  labs(
+    title = "泊松分布：不同平均发生率下的概率分布",
+    x = "事件发生次数 k", y = "概率 P(X = k)"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -1697,16 +1765,18 @@ library(showtext)
 showtext_auto()
 
 # 定义不同的成功概率
-p_values <- c(0.2, 0.5, 0.8)  # 不同成功概率
-max_k <- 10  # 最大显示的试验次数
+p_values <- c(0.2, 0.5, 0.8) # 不同成功概率
+max_k <- 10 # 最大显示的试验次数
 
 # 创建数据框
 geometric_data <- data.frame()
 for (p in p_values) {
   for (k in 1:max_k) {
-    prob <- dgeom(k - 1, prob = p)  # R中的dgeom从0开始计数
-    geometric_data <- rbind(geometric_data,
-                            data.frame(p_value = p, k = k, probability = prob))
+    prob <- dgeom(k - 1, prob = p) # R中的dgeom从0开始计数
+    geometric_data <- rbind(
+      geometric_data,
+      data.frame(p_value = p, k = k, probability = prob)
+    )
   }
 }
 
@@ -1714,10 +1784,14 @@ for (p in p_values) {
 ggplot(geometric_data, aes(x = k, y = probability, fill = factor(p_value))) +
   geom_col(position = "dodge", width = 0.7) +
   facet_wrap(~ paste("几何分布 (p =", p_value, ")"), nrow = 1) +
-  scale_fill_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
-                    name = "成功概率 p") +
-  labs(title = "几何分布：不同成功概率下的等待时间分布",
-       x = "首次成功所需的试验次数 k", y = "概率 P(X = k)") +
+  scale_fill_manual(
+    values = c("#E74C3C", "#3498DB", "#2ECC71"),
+    name = "成功概率 p"
+  ) +
+  labs(
+    title = "几何分布：不同成功概率下的等待时间分布",
+    x = "首次成功所需的试验次数 k", y = "概率 P(X = k)"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -1785,34 +1859,44 @@ library(showtext)
 showtext_auto()
 
 # 定义不同的参数组合
-r_values <- c(2, 5)  # 不同的成功次数目标
-p_values <- c(0.3, 0.6)  # 不同的成功概率
-max_k <- 20  # 最大显示的试验次数
+r_values <- c(2, 5) # 不同的成功次数目标
+p_values <- c(0.3, 0.6) # 不同的成功概率
+max_k <- 20 # 最大显示的试验次数
 
 # 创建数据框
 negative_binomial_data <- data.frame()
 for (r in r_values) {
   for (p in p_values) {
     for (k in r:max_k) {
-      prob <- dnbinom(k - r, size = r, prob = p)  # R中的dnbinom参数
-      negative_binomial_data <- rbind(negative_binomial_data,
-                                      data.frame(r_value = r,
-                                                 p_value = p,
-                                                 k = k,
-                                                 probability = prob))
+      prob <- dnbinom(k - r, size = r, prob = p) # R中的dnbinom参数
+      negative_binomial_data <- rbind(
+        negative_binomial_data,
+        data.frame(
+          r_value = r,
+          p_value = p,
+          k = k,
+          probability = prob
+        )
+      )
     }
   }
 }
 
 # 绘制ggplot图形
-ggplot(negative_binomial_data,
-       aes(x = k, y = probability, fill = factor(p_value))) +
+ggplot(
+  negative_binomial_data,
+  aes(x = k, y = probability, fill = factor(p_value))
+) +
   geom_col(position = "dodge", width = 0.7) +
   facet_wrap(~ paste("负二项分布 (r =", r_value, ", p =", p_value, ")"), nrow = 2) +
-  scale_fill_manual(values = c("#E74C3C", "#3498DB"),
-                    name = "成功概率 p") +
-  labs(title = "负二项分布：不同参数组合下的概率分布",
-       x = "第r次成功所需的试验次数 k", y = "概率 P(X = k)") +
+  scale_fill_manual(
+    values = c("#E74C3C", "#3498DB"),
+    name = "成功概率 p"
+  ) +
+  labs(
+    title = "负二项分布：不同参数组合下的概率分布",
+    x = "第r次成功所需的试验次数 k", y = "概率 P(X = k)"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -1905,15 +1989,19 @@ continuous_data <- data.frame(x = x, PDF = pdf, CDF = cdf)
 p1 <- ggplot(continuous_data, aes(x = x, y = PDF)) +
   geom_line(color = "#2196F3", linewidth = 1.2) +
   geom_area(fill = "#2196F3", alpha = 0.3) +
-  labs(title = "概率密度函数 (PDF)",
-       x = "随机变量取值", y = "概率密度") +
+  labs(
+    title = "概率密度函数 (PDF)",
+    x = "随机变量取值", y = "概率密度"
+  ) +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 
 p2 <- ggplot(continuous_data, aes(x = x, y = CDF)) +
   geom_line(color = "#E91E63", linewidth = 1.2) +
-  labs(title = "累积分布函数 (CDF)",
-       x = "随机变量取值", y = "累积概率") +
+  labs(
+    title = "累积分布函数 (CDF)",
+    x = "随机变量取值", y = "累积概率"
+  ) +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 
@@ -1960,9 +2048,9 @@ showtext_auto()
 
 # 定义不同的均匀分布参数
 uniform_params <- list(
-  c(0, 1),    # [0,1]
-  c(-2, 2),   # [-2,2]
-  c(1, 3)     # [1,3]
+  c(0, 1), # [0,1]
+  c(-2, 2), # [-2,2]
+  c(1, 3) # [1,3]
 )
 
 # 创建数据框
@@ -1973,19 +2061,27 @@ for (i in 1:3) {
   x <- seq(a - 0.5, b + 0.5, length.out = 200)
   pdf <- ifelse(x >= a & x <= b, 1 / (b - a), 0)
 
-  uniform_data <- rbind(uniform_data,
-                        data.frame(a = a, b = b, x = x, PDF = pdf,
-                                   label = paste0("U(", a, ",", b, ")")))
+  uniform_data <- rbind(
+    uniform_data,
+    data.frame(
+      a = a, b = b, x = x, PDF = pdf,
+      label = paste0("U(", a, ",", b, ")")
+    )
+  )
 }
 
 # 绘制ggplot图形
 ggplot(uniform_data, aes(x = x, y = PDF, color = label)) +
   geom_line(linewidth = 1.2) +
-  facet_wrap(~ label, nrow = 1) +
-  scale_color_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
-                     guide = "none") +
-  labs(title = "均匀分布：不同区间参数的概率密度函数",
-       x = "随机变量取值", y = "概率密度") +
+  facet_wrap(~label, nrow = 1) +
+  scale_color_manual(
+    values = c("#E74C3C", "#3498DB", "#2ECC71"),
+    guide = "none"
+  ) +
+  labs(
+    title = "均匀分布：不同区间参数的概率密度函数",
+    x = "随机变量取值", y = "概率密度"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -2023,8 +2119,8 @@ library(showtext)
 showtext_auto()
 
 # 定义不同的lambda值
-lambda_values <- c(0.5, 1, 2)  # 不同速率参数
-x_max <- 8  # x轴最大值
+lambda_values <- c(0.5, 1, 2) # 不同速率参数
+x_max <- 8 # x轴最大值
 
 # 创建数据框
 exponential_data <- data.frame()
@@ -2032,19 +2128,27 @@ for (lambda in lambda_values) {
   x <- seq(0, x_max, length.out = 200)
   pdf <- dexp(x, rate = lambda)
 
-  exponential_data <- rbind(exponential_data,
-                            data.frame(lambda = lambda, x = x, PDF = pdf,
-                                       label = paste0("Exp(λ=", lambda, ")")))
+  exponential_data <- rbind(
+    exponential_data,
+    data.frame(
+      lambda = lambda, x = x, PDF = pdf,
+      label = paste0("Exp(λ=", lambda, ")")
+    )
+  )
 }
 
 # 绘制ggplot图形
 ggplot(exponential_data, aes(x = x, y = PDF, color = label)) +
   geom_line(linewidth = 1.2) +
-  facet_wrap(~ label, nrow = 1) +
-  scale_color_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
-                     guide = "none") +
-  labs(title = "指数分布：不同速率参数的概率密度函数",
-       x = "等待时间", y = "概率密度") +
+  facet_wrap(~label, nrow = 1) +
+  scale_color_manual(
+    values = c("#E74C3C", "#3498DB", "#2ECC71"),
+    guide = "none"
+  ) +
+  labs(
+    title = "指数分布：不同速率参数的概率密度函数",
+    x = "等待时间", y = "概率密度"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -2097,19 +2201,27 @@ for (i in 1:3) {
   x <- seq(mu - 4 * sigma, mu + 4 * sigma, length.out = 200)
   pdf <- dnorm(x, mean = mu, sd = sigma)
 
-  normal_data <- rbind(normal_data,
-                       data.frame(mu = mu, sigma = sigma, x = x, PDF = pdf,
-                                  label = paste0("N(", mu, ",", sigma^2, ")")))
+  normal_data <- rbind(
+    normal_data,
+    data.frame(
+      mu = mu, sigma = sigma, x = x, PDF = pdf,
+      label = paste0("N(", mu, ",", sigma^2, ")")
+    )
+  )
 }
 
 # 绘制ggplot图形
 ggplot(normal_data, aes(x = x, y = PDF, color = label)) +
   geom_line(linewidth = 1.2) +
-  facet_wrap(~ label, nrow = 1) +
-  scale_color_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
-                     guide = "none") +
-  labs(title = "正态分布：不同参数组合的概率密度函数",
-       x = "随机变量取值", y = "概率密度") +
+  facet_wrap(~label, nrow = 1) +
+  scale_color_manual(
+    values = c("#E74C3C", "#3498DB", "#2ECC71"),
+    guide = "none"
+  ) +
+  labs(
+    title = "正态分布：不同参数组合的概率密度函数",
+    x = "随机变量取值", y = "概率密度"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -2144,7 +2256,7 @@ $$f(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1} e^{-(x/\lambda)^
 - **保护生物学**：濒危物种的生存时间分析有助于制定保护策略  
 - **物候学研究**：植物开花时间、动物迁徙时间等时间事件的分析  
 
-```r
+```{r}
 # 威布尔分布：生存分析和寿命数据的分布
 # 生态学应用：动物寿命、设备故障时间、种子萌发时间等
 
@@ -2163,17 +2275,19 @@ print(paste("样本标准差:", round(sd(survival_times), 2)))
 # 威布尔分布的均值和方差公式
 # E[X] = λΓ(1 + 1/k)
 # Var(X) = λ²[Γ(1 + 2/k) - Γ²(1 + 1/k)]
-theoretical_mean <- scale_param * gamma(1 + 1/shape_param)
-theoretical_var <- scale_param^2 * (gamma(1 + 2/shape_param) - gamma(1 + 1/shape_param)^2)
+theoretical_mean <- scale_param * gamma(1 + 1 / shape_param)
+theoretical_var <- scale_param^2 * (gamma(1 + 2 / shape_param) - gamma(1 + 1 / shape_param)^2)
 
 print(paste("理论均值:", round(theoretical_mean, 2)))
 print(paste("理论方差:", round(theoretical_var, 2)))
 
 # 可视化威布尔分布
-hist(survival_times, breaks = 30, freq = FALSE,
-     main = "蚱蜢生存时间分布（威布尔分布）",
-     xlab = "生存时间（天）", ylab = "密度",
-     col = "lightblue", xlim = c(0, 25))
+hist(survival_times,
+  breaks = 30, freq = FALSE,
+  main = "蚱蜢生存时间分布（威布尔分布）",
+  xlab = "生存时间（天）", ylab = "密度",
+  col = "lightblue", xlim = c(0, 25)
+)
 
 # 添加理论威布尔曲线
 x_vals <- seq(0, 25, 0.1)
@@ -2184,8 +2298,10 @@ lines(x_vals, y_vals, col = "red", lwd = 2)
 survival_vals <- 1 - pweibull(x_vals, shape = shape_param, scale = scale_param)
 lines(x_vals, survival_vals, col = "blue", lwd = 2, lty = 2)
 
-legend("topright", legend = c("概率密度", "生存函数"),
-       col = c("red", "blue"), lty = 1:2, lwd = 2)
+legend("topright",
+  legend = c("概率密度", "生存函数"),
+  col = c("red", "blue"), lty = 1:2, lwd = 2
+)
 
 # 参数估计：使用最大似然估计拟合威布尔分布
 library(fitdistrplus)
@@ -2204,17 +2320,21 @@ for (shape_val in shape_values) {
   x_range <- seq(0, 25, 0.1)
   density_vals <- dweibull(x_range, shape = shape_val, scale = scale_fixed)
 
-  plot(x_range, density_vals, type = "l", lwd = 2,
-       main = paste("形状参数 k =", shape_val),
-       xlab = "生存时间", ylab = "概率密度",
-       col = "darkred", ylim = c(0, 0.25))
+  plot(x_range, density_vals,
+    type = "l", lwd = 2,
+    main = paste("形状参数 k =", shape_val),
+    xlab = "生存时间", ylab = "概率密度",
+    col = "darkred", ylim = c(0, 0.25)
+  )
 
   # 添加风险函数
-  hazard_vals <- (shape_val/scale_fixed) * (x_range/scale_fixed)^(shape_val-1)
+  hazard_vals <- (shape_val / scale_fixed) * (x_range / scale_fixed)^(shape_val - 1)
   lines(x_range, hazard_vals, col = "blue", lwd = 2, lty = 2)
 
-  legend("topright", legend = c("概率密度", "风险函数"),
-         col = c("darkred", "blue"), lty = 1:2, lwd = 2)
+  legend("topright",
+    legend = c("概率密度", "风险函数"),
+    col = c("darkred", "blue"), lty = 1:2, lwd = 2
+  )
 }
 
 par(mfrow = c(1, 1))
@@ -2225,7 +2345,7 @@ print("生态学应用：蚱蜢种群生存分析")
 # 计算关键生存指标
 median_survival <- qweibull(0.5, shape = shape_param, scale = scale_param)
 survival_90_days <- 1 - pweibull(90, shape = shape_param, scale = scale_param)
-hazard_at_30_days <- (shape_param/scale_param) * (30/scale_param)^(shape_param-1)
+hazard_at_30_days <- (shape_param / scale_param) * (30 / scale_param)^(shape_param - 1)
 
 print(paste("中位生存时间:", round(median_survival, 2), "天"))
 print(paste("90天生存概率:", round(survival_90_days, 4)))
@@ -2295,19 +2415,27 @@ for (i in 1:3) {
   x <- seq(0, 8, length.out = 200)
   pdf <- dgamma(x, shape = alpha, rate = beta)
 
-  gamma_data <- rbind(gamma_data,
-                      data.frame(alpha = alpha, beta = beta, x = x, PDF = pdf,
-                                 label = paste0("Gamma(", alpha, ",", beta, ")")))
+  gamma_data <- rbind(
+    gamma_data,
+    data.frame(
+      alpha = alpha, beta = beta, x = x, PDF = pdf,
+      label = paste0("Gamma(", alpha, ",", beta, ")")
+    )
+  )
 }
 
 # 绘制ggplot图形
 ggplot(gamma_data, aes(x = x, y = PDF, color = label)) +
   geom_line(linewidth = 1.2) +
-  facet_wrap(~ label, nrow = 1) +
-  scale_color_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
-                     guide = "none") +
-  labs(title = "伽马分布：不同参数组合的概率密度函数",
-       x = "随机变量取值", y = "概率密度") +
+  facet_wrap(~label, nrow = 1) +
+  scale_color_manual(
+    values = c("#E74C3C", "#3498DB", "#2ECC71"),
+    guide = "none"
+  ) +
+  labs(
+    title = "伽马分布：不同参数组合的概率密度函数",
+    x = "随机变量取值", y = "概率密度"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -2360,21 +2488,31 @@ for (i in 1:3) {
   x <- seq(0.01, 0.99, length.out = 200)
   pdf <- dbeta(x, shape1 = alpha, shape2 = beta_val)
 
-  beta_data <- rbind(beta_data,
-                     data.frame(alpha = alpha, beta = beta_val,
-                                x = x, PDF = pdf,
-                                label = paste0("Beta(", alpha, ",",
-                                               beta_val, ")")))
+  beta_data <- rbind(
+    beta_data,
+    data.frame(
+      alpha = alpha, beta = beta_val,
+      x = x, PDF = pdf,
+      label = paste0(
+        "Beta(", alpha, ",",
+        beta_val, ")"
+      )
+    )
+  )
 }
 
 # 绘制ggplot图形
 ggplot(beta_data, aes(x = x, y = PDF, color = label)) +
   geom_line(linewidth = 1.2) +
-  facet_wrap(~ label, nrow = 1) +
-  scale_color_manual(values = c("#E74C3C", "#3498DB", "#2ECC71"),
-                     guide = "none") +
-  labs(title = "贝塔分布：不同参数组合的概率密度函数",
-       x = "比例值 (0-1)", y = "概率密度") +
+  facet_wrap(~label, nrow = 1) +
+  scale_color_manual(
+    values = c("#E74C3C", "#3498DB", "#2ECC71"),
+    guide = "none"
+  ) +
+  labs(
+    title = "贝塔分布：不同参数组合的概率密度函数",
+    x = "比例值 (0-1)", y = "概率密度"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -2419,8 +2557,8 @@ showtext_auto()
 set.seed(1717)
 
 # 定义不同的总体分布
-n_simulations <- 10000  # 模拟次数
-sample_size <- 30       # 样本大小
+n_simulations <- 10000 # 模拟次数
+sample_size <- 30 # 样本大小
 
 # 1. 均匀分布总体
 uniform_means <- replicate(n_simulations, mean(runif(sample_size, 0, 10)))
@@ -2451,14 +2589,20 @@ create_clt_plot <- function(sample_means, dist_name, original_data) {
 
   # 创建直方图
   p <- ggplot(df, aes(x = means)) +
-    geom_histogram(aes(y = ..density..), bins = 30,
-                   fill = "lightblue", alpha = 0.7) +
-    stat_function(fun = dnorm,
-                  args = list(mean = params$mu, sd = params$sigma),
-                  color = "red", linewidth = 1.2) +
-    labs(title = paste("中心极限定理:", dist_name),
-         subtitle = paste("样本量 =", sample_size),
-         x = "样本均值", y = "密度") +
+    geom_histogram(aes(y = ..density..),
+      bins = 30,
+      fill = "lightblue", alpha = 0.7
+    ) +
+    stat_function(
+      fun = dnorm,
+      args = list(mean = params$mu, sd = params$sigma),
+      color = "red", linewidth = 1.2
+    ) +
+    labs(
+      title = paste("中心极限定理:", dist_name),
+      subtitle = paste("样本量 =", sample_size),
+      x = "样本均值", y = "密度"
+    ) +
     theme_minimal() +
     theme(
       plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -2495,15 +2639,22 @@ if (requireNamespace("gridExtra", quietly = TRUE)) {
 
 # 正态性检验
 cat("中心极限定理正态性检验结果:\n")
-cat("均匀分布样本均值Kolmogorov-Smirnov p值:",
-    round(ks.test(uniform_means,"pnorm",mean=mean(uniform_means), sd=sd(uniform_means))$p.value, 4), "\n")
-cat("指数分布样本均值Kolmogorov-Smirnov p值:",
-round(ks.test(exponential_means,"pnorm",mean=mean(exponential_means), sd=sd(exponential_means))$p.value, 4), "\n")
-cat("伽马分布样本均值Kolmogorov-Smirnov p值:",
-round(ks.test(gamma_means,"pnorm",mean=mean(gamma_means), sd=sd(gamma_means))$p.value, 4), "\n")
-cat("贝塔分布样本均值Kolmogorov-Smirnov p值:",
-round(ks.test(beta_means,"pnorm",mean=mean(beta_means), sd=sd(beta_means))$p.value, 4), "\n")
-
+cat(
+  "均匀分布样本均值Kolmogorov-Smirnov p值:",
+  round(ks.test(uniform_means, "pnorm", mean = mean(uniform_means), sd = sd(uniform_means))$p.value, 4), "\n"
+)
+cat(
+  "指数分布样本均值Kolmogorov-Smirnov p值:",
+  round(ks.test(exponential_means, "pnorm", mean = mean(exponential_means), sd = sd(exponential_means))$p.value, 4), "\n"
+)
+cat(
+  "伽马分布样本均值Kolmogorov-Smirnov p值:",
+  round(ks.test(gamma_means, "pnorm", mean = mean(gamma_means), sd = sd(gamma_means))$p.value, 4), "\n"
+)
+cat(
+  "贝塔分布样本均值Kolmogorov-Smirnov p值:",
+  round(ks.test(beta_means, "pnorm", mean = mean(beta_means), sd = sd(beta_means))$p.value, 4), "\n"
+)
 ```
 
 #### 样本量对中心极限定理的影响
@@ -2539,10 +2690,12 @@ for (size in sample_sizes) {
 # 绘制样本量影响图
 ggplot(clt_sample_size_df, aes(x = Means, fill = SampleSize)) +
   geom_density(alpha = 0.5) +
-  facet_wrap(~ SampleSize, nrow = 2) +
-  labs(title = "样本量对中心极限定理的影响",
-       subtitle = "从指数分布中抽样，不同样本量下的样本均值分布",
-       x = "样本均值", y = "密度") +
+  facet_wrap(~SampleSize, nrow = 2) +
+  labs(
+    title = "样本量对中心极限定理的影响",
+    subtitle = "从指数分布中抽样，不同样本量下的样本均值分布",
+    x = "样本均值", y = "密度"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -2642,7 +2795,7 @@ set.seed(2424)
 
 # 创建双峰混合分布数据
 n_samples <- 1000
-mix_prob <- 0.6  # 第一个分布的混合比例
+mix_prob <- 0.6 # 第一个分布的混合比例
 
 # 两个正态分布的混合
 dist1_mean <- 10
@@ -2665,11 +2818,15 @@ library(ggplot2)
 mixture_df <- data.frame(value = mixed_data)
 
 ggplot(mixture_df, aes(x = value)) +
-  geom_histogram(aes(y = ..density..), bins = 30,
-                 fill = "lightblue", alpha = 0.7) +
+  geom_histogram(aes(y = ..density..),
+    bins = 30,
+    fill = "lightblue", alpha = 0.7
+  ) +
   geom_density(color = "red", linewidth = 1.2) +
-  labs(title = "混合分布：双峰数据的概率密度",
-       x = "观测值", y = "密度") +
+  labs(
+    title = "混合分布：双峰数据的概率密度",
+    x = "观测值", y = "密度"
+  ) +
   theme_minimal() +
   theme(
     plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -2722,7 +2879,7 @@ cat("\n与普通泊松分布比较:\n")
 cat("泊松零值比例:", round(mean(poisson_data == 0), 3), "\n")
 cat("泊松方差:", round(var(poisson_data), 3), "\n")
 cat("零膨胀方差:", round(var(zip_data), 3), "\n")
-cat("过度分散指数:", round(var(zip_data)/mean(zip_data), 3), "\n")
+cat("过度分散指数:", round(var(zip_data) / mean(zip_data), 3), "\n")
 
 # 零膨胀分布的生态学意义
 cat("\n零膨胀分布的生态学应用:\n")

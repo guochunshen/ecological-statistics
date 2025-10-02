@@ -191,9 +191,11 @@ ggplot(df, aes(x = value, fill = distribution)) +
   geom_density(alpha = 0.6) +
   geom_vline(xintercept = 1.96, linetype = "dashed", color = "red", size = 1) +
   annotate("text", x = 2.2, y = 0.2, label = "临界值", color = "red") +
-  labs(title = "零假设与备择假设分布",
-       x = "检验统计量", y = "密度",
-       subtitle = "红色虚线表示显著性水平α=0.05的临界值") +
+  labs(
+    title = "零假设与备择假设分布",
+    x = "检验统计量", y = "密度",
+    subtitle = "红色虚线表示显著性水平α=0.05的临界值"
+  ) +
   theme_minimal() +
   scale_fill_manual(values = c("#1f77b4", "#ff7f0e"))
 ```
@@ -244,15 +246,23 @@ density_df <- data.frame(x = density_data$x, y = density_data$y)
 ggplot(p_value_df, aes(x = test_stat)) +
   geom_density(fill = "lightblue", alpha = 0.7) +
   geom_vline(xintercept = observed_stat, color = "red", size = 1) +
-  geom_area(data = subset(density_df, x >= observed_stat),
-            aes(x = x, y = y), fill = "red", alpha = 0.5) +
-  annotate("text", x = observed_stat + 0.5, y = 0.1,
-           label = paste("观测统计量 =", round(observed_stat, 2)), color = "red") +
-  annotate("text", x = observed_stat + 0.5, y = 0.08,
-           label = paste("p值 =", round(p_value, 4)), color = "red") +
-  labs(title = "p值的可视化解释",
-       x = "检验统计量（在零假设下）", y = "密度",
-       subtitle = "红色区域表示p值：在H₀下观测到当前或更极端结果的概率") +
+  geom_area(
+    data = subset(density_df, x >= observed_stat),
+    aes(x = x, y = y), fill = "red", alpha = 0.5
+  ) +
+  annotate("text",
+    x = observed_stat + 0.5, y = 0.1,
+    label = paste("观测统计量 =", round(observed_stat, 2)), color = "red"
+  ) +
+  annotate("text",
+    x = observed_stat + 0.5, y = 0.08,
+    label = paste("p值 =", round(p_value, 4)), color = "red"
+  ) +
+  labs(
+    title = "p值的可视化解释",
+    x = "检验统计量（在零假设下）", y = "密度",
+    subtitle = "红色区域表示p值：在H₀下观测到当前或更极端结果的概率"
+  ) +
   theme_minimal()
 ```
 
@@ -322,8 +332,8 @@ ggplot(p_value_df, aes(x = test_stat)) +
 
 ```{r error-types-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="第一类错误与第二类错误的可视化"}
 # 设置参数
-alpha <- 0.05  # 显著性水平
-effect_size <- 1.5  # 效应大小
+alpha <- 0.05 # 显著性水平
+effect_size <- 1.5 # 效应大小
 
 # 计算临界值（单侧检验）
 critical_value <- qnorm(1 - alpha)
@@ -347,23 +357,35 @@ ggplot(error_df, aes(x = x, y = density, color = distribution)) +
   geom_line(size = 1) +
   geom_vline(xintercept = critical_value, linetype = "dashed", color = "black") +
   # 第一类错误区域（假阳性）
-  geom_area(data = subset(error_df, x >= critical_value &
-                          distribution == "零假设分布"),
-            aes(x = x, y = density), fill = "red", alpha = 0.3) +
+  geom_area(
+    data = subset(error_df, x >= critical_value &
+      distribution == "零假设分布"),
+    aes(x = x, y = density), fill = "red", alpha = 0.3
+  ) +
   # 第二类错误区域（假阴性）
-  geom_area(data = subset(error_df, x < critical_value &
-                          distribution == "备择假设分布"),
-            aes(x = x, y = density), fill = "blue", alpha = 0.3) +
-  annotate("text", x = critical_value + 0.5, y = 0.1,
-           label = paste("第一类错误\nα =", alpha), color = "red") +
-  annotate("text", x = critical_value - 0.8, y = 0.1,
-           label = paste("第二类错误\nβ =", round(beta, 3)), color = "blue") +
-  annotate("text", x = critical_value + 1.5, y = 0.2,
-           label = paste("统计功效\n1-β =", round(1 - beta, 3)),
-           color = "darkgreen") +
-  labs(title = "第一类错误与第二类错误",
-       x = "检验统计量", y = "密度",
-       subtitle = "红色：第一类错误（假阳性），蓝色：第二类错误（假阴性）") +
+  geom_area(
+    data = subset(error_df, x < critical_value &
+      distribution == "备择假设分布"),
+    aes(x = x, y = density), fill = "blue", alpha = 0.3
+  ) +
+  annotate("text",
+    x = critical_value + 0.5, y = 0.1,
+    label = paste("第一类错误\nα =", alpha), color = "red"
+  ) +
+  annotate("text",
+    x = critical_value - 0.8, y = 0.1,
+    label = paste("第二类错误\nβ =", round(beta, 3)), color = "blue"
+  ) +
+  annotate("text",
+    x = critical_value + 1.5, y = 0.2,
+    label = paste("统计功效\n1-β =", round(1 - beta, 3)),
+    color = "darkgreen"
+  ) +
+  labs(
+    title = "第一类错误与第二类错误",
+    x = "检验统计量", y = "密度",
+    subtitle = "红色：第一类错误（假阳性），蓝色：第二类错误（假阴性）"
+  ) +
   theme_minimal() +
   scale_color_manual(values = c("#1f77b4", "#ff7f0e"))
 ```
@@ -375,7 +397,7 @@ ggplot(error_df, aes(x = x, y = density, color = distribution)) +
 ```{r power-sample-size-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="样本量对统计功效的影响"}
 # 模拟不同样本量下的统计功效
 sample_sizes <- seq(10, 200, by = 10)
-effect_sizes <- c(0.2, 0.5, 0.8)  # 小、中、大效应
+effect_sizes <- c(0.2, 0.5, 0.8) # 小、中、大效应
 
 power_df <- expand.grid(sample_size = sample_sizes, effect_size = effect_sizes)
 power_df$power <- NA
@@ -384,21 +406,27 @@ for (i in seq_len(nrow(power_df))) {
   n <- power_df$sample_size[i]
   d <- power_df$effect_size[i]
   # 使用t检验的近似功效计算
-  power_df$power[i] <- power.t.test(n = n, delta = d, sd = 1,
-                                    sig.level = 0.05, type = "two.sample")$power
+  power_df$power[i] <- power.t.test(
+    n = n, delta = d, sd = 1,
+    sig.level = 0.05, type = "two.sample"
+  )$power
 }
 
 # 绘制样本量对功效的影响图
-ggplot(power_df, aes(x = sample_size, y = power,
-                     color = factor(effect_size))) +
+ggplot(power_df, aes(
+  x = sample_size, y = power,
+  color = factor(effect_size)
+)) +
   geom_line(size = 1) +
   geom_point() +
   geom_hline(yintercept = 0.8, linetype = "dashed", color = "gray") +
   annotate("text", x = 150, y = 0.82, label = "常用功效阈值 (0.8)", color = "gray") +
-  labs(title = "样本量对统计功效的影响",
-       x = "每组样本量", y = "统计功效 (1-β)",
-       color = "效应大小 (Cohen's d)",
-       subtitle = "效应大小越大，达到足够统计功效所需的样本量越小") +
+  labs(
+    title = "样本量对统计功效的影响",
+    x = "每组样本量", y = "统计功效 (1-β)",
+    color = "效应大小 (Cohen's d)",
+    subtitle = "效应大小越大，达到足够统计功效所需的样本量越小"
+  ) +
   theme_minimal() +
   scale_color_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
 ```
@@ -470,11 +498,14 @@ ggplot(study_df, aes(x = effect_size, y = study)) +
   geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
   geom_point(aes(color = significant), size = 3) +
   geom_errorbarh(aes(xmin = ci_lower, xmax = ci_upper, color = significant),
-                 height = 0.2) +
+    height = 0.2
+  ) +
   scale_color_manual(values = c("FALSE" = "red", "TRUE" = "blue")) +
-  labs(title = "效应大小与置信区间的森林图",
-       x = "效应大小 (Cohen's d)", y = "研究编号",
-       subtitle = "蓝色点表示统计显著的结果，红色点表示不显著的结果") +
+  labs(
+    title = "效应大小与置信区间的森林图",
+    x = "效应大小 (Cohen's d)", y = "研究编号",
+    subtitle = "蓝色点表示统计显著的结果，红色点表示不显著的结果"
+  ) +
   theme_minimal() +
   theme(legend.position = "none")
 ```
@@ -576,16 +607,16 @@ $t$分布与正态分布形状相似，都是钟形曲线，但$t$分布的尾�
 ```{r one-sample-t-test-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="单样本t检验的可视化解释"}
 # 设置参数
 set.seed(123)
-mu0 <- 7.0  # 理论值 $\mu_0$（中性pH）
-sample_mean <- 6.8  # 样本均值 $\bar{x}$
-sample_sd <- 0.3    # 样本标准差 $s$
-n <- 15             # 样本量 $n$
+mu0 <- 7.0 # 理论值 $\mu_0$（中性pH）
+sample_mean <- 6.8 # 样本均值 $\bar{x}$
+sample_sd <- 0.3 # 样本标准差 $s$
+n <- 15 # 样本量 $n$
 
 # 计算t统计量
 t_stat <- (sample_mean - mu0) / (sample_sd / sqrt(n))
 
 # 生成t分布数据
-df <- n - 1  # 自由度 $n-1$
+df <- n - 1 # 自由度 $n-1$
 x_vals <- seq(-4, 4, length.out = 1000)
 t_density <- dt(x_vals, df = df)
 
@@ -598,22 +629,36 @@ p_value <- 2 * (1 - pt(abs(t_stat), df = df))
 # 绘制t分布图
 ggplot(t_df, aes(x = x, y = density)) +
   geom_line(color = "blue", size = 1) +
-  geom_vline(xintercept = t_stat, color = "red", size = 1,
-             linetype = "solid") +
-  geom_vline(xintercept = -t_stat, color = "red", size = 1,
-             linetype = "solid") +
-  geom_area(data = subset(t_df, x >= abs(t_stat)),
-            aes(x = x, y = density), fill = "red", alpha = 0.3) +
-  geom_area(data = subset(t_df, x <= -abs(t_stat)),
-            aes(x = x, y = density), fill = "red", alpha = 0.3) +
+  geom_vline(
+    xintercept = t_stat, color = "red", size = 1,
+    linetype = "solid"
+  ) +
+  geom_vline(
+    xintercept = -t_stat, color = "red", size = 1,
+    linetype = "solid"
+  ) +
+  geom_area(
+    data = subset(t_df, x >= abs(t_stat)),
+    aes(x = x, y = density), fill = "red", alpha = 0.3
+  ) +
+  geom_area(
+    data = subset(t_df, x <= -abs(t_stat)),
+    aes(x = x, y = density), fill = "red", alpha = 0.3
+  ) +
   geom_vline(xintercept = 0, color = "black", linetype = "dashed") +
-  annotate("text", x = t_stat + 0.5, y = 0.2,
-           label = paste("$t$ =", round(t_stat, 2)), color = "red") +
-  annotate("text", x = t_stat + 0.5, y = 0.15,
-           label = paste("$p$ =", round(p_value, 4)), color = "red") +
-  labs(title = "单样本t检验的可视化解释",
-       x = "$t$统计量", y = "密度",
-       subtitle = "红色区域表示$p$值，垂直线表示观测到的$t$统计量") +
+  annotate("text",
+    x = t_stat + 0.5, y = 0.2,
+    label = paste("$t$ =", round(t_stat, 2)), color = "red"
+  ) +
+  annotate("text",
+    x = t_stat + 0.5, y = 0.15,
+    label = paste("$p$ =", round(p_value, 4)), color = "red"
+  ) +
+  labs(
+    title = "单样本t检验的可视化解释",
+    x = "$t$统计量", y = "密度",
+    subtitle = "红色区域表示$p$值，垂直线表示观测到的$t$统计量"
+  ) +
   theme_minimal()
 ```
 
@@ -663,16 +708,16 @@ ggplot(t_df, aes(x = x, y = density)) +
 ```{r sign-test-visualization, echo=TRUE, fig.width=8, fig.height=5, fig.cap="单样本符号检验的可视化解释"}
 # 设置参数
 set.seed(123)
-m0 <- 50  # 理论中位值 $M_0$（环境标准）
+m0 <- 50 # 理论中位值 $M_0$（环境标准）
 
 # 模拟土壤铅浓度数据（偏态分布）
 soil_lead <- c(45, 48, 52, 55, 58, 62, 65, 68, 72, 75, 85, 120)
 
 # 计算与理论值的差异
 signs <- sign(soil_lead - m0)
-positive_count <- sum(signs == 1)  # 正号数量
+positive_count <- sum(signs == 1) # 正号数量
 negative_count <- sum(signs == -1) # 负号数量
-n <- length(soil_lead) - sum(signs == 0)  # 有效样本量 $n$（排除等于理论值的观测）
+n <- length(soil_lead) - sum(signs == 0) # 有效样本量 $n$（排除等于理论值的观测）
 
 # 计算p值（单侧检验）
 p_value <- 1 - pbinom(positive_count - 1, size = n, prob = 0.5)
@@ -688,15 +733,23 @@ binom_df <- data.frame(x = x_vals, density = binom_density)
 ggplot(binom_df, aes(x = x, y = density)) +
   geom_col(fill = "lightblue", alpha = 0.7) +
   geom_vline(xintercept = positive_count, color = "red", size = 1) +
-  geom_area(data = subset(binom_df, x >= positive_count),
-            aes(x = x, y = density), fill = "red", alpha = 0.5) +
-  annotate("text", x = positive_count + 1, y = max(binom_density) * 0.8,
-           label = paste("正号数量 =", positive_count), color = "red") +
-  annotate("text", x = positive_count + 1, y = max(binom_density) * 0.7,
-           label = paste("$p$ =", round(p_value, 4)), color = "red") +
-  labs(title = "单样本符号检验的可视化解释",
-       x = "正号数量", y = "概率",
-       subtitle = "红色区域表示$p$值，垂直线表示观测到的正号数量") +
+  geom_area(
+    data = subset(binom_df, x >= positive_count),
+    aes(x = x, y = density), fill = "red", alpha = 0.5
+  ) +
+  annotate("text",
+    x = positive_count + 1, y = max(binom_density) * 0.8,
+    label = paste("正号数量 =", positive_count), color = "red"
+  ) +
+  annotate("text",
+    x = positive_count + 1, y = max(binom_density) * 0.7,
+    label = paste("$p$ =", round(p_value, 4)), color = "red"
+  ) +
+  labs(
+    title = "单样本符号检验的可视化解释",
+    x = "正号数量", y = "概率",
+    subtitle = "红色区域表示$p$值，垂直线表示观测到的正号数量"
+  ) +
   theme_minimal()
 ```
 
@@ -758,8 +811,8 @@ $$s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$$
 set.seed(123)
 
 # 模拟施肥组和对照组的数据
-fertilizer_group <- rnorm(10, mean = 25, sd = 3)  # 施肥组，均值25
-control_group <- rnorm(10, mean = 20, sd = 3)     # 对照组，均值20
+fertilizer_group <- rnorm(10, mean = 25, sd = 3) # 施肥组，均值25
+control_group <- rnorm(10, mean = 20, sd = 3) # 对照组，均值20
 
 # 计算样本统计量
 mean_fert <- mean(fertilizer_group)
@@ -773,10 +826,10 @@ n_control <- length(control_group)
 sp <- sqrt(((n_fert - 1) * sd_fert^2 + (n_control - 1) * sd_control^2) / (n_fert + n_control - 2))
 
 # 计算t统计量
-t_stat <- (mean_fert - mean_control) / (sp * sqrt(1/n_fert + 1/n_control))
+t_stat <- (mean_fert - mean_control) / (sp * sqrt(1 / n_fert + 1 / n_control))
 
 # 生成t分布数据
-df <- n_fert + n_control - 2  # 自由度 $n_1 + n_2 - 2$
+df <- n_fert + n_control - 2 # 自由度 $n_1 + n_2 - 2$
 x_vals <- seq(-4, 4, length.out = 1000)
 t_density <- dt(x_vals, df = df)
 
@@ -790,22 +843,36 @@ p_value <- 2 * (1 - pt(abs(t_stat), df = df))
 library(ggplot2)
 ggplot(t_df, aes(x = x, y = density)) +
   geom_line(color = "blue", size = 1) +
-  geom_vline(xintercept = t_stat, color = "red", size = 1,
-             linetype = "solid") +
-  geom_vline(xintercept = -t_stat, color = "red", size = 1,
-             linetype = "solid") +
-  geom_area(data = subset(t_df, x >= abs(t_stat)),
-            aes(x = x, y = density), fill = "red", alpha = 0.3) +
-  geom_area(data = subset(t_df, x <= -abs(t_stat)),
-            aes(x = x, y = density), fill = "red", alpha = 0.3) +
+  geom_vline(
+    xintercept = t_stat, color = "red", size = 1,
+    linetype = "solid"
+  ) +
+  geom_vline(
+    xintercept = -t_stat, color = "red", size = 1,
+    linetype = "solid"
+  ) +
+  geom_area(
+    data = subset(t_df, x >= abs(t_stat)),
+    aes(x = x, y = density), fill = "red", alpha = 0.3
+  ) +
+  geom_area(
+    data = subset(t_df, x <= -abs(t_stat)),
+    aes(x = x, y = density), fill = "red", alpha = 0.3
+  ) +
   geom_vline(xintercept = 0, color = "black", linetype = "dashed") +
-  annotate("text", x = t_stat + 0.5, y = 0.2,
-           label = paste("$t$ =", round(t_stat, 2)), color = "red") +
-  annotate("text", x = t_stat + 0.5, y = 0.15,
-           label = paste("$p$ =", round(p_value, 4)), color = "red") +
-  labs(title = "独立样本t检验的可视化解释",
-       x = "$t$统计量", y = "密度",
-       subtitle = "红色区域表示$p$值，垂直线表示观测到的$t$统计量") +
+  annotate("text",
+    x = t_stat + 0.5, y = 0.2,
+    label = paste("$t$ =", round(t_stat, 2)), color = "red"
+  ) +
+  annotate("text",
+    x = t_stat + 0.5, y = 0.15,
+    label = paste("$p$ =", round(p_value, 4)), color = "red"
+  ) +
+  labs(
+    title = "独立样本t检验的可视化解释",
+    x = "$t$统计量", y = "密度",
+    subtitle = "红色区域表示$p$值，垂直线表示观测到的$t$统计量"
+  ) +
   theme_minimal()
 ```
 
@@ -857,8 +924,8 @@ $$t = \frac{\bar{d}}{s_d / \sqrt{n}}$$
 set.seed(123)
 
 # 模拟保护措施实施前后的鸟类数量数据
-before_protection <- c(15, 18, 12, 20, 16, 14, 17, 19, 13, 21)  # 实施前
-after_protection <- c(18, 22, 15, 24, 19, 17, 20, 23, 16, 25)   # 实施后
+before_protection <- c(15, 18, 12, 20, 16, 14, 17, 19, 13, 21) # 实施前
+after_protection <- c(18, 22, 15, 24, 19, 17, 20, 23, 16, 25) # 实施后
 
 # 计算配对差异
 differences <- after_protection - before_protection
@@ -872,7 +939,7 @@ n <- length(differences)
 t_stat <- mean_diff / (sd_diff / sqrt(n))
 
 # 生成t分布数据
-df <- n - 1  # 自由度 $n-1$
+df <- n - 1 # 自由度 $n-1$
 x_vals <- seq(-4, 4, length.out = 1000)
 t_density <- dt(x_vals, df = df)
 
@@ -885,18 +952,28 @@ p_value <- 1 - pt(t_stat, df = df)
 # 绘制t分布图
 ggplot(t_df, aes(x = x, y = density)) +
   geom_line(color = "blue", size = 1) +
-  geom_vline(xintercept = t_stat, color = "red", size = 1,
-             linetype = "solid") +
-  geom_area(data = subset(t_df, x >= t_stat),
-            aes(x = x, y = density), fill = "red", alpha = 0.3) +
+  geom_vline(
+    xintercept = t_stat, color = "red", size = 1,
+    linetype = "solid"
+  ) +
+  geom_area(
+    data = subset(t_df, x >= t_stat),
+    aes(x = x, y = density), fill = "red", alpha = 0.3
+  ) +
   geom_vline(xintercept = 0, color = "black", linetype = "dashed") +
-  annotate("text", x = t_stat + 0.5, y = 0.2,
-           label = paste("$t$ =", round(t_stat, 2)), color = "red") +
-  annotate("text", x = t_stat + 0.5, y = 0.15,
-           label = paste("$p$ =", round(p_value, 4)), color = "red") +
-  labs(title = "配对样本t检验的可视化解释",
-       x = "$t$统计量", y = "密度",
-       subtitle = "红色区域表示$p$值，垂直线表示观测到的$t$统计量") +
+  annotate("text",
+    x = t_stat + 0.5, y = 0.2,
+    label = paste("$t$ =", round(t_stat, 2)), color = "red"
+  ) +
+  annotate("text",
+    x = t_stat + 0.5, y = 0.15,
+    label = paste("$p$ =", round(p_value, 4)), color = "red"
+  ) +
+  labs(
+    title = "配对样本t检验的可视化解释",
+    x = "$t$统计量", y = "密度",
+    subtitle = "红色区域表示$p$值，垂直线表示观测到的$t$统计量"
+  ) +
   theme_minimal()
 ```
 
@@ -954,7 +1031,7 @@ Mann-Whitney U检验的主要优点是它对分布形态没有要求，对极端
 set.seed(123)
 
 # 模拟污染区域和清洁区域的底栖动物生物量数据（偏态分布）
-polluted_area <- c(2.1, 3.5, 4.2, 5.8, 7.3, 9.1, 12.5, 15.8)  # 污染区域
+polluted_area <- c(2.1, 3.5, 4.2, 5.8, 7.3, 9.1, 12.5, 15.8) # 污染区域
 clean_area <- c(8.2, 10.5, 12.8, 15.3, 18.7, 22.1, 25.4, 28.9) # 清洁区域
 
 # 合并数据并计算秩次
@@ -984,9 +1061,11 @@ library(ggplot2)
 ggplot(data_df, aes(x = group, y = value, fill = group)) +
   geom_boxplot(alpha = 0.7) +
   geom_jitter(width = 0.2, size = 2, alpha = 0.6) +
-  labs(title = "Mann-Whitney U检验的可视化解释",
-       x = "区域类型", y = "底栖动物生物量",
-       subtitle = paste("U统计量 =", round(U, 2), ", p值 =", round(mw_test$p.value, 4))) +
+  labs(
+    title = "Mann-Whitney U检验的可视化解释",
+    x = "区域类型", y = "底栖动物生物量",
+    subtitle = paste("U统计量 =", round(U, 2), ", p值 =", round(mw_test$p.value, 4))
+  ) +
   theme_minimal() +
   scale_fill_manual(values = c("#ff7f0e", "#1f77b4"))
 ```
@@ -1077,8 +1156,8 @@ $$H_1: \text{至少有一对组的均值不相等}$$
 set.seed(123)
 
 # 模拟数据：实际上所有组来自相同的分布（零假设为真）
-k <- 5  # 组数
-n_per_group <- 10  # 每组样本量
+k <- 5 # 组数
+n_per_group <- 10 # 每组样本量
 
 # 生成数据 - 所有组都来自N(0,1)分布
 group_data <- list()
@@ -1087,8 +1166,8 @@ for (i in 1:k) {
 }
 
 # 计算所有两两比较的t检验
-comparisons <- combn(1:k, 2)  # 所有可能的组对
-m <- ncol(comparisons)  # 比较次数
+comparisons <- combn(1:k, 2) # 所有可能的组对
+m <- ncol(comparisons) # 比较次数
 
 # 存储p值
 p_values <- numeric(m)
@@ -1123,15 +1202,19 @@ anova_df <- data.frame(
 )
 
 # 绘制多个t检验的p值分布
-p1 <- ggplot(t_test_df, aes(x = comparison, y = p_value,
-                           color = significant, shape = significant)) +
+p1 <- ggplot(t_test_df, aes(
+  x = comparison, y = p_value,
+  color = significant, shape = significant
+)) +
   geom_point(size = 3) +
   geom_hline(yintercept = 0.05, linetype = "dashed", color = "red") +
   scale_color_manual(values = c("FALSE" = "blue", "TRUE" = "red")) +
   scale_shape_manual(values = c("FALSE" = 16, "TRUE" = 17)) +
-  labs(title = "多个t检验：p值分布",
-       x = "比较编号", y = "p值",
-       subtitle = paste("假阳性数量：", sum(t_test_df$significant), "/", m)) +
+  labs(
+    title = "多个t检验：p值分布",
+    x = "比较编号", y = "p值",
+    subtitle = paste("假阳性数量：", sum(t_test_df$significant), "/", m)
+  ) +
   theme_minimal() +
   theme(legend.position = "none")
 
@@ -1148,18 +1231,23 @@ p2 <- ggplot(cumulative_error, aes(x = k, y = error_rate)) +
   geom_point(color = "blue", size = 2) +
   geom_hline(yintercept = 0.05, linetype = "dashed", color = "red") +
   geom_text(aes(label = paste0(round(error_rate * 100, 1), "%")),
-            vjust = -0.5, size = 3) +
-  labs(title = "累积第一类错误率",
-       x = "组数 (k)", y = "累积第一类错误率",
-       subtitle = "红色虚线表示期望的5%错误率") +
+    vjust = -0.5, size = 3
+  ) +
+  labs(
+    title = "累积第一类错误率",
+    x = "组数 (k)", y = "累积第一类错误率",
+    subtitle = "红色虚线表示期望的5%错误率"
+  ) +
   theme_minimal()
 
 # 使用patchwork包组合图形
 library(patchwork)
 p1 + p2 + plot_annotation(
   title = "多个t检验 vs 方差分析：第一类错误率控制",
-  subtitle = paste("ANOVA p值：", round(anova_p, 4),
-                   "（正确不拒绝零假设）")
+  subtitle = paste(
+    "ANOVA p值：", round(anova_p, 4),
+    "（正确不拒绝零假设）"
+  )
 )
 ```
 
@@ -1230,9 +1318,9 @@ p1 + p2 + plot_annotation(
 set.seed(123)
 
 # 模拟三种森林类型的鸟类物种丰富度数据
-broadleaf <- rnorm(10, mean = 15, sd = 2)    # 阔叶林
-coniferous <- rnorm(10, mean = 12, sd = 2)   # 针叶林
-mixed <- rnorm(10, mean = 14, sd = 2)        # 混交林
+broadleaf <- rnorm(10, mean = 15, sd = 2) # 阔叶林
+coniferous <- rnorm(10, mean = 12, sd = 2) # 针叶林
+mixed <- rnorm(10, mean = 14, sd = 2) # 混交林
 
 # 创建数据框
 forest_data <- data.frame(
@@ -1248,7 +1336,7 @@ f_stat <- summary(anova_result)[[1]]["forest_type", "F value"]
 p_value <- summary(anova_result)[[1]]["forest_type", "Pr(>F)"]
 
 # 生成F分布数据
-df1 <- 2  # 组间自由度 $k-1$
+df1 <- 2 # 组间自由度 $k-1$
 df2 <- 27 # 组内自由度 $N-k$
 x_vals <- seq(0, 8, length.out = 1000)
 f_density <- df(x_vals, df1 = df1, df2 = df2)
@@ -1260,17 +1348,27 @@ f_df <- data.frame(x = x_vals, density = f_density)
 library(ggplot2)
 ggplot(f_df, aes(x = x, y = density)) +
   geom_line(color = "blue", size = 1) +
-  geom_vline(xintercept = f_stat, color = "red", size = 1,
-             linetype = "solid") +
-  geom_area(data = subset(f_df, x >= f_stat),
-            aes(x = x, y = density), fill = "red", alpha = 0.3) +
-  annotate("text", x = f_stat + 1, y = 0.2,
-           label = paste("$F$ =", round(f_stat, 2)), color = "red") +
-  annotate("text", x = f_stat + 1, y = 0.15,
-           label = paste("$p$ =", round(p_value, 4)), color = "red") +
-  labs(title = "方差分析的可视化解释",
-       x = "$F$统计量", y = "密度",
-       subtitle = "红色区域表示$p$值，垂直线表示观测到的$F$统计量") +
+  geom_vline(
+    xintercept = f_stat, color = "red", size = 1,
+    linetype = "solid"
+  ) +
+  geom_area(
+    data = subset(f_df, x >= f_stat),
+    aes(x = x, y = density), fill = "red", alpha = 0.3
+  ) +
+  annotate("text",
+    x = f_stat + 1, y = 0.2,
+    label = paste("$F$ =", round(f_stat, 2)), color = "red"
+  ) +
+  annotate("text",
+    x = f_stat + 1, y = 0.15,
+    label = paste("$p$ =", round(p_value, 4)), color = "red"
+  ) +
+  labs(
+    title = "方差分析的可视化解释",
+    x = "$F$统计量", y = "密度",
+    subtitle = "红色区域表示$p$值，垂直线表示观测到的$F$统计量"
+  ) +
   theme_minimal()
 ```
 
@@ -1334,9 +1432,9 @@ Kruskal-Wallis检验的主要优点是它对分布形态没有要求，对极端
 set.seed(123)
 
 # 模拟三种污染程度区域的底栖动物生物量数据（偏态分布）
-light_pollution <- c(8.2, 10.5, 12.8, 15.3, 18.7, 22.1, 25.4, 28.9)  # 轻度污染
+light_pollution <- c(8.2, 10.5, 12.8, 15.3, 18.7, 22.1, 25.4, 28.9) # 轻度污染
 moderate_pollution <- c(5.8, 7.3, 9.1, 12.5, 15.8, 18.2, 21.7, 24.3) # 中度污染
-heavy_pollution <- c(2.1, 3.5, 4.2, 5.8, 7.3, 9.1, 12.5, 15.8)       # 重度污染
+heavy_pollution <- c(2.1, 3.5, 4.2, 5.8, 7.3, 9.1, 12.5, 15.8) # 重度污染
 
 # 创建数据框
 pollution_data <- data.frame(
@@ -1352,9 +1450,11 @@ library(ggplot2)
 ggplot(pollution_data, aes(x = pollution_level, y = biomass, fill = pollution_level)) +
   geom_boxplot(alpha = 0.7) +
   geom_jitter(width = 0.2, size = 2, alpha = 0.6) +
-  labs(title = "Kruskal-Wallis检验的可视化解释",
-       x = "污染程度", y = "底栖动物生物量",
-       subtitle = paste("H统计量 =", round(kw_test$statistic, 2), ", p值 =", round(kw_test$p.value, 4))) +
+  labs(
+    title = "Kruskal-Wallis检验的可视化解释",
+    x = "污染程度", y = "底栖动物生物量",
+    subtitle = paste("H统计量 =", round(kw_test$statistic, 2), ", p值 =", round(kw_test$p.value, 4))
+  ) +
   theme_minimal() +
   scale_fill_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
 ```
@@ -1515,9 +1615,9 @@ Tukey HSD检验是生态学中最常用的多重比较方法之一，特别适�
 set.seed(123)
 
 # 模拟三种森林类型的鸟类物种丰富度数据
-broadleaf <- rnorm(12, mean = 18, sd = 3)    # 阔叶林
-coniferous <- rnorm(12, mean = 12, sd = 3)   # 针叶林
-mixed <- rnorm(12, mean = 15, sd = 3)        # 混交林
+broadleaf <- rnorm(12, mean = 18, sd = 3) # 阔叶林
+coniferous <- rnorm(12, mean = 12, sd = 3) # 针叶林
+mixed <- rnorm(12, mean = 15, sd = 3) # 混交林
 
 # 创建数据框
 forest_data <- data.frame(
@@ -1549,17 +1649,18 @@ if (p_value < 0.05) {
   # 方法2：Bonferroni校正
   cat("\n=== Bonferroni校正结果 ===\n")
   pairwise_result <- pairwise.t.test(forest_data$richness,
-                                    forest_data$forest_type,
-                                    p.adjust.method = "bonferroni")
+    forest_data$forest_type,
+    p.adjust.method = "bonferroni"
+  )
   print(pairwise_result)
 
   # 方法3：FDR控制
   cat("\n=== FDR控制结果 (Benjamini-Hochberg) ===\n")
   fdr_result <- pairwise.t.test(forest_data$richness,
-                               forest_data$forest_type,
-                               p.adjust.method = "BH")
+    forest_data$forest_type,
+    p.adjust.method = "BH"
+  )
   print(fdr_result)
-
 } else {
   cat("方差分析不显著，无需进行多重比较校正。\n")
 }
@@ -1577,24 +1678,36 @@ summary_stats <- forest_data %>%
   )
 
 # 绘制均值图
-p1 <- ggplot(summary_stats, aes(x = forest_type, y = mean_richness,
-                               fill = forest_type)) +
+p1 <- ggplot(summary_stats, aes(
+  x = forest_type, y = mean_richness,
+  fill = forest_type
+)) +
   geom_col(alpha = 0.7) +
-  geom_errorbar(aes(ymin = mean_richness - se_richness,
-                    ymax = mean_richness + se_richness),
-                width = 0.2) +
-  labs(title = "不同森林类型的鸟类物种丰富度",
-       x = "森林类型", y = "物种丰富度（均值±标准误）") +
+  geom_errorbar(
+    aes(
+      ymin = mean_richness - se_richness,
+      ymax = mean_richness + se_richness
+    ),
+    width = 0.2
+  ) +
+  labs(
+    title = "不同森林类型的鸟类物种丰富度",
+    x = "森林类型", y = "物种丰富度（均值±标准误）"
+  ) +
   theme_minimal() +
   scale_fill_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
 
 # 绘制箱线图
-p2 <- ggplot(forest_data, aes(x = forest_type, y = richness,
-                             fill = forest_type)) +
+p2 <- ggplot(forest_data, aes(
+  x = forest_type, y = richness,
+  fill = forest_type
+)) +
   geom_boxplot(alpha = 0.7) +
   geom_jitter(width = 0.2, alpha = 0.6) +
-  labs(title = "鸟类物种丰富度分布",
-       x = "森林类型", y = "物种丰富度") +
+  labs(
+    title = "鸟类物种丰富度分布",
+    x = "森林类型", y = "物种丰富度"
+  ) +
   theme_minimal() +
   scale_fill_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
 
@@ -1624,7 +1737,7 @@ set.seed(123)
 num_tests <- 20
 
 # 生成p值（大部分来自零假设，少数来自备择假设）
-null_pvalues <- runif(15, 0, 1)  # 零假设下的p值
+null_pvalues <- runif(15, 0, 1) # 零假设下的p值
 alt_pvalues <- runif(5, 0, 0.05) # 备择假设下的p值
 all_pvalues <- c(null_pvalues, alt_pvalues)
 
@@ -1642,14 +1755,18 @@ viz_data <- data.frame(
 
 # 绘制p值比较图
 library(ggplot2)
-ggplot(viz_data, aes(x = test_id, y = -log10(p_value),
-                    color = true_effect, shape = method)) +
+ggplot(viz_data, aes(
+  x = test_id, y = -log10(p_value),
+  color = true_effect, shape = method
+)) +
   geom_point(size = 3, alpha = 0.8) +
   geom_hline(yintercept = -log10(0.05), linetype = "dashed", color = "red") +
-  facet_wrap(~ method, ncol = 1) +
-  labs(title = "多重比较校正对p值的影响",
-       x = "检验编号", y = "-log10(p值)",
-       subtitle = "红色虚线表示显著性阈值 (p = 0.05)") +
+  facet_wrap(~method, ncol = 1) +
+  labs(
+    title = "多重比较校正对p值的影响",
+    x = "检验编号", y = "-log10(p值)",
+    subtitle = "红色虚线表示显著性阈值 (p = 0.05)"
+  ) +
   theme_minimal() +
   scale_color_manual(values = c("无效应" = "blue", "有效应" = "red")) +
   scale_shape_manual(values = c(16, 17, 15))
@@ -1709,10 +1826,11 @@ ggplot(viz_data, aes(x = test_id, y = -log10(p_value),
 
 **5. R语言实现技巧**
 
-```r
+```{r, eval=FALSE}
 # 常用的多重比较校正函数
 
 # Tukey HSD检验
+# 假设已经执行了方差分析：aov_result <- aov(response ~ group, data = data)
 TukeyHSD(aov_result)
 
 # Bonferroni校正
@@ -1722,9 +1840,9 @@ pairwise.t.test(data$response, data$group, p.adjust.method = "bonferroni")
 pairwise.t.test(data$response, data$group, p.adjust.method = "BH")
 
 # 其他校正方法
-p.adjust(p_values, method = "holm")      # Holm校正
-p.adjust(p_values, method = "fdr")       # FDR控制
-p.adjust(p_values, method = "BY")        # Benjamini-Yekutieli
+p.adjust(p_values, method = "holm") # Holm校正
+p.adjust(p_values, method = "fdr") # FDR控制
+p.adjust(p_values, method = "BY") # Benjamini-Yekutieli
 ```
 
 **生态学意义**：通过正确应用多重比较校正，生态学家能够：
@@ -1853,9 +1971,9 @@ library(pwr)
 
 # 计算所需样本量
 t_power <- pwr.t.test(
-  d = 0.5,           # 效应大小（Cohen's d）
-  sig.level = 0.05,  # 显著性水平
-  power = 0.8,       # 期望统计功效
+  d = 0.5, # 效应大小（Cohen's d）
+  sig.level = 0.05, # 显著性水平
+  power = 0.8, # 期望统计功效
   type = "two.sample", # 检验类型：独立样本t检验
   alternative = "two.sided" # 备择假设：双侧检验
 )
@@ -1888,10 +2006,10 @@ print(t_power)
 
 # 计算所需样本量
 anova_power <- pwr.anova.test(
-  k = 3,             # 组数
-  f = 0.25,          # 效应大小（Cohen's f）
-  sig.level = 0.05,  # 显著性水平
-  power = 0.8        # 期望统计功效
+  k = 3, # 组数
+  f = 0.25, # 效应大小（Cohen's f）
+  sig.level = 0.05, # 显著性水平
+  power = 0.8 # 期望统计功效
 )
 
 cat("\n=== 方差分析功效分析 ===\n")
@@ -1921,9 +2039,9 @@ $$f = \sqrt{\frac{\eta^2}{1-\eta^2}}$$
 
 # 计算所需样本量
 cor_power <- pwr.r.test(
-  r = 0.3,           # 预期相关系数
-  sig.level = 0.05,  # 显著性水平
-  power = 0.8,       # 期望统计功效
+  r = 0.3, # 预期相关系数
+  sig.level = 0.05, # 显著性水平
+  power = 0.8, # 期望统计功效
   alternative = "two.sided" # 备择假设：双侧检验
 )
 
@@ -1948,11 +2066,11 @@ print(cor_power)
 
 # 计算所需样本量
 chisq_power <- pwr.chisq.test(
-  w = 0.3,           # 效应大小（Cohen's w）
-  N = NULL,          # 总样本量（待计算）
-  df = 2,            # 自由度
-  sig.level = 0.05,  # 显著性水平
-  power = 0.8        # 期望统计功效
+  w = 0.3, # 效应大小（Cohen's w）
+  N = NULL, # 总样本量（待计算）
+  df = 2, # 自由度
+  sig.level = 0.05, # 显著性水平
+  power = 0.8 # 期望统计功效
 )
 
 cat("\n=== 卡方检验功效分析 ===\n")
@@ -1976,10 +2094,10 @@ library(ggplot2)
 sample_sizes <- seq(10, 100, by = 5)
 power_values <- sapply(sample_sizes, function(n) {
   pwr.t.test(
-    n = n,                # 样本量
-    d = 0.5,              # 效应大小
-    sig.level = 0.05,     # 显著性水平
-    type = "two.sample",  # 检验类型
+    n = n, # 样本量
+    d = 0.5, # 效应大小
+    sig.level = 0.05, # 显著性水平
+    type = "two.sample", # 检验类型
     alternative = "two.sided"
   )$power
 })
@@ -1996,18 +2114,26 @@ ggplot(power_curve, aes(x = sample_size, y = power)) +
   geom_point(color = "blue", size = 1.5) +
   geom_hline(yintercept = 0.8, linetype = "dashed", color = "red", size = 1) +
   geom_vline(xintercept = t_power$n, linetype = "dashed", color = "green", size = 1) +
-  annotate("text", x = 80, y = 0.82,
-           label = "期望功效阈值 (0.8)", color = "red", size = 4) +
-  annotate("text", x = t_power$n + 8, y = 0.3,
-           label = paste("所需样本量 =", round(t_power$n)),
-           color = "green", size = 4) +
-  labs(title = "样本量对统计功效的影响",
-       x = "每组样本量",
-       y = "统计功效",
-       subtitle = "展示在中等效应大小(d=0.5)和α=0.05条件下，样本量与统计功效的关系") +
+  annotate("text",
+    x = 80, y = 0.82,
+    label = "期望功效阈值 (0.8)", color = "red", size = 4
+  ) +
+  annotate("text",
+    x = t_power$n + 8, y = 0.3,
+    label = paste("所需样本量 =", round(t_power$n)),
+    color = "green", size = 4
+  ) +
+  labs(
+    title = "样本量对统计功效的影响",
+    x = "每组样本量",
+    y = "统计功效",
+    subtitle = "展示在中等效应大小(d=0.5)和α=0.05条件下，样本量与统计功效的关系"
+  ) +
   theme_minimal(base_size = 12) +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
-        plot.subtitle = element_text(hjust = 0.5))
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5)
+  )
 ```
 
 **图表解释：**
@@ -2022,33 +2148,42 @@ ggplot(power_curve, aes(x = sample_size, y = power)) +
 
 ```{r sensitivity-analysis, echo=TRUE, fig.width=8, fig.height=5, fig.cap="效应大小对所需样本量的影响"}
 # 测试不同效应大小下的样本量需求
-effect_sizes <- c(0.2, 0.3, 0.5, 0.8)  # 小、中小、中、大效应
+effect_sizes <- c(0.2, 0.3, 0.5, 0.8) # 小、中小、中、大效应
 sample_needs <- sapply(effect_sizes, function(d) {
-  pwr.t.test(d = d, sig.level = 0.05, power = 0.8,
-             type = "two.sample")$n
+  pwr.t.test(
+    d = d, sig.level = 0.05, power = 0.8,
+    type = "two.sample"
+  )$n
 })
 
 # 创建数据框
 sensitivity_df <- data.frame(
   effect_size = effect_sizes,
   sample_need = sample_needs,
-  effect_label = c("小效应(d=0.2)", "中小效应(d=0.3)",
-                   "中效应(d=0.5)", "大效应(d=0.8)")
+  effect_label = c(
+    "小效应(d=0.2)", "中小效应(d=0.3)",
+    "中效应(d=0.5)", "大效应(d=0.8)"
+  )
 )
 
 # 绘制敏感性分析图
 ggplot(sensitivity_df, aes(x = effect_label, y = sample_need, fill = effect_label)) +
   geom_col(alpha = 0.7) +
   geom_text(aes(label = paste("n =", round(sample_need))),
-            vjust = -0.5, size = 4) +
-  labs(title = "不同效应大小下的样本量需求",
-       x = "效应大小",
-       y = "所需样本量（每组）",
-       subtitle = "在α=0.05和功效=0.80条件下") +
+    vjust = -0.5, size = 4
+  ) +
+  labs(
+    title = "不同效应大小下的样本量需求",
+    x = "效应大小",
+    y = "所需样本量（每组）",
+    subtitle = "在α=0.05和功效=0.80条件下"
+  ) +
   theme_minimal(base_size = 12) +
-  theme(plot.title = element_text(hjust = 0.5, face = "bold"),
-        plot.subtitle = element_text(hjust = 0.5),
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5),
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  ) +
   scale_fill_brewer(palette = "Set2")
 ```
 
