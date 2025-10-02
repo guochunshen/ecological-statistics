@@ -20,5 +20,14 @@ rmd_files: [
   "index.Rmd",
   "01-statistical_programing.Rmd",
   "02-probability_and_distribution.Rmd",
+  "03-summary_statistics.Rmd",
+  "04-parameter_estimation.Rmd",
+  "05-correlation.Rmd",
+  "06-hypothesis_test_part1.Rmd",
+  "07-hypothesis_test_part2.Rmd",
+  "08-modeling_and_prediction_part1.Rmd",
+  "09-modeling_and_prediction_part2.Rmd",
+  "10-modeling_and_prediction_part3.Rmd",
+  "11-modeling_and_prediction_part4.Rmd",
   "15-Appendix1_statistical_programing.Rmd"
 ]

@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>14 (PART) 统计建模 | 生态统计学</title>
+  <meta name="description" content="14 (PART) 统计建模 | 生态统计学课程教材，涵盖从基础到高级的生态数据分析方法" />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="14 (PART) 统计建模 | 生态统计学" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="14 (PART) 统计建模 | 生态统计学课程教材，涵盖从基础到高级的生态数据分析方法" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="14 (PART) 统计建模 | 生态统计学" />
+  
+  <meta name="twitter:description" content="14 (PART) 统计建模 | 生态统计学课程教材，涵盖从基础到高级的生态数据分析方法" />
+  
+
+<meta name="author" content="沈国春、李勤" />
+
+
+<meta name="date" content="2025-10-02" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="模型选择与评估.html"/>
+<link rel="next" href="高级回归模型.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7cbaf067c715044120ee231397e9ace3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">生态统计学</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#为什么要学生态统计"><i class="fa fa-check"></i><b>0.1</b> 为什么要学生态统计</a>
+<ul>
+<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#在不确定的世界中寻找规律"><i class="fa fa-check"></i><b>0.1.1</b> 在不确定的世界中寻找规律</a></li>
+<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#ai时代的机遇与陷阱"><i class="fa fa-check"></i><b>0.1.2</b> AI时代的机遇与陷阱</a></li>
+</ul></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#本书介绍"><i class="fa fa-check"></i><b>0.2</b> 本书介绍</a></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#课程在线资源"><i class="fa fa-check"></i><b>0.3</b> 课程在线资源</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#学习方式"><i class="fa fa-check"></i><b>0.4</b> 学习方式</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="统计编程基础.html"><a href="统计编程基础.html"><i class="fa fa-check"></i><b>1</b> 统计编程基础</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="统计编程基础.html"><a href="统计编程基础.html#引言"><i class="fa fa-check"></i><b>1.1</b> 引言</a></li>
+<li class="chapter" data-level="1.2" data-path="统计编程基础.html"><a href="统计编程基础.html#核心能力培养框架"><i class="fa fa-check"></i><b>1.2</b> 核心能力培养框架</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="统计编程基础.html"><a href="统计编程基础.html#高阶思维与问题解决能力"><i class="fa fa-check"></i><b>1.2.1</b> 高阶思维与问题解决能力</a></li>
+<li class="chapter" data-level="1.2.2" data-path="统计编程基础.html"><a href="统计编程基础.html#与llm协同工作的能力"><i class="fa fa-check"></i><b>1.2.2</b> 与LLM协同工作的能力</a></li>
+<li class="chapter" data-level="1.2.3" data-path="统计编程基础.html"><a href="统计编程基础.html#传统但愈发重要的软技能"><i class="fa fa-check"></i><b>1.2.3</b> 传统但愈发重要的软技能</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="统计编程基础.html"><a href="统计编程基础.html#通用编程思维基础"><i class="fa fa-check"></i><b>1.3</b> 通用编程思维基础</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="统计编程基础.html"><a href="统计编程基础.html#编程核心概念"><i class="fa fa-check"></i><b>1.3.1</b> 编程核心概念</a></li>
+<li class="chapter" data-level="1.3.2" data-path="统计编程基础.html"><a href="统计编程基础.html#算法复杂度"><i class="fa fa-check"></i><b>1.3.2</b> 算法复杂度</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="统计编程基础.html"><a href="统计编程基础.html#ai协同编程技能"><i class="fa fa-check"></i><b>1.4</b> AI协同编程技能</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="统计编程基础.html"><a href="统计编程基础.html#ai编程模块安装"><i class="fa fa-check"></i><b>1.4.1</b> AI编程模块安装</a></li>
+<li class="chapter" data-level="1.4.2" data-path="统计编程基础.html"><a href="统计编程基础.html#精准提问技巧"><i class="fa fa-check"></i><b>1.4.2</b> 精准提问技巧</a></li>
+<li class="chapter" data-level="1.4.3" data-path="统计编程基础.html"><a href="统计编程基础.html#代码审查能力"><i class="fa fa-check"></i><b>1.4.3</b> 代码审查能力</a></li>
+<li class="chapter" data-level="1.4.4" data-path="统计编程基础.html"><a href="统计编程基础.html#调试与错误处理"><i class="fa fa-check"></i><b>1.4.4</b> 调试与错误处理</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="统计编程基础.html"><a href="统计编程基础.html#总结"><i class="fa fa-check"></i><b>1.5</b> 总结</a></li>
+<li class="chapter" data-level="1.6" data-path="统计编程基础.html"><a href="统计编程基础.html#综合练习"><i class="fa fa-check"></i><b>1.6</b> 综合练习</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="统计编程基础.html"><a href="统计编程基础.html#练习1"><i class="fa fa-check"></i><b>1.6.1</b> 练习1</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="概率与分布.html"><a href="概率与分布.html"><i class="fa fa-check"></i><b>2</b> 概率与分布</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="概率与分布.html"><a href="概率与分布.html#引言-1"><i class="fa fa-check"></i><b>2.1</b> 引言</a></li>
+<li class="chapter" data-level="2.2" data-path="概率与分布.html"><a href="概率与分布.html#蚂蚱午餐与概率"><i class="fa fa-check"></i><b>2.2</b> 蚂蚱午餐与概率</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="概率与分布.html"><a href="概率与分布.html#一只蚱蜢的午餐"><i class="fa fa-check"></i><b>2.2.1</b> 一只蚱蜢的午餐</a></li>
+<li class="chapter" data-level="2.2.2" data-path="概率与分布.html"><a href="概率与分布.html#理想的猜测古典概率"><i class="fa fa-check"></i><b>2.2.2</b> 理想的猜测——古典概率</a></li>
+<li class="chapter" data-level="2.2.3" data-path="概率与分布.html"><a href="概率与分布.html#数据的语言频率概率"><i class="fa fa-check"></i><b>2.2.3</b> 数据的语言——频率概率</a></li>
+<li class="chapter" data-level="2.2.4" data-path="概率与分布.html"><a href="概率与分布.html#动态的更新贝叶斯概率"><i class="fa fa-check"></i><b>2.2.4</b> 动态的更新——贝叶斯概率</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="概率与分布.html"><a href="概率与分布.html#随机变量与分布"><i class="fa fa-check"></i><b>2.3</b> 随机变量与分布</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="概率与分布.html"><a href="概率与分布.html#概率分布"><i class="fa fa-check"></i><b>2.3.1</b> 概率分布</a></li>
+<li class="chapter" data-level="2.3.2" data-path="概率与分布.html"><a href="概率与分布.html#累积概率分布从可能性到确定性"><i class="fa fa-check"></i><b>2.3.2</b> 累积概率分布：从可能性到确定性</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="概率与分布.html"><a href="概率与分布.html#午餐菜单离散随机变量的分布家族"><i class="fa fa-check"></i><b>2.4</b> 午餐菜单：离散随机变量的分布家族</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="概率与分布.html"><a href="概率与分布.html#伯努利分布一个是或否的终极问题"><i class="fa fa-check"></i><b>2.4.1</b> 伯努利分布：一个”是”或”否”的终极问题</a></li>
+<li class="chapter" data-level="2.4.2" data-path="概率与分布.html"><a href="概率与分布.html#二项分布重复是非题的计数法则"><i class="fa fa-check"></i><b>2.4.2</b> 二项分布：重复”是非题”的计数法则</a></li>
+<li class="chapter" data-level="2.4.3" data-path="概率与分布.html"><a href="概率与分布.html#多项式分布多元选择的全景图"><i class="fa fa-check"></i><b>2.4.3</b> 多项式分布：多元选择的”全景图”</a></li>
+<li class="chapter" data-level="2.4.4" data-path="概率与分布.html"><a href="概率与分布.html#泊松分布罕见事件的低语者"><i class="fa fa-check"></i><b>2.4.4</b> 泊松分布：罕见事件的”低语者”</a></li>
+<li class="chapter" data-level="2.4.5" data-path="概率与分布.html"><a href="概率与分布.html#几何分布等待第一次成功的耐心"><i class="fa fa-check"></i><b>2.4.5</b> 几何分布：等待”第一次成功”的耐心</a></li>
+<li class="chapter" data-level="2.4.6" data-path="概率与分布.html"><a href="概率与分布.html#负二项分布等待最后一次成功的耐心"><i class="fa fa-check"></i><b>2.4.6</b> 负二项分布：等待”最后一次成功”的耐心</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="概率与分布.html"><a href="概率与分布.html#午餐法则连续随机变量的分布家族"><i class="fa fa-check"></i><b>2.5</b> 午餐法则：连续随机变量的分布家族</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="概率与分布.html"><a href="概率与分布.html#均匀分布纯粹的平等"><i class="fa fa-check"></i><b>2.5.1</b> 均匀分布：纯粹的平等</a></li>
+<li class="chapter" data-level="2.5.2" data-path="概率与分布.html"><a href="概率与分布.html#指数分布等待的艺术"><i class="fa fa-check"></i><b>2.5.2</b> 指数分布：等待的艺术</a></li>
+<li class="chapter" data-level="2.5.3" data-path="概率与分布.html"><a href="概率与分布.html#正态分布高斯分布自然界的钟形法则"><i class="fa fa-check"></i><b>2.5.3</b> 正态分布（高斯分布）：自然界的”钟形”法则</a></li>
+<li class="chapter" data-level="2.5.4" data-path="概率与分布.html"><a href="概率与分布.html#威布尔分布生存分析的时间法则"><i class="fa fa-check"></i><b>2.5.4</b> 威布尔分布：生存分析的”时间法则”</a></li>
+<li class="chapter" data-level="2.5.5" data-path="概率与分布.html"><a href="概率与分布.html#伽马分布更一般的等待时间模型"><i class="fa fa-check"></i><b>2.5.5</b> 伽马分布：更一般的等待时间模型</a></li>
+<li class="chapter" data-level="2.5.6" data-path="概率与分布.html"><a href="概率与分布.html#贝塔分布比例变量的天然选择"><i class="fa fa-check"></i><b>2.5.6</b> 贝塔分布：比例变量的天然选择</a></li>
+<li class="chapter" data-level="2.5.7" data-path="概率与分布.html"><a href="概率与分布.html#正态的魔力中心极限定理"><i class="fa fa-check"></i><b>2.5.7</b> 正态的魔力：中心极限定理</a></li>
+<li class="chapter" data-level="2.5.8" data-path="概率与分布.html"><a href="概率与分布.html#生态学应用实例"><i class="fa fa-check"></i><b>2.5.8</b> 生态学应用实例</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="概率与分布.html"><a href="概率与分布.html#混合分布处理异质性数据"><i class="fa fa-check"></i><b>2.6</b> 混合分布：处理异质性数据</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="概率与分布.html"><a href="概率与分布.html#零膨胀分布处理零值过多的数据"><i class="fa fa-check"></i><b>2.6.1</b> 零膨胀分布：处理零值过多的数据</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="概率与分布.html"><a href="概率与分布.html#总结-2"><i class="fa fa-check"></i><b>2.7</b> 总结</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="描述统计.html"><a href="描述统计.html"><i class="fa fa-check"></i><b>3</b> 描述统计</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="描述统计.html"><a href="描述统计.html#引言-2"><i class="fa fa-check"></i><b>3.1</b> 引言</a></li>
+<li class="chapter" data-level="3.2" data-path="描述统计.html"><a href="描述统计.html#描述统计基础"><i class="fa fa-check"></i><b>3.2</b> 描述统计基础</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="描述统计.html"><a href="描述统计.html#中心趋势测量"><i class="fa fa-check"></i><b>3.2.1</b> 中心趋势测量</a></li>
+<li class="chapter" data-level="3.2.2" data-path="描述统计.html"><a href="描述统计.html#离散性测量"><i class="fa fa-check"></i><b>3.2.2</b> 离散性测量</a></li>
+<li class="chapter" data-level="3.2.3" data-path="描述统计.html"><a href="描述统计.html#分布形状与矩测量"><i class="fa fa-check"></i><b>3.2.3</b> 分布形状与矩测量</a></li>
+<li class="chapter" data-level="3.2.4" data-path="描述统计.html"><a href="描述统计.html#统计概念在概率分布图上的可视化"><i class="fa fa-check"></i><b>3.2.4</b> 统计概念在概率分布图上的可视化</a></li>
+<li class="chapter" data-level="3.2.5" data-path="描述统计.html"><a href="描述统计.html#标准误的可视化理解"><i class="fa fa-check"></i><b>3.2.5</b> 标准误的可视化理解</a></li>
+<li class="chapter" data-level="3.2.6" data-path="描述统计.html"><a href="描述统计.html#不同参数值的分布形状比较"><i class="fa fa-check"></i><b>3.2.6</b> 不同参数值的分布形状比较</a></li>
+<li class="chapter" data-level="3.2.7" data-path="描述统计.html"><a href="描述统计.html#生态学意义总结"><i class="fa fa-check"></i><b>3.2.7</b> 生态学意义总结</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="描述统计.html"><a href="描述统计.html#环境异质性描述"><i class="fa fa-check"></i><b>3.3</b> 环境异质性描述</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="描述统计.html"><a href="描述统计.html#环境异质性的概念"><i class="fa fa-check"></i><b>3.3.1</b> 环境异质性的概念</a></li>
+<li class="chapter" data-level="3.3.2" data-path="描述统计.html"><a href="描述统计.html#环境异质性的可视化理解"><i class="fa fa-check"></i><b>3.3.2</b> 环境异质性的可视化理解</a></li>
+<li class="chapter" data-level="3.3.3" data-path="描述统计.html"><a href="描述统计.html#环境异质性的量化方法"><i class="fa fa-check"></i><b>3.3.3</b> 环境异质性的量化方法</a></li>
+<li class="chapter" data-level="3.3.4" data-path="描述统计.html"><a href="描述统计.html#环境异质性的生态学意义"><i class="fa fa-check"></i><b>3.3.4</b> 环境异质性的生态学意义</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="描述统计.html"><a href="描述统计.html#个体特征描述"><i class="fa fa-check"></i><b>3.4</b> 个体特征描述</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="描述统计.html"><a href="描述统计.html#生存函数survival-function"><i class="fa fa-check"></i><b>3.4.1</b> 生存函数（Survival Function）</a></li>
+<li class="chapter" data-level="3.4.2" data-path="描述统计.html"><a href="描述统计.html#瞬时死亡风险函数hazard-function"><i class="fa fa-check"></i><b>3.4.2</b> 瞬时死亡风险函数（Hazard Function）</a></li>
+<li class="chapter" data-level="3.4.3" data-path="描述统计.html"><a href="描述统计.html#累积风险函数cumulative-hazard-function"><i class="fa fa-check"></i><b>3.4.3</b> 累积风险函数（Cumulative Hazard Function）</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="描述统计.html"><a href="描述统计.html#种群特征描述"><i class="fa fa-check"></i><b>3.5</b> 种群特征描述</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="描述统计.html"><a href="描述统计.html#gini系数"><i class="fa fa-check"></i><b>3.5.1</b> Gini系数</a></li>
+<li class="chapter" data-level="3.5.2" data-path="描述统计.html"><a href="描述统计.html#lorenz曲线"><i class="fa fa-check"></i><b>3.5.2</b> Lorenz曲线</a></li>
+<li class="chapter" data-level="3.5.3" data-path="描述统计.html"><a href="描述统计.html#基尼系数的生态学应用"><i class="fa fa-check"></i><b>3.5.3</b> 基尼系数的生态学应用</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="描述统计.html"><a href="描述统计.html#群落特征描述"><i class="fa fa-check"></i><b>3.6</b> 群落特征描述</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="描述统计.html"><a href="描述统计.html#物种多样性描述"><i class="fa fa-check"></i><b>3.6.1</b> 物种多样性描述</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="描述统计.html"><a href="描述统计.html#生态网络特征描述"><i class="fa fa-check"></i><b>3.7</b> 生态网络特征描述</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="描述统计.html"><a href="描述统计.html#网络拓扑指标"><i class="fa fa-check"></i><b>3.7.1</b> 网络拓扑指标</a></li>
+<li class="chapter" data-level="3.7.2" data-path="描述统计.html"><a href="描述统计.html#食物网特征"><i class="fa fa-check"></i><b>3.7.2</b> 食物网特征</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="描述统计.html"><a href="描述统计.html#稳定性描述"><i class="fa fa-check"></i><b>3.8</b> 稳定性描述</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="描述统计.html"><a href="描述统计.html#抵抗力resistance"><i class="fa fa-check"></i><b>3.8.1</b> 抵抗力（Resistance）</a></li>
+<li class="chapter" data-level="3.8.2" data-path="描述统计.html"><a href="描述统计.html#恢复力resilience"><i class="fa fa-check"></i><b>3.8.2</b> 恢复力（Resilience）</a></li>
+<li class="chapter" data-level="3.8.3" data-path="描述统计.html"><a href="描述统计.html#持久性persistence"><i class="fa fa-check"></i><b>3.8.3</b> 持久性（Persistence）</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="描述统计.html"><a href="描述统计.html#总结-3"><i class="fa fa-check"></i><b>3.9</b> 总结</a></li>
+<li class="chapter" data-level="3.10" data-path="描述统计.html"><a href="描述统计.html#综合练习-1"><i class="fa fa-check"></i><b>3.10</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="参数估计.html"><a href="参数估计.html"><i class="fa fa-check"></i><b>4</b> 参数估计</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="参数估计.html"><a href="参数估计.html#引言-3"><i class="fa fa-check"></i><b>4.1</b> 引言</a></li>
+<li class="chapter" data-level="4.2" data-path="参数估计.html"><a href="参数估计.html#样本与总体"><i class="fa fa-check"></i><b>4.2</b> 样本与总体</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="参数估计.html"><a href="参数估计.html#抽样方法及其生态学应用"><i class="fa fa-check"></i><b>4.2.1</b> 抽样方法及其生态学应用</a></li>
+<li class="chapter" data-level="4.2.2" data-path="参数估计.html"><a href="参数估计.html#r语言中的抽样实现"><i class="fa fa-check"></i><b>4.2.2</b> R语言中的抽样实现</a></li>
+<li class="chapter" data-level="4.2.3" data-path="参数估计.html"><a href="参数估计.html#抽样误差与样本量确定"><i class="fa fa-check"></i><b>4.2.3</b> 抽样误差与样本量确定</a></li>
+<li class="chapter" data-level="4.2.4" data-path="参数估计.html"><a href="参数估计.html#生态学抽样设计的实践考虑"><i class="fa fa-check"></i><b>4.2.4</b> 生态学抽样设计的实践考虑</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="参数估计.html"><a href="参数估计.html#参数估计基础"><i class="fa fa-check"></i><b>4.3</b> 参数估计基础</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="参数估计.html"><a href="参数估计.html#点估计"><i class="fa fa-check"></i><b>4.3.1</b> 点估计</a></li>
+<li class="chapter" data-level="4.3.2" data-path="参数估计.html"><a href="参数估计.html#区间估计"><i class="fa fa-check"></i><b>4.3.2</b> 区间估计</a></li>
+<li class="chapter" data-level="4.3.3" data-path="参数估计.html"><a href="参数估计.html#估计方法"><i class="fa fa-check"></i><b>4.3.3</b> 估计方法</a></li>
+<li class="chapter" data-level="4.3.4" data-path="参数估计.html"><a href="参数估计.html#估计量性质如何评价一个估计方法的好坏"><i class="fa fa-check"></i><b>4.3.4</b> 估计量性质：如何评价一个估计方法的好坏？</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="参数估计.html"><a href="参数估计.html#种群大小估计"><i class="fa fa-check"></i><b>4.4</b> 种群大小估计</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="参数估计.html"><a href="参数估计.html#标记重捕法"><i class="fa fa-check"></i><b>4.4.1</b> 标记重捕法</a></li>
+<li class="chapter" data-level="4.4.2" data-path="参数估计.html"><a href="参数估计.html#面积取样法"><i class="fa fa-check"></i><b>4.4.2</b> 面积取样法</a></li>
+<li class="chapter" data-level="4.4.3" data-path="参数估计.html"><a href="参数估计.html#距离抽样法"><i class="fa fa-check"></i><b>4.4.3</b> 距离抽样法</a></li>
+<li class="chapter" data-level="4.4.4" data-path="参数估计.html"><a href="参数估计.html#去除法"><i class="fa fa-check"></i><b>4.4.4</b> 去除法</a></li>
+<li class="chapter" data-level="4.4.5" data-path="参数估计.html"><a href="参数估计.html#种群大小估计方法的选择与比较"><i class="fa fa-check"></i><b>4.4.5</b> 种群大小估计方法的选择与比较</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="参数估计.html"><a href="参数估计.html#稀有种估计"><i class="fa fa-check"></i><b>4.5</b> 稀有种估计</a></li>
+<li class="chapter" data-level="4.6" data-path="参数估计.html"><a href="参数估计.html#物种多样性估计"><i class="fa fa-check"></i><b>4.6</b> 物种多样性估计</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="参数估计.html"><a href="参数估计.html#外推和内插方法"><i class="fa fa-check"></i><b>4.6.1</b> 外推和内插方法</a></li>
+<li class="chapter" data-level="4.6.2" data-path="参数估计.html"><a href="参数估计.html#多样性估计的抽样偏差"><i class="fa fa-check"></i><b>4.6.2</b> 多样性估计的抽样偏差</a></li>
+<li class="chapter" data-level="4.6.3" data-path="参数估计.html"><a href="参数估计.html#多样性估计方法的选择与比较"><i class="fa fa-check"></i><b>4.6.3</b> 多样性估计方法的选择与比较</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="参数估计.html"><a href="参数估计.html#总结-4"><i class="fa fa-check"></i><b>4.7</b> 总结</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="参数估计.html"><a href="参数估计.html#参数估计的生态学意义与理论基础"><i class="fa fa-check"></i><b>4.7.1</b> 参数估计的生态学意义与理论基础</a></li>
+<li class="chapter" data-level="4.7.2" data-path="参数估计.html"><a href="参数估计.html#点估计与区间估计从单一数值到可信范围"><i class="fa fa-check"></i><b>4.7.2</b> 点估计与区间估计：从单一数值到可信范围</a></li>
+<li class="chapter" data-level="4.7.3" data-path="参数估计.html"><a href="参数估计.html#主要估计方法及其生态学应用"><i class="fa fa-check"></i><b>4.7.3</b> 主要估计方法及其生态学应用</a></li>
+<li class="chapter" data-level="4.7.4" data-path="参数估计.html"><a href="参数估计.html#种群大小估计生态学实践的核心任务"><i class="fa fa-check"></i><b>4.7.4</b> 种群大小估计：生态学实践的核心任务</a></li>
+<li class="chapter" data-level="4.7.5" data-path="参数估计.html"><a href="参数估计.html#物种多样性估计群落生态学的量化基础"><i class="fa fa-check"></i><b>4.7.5</b> 物种多样性估计：群落生态学的量化基础</a></li>
+<li class="chapter" data-level="4.7.6" data-path="参数估计.html"><a href="参数估计.html#参数估计在生态学决策中的重要性"><i class="fa fa-check"></i><b>4.7.6</b> 参数估计在生态学决策中的重要性</a></li>
+<li class="chapter" data-level="4.7.7" data-path="参数估计.html"><a href="参数估计.html#未来发展方向与挑战"><i class="fa fa-check"></i><b>4.7.7</b> 未来发展方向与挑战</a></li>
+<li class="chapter" data-level="4.7.8" data-path="参数估计.html"><a href="参数估计.html#结语"><i class="fa fa-check"></i><b>4.7.8</b> 结语</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="参数估计.html"><a href="参数估计.html#综合练习-2"><i class="fa fa-check"></i><b>4.8</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="相关性与相似性.html"><a href="相关性与相似性.html"><i class="fa fa-check"></i><b>5</b> 相关性与相似性</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="相关性与相似性.html"><a href="相关性与相似性.html#引言-4"><i class="fa fa-check"></i><b>5.1</b> 引言</a></li>
+<li class="chapter" data-level="5.2" data-path="相关性与相似性.html"><a href="相关性与相似性.html#相关性统计基础"><i class="fa fa-check"></i><b>5.2</b> 相关性统计基础</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="相关性与相似性.html"><a href="相关性与相似性.html#相关分析"><i class="fa fa-check"></i><b>5.2.1</b> 相关分析</a></li>
+<li class="chapter" data-level="5.2.2" data-path="相关性与相似性.html"><a href="相关性与相似性.html#偏相关分析"><i class="fa fa-check"></i><b>5.2.2</b> 偏相关分析</a></li>
+<li class="chapter" data-level="5.2.3" data-path="相关性与相似性.html"><a href="相关性与相似性.html#距离相关"><i class="fa fa-check"></i><b>5.2.3</b> 距离相关</a></li>
+<li class="chapter" data-level="5.2.4" data-path="相关性与相似性.html"><a href="相关性与相似性.html#互信息"><i class="fa fa-check"></i><b>5.2.4</b> 互信息</a></li>
+<li class="chapter" data-level="5.2.5" data-path="相关性与相似性.html"><a href="相关性与相似性.html#非线性关系度量"><i class="fa fa-check"></i><b>5.2.5</b> 非线性关系度量</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="相关性与相似性.html"><a href="相关性与相似性.html#自相关"><i class="fa fa-check"></i><b>5.3</b> 自相关</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="相关性与相似性.html"><a href="相关性与相似性.html#时间自相关"><i class="fa fa-check"></i><b>5.3.1</b> 时间自相关</a></li>
+<li class="chapter" data-level="5.3.2" data-path="相关性与相似性.html"><a href="相关性与相似性.html#空间自相关"><i class="fa fa-check"></i><b>5.3.2</b> 空间自相关</a></li>
+<li class="chapter" data-level="5.3.3" data-path="相关性与相似性.html"><a href="相关性与相似性.html#系统发育相关性"><i class="fa fa-check"></i><b>5.3.3</b> 系统发育相关性</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="相关性与相似性.html"><a href="相关性与相似性.html#相似性与距离"><i class="fa fa-check"></i><b>5.4</b> 相似性与距离</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="相关性与相似性.html"><a href="相关性与相似性.html#常用相似性系数"><i class="fa fa-check"></i><b>5.4.1</b> 常用相似性系数</a></li>
+<li class="chapter" data-level="5.4.2" data-path="相关性与相似性.html"><a href="相关性与相似性.html#功能性状间相关性"><i class="fa fa-check"></i><b>5.4.2</b> 功能性状间相关性</a></li>
+<li class="chapter" data-level="5.4.3" data-path="相关性与相似性.html"><a href="相关性与相似性.html#种内相关性"><i class="fa fa-check"></i><b>5.4.3</b> 种内相关性</a></li>
+<li class="chapter" data-level="5.4.4" data-path="相关性与相似性.html"><a href="相关性与相似性.html#种间相关性"><i class="fa fa-check"></i><b>5.4.4</b> 种间相关性</a></li>
+<li class="chapter" data-level="5.4.5" data-path="相关性与相似性.html"><a href="相关性与相似性.html#群落相似性"><i class="fa fa-check"></i><b>5.4.5</b> 群落相似性</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="相关性与相似性.html"><a href="相关性与相似性.html#总结-5"><i class="fa fa-check"></i><b>5.5</b> 总结</a></li>
+<li class="chapter" data-level="5.6" data-path="相关性与相似性.html"><a href="相关性与相似性.html#综合练习-3"><i class="fa fa-check"></i><b>5.6</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="part-假设检验.html"><a href="part-假设检验.html"><i class="fa fa-check"></i><b>6</b> (PART) 假设检验</a></li>
+<li class="chapter" data-level="7" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html"><i class="fa fa-check"></i><b>7</b> 基于经典分布的假设检验</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#引言-5"><i class="fa fa-check"></i><b>7.1</b> 引言</a></li>
+<li class="chapter" data-level="7.2" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#经典假设检验"><i class="fa fa-check"></i><b>7.2</b> 经典假设检验</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#假设检验基础"><i class="fa fa-check"></i><b>7.2.1</b> 假设检验基础</a></li>
+<li class="chapter" data-level="7.2.2" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#假设检验的基本步骤"><i class="fa fa-check"></i><b>7.2.2</b> 假设检验的基本步骤</a></li>
+<li class="chapter" data-level="7.2.3" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#单样本检验"><i class="fa fa-check"></i><b>7.2.3</b> 单样本检验</a></li>
+<li class="chapter" data-level="7.2.4" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#双样本检验"><i class="fa fa-check"></i><b>7.2.4</b> 双样本检验</a></li>
+<li class="chapter" data-level="7.2.5" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#多样本检验"><i class="fa fa-check"></i><b>7.2.5</b> 多样本检验</a></li>
+<li class="chapter" data-level="7.2.6" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#非参数检验方法"><i class="fa fa-check"></i><b>7.2.6</b> 非参数检验方法</a></li>
+<li class="chapter" data-level="7.2.7" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#多重比较校正"><i class="fa fa-check"></i><b>7.2.7</b> 多重比较校正</a></li>
+<li class="chapter" data-level="7.2.8" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#功效分析"><i class="fa fa-check"></i><b>7.2.8</b> 功效分析</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#总结-6"><i class="fa fa-check"></i><b>7.3</b> 总结</a></li>
+<li class="chapter" data-level="7.4" data-path="基于经典分布的假设检验.html"><a href="基于经典分布的假设检验.html#综合练习-4"><i class="fa fa-check"></i><b>7.4</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="part-假设检验-1.html"><a href="part-假设检验-1.html"><i class="fa fa-check"></i><b>8</b> (PART) 假设检验</a></li>
+<li class="chapter" data-level="9" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html"><i class="fa fa-check"></i><b>9</b> 基于模拟的假设检验</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#引言-6"><i class="fa fa-check"></i><b>9.1</b> 引言</a></li>
+<li class="chapter" data-level="9.2" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#方法学层次与演进脉络"><i class="fa fa-check"></i><b>9.2</b> 方法学层次与演进脉络</a></li>
+<li class="chapter" data-level="9.3" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#置换检验"><i class="fa fa-check"></i><b>9.3</b> 置换检验</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#置换检验的基本原理"><i class="fa fa-check"></i><b>9.3.1</b> 置换检验的基本原理</a></li>
+<li class="chapter" data-level="9.3.2" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#置换检验的技术实现过程"><i class="fa fa-check"></i><b>9.3.2</b> 置换检验的技术实现过程</a></li>
+<li class="chapter" data-level="9.3.3" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#r语言实现示例"><i class="fa fa-check"></i><b>9.3.3</b> R语言实现示例</a></li>
+<li class="chapter" data-level="9.3.4" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#置换检验在生态学中的应用价值与局限"><i class="fa fa-check"></i><b>9.3.4</b> 置换检验在生态学中的应用价值与局限</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#蒙特卡洛检验"><i class="fa fa-check"></i><b>9.4</b> 蒙特卡洛检验</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#蒙特卡洛方法的概念体系"><i class="fa fa-check"></i><b>9.4.1</b> 蒙特卡洛方法的概念体系</a></li>
+<li class="chapter" data-level="9.4.2" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#蒙特卡洛检验的基本原理"><i class="fa fa-check"></i><b>9.4.2</b> 蒙特卡洛检验的基本原理</a></li>
+<li class="chapter" data-level="9.4.3" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#蒙特卡洛检验的主要类型"><i class="fa fa-check"></i><b>9.4.3</b> 蒙特卡洛检验的主要类型</a></li>
+<li class="chapter" data-level="9.4.4" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#r语言实现示例空间分布随机性检验"><i class="fa fa-check"></i><b>9.4.4</b> R语言实现示例：空间分布随机性检验</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#自助法检验"><i class="fa fa-check"></i><b>9.5</b> 自助法检验</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#自助法的基本原理"><i class="fa fa-check"></i><b>9.5.1</b> 自助法的基本原理</a></li>
+<li class="chapter" data-level="9.5.2" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#自助法的实施步骤"><i class="fa fa-check"></i><b>9.5.2</b> 自助法的实施步骤</a></li>
+<li class="chapter" data-level="9.5.3" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#自助法在生态学中的应用"><i class="fa fa-check"></i><b>9.5.3</b> 自助法在生态学中的应用</a></li>
+<li class="chapter" data-level="9.5.4" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#r语言实现示例-1"><i class="fa fa-check"></i><b>9.5.4</b> R语言实现示例</a></li>
+<li class="chapter" data-level="9.5.5" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#自助法的优势与局限"><i class="fa fa-check"></i><b>9.5.5</b> 自助法的优势与局限</a></li>
+</ul></li>
+<li class="chapter" data-level="9.6" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#基因型频率检验"><i class="fa fa-check"></i><b>9.6</b> 基因型频率检验</a>
+<ul>
+<li class="chapter" data-level="9.6.1" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#hardy-weinberg平衡检验"><i class="fa fa-check"></i><b>9.6.1</b> Hardy-Weinberg平衡检验</a></li>
+<li class="chapter" data-level="9.6.2" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#连锁不平衡检验"><i class="fa fa-check"></i><b>9.6.2</b> 连锁不平衡检验</a></li>
+<li class="chapter" data-level="9.6.3" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#方法学比较与选择建议"><i class="fa fa-check"></i><b>9.6.3</b> 方法学比较与选择建议</a></li>
+</ul></li>
+<li class="chapter" data-level="9.7" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#多样性差异检验"><i class="fa fa-check"></i><b>9.7</b> 多样性差异检验</a>
+<ul>
+<li class="chapter" data-level="9.7.1" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#群落多样性比较"><i class="fa fa-check"></i><b>9.7.1</b> 群落多样性比较</a></li>
+<li class="chapter" data-level="9.7.2" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#相似性分析anosim"><i class="fa fa-check"></i><b>9.7.2</b> 相似性分析（ANOSIM）</a></li>
+<li class="chapter" data-level="9.7.3" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#方法学比较与生态学应用建议"><i class="fa fa-check"></i><b>9.7.3</b> 方法学比较与生态学应用建议</a></li>
+</ul></li>
+<li class="chapter" data-level="9.8" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#物种空间分布检验"><i class="fa fa-check"></i><b>9.8</b> 物种空间分布检验</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#空间分布模式检验"><i class="fa fa-check"></i><b>9.8.1</b> 空间分布模式检验</a></li>
+<li class="chapter" data-level="9.8.2" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#点过程模型检验"><i class="fa fa-check"></i><b>9.8.2</b> 点过程模型检验</a></li>
+<li class="chapter" data-level="9.8.3" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#空间生态学的统计挑战与解决方案"><i class="fa fa-check"></i><b>9.8.3</b> 空间生态学的统计挑战与解决方案</a></li>
+<li class="chapter" data-level="9.8.4" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#生态学应用与保护意义"><i class="fa fa-check"></i><b>9.8.4</b> 生态学应用与保护意义</a></li>
+</ul></li>
+<li class="chapter" data-level="9.9" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#系统发育信号检验"><i class="fa fa-check"></i><b>9.9</b> 系统发育信号检验</a>
+<ul>
+<li class="chapter" data-level="9.9.1" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#系统发育保守性检验"><i class="fa fa-check"></i><b>9.9.1</b> 系统发育保守性检验</a></li>
+<li class="chapter" data-level="9.9.2" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#系统发育独立对比"><i class="fa fa-check"></i><b>9.9.2</b> 系统发育独立对比</a></li>
+<li class="chapter" data-level="9.9.3" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#方法学比较与生态学应用建议-1"><i class="fa fa-check"></i><b>9.9.3</b> 方法学比较与生态学应用建议</a></li>
+</ul></li>
+<li class="chapter" data-level="9.10" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#生态学零模型检验"><i class="fa fa-check"></i><b>9.10</b> 生态学零模型检验</a>
+<ul>
+<li class="chapter" data-level="9.10.1" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#零模型的基本概念与生态学意义"><i class="fa fa-check"></i><b>9.10.1</b> 零模型的基本概念与生态学意义</a></li>
+<li class="chapter" data-level="9.10.2" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#群落组装零模型检验"><i class="fa fa-check"></i><b>9.10.2</b> 群落组装零模型检验</a></li>
+<li class="chapter" data-level="9.10.3" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#生态网络零模型检验"><i class="fa fa-check"></i><b>9.10.3</b> 生态网络零模型检验</a></li>
+<li class="chapter" data-level="9.10.4" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#零模型检验的方法学比较与选择"><i class="fa fa-check"></i><b>9.10.4</b> 零模型检验的方法学比较与选择</a></li>
+<li class="chapter" data-level="9.10.5" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#生态学应用与保护意义-1"><i class="fa fa-check"></i><b>9.10.5</b> 生态学应用与保护意义</a></li>
+</ul></li>
+<li class="chapter" data-level="9.11" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#总结-7"><i class="fa fa-check"></i><b>9.11</b> 总结</a></li>
+<li class="chapter" data-level="9.12" data-path="基于模拟的假设检验.html"><a href="基于模拟的假设检验.html#综合练习-5"><i class="fa fa-check"></i><b>9.12</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="part-统计建模.html"><a href="part-统计建模.html"><i class="fa fa-check"></i><b>10</b> (PART) 统计建模</a></li>
+<li class="chapter" data-level="11" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html"><i class="fa fa-check"></i><b>11</b> 简单线性回归模型</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#引言-7"><i class="fa fa-check"></i><b>11.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#为什么生态学本科生需要学习统计建模与预测"><i class="fa fa-check"></i><b>11.1.1</b> 为什么生态学本科生需要学习统计建模与预测？</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#简单线性回归"><i class="fa fa-check"></i><b>11.2</b> 简单线性回归</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#线性回归模型"><i class="fa fa-check"></i><b>11.2.1</b> 线性回归模型</a></li>
+<li class="chapter" data-level="11.2.2" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#最小二乘估计"><i class="fa fa-check"></i><b>11.2.2</b> 最小二乘估计</a></li>
+<li class="chapter" data-level="11.2.3" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#r语言中的lm函数详解"><i class="fa fa-check"></i><b>11.2.3</b> R语言中的lm()函数详解</a></li>
+<li class="chapter" data-level="11.2.4" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#回归诊断"><i class="fa fa-check"></i><b>11.2.4</b> 回归诊断</a></li>
+<li class="chapter" data-level="11.2.5" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#生态学应用实例-1"><i class="fa fa-check"></i><b>11.2.5</b> 生态学应用实例</a></li>
+<li class="chapter" data-level="11.2.6" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#多元线性回归"><i class="fa fa-check"></i><b>11.2.6</b> 多元线性回归</a></li>
+<li class="chapter" data-level="11.2.7" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#多元线性回归中的变量选择"><i class="fa fa-check"></i><b>11.2.7</b> 多元线性回归中的变量选择</a></li>
+<li class="chapter" data-level="11.2.8" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#完整生态学案例分析鸟类丰富度与环境因子的关系"><i class="fa fa-check"></i><b>11.2.8</b> 完整生态学案例分析：鸟类丰富度与环境因子的关系</a></li>
+<li class="chapter" data-level="11.2.9" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#案例分析总结"><i class="fa fa-check"></i><b>11.2.9</b> 案例分析总结</a></li>
+<li class="chapter" data-level="11.2.10" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#多项式回归"><i class="fa fa-check"></i><b>11.2.10</b> 多项式回归</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#总结-8"><i class="fa fa-check"></i><b>11.3</b> 总结</a></li>
+<li class="chapter" data-level="11.4" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#综合练习-6"><i class="fa fa-check"></i><b>11.4</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="part-统计建模-1.html"><a href="part-统计建模-1.html"><i class="fa fa-check"></i><b>12</b> (PART) 统计建模</a></li>
+<li class="chapter" data-level="13" data-path="模型选择与评估.html"><a href="模型选择与评估.html"><i class="fa fa-check"></i><b>13</b> 模型选择与评估</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="模型选择与评估.html"><a href="模型选择与评估.html#引言-8"><i class="fa fa-check"></i><b>13.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="模型选择与评估.html"><a href="模型选择与评估.html#模型选择"><i class="fa fa-check"></i><b>13.1.1</b> 模型选择</a></li>
+<li class="chapter" data-level="13.1.2" data-path="模型选择与评估.html"><a href="模型选择与评估.html#模型评估"><i class="fa fa-check"></i><b>13.1.2</b> 模型评估</a></li>
+<li class="chapter" data-level="13.1.3" data-path="模型选择与评估.html"><a href="模型选择与评估.html#贝叶斯模型选择与评估"><i class="fa fa-check"></i><b>13.1.3</b> 贝叶斯模型选择与评估</a></li>
+</ul></li>
+<li class="chapter" data-level="13.2" data-path="模型选择与评估.html"><a href="模型选择与评估.html#总结-9"><i class="fa fa-check"></i><b>13.2</b> 总结</a></li>
+<li class="chapter" data-level="13.3" data-path="模型选择与评估.html"><a href="模型选择与评估.html#综合练习-7"><i class="fa fa-check"></i><b>13.3</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="part-统计建模-2.html"><a href="part-统计建模-2.html"><i class="fa fa-check"></i><b>14</b> (PART) 统计建模</a></li>
+<li class="chapter" data-level="15" data-path="高级回归模型.html"><a href="高级回归模型.html"><i class="fa fa-check"></i><b>15</b> 高级回归模型</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="高级回归模型.html"><a href="高级回归模型.html#引言-9"><i class="fa fa-check"></i><b>15.1</b> 引言</a></li>
+<li class="chapter" data-level="15.2" data-path="高级回归模型.html"><a href="高级回归模型.html#可加性模型"><i class="fa fa-check"></i><b>15.2</b> 可加性模型</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="高级回归模型.html"><a href="高级回归模型.html#可加性模型的基本原理"><i class="fa fa-check"></i><b>15.2.1</b> 可加性模型的基本原理</a></li>
+<li class="chapter" data-level="15.2.2" data-path="高级回归模型.html"><a href="高级回归模型.html#与线性模型的比较"><i class="fa fa-check"></i><b>15.2.2</b> 与线性模型的比较</a></li>
+<li class="chapter" data-level="15.2.3" data-path="高级回归模型.html"><a href="高级回归模型.html#常见的平滑函数"><i class="fa fa-check"></i><b>15.2.3</b> 常见的平滑函数</a></li>
+<li class="chapter" data-level="15.2.4" data-path="高级回归模型.html"><a href="高级回归模型.html#平滑函数选择的生态学考量"><i class="fa fa-check"></i><b>15.2.4</b> 平滑函数选择的生态学考量</a></li>
+<li class="chapter" data-level="15.2.5" data-path="高级回归模型.html"><a href="高级回归模型.html#可加性模型中的系数概念"><i class="fa fa-check"></i><b>15.2.5</b> 可加性模型中的”系数”概念</a></li>
+<li class="chapter" data-level="15.2.6" data-path="高级回归模型.html"><a href="高级回归模型.html#在r中的实现"><i class="fa fa-check"></i><b>15.2.6</b> 在R中的实现</a></li>
+<li class="chapter" data-level="15.2.7" data-path="高级回归模型.html"><a href="高级回归模型.html#生态学应用示例"><i class="fa fa-check"></i><b>15.2.7</b> 生态学应用示例</a></li>
+<li class="chapter" data-level="15.2.8" data-path="高级回归模型.html"><a href="高级回归模型.html#可加性模型诊断"><i class="fa fa-check"></i><b>15.2.8</b> 可加性模型诊断</a></li>
+<li class="chapter" data-level="15.2.9" data-path="高级回归模型.html"><a href="高级回归模型.html#可加性模型的优势与局限"><i class="fa fa-check"></i><b>15.2.9</b> 可加性模型的优势与局限</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="高级回归模型.html"><a href="高级回归模型.html#广义线性回归"><i class="fa fa-check"></i><b>15.3</b> 广义线性回归</a>
+<ul>
+<li class="chapter" data-level="15.3.1" data-path="高级回归模型.html"><a href="高级回归模型.html#广义线性模型的基本框架"><i class="fa fa-check"></i><b>15.3.1</b> 广义线性模型的基本框架</a></li>
+<li class="chapter" data-level="15.3.2" data-path="高级回归模型.html"><a href="高级回归模型.html#与普通线性回归的根本区别"><i class="fa fa-check"></i><b>15.3.2</b> 与普通线性回归的根本区别</a></li>
+<li class="chapter" data-level="15.3.3" data-path="高级回归模型.html"><a href="高级回归模型.html#r语言中的glm实现"><i class="fa fa-check"></i><b>15.3.3</b> R语言中的GLM实现</a></li>
+<li class="chapter" data-level="15.3.4" data-path="高级回归模型.html"><a href="高级回归模型.html#常见glm类型及其生态学应用"><i class="fa fa-check"></i><b>15.3.4</b> 常见GLM类型及其生态学应用</a></li>
+<li class="chapter" data-level="15.3.5" data-path="高级回归模型.html"><a href="高级回归模型.html#模型诊断与解释"><i class="fa fa-check"></i><b>15.3.5</b> 模型诊断与解释</a></li>
+<li class="chapter" data-level="15.3.6" data-path="高级回归模型.html"><a href="高级回归模型.html#生态学意义与注意事项"><i class="fa fa-check"></i><b>15.3.6</b> 生态学意义与注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="15.4" data-path="高级回归模型.html"><a href="高级回归模型.html#广义可加模型"><i class="fa fa-check"></i><b>15.4</b> 广义可加模型</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="高级回归模型.html"><a href="高级回归模型.html#gam的基本原理"><i class="fa fa-check"></i><b>15.4.1</b> GAM的基本原理</a></li>
+<li class="chapter" data-level="15.4.2" data-path="高级回归模型.html"><a href="高级回归模型.html#在r中的实现-1"><i class="fa fa-check"></i><b>15.4.2</b> 在R中的实现</a></li>
+<li class="chapter" data-level="15.4.3" data-path="高级回归模型.html"><a href="高级回归模型.html#生态学应用示例-1"><i class="fa fa-check"></i><b>15.4.3</b> 生态学应用示例</a></li>
+<li class="chapter" data-level="15.4.4" data-path="高级回归模型.html"><a href="高级回归模型.html#gam在生态学中的特殊价值"><i class="fa fa-check"></i><b>15.4.4</b> GAM在生态学中的特殊价值</a></li>
+<li class="chapter" data-level="15.4.5" data-path="高级回归模型.html"><a href="高级回归模型.html#高级功能"><i class="fa fa-check"></i><b>15.4.5</b> 高级功能</a></li>
+<li class="chapter" data-level="15.4.6" data-path="高级回归模型.html"><a href="高级回归模型.html#模型选择与诊断"><i class="fa fa-check"></i><b>15.4.6</b> 模型选择与诊断</a></li>
+</ul></li>
+<li class="chapter" data-level="15.5" data-path="高级回归模型.html"><a href="高级回归模型.html#混合效应模型"><i class="fa fa-check"></i><b>15.5</b> 混合效应模型</a>
+<ul>
+<li class="chapter" data-level="15.5.1" data-path="高级回归模型.html"><a href="高级回归模型.html#固定效应与随机效应的生态学概念"><i class="fa fa-check"></i><b>15.5.1</b> 固定效应与随机效应的生态学概念</a></li>
+<li class="chapter" data-level="15.5.2" data-path="高级回归模型.html"><a href="高级回归模型.html#混合效应模型的数学框架"><i class="fa fa-check"></i><b>15.5.2</b> 混合效应模型的数学框架</a></li>
+<li class="chapter" data-level="15.5.3" data-path="高级回归模型.html"><a href="高级回归模型.html#r语言中的混合效应模型实现"><i class="fa fa-check"></i><b>15.5.3</b> R语言中的混合效应模型实现</a></li>
+<li class="chapter" data-level="15.5.4" data-path="高级回归模型.html"><a href="高级回归模型.html#固定效应和随机效应的筛选"><i class="fa fa-check"></i><b>15.5.4</b> 固定效应和随机效应的筛选</a></li>
+<li class="chapter" data-level="15.5.5" data-path="高级回归模型.html"><a href="高级回归模型.html#混合效应模型在生态学中的特殊价值"><i class="fa fa-check"></i><b>15.5.5</b> 混合效应模型在生态学中的特殊价值</a></li>
+<li class="chapter" data-level="15.5.6" data-path="高级回归模型.html"><a href="高级回归模型.html#模型诊断与注意事项"><i class="fa fa-check"></i><b>15.5.6</b> 模型诊断与注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="15.6" data-path="高级回归模型.html"><a href="高级回归模型.html#时空自相关模型"><i class="fa fa-check"></i><b>15.6</b> 时空自相关模型</a>
+<ul>
+<li class="chapter" data-level="15.6.1" data-path="高级回归模型.html"><a href="高级回归模型.html#时空自相关模型与混合效应模型的联系与区别"><i class="fa fa-check"></i><b>15.6.1</b> 时空自相关模型与混合效应模型的联系与区别</a></li>
+<li class="chapter" data-level="15.6.2" data-path="高级回归模型.html"><a href="高级回归模型.html#空间自相关与时间自相关的生态学概念"><i class="fa fa-check"></i><b>15.6.2</b> 空间自相关与时间自相关的生态学概念</a></li>
+<li class="chapter" data-level="15.6.3" data-path="高级回归模型.html"><a href="高级回归模型.html#时空自相关模型的数学框架"><i class="fa fa-check"></i><b>15.6.3</b> 时空自相关模型的数学框架</a></li>
+<li class="chapter" data-level="15.6.4" data-path="高级回归模型.html"><a href="高级回归模型.html#时空模型框架的联系与区别"><i class="fa fa-check"></i><b>15.6.4</b> 时空模型框架的联系与区别</a></li>
+<li class="chapter" data-level="15.6.5" data-path="高级回归模型.html"><a href="高级回归模型.html#r语言中的时空自相关模型实现"><i class="fa fa-check"></i><b>15.6.5</b> R语言中的时空自相关模型实现</a></li>
+<li class="chapter" data-level="15.6.6" data-path="高级回归模型.html"><a href="高级回归模型.html#时空自相关模型的生态学应用"><i class="fa fa-check"></i><b>15.6.6</b> 时空自相关模型的生态学应用</a></li>
+<li class="chapter" data-level="15.6.7" data-path="高级回归模型.html"><a href="高级回归模型.html#模型诊断与注意事项-1"><i class="fa fa-check"></i><b>15.6.7</b> 模型诊断与注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="15.7" data-path="高级回归模型.html"><a href="高级回归模型.html#结构方程模型"><i class="fa fa-check"></i><b>15.7</b> 结构方程模型</a>
+<ul>
+<li class="chapter" data-level="15.7.1" data-path="高级回归模型.html"><a href="高级回归模型.html#结构方程模型的基本框架"><i class="fa fa-check"></i><b>15.7.1</b> 结构方程模型的基本框架</a></li>
+<li class="chapter" data-level="15.7.2" data-path="高级回归模型.html"><a href="高级回归模型.html#r语言中的结构方程模型实现"><i class="fa fa-check"></i><b>15.7.2</b> R语言中的结构方程模型实现</a></li>
+<li class="chapter" data-level="15.7.3" data-path="高级回归模型.html"><a href="高级回归模型.html#结构方程模型在生态学中的特殊价值"><i class="fa fa-check"></i><b>15.7.3</b> 结构方程模型在生态学中的特殊价值</a></li>
+<li class="chapter" data-level="15.7.4" data-path="高级回归模型.html"><a href="高级回归模型.html#模型诊断与注意事项-2"><i class="fa fa-check"></i><b>15.7.4</b> 模型诊断与注意事项</a></li>
+</ul></li>
+<li class="chapter" data-level="15.8" data-path="高级回归模型.html"><a href="高级回归模型.html#总结-10"><i class="fa fa-check"></i><b>15.8</b> 总结</a></li>
+<li class="chapter" data-level="15.9" data-path="高级回归模型.html"><a href="高级回归模型.html#综合练习-8"><i class="fa fa-check"></i><b>15.9</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="part-统计建模-3.html"><a href="part-统计建模-3.html"><i class="fa fa-check"></i><b>16</b> (PART) 统计建模</a></li>
+<li class="chapter" data-level="17" data-path="机器学习.html"><a href="机器学习.html"><i class="fa fa-check"></i><b>17</b> 机器学习</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="机器学习.html"><a href="机器学习.html#引言-10"><i class="fa fa-check"></i><b>17.1</b> 引言</a></li>
+<li class="chapter" data-level="17.2" data-path="机器学习.html"><a href="机器学习.html#决策树"><i class="fa fa-check"></i><b>17.2</b> 决策树</a>
+<ul>
+<li class="chapter" data-level="17.2.1" data-path="机器学习.html"><a href="机器学习.html#基本概念与原理"><i class="fa fa-check"></i><b>17.2.1</b> 基本概念与原理</a></li>
+<li class="chapter" data-level="17.2.2" data-path="机器学习.html"><a href="机器学习.html#决策树构建原理"><i class="fa fa-check"></i><b>17.2.2</b> 决策树构建原理</a></li>
+<li class="chapter" data-level="17.2.3" data-path="机器学习.html"><a href="机器学习.html#分类树classification-trees"><i class="fa fa-check"></i><b>17.2.3</b> 分类树（Classification Trees）</a></li>
+<li class="chapter" data-level="17.2.4" data-path="机器学习.html"><a href="机器学习.html#回归树regression-trees"><i class="fa fa-check"></i><b>17.2.4</b> 回归树（Regression Trees）</a></li>
+<li class="chapter" data-level="17.2.5" data-path="机器学习.html"><a href="机器学习.html#分类树与回归树的比较"><i class="fa fa-check"></i><b>17.2.5</b> 分类树与回归树的比较</a></li>
+<li class="chapter" data-level="17.2.6" data-path="机器学习.html"><a href="机器学习.html#生态学应用实例-3"><i class="fa fa-check"></i><b>17.2.6</b> 生态学应用实例</a></li>
+<li class="chapter" data-level="17.2.7" data-path="机器学习.html"><a href="机器学习.html#优势与局限"><i class="fa fa-check"></i><b>17.2.7</b> 优势与局限</a></li>
+<li class="chapter" data-level="17.2.8" data-path="机器学习.html"><a href="机器学习.html#r代码实现示例"><i class="fa fa-check"></i><b>17.2.8</b> R代码实现示例</a></li>
+</ul></li>
+<li class="chapter" data-level="17.3" data-path="机器学习.html"><a href="机器学习.html#随机森林"><i class="fa fa-check"></i><b>17.3</b> 随机森林</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="机器学习.html"><a href="机器学习.html#决策树与随机森林的关系"><i class="fa fa-check"></i><b>17.3.1</b> 决策树与随机森林的关系</a></li>
+<li class="chapter" data-level="17.3.2" data-path="机器学习.html"><a href="机器学习.html#随机森林的三个随机"><i class="fa fa-check"></i><b>17.3.2</b> 随机森林的三个随机</a></li>
+<li class="chapter" data-level="17.3.3" data-path="机器学习.html"><a href="机器学习.html#数学定义与原理"><i class="fa fa-check"></i><b>17.3.3</b> 数学定义与原理</a></li>
+<li class="chapter" data-level="17.3.4" data-path="机器学习.html"><a href="机器学习.html#生动例子阐释原理"><i class="fa fa-check"></i><b>17.3.4</b> 生动例子阐释原理</a></li>
+<li class="chapter" data-level="17.3.5" data-path="机器学习.html"><a href="机器学习.html#r代码实现"><i class="fa fa-check"></i><b>17.3.5</b> R代码实现</a></li>
+<li class="chapter" data-level="17.3.6" data-path="机器学习.html"><a href="机器学习.html#代码详细说明"><i class="fa fa-check"></i><b>17.3.6</b> 代码详细说明</a></li>
+<li class="chapter" data-level="17.3.7" data-path="机器学习.html"><a href="机器学习.html#模型评估与验证"><i class="fa fa-check"></i><b>17.3.7</b> 模型评估与验证</a></li>
+<li class="chapter" data-level="17.3.8" data-path="机器学习.html"><a href="机器学习.html#生态学应用实例-4"><i class="fa fa-check"></i><b>17.3.8</b> 生态学应用实例</a></li>
+<li class="chapter" data-level="17.3.9" data-path="机器学习.html"><a href="机器学习.html#生态学应用价值-1"><i class="fa fa-check"></i><b>17.3.9</b> 生态学应用价值</a></li>
+<li class="chapter" data-level="17.3.10" data-path="机器学习.html"><a href="机器学习.html#优势与局限的深入分析"><i class="fa fa-check"></i><b>17.3.10</b> 优势与局限的深入分析</a></li>
+<li class="chapter" data-level="17.3.11" data-path="机器学习.html"><a href="机器学习.html#生态学启示与未来展望"><i class="fa fa-check"></i><b>17.3.11</b> 生态学启示与未来展望</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="机器学习.html"><a href="机器学习.html#支持向量机"><i class="fa fa-check"></i><b>17.4</b> 支持向量机</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="机器学习.html"><a href="机器学习.html#基本概念与几何直觉"><i class="fa fa-check"></i><b>17.4.1</b> 基本概念与几何直觉</a></li>
+<li class="chapter" data-level="17.4.2" data-path="机器学习.html"><a href="机器学习.html#数学原理与核心概念"><i class="fa fa-check"></i><b>17.4.2</b> 数学原理与核心概念</a></li>
+<li class="chapter" data-level="17.4.3" data-path="机器学习.html"><a href="机器学习.html#生动例子阐释原理-1"><i class="fa fa-check"></i><b>17.4.3</b> 生动例子阐释原理</a></li>
+<li class="chapter" data-level="17.4.4" data-path="机器学习.html"><a href="机器学习.html#r代码实现-1"><i class="fa fa-check"></i><b>17.4.4</b> R代码实现</a></li>
+<li class="chapter" data-level="17.4.5" data-path="机器学习.html"><a href="机器学习.html#代码详细说明-1"><i class="fa fa-check"></i><b>17.4.5</b> 代码详细说明</a></li>
+<li class="chapter" data-level="17.4.6" data-path="机器学习.html"><a href="机器学习.html#模型评估与验证-1"><i class="fa fa-check"></i><b>17.4.6</b> 模型评估与验证</a></li>
+<li class="chapter" data-level="17.4.7" data-path="机器学习.html"><a href="机器学习.html#生态学应用实例-5"><i class="fa fa-check"></i><b>17.4.7</b> 生态学应用实例</a></li>
+<li class="chapter" data-level="17.4.8" data-path="机器学习.html"><a href="机器学习.html#优势与局限-1"><i class="fa fa-check"></i><b>17.4.8</b> 优势与局限</a></li>
+<li class="chapter" data-level="17.4.9" data-path="机器学习.html"><a href="机器学习.html#生态学启示与未来展望-1"><i class="fa fa-check"></i><b>17.4.9</b> 生态学启示与未来展望</a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="机器学习.html"><a href="机器学习.html#深度神经网络"><i class="fa fa-check"></i><b>17.5</b> 深度神经网络</a>
+<ul>
+<li class="chapter" data-level="17.5.1" data-path="机器学习.html"><a href="机器学习.html#基本概念与生物学启发"><i class="fa fa-check"></i><b>17.5.1</b> 基本概念与生物学启发</a></li>
+<li class="chapter" data-level="17.5.2" data-path="机器学习.html"><a href="机器学习.html#主要神经网络架构"><i class="fa fa-check"></i><b>17.5.2</b> 主要神经网络架构</a></li>
+<li class="chapter" data-level="17.5.3" data-path="机器学习.html"><a href="机器学习.html#生动例子阐释原理-2"><i class="fa fa-check"></i><b>17.5.3</b> 生动例子阐释原理</a></li>
+<li class="chapter" data-level="17.5.4" data-path="机器学习.html"><a href="机器学习.html#生态学应用实例-6"><i class="fa fa-check"></i><b>17.5.4</b> 生态学应用实例</a></li>
+<li class="chapter" data-level="17.5.5" data-path="机器学习.html"><a href="机器学习.html#优势与局限-2"><i class="fa fa-check"></i><b>17.5.5</b> 优势与局限</a></li>
+<li class="chapter" data-level="17.5.6" data-path="机器学习.html"><a href="机器学习.html#生态学启示与未来展望-2"><i class="fa fa-check"></i><b>17.5.6</b> 生态学启示与未来展望</a></li>
+</ul></li>
+<li class="chapter" data-level="17.6" data-path="机器学习.html"><a href="机器学习.html#总结-11"><i class="fa fa-check"></i><b>17.6</b> 总结</a></li>
+<li class="chapter" data-level="17.7" data-path="机器学习.html"><a href="机器学习.html#综合练习-9"><i class="fa fa-check"></i><b>17.7</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html"><i class="fa fa-check"></i><b>18</b> 附录1 R语言编程基础</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言介绍"><i class="fa fa-check"></i><b>18.1</b> R语言介绍</a>
+<ul>
+<li class="chapter" data-level="18.1.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#为什么生态学专业需要学习r"><i class="fa fa-check"></i><b>18.1.1</b> 为什么生态学专业需要学习R？</a></li>
+<li class="chapter" data-level="18.1.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言简介与趣味应用"><i class="fa fa-check"></i><b>18.1.2</b> R语言简介与趣味应用</a></li>
+<li class="chapter" data-level="18.1.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#环境设置和配置"><i class="fa fa-check"></i><b>18.1.3</b> 环境设置和配置</a></li>
+<li class="chapter" data-level="18.1.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#项目文件夹结构设置"><i class="fa fa-check"></i><b>18.1.4</b> 项目文件夹结构设置</a></li>
+<li class="chapter" data-level="18.1.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#基本包管理"><i class="fa fa-check"></i><b>18.1.5</b> 基本包管理</a></li>
+<li class="chapter" data-level="18.1.6" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#工作目录设置"><i class="fa fa-check"></i><b>18.1.6</b> 工作目录设置</a></li>
+<li class="chapter" data-level="18.1.7" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课前准备检查清单"><i class="fa fa-check"></i><b>18.1.7</b> 课前准备检查清单</a></li>
+</ul></li>
+<li class="chapter" data-level="18.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#数值向量创建与基本统计计算"><i class="fa fa-check"></i><b>18.2</b> 数值向量创建与基本统计计算</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#生态学背景"><i class="fa fa-check"></i><b>18.2.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="18.2.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#演示数据"><i class="fa fa-check"></i><b>18.2.2</b> 演示数据</a></li>
+<li class="chapter" data-level="18.2.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课堂演示过程"><i class="fa fa-check"></i><b>18.2.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="18.2.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言知识点详解"><i class="fa fa-check"></i><b>18.2.4</b> R语言知识点详解</a></li>
+<li class="chapter" data-level="18.2.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课后练习"><i class="fa fa-check"></i><b>18.2.5</b> 课后练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#字符型数据处理与向量索引操作"><i class="fa fa-check"></i><b>18.3</b> 字符型数据处理与向量索引操作</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#生态学背景-1"><i class="fa fa-check"></i><b>18.3.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="18.3.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#演示数据-1"><i class="fa fa-check"></i><b>18.3.2</b> 演示数据</a></li>
+<li class="chapter" data-level="18.3.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课堂演示过程-1"><i class="fa fa-check"></i><b>18.3.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="18.3.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言知识点详解-1"><i class="fa fa-check"></i><b>18.3.4</b> R语言知识点详解</a></li>
+<li class="chapter" data-level="18.3.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课后练习-1"><i class="fa fa-check"></i><b>18.3.5</b> 课后练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#数据框结构理解与多类型数据管理"><i class="fa fa-check"></i><b>18.4</b> 数据框结构理解与多类型数据管理</a>
+<ul>
+<li class="chapter" data-level="18.4.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#生态学背景-2"><i class="fa fa-check"></i><b>18.4.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="18.4.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#演示数据-2"><i class="fa fa-check"></i><b>18.4.2</b> 演示数据</a></li>
+<li class="chapter" data-level="18.4.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课堂演示过程-2"><i class="fa fa-check"></i><b>18.4.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="18.4.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言知识点详解-2"><i class="fa fa-check"></i><b>18.4.4</b> R语言知识点详解</a></li>
+<li class="chapter" data-level="18.4.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课后练习-2"><i class="fa fa-check"></i><b>18.4.5</b> 课后练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#列表数据结构与数据分组管理"><i class="fa fa-check"></i><b>18.5</b> 列表数据结构与数据分组管理</a>
+<ul>
+<li class="chapter" data-level="18.5.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#生态学背景-3"><i class="fa fa-check"></i><b>18.5.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="18.5.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#演示数据-3"><i class="fa fa-check"></i><b>18.5.2</b> 演示数据</a></li>
+<li class="chapter" data-level="18.5.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课堂演示过程-3"><i class="fa fa-check"></i><b>18.5.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="18.5.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言知识点详解-3"><i class="fa fa-check"></i><b>18.5.4</b> R语言知识点详解</a></li>
+<li class="chapter" data-level="18.5.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课后练习-3"><i class="fa fa-check"></i><b>18.5.5</b> 课后练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#外部数据导入与条件筛选分析"><i class="fa fa-check"></i><b>18.6</b> 外部数据导入与条件筛选分析</a>
+<ul>
+<li class="chapter" data-level="18.6.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#生态学背景-4"><i class="fa fa-check"></i><b>18.6.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="18.6.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#演示数据文件bird_monitoring.csv"><i class="fa fa-check"></i><b>18.6.2</b> 演示数据文件（bird_monitoring.csv）</a></li>
+<li class="chapter" data-level="18.6.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课堂演示过程-4"><i class="fa fa-check"></i><b>18.6.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="18.6.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言知识点详解-4"><i class="fa fa-check"></i><b>18.6.4</b> R语言知识点详解</a></li>
+<li class="chapter" data-level="18.6.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课后练习-4"><i class="fa fa-check"></i><b>18.6.5</b> 课后练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18.7" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#缺失值和异常值的识别处理"><i class="fa fa-check"></i><b>18.7</b> 缺失值和异常值的识别处理</a>
+<ul>
+<li class="chapter" data-level="18.7.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#生态学背景-5"><i class="fa fa-check"></i><b>18.7.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="18.7.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#演示数据-4"><i class="fa fa-check"></i><b>18.7.2</b> 演示数据</a></li>
+<li class="chapter" data-level="18.7.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课堂演示过程-5"><i class="fa fa-check"></i><b>18.7.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="18.7.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言知识点详解-5"><i class="fa fa-check"></i><b>18.7.4</b> R语言知识点详解</a></li>
+<li class="chapter" data-level="18.7.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课后练习-5"><i class="fa fa-check"></i><b>18.7.5</b> 课后练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18.8" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#描述性统计分析与基础数据可视化"><i class="fa fa-check"></i><b>18.8</b> 描述性统计分析与基础数据可视化</a>
+<ul>
+<li class="chapter" data-level="18.8.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#生态学背景-6"><i class="fa fa-check"></i><b>18.8.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="18.8.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#演示数据-5"><i class="fa fa-check"></i><b>18.8.2</b> 演示数据</a></li>
+<li class="chapter" data-level="18.8.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课堂演示过程-6"><i class="fa fa-check"></i><b>18.8.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="18.8.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言知识点详解-6"><i class="fa fa-check"></i><b>18.8.4</b> R语言知识点详解</a></li>
+<li class="chapter" data-level="18.8.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课后练习-6"><i class="fa fa-check"></i><b>18.8.5</b> 课后练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18.9" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#条件判断循环结构与函数编程"><i class="fa fa-check"></i><b>18.9</b> 条件判断、循环结构与函数编程</a>
+<ul>
+<li class="chapter" data-level="18.9.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#生态学背景-7"><i class="fa fa-check"></i><b>18.9.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="18.9.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#演示数据-6"><i class="fa fa-check"></i><b>18.9.2</b> 演示数据</a></li>
+<li class="chapter" data-level="18.9.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课堂演示过程-7"><i class="fa fa-check"></i><b>18.9.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="18.9.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言知识点详解-7"><i class="fa fa-check"></i><b>18.9.4</b> R语言知识点详解</a></li>
+<li class="chapter" data-level="18.9.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课后练习-7"><i class="fa fa-check"></i><b>18.9.5</b> 课后练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18.10" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#现代数据科学工具包应用"><i class="fa fa-check"></i><b>18.10</b> 现代数据科学工具包应用</a>
+<ul>
+<li class="chapter" data-level="18.10.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#生态学背景-8"><i class="fa fa-check"></i><b>18.10.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="18.10.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#演示数据-7"><i class="fa fa-check"></i><b>18.10.2</b> 演示数据</a></li>
+<li class="chapter" data-level="18.10.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课堂演示过程-8"><i class="fa fa-check"></i><b>18.10.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="18.10.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言知识点详解-8"><i class="fa fa-check"></i><b>18.10.4</b> R语言知识点详解</a></li>
+<li class="chapter" data-level="18.10.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课后练习-8"><i class="fa fa-check"></i><b>18.10.5</b> 课后练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18.11" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#图形语法与科学绘图"><i class="fa fa-check"></i><b>18.11</b> 图形语法与科学绘图</a>
+<ul>
+<li class="chapter" data-level="18.11.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#生态学背景-9"><i class="fa fa-check"></i><b>18.11.1</b> 生态学背景</a></li>
+<li class="chapter" data-level="18.11.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#演示数据-8"><i class="fa fa-check"></i><b>18.11.2</b> 演示数据</a></li>
+<li class="chapter" data-level="18.11.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课堂演示过程-9"><i class="fa fa-check"></i><b>18.11.3</b> 课堂演示过程</a></li>
+<li class="chapter" data-level="18.11.4" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#r语言知识点详解-9"><i class="fa fa-check"></i><b>18.11.4</b> R语言知识点详解</a></li>
+<li class="chapter" data-level="18.11.5" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#课后练习-9"><i class="fa fa-check"></i><b>18.11.5</b> 课后练习</a></li>
+</ul></li>
+<li class="chapter" data-level="18.12" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#综合练习-10"><i class="fa fa-check"></i><b>18.12</b> 综合练习</a>
+<ul>
+<li class="chapter" data-level="18.12.1" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#练习1-1"><i class="fa fa-check"></i><b>18.12.1</b> 练习1</a></li>
+<li class="chapter" data-level="18.12.2" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#练习2"><i class="fa fa-check"></i><b>18.12.2</b> 练习2</a></li>
+<li class="chapter" data-level="18.12.3" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html#练习3"><i class="fa fa-check"></i><b>18.12.3</b> 练习3</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://gitee.com/gcshen/ecological-statistics" target="blank">Gitee</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">生态统计学</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="part-统计建模-2" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">14</span> (PART) 统计建模<a href="part-统计建模-2.html#part-统计建模-2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="模型选择与评估.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="高级回归模型.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": false,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["ecological-statistics.pdf", "ecological-statistics.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

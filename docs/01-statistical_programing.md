@@ -135,7 +135,7 @@
 **GPU加速计算的流程**与CPU有所不同。当程序需要利用GPU进行并行计算时：首先，CPU将需要处理的数据从系统内存通过PCIe总线传输到GPU显存；然后，GPU的数千个计算核心并行处理数据；计算结果暂存在GPU显存中；最后，CPU将结果从GPU显存传回系统内存，再保存到硬盘。这个过程中，数据流动为：硬盘→内存→GPU显存→GPU计算核心→GPU显存→内存→硬盘。GPU计算的关键在于减少CPU与GPU之间的数据传输次数，通过批处理和异步传输优化性能。
 
 <div class="figure">
-<img src="imgs/hardware_flow.png" alt="程序运行中的数据流动示意图"  />
+<img src="imgs/hardware_flow.png" alt="程序运行中的数据流动示意图" width="1000" />
 <p class="caption">(\#fig:hardware-flow)程序运行中的数据流动示意图</p>
 </div>
 
@@ -1076,14 +1076,17 @@ calculate_shannon_diversity <- function(species_vector) {
 ```
 
 ```
-## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## Warning: Using `size` aesthetic for lines was
+## deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+## Call `lifecycle::last_lifecycle_warnings()`
+## to see where this warning was generated.
 ```
 
 ```
-## Warning in scale_y_log10(): log-10 transformation introduced infinite values.
+## Warning in scale_y_log10(): log-10 transformation introduced infinite
+## values.
 ```
 
 <img src="01-statistical_programing_files/figure-html/unnamed-chunk-1-1.png" width="672" />

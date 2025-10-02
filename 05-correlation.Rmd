@@ -1728,15 +1728,20 @@ community_data <- matrix(c(
   10, 5, 0, 8, 15,  # 样地1的物种多度
   2, 8, 12, 3, 6,   # 样地2
   15, 2, 7, 10, 4,  # 样地3
-  5, 12, 3, 6, 18   # 样地4
-), nrow = 4, byrow = TRUE)
-rownames(community_data) <- c("样地1", "样地2", "样地3", "样地4")
+  5, 12, 3, 6, 18,  # 样地4
+  8, 3, 10, 5, 12,  # 样地5
+  12, 6, 4, 9, 7,   # 样地6
+  3, 10, 8, 4, 14,  # 样地7
+  7, 4, 11, 7, 9    # 样地8
+), nrow = 8, byrow = TRUE)
+rownames(community_data) <- c("样地1", "样地2", "样地3",
+ "样地4", "样地5", "样地6", "样地7", "样地8")
 
 # 创建环境数据
 env_data <- data.frame(
-  温度 = c(15, 18, 12, 20),
-  湿度 = c(65, 75, 60, 80),
-  pH = c(6.5, 7.2, 6.8, 7.5)
+  温度 = c(15, 18, 12, 20, 16, 14, 19, 13),
+  湿度 = c(65, 75, 60, 80, 70, 68, 78, 62),
+  pH = c(6.5, 7.2, 6.8, 7.5, 6.9, 7.0, 7.3, 6.7)
 )
 
 # Mantel检验
@@ -1751,8 +1756,10 @@ summary(pca_result)
 plot(pca_result, display = "sites")
 
 # 排序分析 - NMDS
-nmds_result <- metaMDS(community_data, distance = "bray")
+comm_dist <- vegdist(community_data, method = "bray")
+nmds_result <- monoMDS(comm_dist)
 plot(nmds_result, type = "t")
+
 
 # 聚类分析 - 层次聚类
 hc_result <- hclust(comm_dist, method = "average")

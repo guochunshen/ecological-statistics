@@ -1,7 +1,7 @@
 ---
 title: "生态统计学"
 author: "沈国春、李勤"
-date: "2025-09-30"
+date: "2025-10-02"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -69,8 +69,21 @@ install.packages(c(
   "tidyverse", "vegan", "lme4", "ggplot2",
   "bookdown", "knitr", "rmarkdown", "DiagrammeR",
   "showtext", "gridExtra", "moments",
-  "gganimate", "gapminder", "audio", "patchwork"
+  "gganimate", "gapminder", "audio", "patchwork",
+  "sn", "spdep", "reshape2", "ineq", "NetIndices",
+  "vegan", "bipartite", "pwr", "marked", "Distance",
+  "fitdistrplus", "brms", "ppcor", "energy", "infotheo",
+  "tseries", "forecast", "gstat", "geoR", "automap",
+  "ape", "phytools", "picante", "corrplot", "coin",
+  "geiger", "spaa", "adespatial", "relaimpo",
+  "MuMIn", "caret", "car", "BMS", "monomvn", "BayesFactor",
+  "gratia", "AER", "lmerTest", "performance",
+  "spatialreg", "spTimer", "lavaan", "semPlot",
+  "rpart.plot", "pdp", "torch"
 ))
+
+devtools::install_github("GotelliLab/EcoSimR")
+#ubuntu sudo apt install r-cran-openmx
 ```
 
 ## 课程在线资源

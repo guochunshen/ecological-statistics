@@ -1,5 +1,3 @@
-# (PART) 假设检验
-
 # 基于模拟的假设检验
 
 ## 引言
@@ -94,7 +92,7 @@
 以下通过几个典型的生态学场景展示置换检验在R中的实现：
 
 **示例1：两组物种丰富度差异检验**
-```r
+```{r}
 # 模拟数据：保护区内外物种丰富度
 set.seed(123)
 protected <- rpois(20, lambda = 15)  # 保护区内
@@ -120,7 +118,7 @@ cat("p值:", p_value, "\n")
 ```
 
 **示例2：群落组成差异检验（置换ANOVA）**
-```r
+```{r}
 # 使用vegan包进行群落置换检验
 library(vegan)
 
@@ -136,7 +134,7 @@ print(adonis_result)
 ```
 
 **示例3：空间自相关检验**
-```r
+```{r}
 # 使用spdep包进行空间置换检验
 library(spdep)
 
@@ -155,7 +153,7 @@ print(moran_test)
 ```
 
 **示例4：使用coin包进行置换检验**
-```r
+```{r}
 # 使用coin包进行非参数置换检验
 library(coin)
 
@@ -239,7 +237,7 @@ independence_test(value ~ group, data = data, distribution = approximate(nresamp
 
 下面通过空间分布随机性检验的R代码来具体说明蒙特卡洛检验的三个步骤：
 
-```r
+```{r}
 # 检验物种空间分布是否随机
 set.seed(123)
 observed_pattern <- matrix(runif(100), ncol = 2)  # 观测空间点
@@ -322,7 +320,7 @@ cat("p值:", p_value, "\n")
 ### R语言实现示例
 
 **示例1：多样性指数置信区间估计**
-```r
+```{r}
 # 使用boot包进行自助法分析
 library(boot)
 
@@ -403,7 +401,7 @@ print(boot_ci)
 
 **R语言实现示例**：
 
-```r
+```{r}
 # Hardy-Weinberg平衡的蒙特卡洛检验
 set.seed(123)
 observed <- c(AA = 2, AB = 5, BB = 8)  # 观测基因型频数
@@ -479,7 +477,7 @@ cat("经验p值:", p_value, "\n")
 
 **R语言实现示例**：
 
-```r
+```{r}
 # 连锁不平衡的置换检验
 set.seed(123)
 haplotypes <- c(rep("FM", 12), rep("Fm", 3), rep("fM", 2), rep("fm", 8))
@@ -574,7 +572,7 @@ cat("经验p值:", p_value, "\n")
 
 **R语言实现示例**：
 
-```r
+```{r}
 # 群落多样性比较的自助法检验
 library(vegan)
 set.seed(123)
@@ -672,7 +670,7 @@ cat("原生林 Shannon多样性: ", round(mean(boot_primary), 3),
 
 **R语言实现示例**：
 
-```r
+```{r}
 # ANOSIM分析：污染对底栖动物群落的影响
 library(vegan)
 set.seed(123)
@@ -795,7 +793,7 @@ legend("topright", legend = levels(groups), col = 1:3, pch = 16)
 
 **R语言实现示例**：
 
-```r
+```{r}
 # 物种空间分布模式的蒙特卡洛检验
 library(spatstat)
 set.seed(123)
@@ -878,7 +876,7 @@ legend("topleft", legend = c("观测K函数", "模拟包络", "理论CSR"),
 
 **R语言实现示例**：
 
-```r
+```{r}
 # 点过程模型的蒙特卡洛拟合优度检验
 library(spatstat)
 set.seed(123)
@@ -913,13 +911,13 @@ for (i in 1:n_sim) {
   # 用相同模型拟合模拟数据
   sim_fit <- ppm(sim_pattern ~ coral_coverage)
 
-  # 计算模拟残差统计量
+  # 计算模拟残差统计量（使用残差的绝对值积分）
   sim_residuals <- residuals(sim_fit, type = "raw")
-  sim_residual_stats[i] <- integral(sim_residuals^2)
+  sim_residual_stats[i] <- integral(sim_residuals)
 }
 
 # 计算观测残差统计量
-obs_residual_stat <- integral(obs_residuals^2)
+obs_residual_stat <- integral(obs_residuals)
 
 # 计算p值
 p_value <- mean(sim_residual_stats >= obs_residual_stat)
@@ -962,7 +960,7 @@ plot(observed_fish, add = TRUE, cols = "white", pch = 1, cex = 0.6)
 
 **R语言中的空间分析工具**：
 
-```r
+```{r}
 # 常用的空间分析包
 library(spatstat)    # 点模式分析
 library(spdep)       # 空间依赖性分析
@@ -1043,7 +1041,7 @@ print(moran_test)
 
 **R语言实现示例**：
 
-```r
+```{r}
 # 系统发育信号检验的蒙特卡洛模拟
 library(ape)
 library(picante)
@@ -1071,7 +1069,7 @@ for (i in 1:n_sim) {
 }
 
 # 计算经验p值
-p_value <- mean(sim_K >= obs_K)
+p_value <- mean(sim_K >= as.numeric(obs_K))
 cat("观测Blomberg's K统计量:", obs_K, "\n")
 cat("经验p值:", p_value, "\n")
 
@@ -1122,7 +1120,7 @@ legend("bottomleft", legend = c("低性状值", "高性状值"),
 
 **R语言实现示例**：
 
-```r
+```{r}
 # 系统发育独立对比的置换检验
 library(ape)
 library(geiger)
@@ -1264,7 +1262,7 @@ text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
 
 **R语言实现示例**：
 
-```r
+```{r}
 # 群落组装零模型检验
 library(vegan)
 library(bipartite)
@@ -1407,7 +1405,7 @@ ggplot(comm_melt, aes(x = 样点, y = 物种, fill = factor(存在))) +
 
 **R语言实现示例**：
 
-```r
+```{r}
 # 生态网络零模型检验：传粉网络嵌套性
 library(bipartite)
 library(igraph)
@@ -1541,7 +1539,7 @@ ggplot(network_melt, aes(x = 传粉者, y = 植物, fill = factor(相互作用))
 
 **R语言中的零模型分析工具**：
 
-```r
+```{r}
 # 常用的零模型分析包
 library(vegan)      # 群落生态学零模型
 library(bipartite)  # 二分网络零模型
@@ -1562,12 +1560,25 @@ summary(cooc_null)
 plot(cooc_null)
 
 # 网络嵌套性零模型
-net_null <- network_null_model(pollination_network,
-                              method = "degreeprob",
-                              nsim = 1000)
+# 使用vegan包中的permatswap函数
+net_null <- permatswap(pollination_network, method = "quasiswap", times = 1000)
 
-summary(net_null)
-plot(net_null)
+# 提取模拟结果并计算嵌套性
+null_results <- sapply(net_null$perm, function(mat) {
+  nested(mat, method = "NODF2")
+})
+
+# 计算观测嵌套性
+obs_nestedness <- nested(pollination_network, method = "NODF2")
+
+# 计算p值
+p_value <- mean(null_results >= obs_nestedness)
+cat("观测嵌套性:", obs_nestedness, "\n")
+cat("p值:", p_value, "\n")
+
+# 可视化零分布
+hist(null_results, main = "嵌套性零分布", xlab = "嵌套性指数")
+abline(v = obs_nestedness, col = "red", lwd = 2)
 ```
 
 ### 生态学应用与保护意义

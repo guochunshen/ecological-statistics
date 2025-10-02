@@ -861,13 +861,19 @@ calculate_fractal_dimension <- function(surface_matrix) {
   for (i in seq_along(sizes)) {
     size <- sizes[i]
     # 将表面划分为网格
-    grid <- matrix(0, nrow = nrow(surface_matrix) %/% size,
-                   ncol = ncol(surface_matrix) %/% size)
+    grid_rows <- nrow(surface_matrix) %/% size
+    grid_cols <- ncol(surface_matrix) %/% size
+    grid <- matrix(0, nrow = grid_rows, ncol = grid_cols)
 
     # 计算每个网格中是否有数据点
-    for (r in 1:nrow(grid)) {
-      for (c in 1:ncol(grid)) {
-        sub_matrix <- surface_matrix[(r-1)*size + 1:size, (c-1)*size + 1:size]
+    for (r in 1:grid_rows) {
+      for (c in 1:grid_cols) {
+        row_start <- (r-1)*size + 1
+        row_end <- min(row_start + size - 1, nrow(surface_matrix))
+        col_start <- (c-1)*size + 1
+        col_end <- min(col_start + size - 1, ncol(surface_matrix))
+
+        sub_matrix <- surface_matrix[row_start:row_end, col_start:col_end]
         if (any(sub_matrix > 0)) {
           grid[r, c] <- 1
         }
@@ -964,7 +970,9 @@ plot(fit, main = "鸟类个体生存函数",
 
 # 输出关键统计量
 cat("中位生存时间:", round(quantile(fit, probs = 0.5)$quantile, 1), "天\n")
-cat("1年生存率:", round(summary(fit, times = 365)$surv, 3), "\n")
+# 计算最大观测时间内的生存率
+max_time <- max(survival_times)
+cat("最大观测时间(", max_time, "天)生存率:", round(summary(fit, times = max_time)$surv, 3), "\n")
 ```
 
 **生态学意义：**
@@ -1026,8 +1034,10 @@ $$H(t) = -\ln S(t) = \int_0^t h(u)du$$
 # 计算累积风险函数
 cumulative_hazard <- function(time_points, fit) {
   surv_summary <- summary(fit, times = time_points)
+  # 确保时间点和累积风险值长度一致
+  valid_times <- surv_summary$time
   cum_hazard <- -log(surv_summary$surv)
-  return(data.frame(time = time_points, cum_hazard = cum_hazard))
+  return(data.frame(time = valid_times, cum_hazard = cum_hazard))
 }
 
 # 计算累积风险
@@ -1151,8 +1161,8 @@ lorenz_data <- calculate_lorenz(tree_diameters)
 ggplot(lorenz_data, aes(x = p, y = L)) +
   geom_line(color = "darkgreen", size = 1.5) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray") +
-  geom_polygon(aes(x = c(0, p, 1), y = c(0, L, 0)),
-               fill = "lightgreen", alpha = 0.3) +
+  geom_polygon(data = data.frame(x = c(0, lorenz_data$p, 1), y = c(0, lorenz_data$L, 0)),
+               aes(x = x, y = y), fill = "lightgreen", alpha = 0.3) +
   labs(title = "Lorenz曲线",
        subtitle = paste("Gini系数 =", round(gini_index, 3)),
        x = "累积个体比例", y = "累积资源比例") +
@@ -1251,6 +1261,9 @@ $$S = \alpha \ln(1 + \frac{N}{\alpha})$$
 
 **R代码实现：**
 ```{r}
+# 示例数据：森林群落中不同树种的个体数量
+species_abundance <- c(25, 18, 12, 8, 5)  # 各树种的个体数量
+
 # 计算Fisher's α
 calculate_fisher_alpha <- function(abundance) {
   S <- length(abundance)  # 物种数
@@ -1273,6 +1286,14 @@ cat("Fisher's α:", round(fisher_alpha, 3), "\n")
 # 使用vegan包验证计算结果
 fisher_vegan <- vegan::fisher.alpha(species_abundance)
 cat("使用vegan包计算的Fisher's α:", round(fisher_vegan, 3), "\n")
+
+# 计算Shannon-Wiener指数（用于比较）
+calculate_shannon <- function(abundance) {
+  total <- sum(abundance)
+  p <- abundance / total
+  H <- -sum(p * log(p))
+  return(H)
+}
 
 # 分析样本量对多样性的影响
 sample_sizes <- c(50, 100, 200, 500)
@@ -1311,7 +1332,6 @@ $$H' = -\sum_{i=1}^{S} p_i \ln(p_i)$$
 ```{r}
 # 示例数据：森林群落中不同树种的个体数量
 tree_species <- c("橡树", "松树", "枫树", "桦树", "杉树")
-species_abundance <- c(25, 18, 12, 8, 5)  # 各树种的个体数量
 
 # 计算Shannon-Wiener指数
 calculate_shannon <- function(abundance) {

@@ -319,6 +319,10 @@ cat("小样本（n=10）的95%置信区间：", ci_small, "\n")
 # 自助法置信区间
 library(boot)
 
+# 重新生成数据（确保代码块独立性）
+set.seed(123)
+egret_counts <- rnorm(30, mean = 1200, sd = 100)
+
 # 定义统计量函数
 mean_func <- function(data, indices) {
   return(mean(data[indices]))
@@ -335,6 +339,13 @@ cat("自助法95%置信区间：", ci_bootstrap$percent[4:5], "\n")
 par(mfrow = c(1, 2))
 
 # 绘制不同置信水平的区间
+# 重新生成数据（确保代码块独立性）
+set.seed(123)
+egret_counts <- rnorm(30, mean = 1200, sd = 100)
+mean_egret <- mean(egret_counts)
+sd_egret <- sd(egret_counts)
+n_egret <- length(egret_counts)
+
 confidence_levels <- c(0.90, 0.95, 0.99)
 colors <- c("lightblue", "blue", "darkblue")
 
@@ -674,64 +685,83 @@ $$p(\theta|x) \propto p(x|\theta) \times p(\theta)$$
 简单来说：**后验 ∝ 似然 × 先验**
 
 ```r
-# 贝叶斯估计示例（使用MCMC方法）
-# 需要安装rstan包：install.packages("rstan")
-library(rstan)
-
-# 定义Stan模型
-stan_code <- "
-data {
-  int<lower=0> N;
-  vector[N] y;
-}
-parameters {
-  real mu;
-  real<lower=0> sigma;
-}
-model {
-  // 先验分布
-  mu ~ normal(20, 10);  // 均值的先验：均值为20，标准差为10
-  sigma ~ cauchy(0, 5); // 标准差的先验：位置参数0，尺度参数5
-
-  // 似然函数
-  y ~ normal(mu, sigma);
-}
-"
+# 贝叶斯估计示例（使用brms包）
+# 需要安装brms包：install.packages("brms")
+library(brms)
 
 # 准备数据
-stan_data <- list(N = length(tree_diameter), y = tree_diameter)
+bayes_data <- data.frame(diameter = tree_diameter)
 
-# 编译模型
-# model <- stan_model(model_code = stan_code)
+# 使用brms拟合贝叶斯模型
+# 模型公式：diameter ~ 1 表示只包含截距项（均值）
+# 先验设置：
+# - 截距（均值）的先验：normal(22, 3)，表示均值为22，标准差为3
+# - 标准差sigma的先验：student_t(3, 0, 5)，使用学生t分布作为稳健先验
 
-# 运行MCMC采样
-# fit <- sampling(model, data = stan_data, iter = 2000, chains = 4)
+# 定义先验
+priors <- c(
+  prior(normal(22, 3), class = Intercept),  # 均值的先验
+  prior(student_t(3, 0, 5), class = sigma)  # 标准差的先验
+)
 
-# 由于Stan模型编译需要时间，这里使用简化方法展示贝叶斯估计思想
-cat("贝叶斯估计的核心思想：\n")
+# 拟合模型
+fit_brm <- brm(
+  formula = diameter ~ 1,           # 模型公式
+  data = bayes_data,                # 数据
+  prior = priors,                   # 先验分布
+  family = gaussian(),              # 正态分布
+  chains = 4,                       # 4条MCMC链
+  iter = 2000,                      # 每链2000次迭代
+  warmup = 1000,                    # 前1000次作为预热
+  seed = 123                        # 设置随机种子
+)
+
+# 查看模型摘要
+cat("贝叶斯模型拟合结果：\n")
+print(summary(fit_brm))
+
+# 提取后验分布样本
+posterior_samples <- as.data.frame(fit_brm)
+
+# 计算后验统计量
+posterior_mean <- mean(posterior_samples$b_Intercept)
+posterior_sd <- mean(posterior_samples$sigma)
+
+cat("\n贝叶斯估计结果：\n")
+cat("后验均值：", round(posterior_mean, 2), "cm\n")
+cat("后验标准差：", round(posterior_sd, 2), "cm\n")
+
+# 可视化后验分布
+par(mfrow = c(1, 2))
+
+# 均值的后验分布
+hist(posterior_samples$b_Intercept, breaks = 30,
+     xlab = "均值 (cm)", ylab = "密度",
+     main = "均值的后验分布", col = "lightblue")
+abline(v = posterior_mean, col = "red", lwd = 2)
+
+# 标准差的后验分布
+hist(posterior_samples$sigma, breaks = 30,
+     xlab = "标准差 (cm)", ylab = "密度",
+     main = "标准差的后验分布", col = "lightgreen")
+abline(v = posterior_sd, col = "red", lwd = 2)
+
+par(mfrow = c(1, 1))
+
+# 计算95%可信区间
+ci_mean <- quantile(posterior_samples$b_Intercept, probs = c(0.025, 0.975))
+ci_sigma <- quantile(posterior_samples$sigma, probs = c(0.025, 0.975))
+
+cat("\n95%可信区间：\n")
+cat("均值：[", round(ci_mean[1], 2), ", ", round(ci_mean[2], 2), "] cm\n")
+cat("标准差：[", round(ci_sigma[1], 2), ", ", round(ci_sigma[2], 2), "] cm\n")
+
+# 贝叶斯估计的核心思想说明
+cat("\n贝叶斯估计的核心思想：\n")
 cat("1. 结合先验信息和样本信息\n")
 cat("2. 得到参数的后验分布而非点估计\n")
 cat("3. 提供完整的参数不确定性信息\n")
 cat("4. 特别适用于有先验知识的生态学问题\n")
-
-# 使用简单的方法展示贝叶斯估计
-# 假设我们有一个关于树木胸径的先验知识：均值在20-30cm之间
-prior_mean <- 22  # 先验均值
-prior_sd <- 3     # 先验标准差
-
-# 样本信息
-sample_mean <- mean(tree_diameter)
-sample_sd <- sd(tree_diameter)
-sample_n <- length(tree_diameter)
-
-# 贝叶斯估计（正态-正态共轭先验情况）
-posterior_precision <- 1/prior_sd^2 + sample_n/sample_sd^2
-posterior_mean <- (prior_mean/prior_sd^2 + sample_n*sample_mean/sample_sd^2) / posterior_precision
-posterior_sd <- sqrt(1/posterior_precision)
-
-cat("\n贝叶斯估计结果（简化版）：\n")
-cat("后验均值：", posterior_mean, "cm\n")
-cat("后验标准差：", posterior_sd, "cm\n")
 ```
 
 **贝叶斯估计的生态学意义**
