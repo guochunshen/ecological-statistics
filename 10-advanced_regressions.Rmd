@@ -1293,7 +1293,7 @@ plot(fitted(bird_gam), sqrt(abs(residuals(bird_gam, type = "pearson"))),
 
 比较不同分布、连接函数和平滑复杂度的GAM模型。
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # 比较不同分布的GAM
 model_poisson <- gam(species_richness ~ s(elevation) + s(temperature) + s(precipitation),
   family = poisson(link = "log"),

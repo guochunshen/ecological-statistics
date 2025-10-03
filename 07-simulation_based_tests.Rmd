@@ -1770,7 +1770,8 @@ library(EcoSimR)
 # 使用固定行和列总和的算法
 cooc_null <- cooc_null_model(comm_matrix,
   algo = "sim9",
-  nReps = 1000
+  nReps = 1000,
+  suppressProg = TRUE
 )
 
 summary(cooc_null)
