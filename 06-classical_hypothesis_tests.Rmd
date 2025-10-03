@@ -80,35 +80,64 @@
 
 让我们通过一个流程图来直观展示这个通用流程：
 
-```{r hypothesis-testing-flowchart, echo=FALSE, fig.width=8, fig.height=6, fig.cap="假设检验通用流程图：展示从明确研究问题到解释结果的完整统计推断过程"}
-# 加载必要的包
+```{r hypothesis-testing-flow-setup, echo=FALSE}
+# 加载流程图库
 library(DiagrammeR)
 
-# 创建假设检验流程图
-grViz("digraph hypothesis_testing {
-  graph [rankdir = TB]
+# 创建基础图形结构
+graph <- create_graph()
+```
 
-  node [shape = rectangle, style = filled, fillcolor = lightblue]
-  A [label = '明确研究问题\n与假设设定']
-  B [label = '选择适当的\n统计检验方法']
-  C [label = '设定显著性水平\n(α)']
-  D [label = '收集数据并\n计算检验统计量']
-  E [label = '确定p值\n或临界值']
-  F [label = '做出统计决策']
-  G [label = '解释结果并\n考虑生态学意义']
+```{r hypothesis-testing-flow-nodes, echo=FALSE}
+# 添加主要流程节点
+graph <- graph %>%
+  add_node(label = "明确研究问题") %>%
+  add_node(label = "选择检验方法") %>%
+  add_node(label = "设定显著性水平") %>%
+  add_node(label = "收集数据计算统计量") %>%
+  add_node(label = "确定p值或临界值") %>%
+  add_node(label = "做出统计决策") %>%
+  add_node(label = "解释生态学意义")
+```
 
-  node [shape = diamond, fillcolor = lightgreen]
-  H [label = '使用模拟方法?']
-  I [label = '构建零模型\n重复模拟\n构建经验分布\n计算经验p值']
-  J [label = '基于理论分布\n计算p值']
+```{r hypothesis-testing-flow-decision-nodes, echo=FALSE}
+# 添加决策节点
+graph <- graph %>%
+  add_node(label = "使用模拟方法?") %>%
+  add_node(label = "构建零模型重复模拟") %>%
+  add_node(label = "基于理论分布计算")
+```
 
-  A -> B -> C -> D -> E -> F -> G
-  E -> H
-  H -> I [label = '是']
-  H -> J [label = '否']
-  I -> F
-  J -> F
-}")
+```{r hypothesis-testing-flow-main-edges, echo=FALSE}
+# 添加主要流程边
+graph <- graph %>%
+  add_edge(from = 1, to = 2) %>%
+  add_edge(from = 2, to = 3) %>%
+  add_edge(from = 3, to = 4) %>%
+  add_edge(from = 4, to = 5) %>%
+  add_edge(from = 5, to = 6) %>%
+  add_edge(from = 6, to = 7)
+```
+
+```{r hypothesis-testing-flow-decision-edges, echo=FALSE}
+# 添加决策流程边
+graph <- graph %>%
+  add_edge(from = 5, to = 8) %>%
+  add_edge(from = 8, to = 9, rel = "是") %>%
+  add_edge(from = 8, to = 10, rel = "否") %>%
+  add_edge(from = 9, to = 6) %>%
+  add_edge(from = 10, to = 6)
+```
+
+```{r hypothesis-testing-flow-export, fig.cap="假设检验通用流程图：展示从明确研究问题到解释结果的完整统计推断过程", echo=FALSE}
+img_file="imgs/hypothesis_testing_flow.png"
+# 直接渲染图形
+export_graph(graph,
+  file_name = img_file, file_type = "png",
+  width = 2000, height = 1200
+)
+# 显示图片
+knitr::include_graphics(img_file)
 ```
 
 这个流程图清晰地展示了假设检验的完整过程，特别强调了模拟方法与传统方法的区别。在接下来的章节中，我们将详细探讨各种统计检验方法的具体实施，包括经典参数检验、非参数检验以及基于模拟的现代检验方法在生态学研究中的应用。
@@ -802,8 +831,8 @@ $$s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$$
 >
 > 假设我们研究施肥对草地生态系统生产力的影响。我们随机分配20个样方，其中10个接受施肥处理，10个作为对照。经过一个生长季，我们测量每个样方的地上生物量。
 >
-> - **零假设（$H_0$）**：施肥组和对照组的平均生物量没有差异（$\mu_{施肥} = \mu_{对照}$）
-> - **备择假设（$H_1$）**：施肥组和对照组的平均生物量存在差异（$\mu_{施肥} \neq \mu_{对照}$）
+> - **零假设（$H_0$)**：施肥组和对照组的平均生物量没有差异
+> - **备择假设（$H_1$)**：施肥组和对照组的平均生物量存在差异
 >
 > 如果检验结果显示p < 0.05，我们有统计证据表明施肥确实对草地生产力产生了显著影响。
 
@@ -1533,30 +1562,44 @@ $$\alpha_{family} = 1 - (1 - \alpha)^m$$
 
 让我们通过一个流程图来理解完整的分析流程：
 
-```{r multiple-comparison-flowchart, echo=FALSE, fig.width=8, fig.height=4, fig.cap="多重比较分析流程图：展示从方差分析到多重比较校正的完整统计分析流程"}
-# 加载必要的包
+```{r multiple-comparison-flowchart-setup, echo=FALSE}
+# 加载流程图库
 library(DiagrammeR)
 
-# 创建多重比较分析流程图
-grViz("digraph multiple_comparison {
-  graph [rankdir = TB]
+# 创建基础图形结构
+graph <- create_graph()
+```
 
-  node [shape = rectangle, style = filled, fillcolor = lightblue]
-  A [label = '执行方差分析\n(ANOVA)']
-  B [label = '检验总体差异\n是否显著?']
-  C [label = '进行多重比较校正']
-  D [label = '解释具体组间差异']
-  E [label = '停止分析\n(无总体差异)']
+```{r multiple-comparison-flowchart-nodes, echo=FALSE}
+# 添加主要流程节点
+graph <- graph %>%
+  add_node(label = "执行方差分析\n(ANOVA)") %>%
+  add_node(label = "检验总体差异\n是否显著?") %>%
+  add_node(label = "进行多重比较校正") %>%
+  add_node(label = "解释具体组间差异") %>%
+  add_node(label = "停止分析\n(无总体差异)") %>%
+  add_node(label = "选择校正方法\n- Tukey HSD\n- Bonferroni\n- FDR控制")
+```
 
-  node [shape = diamond, fillcolor = lightgreen]
-  F [label = '选择校正方法\n- Tukey HSD\\n- Bonferroni\\n- FDR控制']
+```{r multiple-comparison-flowchart-edges, echo=FALSE}
+# 添加流程边
+graph <- graph %>%
+  add_edge(from = 1, to = 2) %>%
+  add_edge(from = 2, to = 3, rel = "是") %>%
+  add_edge(from = 2, to = 5, rel = "否") %>%
+  add_edge(from = 3, to = 6) %>%
+  add_edge(from = 6, to = 4)
+```
 
-  A -> B
-  B -> C [label = '是']
-  B -> E [label = '否']
-  C -> F
-  F -> D
-}")
+```{r multiple-comparison-flowchart-export, fig.cap="多重比较分析流程图：展示从方差分析到多重比较校正的完整统计分析流程", echo=FALSE}
+img_file <- "imgs/multiple_comparison_flow.png"
+# 直接渲染图形
+export_graph(graph,
+  file_name = img_file, file_type = "png",
+  width = 2000, height = 1200
+)
+# 显示图片
+knitr::include_graphics(img_file)
 ```
 
 这个流程图清晰地展示了多重比较校正在整个分析流程中的位置。只有在方差分析显示总体差异显著后，我们才需要进行多重比较校正来识别具体的差异组对。

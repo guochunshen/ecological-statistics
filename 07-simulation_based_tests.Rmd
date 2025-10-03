@@ -830,9 +830,9 @@ cat(
 
 **R语言实现示例**：
 
-下面的代码展示了ANOSIM分析的具体实现过程（图\@ref(fig:anosim-analysis)）：
+下面的代码展示了ANOSIM分析的具体实现过程。首先我们模拟底栖动物群落数据并执行分析：
 
-```{r anosim-analysis, fig.cap="ANOSIM分析：不同河段底栖动物群落差异检验结果"}
+```{r anosim-data-analysis}
 # ANOSIM分析：污染对底栖动物群落的影响
 library(vegan)
 set.seed(123)
@@ -866,10 +866,18 @@ anosim_result <- anosim(species_matrix, groups, distance = "bray", permutations 
 
 # 输出结果
 print(anosim_result)
+```
 
-# 可视化结果
+图\@ref(fig:anosim-rank-plot)展示了ANOSIM分析的排序差异箱线图：
+
+```{r anosim-rank-plot, fig.cap="ANOSIM分析：不同河段底栖动物群落排序差异检验"}
+# 可视化ANOSIM结果
 plot(anosim_result, main = "ANOSIM分析：不同河段底栖动物群落差异")
+```
 
+图\@ref(fig:nmds-community-plot)展示了底栖动物群落组成的NMDS排序图：
+
+```{r nmds-community-plot, fig.cap="底栖动物群落组成的NMDS排序分析"}
 # 补充分析：群落组成排序图
 nmds_result <- metaMDS(species_matrix, distance = "bray")
 plot(nmds_result, type = "n", main = "底栖动物群落NMDS排序")
@@ -1048,9 +1056,9 @@ legend("topleft",
 
 **R语言实现示例**：
 
-下面的代码展示了点过程模型拟合优度检验的具体实现过程（图\@ref(fig:point-process-fit)）：
+下面的代码展示了点过程模型拟合优度检验的具体实现过程。首先我们模拟小丑鱼分布数据并拟合模型：
 
-```{r point-process-fit, fig.cap="小丑鱼分布与环境关系的点过程模型拟合优度检验"}
+```{r point-process-model-setup}
 # 点过程模型的蒙特卡洛拟合优度检验
 library(spatstat)
 set.seed(123)
@@ -1069,7 +1077,26 @@ observed_fish <- rpoispp(intensity)
 # 拟合非齐次泊松点过程模型
 fit_model <- ppm(observed_fish ~ coral_coverage)
 summary(fit_model)
+```
 
+图\@ref(fig:coral-coverage-dist)展示了模拟的珊瑚覆盖率分布情况：
+
+```{r coral-coverage-dist, fig.cap="模拟的珊瑚覆盖率空间分布"}
+# 可视化珊瑚覆盖率分布
+plot(coral_coverage, main = "珊瑚覆盖率分布")
+```
+
+图\@ref(fig:fish-distribution-coral)展示了小丑鱼在珊瑚覆盖率背景下的实际分布：
+
+```{r fish-distribution-coral, fig.cap="小丑鱼在珊瑚覆盖率背景下的空间分布"}
+# 可视化小丑鱼在珊瑚覆盖率背景下的分布
+plot(coral_coverage, main = "小丑鱼分布与珊瑚覆盖率")
+plot(observed_fish, add = TRUE, cols = "red", pch = 16, cex = 0.8)
+```
+
+接下来进行拟合优度检验：
+
+```{r goodness-of-fit-test}
 # 拟合优度检验：残差分析
 # 计算观测残差
 obs_residuals <- residuals(fit_model, type = "raw")
@@ -1097,11 +1124,11 @@ obs_residual_stat <- integral(obs_residuals)
 p_value <- mean(sim_residual_stats >= obs_residual_stat)
 cat("观测残差统计量:", obs_residual_stat, "\n")
 cat("拟合优度检验p值:", p_value, "\n")
+```
 
-# 可视化环境与分布的关系
-plot(coral_coverage, main = "珊瑚覆盖率分布")
-plot(observed_fish, add = TRUE, cols = "red", pch = 16, cex = 0.8)
+图\@ref(fig:predicted-fish-intensity)展示了模型预测的小丑鱼分布强度：
 
+```{r predicted-fish-intensity, fig.cap="点过程模型预测的小丑鱼分布强度"}
 # 模型预测强度图
 predicted_intensity <- predict(fit_model)
 plot(predicted_intensity, main = "预测的小丑鱼分布强度")
@@ -1450,9 +1477,9 @@ text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
 
 **R语言实现示例**：
 
-下面的代码展示了群落组装零模型检验的具体实现过程（图\@ref(fig:community-null-model)）：
+下面的代码展示了群落组装零模型检验的具体实现过程。首先我们模拟热带雨林群落数据并执行零模型分析：
 
-```{r community-null-model, fig.cap="热带雨林群落组装零模型检验：C-score分布与物种分布热图"}
+```{r community-null-model-analysis}
 # 群落组装零模型检验
 library(vegan)
 library(bipartite)
@@ -1525,8 +1552,12 @@ for (i in 1:n_sim) {
 p_value <- mean(sim_c_scores >= obs_c_score)
 cat("观测C-score:", obs_c_score, "\n")
 cat("零模型检验p值:", p_value, "\n")
+```
 
-# 可视化结果
+图\@ref(fig:c-score-null-dist)展示了群落组装零模型检验的C-score零分布：
+
+```{r c-score-null-dist, fig.cap="热带雨林群落组装零模型检验：C-score零分布与观测值比较"}
+# 可视化零分布结果
 library(ggplot2)
 
 # 创建零分布可视化数据
@@ -1545,7 +1576,11 @@ ggplot(null_dist_df, aes(x = c_score)) +
     subtitle = paste("p值 =", round(p_value, 4))
   ) +
   theme_minimal()
+```
 
+图\@ref(fig:community-matrix-heatmap)展示了热带雨林群落的物种分布热图：
+
+```{r community-matrix-heatmap, fig.cap="热带雨林群落物种分布热图：基于环境梯度的物种分布模式"}
 # 群落矩阵热图
 library(reshape2)
 comm_melt <- melt(comm_matrix)
@@ -1603,9 +1638,9 @@ ggplot(comm_melt, aes(x = 样点, y = 物种, fill = factor(存在))) +
 
 **R语言实现示例**：
 
-下面的代码展示了传粉网络嵌套性零模型检验的具体实现过程（图\@ref(fig:pollination-network)）：
+下面的代码展示了传粉网络嵌套性零模型检验的具体实现过程。首先我们模拟传粉网络数据并执行零模型分析：
 
-```{r pollination-network, fig.cap="传粉网络嵌套性零模型检验：嵌套性分布与网络结构可视化"}
+```{r pollination-network-analysis}
 # 生态网络零模型检验：传粉网络嵌套性
 library(bipartite)
 library(igraph)
@@ -1655,8 +1690,12 @@ for (i in 1:n_sim) {
 p_value <- mean(sim_nestedness >= obs_nestedness)
 cat("观测嵌套性(NODF):", obs_nestedness, "\n")
 cat("零模型检验p值:", p_value, "\n")
+```
 
-# 可视化结果
+图\@ref(fig:nestedness-null-dist)展示了传粉网络嵌套性零模型检验的零分布：
+
+```{r nestedness-null-dist, fig.cap="传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较"}
+# 可视化零分布结果
 library(ggplot2)
 
 # 创建零分布可视化数据
@@ -1675,7 +1714,11 @@ ggplot(null_dist_df, aes(x = nestedness)) +
     subtitle = paste("p值 =", round(p_value, 4))
   ) +
   theme_minimal()
+```
 
+图\@ref(fig:pollination-network-structure)展示了传粉网络的结构图：
+
+```{r pollination-network-structure, fig.cap="传粉网络结构可视化：植物与传粉者的二分网络"}
 # 网络可视化
 library(igraph)
 
@@ -1703,7 +1746,11 @@ legend("bottomleft",
   col = c("lightgreen", "yellow"),
   bty = "n"
 )
+```
 
+图\@ref(fig:pollination-matrix-heatmap)展示了传粉网络相互作用的矩阵热图：
+
+```{r pollination-matrix-heatmap, fig.cap="传粉网络相互作用矩阵热图：嵌套结构的可视化"}
 # 网络矩阵热图
 library(reshape2)
 network_melt <- melt(pollination_network)
@@ -1753,9 +1800,9 @@ ggplot(network_melt, aes(x = 传粉者, y = 植物, fill = factor(相互作用))
 
 **R语言中的零模型分析工具**：
 
-下面的代码展示了常用的零模型分析工具及其应用（图\@ref(fig:cooccurrence-null-model)）：
+下面的代码展示了常用的零模型分析工具及其应用。首先我们加载相关包并执行物种共现零模型分析：
 
-```{r cooccurrence-null-model, fig.cap="物种共现零模型检验结果与嵌套性零分布可视化"}
+```{r null-model-tools-analysis}
 # 常用的零模型分析包
 library(vegan) # 群落生态学零模型
 library(bipartite) # 二分网络零模型
@@ -1775,7 +1822,6 @@ cooc_null <- cooc_null_model(comm_matrix,
 )
 
 summary(cooc_null)
-plot(cooc_null)
 
 # 网络嵌套性零模型
 # 使用vegan包中的permatswap函数
@@ -1793,8 +1839,19 @@ obs_nestedness <- nested(pollination_network, method = "NODF2")
 p_value <- mean(null_results >= obs_nestedness)
 cat("观测嵌套性:", obs_nestedness, "\n")
 cat("p值:", p_value, "\n")
+```
 
-# 可视化零分布
+图\@ref(fig:cooc-null-model-plot)展示了EcoSimR包中物种共现零模型的检验结果：
+
+```{r cooc-null-model-plot, fig.cap="物种共现零模型检验：EcoSimR包分析结果"}
+# 可视化物种共现零模型结果
+plot(cooc_null)
+```
+
+图\@ref(fig:nestedness-null-hist)展示了网络嵌套性零模型的零分布直方图：
+
+```{r nestedness-null-hist, fig.cap="网络嵌套性零模型检验：嵌套性指数零分布"}
+# 可视化嵌套性零分布
 hist(null_results, main = "嵌套性零分布", xlab = "嵌套性指数")
 abline(v = obs_nestedness, col = "red", lwd = 2)
 ```
