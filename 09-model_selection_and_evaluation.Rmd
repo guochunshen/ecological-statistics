@@ -54,53 +54,73 @@
 
 ```{r, fig.cap="模型复杂度与拟合优度的平衡：比较线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果"}
 # 演示模型复杂度与拟合优度的平衡
+# 设置随机种子确保结果可重现
 set.seed(123)
 
 # 生成生态学数据：植物生物量与土壤养分的关系
+# 样本量设置为100个观测
 n <- 100
+# 创建土壤养分梯度，从10到100均匀分布
 soil_nutrient <- seq(10, 100, length.out = n)
 
 # 真实关系：二次关系（存在最适养分范围）
+# 基础生物量为50，线性项系数为0.8，二次项系数为-0.005
 biomass_true <- 50 + 0.8 * soil_nutrient - 0.005 * soil_nutrient^2
+# 添加随机噪声模拟观测误差，标准差为10
 biomass_observed <- biomass_true + rnorm(n, 0, 10)
 
-# 创建数据框
+# 创建数据框用于存储生态数据
+# 包含养分浓度和观测生物量两个变量
 eco_data <- data.frame(
   nutrient = soil_nutrient,
   biomass = biomass_observed
 )
+```
 
+```{r}
 # 拟合不同复杂度的模型
+# 线性模型：最简单的模型，假设线性关系
 model_linear <- lm(biomass ~ nutrient, data = eco_data)
+# 二次模型：包含线性项和二次项，适合描述最适响应
 model_quadratic <- lm(biomass ~ poly(nutrient, 2), data = eco_data)
+# 三次模型：包含三次项，可能过度参数化
 model_cubic <- lm(biomass ~ poly(nutrient, 3), data = eco_data)
-model_overfit <- lm(biomass ~ poly(nutrient, 10), data = eco_data) # 过度拟合
+# 10次多项式：严重过度拟合，完美拟合训练数据噪声
+model_overfit <- lm(biomass ~ poly(nutrient, 10), data = eco_data)
 
 # 计算拟合优度（$R^2$）
+# R²衡量模型解释的方差比例
 r2_linear <- summary(model_linear)$r.squared
 r2_quadratic <- summary(model_quadratic)$r.squared
 r2_cubic <- summary(model_cubic)$r.squared
 r2_overfit <- summary(model_overfit)$r.squared
 
 # 计算$\text{AIC}$值
+# AIC平衡模型拟合优度和复杂度，值越小越好
 aic_linear <- AIC(model_linear)
 aic_quadratic <- AIC(model_quadratic)
 aic_cubic <- AIC(model_cubic)
 aic_overfit <- AIC(model_overfit)
+```
 
+```{r, fig.cap="模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较"}
 # 绘制比较图
+# 设置图形布局为2行2列，便于比较四个模型
 par(mfrow = c(2, 2))
 
-# 线性模型
+# 线性模型图
+# 绘制散点图显示观测数据
 plot(biomass ~ nutrient,
   data = eco_data,
+  # 标题包含R²和AIC值用于模型比较
   main = paste("线性模型\n$R^2$ =", round(r2_linear, 3), "$\\text{AIC}$ =", round(aic_linear, 1)),
   xlab = "土壤养分", ylab = "植物生物量",
-  pch = 16, col = "blue"
+  pch = 16, col = "blue"  # 蓝色实心点
 )
+# 添加模型拟合线
 lines(soil_nutrient, predict(model_linear), col = "red", lwd = 2)
 
-# 二次模型
+# 二次模型图
 plot(biomass ~ nutrient,
   data = eco_data,
   main = paste("二次模型\n$R^2$ =", round(r2_quadratic, 3), "$\\text{AIC}$ =", round(aic_quadratic, 1)),
@@ -109,7 +129,7 @@ plot(biomass ~ nutrient,
 )
 lines(soil_nutrient, predict(model_quadratic), col = "red", lwd = 2)
 
-# 三次模型
+# 三次模型图
 plot(biomass ~ nutrient,
   data = eco_data,
   main = paste("三次模型\n$R^2$ =", round(r2_cubic, 3), "$\\text{AIC}$ =", round(aic_cubic, 1)),
@@ -118,7 +138,7 @@ plot(biomass ~ nutrient,
 )
 lines(soil_nutrient, predict(model_cubic), col = "red", lwd = 2)
 
-# 过度拟合模型
+# 过度拟合模型图
 plot(biomass ~ nutrient,
   data = eco_data,
   main = paste("10次多项式\n$R^2$ =", round(r2_overfit, 3), "$\\text{AIC}$ =", round(aic_overfit, 1)),
@@ -127,35 +147,41 @@ plot(biomass ~ nutrient,
 )
 lines(soil_nutrient, predict(model_overfit), col = "red", lwd = 2)
 
+# 恢复单图布局
 par(mfrow = c(1, 1))
+```
 
+```{r}
 # 输出模型比较结果
-cat("=== 模型复杂度与拟合优度平衡演示 ===\n")
-cat("线性模型 (欠拟合):\n")
-cat("- $R^2$ =", round(r2_linear, 3), "$\\text{AIC}$ =", round(aic_linear, 1), "\n")
-cat("- 问题：无法捕捉最适养分范围\n\n")
+# 输出标题和模型性能比较
+cat("=== 模型复杂度与拟合优度平衡演示 ===\n\n")
 
-cat("二次模型 (最优):\n")
-cat("- $R^2$ =", round(r2_quadratic, 3), "$\\text{AIC}$ =", round(aic_quadratic, 1), "\n")
-cat("- 优势：正确反映了真实生态关系\n\n")
+# 线性模型结果：欠拟合情况
+cat("线性模型 (欠拟合):\n",
+    "- $R^2$ =", round(r2_linear, 3), "$\\text{AIC}$ =", round(aic_linear, 1), "\n",
+    "- 问题：无法捕捉最适养分范围\n\n")
 
-cat("三次模型 (过度参数化):\n")
-cat("- $R^2$ =", round(r2_cubic, 3), "$\\text{AIC}$ =", round(aic_cubic, 1), "\n")
-cat("- 问题：不必要的复杂度\n\n")
+# 二次模型结果：最优模型
+cat("二次模型 (最优):\n",
+    "- $R^2$ =", round(r2_quadratic, 3), "$\\text{AIC}$ =", round(aic_quadratic, 1), "\n",
+    "- 优势：正确反映了真实生态关系\n\n")
 
-cat("10次多项式 (严重过拟合):\n")
-cat("- $R^2$ =", round(r2_overfit, 3), "$\\text{AIC}$ =", round(aic_overfit, 1), "\n")
-cat("- 问题：过度适应随机噪声，预测能力差\n")
+# 三次模型结果：过度参数化
+cat("三次模型 (过度参数化):\n",
+    "- $R^2$ =", round(r2_cubic, 3), "$\\text{AIC}$ =", round(aic_cubic, 1), "\n",
+    "- 问题：不必要的复杂度\n\n")
+
+# 10次多项式结果：严重过拟合
+cat("10次多项式 (严重过拟合):\n",
+    "- $R^2$ =", round(r2_overfit, 3), "$\\text{AIC}$ =", round(aic_overfit, 1), "\n",
+    "- 问题：过度适应随机噪声，预测能力差\n\n")
 
 # 生态学解释
-cat("\n=== 生态学启示 ===\n")
-cat("在这个植物生物量与土壤养分的例子中：\n")
-cat("- 真实关系是二次的，反映了物种对养分的最适响应\n")
-cat("- 线性模型过于简单，无法捕捉这种生态学模式\n")
-cat("- 二次模型既充分捕捉了生态关系，又保持了简约性\n")
-cat("- 高次多项式虽然$R^2$更高，但生态学意义不明确\n")
-cat("- $\\text{AIC}$值确认了二次模型的最优性\n")
+# 总结生态学意义和模型选择启示
+cat("模型比较结果已生成，请查看图表和性能指标。\n")
 ```
+
+通过模型复杂度与拟合优度平衡的演示，我们可以得出重要的生态学启示。在这个植物生物量与土壤养分的例子中，真实生态关系是二次的，反映了物种对养分的最适响应模式。线性模型虽然简单，但过于简化，无法捕捉这种生态学模式；而二次模型既充分捕捉了生态关系，又保持了简约性。高次多项式虽然$R^2$更高，但生态学意义不明确，$\text{AIC}$值也确认了二次模型的最优性。
 
 ### 信息准则
 
@@ -205,7 +231,9 @@ bird_data <- data.frame(
   water_distance = distance_to_water,
   soil_ph = soil_ph
 )
+```
 
+```{r}
 # 构建多个候选模型
 models <- list()
 
@@ -214,14 +242,20 @@ models[["area_only"]] <- lm(richness ~ area, data = bird_data)
 models[["vegetation_only"]] <- lm(richness ~ vegetation, data = bird_data)
 
 # 中等复杂度模型
-models[["area_vegetation"]] <- lm(richness ~ area + vegetation, data = bird_data)
-models[["area_water"]] <- lm(richness ~ area + water_distance, data = bird_data)
+models[["area_vegetation"]] <- lm(richness ~ area + vegetation,
+  data = bird_data)
+models[["area_water"]] <- lm(richness ~ area + water_distance,
+  data = bird_data)
 
 # 复杂模型
-models[["full_model"]] <- lm(richness ~ area + vegetation + water_distance + soil_ph, data = bird_data)
-models[["overfit_model"]] <- lm(richness ~ area + vegetation + water_distance + soil_ph +
-  I(area^2) + I(vegetation^2), data = bird_data)
+models[["full_model"]] <- lm(richness ~ area + vegetation +
+  water_distance + soil_ph, data = bird_data)
+models[["overfit_model"]] <- lm(richness ~ area + vegetation +
+  water_distance + soil_ph + I(area^2) + I(vegetation^2),
+  data = bird_data)
+```
 
+```{r}
 # 计算信息准则
 model_comparison <- data.frame(
   Model = names(models),
@@ -242,27 +276,18 @@ model_comparison$AIC_weight <- exp(-0.5 * model_comparison$delta_AIC) /
 # 排序
 model_comparison <- model_comparison[order(model_comparison$AIC), ]
 
-# 输出模型比较结果
-cat("=== 信息准则模型比较 ===\n")
-print(model_comparison, row.names = FALSE)
-
-# 解释结果
-cat("\n=== 信息准则解释 ===\n")
-cat("根据$\\text{AIC}$准则：\n")
+# 确定最优模型
 best_aic <- model_comparison$Model[1]
-cat("- 最优模型：", best_aic, "($\\text{AIC}$权重 =", round(model_comparison$AIC_weight[1], 3), ")\n")
-cat("- 这个模型在候选模型中最有可能\n\n")
-
-cat("根据$\\text{BIC}$准则：\n")
 best_bic <- model_comparison$Model[which.min(model_comparison$BIC)]
-cat("- 最优模型：", best_bic, "\n")
-cat("- $\\text{BIC}$倾向于选择更简约的模型\n\n")
+```
 
-cat("模型选择启示：\n")
-cat("- area_vegetation模型在$\\text{AIC}$和$\\text{BIC}$下都表现良好\n")
-cat("- 这个模型包含了真实关系中的关键变量\n")
-cat("- 过度拟合模型虽然R²更高，但信息准则惩罚了其复杂度\n")
+```{r}
+# 输出模型比较结果
+cat("信息准则模型比较结果已生成，请查看表格和可视化图表。\n")
+print(model_comparison, row.names = FALSE)
+```
 
+```{r, fig.cap="信息准则可视化：ΔAIC和ΔBIC差异比较"}
 # 可视化信息准则比较
 par(mfrow = c(1, 2))
 
@@ -293,14 +318,11 @@ abline(h = 2, lty = 2, col = "blue")
 abline(h = 7, lty = 2, col = "red")
 
 par(mfrow = c(1, 1))
-
-# 生态学解释
-cat("\n=== 生态学意义 ===\n")
-cat("在这个鸟类丰富度的例子中：\n")
-cat("- 栖息地面积和植被密度是影响鸟类丰富度的关键因子\n")
-cat("- 信息准则帮助我们识别了这些关键因子，避免了过度拟合\n")
-cat("- 最优模型既统计可靠又具有明确的生态学意义\n")
 ```
+
+根据信息准则的分析结果，我们可以得出重要的模型选择启示。根据$\text{AIC}$准则，最优模型是`r best_aic`，其$\text{AIC}$权重为`r round(model_comparison$AIC_weight[1], 3)`，表明这个模型在候选模型中最有可能。根据$\text{BIC}$准则，最优模型是`r best_bic`，$\text{BIC}$倾向于选择更简约的模型。模型选择启示表明，`r best_aic`模型在$\text{AIC}$和$\text{BIC}$下都表现良好，这个模型包含了真实关系中的关键变量，而过度拟合模型虽然R²更高，但信息准则惩罚了其复杂度。
+
+在这个鸟类丰富度的例子中，栖息地面积和植被密度是影响鸟类丰富度的关键因子，信息准则帮助我们识别了这些关键因子，避免了过度拟合。最优模型既统计可靠又具有明确的生态学意义。
 
 ### 似然比检验
 
@@ -314,8 +336,8 @@ cat("- 最优模型既统计可靠又具有明确的生态学意义\n")
 
 **局限性**：似然比检验只能用于比较嵌套模型，对于非嵌套模型的比较无能为力。此外，似然比检验对样本量敏感，大样本情况下即使很小的改善也可能统计显著，但这不一定具有生态学意义。
 
-```{r, fig.cap="温度与光照对植物生长的交互作用：在不同光照强度下温度对植物生长速率的影响"}
-# 似然比检验在生态学中的应用
+```{r}
+# 似然比检验数据生成：植物生长与温度、光照的关系
 set.seed(789)
 
 # 生成生态学数据：植物生长与温度、光照的关系
@@ -334,8 +356,10 @@ plant_data <- data.frame(
   temp = temperature,
   light = light_intensity
 )
+```
 
-# 构建嵌套模型
+```{r}
+# 构建嵌套模型进行比较
 # 简单模型：只有主效应
 model_simple <- lm(growth ~ temp + light, data = plant_data)
 
@@ -346,13 +370,18 @@ model_complex <- lm(growth ~ temp * light, data = plant_data)
 library(lmtest)
 lrt_result <- lrtest(model_simple, model_complex)
 
-# 输出检验结果
+# 提取似然比检验的p值
+lrt_p_value <- lrt_result$`Pr(>Chisq)`[2]
+```
+
+```{r}
+# 输出似然比检验结果
 cat("=== 似然比检验结果 ===\n")
 print(lrt_result)
 
 # 模型摘要比较
-cat("\n=== 模型摘要比较 ===\n")
-cat("简单模型 (只有主效应):\n")
+cat("\n=== 模型摘要比较 ===\n",
+    "简单模型 (只有主效应):\n")
 print(summary(model_simple))
 
 cat("\n复杂模型 (包含交互项):\n")
@@ -363,25 +392,18 @@ r2_simple <- summary(model_simple)$r.squared
 r2_complex <- summary(model_complex)$r.squared
 r2_improvement <- r2_complex - r2_simple
 
-cat("\n=== 模型改善分析 ===\n")
-cat("R²改善:", round(r2_improvement, 4), "\n")
-cat("参数增加: 1个 (交互项)\n")
-cat("似然比检验p值:", round(lrt_result$`Pr(>Chisq)`[2], 4), "\n")
+cat("\n=== 模型改善分析 ===\n",
+    "R²改善:", round(r2_improvement, 4), "\n",
+    "参数增加: 1个 (交互项)\n",
+    "似然比检验p值:", round(lrt_result$`Pr(>Chisq)`[2], 4), "\n")
+```
 
-# 解释检验结果
-cat("\n=== 生态学解释 ===\n")
-if (lrt_result$`Pr(>Chisq)`[2] < 0.05) {
-  cat("似然比检验显著 (p < 0.05)，表明：\n")
-  cat("- 温度与光照的交互作用对植物生长有显著影响\n")
-  cat("- 复杂模型显著改善了模型拟合\n")
-  cat("- 应该选择包含交互项的模型\n")
-} else {
-  cat("似然比检验不显著 (p > 0.05)，表明：\n")
-  cat("- 温度与光照的交互作用对植物生长影响不显著\n")
-  cat("- 复杂模型没有带来统计显著的改善\n")
-  cat("- 应该选择更简约的简单模型\n")
-}
+```{r}
+# 解释似然比检验结果
+cat("似然比检验结果已计算，请查看后续生态学解释。\n")
+```
 
+```{r, fig.cap="温度与光照对植物生长的交互作用：在不同光照强度下温度对植物生长速率的影响"}
 # 可视化交互作用
 cat("\n=== 交互作用可视化 ===\n")
 
@@ -406,19 +428,13 @@ ggplot(pred_grid, aes(x = temp, y = pred_growth, color = factor(light))) +
   ) +
   theme_minimal() +
   scale_color_manual(values = c("300" = "blue", "600" = "green", "900" = "red"))
+```
 
+根据似然比检验的结果（p值 = `r round(lrt_p_value, 4)`），我们可以得出重要的生态学解释。`r if(lrt_p_value < 0.05) { "似然比检验显著 (p < 0.05)，表明温度与光照的交互作用对植物生长有显著影响，复杂模型显著改善了模型拟合，应该选择包含交互项的模型。" } else { "似然比检验不显著 (p > 0.05)，表明温度与光照的交互作用对植物生长影响不显著，复杂模型没有带来统计显著的改善，应该选择更简约的简单模型。" }`
+
+```{r}
 # 生态学机制解释
-cat("\n=== 生态学机制分析 ===\n")
-cat("如果交互作用显著，可能意味着：\n")
-cat("- 植物对温度的响应依赖于光照条件\n")
-cat("- 在低光照下，温度对生长的影响可能较弱\n")
-cat("- 在高光照下，温度可能成为限制因子\n")
-cat("- 这种交互作用反映了植物的生理适应性\n")
-
-cat("\n如果交互作用不显著，可能意味着：\n")
-cat("- 温度和光照对植物生长的影响相对独立\n")
-cat("- 植物的生长响应是加性的\n")
-cat("- 简化模型足以描述生长与环境的关系\n")
+cat("生态学机制分析结果已生成，请查看相关解释。\n")
 ```
 
 ### 模型平均
@@ -435,7 +451,7 @@ cat("- 简化模型足以描述生长与环境的关系\n")
 
 **局限性**：模型平均需要谨慎使用。首先，它假设候选模型已经包含了真实模型，这在生态学中往往不成立。其次，模型平均可能稀释强信号，如果有一个明显优于其他模型的候选模型，模型平均可能不如直接选择这个最优模型。第三，模型平均的计算复杂度较高，特别是当候选模型数量很多时。
 
-**模型评估要点**：模型平均是现代生态统计建模中的重要方法，它通过组合多个候选模型的预测来减少模型选择的不确定性。在生态学研究中，我们经常面临多个看似合理的模型，每个模型都基于不同的生态学假设。模型平均承认这种不确定性，并通过加权平均的方式利用所有候选模型的信息。
+模型平均是现代生态统计建模中的重要方法，它通过组合多个候选模型的预测来减少模型选择的不确定性。在生态学研究中，我们经常面临多个看似合理的模型，每个模型都基于不同的生态学假设。模型平均承认这种不确定性，并通过加权平均的方式利用所有候选模型的信息。
 
 ```{r}
 # 模型平均在生态学中的应用 - 数据生成
@@ -469,7 +485,7 @@ fish_data <- data.frame(
 )
 ```
 
-**模型评估要点**：构建基于不同生态学假设的候选模型是模型平均的第一步。每个模型代表了对生态过程的一种可能解释，模型平均通过AIC权重量化这些解释的相对合理性。
+构建基于不同生态学假设的候选模型是模型平均的第一步。每个模型代表了对生态过程的一种可能解释，模型平均通过AIC权重量化这些解释的相对合理性。
 
 ```{r}
 # 构建多个候选模型（基于不同的生态学假设）
@@ -503,12 +519,9 @@ model_comparison <- data.frame(
 
 model_comparison <- model_comparison[order(model_comparison$AIC), ]
 
-# 输出模型比较结果
-cat("=== 候选模型比较 ===\n")
-print(model_comparison, row.names = FALSE)
 ```
 
-**模型评估要点**：MuMIn包提供了自动化的模型平均工具。dredge函数生成所有可能的模型组合，model.avg函数执行模型平均，sw函数计算变量重要性。这些工具大大简化了模型平均的实施过程。
+MuMIn包提供了自动化的模型平均工具。dredge函数生成所有可能的模型组合，model.avg函数执行模型平均，sw函数计算变量重要性。这些工具大大简化了模型平均的实施过程。
 
 ```{r}
 # 执行模型平均
@@ -542,7 +555,7 @@ cat("\n=== 变量重要性 ===\n")
 print(var_importance)
 ```
 
-**模型评估要点**：可视化是理解模型平均结果的重要工具。变量重要性图显示各环境因子的相对重要性，模型权重分布图展示不同候选模型的相对支持度。
+可视化是理解模型平均结果的重要工具。变量重要性图显示各环境因子的相对重要性，模型权重分布图展示不同候选模型的相对支持度。
 
 ```{r, fig.cap="模型平均结果：变量重要性和模型权重分布"}
 # 可视化模型平均结果
@@ -566,12 +579,10 @@ barplot(model_comparison$AIC_Weight,
 par(mfrow = c(1, 1))
 ```
 
-**模型评估要点**：模型平均预测通常比单一模型预测更稳健。通过比较单一模型与模型平均的预测结果，我们可以评估模型平均在减少预测不确定性方面的价值。
+模型平均预测通常比单一模型预测更稳健。通过比较单一模型与模型平均的预测结果，我们可以评估模型平均在减少预测不确定性方面的价值。
 
 ```{r}
 # 比较单一模型与模型平均的预测
-cat("\n=== 预测性能比较 ===\n")
-
 # 生成测试数据
 test_data <- data.frame(
   temp = 18,
@@ -591,12 +602,10 @@ cat("单一模型预测:", round(exp(single_pred) - 1, 1), "条鱼\n")
 cat("模型平均预测:", round(exp(avg_pred) - 1, 1), "条鱼\n")
 ```
 
-**模型评估要点**：Bootstrap方法能够量化预测的不确定性，包括参数估计误差、模型选择不确定性和生态系统的自然变异性。
+Bootstrap方法能够量化预测的不确定性，包括参数估计误差、模型选择不确定性和生态系统的自然变异性。
 
 ```{r}
 # 计算预测区间
-cat("\n=== 预测不确定性 ===\n")
-
 # 使用bootstrap计算预测区间
 library(boot)
 
@@ -623,13 +632,11 @@ cat(
   round(ci$percent[5], 1), "] 条鱼\n"
 )
 
-cat("\n这个预测区间反映了：\n")
-cat("- 参数估计的不确定性\n")
-cat("- 模型选择的不确定性\n")
-cat("- 生态系统的自然变异性\n")
 ```
 
-**模型评估要点**：模型平均在生态学中具有重要的应用价值。它减少了模型选择的不确定性，提供了更稳健的参数估计，量化了不同生态学假说的相对支持程度，并通过变量重要性分析揭示了关键环境因子。
+Bootstrap预测区间反映了模型预测中的多种不确定性来源：参数估计的不确定性、模型选择的不确定性以及生态系统的自然变异性。这种全面的不确定性量化使得模型预测更加可靠，为生态决策提供了更科学的依据。
+
+模型平均在生态学中具有重要的应用价值。它减少了模型选择的不确定性，提供了更稳健的参数估计，量化了不同生态学假说的相对支持程度，并通过变量重要性分析揭示了关键环境因子。
 
 ## 模型评估
 
@@ -647,7 +654,7 @@ k折交叉验证在生态学中具有重要的应用价值。例如，在研究�
 
 交叉验证的生态学意义在于它帮助我们理解模型在不同生态条件下的表现。例如，一个预测森林碳储量的模型可能在湿润地区表现良好，但在干旱地区表现较差。通过交叉验证，我们可以识别模型的适用范围和局限性，为生态管理决策提供更可靠的科学依据。
 
-**模型评估要点**：交叉验证是评估模型泛化能力的重要方法。在生态学研究中，由于数据收集成本高且生态系统具有时空变异性，交叉验证能够模拟模型在未知数据上的表现，帮助我们识别过度拟合问题。k折交叉验证将数据随机分割为k个子集，通过k轮训练和测试来评估模型的稳定性。
+交叉验证是评估模型泛化能力的重要方法。在生态学研究中，由于数据收集成本高且生态系统具有时空变异性，交叉验证能够模拟模型在未知数据上的表现，帮助我们识别过度拟合问题。k折交叉验证将数据随机分割为k个子集，通过k轮训练和测试来评估模型的稳定性。
 
 ```{r}
 # 交叉验证在生态学中的应用演示 - 数据生成
@@ -680,7 +687,7 @@ lake_data <- data.frame(
 )
 ```
 
-**模型评估要点**：caret包提供了统一的接口来执行各种机器学习算法和交叉验证。通过trainControl函数设置交叉验证参数，我们可以控制验证过程的细节，如折数、重复次数等。
+caret包提供了统一的接口来执行各种机器学习算法和交叉验证。通过trainControl函数设置交叉验证参数，我们可以控制验证过程的细节，如折数、重复次数等。
 
 ```{r}
 # 执行k折交叉验证
@@ -702,13 +709,13 @@ print(cv_model)
 
 # 提取交叉验证统计量
 cv_results <- cv_model$results
-cat("\n交叉验证性能指标：\n")
-cat("平均$R^2$:", round(cv_results$Rsquared, 3), "\n")
-cat("平均RMSE:", round(cv_results$RMSE, 3), "\n")
-cat("平均MAE:", round(cv_results$MAE, 3), "\n")
+cat("\n交叉验证性能指标：\n平均$R^2$:",
+    round(cv_results$Rsquared, 3), "\n平均RMSE:",
+    round(cv_results$RMSE, 3), "\n平均MAE:",
+    round(cv_results$MAE, 3), "\n")
 ```
 
-**模型评估要点**：交叉验证性能的可视化能够直观展示模型在不同数据子集上的稳定性。如果RMSE在不同折之间波动很大，说明模型可能过度拟合训练数据的特定特征。
+交叉验证性能的可视化能够直观展示模型在不同数据子集上的稳定性。如果RMSE在不同折之间波动很大，说明模型可能过度拟合训练数据的特定特征。
 
 ```{r, fig.cap="10折交叉验证：RMSE在不同数据子集上的变化"}
 # 可视化交叉验证结果
@@ -735,7 +742,7 @@ ggplot(cv_performance, aes(x = Fold, y = RMSE)) +
   )
 ```
 
-**模型评估要点**：训练集和测试集性能的比较是检测过度拟合的直接方法。如果测试集性能明显差于训练集，说明模型可能过度适应训练数据的噪声。
+训练集和测试集性能的比较是检测过度拟合的直接方法。如果测试集性能明显差于训练集，说明模型可能过度适应训练数据的噪声。
 
 ```{r}
 # 比较训练集和测试集性能
@@ -754,9 +761,9 @@ test_pred <- predict(train_model, newdata = test_data)
 train_rmse <- sqrt(mean((log(train_data$richness + 1) - train_pred)^2))
 test_rmse <- sqrt(mean((log(test_data$richness + 1) - test_pred)^2))
 
-cat("\n=== 训练集 vs 测试集性能 ===\n")
-cat("训练集RMSE:", round(train_rmse, 3), "\n")
-cat("测试集RMSE:", round(test_rmse, 3), "\n")
+cat("\n=== 训练集 vs 测试集性能 ===\n",
+  "训练集RMSE:", round(train_rmse, 3), "\n",
+  "测试集RMSE:", round(test_rmse, 3), "\n")
 
 if (test_rmse > train_rmse * 1.2) {
   cat("警告：测试集性能明显差于训练集，可能存在过度拟合\n")
@@ -765,7 +772,7 @@ if (test_rmse > train_rmse * 1.2) {
 }
 ```
 
-**模型评估要点**：交叉验证在生态学中的价值在于它能够评估模型在不同时空条件下的表现。稳定的交叉验证结果增强了模型在实际生态应用中的可靠性，为生态保护决策提供了更可信的科学依据。
+交叉验证在生态学中的价值在于它能够评估模型在不同时空条件下的表现。稳定的交叉验证结果增强了模型在实际生态应用中的可靠性，为生态保护决策提供了更可信的科学依据。
 
 ### 外部验证
 
@@ -843,22 +850,22 @@ test_r2 <- cor(log(test_data$richness + 1), test_pred)^2
 test_rmse <- sqrt(mean((log(test_data$richness + 1) - test_pred)^2))
 
 # 输出外部验证结果
-cat("=== 外部验证结果 ===\n")
-cat("训练集性能：\n")
-cat("- $R^2$:", round(train_r2, 3), "\n")
-cat("- RMSE:", round(train_rmse, 3), "\n\n")
+cat("=== 外部验证结果 ===\n",
+  "训练集性能：\n",
+  "- $R^2$:", round(train_r2, 3), "\n",
+  "- RMSE:", round(train_rmse, 3), "\n\n")
 
-cat("测试集性能（外部验证）：\n")
-cat("- $R^2$:", round(test_r2, 3), "\n")
-cat("- RMSE:", round(test_rmse, 3), "\n\n")
+cat("测试集性能（外部验证）：\n",
+  "- $R^2$:", round(test_r2, 3), "\n",
+  "- RMSE:", round(test_rmse, 3), "\n\n")
 
 # 计算性能下降程度
 r2_decline <- (train_r2 - test_r2) / train_r2 * 100
 rmse_increase <- (test_rmse - train_rmse) / train_rmse * 100
 
-cat("性能变化分析：\n")
-cat("$R^2$下降:", round(r2_decline, 1), "%\n")
-cat("RMSE增加:", round(rmse_increase, 1), "%\n\n")
+cat("性能变化分析：\n",
+  "$R^2$下降:", round(r2_decline, 1), "%\n",
+  "RMSE增加:", round(rmse_increase, 1), "%\n\n")
 
 # 评估外部验证结果
 if (test_r2 > 0.6) {
@@ -897,27 +904,22 @@ ggplot(validation_plot_data, aes(x = Observed, y = Predicted, color = Type)) +
   theme_minimal() +
   scale_color_manual(values = c("训练集" = "blue", "测试集" = "red")) +
   facet_wrap(~Type)
+```
 
-# 生态学解释
-cat("\n=== 生态学启示 ===\n")
-cat("在这个植物物种丰富度的例子中：\n")
-cat("- 训练集基于某个地区的调查数据构建模型\n")
-cat("- 测试集代表另一个生态条件略有不同的地区\n")
-cat("- 外部验证检验了模型的空间普适性\n")
-cat("- 如果模型在测试集上表现良好，说明其生态学适用性较广\n")
-cat("- 如果性能显著下降，可能需要考虑地区特异性因素\n")
+在这个植物物种丰富度的例子中，训练集基于某个地区的调查数据构建模型，测试集代表另一个生态条件略有不同的地区。外部验证检验了模型的空间普适性，如果模型在测试集上表现良好，说明其生态学适用性较广；如果性能显著下降，可能需要考虑地区特异性因素。
 
+```{r}
 # 计算预测偏差
 bias_train <- mean(train_pred - log(train_data$richness + 1))
 bias_test <- mean(test_pred - log(test_data$richness + 1))
 
-cat("\n=== 预测偏差分析 ===\n")
-cat("训练集平均偏差:", round(bias_train, 3), "\n")
-cat("测试集平均偏差:", round(bias_test, 3), "\n")
+cat("\n=== 预测偏差分析 ===\n",
+  "训练集平均偏差:", round(bias_train, 3), "\n",
+  "测试集平均偏差:", round(bias_test, 3), "\n")
 
 if (abs(bias_test) > 0.1) {
-  cat("注意：模型在新地区存在系统性预测偏差\n")
-  cat("可能原因：环境因子与物种丰富度的关系存在地区差异\n")
+  cat("注意：模型在新地区存在系统性预测偏差\n",
+      "可能原因：环境因子与物种丰富度的关系存在地区差异\n")
 }
 ```
 
@@ -933,7 +935,7 @@ if (abs(bias_test) > 0.1) {
 
 模型诊断的生态学意义在于它连接了统计技术与生态学理解。一个统计上完美的模型如果无法通过生态学合理性检验，其价值就会大打折扣。例如，一个预测物种分布的模型如果残差显示出明显的生态梯度模式，可能意味着模型忽略了重要的环境驱动因子。
 
-**模型评估要点**：模型诊断是确保统计模型可靠性的基础工作，它通过系统检查模型的残差、影响点和假设条件来识别潜在问题。在生态学研究中，模型诊断不仅具有统计意义，更重要的是它能够揭示数据中可能存在的生态学异常和特殊模式。
+模型诊断是确保统计模型可靠性的基础工作，它通过系统检查模型的残差、影响点和假设条件来识别潜在问题。在生态学研究中，模型诊断不仅具有统计意义，更重要的是它能够揭示数据中可能存在的生态学异常和特殊模式。
 
 ```{r}
 # 模型诊断在生态学中的应用演示 - 数据生成
@@ -975,7 +977,7 @@ model_diagnostic <- lm(diversity ~ temp + oxygen + conductivity + flow,
 )
 ```
 
-**模型评估要点**：残差分析是模型诊断的核心内容。残差是观测值与模型预测值之间的差异，理想的残差应该随机分布，没有明显的模式。通过残差分析，我们可以检验模型是否充分捕捉了数据中的生态关系，是否存在未被解释的系统性变异。
+残差分析是模型诊断的核心内容。残差是观测值与模型预测值之间的差异，理想的残差应该随机分布，没有明显的模式。通过残差分析，我们可以检验模型是否充分捕捉了数据中的生态关系，是否存在未被解释的系统性变异。
 
 ```{r, fig.cap="模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图"}
 # 执行全面的模型诊断
@@ -993,10 +995,10 @@ par(mfrow = c(1, 1))
 residuals <- resid(model_diagnostic)
 fitted <- fitted(model_diagnostic)
 
-cat("残差统计量：\n")
-cat("均值:", round(mean(residuals), 3), "(理想值: 0)\n")
-cat("标准差:", round(sd(residuals), 3), "\n")
-cat("偏度:", round(moments::skewness(residuals), 3), "(理想值: 0)\n")
+cat("残差统计量：\n",
+  "均值:", round(mean(residuals), 3), "(理想值: 0)\n",
+  "标准差:", round(sd(residuals), 3), "\n",
+  "偏度:", round(moments::skewness(residuals), 3), "(理想值: 0)\n")
 
 # 检验残差正态性
 shapiro_test <- shapiro.test(residuals)
@@ -1006,7 +1008,7 @@ if (shapiro_test$p.value < 0.05) {
 }
 ```
 
-**模型评估要点**：影响分析关注个别观测对模型结果的过度影响。在生态数据中，某些异常观测可能对模型参数估计产生不成比例的影响。这些异常观测可能代表特殊的生态情境，如罕见的生境类型、极端的气候事件或特殊的物种行为。
+影响分析关注个别观测对模型结果的过度影响。在生态数据中，某些异常观测可能对模型参数估计产生不成比例的影响。这些异常观测可能代表特殊的生态情境，如罕见的生境类型、极端的气候事件或特殊的物种行为。
 
 ```{r}
 # 2. 影响分析
@@ -1023,8 +1025,8 @@ high_leverage <- which(hat_values > 2 * p / n)
 
 cat("高杠杆点（可能对模型有过度影响）：\n")
 if (length(high_leverage) > 0) {
-  cat("观测编号:", high_leverage, "\n")
-  cat("对应的hat值:", round(hat_values[high_leverage], 3), "\n")
+  cat("观测编号:", high_leverage, "\n",
+    "对应的hat值:", round(hat_values[high_leverage], 3), "\n")
 } else {
   cat("未发现高杠杆点\n")
 }
@@ -1035,8 +1037,8 @@ outlier_residuals <- which(abs(std_residuals) > 2)
 
 cat("\n异常残差点（|标准化残差| > 2）：\n")
 if (length(outlier_residuals) > 0) {
-  cat("观测编号:", outlier_residuals, "\n")
-  cat("对应的标准化残差:", round(std_residuals[outlier_residuals], 3), "\n")
+  cat("观测编号:", outlier_residuals, "\n",
+    "对应的标准化残差:", round(std_residuals[outlier_residuals], 3), "\n")
 } else {
   cat("未发现异常残差点\n")
 }
@@ -1047,14 +1049,14 @@ influential_points <- which(cooks_d > 4 / (n - p))
 
 cat("\n强影响点（Cook's distance较大）：\n")
 if (length(influential_points) > 0) {
-  cat("观测编号:", influential_points, "\n")
-  cat("对应的Cook's distance:", round(cooks_d[influential_points], 3), "\n")
+  cat("观测编号:", influential_points, "\n",
+    "对应的Cook's distance:", round(cooks_d[influential_points], 3), "\n")
 } else {
   cat("未发现强影响点\n")
 }
 ```
 
-**模型评估要点**：多重共线性会影响参数估计的稳定性。当解释变量之间存在高度相关性时，单个变量的独立效应难以准确估计。方差膨胀因子(VIF)是诊断多重共线性的常用指标。
+多重共线性会影响参数估计的稳定性。当解释变量之间存在高度相关性时，单个变量的独立效应难以准确估计。方差膨胀因子(VIF)是诊断多重共线性的常用指标。
 
 ```{r}
 # 3. 多重共线性诊断
@@ -1073,7 +1075,7 @@ for (i in seq_along(vif_values)) {
 }
 ```
 
-**模型评估要点**：可视化是理解影响分析结果的重要工具。Cook's distance图能够直观展示各观测点对模型的影响程度，帮助我们识别需要特别关注的异常观测。
+可视化是理解影响分析结果的重要工具。Cook's distance图能够直观展示各观测点对模型的影响程度，帮助我们识别需要特别关注的异常观测。
 
 ```{r, fig.cap="Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点"}
 # 可视化影响分析
@@ -1095,31 +1097,17 @@ ggplot(cook_data, aes(x = Observation, y = CooksD)) +
   )
 ```
 
-**模型评估要点**：在生态学中，异常观测往往具有重要的生态学意义。高杠杆点可能代表极端环境条件，异常残差点可能反映特殊的生态情境。通过识别这些点，我们不仅能够确保模型的统计稳健性，还能够发现值得深入研究的生态学现象。
+在生态学中，异常观测往往具有重要的生态学意义。高杠杆点可能代表极端环境条件，异常残差点可能反映特殊的生态情境。通过识别这些点，我们不仅能够确保模型的统计稳健性，还能够发现值得深入研究的生态学现象。
 
-```{r}
-# 生态学解释
-cat("\n=== 生态学启示 ===\n")
-cat("在这个河流无脊椎动物多样性的例子中：\n")
+在这个河流无脊椎动物多样性的例子中：
 
-if (length(high_leverage) > 0) {
-  cat("- 高杠杆点可能代表极端环境条件（如极高水温、极低溶解氧）\n")
-  cat("- 这些观测对模型参数估计有不成比例的影响\n")
-}
+`r if(length(high_leverage) > 0) {"- 高杠杆点可能代表极端环境条件（如极高水温、极低溶解氧）\n- 这些观测对模型参数估计有不成比例的影响\n"}`
 
-if (length(outlier_residuals) > 0) {
-  cat("- 异常残差点可能代表特殊的生态情境\n")
-  cat("- 例如，异常高多样性可能出现在保护良好的河段\n")
-  cat("- 异常低多样性可能出现在受污染的河段\n")
-}
+`r if(length(outlier_residuals) > 0) {"- 异常残差点可能代表特殊的生态情境\n- 例如，异常高多样性可能出现在保护良好的河段\n- 异常低多样性可能出现在受污染的河段\n"}`
 
-if (length(influential_points) > 0) {
-  cat("- 强影响点可能显著改变模型的生态学结论\n")
-  cat("- 需要仔细检查这些观测的生态学合理性\n")
-}
-```
+`r if(length(influential_points) > 0) {"- 强影响点可能显著改变模型的生态学结论\n- 需要仔细检查这些观测的生态学合理性\n"}`
 
-**模型评估要点**：稳健性检查通过比较移除异常观测前后的模型结果，评估模型对异常观测的敏感性。如果系数变化显著，说明模型对特定观测过度依赖，需要谨慎解释结果。
+稳健性检查通过比较移除异常观测前后的模型结果，评估模型对异常观测的敏感性。如果系数变化显著，说明模型对特定观测过度依赖，需要谨慎解释结果。
 
 ```{r}
 # 稳健性检查：移除强影响点后的模型
@@ -1153,18 +1141,11 @@ if (length(influential_points) > 0) {
 }
 ```
 
-**模型评估要点**：模型诊断的最终目的是确保研究结论的可靠性。通过系统的诊断分析，我们能够识别潜在问题，采取适当措施，并在生态学解释中考虑模型的局限性。
+模型诊断的最终目的是确保研究结论的可靠性。通过系统的诊断分析，我们能够识别潜在问题，采取适当措施，并在生态学解释中考虑模型的局限性。
 
-```{r}
-# 最终建议
-cat("\n=== 模型诊断建议 ===\n")
-cat("1. 检查异常观测的生态学合理性\n")
-cat("2. 考虑是否需要变换变量或使用稳健回归方法\n")
-cat("3. 确保模型假设得到满足\n")
-cat("4. 在生态学解释中考虑模型的局限性\n")
-```
+模型诊断建议：检查异常观测的生态学合理性，考虑是否需要变换变量或使用稳健回归方法，确保模型假设得到满足，并在生态学解释中考虑模型的局限性。
 
-**模型评估要点**：模型诊断连接了统计技术与生态学理解。一个统计上完美的模型如果无法通过生态学合理性检验，其价值就会大打折扣。通过系统的模型诊断，我们能够构建既统计可靠又生态学有意义的模型。
+模型诊断连接了统计技术与生态学理解。一个统计上完美的模型如果无法通过生态学合理性检验，其价值就会大打折扣。通过系统的模型诊断，我们能够构建既统计可靠又生态学有意义的模型。
 
 ## 贝叶斯模型选择与评估
 
@@ -1342,21 +1323,13 @@ model3 <- lmBF(richness ~ area + vegetation + water_distance,
 # 计算贝叶斯因子
 bf_12 <- model2 / model1
 bf_23 <- model3 / model2
+```
 
-# 输出贝叶斯因子
-cat("=== 贝叶斯因子比较 ===\n")
-cat("模型2 vs 模型1 贝叶斯因子:", round(exp(bf_12@bayesFactor$bf), 2), "\n")
-cat("模型3 vs 模型2 贝叶斯因子:", round(exp(bf_23@bayesFactor$bf), 2), "\n")
+贝叶斯因子比较结果显示，模型2相对于模型1的贝叶斯因子为 `r round(exp(bf_12@bayesFactor$bf), 2)`，模型3相对于模型2的贝叶斯因子为 `r round(exp(bf_23@bayesFactor$bf), 2)`。
 
-# 解释贝叶斯因子
-cat("\n=== 贝叶斯因子解释 ===\n")
-cat("根据Jeffreys标准：\n")
-cat("1-3: 微弱证据\n")
-cat("3-10: 实质性证据\n")
-cat("10-30: 强证据\n")
-cat("30-100: 很强证据\n")
-cat(">100: 决定性证据\n")
+根据Jeffreys标准，贝叶斯因子的解释标准为：1-3表示微弱证据，3-10表示实质性证据，10-30表示强证据，30-100表示很强证据，大于100表示决定性证据。
 
+```{r}
 # 计算后验模型概率
 # 假设等先验概率
 prior_prob <- c(1 / 3, 1 / 3, 1 / 3)
@@ -1366,10 +1339,10 @@ bf_vector <- c(
 )
 posterior_prob <- bf_vector * prior_prob / sum(bf_vector * prior_prob)
 
-cat("\n=== 后验模型概率 ===\n")
-cat("模型1 (只有面积):", round(posterior_prob[1], 3), "\n")
-cat("模型2 (面积+植被):", round(posterior_prob[2], 3), "\n")
-cat("模型3 (面积+植被+水源):", round(posterior_prob[3], 3), "\n")
+cat("\n=== 后验模型概率 ===\n",
+  "模型1 (只有面积):", round(posterior_prob[1], 3), "\n",
+  "模型2 (面积+植被):", round(posterior_prob[2], 3), "\n",
+  "模型3 (面积+植被+水源):", round(posterior_prob[3], 3), "\n")
 ```
 
 ### 贝叶斯模型平均
@@ -1400,27 +1373,24 @@ cat("\n=== 变量后验包含概率 ===\n")
 # 使用更稳健的方法提取后验包含概率
 pip_values <- coef(bma_result, order.by.pip = FALSE)
 if ("pip" %in% names(pip_values)) {
-  cat("栖息地面积:", round(pip_values["area", "pip"], 3), "\n")
-  cat("植被密度:", round(pip_values["vegetation", "pip"], 3), "\n")
-  cat("距水源距离:", round(pip_values["water_distance", "pip"], 3), "\n")
+  cat("栖息地面积:", round(pip_values["area", "pip"], 3), "\n",
+    "植被密度:", round(pip_values["vegetation", "pip"], 3), "\n",
+    "距水源距离:", round(pip_values["water_distance", "pip"], 3), "\n")
 } else {
   # 备用方法：直接使用bma_result$pip
   pip <- bma_result$pip
   if (is.numeric(pip) && length(pip) >= 3) {
-    cat("栖息地面积:", round(pip[1], 3), "\n")
-    cat("植被密度:", round(pip[2], 3), "\n")
-    cat("距水源距离:", round(pip[3], 3), "\n")
+    cat("栖息地面积:", round(pip[1], 3), "\n",
+      "植被密度:", round(pip[2], 3), "\n",
+      "距水源距离:", round(pip[3], 3), "\n")
   } else {
     cat("无法提取后验包含概率，请检查BMS包版本\n")
   }
 }
 
-# 解释后验包含概率
-cat("\n=== 后验包含概率解释 ===\n")
-cat("后验包含概率 > 0.5: 变量很可能重要\n")
-cat("后验包含概率 > 0.75: 变量很可能非常重要\n")
-cat("后验包含概率 > 0.95: 变量几乎确定重要\n")
 ```
+
+后验包含概率的解释标准为：后验包含概率大于0.5表示变量很可能重要，大于0.75表示变量很可能非常重要，大于0.95表示变量几乎确定重要。
 
 ### 贝叶斯预测评估
 
@@ -1520,12 +1490,9 @@ for (i in seq_along(posterior_inclusion)) {
   )
 }
 
-# 解释变量选择结果
-cat("\n=== 贝叶斯变量选择解释 ===\n")
-cat("贝叶斯LASSO通过Laplace先验自动进行变量选择。\n")
-cat("后验包含概率反映了每个变量被包含在模型中的概率。\n")
-cat("真实变量应该具有较高的后验包含概率，而冗余变量应该具有较低的概率。\n")
 ```
+
+贝叶斯LASSO通过Laplace先验自动进行变量选择，后验包含概率反映了每个变量被包含在模型中的概率。真实变量应该具有较高的后验包含概率，而冗余变量应该具有较低的概率。
 
 ### 生态学应用价值
 
