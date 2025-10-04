@@ -1,5 +1,19 @@
 # 基于经典分布的假设检验
 
+
+```{r include=FALSE}
+# 初始化设置
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
+)
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
+```
+
+
 ## 引言
 
 在生态学研究的广阔领域中，我们常常面临这样的困境：当我们观察到某种现象时，如何判断这是真实的生态规律还是偶然的随机波动？当我们实施某种保护措施后，如何确定它确实产生了预期的效果？这些问题正是统计假设检验所要回答的核心问题。
@@ -134,7 +148,7 @@ img_file="imgs/hypothesis_testing_flow.png"
 # 直接渲染图形
 export_graph(graph,
   file_name = img_file, file_type = "png",
-  width = 2000, height = 1200
+  width = 600, height = 480
 )
 # 显示图片
 knitr::include_graphics(img_file)
@@ -1596,7 +1610,7 @@ img_file <- "imgs/multiple_comparison_flow.png"
 # 直接渲染图形
 export_graph(graph,
   file_name = img_file, file_type = "png",
-  width = 2000, height = 1200
+  width = 600, height = 480
 )
 # 显示图片
 knitr::include_graphics(img_file)

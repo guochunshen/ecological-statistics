@@ -247,11 +247,11 @@ if (!dir.exists("imgs")) {
   dir.create("imgs")
 }
 
-# 生成高清晰度静态图片文件
+# 生成适合PDF的图片文件
 img_file <- "imgs/hardware_flow.png"
 export_graph(graph,
   file_name = img_file, file_type = "png",
-  width = 2000, height = 1200
+  width = 500, height = 480
 )
 
 # 显示图片
@@ -1124,10 +1124,10 @@ fibonacci_dp_bigint <- function(n) {
   return(fib[[n + 1]])
 }
 
-# 测试（可以计算非常大的n值）
+# 测试（使用较小的n值避免输出过长）
 library(gmp)
-result <- fibonacci_dp_bigint(1000)
-print(result) # 输出: 354224848179261915075
+result <- fibonacci_dp_bigint(50)
+cat("第50个斐波那契数：", as.character(result))
     ```
 
 *   **矩阵的大整数版本** - 使用gmp包处理任意精度整数
@@ -1181,10 +1181,10 @@ fibonacci_bigint <- function(n) {
   return(result_matrix[1, 1])
 }
 
-# 测试（可以计算任意大的n值）
+# 测试（使用较小的n值避免输出过长）
 library(gmp)
-result <- fibonacci_bigint(10000)
-print(result) # 输出第10000个斐波那契数（336447...开头的2089位数）
+result <- fibonacci_bigint(100)
+cat("第100个斐波那契数：", as.character(result))
     ```
     ```
 

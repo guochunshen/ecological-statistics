@@ -1,24 +1,28 @@
 # 相关性与相似性
 
+
+
+
+
 ## 引言
 
-在生态学研究中，我们常常面临一个根本性的问题：自然界中的各种现象之间存在着怎样的联系？这种对关系的探索构成了生态学研究的核心任务之一。在前面的章节中，我们学习了如何通过统计量和参数估计来描述生态系统的特征，如种群数量、物种多样性等。然而，生态学的真正魅力在于揭示这些特征之间的内在联系——环境因子如何影响物种分布？物种之间如何相互作用？群落结构如何响应环境变化？这些问题的答案往往隐藏在变量间的相关性或相似性之中。
+生态学研究的一个核心任务是揭示自然界中各种现象之间的内在联系。在前面的章节中，我们学习了如何描述生态系统的特征，如种群数量、物种多样性等。然而，生态学的真正魅力在于理解这些特征之间的相互关系——环境因子如何影响物种分布？物种之间如何相互作用？群落结构如何响应环境变化？这些问题的答案往往隐藏在变量间的相关性或相似性之中。
 
-相关性与相似性分析正是帮助我们揭示这些生态关系的重要统计工具。作为生态统计学的重要组成部分，这一章节将带领大家从描述生态系统特征转向理解生态系统关系，这是生态学研究从现象描述到规律发现的关键跨越。对于生态学本科生而言，掌握相关性与相似性分析方法不仅能够提升研究能力，更重要的是培养一种关系思维——学会从相互联系的角度来理解复杂的生态系统。
+相关性与相似性分析是揭示这些生态关系的重要统计工具。本章将带领大家从描述生态系统特征转向理解生态系统关系，这是生态学研究从现象描述到规律发现的关键跨越。对于生态学本科生而言，掌握这些分析方法不仅能够提升研究能力，更重要的是培养一种关系思维——学会从相互联系的角度来理解复杂的生态系统。
 
-为什么生态学专业的学生需要学习相关性与相似性？首先，生态系统的本质是一个由无数相互关联的组分构成的复杂网络。从微观的基因表达关系到宏观的物种分布格局，从短期的种群动态到长期的气候变化响应，相关性分析为我们提供了量化这些关系的数学语言。例如，通过相关性分析，我们可以确定温度变化与物种丰富度之间的关系强度，或者评估不同环境因子对群落结构的相对重要性。这种量化关系的能力是现代生态学研究的基本要求。
+为什么生态学专业的学生需要学习相关性与相似性？首先，生态系统的本质是一个由无数相互关联的组分构成的复杂网络。从微观的基因表达到宏观的物种分布，从短期的种群动态到长期的气候变化响应，相关性分析为我们提供了量化这些关系的数学语言。例如，通过相关性分析，我们可以确定温度变化与物种丰富度之间的关系强度，或者评估不同环境因子对群落结构的相对重要性。
 
 其次，相似性分析在生态学中具有广泛的应用价值。当我们研究不同群落的物种组成时，需要量化它们之间的相似程度；当我们分析功能性状的协变模式时，需要评估性状间的相似性关系；当我们构建生态网络时，需要基于相似性来识别物种间的相互作用。相似性分析不仅帮助我们理解生态系统的结构特征，还为保护生物学中的优先区识别、生态恢复中的参考系统选择提供了科学依据。
 
-本章节的内容安排遵循从基础到应用、从简单到复杂的学习路径。我们将首先介绍相关性统计的基础知识，包括Pearson相关系数、Spearman秩相关、Kendall's τ等常用方法，以及它们在生态学中的具体应用场景。这些基础方法构成了理解变量间线性关系和单调关系的基础框架。随后，我们将深入探讨更复杂的相关性概念，如偏相关分析如何帮助我们识别变量间的直接关系，距离相关如何检测非线性依赖模式，以及互信息如何基于信息论来量化变量间的信息共享。
+本章的内容安排遵循从基础到应用、从简单到复杂的学习路径。我们将首先介绍相关性统计的基础知识，包括Pearson相关系数、Spearman秩相关、Kendall's τ等常用方法。随后，我们将深入探讨更复杂的相关性概念，如偏相关分析、距离相关和互信息。
 
-自相关分析是本章的另一个重要组成部分，它专门处理具有时间或空间依赖性的生态数据。时间自相关分析帮助我们理解生态过程的时间动态，如种群波动的周期性、环境因子的记忆效应等；空间自相关分析则揭示了生态现象的空间格局，如物种分布的空间聚集、环境异质性的空间结构等。此外，我们还将介绍系统发育相关性分析，这种方法在进化生态学和比较生物学中具有重要地位，帮助我们理解性状的系统发育保守性和生态适应机制。
+自相关分析是本章的另一个重要组成部分，它专门处理具有时间或空间依赖性的生态数据。时间自相关分析帮助我们理解生态过程的时间动态，空间自相关分析则揭示了生态现象的空间格局。此外，我们还将介绍系统发育相关性分析，帮助我们理解性状的系统发育保守性和生态适应机制。
 
-相似性与距离度量构成了本章的后半部分内容。我们将系统介绍常用的相似性系数，如Jaccard系数、Sørensen系数用于二元数据，Bray-Curtis距离、Morisita-Horn指数用于数量数据，以及欧氏距离、Mahalanobis距离等距离度量方法。这些方法为比较不同生态实体（如群落、个体、功能性状）提供了量化工具。特别地，我们将探讨功能性状间相关性的生态学意义，包括性状权衡关系、功能性状的协变模式，以及经济型谱理论在理解植物功能策略中的应用。
+相似性与距离度量构成了本章的后半部分内容。我们将系统介绍常用的相似性系数和距离度量方法，探讨功能性状间相关性的生态学意义，以及经济型谱理论在理解植物功能策略中的应用。
 
-种内相关性和种间相关性分析将帮助我们理解生物个体和物种间的空间分布模式和相互作用关系。通过聚集指数、种间关联分析等方法，我们可以量化种内空间分布模式、识别物种间的正负相关关系，为理解群落构建机制提供证据。最后，群落相似性分析将整合前面学到的各种方法，通过Mantel检验、排序分析、聚类分析和Beta多样性分析，全面揭示群落结构的空间格局和环境梯度响应。
+种内相关性和种间相关性分析将帮助我们理解生物个体和物种间的空间分布模式和相互作用关系。最后，群落相似性分析将整合前面学到的各种方法，全面揭示群落结构的空间格局和环境梯度响应。
 
-学习相关性与相似性分析不仅是为了掌握一套统计工具，更重要的是培养一种系统思维的能力。在生态学研究中，很少有现象是孤立存在的，理解它们之间的相互关系往往比理解单个现象本身更为重要。通过本章的学习，希望大家能够建立起从关系角度思考生态问题的习惯，学会用统计语言来描述和验证生态假说，为未来的生态学研究和保护实践奠定坚实的统计基础。
+学习相关性与相似性分析不仅是为了掌握统计工具，更重要的是培养系统思维的能力。在生态学研究中，很少有现象是孤立存在的，理解它们之间的相互关系往往比理解单个现象本身更为重要。通过本章的学习，希望大家能够建立起从关系角度思考生态问题的习惯，为未来的生态学研究和保护实践奠定坚实的统计基础。
 
 ## 相关性统计基础
 
@@ -30,7 +34,13 @@
 
 假设我们正在研究一片温带森林中树木的胸径与树高的关系。我们测量了50棵树的胸径（cm）和树高（m），想要了解这两个变量之间是否存在线性关系。
 
-Pearson相关系数是统计学中最为经典和广泛使用的线性相关性度量方法，由英国统计学家卡尔·皮尔逊于1895年提出。这种方法专门用于量化两个连续变量之间的线性关系强度和方向。其核心思想是通过计算两个变量的协方差与各自标准差的乘积之比来标准化协方差的大小，从而得到一个无量纲的相关系数。Pearson相关系数的取值范围严格限定在-1到1之间，其中正值表示正相关关系，即当一个变量增加时另一个变量也倾向于增加；负值表示负相关关系，即当一个变量增加时另一个变量倾向于减少；而0值则表示两个变量之间不存在线性相关关系。值得注意的是，Pearson相关系数只能检测线性关系，对于非线性关系可能会给出接近0的值，即使变量间存在强烈的非线性关联。这种方法对异常值比较敏感，且要求数据大致满足正态分布假设。在生态学研究中，Pearson相关系数常用于分析环境梯度与生物响应之间的线性趋势，如温度与物种丰富度的关系、土壤养分与植物生长的关系等。然而，生态学家需要谨慎使用这种方法，因为许多生态关系本质上是非线性的，过度依赖Pearson相关系数可能会导致对生态关系的错误理解。此外，Pearson相关系数只能反映变量间的统计关联，不能证明因果关系，这在复杂的生态系统中尤为重要。
+Pearson相关系数是统计学中最经典的线性相关性度量方法，由卡尔·皮尔逊于1895年提出。它专门用于量化两个连续变量之间的线性关系强度和方向。其核心思想是通过计算两个变量的协方差与各自标准差的乘积之比来标准化协方差的大小，从而得到一个无量纲的相关系数。
+
+Pearson相关系数的取值范围在-1到1之间。正值表示正相关关系，即当一个变量增加时另一个变量也倾向于增加；负值表示负相关关系，即当一个变量增加时另一个变量倾向于减少；0值则表示两个变量之间不存在线性相关关系。
+
+值得注意的是，Pearson相关系数只能检测线性关系，对于非线性关系可能会给出接近0的值，即使变量间存在强烈的非线性关联。这种方法对异常值比较敏感，且要求数据大致满足正态分布假设。
+
+在生态学研究中，Pearson相关系数常用于分析环境梯度与生物响应之间的线性趋势，如温度与物种丰富度的关系、土壤养分与植物生长的关系等。然而，生态学家需要谨慎使用这种方法，因为许多生态关系本质上是非线性的。此外，Pearson相关系数只能反映变量间的统计关联，不能证明因果关系，这在复杂的生态系统中尤为重要。
 
 **数学定义**：对于两个变量$X$和$Y$，Pearson相关系数$r$定义为：
 
@@ -59,6 +69,7 @@ cat("Pearson相关系数：", round(pearson_cor, 3), "\n")
 ## Pearson相关系数： 0.59
 ```
 
+
 ``` r
 # 可视化散点图
 plot(dbh, height,
@@ -73,46 +84,32 @@ legend("topleft",
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-1-1.png" alt="树木胸径与树高的关系散点图，显示线性相关关系" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-1)树木胸径与树高的关系散点图，显示线性相关关系</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-3-1} 
+
+}
+
+\caption{树木胸径与树高的关系散点图，显示线性相关关系}(\#fig:unnamed-chunk-3)
+\end{figure}
+
 
 ``` r
 # 进行相关性检验
 cor_test <- cor.test(dbh, height, method = "pearson")
-cat("相关性检验结果：\n")
+cat("相关性检验结果：\n",
+    "t统计量：", round(cor_test$statistic, 3), "\n",
+    "p值：", format.pval(cor_test$p.value, digits = 3), "\n",
+    "95%置信区间：[", round(cor_test$conf.int[1], 3),
+    ",", round(cor_test$conf.int[2], 3), "]\n",
+    sep = "")
 ```
 
 ```
 ## 相关性检验结果：
-```
-
-``` r
-cat("t统计量：", round(cor_test$statistic, 3), "\n")
-```
-
-```
-## t统计量： 5.068
-```
-
-``` r
-cat("p值：", format.pval(cor_test$p.value, digits = 3), "\n")
-```
-
-```
-## p值： 6.39e-06
-```
-
-``` r
-cat(
-  "95%置信区间：[", round(cor_test$conf.int[1], 3),
-  ",", round(cor_test$conf.int[2], 3), "]\n"
-)
-```
-
-```
-## 95%置信区间：[ 0.373 , 0.746 ]
+## t统计量：5.068
+## p值：6.39e-06
+## 95%置信区间：[0.373,0.746]
 ```
 
 **生态学意义**：Pearson相关系数在生态学中广泛应用于量化环境因子与生物响应之间的关系，如温度与物种丰富度的关系、养分浓度与植物生长的关系等。
@@ -121,9 +118,13 @@ cat(
 
 在研究河流水质与底栖动物多样性的关系时，我们发现两者之间的关系可能不是严格的线性关系，但存在明显的单调趋势——水质越好，多样性越高。
 
-Spearman秩相关系数是一种基于秩次的非参数相关性度量方法，由英国心理学家查尔斯·斯皮尔曼于1904年提出。与Pearson相关系数专注于线性关系不同，Spearman相关专门用于检测变量间的单调关系——即当一个变量增加时，另一个变量也倾向于增加（正单调关系）或减少（负单调关系），无论这种关系是线性的还是非线性的。这种方法的独特之处在于它完全基于变量的秩次信息，而不是原始数值大小，这使得它对异常值具有天然的鲁棒性。在计算Spearman相关系数时，我们首先将每个变量的观测值转换为秩次（即按大小排序后的位置），然后计算这些秩次之间的Pearson相关系数。这种转换过程相当于对数据进行了一种非线性变换，使得Spearman相关能够捕捉任何形式的单调关系，包括指数关系、对数关系、幂律关系等常见的生态学关系模式。
+Spearman秩相关系数是一种基于秩次的非参数相关性度量方法，由查尔斯·斯皮尔曼于1904年提出。与Pearson相关系数专注于线性关系不同，Spearman相关专门用于检测变量间的单调关系——即当一个变量增加时，另一个变量也倾向于增加（正单调关系）或减少（负单调关系），无论这种关系是线性的还是非线性的。
 
-Spearman相关系数的取值范围与Pearson相关系数相同，都在-1到1之间。正值表示正单调关系，负值表示负单调关系，0值表示没有单调关系。值得注意的是，Spearman相关系数度量的是变量间关系的单调性强度，而不是线性强度。这意味着即使两个变量之间存在强烈的非线性单调关系，Spearman相关也能给出接近1或-1的值，而Pearson相关在这种情况下可能给出接近0的值。在生态学研究中，这种特性使得Spearman相关特别适用于分析等级数据、存在异常值的数据、或者分布未知的数据。例如，在分析环境梯度对物种分布的影响时，许多生态响应关系本质上是单调但非线性的，如物种丰富度随海拔或纬度的变化、生物量随养分浓度的变化等。此外，Spearman相关对数据的分布形式没有严格要求，不要求变量满足正态分布假设，这使其在处理生态学中常见的偏态分布数据时具有明显优势。然而，生态学家需要注意，Spearman相关只能检测单调关系，对于非单调的复杂关系（如U型关系、周期性关系）仍然无法有效识别。
+这种方法的独特之处在于它完全基于变量的秩次信息，而不是原始数值大小，这使得它对异常值具有天然的鲁棒性。在计算Spearman相关系数时，我们首先将每个变量的观测值转换为秩次（即按大小排序后的位置），然后计算这些秩次之间的Pearson相关系数。
+
+Spearman相关系数的取值范围在-1到1之间。正值表示正单调关系，负值表示负单调关系，0值表示没有单调关系。值得注意的是，Spearman相关系数度量的是变量间关系的单调性强度，而不是线性强度。这意味着即使两个变量之间存在强烈的非线性单调关系，Spearman相关也能给出接近1或-1的值，而Pearson相关在这种情况下可能给出接近0的值。
+
+在生态学研究中，这种特性使得Spearman相关特别适用于分析等级数据、存在异常值的数据、或者分布未知的数据。例如，在分析环境梯度对物种分布的影响时，许多生态响应关系本质上是单调但非线性的，如物种丰富度随海拔或纬度的变化、生物量随养分浓度的变化等。此外，Spearman相关对数据的分布形式没有严格要求，不要求变量满足正态分布假设，这使其在处理生态学中常见的偏态分布数据时具有明显优势。然而，生态学家需要注意，Spearman相关只能检测单调关系，对于非单调的复杂关系（如U型关系、周期性关系）仍然无法有效识别。
 
 **数学定义**：对于两个变量$X$和$Y$，Spearman相关系数$\rho$定义为：
 
@@ -156,6 +157,17 @@ cat("Spearman相关系数：", round(spearman_cor, 3), "\n")
 ```
 
 ``` r
+# 进行相关性检验
+spearman_test <- cor.test(water_quality, macroinvertebrate_diversity, method = "spearman")
+cat("Spearman检验p值：", format.pval(spearman_test$p.value, digits = 3), "\n")
+```
+
+```
+## Spearman检验p值： <2e-16
+```
+
+
+``` r
 # 可视化关系
 plot(water_quality, macroinvertebrate_diversity,
   pch = 19, col = "darkgreen",
@@ -169,20 +181,14 @@ legend("topleft",
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-2-1.png" alt="河流水质与底栖动物多样性的关系散点图，显示单调非线性关系" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-2)河流水质与底栖动物多样性的关系散点图，显示单调非线性关系</p>
-</div>
+\begin{figure}
 
-``` r
-# 进行相关性检验
-spearman_test <- cor.test(water_quality, macroinvertebrate_diversity, method = "spearman")
-cat("Spearman检验p值：", format.pval(spearman_test$p.value, digits = 3), "\n")
-```
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-6-1} 
 
-```
-## Spearman检验p值： <2e-16
-```
+}
+
+\caption{河流水质与底栖动物多样性的关系散点图，显示单调非线性关系}(\#fig:unnamed-chunk-6)
+\end{figure}
 
 **生态学意义**：Spearman相关特别适用于生态学中常见的等级数据或存在异常值的情况，如物种丰富度的排序比较、环境梯度的响应分析等。
 
@@ -228,35 +234,18 @@ cat("Kendall's τ：", round(kendall_tau, 3), "\n")
 pearson_comp <- cor(spring_temperature, arrival_date, method = "pearson")
 spearman_comp <- cor(spring_temperature, arrival_date, method = "spearman")
 
-cat("不同相关性系数的比较：\n")
+cat("不同相关性系数的比较：\n",
+    "Pearson：", round(pearson_comp, 3), "\n",
+    "Spearman：", round(spearman_comp, 3), "\n",
+    "Kendall's τ：", round(kendall_tau, 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 不同相关性系数的比较：
-```
-
-``` r
-cat("Pearson：", round(pearson_comp, 3), "\n")
-```
-
-```
-## Pearson： -0.79
-```
-
-``` r
-cat("Spearman：", round(spearman_comp, 3), "\n")
-```
-
-```
-## Spearman： -0.692
-```
-
-``` r
-cat("Kendall's τ：", round(kendall_tau, 3), "\n")
-```
-
-```
-## Kendall's τ： -0.54
+## Pearson：-0.79
+## Spearman：-0.692
+## Kendall's τ：-0.54
 ```
 
 ``` r
@@ -273,10 +262,14 @@ legend("topright",
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-3-1.png" alt="鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-3)鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-7-1} 
+
+}
+
+\caption{鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性}(\#fig:unnamed-chunk-7)
+\end{figure}
 
 **生态学意义**：Kendall's τ在小样本或存在异常值的情况下表现稳定，适用于生态时间序列分析、物种对环境变化的响应研究等。
 
@@ -317,16 +310,11 @@ cat("降水量与生产力的简单相关系数：", round(simple_cor, 3), "\n")
 ## 降水量与生产力的简单相关系数： 0.33
 ```
 
+
 ``` r
 # 计算偏相关系数（控制温度影响）
 library(ppcor) # 需要安装：install.packages("ppcor")
-```
 
-```
-## Loading required package: MASS
-```
-
-``` r
 # 创建数据框
 eco_data <- data.frame(precipitation, temperature, productivity)
 partial_cor <- pcor(eco_data)$estimate
@@ -361,6 +349,7 @@ cat(
 ## 控制温度后，降水量与生产力的偏相关系数： 0.389
 ```
 
+
 ``` r
 # 可视化偏相关关系
 # 使用残差法展示偏相关
@@ -383,10 +372,14 @@ legend("topleft",
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-4-1.png" alt="控制温度影响后的降水量与生产力关系散点图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-4)控制温度影响后的降水量与生产力关系散点图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-10-1} 
+
+}
+
+\caption{控制温度影响后的降水量与生产力关系散点图}(\#fig:unnamed-chunk-10)
+\end{figure}
 
 **生态学意义**：偏相关分析在生态学中非常重要，因为它能帮助识别变量间的直接因果关系，排除混杂变量的影响，在复杂的生态系统研究中尤为有用。
 
@@ -433,36 +426,20 @@ cat("距离相关系数：", round(dcor_result, 3), "\n")
 pearson_dc <- cor(leaf_area, specific_leaf_area, method = "pearson")
 spearman_dc <- cor(leaf_area, specific_leaf_area, method = "spearman")
 
-cat("不同相关性方法的比较：\n")
+cat("不同相关性方法的比较：\n",
+    "Pearson相关系数：", round(pearson_dc, 3), "\n",
+    "Spearman相关系数：", round(spearman_dc, 3), "\n",
+    "距离相关系数：", round(dcor_result, 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 不同相关性方法的比较：
+## Pearson相关系数：0.133
+## Spearman相关系数：0.04
+## 距离相关系数：0.454
 ```
 
-``` r
-cat("Pearson相关系数：", round(pearson_dc, 3), "\n")
-```
-
-```
-## Pearson相关系数： 0.133
-```
-
-``` r
-cat("Spearman相关系数：", round(spearman_dc, 3), "\n")
-```
-
-```
-## Spearman相关系数： 0.04
-```
-
-``` r
-cat("距离相关系数：", round(dcor_result, 3), "\n")
-```
-
-```
-## 距离相关系数： 0.454
-```
 
 ``` r
 # 可视化非线性关系
@@ -488,10 +465,14 @@ legend("top",
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-5-1.png" alt="植物功能性状间的非线性关系散点图，显示U型关系" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-5)植物功能性状间的非线性关系散点图，显示U型关系</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-12-1} 
+
+}
+
+\caption{植物功能性状间的非线性关系散点图，显示U型关系}(\#fig:unnamed-chunk-12)
+\end{figure}
 
 **生态学意义**：距离相关特别适用于生态学中常见的复杂非线性关系，如物种-面积关系、功能性状权衡、种群动态模型等。
 
@@ -540,35 +521,18 @@ mi_temp <- mutinformation(temp_disc, species_presence)
 mi_precip <- mutinformation(precip_disc, species_presence)
 mi_joint <- mutinformation(cbind(temp_disc, precip_disc), species_presence)
 
-cat("互信息分析结果：\n")
+cat("互信息分析结果：\n",
+    "温度与物种出现的互信息：", round(mi_temp, 3), "\n",
+    "降水量与物种出现的互信息：", round(mi_precip, 3), "\n",
+    "温度与降水量联合与物种出现的互信息：", round(mi_joint, 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 互信息分析结果：
-```
-
-``` r
-cat("温度与物种出现的互信息：", round(mi_temp, 3), "\n")
-```
-
-```
-## 温度与物种出现的互信息： 0
-```
-
-``` r
-cat("降水量与物种出现的互信息：", round(mi_precip, 3), "\n")
-```
-
-```
-## 降水量与物种出现的互信息： 0
-```
-
-``` r
-cat("温度与降水量联合与物种出现的互信息：", round(mi_joint, 3), "\n")
-```
-
-```
-## 温度与降水量联合与物种出现的互信息： 0
+## 温度与物种出现的互信息：0
+## 降水量与物种出现的互信息：0
+## 温度与降水量联合与物种出现的互信息：0
 ```
 
 ``` r
@@ -606,10 +570,14 @@ pred_prob2 <- predict(logit_fit2,
 lines(precip_seq, pred_prob2, col = "red", lwd = 2)
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-6-1.png" alt="环境因子与物种分布的关系逻辑回归曲线" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-6)环境因子与物种分布的关系逻辑回归曲线</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-13-1} 
+
+}
+
+\caption{环境因子与物种分布的关系逻辑回归曲线}(\#fig:unnamed-chunk-13)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
@@ -767,13 +735,6 @@ plot(x, y_exponential,
   xlab = "X", ylab = "Y"
 )
 exp_fit <- lm(log(y_exponential) ~ x)
-```
-
-```
-## Warning in log(y_exponential): NaNs produced
-```
-
-``` r
 lines(x, exp(predict(exp_fit, newdata = data.frame(x = x))), col = "red", lwd = 2)
 
 # 周期性关系
@@ -796,10 +757,14 @@ barplot(quad_values,
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-7-1.png" alt="不同类型非线性关系的可视化及方法比较" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-7)不同类型非线性关系的可视化及方法比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-14-1} 
+
+}
+
+\caption{不同类型非线性关系的可视化及方法比较}(\#fig:unnamed-chunk-14)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
@@ -858,70 +823,46 @@ plot(acf_result,
 abline(h = 0, lty = 2)
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-8-1.png" alt="浮游植物生物量的自相关函数和时间序列图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-8-1)浮游植物生物量的自相关函数和时间序列图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-15-1} 
+
+}
+
+\caption{浮游植物生物量的自相关函数和时间序列图}(\#fig:unnamed-chunk-15-1)
+\end{figure}
 
 ``` r
 # 提取关键的自相关系数
-cat("关键滞后下的自相关系数：\n")
+cat("关键滞后下的自相关系数：\n",
+    "滞后1个月：", round(acf_result$acf[2], 3), "\n",
+    "滞后12个月（年周期）：", round(acf_result$acf[13], 3), "\n",
+    "滞后6个月（半年周期）：", round(acf_result$acf[7], 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 关键滞后下的自相关系数：
-```
-
-``` r
-cat("滞后1个月：", round(acf_result$acf[2], 3), "\n")
-```
-
-```
-## 滞后1个月： 0.772
-```
-
-``` r
-cat("滞后12个月（年周期）：", round(acf_result$acf[13], 3), "\n")
-```
-
-```
-## 滞后12个月（年周期）： 0.528
-```
-
-``` r
-cat("滞后6个月（半年周期）：", round(acf_result$acf[7], 3), "\n")
-```
-
-```
-## 滞后6个月（半年周期）： -0.724
+## 滞后1个月：0.772
+## 滞后12个月（年周期）：0.528
+## 滞后6个月（半年周期）：-0.724
 ```
 
 ``` r
 # 进行Ljung-Box检验（检验自相关的显著性）
 library(stats)
 lb_test <- Box.test(phytoplankton_biomass, lag = 10, type = "Ljung-Box")
-cat("\nLjung-Box检验结果：\n")
+cat("\nLjung-Box检验结果：\n",
+    "检验统计量：", round(lb_test$statistic, 3), "\n",
+    "p值：", format.pval(lb_test$p.value, digits = 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 
 ## Ljung-Box检验结果：
-```
-
-``` r
-cat("检验统计量：", round(lb_test$statistic, 3), "\n")
-```
-
-```
-## 检验统计量： 108.11
-```
-
-``` r
-cat("p值：", format.pval(lb_test$p.value, digits = 3), "\n")
-```
-
-```
-## p值： <2e-16
+## 检验统计量：108.11
+## p值：<2e-16
 ```
 
 ``` r
@@ -938,10 +879,14 @@ legend("topleft",
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-8-2.png" alt="浮游植物生物量的自相关函数和时间序列图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-8-2)浮游植物生物量的自相关函数和时间序列图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-15-2} 
+
+}
+
+\caption{浮游植物生物量的自相关函数和时间序列图}(\#fig:unnamed-chunk-15-2)
+\end{figure}
 
 **生态学意义**：自相关函数在生态学中广泛应用于检测种群波动的周期性、环境因子的记忆效应、生态过程的持续性等时间动态特征。
 
@@ -1014,42 +959,29 @@ plot(pacf_result,
 abline(h = 0, lty = 2)
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-9-1.png" alt="森林年轮宽度的偏自相关函数和时间序列图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-9-1)森林年轮宽度的偏自相关函数和时间序列图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-16-1} 
+
+}
+
+\caption{森林年轮宽度的偏自相关函数和时间序列图}(\#fig:unnamed-chunk-16-1)
+\end{figure}
 
 ``` r
 # 提取关键的偏自相关系数
-cat("关键滞后下的偏自相关系数：\n")
+cat("关键滞后下的偏自相关系数：\n",
+    "滞后1年：", round(pacf_result$acf[1], 3), "\n",
+    "滞后2年：", round(pacf_result$acf[2], 3), "\n",
+    "滞后3年：", round(pacf_result$acf[3], 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 关键滞后下的偏自相关系数：
-```
-
-``` r
-cat("滞后1年：", round(pacf_result$acf[1], 3), "\n")
-```
-
-```
-## 滞后1年： 0.782
-```
-
-``` r
-cat("滞后2年：", round(pacf_result$acf[2], 3), "\n")
-```
-
-```
-## 滞后2年： -0.252
-```
-
-``` r
-cat("滞后3年：", round(pacf_result$acf[3], 3), "\n")
-```
-
-```
-## 滞后3年： 0.254
+## 滞后1年：0.782
+## 滞后2年：-0.252
+## 滞后3年：0.254
 ```
 
 ``` r
@@ -1063,44 +995,34 @@ acf(tree_ring_width, lag.max = 15, main = "自相关函数")
 pacf(tree_ring_width, lag.max = 15, main = "偏自相关函数")
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-9-2.png" alt="森林年轮宽度的偏自相关函数和时间序列图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-9-2)森林年轮宽度的偏自相关函数和时间序列图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-16-2} 
+
+}
+
+\caption{森林年轮宽度的偏自相关函数和时间序列图}(\#fig:unnamed-chunk-16-2)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
 
 # 拟合AR模型并确定最优阶数
 library(forecast)
-```
 
-```
-## Registered S3 method overwritten by 'quantmod':
-##   method            from
-##   as.zoo.data.frame zoo
-```
-
-``` r
 # 使用AIC准则选择最优AR模型阶数
 best_ar <- auto.arima(tree_ring_width,
   max.p = 10, max.q = 0, max.d = 0,
   seasonal = FALSE, stepwise = FALSE, approximation = FALSE
 )
-cat("\n最优AR模型阶数：", best_ar$arma[1], "\n")
+cat("\n最优AR模型阶数：", best_ar$arma[1], "\n",
+  "模型系数：\n")
 ```
 
 ```
 ## 
-## 最优AR模型阶数： 3
-```
-
-``` r
-cat("模型系数：\n")
-```
-
-```
-## 模型系数：
+## 最优AR模型阶数： 3 
+##  模型系数：
 ```
 
 ``` r
@@ -1121,10 +1043,14 @@ plot(years, tree_ring_width,
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-9-3.png" alt="森林年轮宽度的偏自相关函数和时间序列图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-9-3)森林年轮宽度的偏自相关函数和时间序列图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-16-3} 
+
+}
+
+\caption{森林年轮宽度的偏自相关函数和时间序列图}(\#fig:unnamed-chunk-16-3)
+\end{figure}
 
 **生态学意义**：偏自相关函数在生态学中主要用于识别时间序列模型的自回归阶数，帮助理解生态过程的直接时间依赖关系和内在动态机制。
 
@@ -1175,44 +1101,31 @@ plot(years, bird_population,
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-10-1.png" alt="鸟类种群数量的时间序列平稳性检验和分解" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-10-1)鸟类种群数量的时间序列平稳性检验和分解</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-17-1} 
+
+}
+
+\caption{鸟类种群数量的时间序列平稳性检验和分解}(\#fig:unnamed-chunk-17-1)
+\end{figure}
 
 ``` r
 # 检验平稳性：ADF检验（Augmented Dickey-Fuller Test）
 library(tseries)
 
 adf_test <- adf.test(bird_population)
-cat("ADF单位根检验结果：\n")
+cat("ADF单位根检验结果：\n",
+    "检验统计量：", round(adf_test$statistic, 3), "\n",
+    "p值：", format.pval(adf_test$p.value, digits = 3), "\n",
+    "原假设：时间序列有单位根（非平稳）\n",
+    sep = "")
 ```
 
 ```
 ## ADF单位根检验结果：
-```
-
-``` r
-cat("检验统计量：", round(adf_test$statistic, 3), "\n")
-```
-
-```
-## 检验统计量： -2.818
-```
-
-``` r
-cat("p值：", format.pval(adf_test$p.value, digits = 3), "\n")
-```
-
-```
-## p值： 0.246
-```
-
-``` r
-cat("原假设：时间序列有单位根（非平稳）\n")
-```
-
-```
+## 检验统计量：-2.818
+## p值：0.246
 ## 原假设：时间序列有单位根（非平稳）
 ```
 
@@ -1231,42 +1144,18 @@ if (adf_test$p.value < 0.05) {
 ``` r
 # KPSS检验（另一种平稳性检验）
 kpss_test <- kpss.test(bird_population)
-```
-
-```
-## Warning in kpss.test(bird_population): p-value smaller than printed p-value
-```
-
-``` r
-cat("\nKPSS平稳性检验结果：\n")
+cat("\nKPSS平稳性检验结果：\n",
+    "检验统计量：", round(kpss_test$statistic, 3), "\n",
+    "p值：", format.pval(kpss_test$p.value, digits = 3), "\n",
+    "原假设：时间序列是平稳的\n",
+    sep = "")
 ```
 
 ```
 ## 
 ## KPSS平稳性检验结果：
-```
-
-``` r
-cat("检验统计量：", round(kpss_test$statistic, 3), "\n")
-```
-
-```
-## 检验统计量： 1.201
-```
-
-``` r
-cat("p值：", format.pval(kpss_test$p.value, digits = 3), "\n")
-```
-
-```
-## p值： 0.01
-```
-
-``` r
-cat("原假设：时间序列是平稳的\n")
-```
-
-```
+## 检验统计量：1.201
+## p值：0.01
 ## 原假设：时间序列是平稳的
 ```
 
@@ -1324,18 +1213,18 @@ if (adf_test$p.value >= 0.05) {
 ```
 
 ```
-## Warning in adf.test(bird_diff): p-value smaller than printed p-value
-```
-
-```
 ## 差分后序列的ADF检验：
 ## p值： 0.01
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-10-2.png" alt="鸟类种群数量的时间序列平稳性检验和分解" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-10-2)鸟类种群数量的时间序列平稳性检验和分解</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-17-2} 
+
+}
+
+\caption{鸟类种群数量的时间序列平稳性检验和分解}(\#fig:unnamed-chunk-17-2)
+\end{figure}
 
 ``` r
 # 分解时间序列（趋势、季节、随机成分）
@@ -1346,10 +1235,14 @@ if (length(bird_population) >= 2 * 12) { # 需要足够的数据点进行季节�
 }
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-10-3.png" alt="鸟类种群数量的时间序列平稳性检验和分解" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-10-3)鸟类种群数量的时间序列平稳性检验和分解</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-17-3} 
+
+}
+
+\caption{鸟类种群数量的时间序列平稳性检验和分解}(\#fig:unnamed-chunk-17-3)
+\end{figure}
 
 **生态学意义**：时间序列平稳性是生态时间序列分析的基本前提，正确的平稳性检验和处理对于避免伪相关、确保统计推断的有效性至关重要，特别是在分析长期生态监测数据和气候变化影响研究时。
 
@@ -1393,21 +1286,7 @@ coords <- data.frame(
 # 模拟具有空间自相关的物种丰富度数据
 # 使用高斯随机场模拟空间相关性
 library(geoR)
-```
 
-```
-## Warning: no DISPLAY variable so Tk is not available
-```
-
-```
-## --------------------------------------------------------------
-##  Analysis of Geostatistical Data
-##  For an Introduction to geoR go to http://www.leg.ufpr.br/geoR
-##  geoR version 1.9-6 (built on 2025-08-29) is now loaded
-## --------------------------------------------------------------
-```
-
-``` r
 # 设置空间相关参数
 mean_richness <- 20 # 平均物种丰富度
 spatial_range <- 30 # 空间相关范围
@@ -1454,10 +1333,14 @@ plot(variogram_emp,
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-11-1.png" alt="物种丰富度的经验变异函数和空间分布图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-11-1)物种丰富度的经验变异函数和空间分布图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-18-1} 
+
+}
+
+\caption{物种丰富度的经验变异函数和空间分布图}(\#fig:unnamed-chunk-18-1)
+\end{figure}
 
 ``` r
 # 拟合理论变异函数模型（指数模型）
@@ -1470,50 +1353,31 @@ plot(variogram_emp, variogram_fit,
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-11-2.png" alt="物种丰富度的经验变异函数和空间分布图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-11-2)物种丰富度的经验变异函数和空间分布图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-18-2} 
+
+}
+
+\caption{物种丰富度的经验变异函数和空间分布图}(\#fig:unnamed-chunk-18-2)
+\end{figure}
 
 ``` r
 # 提取变异函数参数
-cat("变异函数参数：\n")
+cat("变异函数参数：\n",
+    "块金值 (nugget)：", variogram_fit$psill[1], "\n",
+    "偏基台值 (partial sill)：", variogram_fit$psill[2], "\n",
+    "基台值 (sill)：", sum(variogram_fit$psill), "\n",
+    "变程 (range)：", variogram_fit$range[2], "\n",
+    sep = "")
 ```
 
 ```
 ## 变异函数参数：
-```
-
-``` r
-cat("块金值 (nugget)：", variogram_fit$psill[1], "\n")
-```
-
-```
-## 块金值 (nugget)： 0
-```
-
-``` r
-cat("偏基台值 (partial sill)：", variogram_fit$psill[2], "\n")
-```
-
-```
-## 偏基台值 (partial sill)： 252.118
-```
-
-``` r
-cat("基台值 (sill)：", sum(variogram_fit$psill), "\n")
-```
-
-```
-## 基台值 (sill)： 252.118
-```
-
-``` r
-cat("变程 (range)：", variogram_fit$range[2], "\n")
-```
-
-```
-## 变程 (range)： 411.6164
+## 块金值 (nugget)：0
+## 偏基台值 (partial sill)：252.118
+## 基台值 (sill)：252.118
+## 变程 (range)：411.6164
 ```
 
 ``` r
@@ -1531,10 +1395,14 @@ ggplot(spatial_df, aes(x = x, y = y, color = richness)) +
   theme_minimal()
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-11-3.png" alt="物种丰富度的经验变异函数和空间分布图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-11-3)物种丰富度的经验变异函数和空间分布图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-18-3} 
+
+}
+
+\caption{物种丰富度的经验变异函数和空间分布图}(\#fig:unnamed-chunk-18-3)
+\end{figure}
 
 ``` r
 # 进行空间插值（普通克里金法）
@@ -1561,10 +1429,14 @@ kriging_result <- autoKrige(richness ~ 1, spatial_data, grid)
 plot(kriging_result)
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-11-4.png" alt="物种丰富度的经验变异函数和空间分布图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-11-4)物种丰富度的经验变异函数和空间分布图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-18-4} 
+
+}
+
+\caption{物种丰富度的经验变异函数和空间分布图}(\#fig:unnamed-chunk-18-4)
+\end{figure}
 
 **生态学意义**：变异函数在生态学中广泛应用于量化空间依赖性的尺度，如物种分布的空间格局、环境异质性的空间结构、种群聚集的空间范围等。
 
@@ -1601,38 +1473,7 @@ set.seed(123)
 
 # 模拟森林树木数据
 library(spdep)
-```
 
-```
-## Loading required package: spData
-```
-
-```
-## To access larger datasets in this package, install the spDataLarge
-## package with: `install.packages('spDataLarge',
-## repos='https://nowosad.github.io/drat/', type='source')`
-```
-
-```
-## 
-## Attaching package: 'spData'
-```
-
-```
-## The following object is masked _by_ '.GlobalEnv':
-## 
-##     coords
-```
-
-```
-## Loading required package: sf
-```
-
-```
-## Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE
-```
-
-``` r
 n_trees <- 100
 
 # 生成树木坐标（模拟聚集分布）
@@ -1672,14 +1513,6 @@ coordinates(tree_coords) <- ~ x + y
 
 # 创建空间权重矩阵（基于k近邻）
 knn_weights <- knn2nb(knearneigh(tree_coords, k = 5))
-```
-
-```
-## Warning in knn2nb(knearneigh(tree_coords, k = 5)): neighbour object has 3
-## sub-graphs
-```
-
-``` r
 listw_weights <- nb2listw(knn_weights, style = "W")
 
 # 模拟具有空间自相关的胸径数据
@@ -1702,78 +1535,38 @@ if (rcond(I_minus_rhoW) > 1e-10) {
 
 # 计算Moran's I
 moran_test <- moran.test(tree_dbh, listw_weights)
-cat("Moran's I检验结果：\n")
+cat("Moran's I检验结果：\n",
+    "Moran's I统计量：", round(moran_test$estimate[1], 3), "\n",
+    "期望值：", round(moran_test$estimate[2], 3), "\n",
+    "方差：", round(moran_test$estimate[3], 3), "\n",
+    "p值：", format.pval(moran_test$p.value, digits = 3), "\n",
+    sep = "")
 ```
 
 ```
 ## Moran's I检验结果：
-```
-
-``` r
-cat("Moran's I统计量：", round(moran_test$estimate[1], 3), "\n")
-```
-
-```
-## Moran's I统计量： 0.425
-```
-
-``` r
-cat("期望值：", round(moran_test$estimate[2], 3), "\n")
-```
-
-```
-## 期望值： -0.01
-```
-
-``` r
-cat("方差：", round(moran_test$estimate[3], 3), "\n")
-```
-
-```
-## 方差： 0.003
-```
-
-``` r
-cat("p值：", format.pval(moran_test$p.value, digits = 3), "\n")
-```
-
-```
-## p值： 4.48e-15
+## Moran's I统计量：0.425
+## 期望值：-0.01
+## 方差：0.003
+## p值：4.48e-15
 ```
 
 ``` r
 # 计算Geary's C
 geary_test <- geary.test(tree_dbh, listw_weights)
-cat("\nGeary's C检验结果：\n")
+cat("\nGeary's C检验结果：\n",
+    "Geary's C统计量：", round(geary_test$estimate[1], 3), "\n",
+    "期望值：", round(geary_test$estimate[2], 3), "\n",
+    "p值：", format.pval(geary_test$p.value, digits = 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 
 ## Geary's C检验结果：
-```
-
-``` r
-cat("Geary's C统计量：", round(geary_test$estimate[1], 3), "\n")
-```
-
-```
-## Geary's C统计量： 0.568
-```
-
-``` r
-cat("期望值：", round(geary_test$estimate[2], 3), "\n")
-```
-
-```
-## 期望值： 1
-```
-
-``` r
-cat("p值：", format.pval(geary_test$p.value, digits = 3), "\n")
-```
-
-```
-## p值： 7.06e-11
+## Geary's C统计量：0.568
+## 期望值：1
+## p值：7.06e-11
 ```
 
 ``` r
@@ -1804,10 +1597,14 @@ legend("topright",
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-12-1.png" alt="森林树木分布的空间自相关分析和蒙特卡洛检验" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-12-1)森林树木分布的空间自相关分析和蒙特卡洛检验</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-19-1} 
+
+}
+
+\caption{森林树木分布的空间自相关分析和蒙特卡洛检验}(\#fig:unnamed-chunk-19-1)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
@@ -1841,10 +1638,14 @@ abline(v = moran_test$estimate[1], col = "red", lwd = 2)
 legend("topright", legend = "观测值", col = "red", lwd = 2)
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-12-2.png" alt="森林树木分布的空间自相关分析和蒙特卡洛检验" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-12-2)森林树木分布的空间自相关分析和蒙特卡洛检验</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-19-2} 
+
+}
+
+\caption{森林树木分布的空间自相关分析和蒙特卡洛检验}(\#fig:unnamed-chunk-19-2)
+\end{figure}
 
 **生态学意义**：空间自相关指数在生态学中广泛应用于检测空间聚集或分散模式，如物种分布的热点区域、种群的空间格局、环境因子的空间变异等。
 
@@ -1919,14 +1720,6 @@ dist_threshold <- 20 # 20单位内的公园视为邻居
 
 # 创建基于距离的邻居列表
 nb_dist <- dnearneigh(park_coords, 0, dist_threshold)
-```
-
-```
-## Warning in dnearneigh(park_coords, 0, dist_threshold): neighbour object has 2
-## sub-graphs
-```
-
-``` r
 # 检查是否有孤立点，如果有则使用k近邻
 if (any(card(nb_dist) == 0)) {
   cat("检测到孤立点，使用k近邻方法\n")
@@ -1994,10 +1787,14 @@ ggplot(lisa_results, aes(x = x, y = y, color = lisa_type, size = richness)) +
   theme_minimal()
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-13-1.png" alt="鸟类物种丰富度的局部空间自相关分析和热点识别" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-13-1)鸟类物种丰富度的局部空间自相关分析和热点识别</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-20-1} 
+
+}
+
+\caption{鸟类物种丰富度的局部空间自相关分析和热点识别}(\#fig:unnamed-chunk-20-1)
+\end{figure}
 
 ``` r
 # Gi*热点分析
@@ -2015,91 +1812,49 @@ ggplot(lisa_results, aes(x = x, y = y, color = gi_type, size = abs(gi_star))) +
   theme_minimal()
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-13-2.png" alt="鸟类物种丰富度的局部空间自相关分析和热点识别" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-13-2)鸟类物种丰富度的局部空间自相关分析和热点识别</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-20-2} 
+
+}
+
+\caption{鸟类物种丰富度的局部空间自相关分析和热点识别}(\#fig:unnamed-chunk-20-2)
+\end{figure}
 
 ``` r
 # 统计结果摘要
-cat("LISA分析结果摘要：\n")
+cat("LISA分析结果摘要：\n",
+    "总公园数：", n_parks, "\n",
+    "显著LISA模式的数量：", sum(lisa_results$p_value < 0.05), "\n",
+    "高-高聚集（热点）：", sum(lisa_results$lisa_type == "高-高"), "\n",
+    "低-低聚集（冷点）：", sum(lisa_results$lisa_type == "低-低"), "\n",
+    "高-低异常值：", sum(lisa_results$lisa_type == "高-低"), "\n",
+    "低-高异常值：", sum(lisa_results$lisa_type == "低-高"), "\n",
+    sep = "")
 ```
 
 ```
 ## LISA分析结果摘要：
+## 总公园数：50
+## 显著LISA模式的数量：1
+## 高-高聚集（热点）：1
+## 低-低聚集（冷点）：0
+## 高-低异常值：0
+## 低-高异常值：0
 ```
 
 ``` r
-cat("总公园数：", n_parks, "\n")
-```
-
-```
-## 总公园数： 50
-```
-
-``` r
-cat("显著LISA模式的数量：", sum(lisa_results$p_value < 0.05), "\n")
-```
-
-```
-## 显著LISA模式的数量： 1
-```
-
-``` r
-cat("高-高聚集（热点）：", sum(lisa_results$lisa_type == "高-高"), "\n")
-```
-
-```
-## 高-高聚集（热点）： 1
-```
-
-``` r
-cat("低-低聚集（冷点）：", sum(lisa_results$lisa_type == "低-低"), "\n")
-```
-
-```
-## 低-低聚集（冷点）： 0
-```
-
-``` r
-cat("高-低异常值：", sum(lisa_results$lisa_type == "高-低"), "\n")
-```
-
-```
-## 高-低异常值： 0
-```
-
-``` r
-cat("低-高异常值：", sum(lisa_results$lisa_type == "低-高"), "\n")
-```
-
-```
-## 低-高异常值： 0
-```
-
-``` r
-cat("\nGetis-Ord Gi*分析结果摘要：\n")
+cat("\nGetis-Ord Gi*分析结果摘要：\n",
+    "热点数量：", sum(lisa_results$gi_type == "热点"), "\n",
+    "冷点数量：", sum(lisa_results$gi_type == "冷点"), "\n",
+    sep = "")
 ```
 
 ```
 ## 
 ## Getis-Ord Gi*分析结果摘要：
-```
-
-``` r
-cat("热点数量：", sum(lisa_results$gi_type == "热点"), "\n")
-```
-
-```
-## 热点数量： 1
-```
-
-``` r
-cat("冷点数量：", sum(lisa_results$gi_type == "冷点"), "\n")
-```
-
-```
-## 冷点数量： 0
+## 热点数量：1
+## 冷点数量：0
 ```
 
 ``` r
@@ -2107,20 +1862,15 @@ cat("冷点数量：", sum(lisa_results$gi_type == "冷点"), "\n")
 # 使用FDR校正p值
 lisa_results$p_fdr <- p.adjust(lisa_results$p_value, method = "fdr")
 
-cat("\n经过FDR校正后的显著LISA模式：\n")
+cat("\n经过FDR校正后的显著LISA模式：\n",
+    "数量：", sum(lisa_results$p_fdr < 0.05), "\n",
+    sep = "")
 ```
 
 ```
 ## 
 ## 经过FDR校正后的显著LISA模式：
-```
-
-``` r
-cat("数量：", sum(lisa_results$p_fdr < 0.05), "\n")
-```
-
-```
-## 数量： 0
+## 数量：0
 ```
 
 ``` r
@@ -2142,10 +1892,14 @@ hist(lisa_results$p_fdr,
 abline(v = 0.05, col = "red", lwd = 2)
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-13-3.png" alt="鸟类物种丰富度的局部空间自相关分析和热点识别" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-13-3)鸟类物种丰富度的局部空间自相关分析和热点识别</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-20-3} 
+
+}
+
+\caption{鸟类物种丰富度的局部空间自相关分析和热点识别}(\#fig:unnamed-chunk-20-3)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
@@ -2191,61 +1945,9 @@ $$L(\lambda) = -\frac{1}{2}[(n-1)\ln(2\pi) + \ln|\lambda\mathbf{C} + (1-\lambda)
 ``` r
 # 系统发育信号分析示例：植物叶片性状的系统发育保守性
 library(ape)
-```
-
-```
-## Registered S3 method overwritten by 'ape':
-##   method   from 
-##   plot.mst spdep
-```
-
-``` r
 library(phytools)
-```
-
-```
-## Loading required package: maps
-```
-
-``` r
 library(picante)
-```
 
-```
-## Loading required package: vegan
-```
-
-```
-## Loading required package: permute
-```
-
-```
-## 
-## Attaching package: 'vegan'
-```
-
-```
-## The following object is masked from 'package:phytools':
-## 
-##     scores
-```
-
-```
-## Loading required package: nlme
-```
-
-```
-## 
-## Attaching package: 'nlme'
-```
-
-```
-## The following object is masked from 'package:forecast':
-## 
-##     getResponse
-```
-
-``` r
 # 模拟系统发育树和性状数据
 set.seed(123)
 
@@ -2265,27 +1967,16 @@ names(trait_random) <- phy_tree$tip.label
 K_conservative <- Kcalc(trait_conservative, phy_tree)
 K_random <- Kcalc(trait_random, phy_tree)
 
-cat("Blomberg's K分析结果：\n")
+cat("Blomberg's K分析结果：\n",
+    "保守性状的K值：", round(K_conservative, 3), "\n",
+    "随机性状的K值：", round(K_random, 3), "\n",
+    sep = "")
 ```
 
 ```
 ## Blomberg's K分析结果：
-```
-
-``` r
-cat("保守性状的K值：", round(K_conservative, 3), "\n")
-```
-
-```
-## 保守性状的K值： 1.104
-```
-
-``` r
-cat("随机性状的K值：", round(K_random, 3), "\n")
-```
-
-```
-## 随机性状的K值： 0.168
+## 保守性状的K值：1.104
+## 随机性状的K值：0.168
 ```
 
 ``` r
@@ -2293,28 +1984,17 @@ cat("随机性状的K值：", round(K_random, 3), "\n")
 K_perm_conservative <- phylosig(phy_tree, trait_conservative, method = "K", test = TRUE, nsim = 999)
 K_perm_random <- phylosig(phy_tree, trait_random, method = "K", test = TRUE, nsim = 999)
 
-cat("\n置换检验p值：\n")
+cat("\n置换检验p值：\n",
+    "保守性状：", format.pval(K_perm_conservative$P, digits = 3), "\n",
+    "随机性状：", format.pval(K_perm_random$P, digits = 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 
 ## 置换检验p值：
-```
-
-``` r
-cat("保守性状：", format.pval(K_perm_conservative$P, digits = 3), "\n")
-```
-
-```
-## 保守性状： 0.001
-```
-
-``` r
-cat("随机性状：", format.pval(K_perm_random$P, digits = 3), "\n")
-```
-
-```
-## 随机性状： 0.83
+## 保守性状：0.001
+## 随机性状：0.83
 ```
 
 ``` r
@@ -2322,53 +2002,31 @@ cat("随机性状：", format.pval(K_perm_random$P, digits = 3), "\n")
 lambda_conservative <- phylosig(phy_tree, trait_conservative, method = "lambda")
 lambda_random <- phylosig(phy_tree, trait_random, method = "lambda")
 
-cat("\nPagel's λ分析结果：\n")
+cat("\nPagel's λ分析结果：\n",
+    "保守性状的λ值：", round(lambda_conservative$lambda, 3), "\n",
+    "随机性状的λ值：", round(lambda_random$lambda, 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 
 ## Pagel's λ分析结果：
-```
-
-``` r
-cat("保守性状的λ值：", round(lambda_conservative$lambda, 3), "\n")
-```
-
-```
-## 保守性状的λ值： 1
-```
-
-``` r
-cat("随机性状的λ值：", round(lambda_random$lambda, 3), "\n")
-```
-
-```
-## 随机性状的λ值： 0
+## 保守性状的λ值：1
+## 随机性状的λ值：0
 ```
 
 ``` r
 # 进行似然比检验
-cat("\n似然比检验p值：\n")
+cat("\n似然比检验p值：\n",
+    "保守性状：", format.pval(lambda_conservative$P, digits = 3), "\n",
+    "随机性状：", format.pval(lambda_random$P, digits = 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 
 ## 似然比检验p值：
-```
-
-``` r
-cat("保守性状：", format.pval(lambda_conservative$P, digits = 3), "\n")
-```
-
-```
 ## 保守性状：
-```
-
-``` r
-cat("随机性状：", format.pval(lambda_random$P, digits = 3), "\n")
-```
-
-```
 ## 随机性状：
 ```
 
@@ -2426,50 +2084,31 @@ legend("topleft",
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-14-1.png" alt="植物叶片性状的系统发育信号分析和性状距离关系" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-14)植物叶片性状的系统发育信号分析和性状距离关系</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-21-1} 
+
+}
+
+\caption{植物叶片性状的系统发育信号分析和性状距离关系}(\#fig:unnamed-chunk-21)
+\end{figure}
 
 ``` r
-cat("\nMantel检验结果：\n")
+cat("\nMantel检验结果：\n",
+    "保守性状的Mantel r：", round(conservative_cor$statistic, 3), "\n",
+    "保守性状的p值：", format.pval(conservative_cor$signif, digits = 3), "\n",
+    "随机性状的Mantel r：", round(random_cor$statistic, 3), "\n",
+    "随机性状的p值：", format.pval(random_cor$signif, digits = 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 
 ## Mantel检验结果：
-```
-
-``` r
-cat("保守性状的Mantel r：", round(conservative_cor$statistic, 3), "\n")
-```
-
-```
-## 保守性状的Mantel r： 0.337
-```
-
-``` r
-cat("保守性状的p值：", format.pval(conservative_cor$signif, digits = 3), "\n")
-```
-
-```
-## 保守性状的p值： 0.001
-```
-
-``` r
-cat("随机性状的Mantel r：", round(random_cor$statistic, 3), "\n")
-```
-
-```
-## 随机性状的Mantel r： -0.021
-```
-
-``` r
-cat("随机性状的p值：", format.pval(random_cor$signif, digits = 3), "\n")
-```
-
-```
-## 随机性状的p值： 0.659
+## 保守性状的Mantel r：0.337
+## 保守性状的p值：0.001
+## 随机性状的Mantel r：-0.021
+## 随机性状的p值：0.659
 ```
 
 ``` r
@@ -2570,34 +2209,19 @@ print(round(cor_traditional, 3))
 cor_test_np <- cor.test(trait_data$nitrogen, trait_data$photosynthesis)
 cor_test_ns <- cor.test(trait_data$nitrogen, trait_data$sla)
 
-cat("\n传统相关性检验：\n")
+cat("\n传统相关性检验：\n",
+    "氮含量 vs 光合速率：r =", round(cor_test_np$estimate, 3),
+    ", p =", format.pval(cor_test_np$p.value, digits = 3), "\n",
+    "氮含量 vs 比叶重：r =", round(cor_test_ns$estimate, 3),
+    ", p =", format.pval(cor_test_ns$p.value, digits = 3), "\n",
+    sep = "")
 ```
 
 ```
 ## 
 ## 传统相关性检验：
-```
-
-``` r
-cat(
-  "氮含量 vs 光合速率：r =", round(cor_test_np$estimate, 3),
-  ", p =", format.pval(cor_test_np$p.value, digits = 3), "\n"
-)
-```
-
-```
-## 氮含量 vs 光合速率：r = 0.497 , p = 0.00519
-```
-
-``` r
-cat(
-  "氮含量 vs 比叶重：r =", round(cor_test_ns$estimate, 3),
-  ", p =", format.pval(cor_test_ns$p.value, digits = 3), "\n"
-)
-```
-
-```
-## 氮含量 vs 比叶重：r = -0.967 , p = <2e-16
+## 氮含量 vs 光合速率：r =0.497, p =0.00519
+## 氮含量 vs 比叶重：r =-0.967, p =<2e-16
 ```
 
 ``` r
@@ -2620,33 +2244,18 @@ pic_sla <- pic(trait_sla, phy_tree)
 pic_cor_np <- cor.test(pic_nitrogen, pic_photosynthesis)
 pic_cor_ns <- cor.test(pic_nitrogen, pic_sla)
 
-cat("PIC相关性检验：\n")
+cat("PIC相关性检验：\n",
+    "氮含量 vs 光合速率：r =", round(pic_cor_np$estimate, 3),
+    ", p =", format.pval(pic_cor_np$p.value, digits = 3), "\n",
+    "氮含量 vs 比叶重：r =", round(pic_cor_ns$estimate, 3),
+    ", p =", format.pval(pic_cor_ns$p.value, digits = 3), "\n",
+    sep = "")
 ```
 
 ```
 ## PIC相关性检验：
-```
-
-``` r
-cat(
-  "氮含量 vs 光合速率：r =", round(pic_cor_np$estimate, 3),
-  ", p =", format.pval(pic_cor_np$p.value, digits = 3), "\n"
-)
-```
-
-```
-## 氮含量 vs 光合速率：r = 0.597 , p = 0.000635
-```
-
-``` r
-cat(
-  "氮含量 vs 比叶重：r =", round(pic_cor_ns$estimate, 3),
-  ", p =", format.pval(pic_cor_ns$p.value, digits = 3), "\n"
-)
-```
-
-```
-## 氮含量 vs 比叶重：r = -0.92 , p = 1.78e-12
+## 氮含量 vs 光合速率：r =0.597, p =0.000635
+## 氮含量 vs 比叶重：r =-0.92, p =1.78e-12
 ```
 
 ``` r
@@ -2694,10 +2303,14 @@ abline(lm(pic_sla ~ pic_nitrogen),
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-15-1.png" alt="植物叶片性状的系统发育独立对比分析和性状关系" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-15-1)植物叶片性状的系统发育独立对比分析和性状关系</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-22-1} 
+
+}
+
+\caption{植物叶片性状的系统发育独立对比分析和性状关系}(\#fig:unnamed-chunk-22-1)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
@@ -2750,10 +2363,14 @@ photosynthesis_scaled <- (trait_photosynthesis - min(trait_photosynthesis)) /
 tiplabels(pch = 19, col = photosynthesis_colors[round(photosynthesis_scaled * 99) + 1])
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-15-2.png" alt="植物叶片性状的系统发育独立对比分析和性状关系" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-15-2)植物叶片性状的系统发育独立对比分析和性状关系</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-22-2} 
+
+}
+
+\caption{植物叶片性状的系统发育独立对比分析和性状关系}(\#fig:unnamed-chunk-22-2)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
@@ -2860,20 +2477,17 @@ print(cor_matrix)
 ``` r
 # 可视化相关性矩阵
 library(corrplot)
-```
-
-```
-## corrplot 0.95 loaded
-```
-
-``` r
 corrplot(cor_matrix, method = "circle")
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-19-1.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-19-1)功能性状相关性矩阵图和主成分分析双标图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-26-1} 
+
+}
+
+\caption{功能性状相关性矩阵图和主成分分析双标图}(\#fig:unnamed-chunk-26-1)
+\end{figure}
 
 ``` r
 # 进行主成分分析探索性状协变模式
@@ -2893,10 +2507,14 @@ summary(pca_result)
 biplot(pca_result)
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-19-2.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-19-2)功能性状相关性矩阵图和主成分分析双标图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-26-2} 
+
+}
+
+\caption{功能性状相关性矩阵图和主成分分析双标图}(\#fig:unnamed-chunk-26-2)
+\end{figure}
 
 对于经济型谱分析，可以使用线性模型来检验性状间的权衡关系：
 
@@ -2963,10 +2581,14 @@ plot(trait_data$比叶面积, trait_data$光合速率,
 abline(model1, col = "red")
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-20-1.png" alt="叶片经济型谱关系散点图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-20)叶片经济型谱关系散点图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-27-1} 
+
+}
+
+\caption{叶片经济型谱关系散点图}(\#fig:unnamed-chunk-27)
+\end{figure}
 
 **结果解释与生态学意义**：功能性状相关性分析的结果解释需要结合相关系数的数值大小、显著性水平和生态学背景。相关系数$r$的绝对值大小反映了性状间关系的强度：$|r| > 0.7$表示强相关，$0.5 < |r| \leq 0.7$表示中等相关，$0.3 < |r| \leq 0.5$表示弱相关，$|r| \leq 0.3$表示无实质性相关。相关系数的正负号指示了关系的方向：正相关表示性状间协同变化，负相关表示性状间存在权衡关系。
 
@@ -3077,44 +2699,6 @@ print(association_matrix)
 ``` r
 # 构建生态网络
 library(igraph)
-```
-
-```
-## 
-## Attaching package: 'igraph'
-```
-
-```
-## The following object is masked from 'package:vegan':
-## 
-##     diversity
-```
-
-```
-## The following object is masked from 'package:permute':
-## 
-##     permute
-```
-
-```
-## The following objects are masked from 'package:ape':
-## 
-##     degree, edges, mst, ring
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     decompose, spectrum
-```
-
-```
-## The following object is masked from 'package:base':
-## 
-##     union
-```
-
-``` r
 # 设定相关性阈值
 threshold <- 0.3
 adj_matrix <- ifelse(abs(association_matrix) > threshold, 1, 0)
@@ -3149,10 +2733,14 @@ plot(network,
 )
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-22-1.png" alt="种间关联网络图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-22)种间关联网络图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-29-1} 
+
+}
+
+\caption{种间关联网络图}(\#fig:unnamed-chunk-29)
+\end{figure}
 
 **结果解释与生态学意义**：种间相关性分析的结果解释需要结合相关系数的数值、显著性水平和生态学机制。对于种间关联系数$\phi$，通常认为：$|\phi| > 0.3$表示强关联，$0.2 < |\phi| \leq 0.3$表示中等关联，$|\phi| \leq 0.2$表示弱关联。正关联$\phi > 0$表示物种倾向于共同出现，可能源于互利共生或相似的环境需求；负关联$\phi < 0$表示物种相互排斥，可能源于竞争或不同的生态位需求。
 
@@ -3252,10 +2840,14 @@ summary(pca_result)
 plot(pca_result, display = "sites")
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-23-1.png" alt="群落相似性分析的排序图和聚类图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-23-1)群落相似性分析的排序图和聚类图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-30-1} 
+
+}
+
+\caption{群落相似性分析的排序图和聚类图}(\#fig:unnamed-chunk-30-1)
+\end{figure}
 
 ``` r
 # 排序分析 - NMDS
@@ -3264,10 +2856,14 @@ nmds_result <- monoMDS(comm_dist)
 plot(nmds_result, type = "t")
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-23-2.png" alt="群落相似性分析的排序图和聚类图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-23-2)群落相似性分析的排序图和聚类图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-30-2} 
+
+}
+
+\caption{群落相似性分析的排序图和聚类图}(\#fig:unnamed-chunk-30-2)
+\end{figure}
 
 ``` r
 # 聚类分析 - 层次聚类
@@ -3275,10 +2871,14 @@ hc_result <- hclust(comm_dist, method = "average")
 plot(hc_result)
 ```
 
-<div class="figure">
-<img src="05-correlation_files/figure-html/unnamed-chunk-23-3.png" alt="群落相似性分析的排序图和聚类图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-23-3)群落相似性分析的排序图和聚类图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{05-correlation_files/figure-latex/unnamed-chunk-30-3} 
+
+}
+
+\caption{群落相似性分析的排序图和聚类图}(\#fig:unnamed-chunk-30-3)
+\end{figure}
 
 ``` r
 # Beta多样性计算

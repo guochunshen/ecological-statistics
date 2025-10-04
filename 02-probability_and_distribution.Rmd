@@ -1,5 +1,15 @@
 # 概率与分布
 
+```{r include=FALSE}
+# 初始化设置
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
+)
+```
+
 ## 引言
 
 当人工智能的浪潮如春风般拂过科学研究的每一片田野，生态学专业的学生心中或许会浮现这样的疑问：在AI能够驾驭海量数据、揭示复杂模式的今天，我们为何还要深入理解概率与分布这些看似基础的数学概念？难道强大的AI不能为我们处理所有的数据分析任务吗？

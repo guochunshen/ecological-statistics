@@ -1,5 +1,20 @@
 # 参数估计
 
+
+```{r include=FALSE}
+# 初始化设置
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
+)
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
+```
+
+
+
 ## 引言
 
 参数估计构成了统计学理论体系的核心支柱，在生态学研究中发挥着不可替代的方法论作用。面对自然界的复杂性和生态系统的庞大规模，研究者往往难以开展全面观测，此时参数估计便成为从有限样本数据推断总体特征的关键桥梁。

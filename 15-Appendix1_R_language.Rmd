@@ -1,5 +1,18 @@
 # 附录1 R语言编程基础
 
+
+```{r include=FALSE}
+# 初始化设置
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
+)
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
+```
+
 ## R语言介绍
 - 理解为什么生态学专业需要学习R语言
 - 掌握R和RStudio的安装和配置

@@ -1,5 +1,19 @@
 # 简单线性回归模型
 
+
+```{r include=FALSE}
+# 初始化设置
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
+)
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
+```
+
+
 ## 引言
 
 在生态学的数据海洋中，统计建模如同我们手中的数学望远镜，让我们能够穿透自然界的混沌，看清生态现象背后的规律。通过构建数学模型，我们不仅能够描述生态过程，更能识别关键驱动因素并进行科学预测，为生态管理和保护提供坚实的决策支持。

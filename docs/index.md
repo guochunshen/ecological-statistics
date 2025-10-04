@@ -1,7 +1,7 @@
 ---
 title: "生态统计学"
 author: "沈国春、李勤"
-date: "2025-10-02"
+date: "2025-10-04"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]

@@ -1,48 +1,55 @@
 # 参数估计
 
+
+
+
+
+
 ## 引言
 
-参数估计是统计学中的核心概念，也是生态学研究不可或缺的方法论基础。在生态学研究中，我们常常需要了解自然界的各种特征和规律，但由于研究对象的复杂性和规模的庞大性，我们往往无法对总体进行全面的观测。参数估计正是解决这一问题的关键工具，它允许我们通过有限的样本数据来推断总体的特征参数。
+参数估计构成了统计学理论体系的核心支柱，在生态学研究中发挥着不可替代的方法论作用。面对自然界的复杂性和生态系统的庞大规模，研究者往往难以开展全面观测，此时参数估计便成为从有限样本数据推断总体特征的关键桥梁。
 
-生态学研究中的参数可以理解为描述生态系统特征的数量指标，例如种群的平均密度、物种的丰富度、生物量的空间分布等。这些参数构成了我们对生态系统认知的量化基础。参数估计的重要性体现在多个方面：首先，生态学研究通常面对的是规模庞大且难以全面观测的自然系统，如一片森林中的昆虫种群、一个湖泊中的鱼类群落，或是整个流域的水质状况。通过科学的抽样和参数估计方法，我们能够用有限的观测数据来推断整个系统的状态，这大大提高了生态学研究的可行性和效率。
+生态学参数代表着描述生态系统特征的数量化指标，涵盖了种群平均密度、物种丰富度、生物量空间分布等多个维度。这些参数为我们认知生态系统提供了量化基础，其重要性体现在多个层面。生态学研究通常涉及规模庞大且难以全面观测的自然系统，无论是森林中的昆虫种群、湖泊中的鱼类群落，还是流域的水质状况，都需要通过科学抽样和参数估计方法来推断系统整体状态，这显著提升了生态学研究的可行性和效率。
 
-其次，参数估计为生态学决策提供了科学依据。无论是制定物种保护策略、评估生态修复效果，还是预测气候变化对生态系统的影响，都需要基于准确的参数估计。例如，在制定濒危物种保护计划时，我们需要估计该物种的种群数量、分布范围和生存率等参数；在评估湿地恢复工程的效果时，我们需要估计生物多样性的恢复程度和水质改善的幅度。这些参数估计的准确性直接关系到生态保护决策的科学性和有效性。
+在生态决策层面，参数估计为制定物种保护策略、评估生态修复效果、预测气候变化影响等关键决策提供了科学依据。以濒危物种保护为例，准确的种群数量、分布范围和生存率参数估计直接关系到保护计划的科学性；在湿地恢复工程评估中，生物多样性恢复程度和水质改善幅度的参数估计则决定了工程效果评价的可靠性。
 
-第三，参数估计有助于我们发现和理解生态规律。通过估计不同生态系统的参数，我们能够比较不同系统之间的差异，识别影响生态系统结构和功能的关键因素。例如，通过估计不同纬度地区物种多样性的参数，我们发现了物种丰富度随纬度变化的宏观格局；通过估计种群动态参数，我们理解了种群增长、竞争和捕食等基本生态过程。这些规律性的认识不仅深化了我们对自然界的理解，也为生态预测和生态系统管理提供了理论基础。
+参数估计还深化了我们对生态规律的理解。通过比较不同生态系统的参数特征，研究者能够识别影响生态系统结构和功能的关键因素。物种丰富度随纬度变化的宏观格局、种群增长与竞争捕食等基本生态过程，都依赖于准确的参数估计来揭示其内在规律。这些规律性认识不仅丰富了生态学理论体系，也为生态系统管理和生态预测提供了坚实基础。
 
-最后，参数估计培养了生态学研究者的科学思维和严谨态度。在参数估计的过程中，我们需要考虑样本的代表性、估计方法的适用性、估计结果的不确定性等问题。这种批判性思维和严谨的科学态度是生态学研究者必备的素质。一个准确的参数估计不仅需要正确的统计方法，还需要对生态系统的深入理解和合理的假设前提。
+参数估计过程本身也培养了研究者的科学思维和严谨态度。从样本代表性考量到估计方法选择，从结果不确定性评估到假设前提检验，每一个环节都需要批判性思维和严谨的科学态度。一个准确的参数估计不仅依赖于正确的统计方法，更需要研究者对生态系统的深入理解和合理的假设设定。
 
-在生态学实践中，参数估计有着广泛的应用。例如，在研究一片湿地中的两栖动物种群时，研究者不可能将每只青蛙都找出来计数，而是通过设置采样点，记录观察到的个体数量，然后利用这些样本数据来估计整个湿地的种群规模。又如，在研究气候变化对植物物候的影响时，研究者需要估计多年来的平均开花日期等参数，通过比较不同年份的参数变化来揭示气候变暖对植物生命周期的影响。
+在生态实践层面，参数估计应用广泛。湿地两栖动物种群研究中，研究者通过采样点设置和个体计数来估计整个湿地种群规模；气候变化对植物物候影响研究中，多年平均开花日期等参数的估计则揭示了气候变暖对植物生命周期的具体影响。
 
-参数估计方法的发展也为生态学研究提供了更多可能性。从传统的频率学派方法到现代的贝叶斯方法，从简单的点估计到复杂的区间估计，统计方法的进步使得我们能够更准确地描述生态系统的特征，更可靠地预测生态系统的变化。在接下来的章节中，我们将系统地介绍参数估计的基本原理、常用方法及其在生态学中的具体应用，帮助大家掌握这一重要的生态学研究工具。
+随着统计方法的不断发展，从传统频率学派到现代贝叶斯方法，从简单点估计到复杂区间估计，参数估计技术的进步为生态学研究提供了更强大的工具。这些方法使我们能够更精确地描述生态系统特征，更可靠地预测生态系统变化趋势。在后续章节中，我们将系统阐述参数估计的基本原理、常用方法及其生态学应用，帮助读者全面掌握这一重要的生态学研究工具。
 
 
 ## 样本与总体
 
-在生态学研究中，理解总体与样本的关系是进行科学推断的基础。总体是指研究对象的全部个体集合，它代表了我们要研究的完整生态系统或生物群落。例如，当我们研究一片森林中的鸟类群落时，总体就是这片森林中所有鸟类的集合；当我们研究一个湖泊的水质时，总体就是整个湖泊的水体。总体具有明确的边界和特征，但由于生态系统的复杂性和规模，我们往往无法对总体进行全面观测。
+理解总体与样本的关系构成了生态学科学推断的理论基石。总体代表着研究对象的完整个体集合，即我们所要研究的完整生态系统或生物群落。以森林鸟类群落研究为例，总体即为该森林中所有鸟类的集合；在水质研究中，总体则指整个湖泊的水体。尽管总体具有明确的边界和特征，但生态系统的复杂性和庞大规模往往使得全面观测难以实现。
 
-样本则是从总体中抽取的部分个体集合，它作为总体的代表，为我们提供了了解总体特征的窗口。在生态学实践中，由于时间、经费和可行性的限制，我们通常只能观测样本而非总体。例如，要调查一个国家级自然保护区的哺乳动物多样性，我们不可能在保护区的每一寸土地上设置观测点，而是选择具有代表性的样线或样方进行观测。
+样本是从总体中抽取的部分个体集合，作为总体的代表性窗口，为我们了解总体特征提供了可能。生态学实践中，受限于时间、经费和可行性等因素，研究者通常只能观测样本而非总体。例如，在国家级自然保护区哺乳动物多样性调查中，不可能在每一寸土地设置观测点，而是通过代表性样线或样方进行观测。
 
-总体与样本的关系在生态学中具有深刻的实践意义。生态系统的复杂性决定了我们往往只能通过"管中窥豹"的方式来了解自然界的规律。样本的质量直接决定了我们对总体认识的准确性。一个好的样本应该具有代表性，能够反映总体的主要特征和变异模式。在生态学研究中，我们通过样本统计量（如样本均值、样本方差）来估计总体参数（如总体均值、总体方差），这种从样本到总体的推断过程构成了生态统计学的基础。
+总体与样本的关系在生态学中蕴含着深刻的实践意义。生态系统的内在复杂性决定了我们往往需要通过"管中窥豹"的方式来探索自然规律。样本质量直接决定了总体认识的准确性，一个具有代表性的样本应当能够充分反映总体的主要特征和变异模式。在生态统计学框架下，我们通过样本统计量（如样本均值、样本方差）来估计总体参数（如总体均值、总体方差），这种从样本到总体的推断过程构成了生态学研究的统计基础。
 
 ### 抽样方法及其生态学应用
 
-抽样方法是连接总体与样本的桥梁，不同的抽样方法适用于不同的生态学研究场景。随机抽样是最基本的抽样方法，每个个体被抽中的概率相等，这种方法能够保证样本的无偏性。在生态学中，随机抽样适用于相对均质的生境，如一片草地中的植物调查或一个池塘中的浮游生物采样。
+抽样方法构成了连接总体与样本的重要桥梁，不同方法适用于各异的生态学研究场景。随机抽样作为最基本的抽样方法，确保每个个体被抽中的概率相等，从而保证样本的无偏性。这种方法特别适用于相对均质的生境，如草地植物调查或池塘浮游生物采样。
 
-分层抽样则是根据生态系统的异质性特点发展而来的抽样方法。在生态学研究中，生境往往具有明显的空间异质性，如森林中的不同林层、湖泊中的不同水深区域、山地中的不同海拔梯度。分层抽样首先将总体划分为相对同质的层（strata），然后在各层内分别进行随机抽样。这种方法能够提高抽样效率，确保样本能够代表总体的不同组成部分。例如，在调查山地植物多样性时，我们可以按海拔梯度分层，在不同海拔带分别设置样方，这样既能保证样本的代表性，又能揭示物种多样性随海拔变化的规律。
+分层抽样方法则针对生态系统的异质性特点而发展。面对森林不同林层、湖泊不同水深区域、山地不同海拔梯度等空间异质性明显的生境，分层抽样首先将总体划分为相对同质的层（strata），然后在各层内分别进行随机抽样。这种方法显著提高了抽样效率，确保样本能够充分代表总体的不同组成部分。以山地植物多样性调查为例，按海拔梯度分层并在不同海拔带设置样方，既能保证样本代表性，又能揭示物种多样性随海拔变化的规律。
 
-系统抽样是按照固定的空间或时间间隔进行抽样，这种方法在生态学调查中应用广泛。系统抽样的优点在于操作简便、覆盖均匀，特别适用于大尺度的生态调查。例如，在鸟类迁徙路线调查中，可以按照固定的时间间隔进行观测；在森林资源调查中，可以按照规则的网格设置样方。然而，系统抽样需要注意避免与生态系统的周期性模式重合，否则可能导致样本偏差。
+系统抽样按照固定的空间或时间间隔进行抽样，在生态学调查中应用广泛。其优势在于操作简便、覆盖均匀，特别适合大尺度生态调查。鸟类迁徙路线调查中的固定时间间隔观测、森林资源调查中的规则网格样方设置，都是系统抽样的典型应用。然而，这种方法需要注意避免与生态系统的周期性模式重合，以防产生样本偏差。
 
-不同的抽样方法对参数估计的准确性和代表性有着重要影响。在生态学研究中，选择合适的抽样方法需要考虑研究目的、生态系统特征、资源限制等多方面因素。一个好的抽样设计不仅能够提高估计的精度，还能够揭示生态系统的空间格局和时间动态。
+不同抽样方法对参数估计的准确性和代表性产生重要影响。生态学研究中，抽样方法的选择需要综合考虑研究目的、生态系统特征、资源限制等多重因素。一个优秀的抽样设计不仅能够提升估计精度，还能够揭示生态系统的空间格局和时间动态特征。
 
 ### R语言中的抽样实现
 
 在R语言中，我们可以方便地实现各种抽样方法。以下代码展示了不同抽样方法的具体实现：
 
+首先创建模拟的森林鸟类种群数据，为后续抽样方法演示提供基础数据集：
+
 
 ``` r
-# 创建一个模拟的森林鸟类种群数据
-set.seed(123)  # 设置随机种子保证结果可重复
+set.seed(123)
+
 forest_birds <- data.frame(
   species = rep(c("麻雀", "画眉", "啄木鸟", "杜鹃", "黄鹂"), each = 200),
   abundance = c(rpois(200, 50), rpois(200, 30), rpois(200, 10),
@@ -50,9 +57,39 @@ forest_birds <- data.frame(
   habitat = rep(c("林缘", "林内", "林冠", "灌丛", "空地"), each = 200)
 )
 
-# 1. 简单随机抽样
-# 从1000个观测中随机抽取100个样本
+cat("数据集结构概览：\n")
+```
+
+```
+## 数据集结构概览：
+```
+
+``` r
+str(forest_birds)
+```
+
+```
+## 'data.frame':	1000 obs. of  3 variables:
+##  $ species  : chr  "麻雀" "麻雀" "麻雀" "麻雀" ...
+##  $ abundance: int  46 58 38 50 62 53 41 37 58 52 ...
+##  $ habitat  : chr  "林缘" "林缘" "林缘" "林缘" ...
+```
+
+``` r
+cat("\n总体均值：", mean(forest_birds$abundance), "\n")
+```
+
+```
+## 
+## 总体均值： 26.01
+```
+
+接下来演示简单随机抽样方法，这是最基本的抽样技术：
+
+
+``` r
 random_sample <- forest_birds[sample(nrow(forest_birds), 100), ]
+
 cat("随机抽样结果：\n")
 ```
 
@@ -71,37 +108,27 @@ print(table(random_sample$species))
 ```
 
 ``` r
-# 2. 分层抽样
-# 按生境类型分层抽样
-library(dplyr)
+cat("随机抽样均值估计：", mean(random_sample$abundance), "\n")
 ```
 
 ```
-## 
-## Attaching package: 'dplyr'
+## 随机抽样均值估计： 26.64
 ```
 
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
+分层抽样方法针对生态系统的异质性特点，按生境类型分层进行抽样：
 
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
 
 ``` r
+library(dplyr)
+
 stratified_sample <- forest_birds %>%
   group_by(habitat) %>%
-  sample_n(size = 20)  # 每个生境抽取20个样本
-cat("\n分层抽样结果：\n")
+  sample_n(size = 20)
+
+cat("分层抽样结果：\n")
 ```
 
 ```
-## 
 ## 分层抽样结果：
 ```
 
@@ -120,15 +147,24 @@ print(table(stratified_sample$habitat, stratified_sample$species))
 ```
 
 ``` r
-# 3. 系统抽样
-# 按照固定间隔抽样（每10个观测抽取1个）
-systematic_indices <- seq(1, nrow(forest_birds), by = 10)
-systematic_sample <- forest_birds[systematic_indices, ]
-cat("\n系统抽样结果：\n")
+cat("分层抽样均值估计：", mean(stratified_sample$abundance), "\n")
 ```
 
 ```
-## 
+## 分层抽样均值估计： 25.45
+```
+
+系统抽样按照固定间隔进行抽样，操作简便且覆盖均匀：
+
+
+``` r
+systematic_indices <- seq(1, nrow(forest_birds), by = 10)
+systematic_sample <- forest_birds[systematic_indices, ]
+
+cat("系统抽样结果：\n")
+```
+
+```
 ## 系统抽样结果：
 ```
 
@@ -143,45 +179,49 @@ print(table(systematic_sample$species))
 ```
 
 ``` r
-# 比较不同抽样方法的估计效果
-cat("\n不同抽样方法对种群数量均值的估计：\n")
+cat("系统抽样均值估计：", mean(systematic_sample$abundance), "\n")
+```
+
+```
+## 系统抽样均值估计： 26.16
+```
+
+最后比较不同抽样方法的估计效果，评估各种方法的性能差异：
+
+
+``` r
+cat("不同抽样方法对种群数量均值的估计比较：\n",
+    "总体均值：", mean(forest_birds$abundance), "\n",
+    "随机抽样估计：", mean(random_sample$abundance), "\n",
+    "分层抽样估计：", mean(stratified_sample$abundance), "\n",
+    "系统抽样估计：", mean(systematic_sample$abundance), "\n")
+```
+
+```
+## 不同抽样方法对种群数量均值的估计比较：
+##  总体均值： 26.01 
+##  随机抽样估计： 26.64 
+##  分层抽样估计： 25.45 
+##  系统抽样估计： 26.16
+```
+
+``` r
+true_mean <- mean(forest_birds$abundance)
+cat("\n估计偏差分析：\n",
+    "随机抽样偏差：",
+    (mean(random_sample$abundance) - true_mean) / true_mean * 100, "%\n",
+    "分层抽样偏差：",
+    (mean(stratified_sample$abundance) - true_mean) / true_mean * 100, "%\n",
+    "系统抽样偏差：",
+    (mean(systematic_sample$abundance) - true_mean) / true_mean * 100, "%\n")
 ```
 
 ```
 ## 
-## 不同抽样方法对种群数量均值的估计：
-```
-
-``` r
-cat("总体均值：", mean(forest_birds$abundance), "\n")
-```
-
-```
-## 总体均值： 26.01
-```
-
-``` r
-cat("随机抽样估计：", mean(random_sample$abundance), "\n")
-```
-
-```
-## 随机抽样估计： 26.64
-```
-
-``` r
-cat("分层抽样估计：", mean(stratified_sample$abundance), "\n")
-```
-
-```
-## 分层抽样估计： 25.45
-```
-
-``` r
-cat("系统抽样估计：", mean(systematic_sample$abundance), "\n")
-```
-
-```
-## 系统抽样估计： 26.16
+## 估计偏差分析：
+##  随机抽样偏差： 2.422145 %
+##  分层抽样偏差： -2.153018 %
+##  系统抽样偏差： 0.5767013 %
 ```
 
 ### 抽样误差与样本量确定
@@ -190,18 +230,13 @@ cat("系统抽样估计：", mean(systematic_sample$abundance), "\n")
 
 
 ``` r
-# 样本量计算示例
-# 基于期望的精度和置信水平计算所需样本量
 library(pwr)
 
-# 假设我们想要估计鸟类种群数量的均值
-# 已知总体标准差约为15，期望的误差界限为2，置信水平95%
 population_sd <- 15
 desired_margin <- 2
 confidence_level <- 0.95
 
-# 计算所需样本量
-z_value <- qnorm(1 - (1 - confidence_level)/2)
+z_value <- qnorm(1 - (1 - confidence_level) / 2)
 required_sample_size <- ceiling((z_value * population_sd / desired_margin)^2)
 cat("基于精度要求的所需样本量：", required_sample_size, "\n")
 ```
@@ -211,12 +246,10 @@ cat("基于精度要求的所需样本量：", required_sample_size, "\n")
 ```
 
 ``` r
-# 使用pwr包进行样本量计算
-# 对于t检验，计算检测中等效应大小所需的样本量
 effect_size <- 0.5  # 中等效应大小
 power <- 0.8  # 统计功效
 sample_size_t <- pwr.t.test(d = effect_size, power = power,
-                           sig.level = 0.05, type = "two.sample")$n
+                            sig.level = 0.05, type = "two.sample")$n
 cat("基于统计功效的所需样本量：", ceiling(sample_size_t), "\n")
 ```
 
@@ -278,50 +311,44 @@ $$E\left[\sum_{i=1}^{n} (x_i - \bar{x})^2\right] = n\sigma^2 - 2\sigma^2 + \sigm
 
 
 ``` r
-# 验证样本方差的有效性
 set.seed(123)
-simulation_variance <- function(n_sim = 10000, n_sample = 10, true_sigma2 = 25) {
-  # 存储不同估计量的结果
+simulation_variance <- function(n_sim = 10000, n_sample = 10,
+                                true_sigma2 = 25) {
   s2_estimates <- numeric(n_sim)  # 无偏样本方差
   mle_estimates <- numeric(n_sim) # 最大似然估计
 
   for (i in 1:n_sim) {
     sample_data <- rnorm(n_sample, mean = 0, sd = sqrt(true_sigma2))
     s2_estimates[i] <- var(sample_data)  # 无偏估计
-    mle_estimates[i] <- sum((sample_data - mean(sample_data))^2) / n_sample  # 有偏但可能更有效
+    mle_estimates[i] <- sum((sample_data - mean(sample_data))^2) / n_sample
   }
 
-  # 计算方差
   var_s2 <- var(s2_estimates)
   var_mle <- var(mle_estimates)
 
-  # Cramér-Rao下界
   cr_lower_bound <- 2 * true_sigma2^2 / n_sample
 
-  cat("有效性分析结果（样本量n =", n_sample, "）：\n")
-  cat("无偏样本方差的方差：", var_s2, "\n")
-  cat("最大似然估计的方差：", var_mle, "\n")
-  cat("Cramér-Rao下界：", cr_lower_bound, "\n")
-  cat("无偏样本方差是否达到Cramér-Rao下界：", var_s2 >= cr_lower_bound, "\n")
-  cat("最大似然估计是否达到Cramér-Rao下界：", var_mle >= cr_lower_bound, "\n")
-
-  # 比较相对效率
   relative_efficiency <- var_mle / var_s2
-  cat("最大似然估计相对于无偏样本方差的效率：", relative_efficiency, "\n")
+  cat("有效性分析结果（样本量n =", n_sample, "）：\n",
+      "无偏样本方差的方差：", var_s2, "\n",
+      "最大似然估计的方差：", var_mle, "\n",
+      "Cramér-Rao下界：", cr_lower_bound, "\n",
+      "无偏样本方差是否达到Cramér-Rao下界：", var_s2 >= cr_lower_bound, "\n",
+      "最大似然估计是否达到Cramér-Rao下界：", var_mle >= cr_lower_bound, "\n",
+      "最大似然估计相对于无偏样本方差的效率：", relative_efficiency, "\n")
 }
 
-# 运行模拟
 simulation_variance(n_sim = 1000, n_sample = 10)
 ```
 
 ```
 ## 有效性分析结果（样本量n = 10 ）：
-## 无偏样本方差的方差： 139.1433 
-## 最大似然估计的方差： 112.7061 
-## Cramér-Rao下界： 125 
-## 无偏样本方差是否达到Cramér-Rao下界： TRUE 
-## 最大似然估计是否达到Cramér-Rao下界： FALSE 
-## 最大似然估计相对于无偏样本方差的效率： 0.81
+##  无偏样本方差的方差： 139.1433 
+##  最大似然估计的方差： 112.7061 
+##  Cramér-Rao下界： 125 
+##  无偏样本方差是否达到Cramér-Rao下界： TRUE 
+##  最大似然估计是否达到Cramér-Rao下界： FALSE 
+##  最大似然估计相对于无偏样本方差的效率： 0.81
 ```
 
 这个模拟会显示，虽然最大似然估计量是有偏的，但它的方差可能更小，这体现了估计量性质之间的权衡。
@@ -374,22 +401,17 @@ $$\bar{x} \pm z_{\alpha/2} \times \frac{\sigma}{\sqrt{n}}$$
 
 
 ``` r
-# 置信区间构建示例
 set.seed(123)
 
-# 案例1：湿地鸟类种群调查
-# 假设我们调查了30个样点，记录白鹭数量
 egret_counts <- rnorm(30, mean = 1200, sd = 100)
 
-# 基于正态分布的95%置信区间
 mean_egret <- mean(egret_counts)
 sd_egret <- sd(egret_counts)
 n_egret <- length(egret_counts)
 
-# 正态分布置信区间
 z_value <- qnorm(0.975)  # 95%置信水平的z值
-ci_normal <- c(mean_egret - z_value * sd_egret/sqrt(n_egret),
-               mean_egret + z_value * sd_egret/sqrt(n_egret))
+ci_normal <- c(mean_egret - z_value * sd_egret / sqrt(n_egret),
+               mean_egret + z_value * sd_egret / sqrt(n_egret))
 
 cat("基于正态分布的95%置信区间：", ci_normal, "\n")
 ```
@@ -399,10 +421,9 @@ cat("基于正态分布的95%置信区间：", ci_normal, "\n")
 ```
 
 ``` r
-# 基于t分布的95%置信区间
 t_value <- qt(0.975, df = n_egret - 1)  # 95%置信水平的t值
-ci_t <- c(mean_egret - t_value * sd_egret/sqrt(n_egret),
-          mean_egret + t_value * sd_egret/sqrt(n_egret))
+ci_t <- c(mean_egret - t_value * sd_egret / sqrt(n_egret),
+          mean_egret + t_value * sd_egret / sqrt(n_egret))
 
 cat("基于t分布的95%置信区间：", ci_t, "\n")
 ```
@@ -428,17 +449,14 @@ t分布置信区间的生态学意义在于，它为小样本生态学研究提�
 
 
 ``` r
-# 案例2：小样本情况下的置信区间
-# 假设我们只调查了10个样点
 small_sample <- rnorm(10, mean = 1200, sd = 100)
 mean_small <- mean(small_sample)
 sd_small <- sd(small_sample)
 n_small <- length(small_sample)
 
-# 小样本使用t分布
 t_value_small <- qt(0.975, df = n_small - 1)
-ci_small <- c(mean_small - t_value_small * sd_small/sqrt(n_small),
-              mean_small + t_value_small * sd_small/sqrt(n_small))
+ci_small <- c(mean_small - t_value_small * sd_small / sqrt(n_small),
+              mean_small + t_value_small * sd_small / sqrt(n_small))
 
 cat("小样本（n=10）的95%置信区间：", ci_small, "\n")
 ```
@@ -456,25 +474,21 @@ cat("小样本（n=10）的95%置信区间：", ci_small, "\n")
 
 自助法置信区间的生态学意义在于，它为处理复杂生态学数据提供了灵活而强大的统计工具。无论是研究物种-面积关系、种群空间分布格局，还是分析生态系统的非线性响应，自助法都能够提供可靠的置信区间估计。此外，自助法特别适用于小样本情况，在生态学研究中，由于研究对象的稀有性或调查成本的限制，小样本问题普遍存在，自助法为这些情况下的统计推断提供了有效的解决方案。
 
+图\@ref(fig:different-confidence-levels)展示了不同置信水平下区间估计的比较，帮助我们理解置信水平对估计精度的影响。
 
 
 ``` r
-# 自助法置信区间
 library(boot)
 
-# 重新生成数据（确保代码块独立性）
 set.seed(123)
 egret_counts <- rnorm(30, mean = 1200, sd = 100)
 
-# 定义统计量函数
 mean_func <- function(data, indices) {
   return(mean(data[indices]))
 }
 
-# 进行自助抽样
 boot_result <- boot(egret_counts, statistic = mean_func, R = 1000)
 
-# 计算自助法置信区间
 ci_bootstrap <- boot.ci(boot_result, type = "perc", conf = 0.95)
 cat("自助法95%置信区间：", ci_bootstrap$percent[4:5], "\n")
 ```
@@ -484,11 +498,8 @@ cat("自助法95%置信区间：", ci_bootstrap$percent[4:5], "\n")
 ```
 
 ``` r
-# 可视化置信区间
 par(mfrow = c(1, 2))
 
-# 绘制不同置信水平的区间
-# 重新生成数据（确保代码块独立性）
 set.seed(123)
 egret_counts <- rnorm(30, mean = 1200, sd = 100)
 mean_egret <- mean(egret_counts)
@@ -503,9 +514,9 @@ plot(1, type = "n", xlim = c(1100, 1300), ylim = c(0.5, 3.5),
      main = "不同置信水平的区间估计")
 
 for (i in seq_along(confidence_levels)) {
-  z_val <- qnorm(1 - (1 - confidence_levels[i])/2)
-  ci <- c(mean_egret - z_val * sd_egret/sqrt(n_egret),
-          mean_egret + z_val * sd_egret/sqrt(n_egret))
+  z_val <- qnorm(1 - (1 - confidence_levels[i]) / 2)
+  ci <- c(mean_egret - z_val * sd_egret / sqrt(n_egret),
+          mean_egret + z_val * sd_egret / sqrt(n_egret))
   segments(ci[1], i, ci[2], i, lwd = 3, col = colors[i])
   points(mean_egret, i, pch = 19, col = "red")
 }
@@ -513,13 +524,12 @@ for (i in seq_along(confidence_levels)) {
 legend("topright", legend = c("90%", "95%", "99%"),
        col = colors, lwd = 3, title = "置信水平")
 
-# 比较不同样本量的置信区间宽度
 sample_sizes <- c(10, 30, 50, 100)
 ci_widths <- numeric(length(sample_sizes))
 
 for (i in seq_along(sample_sizes)) {
   n <- sample_sizes[i]
-  ci_width <- 2 * qt(0.975, df = n-1) * sd_egret / sqrt(n)
+  ci_width <- 2 * qt(0.975, df = n - 1) * sd_egret / sqrt(n)
   ci_widths[i] <- ci_width
 }
 
@@ -528,10 +538,14 @@ plot(sample_sizes, ci_widths, type = "b", pch = 19,
      main = "样本量对置信区间宽度的影响")
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-6-1.png" alt="不同置信水平的区间估计比较" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-6)不同置信水平的区间估计比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/different-confidence-levels-1} 
+
+}
+
+\caption{不同置信水平的区间估计比较}(\#fig:different-confidence-levels)
+\end{figure}
 
 #### 置信水平的选择
 
@@ -595,83 +609,53 @@ $$\ln L(\theta|x) = \sum_{i=1}^{n} \ln f(x_i|\theta)$$
 
 
 ``` r
-# 最大似然估计示例：森林树木胸径分布
 set.seed(123)
 tree_diameter <- rnorm(50, mean = 25, sd = 5)  # 真实均值25cm，标准差5cm
 
-# 方法1：直接计算最大似然估计
-# 对于正态分布，最大似然估计有解析解
 mu_hat_mle <- mean(tree_diameter)
 sigma2_hat_mle <- sum((tree_diameter - mu_hat_mle)^2) / length(tree_diameter)
 
-cat("最大似然估计结果：\n")
+cat("最大似然估计结果：\n",
+  "总体均值估计：", mu_hat_mle, "cm\n",
+  "总体方差估计：", sigma2_hat_mle, "cm²\n")
 ```
 
 ```
 ## 最大似然估计结果：
+##  总体均值估计： 25.17202 cm
+##  总体方差估计： 21.00226 cm²
 ```
 
 ``` r
-cat("总体均值估计：", mu_hat_mle, "cm\n")
-```
-
-```
-## 总体均值估计： 25.17202 cm
-```
-
-``` r
-cat("总体方差估计：", sigma2_hat_mle, "cm²\n")
-```
-
-```
-## 总体方差估计： 21.00226 cm²
-```
-
-``` r
-# 方法2：使用优化算法求解最大似然估计
-# 定义对数似然函数
 log_likelihood <- function(params, data) {
   mu <- params[1]
   sigma <- params[2]
   # 避免sigma为负值
   if (sigma <= 0) return(-Inf)
   n <- length(data)
-  log_lik <- -n/2 * log(2*pi) - n * log(sigma) - sum((data - mu)^2) / (2 * sigma^2)
+  log_lik <- -n / 2 * log(2 * pi) - n * log(sigma) -
+    sum((data - mu)^2) / (2 * sigma^2)
   return(log_lik)
 }
 
-# 使用optim函数最大化对数似然函数
 initial_params <- c(mean(tree_diameter), sd(tree_diameter))
 result <- optim(initial_params, log_likelihood, data = tree_diameter,
                 control = list(fnscale = -1), method = "L-BFGS-B",
                 lower = c(-Inf, 0.001), upper = c(Inf, Inf))
 
-cat("\n使用优化算法的最大似然估计结果：\n")
+cat("\n使用优化算法的最大似然估计结果：\n",
+  "总体均值估计：", result$par[1], "cm\n",
+  "总体标准差估计：", result$par[2], "cm\n")
 ```
 
 ```
 ## 
 ## 使用优化算法的最大似然估计结果：
+##  总体均值估计： 25.17202 cm
+##  总体标准差估计： 4.582823 cm
 ```
 
 ``` r
-cat("总体均值估计：", result$par[1], "cm\n")
-```
-
-```
-## 总体均值估计： 25.17202 cm
-```
-
-``` r
-cat("总体标准差估计：", result$par[2], "cm\n")
-```
-
-```
-## 总体标准差估计： 4.582823 cm
-```
-
-``` r
-# 验证估计的无偏性
 simulation_study <- function(n_sim = 1000, n_sample = 50) {
   mu_estimates <- numeric(n_sim)
   sigma2_estimates <- numeric(n_sim)
@@ -682,24 +666,23 @@ simulation_study <- function(n_sim = 1000, n_sample = 50) {
     sigma2_estimates[i] <- sum((sample_data - mu_estimates[i])^2) / n_sample
   }
 
-  cat("\n模拟研究结果（", n_sim, "次模拟）：\n")
-  cat("均值估计的平均值：", mean(mu_estimates), "（真实值：25）\n")
-  cat("方差估计的平均值：", mean(sigma2_estimates), "（真实值：25）\n")
-  cat("均值估计的偏差：", mean(mu_estimates) - 25, "\n")
-  cat("方差估计的偏差：", mean(sigma2_estimates) - 25, "\n")
+  cat("\n模拟研究结果（", n_sim, "次模拟）：\n",
+      "均值估计的平均值：", mean(mu_estimates), "（真实值：25）\n",
+      "方差估计的平均值：", mean(sigma2_estimates), "（真实值：25）\n",
+      "均值估计的偏差：", mean(mu_estimates) - 25, "\n",
+      "方差估计的偏差：", mean(sigma2_estimates) - 25, "\n")
 }
 
-# 运行模拟研究
 simulation_study(n_sim = 100)
 ```
 
 ```
 ## 
 ## 模拟研究结果（ 100 次模拟）：
-## 均值估计的平均值： 24.9936 （真实值：25）
-## 方差估计的平均值： 24.30269 （真实值：25）
-## 均值估计的偏差： -0.006404009 
-## 方差估计的偏差： -0.6973116
+##  均值估计的平均值： 24.9936 （真实值：25）
+##  方差估计的平均值： 24.30269 （真实值：25）
+##  均值估计的偏差： -0.006404009 
+##  方差估计的偏差： -0.6973116
 ```
 
 **最大似然估计的生态学意义**
@@ -786,108 +769,48 @@ simulation_study(n_sim = 100)
 
 
 ``` r
-# 矩估计示例：森林树木胸径分布
 set.seed(123)
 tree_diameter <- rnorm(50, mean = 25, sd = 5)  # 真实均值25cm，标准差5cm
 
-# 使用矩估计法估计参数
 mu_hat_moment <- mean(tree_diameter)  # 一阶矩估计
 sigma2_hat_moment <- var(tree_diameter)  # 二阶矩估计（无偏估计）
 
-cat("矩估计结果：\n")
+cat("矩估计结果：\n",
+    "总体均值估计：", mu_hat_moment, "cm\n",
+    "总体方差估计：", sigma2_hat_moment, "cm²\n",
+    "\n不同估计方法的比较：\n",
+    "最大似然估计均值：", mu_hat_mle, "cm\n",
+    "矩估计均值：", mu_hat_moment, "cm\n",
+    "最大似然估计方差：", sigma2_hat_mle, "cm²\n",
+    "矩估计方差：", sigma2_hat_moment, "cm²\n")
 ```
 
 ```
 ## 矩估计结果：
-```
-
-``` r
-cat("总体均值估计：", mu_hat_moment, "cm\n")
-```
-
-```
-## 总体均值估计： 25.17202 cm
-```
-
-``` r
-cat("总体方差估计：", sigma2_hat_moment, "cm²\n")
-```
-
-```
-## 总体方差估计： 21.43088 cm²
-```
-
-``` r
-# 比较不同估计方法
-cat("\n不同估计方法的比较：\n")
-```
-
-```
-## 
+##  总体均值估计： 25.17202 cm
+##  总体方差估计： 21.43088 cm²
+##  
 ## 不同估计方法的比较：
+##  最大似然估计均值： 25.17202 cm
+##  矩估计均值： 25.17202 cm
+##  最大似然估计方差： 21.00226 cm²
+##  矩估计方差： 21.43088 cm²
 ```
 
 ``` r
-cat("最大似然估计均值：", mu_hat_mle, "cm\n")
-```
-
-```
-## 最大似然估计均值： 25.17202 cm
-```
-
-``` r
-cat("矩估计均值：", mu_hat_moment, "cm\n")
-```
-
-```
-## 矩估计均值： 25.17202 cm
-```
-
-``` r
-cat("最大似然估计方差：", sigma2_hat_mle, "cm²\n")
-```
-
-```
-## 最大似然估计方差： 21.00226 cm²
-```
-
-``` r
-cat("矩估计方差：", sigma2_hat_moment, "cm²\n")
-```
-
-```
-## 矩估计方差： 21.43088 cm²
-```
-
-``` r
-# 展示矩估计在生态学中的另一个应用：指数分布参数估计
-# 假设我们研究某种昆虫的寿命分布，服从指数分布
 exp_lifespan <- rexp(100, rate = 0.1)  # 平均寿命10天
 
-# 指数分布的矩估计：λ̂ = 1/x̄
 lambda_hat_moment <- 1 / mean(exp_lifespan)
-cat("\n昆虫寿命分布的矩估计：\n")
+cat("\n昆虫寿命分布的矩估计：\n",
+    "指数分布参数估计：", lambda_hat_moment, "（真实值：0.1）\n",
+    "平均寿命估计：", 1 / lambda_hat_moment, "天（真实值：10天）\n")
 ```
 
 ```
 ## 
 ## 昆虫寿命分布的矩估计：
-```
-
-``` r
-cat("指数分布参数估计：", lambda_hat_moment, "（真实值：0.1）\n")
-```
-
-```
-## 指数分布参数估计： 0.1087193 （真实值：0.1）
-```
-
-``` r
-cat("平均寿命估计：", 1/lambda_hat_moment, "天（真实值：10天）\n")
-```
-
-```
-## 平均寿命估计： 9.197996 天（真实值：10天）
+##  指数分布参数估计： 0.1087193 （真实值：0.1）
+##  平均寿命估计： 9.197996 天（真实值：10天）
 ```
 
 **矩估计的生态学意义**
@@ -966,49 +889,16 @@ $$p(\theta|x) \propto p(x|\theta) \times p(\theta)$$
 
 
 ``` r
-# 贝叶斯估计示例（使用brms包）
-# 需要安装brms包：install.packages("brms")
 library(brms)
-```
 
-```
-## Loading required package: Rcpp
-```
-
-```
-## Loading 'brms' package (version 2.23.0). Useful instructions
-## can be found by typing help('brms'). A more detailed introduction
-## to the package is available through vignette('brms_overview').
-```
-
-```
-## 
-## Attaching package: 'brms'
-```
-
-```
-## The following object is masked from 'package:stats':
-## 
-##     ar
-```
-
-``` r
-# 准备数据
 bayes_data <- data.frame(diameter = tree_diameter)
 
-# 使用brms拟合贝叶斯模型
-# 模型公式：diameter ~ 1 表示只包含截距项（均值）
-# 先验设置：
-# - 截距（均值）的先验：normal(22, 3)，表示均值为22，标准差为3
-# - 标准差sigma的先验：student_t(3, 0, 5)，使用学生t分布作为稳健先验
 
-# 定义先验
 priors <- c(
   prior(normal(22, 3), class = Intercept),  # 均值的先验
   prior(student_t(3, 0, 5), class = sigma)  # 标准差的先验
 )
 
-# 拟合模型
 fit_brm <- brm(
   formula = diameter ~ 1,           # 模型公式
   data = bayes_data,                # 数据
@@ -1022,19 +912,11 @@ fit_brm <- brm(
 ```
 
 ```
-## Compiling Stan program...
-```
-
-```
-## Start sampling
-```
-
-```
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 ## Chain 1: 
-## Chain 1: Gradient evaluation took 2.7e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.27 seconds.
+## Chain 1: Gradient evaluation took 1.8e-05 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
 ## Chain 1: Adjust your expectations accordingly!
 ## Chain 1: 
 ## Chain 1: 
@@ -1058,8 +940,8 @@ fit_brm <- brm(
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 ## Chain 2: 
-## Chain 2: Gradient evaluation took 5e-06 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+## Chain 2: Gradient evaluation took 7e-06 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.07 seconds.
 ## Chain 2: Adjust your expectations accordingly!
 ## Chain 2: 
 ## Chain 2: 
@@ -1076,15 +958,15 @@ fit_brm <- brm(
 ## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 2: 
-## Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)
+## Chain 2:  Elapsed Time: 0.014 seconds (Warm-up)
 ## Chain 2:                0.014 seconds (Sampling)
-## Chain 2:                0.027 seconds (Total)
+## Chain 2:                0.028 seconds (Total)
 ## Chain 2: 
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
 ## Chain 3: 
-## Chain 3: Gradient evaluation took 4e-06 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+## Chain 3: Gradient evaluation took 6e-06 seconds
+## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 ## Chain 3: Adjust your expectations accordingly!
 ## Chain 3: 
 ## Chain 3: 
@@ -1108,8 +990,8 @@ fit_brm <- brm(
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
 ## Chain 4: 
-## Chain 4: Gradient evaluation took 4e-06 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+## Chain 4: Gradient evaluation took 6e-06 seconds
+## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 ## Chain 4: Adjust your expectations accordingly!
 ## Chain 4: 
 ## Chain 4: 
@@ -1133,7 +1015,6 @@ fit_brm <- brm(
 ```
 
 ``` r
-# 查看模型摘要
 cat("贝叶斯模型拟合结果：\n")
 ```
 
@@ -1167,131 +1048,65 @@ print(summary(fit_brm))
 ```
 
 ``` r
-# 提取后验分布样本
 posterior_samples <- as.data.frame(fit_brm)
 
-# 计算后验统计量
 posterior_mean <- mean(posterior_samples$b_Intercept)
 posterior_sd <- mean(posterior_samples$sigma)
 
-cat("\n贝叶斯估计结果：\n")
+cat("\n贝叶斯估计结果：\n",
+    "后验均值：", round(posterior_mean, 2), "cm\n",
+    "后验标准差：", round(posterior_sd, 2), "cm\n")
 ```
 
 ```
 ## 
 ## 贝叶斯估计结果：
+##  后验均值： 25 cm
+##  后验标准差： 4.72 cm
 ```
 
 ``` r
-cat("后验均值：", round(posterior_mean, 2), "cm\n")
-```
-
-```
-## 后验均值： 25 cm
-```
-
-``` r
-cat("后验标准差：", round(posterior_sd, 2), "cm\n")
-```
-
-```
-## 后验标准差： 4.72 cm
-```
-
-``` r
-# 可视化后验分布
 par(mfrow = c(1, 2))
 
-# 均值的后验分布
 hist(posterior_samples$b_Intercept, breaks = 30,
      xlab = "均值 (cm)", ylab = "密度",
      main = "均值的后验分布", col = "lightblue")
 abline(v = posterior_mean, col = "red", lwd = 2)
 
-# 标准差的后验分布
 hist(posterior_samples$sigma, breaks = 30,
      xlab = "标准差 (cm)", ylab = "密度",
      main = "标准差的后验分布", col = "lightgreen")
 abline(v = posterior_sd, col = "red", lwd = 2)
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-9-1.png" alt="贝叶斯估计的后验分布" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-9)贝叶斯估计的后验分布</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-8-1} 
+
+}
+
+\caption{贝叶斯估计的后验分布}(\#fig:unnamed-chunk-8)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
 
-# 计算95%可信区间
 ci_mean <- quantile(posterior_samples$b_Intercept, probs = c(0.025, 0.975))
 ci_sigma <- quantile(posterior_samples$sigma, probs = c(0.025, 0.975))
 
-cat("\n95%可信区间：\n")
+cat("\n95%可信区间：\n",
+    "均值：[", round(ci_mean[1], 2), ", ", round(ci_mean[2], 2), "] cm\n",
+    "标准差：[", round(ci_sigma[1], 2), ", ", round(ci_sigma[2], 2), "] cm\n")
 ```
 
 ```
 ## 
 ## 95%可信区间：
+##  均值：[ 23.65 ,  26.29 ] cm
+##  标准差：[ 3.86 ,  5.78 ] cm
 ```
 
-``` r
-cat("均值：[", round(ci_mean[1], 2), ", ", round(ci_mean[2], 2), "] cm\n")
-```
-
-```
-## 均值：[ 23.65 ,  26.29 ] cm
-```
-
-``` r
-cat("标准差：[", round(ci_sigma[1], 2), ", ", round(ci_sigma[2], 2), "] cm\n")
-```
-
-```
-## 标准差：[ 3.86 ,  5.78 ] cm
-```
-
-``` r
-# 贝叶斯估计的核心思想说明
-cat("\n贝叶斯估计的核心思想：\n")
-```
-
-```
-## 
-## 贝叶斯估计的核心思想：
-```
-
-``` r
-cat("1. 结合先验信息和样本信息\n")
-```
-
-```
-## 1. 结合先验信息和样本信息
-```
-
-``` r
-cat("2. 得到参数的后验分布而非点估计\n")
-```
-
-```
-## 2. 得到参数的后验分布而非点估计
-```
-
-``` r
-cat("3. 提供完整的参数不确定性信息\n")
-```
-
-```
-## 3. 提供完整的参数不确定性信息
-```
-
-``` r
-cat("4. 特别适用于有先验知识的生态学问题\n")
-```
-
-```
-## 4. 特别适用于有先验知识的生态学问题
-```
+贝叶斯估计的核心思想包括：结合先验信息和样本信息、得到参数的后验分布而非点估计、提供完整的参数不确定性信息，以及特别适用于有先验知识的生态学问题。
 
 **贝叶斯估计的生态学意义**
 
@@ -1480,15 +1295,12 @@ Lincoln-Petersen估计的关键假设包括：
 
 
 ``` r
-# Lincoln-Petersen估计的R实现
-# 示例：湿地蛙类种群估计
-M <- 100  # 第一次标记的个体数
-C <- 80   # 第二次捕获的总个体数
-R <- 20   # 第二次捕获中标记个体的数量
+marked_first <- 100  # 第一次标记的个体数
+captured_second <- 80   # 第二次捕获的总个体数
+recaptured_marked <- 20   # 第二次捕获中标记个体的数量
 
-# Lincoln-Petersen估计
-N_lp <- (M * C) / R
-cat("Lincoln-Petersen估计的种群数量：", N_lp, "只\n")
+population_lp <- (marked_first * captured_second) / recaptured_marked
+cat("Lincoln-Petersen估计的种群数量：", population_lp, "只\n")
 ```
 
 ```
@@ -1496,10 +1308,9 @@ cat("Lincoln-Petersen估计的种群数量：", N_lp, "只\n")
 ```
 
 ``` r
-# 计算置信区间（Chapman修正）
-# Chapman修正可以减少小样本偏差
-N_chapman <- ((M + 1) * (C + 1)) / (R + 1) - 1
-cat("Chapman修正后的种群估计：", N_chapman, "只\n")
+population_chapman <- ((marked_first + 1) * (captured_second + 1)) /
+  (recaptured_marked + 1) - 1
+cat("Chapman修正后的种群估计：", population_chapman, "只\n")
 ```
 
 ```
@@ -1507,10 +1318,11 @@ cat("Chapman修正后的种群估计：", N_chapman, "只\n")
 ```
 
 ``` r
-# 计算标准误和95%置信区间
-se_N <- sqrt((M^2 * C * (C - R)) / (R^3))
-ci_lower <- N_lp - 1.96 * se_N
-ci_upper <- N_lp + 1.96 * se_N
+standard_error_population <- sqrt((marked_first^2 * captured_second *
+                                     (captured_second - recaptured_marked)) /
+                                     (recaptured_marked^3))
+ci_lower <- population_lp - 1.96 * standard_error_population
+ci_upper <- population_lp + 1.96 * standard_error_population
 cat("95%置信区间：[", ci_lower, ",", ci_upper, "]\n")
 ```
 
@@ -1531,9 +1343,6 @@ Schnabel方法的主要优势在于它能够利用多次捕获的信息，提高
 
 
 ``` r
-# Schnabel多重标记估计的R实现
-# 示例：多次标记重捕数据
-# 数据格式：每次捕获的标记个体数(M_t)、总捕获数(C_t)、重捕标记数(R_t)
 capture_data <- data.frame(
   session = 1:5,
   M_t = c(0, 50, 120, 180, 240),  # 累计标记数
@@ -1541,12 +1350,11 @@ capture_data <- data.frame(
   R_t = c(0, 10, 25, 35, 40)      # 本次捕获中标记个体数
 )
 
-# Schnabel估计
 numerator <- sum(capture_data$M_t * capture_data$C_t)
 denominator <- sum(capture_data$R_t)
-N_schnabel <- numerator / denominator
+population_schnabel <- numerator / denominator
 
-cat("Schnabel估计的种群数量：", N_schnabel, "只\n")
+cat("Schnabel估计的种群数量：", population_schnabel, "只\n")
 ```
 
 ```
@@ -1554,11 +1362,11 @@ cat("Schnabel估计的种群数量：", N_schnabel, "只\n")
 ```
 
 ``` r
-# 计算每次捕获的估计值（用于检验稳定性）
 cumulative_estimates <- numeric(nrow(capture_data))
 for (i in 2:nrow(capture_data)) {
-  cumulative_estimates[i] <- sum(capture_data$M_t[1:i] * capture_data$C_t[1:i]) /
-                            sum(capture_data$R_t[1:i])
+  cumulative_estimates[i] <- sum(capture_data$M_t[1:i] *
+                                 capture_data$C_t[1:i]) /
+                                 sum(capture_data$R_t[1:i])
 }
 
 cat("各次捕获后的累计估计值：\n")
@@ -1577,17 +1385,20 @@ print(cumulative_estimates)
 ```
 
 ``` r
-# 可视化估计的稳定性
 plot(capture_data$session, cumulative_estimates, type = "b",
      xlab = "捕获次数", ylab = "种群估计",
      main = "Schnabel估计的稳定性检验")
-abline(h = N_schnabel, col = "red", lty = 2)
+abline(h = population_schnabel, col = "red", lty = 2)
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-11-1.png" alt="Schnabel估计的稳定性检验" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-11)Schnabel估计的稳定性检验</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-10-1} 
+
+}
+
+\caption{Schnabel估计的稳定性检验}(\#fig:unnamed-chunk-10)
+\end{figure}
 
 **Jolly-Seber模型**是标记重捕法中最复杂和最强大的方法，专门用于处理开放种群的情况。开放种群是指存在出生、死亡、迁入和迁出的种群，这在真实的生态系统中更为常见。Jolly-Seber模型不仅能够估计种群大小，还能够估计存活率、迁入率等种群动态参数。
 
@@ -1601,41 +1412,8 @@ Jolly-Seber模型的估计过程相对复杂，通常需要专门的统计软件
 
 
 ``` r
-# Jolly-Seber模型的R实现（使用marked包）
-# 需要安装marked包：install.packages("marked")
 library(marked)
-```
 
-```
-## Loading required package: lme4
-```
-
-```
-## Loading required package: Matrix
-```
-
-```
-## 
-## Attaching package: 'lme4'
-```
-
-```
-## The following object is masked from 'package:brms':
-## 
-##     ngrps
-```
-
-```
-## Loading required package: parallel
-```
-
-```
-## This is marked 1.2.8
-```
-
-``` r
-# 创建标记重捕数据格式
-# 示例数据：5次捕获，每次捕获的个体标记情况
 capture_history <- c(
   "10000", "01000", "00100", "00010", "00001",
   "11000", "10100", "10010", "10001",
@@ -1644,52 +1422,27 @@ capture_history <- c(
   "00011"
 )
 
-# 创建数据框
 js_data <- data.frame(
   ch = capture_history,
   freq = c(20, 18, 15, 12, 10, 8, 7, 6, 5, 6, 5, 4, 4, 3, 2)
 )
 
-# 拟合Jolly-Seber模型
-# 注意：实际应用中需要更复杂的数据准备和模型设定
-cat("Jolly-Seber模型需要专门的数据格式和模型设定\n")
+cat("Jolly-Seber模型需要专门的数据格式和模型设定\n",
+    "在实际应用中，建议使用RMark包进行完整的Jolly-Seber分析\n")
 ```
 
 ```
 ## Jolly-Seber模型需要专门的数据格式和模型设定
+##  在实际应用中，建议使用RMark包进行完整的Jolly-Seber分析
 ```
 
 ``` r
-cat("在实际应用中，建议使用RMark包进行完整的Jolly-Seber分析\n")
-```
-
-```
-## 在实际应用中，建议使用RMark包进行完整的Jolly-Seber分析
-```
-
-``` r
-# 使用RMark包的示例（需要安装RMark）
-# library(RMark)
-# # 准备数据
-# data <- process.data(js_data, model="Jolly")
-# # 创建模型
-# ddl <- make.design.data(data)
-# # 拟合模型
-# model <- mark(data, ddl, model.parameters=list(Phi=list(formula=~1),
-#                                                p=list(formula=~1),
-#                                                pent=list(formula=~1)))
-# # 查看结果
-# summary(model)
-
-# 简化示例：使用基本统计方法估计存活率
-# 假设我们有每次捕获的标记个体数和重捕数
 marked_counts <- c(50, 45, 40, 35, 30)  # 每次捕获的标记个体数
 recaptures <- c(NA, 10, 8, 7, 6)        # 每次捕获的重捕数
 
-# 计算存活率（简化方法）
-survival_rates <- numeric(length(marked_counts)-1)
+survival_rates <- numeric(length(marked_counts) - 1)
 for (i in 2:length(marked_counts)) {
-  survival_rates[i-1] <- recaptures[i] / marked_counts[i-1]
+  survival_rates[i - 1] <- recaptures[i] / marked_counts[i - 1]
 }
 
 cat("简化的存活率估计：\n")
@@ -1741,49 +1494,35 @@ $$N = \frac{100,000}{50} \times 8 = 16,000$$
 
 
 ``` r
-# 样方法的R实现
-# 示例：草原草本植物种群估计
+area_total <- 100000
 
-# 研究区域总面积（平方米）
-A <- 100000
-
-# 样方数据
 quadrat_area <- 1  # 每个样方面积（平方米）
 quadrat_count <- 50  # 样方数量
 
-# 模拟样方内植物数量（正态分布）
 set.seed(123)
 plants_per_quadrat <- rnorm(quadrat_count, mean = 8, sd = 2)
 plants_per_quadrat <- round(pmax(plants_per_quadrat, 0))  # 确保非负
 
-# 计算平均每样方个体数
 mean_plants <- mean(plants_per_quadrat)
 
-# 样方估计
-N_quadrat <- (A / (quadrat_area * quadrat_count)) * sum(plants_per_quadrat)
+population_quadrat <- (area_total / (quadrat_area * quadrat_count)) *
+  sum(plants_per_quadrat)
 
-cat("样方估计的种群数量：", round(N_quadrat), "株\n")
+cat("样方估计的种群数量：", round(population_quadrat), "株\n",
+  "平均每样方个体数：", round(mean_plants, 2), "株\n")
 ```
 
 ```
 ## 样方估计的种群数量： 810000 株
+##  平均每样方个体数： 8.1 株
 ```
 
 ``` r
-cat("平均每样方个体数：", round(mean_plants, 2), "株\n")
-```
-
-```
-## 平均每样方个体数： 8.1 株
-```
-
-``` r
-# 计算置信区间
 se_mean <- sd(plants_per_quadrat) / sqrt(quadrat_count)
-ci_lower <- (A / (quadrat_area * quadrat_count)) *
-            (sum(plants_per_quadrat) - 1.96 * se_mean * quadrat_count)
-ci_upper <- (A / (quadrat_area * quadrat_count)) *
-            (sum(plants_per_quadrat) + 1.96 * se_mean * quadrat_count)
+ci_lower <- (area_total / (quadrat_area * quadrat_count)) *
+  (sum(plants_per_quadrat) - 1.96 * se_mean * quadrat_count)
+ci_upper <- (area_total / (quadrat_area * quadrat_count)) *
+  (sum(plants_per_quadrat) + 1.96 * se_mean * quadrat_count)
 
 cat("95%置信区间：[", round(ci_lower), ",", round(ci_upper), "]\n")
 ```
@@ -1793,7 +1532,6 @@ cat("95%置信区间：[", round(ci_lower), ",", round(ci_upper), "]\n")
 ```
 
 ``` r
-# 可视化样方数据分布
 hist(plants_per_quadrat, breaks = 10,
      xlab = "每样方个体数", ylab = "频数",
      main = "样方内植物数量分布")
@@ -1802,10 +1540,14 @@ legend("topright", legend = paste("均值 =", round(mean_plants, 2)),
        col = "red", lwd = 2)
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-13-1.png" alt="样方内植物数量分布" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-13)样方内植物数量分布</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-12-1} 
+
+}
+
+\caption{样方内植物数量分布}(\#fig:unnamed-chunk-12)
+\end{figure}
 
 **样线法**是面积取样法的另一种形式，特别适用于调查移动性较强的动物或在大尺度区域进行调查。研究人员沿着预设的样线（transect）行进，记录在样线两侧一定宽度内观察到的个体数量。
 
@@ -1824,23 +1566,17 @@ $$N = \frac{A}{2wL} \times n$$
 
 
 ``` r
-# 样线法的R实现
-# 示例：森林鸟类种群估计
+area_total <- 100
 
-# 研究区域总面积（平方公里）
-A <- 100
+transect_length <- 50  # 样线总长度（公里）
+transect_width <- 0.1  # 样线单侧宽度（公里）
 
-# 样线参数
-L <- 50  # 样线总长度（公里）
-w <- 0.1  # 样线单侧宽度（公里）
-
-# 观察到的个体总数
 n_observed <- 60
 
-# 样线估计
-N_transect <- (A / (2 * w * L)) * n_observed
+population_transect <- (area_total / (2 * transect_width * transect_length)) *
+  n_observed
 
-cat("样线法估计的种群数量：", round(N_transect), "只\n")
+cat("样线法估计的种群数量：", round(population_transect), "只\n")
 ```
 
 ```
@@ -1848,12 +1584,10 @@ cat("样线法估计的种群数量：", round(N_transect), "只\n")
 ```
 
 ``` r
-# 考虑发现概率校正（简化示例）
-# 假设通过距离抽样法估计平均发现概率为0.7
 detection_prob <- 0.7
-N_corrected <- N_transect / detection_prob
+population_corrected <- population_transect / detection_prob
 
-cat("校正后的种群估计：", round(N_corrected), "只\n")
+cat("校正后的种群估计：", round(population_corrected), "只\n")
 ```
 
 ```
@@ -1861,26 +1595,21 @@ cat("校正后的种群估计：", round(N_corrected), "只\n")
 ```
 
 ``` r
-# 计算不同发现概率下的敏感性分析
 detection_probs <- seq(0.5, 0.9, 0.1)
-population_estimates <- N_transect / detection_probs
+population_estimates <- population_transect / detection_probs
 
-cat("\n不同发现概率下的种群估计：\n")
+output_lines <- "\n不同发现概率下的种群估计：\n"
+for (i in seq_along(detection_probs)) {
+  output_lines <- paste0(output_lines,
+                        sprintf("发现概率 %.1f: %.0f 只\n",
+                                detection_probs[i], population_estimates[i]))
+}
+cat(output_lines)
 ```
 
 ```
 ## 
 ## 不同发现概率下的种群估计：
-```
-
-``` r
-for (i in seq_along(detection_probs)) {
-  cat(sprintf("发现概率 %.1f: %.0f 只\n",
-              detection_probs[i], population_estimates[i]))
-}
-```
-
-```
 ## 发现概率 0.5: 1200 只
 ## 发现概率 0.6: 1000 只
 ## 发现概率 0.7: 857 只
@@ -1889,18 +1618,21 @@ for (i in seq_along(detection_probs)) {
 ```
 
 ``` r
-# 可视化敏感性分析
 plot(detection_probs, population_estimates, type = "b",
      xlab = "发现概率", ylab = "种群估计",
      main = "样线法估计的敏感性分析")
-points(0.7, N_corrected, col = "red", pch = 19, cex = 2)
+points(0.7, population_corrected, col = "red", pch = 19, cex = 2)
 legend("topright", legend = "基准估计", col = "red", pch = 19)
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-14-1.png" alt="样线法估计的敏感性分析" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-14)样线法估计的敏感性分析</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-13-1} 
+
+}
+
+\caption{样线法估计的敏感性分析}(\#fig:unnamed-chunk-13)
+\end{figure}
 
 **生态学意义**：面积取样法在植物生态学、无脊椎动物生态学和某些脊椎动物生态学中具有广泛的应用。它不仅是估计种群数量的重要工具，还为研究种群的空间分布、种间关系、生境偏好等生态学问题提供了数据基础。在生态监测中，面积取样法被用于长期跟踪种群的变化趋势；在保护生物学中，它被用于评估保护措施的效果；在生态恢复中，它被用于监测恢复过程的进展。
 
@@ -1942,34 +1674,8 @@ $$N = \frac{100}{2 \times 0.1 \times 50} \times \frac{60}{0.7} = \frac{100}{10} 
 
 
 ``` r
-# 距离抽样法的R实现
-# 需要安装Distance包：install.packages("Distance")
 library(Distance)
-```
 
-```
-## Loading required package: mrds
-```
-
-```
-## This is mrds 3.0.1
-## Built: R 4.3.3; ; 2025-10-02 03:32:18 UTC; unix
-```
-
-```
-## 
-## Attaching package: 'Distance'
-```
-
-```
-## The following object is masked from 'package:mrds':
-## 
-##     create.bins
-```
-
-``` r
-# 示例：森林鹿类种群估计
-# 模拟观测距离数据（单位：米）
 set.seed(123)
 distance_data <- data.frame(
   distance = c(runif(20, 0, 20),   # 近距离观测
@@ -1977,16 +1683,11 @@ distance_data <- data.frame(
                runif(15, 50, 100)) # 远距离观测
 )
 
-# 研究区域参数
-A <- 100  # 总面积（平方公里）
-L <- 50   # 样线总长度（公里）
-w <- 0.1  # 最大观测宽度（公里）
+area_total <- 100  # 总面积（平方公里）
+transect_length <- 50   # 样线总长度（公里）
+transect_width <- 0.1  # 最大观测宽度（公里）
 
-# 使用Distance包进行距离抽样分析
-# 注意：实际应用中需要更完整的数据准备
 
-# 简化实现：手动拟合发现函数
-# 使用半正态发现函数
 fit_halfnormal <- function(distances, w_max) {
   # 半正态发现函数：g(x) = exp(-x^2/(2*sigma^2))
   # 使用最大似然估计sigma
@@ -1994,34 +1695,25 @@ fit_halfnormal <- function(distances, w_max) {
   return(sigma_hat)
 }
 
-# 拟合发现函数
-sigma <- fit_halfnormal(distance_data$distance, w * 1000)  # 转换为米
+sigma <- fit_halfnormal(distance_data$distance, transect_width * 1000)  # 转换为米
 
-# 计算平均发现概率
-# 对于半正态函数，平均发现概率 = sqrt(2/pi) * sigma / w
-P_a <- sqrt(2/pi) * sigma / (w * 1000)
+detection_prob_avg <- sqrt(2 / pi) * sigma / (transect_width * 1000)
 
-cat("半正态发现函数参数sigma：", round(sigma, 2), "米\n")
+cat("半正态发现函数参数sigma：", round(sigma, 2), "米\n",
+  "平均发现概率：", round(detection_prob_avg, 3), "\n")
 ```
 
 ```
 ## 半正态发现函数参数sigma： 43.82 米
+##  平均发现概率： 0.35
 ```
 
 ``` r
-cat("平均发现概率：", round(P_a, 3), "\n")
-```
-
-```
-## 平均发现概率： 0.35
-```
-
-``` r
-# 距离抽样估计
 n_observed <- nrow(distance_data)
-N_distance <- (A / (2 * w * L)) * (n_observed / P_a)
+population_distance <- (area_total / (2 * transect_width * transect_length)) *
+  (n_observed / detection_prob_avg)
 
-cat("距离抽样法估计的种群数量：", round(N_distance), "只\n")
+cat("距离抽样法估计的种群数量：", round(population_distance), "只\n")
 ```
 
 ```
@@ -2029,8 +1721,7 @@ cat("距离抽样法估计的种群数量：", round(N_distance), "只\n")
 ```
 
 ``` r
-# 可视化发现函数
-x_vals <- seq(0, w * 1000, length.out = 100)
+x_vals <- seq(0, transect_width * 1000, length.out = 100)
 g_x <- exp(-x_vals^2 / (2 * sigma^2))
 
 plot(x_vals, g_x, type = "l", lwd = 2,
@@ -2042,172 +1733,14 @@ legend("topright", legend = paste("sigma =", round(sigma, 2)),
        lty = 1, lwd = 2)
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-15-1.png" alt="半正态发现函数" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-15)半正态发现函数</p>
-</div>
+\begin{figure}
 
-``` r
-# 使用Distance包的完整分析（示例代码）
-cat("\n使用Distance包的完整分析示例：\n")
-```
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-14-1} 
 
-```
-## 
-## 使用Distance包的完整分析示例：
-```
+}
 
-``` r
-cat("# 准备数据\n")
-```
-
-```
-## # 准备数据
-```
-
-``` r
-cat("ds_data <- data.frame(\n")
-```
-
-```
-## ds_data <- data.frame(
-```
-
-``` r
-cat("  object = 1:n_observed,\n")
-```
-
-```
-##   object = 1:n_observed,
-```
-
-``` r
-cat("  distance = distance_data$distance,\n")
-```
-
-```
-##   distance = distance_data$distance,
-```
-
-``` r
-cat("  size = rep(1, n_observed),\n")
-```
-
-```
-##   size = rep(1, n_observed),
-```
-
-``` r
-cat("  Region.Label = rep('study_area', n_observed),\n")
-```
-
-```
-##   Region.Label = rep('study_area', n_observed),
-```
-
-``` r
-cat("  Area = A\n")
-```
-
-```
-##   Area = A
-```
-
-``` r
-cat(")\n\n")
-```
-
-```
-## )
-```
-
-``` r
-cat("# 创建样线数据\n")
-```
-
-```
-## # 创建样线数据
-```
-
-``` r
-cat("sample_data <- data.frame(\n")
-```
-
-```
-## sample_data <- data.frame(
-```
-
-``` r
-cat("  Region.Label = 'study_area',\n")
-```
-
-```
-##   Region.Label = 'study_area',
-```
-
-``` r
-cat("  Sample.Label = 'transect_1',\n")
-```
-
-```
-##   Sample.Label = 'transect_1',
-```
-
-``` r
-cat("  Effort = L\n")
-```
-
-```
-##   Effort = L
-```
-
-``` r
-cat(")\n\n")
-```
-
-```
-## )
-```
-
-``` r
-cat("# 拟合距离抽样模型\n")
-```
-
-```
-## # 拟合距离抽样模型
-```
-
-``` r
-cat("model <- ds(ds_data, key = 'hn', adjustment = NULL,\n")
-```
-
-```
-## model <- ds(ds_data, key = 'hn', adjustment = NULL,
-```
-
-``` r
-cat("            sample_table = sample_data,\n")
-```
-
-```
-##             sample_table = sample_data,
-```
-
-``` r
-cat("            region_table = data.frame(Region.Label = 'study_area', Area = A))\n")
-```
-
-```
-##             region_table = data.frame(Region.Label = 'study_area', Area = A))
-```
-
-``` r
-cat("summary(model)\n")
-```
-
-```
-## summary(model)
-```
+\caption{半正态发现函数}(\#fig:unnamed-chunk-14)
+\end{figure}
 
 **生态学意义**：距离抽样法在野生动物生态学和保护生物学中具有重要的应用价值。它特别适用于调查分布范围广、密度较低的动物种群，如大型哺乳动物、鸟类和海洋哺乳动物。在保护生物学中，距离抽样法被用于监测濒危物种的种群趋势；在野生动物管理中，它被用于评估种群状况和制定管理策略；在生态监测中，它被用于长期跟踪种群的变化。
 
@@ -2247,15 +1780,10 @@ $$C_i = q(N - K_i)$$
 
 
 ``` r
-# 去除法的R实现
-# 示例：池塘鱼类种群估计
-
-# 连续捕获数据
 captures <- c(80, 60, 40)  # 三次捕获的个体数
 
-# 一次去除法（基于第一次和第二次捕获）
-N_single_removal <- captures[1]^2 / (captures[1] - captures[2])
-cat("一次去除法估计的种群数量：", round(N_single_removal), "条\n")
+population_single_removal <- captures[1]^2 / (captures[1] - captures[2])
+cat("一次去除法估计的种群数量：", round(population_single_removal), "条\n")
 ```
 
 ```
@@ -2263,44 +1791,33 @@ cat("一次去除法估计的种群数量：", round(N_single_removal), "条\n")
 ```
 
 ``` r
-# 多次去除法（线性回归方法）
-# 累积捕获量
 cumulative_captures <- cumsum(captures)
-K <- c(0, cumulative_captures[1:2])  # 前i-1次累积捕获量
+previous_captures <- c(0, cumulative_captures[1:2])  # 前i-1次累积捕获量
 
-# 线性回归：C_i = q(N - K_i)
-# 即：C_i = qN - qK_i
-model <- lm(captures ~ K)
-q <- -coef(model)[2]  # 捕获效率系数
-N_multiple_removal <- coef(model)[1] / q
+model <- lm(captures ~ previous_captures)
+capture_efficiency <- -coef(model)[2]  # 捕获效率系数
+population_multiple_removal <- coef(model)[1] / capture_efficiency
 
-cat("多次去除法估计的种群数量：", round(N_multiple_removal), "条\n")
+cat("多次去除法估计的种群数量：", round(population_multiple_removal), "条\n",
+  "捕获效率系数：", round(capture_efficiency, 4), "\n")
 ```
 
 ```
 ## 多次去除法估计的种群数量： 285 条
+##  捕获效率系数： 0.2838
 ```
 
 ``` r
-cat("捕获效率系数q：", round(q, 4), "\n")
-```
-
-```
-## 捕获效率系数q： 0.2838
-```
-
-``` r
-# 计算置信区间
 summary_model <- summary(model)
 se_intercept <- summary_model$coefficients[1, 2]
 se_slope <- summary_model$coefficients[2, 2]
 
-# 使用Delta方法计算N的标准误
-var_N <- (1/q^2) * se_intercept^2 + (coef(model)[1]^2/q^4) * se_slope^2
-se_N <- sqrt(var_N)
+variance_population <- (1 / capture_efficiency^2) * se_intercept^2 +
+  (coef(model)[1]^2 / capture_efficiency^4) * se_slope^2
+standard_error_population <- sqrt(variance_population)
 
-ci_lower <- N_multiple_removal - 1.96 * se_N
-ci_upper <- N_multiple_removal + 1.96 * se_N
+ci_lower <- population_multiple_removal - 1.96 * standard_error_population
+ci_upper <- population_multiple_removal + 1.96 * standard_error_population
 
 cat("95%置信区间：[", round(ci_lower), ",", round(ci_upper), "]\n")
 ```
@@ -2310,8 +1827,7 @@ cat("95%置信区间：[", round(ci_lower), ",", round(ci_upper), "]\n")
 ```
 
 ``` r
-# 可视化捕获数据
-plot(K, captures, type = "b", pch = 19, cex = 1.5,
+plot(previous_captures, captures, type = "b", pch = 19, cex = 1.5,
      xlab = "累积捕获量", ylab = "本次捕获量",
      main = "去除法：捕获量随累积捕获量的变化")
 abline(model, col = "red", lwd = 2)
@@ -2319,13 +1835,16 @@ legend("topright", legend = c("观测数据", "拟合直线"),
        pch = c(19, NA), lty = c(NA, 1), col = c("black", "red"))
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-16-1.png" alt="去除法：捕获量随累积捕获量的变化" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-16)去除法：捕获量随累积捕获量的变化</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-15-1} 
+
+}
+
+\caption{去除法：捕获量随累积捕获量的变化}(\#fig:unnamed-chunk-15)
+\end{figure}
 
 ``` r
-# 敏感性分析：不同捕获次数的影响
 cat("\n敏感性分析：不同捕获次数的估计\n")
 ```
 
@@ -2337,22 +1856,23 @@ cat("\n敏感性分析：不同捕获次数的估计\n")
 ``` r
 for (n_captures in 2:length(captures)) {
   sub_captures <- captures[1:n_captures]
-  sub_K <- c(0, cumsum(sub_captures)[1:(n_captures-1)])
+  sub_previous_captures <- c(0, cumsum(sub_captures)[1:(n_captures - 1)])
 
   if (n_captures == 2) {
     # 一次去除法
-    N_est <- sub_captures[1]^2 / (sub_captures[1] - sub_captures[2])
+    population_estimate <- sub_captures[1]^2 /
+      (sub_captures[1] - sub_captures[2])
     method <- "一次去除法"
   } else {
     # 多次去除法
-    sub_model <- lm(sub_captures ~ sub_K)
-    q_sub <- -coef(sub_model)[2]
-    N_est <- coef(sub_model)[1] / q_sub
+    sub_model <- lm(sub_captures ~ sub_previous_captures)
+    capture_efficiency_sub <- -coef(sub_model)[2]
+    population_estimate <- coef(sub_model)[1] / capture_efficiency_sub
     method <- "多次去除法"
   }
 
   cat(sprintf("使用前%d次捕获（%s）：%.0f 条\n",
-              n_captures, method, N_est))
+              n_captures, method, population_estimate))
 }
 ```
 
@@ -2471,65 +1991,56 @@ $$S(n) = S_{max} \times (1 - e^{-kn})$$
 
 
 ``` r
-# 基于样本积累曲线外推的R实现
-# 示例：森林鸟类多样性估计
-
-# 样本积累数据
 sample_effort <- c(5, 10, 15, 20, 25)  # 样点数
 species_accumulated <- c(15, 25, 32, 37, 41)  # 累计物种数
 
-# 拟合负指数模型
-# S(n) = S_max * (1 - exp(-k * n))
-fit_exponential <- nls(species_accumulated ~ S_max * (1 - exp(-k * sample_effort)),
-                       start = list(S_max = 50, k = 0.1))
+fit_exponential <- nls(
+  species_accumulated ~ species_max *
+    (1 - exp(-discovery_rate * sample_effort)),
+  start = list(species_max = 50, discovery_rate = 0.1)
+)
 
-# 获取参数估计
-S_max_est <- coef(fit_exponential)["S_max"]
-k_est <- coef(fit_exponential)["k"]
+species_max_est <- coef(fit_exponential)["species_max"]
+discovery_rate_est <- coef(fit_exponential)["discovery_rate"]
 
-cat("基于积累曲线外推的物种丰富度估计：", round(S_max_est), "种\n")
+cat("基于积累曲线外推的物种丰富度估计：", round(species_max_est), "种\n",
+  "物种发现率参数：", round(discovery_rate_est, 3), "\n")
 ```
 
 ```
 ## 基于积累曲线外推的物种丰富度估计： 49 种
+##  物种发现率参数： 0.072
 ```
 
 ``` r
-cat("物种发现率参数k：", round(k_est, 3), "\n")
-```
-
-```
-## 物种发现率参数k： 0.072
-```
-
-``` r
-# 预测不同样本量下的物种数
 predicted_effort <- seq(5, 50, by = 5)
 predicted_species <- predict(fit_exponential,
-                            newdata = data.frame(sample_effort = predicted_effort))
+  newdata = data.frame(sample_effort = predicted_effort))
 
-# 可视化积累曲线和外推
 plot(sample_effort, species_accumulated, type = "b", pch = 19,
      xlab = "样点数", ylab = "累计物种数",
      xlim = c(0, 50), ylim = c(0, 50),
      main = "样本积累曲线与外推")
 lines(predicted_effort, predicted_species, col = "red", lwd = 2)
-abline(h = S_max_est, col = "blue", lty = 2)
+abline(h = species_max_est, col = "blue", lty = 2)
 legend("bottomright",
        legend = c("观测数据", "拟合曲线", "渐近线估计"),
        col = c("black", "red", "blue"),
        lty = c(1, 1, 2), pch = c(19, NA, NA))
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-17-1.png" alt="样本积累曲线与外推" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-17)样本积累曲线与外推</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-16-1} 
+
+}
+
+\caption{样本积累曲线与外推}(\#fig:unnamed-chunk-16)
+\end{figure}
 
 ``` r
-# 计算拟合优度
 r_squared <- 1 - sum(residuals(fit_exponential)^2) /
-            sum((species_accumulated - mean(species_accumulated))^2)
+  sum((species_accumulated - mean(species_accumulated))^2)
 cat("模型拟合优度R²：", round(r_squared, 3), "\n")
 ```
 
@@ -2553,140 +2064,83 @@ cat("模型拟合优度R²：", round(r_squared, 3), "\n")
 
 
 ``` r
-# 基于物种多度分布内插的R实现
-# 示例：比较不同采样强度的群落多样性
-
-# 安装并加载vegan包
-# install.packages("vegan")
 library(vegan)
-```
 
-```
-## Loading required package: permute
-```
-
-``` r
-# 模拟两个森林样地的物种多度数据
 set.seed(123)
 
-# 样地A：高多样性群落
-community_A <- c(50, 40, 35, 30, 25, 20, 15, 10, 8, 6, 5, 4, 3, 2, 1, 1, 1)
+community_a <- c(50, 40, 35, 30, 25, 20, 15, 10, 8, 6, 5, 4, 3, 2, 1, 1, 1)
 
-# 样地B：低多样性群落
-community_B <- c(80, 60, 40, 20, 10, 5, 3, 2, 1, 1)
+community_b <- c(80, 60, 40, 20, 10, 5, 3, 2, 1, 1)
 
-# 计算观测物种丰富度
-S_obs_A <- length(community_A)
-S_obs_B <- length(community_B)
+species_obs_a <- length(community_a)
+species_obs_b <- length(community_b)
 
-cat("观测物种丰富度：\n")
+cat("观测物种丰富度：\n",
+  "样地A：", species_obs_a, "种\n",
+  "样地B：", species_obs_b, "种\n")
 ```
 
 ```
 ## 观测物种丰富度：
+##  样地A： 17 种
+##  样地B： 10 种
 ```
 
 ``` r
-cat("样地A：", S_obs_A, "种\n")
-```
+rare_a <- rarefy(community_a, sample = c(50, 100, 150))
+rare_b <- rarefy(community_b, sample = c(50, 100, 150))
 
-```
-## 样地A： 17 种
-```
-
-``` r
-cat("样地B：", S_obs_B, "种\n")
-```
-
-```
-## 样地B： 10 种
-```
-
-``` r
-# 使用rarefaction方法进行内插比较
-# 计算在不同样本量下的期望物种数
-rare_A <- rarefy(community_A, sample = c(50, 100, 150))
-rare_B <- rarefy(community_B, sample = c(50, 100, 150))
-
-cat("\n内插比较（相同个体数下的期望物种数）：\n")
+cat("\n内插比较（相同个体数下的期望物种数）：\n",
+    "样本量50个体：样地A =", round(rare_a[1], 1),
+    "种，样地B =", round(rare_b[1], 1), "种\n",
+    "样本量100个体：样地A =", round(rare_a[2], 1),
+    "种，样地B =", round(rare_b[2], 1), "种\n",
+    "样本量150个体：样地A =", round(rare_a[3], 1),
+    "种，样地B =", round(rare_b[3], 1), "种\n")
 ```
 
 ```
 ## 
 ## 内插比较（相同个体数下的期望物种数）：
+##  样本量50个体：样地A = 12.1 种，样地B = 7 种
+##  样本量100个体：样地A = 14.3 种，样地B = 8.4 种
+##  样本量150个体：样地A = 15.5 种，样地B = 9.2 种
 ```
 
 ``` r
-cat("样本量50个体：样地A =", round(rare_A[1], 1),
-    "种，样地B =", round(rare_B[1], 1), "种\n")
-```
-
-```
-## 样本量50个体：样地A = 12.1 种，样地B = 7 种
-```
-
-``` r
-cat("样本量100个体：样地A =", round(rare_A[2], 1),
-    "种，样地B =", round(rare_B[2], 1), "种\n")
-```
-
-```
-## 样本量100个体：样地A = 14.3 种，样地B = 8.4 种
-```
-
-``` r
-cat("样本量150个体：样地A =", round(rare_A[3], 1),
-    "种，样地B =", round(rare_B[3], 1), "种\n")
-```
-
-```
-## 样本量150个体：样地A = 15.5 种，样地B = 9.2 种
-```
-
-``` r
-# 可视化稀化曲线
-plot(rare_A, type = "l", col = "blue", lwd = 2,
+plot(rare_a, type = "l", col = "blue", lwd = 2,
      xlab = "样本量", ylab = "期望物种数",
-     xaxt = "n", ylim = c(0, max(c(rare_A, rare_B))),
+     xaxt = "n", ylim = c(0, max(c(rare_a, rare_b))),
      main = "物种丰富度内插比较")
-lines(rare_B, col = "red", lwd = 2)
+lines(rare_b, col = "red", lwd = 2)
 axis(1, at = 1:3, labels = c(50, 100, 150))
 legend("bottomright", legend = c("样地A", "样地B"),
        col = c("blue", "red"), lwd = 2)
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-18-1.png" alt="物种丰富度内插比较" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-18)物种丰富度内插比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-17-1} 
+
+}
+
+\caption{物种丰富度内插比较}(\#fig:unnamed-chunk-17)
+\end{figure}
 
 ``` r
-# 使用Chao1估计器校正稀有种影响
-chao1_A <- estimateR(community_A)["S.chao1"]
-chao1_B <- estimateR(community_B)["S.chao1"]
+chao1_a <- estimateR(community_a)["S.chao1"]
+chao1_b <- estimateR(community_b)["S.chao1"]
 
-cat("\nChao1校正后的物种丰富度估计：\n")
+cat("\nChao1校正后的物种丰富度估计：\n",
+    "样地A：", round(chao1_a), "种\n",
+    "样地B：", round(chao1_b), "种\n")
 ```
 
 ```
 ## 
 ## Chao1校正后的物种丰富度估计：
-```
-
-``` r
-cat("样地A：", round(chao1_A), "种\n")
-```
-
-```
-## 样地A： 18 种
-```
-
-``` r
-cat("样地B：", round(chao1_B), "种\n")
-```
-
-```
-## 样地B： 10 种
+##  样地A： 18 种
+##  样地B： 10 种
 ```
 
 **生态学意义**：外推和内插方法在生态学研究中具有重要的应用价值。它们不仅是估计物种多样性的重要工具，还为比较不同采样强度的群落、评估保护优先区和监测生物多样性变化提供了科学基础。在保护生物学中，这些方法被用于识别生物多样性热点区域；在生态监测中，它们被用于长期跟踪多样性的变化趋势；在生态恢复中，它们被用于评估恢复过程的效果。
@@ -2726,10 +2180,6 @@ Chao估计器的优势在于其计算简单、对数据要求低，且具有较�
 
 
 ``` r
-# Chao估计器的R实现
-# 示例：热带雨林昆虫多样性校正
-
-# 模拟观测数据
 set.seed(123)
 observed_species <- c(
   rep(1, 15),  # 15个单例种
@@ -2739,57 +2189,33 @@ observed_species <- c(
   rep(5, 3)    # 3个出现5次的物种
 )
 
-S_obs <- length(observed_species)
-f1 <- sum(observed_species == 1)
-f2 <- sum(observed_species == 2)
+species_obs <- length(observed_species)
+freq_single <- sum(observed_species == 1)
+freq_double <- sum(observed_species == 2)
 
-# Chao1估计
-S_chao1 <- S_obs + (f1^2) / (2 * f2)
+species_chao1 <- species_obs + (freq_single^2) / (2 * freq_double)
 
-cat("Chao1估计结果：\n")
+cat("Chao1估计结果：\n",
+    "观测物种数：", species_obs, "种\n",
+    "单例种数(f1)：", freq_single, "种\n",
+    "双例种数(f2)：", freq_double, "种\n",
+    "Chao1校正估计：", round(species_chao1, 1), "种\n")
 ```
 
 ```
 ## Chao1估计结果：
+##  观测物种数： 36 种
+##  单例种数(f1)： 15 种
+##  双例种数(f2)： 8 种
+##  Chao1校正估计： 50.1 种
 ```
 
 ``` r
-cat("观测物种数：", S_obs, "种\n")
-```
-
-```
-## 观测物种数： 36 种
-```
-
-``` r
-cat("单例种数(f1)：", f1, "种\n")
-```
-
-```
-## 单例种数(f1)： 15 种
-```
-
-``` r
-cat("双例种数(f2)：", f2, "种\n")
-```
-
-```
-## 双例种数(f2)： 8 种
-```
-
-``` r
-cat("Chao1校正估计：", round(S_chao1, 1), "种\n")
-```
-
-```
-## Chao1校正估计： 50.1 种
-```
-
-``` r
-# 计算置信区间
-var_chao <- f2 * ((f1/f2)^4 / 4 + (f1/f2)^3 + (f1/f2)^2 / 2)
-ci_lower <- S_chao1 - 1.96 * sqrt(var_chao)
-ci_upper <- S_chao1 + 1.96 * sqrt(var_chao)
+var_chao <- freq_double * ((freq_single / freq_double)^4 / 4 +
+                            (freq_single / freq_double)^3 +
+                            (freq_single / freq_double)^2 / 2)
+ci_lower <- species_chao1 - 1.96 * sqrt(var_chao)
+ci_upper <- species_chao1 + 1.96 * sqrt(var_chao)
 
 cat("95%置信区间：[", round(ci_lower, 1), ",", round(ci_upper, 1), "]\n")
 ```
@@ -2816,61 +2242,34 @@ Jackknife估计的优势在于它不依赖于特定的分布假设，适用于�
 
 
 ``` r
-# Jackknife估计的R实现
-# 示例：使用Jackknife方法校正稀有种影响
-
-# 使用vegan包中的估计函数
 library(vegan)
 
-# 创建物种出现矩阵（10个样本，36个物种）
 set.seed(123)
 species_matrix <- matrix(0, nrow = 10, ncol = 36)
 
-# 随机分配物种出现（模拟真实采样过程）
-for(i in 1:36) {
+for (i in 1:36) {
   occurrences <- sample(1:10, size = sample(1:5, 1))
   species_matrix[occurrences, i] <- 1
 }
 
-# 计算观测物种数
 S_obs <- sum(colSums(species_matrix) > 0)
 
-# 使用Jackknife估计
 jack_estimates <- estimateR(colSums(species_matrix))
 
-cat("Jackknife估计结果：\n")
+cat("Jackknife估计结果：\n",
+    "观测物种数：", S_obs, "种\n",
+    "一阶Jackknife估计：", round(jack_estimates["S.jack1"], 1), "种\n",
+    "二阶Jackknife估计：", round(jack_estimates["S.jack2"], 1), "种\n")
 ```
 
 ```
 ## Jackknife估计结果：
+##  观测物种数： 36 种
+##  一阶Jackknife估计： NA 种
+##  二阶Jackknife估计： NA 种
 ```
 
 ``` r
-cat("观测物种数：", S_obs, "种\n")
-```
-
-```
-## 观测物种数： 36 种
-```
-
-``` r
-cat("一阶Jackknife估计：", round(jack_estimates["S.jack1"], 1), "种\n")
-```
-
-```
-## 一阶Jackknife估计： NA 种
-```
-
-``` r
-cat("二阶Jackknife估计：", round(jack_estimates["S.jack2"], 1), "种\n")
-```
-
-```
-## 二阶Jackknife估计： NA 种
-```
-
-``` r
-# 手动计算一阶Jackknife
 n_samples <- nrow(species_matrix)
 f1 <- sum(colSums(species_matrix) == 1)
 S_jack1_manual <- S_obs + ((n_samples - 1) / n_samples) * f1
@@ -2901,63 +2300,38 @@ Bootstrap方法的优势在于它能够提供完整的不确定性信息，且�
 
 
 ``` r
-# Bootstrap估计的R实现
-# 示例：使用Bootstrap方法估计物种丰富度
-
 set.seed(123)
 
-# 原始观测数据（物种在多度向量中的位置）
 original_data <- c(rep(1, 10), rep(2, 8), rep(3, 6), rep(4, 4), rep(5, 3))
 S_obs <- length(unique(original_data))
 
-# Bootstrap估计
-B <- 1000  # Bootstrap重复次数
-bootstrap_estimates <- numeric(B)
+bootstrap_reps <- 1000  # Bootstrap重复次数
+bootstrap_estimates <- numeric(bootstrap_reps)
 
-for(b in 1:B) {
+for (rep in 1:bootstrap_reps) {
   # 有放回抽样
-  bootstrap_sample <- sample(original_data, size = length(original_data), replace = TRUE)
-  bootstrap_estimates[b] <- length(unique(bootstrap_sample))
+  bootstrap_sample <- sample(original_data, size = length(original_data),
+                           replace = TRUE)
+  bootstrap_estimates[rep] <- length(unique(bootstrap_sample))
 }
 
-# Bootstrap估计值
 S_boot <- 2 * S_obs - mean(bootstrap_estimates)
 
-cat("Bootstrap估计结果：\n")
+ci_boot <- quantile(bootstrap_estimates, probs = c(0.025, 0.975))
+cat("Bootstrap估计结果：\n",
+    "观测物种数：", S_obs, "种\n",
+    "Bootstrap估计：", round(S_boot, 1), "种\n",
+    "Bootstrap 95%置信区间：[", ci_boot[1], ",", ci_boot[2], "]\n")
 ```
 
 ```
 ## Bootstrap估计结果：
+##  观测物种数： 5 种
+##  Bootstrap估计： 5.1 种
+##  Bootstrap 95%置信区间：[ 4 , 5 ]
 ```
 
 ``` r
-cat("观测物种数：", S_obs, "种\n")
-```
-
-```
-## 观测物种数： 5 种
-```
-
-``` r
-cat("Bootstrap估计：", round(S_boot, 1), "种\n")
-```
-
-```
-## Bootstrap估计： 5.1 种
-```
-
-``` r
-# 计算Bootstrap置信区间
-ci_boot <- quantile(bootstrap_estimates, probs = c(0.025, 0.975))
-cat("Bootstrap 95%置信区间：[", ci_boot[1], ",", ci_boot[2], "]\n")
-```
-
-```
-## Bootstrap 95%置信区间：[ 4 , 5 ]
-```
-
-``` r
-# 可视化Bootstrap分布
 hist(bootstrap_estimates, breaks = 20,
      xlab = "Bootstrap样本物种数", ylab = "频数",
      main = "Bootstrap估计的抽样分布")
@@ -2967,10 +2341,14 @@ legend("topright", legend = c("观测值", "Bootstrap估计"),
        col = c("red", "blue"), lwd = 2)
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-21-1.png" alt="Bootstrap估计的抽样分布" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-21)Bootstrap估计的抽样分布</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-20-1} 
+
+}
+
+\caption{Bootstrap估计的抽样分布}(\#fig:unnamed-chunk-20)
+\end{figure}
 
 4. **多度分布模型**：基于物种多度分布的稀有性校正
 
@@ -2991,118 +2369,53 @@ $$\hat{S} = S_{obs} + S_0 \Phi(-\frac{\log x_0 - \mu}{\sigma})$$
 
 
 ``` r
-# 多度分布模型校正的R实现
-# 示例：使用对数正态分布模型估计物种丰富度
-
 library(fitdistrplus)
-```
 
-```
-## Loading required package: MASS
-```
-
-```
-## 
-## Attaching package: 'MASS'
-```
-
-```
-## The following object is masked from 'package:dplyr':
-## 
-##     select
-```
-
-```
-## Loading required package: survival
-```
-
-```
-## 
-## Attaching package: 'survival'
-```
-
-```
-## The following object is masked from 'package:brms':
-## 
-##     kidney
-```
-
-```
-## The following object is masked from 'package:boot':
-## 
-##     aml
-```
-
-``` r
-# 模拟观测物种多度数据（对数正态分布）
 set.seed(123)
 observed_abundances <- round(rlnorm(30, meanlog = 2, sdlog = 1.2))
 observed_abundances <- pmax(observed_abundances, 1)  # 确保多度≥1
 
 S_obs <- length(observed_abundances)
 
-# 拟合对数正态分布
 fit_lnorm <- fitdist(observed_abundances, "lnorm")
 mu_est <- fit_lnorm$estimate["meanlog"]
 sigma_est <- fit_lnorm$estimate["sdlog"]
 
-cat("多度分布模型估计结果：\n")
+cat("多度分布模型估计结果：\n",
+    "观测物种数：", S_obs, "种\n",
+    "对数正态分布参数：mu =", round(mu_est, 3), ", sigma =", round(sigma_est, 3), "\n")
 ```
 
 ```
 ## 多度分布模型估计结果：
+##  观测物种数： 30 种
+##  对数正态分布参数：mu = 1.954 , sigma = 1.13
 ```
 
 ``` r
-cat("观测物种数：", S_obs, "种\n")
-```
-
-```
-## 观测物种数： 30 种
-```
-
-``` r
-cat("对数正态分布参数：mu =", round(mu_est, 3), ", sigma =", round(sigma_est, 3), "\n")
-```
-
-```
-## 对数正态分布参数：mu = 1.954 , sigma = 1.13
-```
-
-``` r
-# 基于拟合分布估计总物种数（简化方法）
-# 假设观测阈值为多度=1，估计未观测的稀有种
 threshold <- 1
-prob_observed <- plnorm(threshold, meanlog = mu_est, sdlog = sigma_est, lower.tail = FALSE)
+prob_observed <- plnorm(threshold, meanlog = mu_est, sdlog = sigma_est,
+                       lower.tail = FALSE)
 S_total_est <- S_obs / prob_observed
 
-cat("基于对数正态分布的物种丰富度估计：", round(S_total_est), "种\n")
+cat("基于对数正态分布的物种丰富度估计：", round(S_total_est), "种\n",
+  "估计的未观测物种数：", round(S_total_est - S_obs), "种\n")
 ```
 
 ```
 ## 基于对数正态分布的物种丰富度估计： 31 种
+##  估计的未观测物种数： 1 种
 ```
 
 ``` r
-cat("估计的未观测物种数：", round(S_total_est - S_obs), "种\n")
-```
-
-```
-## 估计的未观测物种数： 1 种
-```
-
-``` r
-# 可视化拟合结果
 par(mfrow = c(1, 2))
 
-# 观测多度分布
 hist(log(observed_abundances), breaks = 10, freq = FALSE,
      xlab = "log(多度)", ylab = "密度",
      main = "观测多度分布与拟合曲线")
 curve(dlnorm(exp(x), meanlog = mu_est, sdlog = sigma_est) * exp(x),
       add = TRUE, col = "red", lwd = 2)
 
-# 累积分布函数比较
 plot(ecdf(observed_abundances), main = "累积分布函数比较")
 curve(plnorm(x, meanlog = mu_est, sdlog = sigma_est),
       add = TRUE, col = "red", lwd = 2)
@@ -3110,10 +2423,14 @@ legend("bottomright", legend = c("经验分布", "拟合分布"),
        col = c("black", "red"), lwd = 2)
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-22-1.png" alt="多度分布模型拟合结果" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-22)多度分布模型拟合结果</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-21-1} 
+
+}
+
+\caption{多度分布模型拟合结果}(\#fig:unnamed-chunk-21)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
@@ -3127,170 +2444,94 @@ par(mfrow = c(1, 1))
 
 
 ``` r
-# 稀有种影响分析的R实现
-# 示例：评估稀有种对多样性估计的影响
-
-# 模拟一个包含稀有种的群落
 set.seed(123)
 
-# 创建物种多度分布（对数正态分布）
-# 大多数物种为中等多度，少数物种为稀有种
 species_abundances <- round(10^(rnorm(100, mean = 1.5, sd = 1.2)))
 species_abundances <- pmax(species_abundances, 1)  # 确保所有物种至少出现1次
 
-# 真实物种丰富度
 S_true <- length(species_abundances)
 
-# 模拟抽样过程（由于稀有种容易被遗漏）
-# 假设每个个体被采样的概率与其多度成正比
 sampling_prob <- species_abundances / sum(species_abundances)
 sampled_species <- rmultinom(1, size = 500, prob = sampling_prob)
 
-# 在样本中出现的物种
 observed_species <- which(sampled_species > 0)
 S_obs <- length(observed_species)
 
-cat("稀有种影响分析：\n")
+cat("稀有种影响分析：\n",
+    "真实物种丰富度：", S_true, "种\n",
+    "观测物种丰富度：", S_obs, "种\n",
+    "观测遗漏率：", round((S_true - S_obs) / S_true * 100, 1), "%\n")
 ```
 
 ```
 ## 稀有种影响分析：
+##  真实物种丰富度： 100 种
+##  观测物种丰富度： 40 种
+##  观测遗漏率： 60 %
 ```
 
 ``` r
-cat("真实物种丰富度：", S_true, "种\n")
-```
-
-```
-## 真实物种丰富度： 100 种
-```
-
-``` r
-cat("观测物种丰富度：", S_obs, "种\n")
-```
-
-```
-## 观测物种丰富度： 40 种
-```
-
-``` r
-cat("观测遗漏率：", round((S_true - S_obs) / S_true * 100, 1), "%\n")
-```
-
-```
-## 观测遗漏率： 60 %
-```
-
-``` r
-# 分析稀有种的遗漏情况
 rare_threshold <- 5  # 定义稀有种阈值（多度≤5）
 rare_species <- which(species_abundances <= rare_threshold)
 common_species <- which(species_abundances > rare_threshold)
 
-# 稀有种在样本中的出现情况
 rare_observed <- sum(sampled_species[rare_species] > 0)
 rare_total <- length(rare_species)
 
-cat("\n稀有种分析：\n")
+cat("\n稀有种分析：\n",
+    "稀有种总数：", rare_total, "种\n",
+    "观测到的稀有种：", rare_observed, "种\n",
+    "稀有种观测率：", round(rare_observed / rare_total * 100, 1), "%\n")
 ```
 
 ```
 ## 
 ## 稀有种分析：
+##  稀有种总数： 19 种
+##  观测到的稀有种： 1 种
+##  稀有种观测率： 5.3 %
 ```
 
 ``` r
-cat("稀有种总数：", rare_total, "种\n")
-```
-
-```
-## 稀有种总数： 19 种
-```
-
-``` r
-cat("观测到的稀有种：", rare_observed, "种\n")
-```
-
-```
-## 观测到的稀有种： 1 种
-```
-
-``` r
-cat("稀有种观测率：", round(rare_observed / rare_total * 100, 1), "%\n")
-```
-
-```
-## 稀有种观测率： 5.3 %
-```
-
-``` r
-# 常见种在样本中的出现情况
 common_observed <- sum(sampled_species[common_species] > 0)
 common_total <- length(common_species)
 
-cat("\n常见种分析：\n")
+cat("\n常见种分析：\n",
+    "常见种总数：", common_total, "种\n",
+    "观测到的常见种：", common_observed, "种\n",
+    "常见种观测率：", round(common_observed / common_total * 100, 1), "%\n")
 ```
 
 ```
 ## 
 ## 常见种分析：
+##  常见种总数： 81 种
+##  观测到的常见种： 39 种
+##  常见种观测率： 48.1 %
 ```
 
 ``` r
-cat("常见种总数：", common_total, "种\n")
-```
-
-```
-## 常见种总数： 81 种
-```
-
-``` r
-cat("观测到的常见种：", common_observed, "种\n")
-```
-
-```
-## 观测到的常见种： 39 种
-```
-
-``` r
-cat("常见种观测率：", round(common_observed / common_total * 100, 1), "%\n")
-```
-
-```
-## 常见种观测率： 48.1 %
-```
-
-``` r
-# 使用Chao1估计器校正稀有种影响
-chao1_estimate <- estimateR(as.numeric(sampled_species[observed_species]))["S.chao1"]
-cat("\nChao1校正后的物种丰富度估计：", round(chao1_estimate), "种\n")
+chao1_estimate <- estimateR(as.numeric(sampled_species[observed_species]))[
+  "S.chao1"]
+cat("\nChao1校正后的物种丰富度估计：", round(chao1_estimate), "种\n",
+    "Chao1校正的改善程度：",
+    round((chao1_estimate - S_obs) / (S_true - S_obs) * 100, 1), "%\n")
 ```
 
 ```
 ## 
 ## Chao1校正后的物种丰富度估计： 61 种
+##  Chao1校正的改善程度： 35 %
 ```
 
 ``` r
-cat("Chao1校正的改善程度：",
-    round((chao1_estimate - S_obs) / (S_true - S_obs) * 100, 1), "%\n")
-```
-
-```
-## Chao1校正的改善程度： 35 %
-```
-
-``` r
-# 可视化多度分布和抽样偏差
 par(mfrow = c(1, 2))
 
-# 真实多度分布
 hist(log10(species_abundances), breaks = 20,
      xlab = "log10(多度)", ylab = "物种数",
      main = "真实多度分布")
 abline(v = log10(rare_threshold), col = "red", lty = 2)
 
-# 观测多度分布
 observed_abundances <- sampled_species[observed_species]
 hist(log10(observed_abundances), breaks = 20,
      xlab = "log10(多度)", ylab = "物种数",
@@ -3298,10 +2539,14 @@ hist(log10(observed_abundances), breaks = 20,
 abline(v = log10(rare_threshold), col = "red", lty = 2)
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-23-1.png" alt="稀有种对多样性估计的影响分析" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-23)稀有种对多样性估计的影响分析</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-22-1} 
+
+}
+
+\caption{稀有种对多样性估计的影响分析}(\#fig:unnamed-chunk-22)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
@@ -3325,69 +2570,48 @@ $$\text{Var}(\hat{S}) \propto \frac{1}{n}$$
 
 
 ``` r
-# 样本量影响分析的R实现
-# 示例：评估样本量对多样性估计的影响
-
-# 模拟一个真实的群落
 set.seed(123)
 real_community <- c(30, 25, 20, 15, 12, 10, 8, 6, 5, 4, 3, 2, 1, 1, 1)
 
-# 真实多样性指标
 S_true <- length(real_community)  # 物种丰富度
 H_true <- diversity(real_community, index = "shannon")  # Shannon多样性
 
-cat("真实群落多样性：\n")
+cat("真实群落多样性：\n",
+    "物种丰富度：", S_true, "种\n",
+    "Shannon多样性：", round(H_true, 3), "\n")
 ```
 
 ```
 ## 真实群落多样性：
+##  物种丰富度： 15 种
+##  Shannon多样性： 2.295
 ```
 
 ``` r
-cat("物种丰富度：", S_true, "种\n")
-```
-
-```
-## 物种丰富度： 15 种
-```
-
-``` r
-cat("Shannon多样性：", round(H_true, 3), "\n")
-```
-
-```
-## Shannon多样性： 2.295
-```
-
-``` r
-# 模拟不同样本量下的抽样
 sample_sizes <- c(50, 100, 200, 500, 1000)
 n_sim <- 100  # 每个样本量的模拟次数
 
-# 存储结果
 results <- data.frame(
   sample_size = rep(sample_sizes, each = n_sim),
   S_est = NA,
   H_est = NA
 )
 
-# 进行模拟
 for (i in seq_along(sample_sizes)) {
   n <- sample_sizes[i]
   for (j in 1:n_sim) {
     # 从真实群落中抽样
     sampled <- rmultinom(1, size = n,
-                        prob = real_community / sum(real_community))
+  prob = real_community / sum(real_community))
     observed <- which(sampled > 0)
 
     # 计算多样性估计
-    idx <- (i-1)*n_sim + j
+    idx <- (i - 1) * n_sim + j
     results$S_est[idx] <- length(observed)
     results$H_est[idx] <- diversity(sampled[observed], index = "shannon")
   }
 }
 
-# 分析样本量对估计精度的影响
 precision_analysis <- results %>%
   group_by(sample_size) %>%
   summarise(
@@ -3412,7 +2636,7 @@ print(precision_analysis)
 ```
 
 ```
-## # A tibble: 5 × 7
+## # A tibble: 5 x 7
 ##   sample_size S_mean  S_sd H_mean   H_sd  S_bias H_bias
 ##         <dbl>  <dbl> <dbl>  <dbl>  <dbl>   <dbl>  <dbl>
 ## 1          50   11.6 1.24    2.15 0.108  -22.7   -6.18 
@@ -3423,10 +2647,8 @@ print(precision_analysis)
 ```
 
 ``` r
-# 可视化样本量影响
 par(mfrow = c(2, 2))
 
-# 物种丰富度的样本量影响
 plot(precision_analysis$sample_size, precision_analysis$S_mean,
      type = "b", pch = 19, ylim = c(0, S_true * 1.1),
      xlab = "样本量", ylab = "物种丰富度估计",
@@ -3436,17 +2658,8 @@ arrows(precision_analysis$sample_size,
        precision_analysis$sample_size,
        precision_analysis$S_mean + precision_analysis$S_sd,
        angle = 90, code = 3, length = 0.1)
-```
-
-```
-## Warning in arrows(precision_analysis$sample_size, precision_analysis$S_mean - :
-## zero-length arrow is of indeterminate angle and so skipped
-```
-
-``` r
 abline(h = S_true, col = "red", lty = 2)
 
-# Shannon多样性的样本量影响
 plot(precision_analysis$sample_size, precision_analysis$H_mean,
      type = "b", pch = 19, ylim = c(0, H_true * 1.2),
      xlab = "样本量", ylab = "Shannon多样性估计",
@@ -3458,7 +2671,6 @@ arrows(precision_analysis$sample_size,
        angle = 90, code = 3, length = 0.1)
 abline(h = H_true, col = "red", lty = 2)
 
-# 估计偏差的样本量影响
 plot(precision_analysis$sample_size, precision_analysis$S_bias,
      type = "b", pch = 19, ylim = c(-50, 10),
      xlab = "样本量", ylab = "物种丰富度偏差 (%)",
@@ -3469,9 +2681,9 @@ legend("bottomright", legend = c("物种丰富度", "Shannon多样性"),
        pch = c(19, 17), col = c("black", "blue"))
 abline(h = 0, col = "red", lty = 2)
 
-# 估计方差的样本量影响
 plot(precision_analysis$sample_size, precision_analysis$S_sd,
-     type = "b", pch = 19, ylim = c(0, max(c(precision_analysis$S_sd, precision_analysis$H_sd))),
+     type = "b", pch = 19,
+     ylim = c(0, max(c(precision_analysis$S_sd, precision_analysis$H_sd))),
      xlab = "样本量", ylab = "估计标准差",
      main = "样本量对估计方差的影响")
 lines(precision_analysis$sample_size, precision_analysis$H_sd,
@@ -3480,24 +2692,26 @@ legend("topright", legend = c("物种丰富度", "Shannon多样性"),
        pch = c(19, 17), col = c("black", "blue"))
 ```
 
-<div class="figure">
-<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-24-1.png" alt="样本量对多样性估计精度的影响" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-24)样本量对多样性估计精度的影响</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-23-1} 
+
+}
+
+\caption{样本量对多样性估计精度的影响}(\#fig:unnamed-chunk-23)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
 
-# 样本量规划：基于期望精度计算所需样本量
 desired_precision <- 0.1  # 期望的相对精度（10%）
 
-# 使用模拟结果外推所需样本量
-model_S <- nls(S_sd ~ a / sqrt(sample_size),
+model_S <- nls(S_sd ~ scale_S / sqrt(sample_size),
                data = precision_analysis,
-               start = list(a = 10))
-model_H <- nls(H_sd ~ b / sqrt(sample_size),
+               start = list(scale_S = 10))
+model_H <- nls(H_sd ~ scale_H / sqrt(sample_size),
                data = precision_analysis,
-               start = list(b = 1))
+               start = list(scale_H = 1))
 
 required_n_S <- (coef(model_S) / (S_true * desired_precision))^2
 required_n_H <- (coef(model_H) / (H_true * desired_precision))^2

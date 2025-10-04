@@ -1,5 +1,19 @@
 # 基于模拟的假设检验
 
+
+```{r include=FALSE}
+# 初始化设置
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
+)
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
+```
+
+
 ## 引言
 
 在生态统计学的探索旅程中，我们已经掌握了基于经典统计分布的假设检验方法，这些方法如同生态学家手中的传统工具，在物种多样性比较、保护效果评估、环境因子分析等众多场景中发挥着重要作用。然而，当我们面对生态学研究中日益复杂的挑战时，传统方法有时显得力不从心。

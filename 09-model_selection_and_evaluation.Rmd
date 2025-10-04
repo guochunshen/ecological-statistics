@@ -1,5 +1,19 @@
 # 模型选择与评估
 
+
+```{r include=FALSE}
+# 初始化设置
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = "center"
+)
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
+```
+
+
 ## 引言
 
 在前面的章节中，我们已经学习了多种回归模型——从简单的线性回归到复杂的多元和多项式回归。面对如此丰富的建模工具，生态学研究者自然会面临一个重要问题：对于特定的生态学数据，我们应该选择哪种模型？为什么同一套数据可以构建多种不同的模型？这些问题的答案引出了本章的核心主题——模型选择与评估。
