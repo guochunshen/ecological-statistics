@@ -296,14 +296,10 @@ summary(phyto_am)
 plot(phyto_am, pages = 1, residuals = TRUE, pch = 1, cex = 1)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/visualize-phyto-am-1} 
-
-}
-
-\caption{浮游植物生物量与环境因子关系的可加性模型平滑效应图}(\#fig:visualize-phyto-am)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/visualize-phyto-am-1.png" alt="浮游植物生物量与环境因子关系的可加性模型平滑效应图" width="672" />
+<p class="caption">(\#fig:visualize-phyto-am)浮游植物生物量与环境因子关系的可加性模型平滑效应图</p>
+</div>
 
 
 ``` r
@@ -312,14 +308,10 @@ plot(phyto_am, pages = 1, residuals = TRUE, pch = 1, cex = 1)
 gam.check(phyto_am)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/diagnose-phyto-am-1} 
-
-}
-
-\caption{浮游植物生物量可加性模型诊断图}(\#fig:diagnose-phyto-am)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/diagnose-phyto-am-1.png" alt="浮游植物生物量可加性模型诊断图" width="672" />
+<p class="caption">(\#fig:diagnose-phyto-am)浮游植物生物量可加性模型诊断图</p>
+</div>
 
 ```
 ## 
@@ -379,14 +371,10 @@ AIC(phyto_am, phyto_lm)
 gam.check(phyto_am)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-2-1} 
-
-}
-
-\caption{可加性模型平滑复杂度诊断图}(\#fig:unnamed-chunk-2-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-2-1.png" alt="可加性模型平滑复杂度诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-2-1)可加性模型平滑复杂度诊断图</p>
+</div>
 
 ```
 ## 
@@ -423,14 +411,10 @@ phyto_am_adj <- gam(
 gam.check(phyto_am_adj)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-2-2} 
-
-}
-
-\caption{可加性模型平滑复杂度诊断图}(\#fig:unnamed-chunk-2-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-2-2.png" alt="可加性模型平滑复杂度诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-2-2)可加性模型平滑复杂度诊断图</p>
+</div>
 
 ```
 ## 
@@ -474,14 +458,10 @@ plot(fitted(phyto_am), residuals(phyto_am),
 abline(h = 0, col = "red")  # 添加零参考线
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/residual-vs-fitted-1} 
-
-}
-
-\caption{残差与拟合值关系图}(\#fig:residual-vs-fitted)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/residual-vs-fitted-1.png" alt="残差与拟合值关系图" width="672" />
+<p class="caption">(\#fig:residual-vs-fitted)残差与拟合值关系图</p>
+</div>
 
 
 ``` r
@@ -491,14 +471,10 @@ qqnorm(residuals(phyto_am))
 qqline(residuals(phyto_am), col = "red")  # 添加参考线
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/qq-plot-residuals-1} 
-
-}
-
-\caption{残差正态性Q-Q图}(\#fig:qq-plot-residuals)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/qq-plot-residuals-1.png" alt="残差正态性Q-Q图" width="672" />
+<p class="caption">(\#fig:qq-plot-residuals)残差正态性Q-Q图</p>
+</div>
 
 
 ``` r
@@ -512,14 +488,10 @@ plot(lake_data$temperature, residuals(phyto_am),
 abline(h = 0, col = "red")  # 添加零参考线
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/residual-vs-temperature-1} 
-
-}
-
-\caption{残差与温度关系图}(\#fig:residual-vs-temperature)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/residual-vs-temperature-1.png" alt="残差与温度关系图" width="672" />
+<p class="caption">(\#fig:residual-vs-temperature)残差与温度关系图</p>
+</div>
 
 
 ``` r
@@ -529,14 +501,10 @@ abline(h = 0, col = "red")  # 添加零参考线
 acf(residuals(phyto_am), main = "残差自相关")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/acf-residuals-1} 
-
-}
-
-\caption{残差自相关函数图}(\#fig:acf-residuals)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/acf-residuals-1.png" alt="残差自相关函数图" width="672" />
+<p class="caption">(\#fig:acf-residuals)残差自相关函数图</p>
+</div>
 
 #### 模型比较与选择
 
@@ -728,14 +696,10 @@ ggplot(new_data, aes(x = temperature, y = pred)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/visualize-prediction-intervals-1} 
-
-}
-
-\caption{温度对浮游植物生物量影响的预测曲线（含95\%置信区间）}(\#fig:visualize-prediction-intervals)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/visualize-prediction-intervals-1.png" alt="温度对浮游植物生物量影响的预测曲线（含95%置信区间）" width="672" />
+<p class="caption">(\#fig:visualize-prediction-intervals)温度对浮游植物生物量影响的预测曲线（含95%置信区间）</p>
+</div>
 
 #### 生态学意义验证
 
@@ -1186,14 +1150,10 @@ ggplot(new_moisture, aes(x = soil_moisture, y = pred)) +
   scale_y_continuous(labels = scales::percent)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-6-1} 
-
-}
-
-\caption{土壤湿度对植物存活率影响的预测曲线（含95\%置信区间）}(\#fig:unnamed-chunk-6)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-6-1.png" alt="土壤湿度对植物存活率影响的预测曲线（含95%置信区间）" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-6)土壤湿度对植物存活率影响的预测曲线（含95%置信区间）</p>
+</div>
 
 ``` r
 # 系数解释：优势比
@@ -1251,14 +1211,10 @@ plot(fitted(logistic_model), sqrt(abs(residuals(logistic_model, type = "pearson"
 plot(logistic_model, which = 5)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-7-1} 
-
-}
-
-\caption{逻辑回归模型残差诊断图}(\#fig:unnamed-chunk-7)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-7-1.png" alt="逻辑回归模型残差诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-7)逻辑回归模型残差诊断图</p>
+</div>
 
 #### 过度离散诊断
 
@@ -1351,14 +1307,10 @@ roc_curve <- roc(species_data$presence, fitted(logistic_model))
 plot(roc_curve, main = "ROC曲线")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-9-1} 
-
-}
-
-\caption{逻辑回归模型ROC曲线}(\#fig:unnamed-chunk-9)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-9-1.png" alt="逻辑回归模型ROC曲线" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-9)逻辑回归模型ROC曲线</p>
+</div>
 
 ``` r
 cat("AUC:", auc(roc_curve), "\n")
@@ -1496,14 +1448,10 @@ plot(cooks_d,
 abline(h = 4 / length(cooks_d), col = "red") # 常用阈值
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-12-1} 
-
-}
-
-\caption{逻辑回归模型影响点诊断图}(\#fig:unnamed-chunk-12-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-12-1.png" alt="逻辑回归模型影响点诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-12-1)逻辑回归模型影响点诊断图</p>
+</div>
 
 ``` r
 # 杠杆值
@@ -1515,14 +1463,10 @@ plot(leverage,
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-12-2} 
-
-}
-
-\caption{逻辑回归模型影响点诊断图}(\#fig:unnamed-chunk-12-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-12-2.png" alt="逻辑回归模型影响点诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-12-2)逻辑回归模型影响点诊断图</p>
+</div>
 
 ``` r
 # DFBETA统计量（系数变化）
@@ -1530,14 +1474,10 @@ library(car)
 influencePlot(logistic_model)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-12-3} 
-
-}
-
-\caption{逻辑回归模型影响点诊断图}(\#fig:unnamed-chunk-12-3)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-12-3.png" alt="逻辑回归模型影响点诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-12-3)逻辑回归模型影响点诊断图</p>
+</div>
 
 ```
 ##        StudRes         Hat       CookD
@@ -1581,14 +1521,10 @@ ggplot(new_data, aes(x = temperature, y = pred)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-13-1} 
-
-}
-
-\caption{温度对物种出现概率影响的预测曲线（含95\%置信区间）}(\#fig:unnamed-chunk-13)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-13-1.png" alt="温度对物种出现概率影响的预测曲线（含95%置信区间）" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-13)温度对物种出现概率影响的预测曲线（含95%置信区间）</p>
+</div>
 
 #### 生态学意义验证
 
@@ -1722,28 +1658,20 @@ summary(bird_gam)
 plot(bird_gam, pages = 1, residuals = TRUE, pch = 1, cex = 1)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-15-1} 
-
-}
-
-\caption{鸟类物种丰富度与环境因子关系的广义可加模型分析}(\#fig:unnamed-chunk-15-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-15-1.png" alt="鸟类物种丰富度与环境因子关系的广义可加模型分析" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-15-1)鸟类物种丰富度与环境因子关系的广义可加模型分析</p>
+</div>
 
 ``` r
 # 模型诊断
 gam.check(bird_gam)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-15-2} 
-
-}
-
-\caption{鸟类物种丰富度与环境因子关系的广义可加模型分析}(\#fig:unnamed-chunk-15-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-15-2.png" alt="鸟类物种丰富度与环境因子关系的广义可加模型分析" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-15-2)鸟类物种丰富度与环境因子关系的广义可加模型分析</p>
+</div>
 
 ```
 ## 
@@ -1788,14 +1716,10 @@ ggplot(new_elevation, aes(x = elevation, y = pred)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-15-3} 
-
-}
-
-\caption{鸟类物种丰富度与环境因子关系的广义可加模型分析}(\#fig:unnamed-chunk-15-3)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-15-3.png" alt="鸟类物种丰富度与环境因子关系的广义可加模型分析" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-15-3)鸟类物种丰富度与环境因子关系的广义可加模型分析</p>
+</div>
 
 ``` r
 # 与GLM比较
@@ -1909,14 +1833,10 @@ GAM的平滑复杂度诊断与可加性模型类似，但需要考虑分布特�
 gam.check(bird_gam)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-17-1} 
-
-}
-
-\caption{广义可加模型平滑复杂度诊断图}(\#fig:unnamed-chunk-17-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-17-1.png" alt="广义可加模型平滑复杂度诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-17-1)广义可加模型平滑复杂度诊断图</p>
+</div>
 
 ```
 ## 
@@ -1953,14 +1873,10 @@ bird_gam_adj <- gam(
 gam.check(bird_gam_adj)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-17-2} 
-
-}
-
-\caption{广义可加模型平滑复杂度诊断图}(\#fig:unnamed-chunk-17-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-17-2.png" alt="广义可加模型平滑复杂度诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-17-2)广义可加模型平滑复杂度诊断图</p>
+</div>
 
 ```
 ## 
@@ -2016,14 +1932,10 @@ plot(fitted(bird_gam), sqrt(abs(residuals(bird_gam, type = "pearson"))),
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-18-1} 
-
-}
-
-\caption{广义可加模型残差诊断图}(\#fig:unnamed-chunk-18)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-18-1.png" alt="广义可加模型残差诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-18)广义可加模型残差诊断图</p>
+</div>
 
 #### 模型比较与选择
 
@@ -2158,9 +2070,7 @@ ggplot(new_elevation, aes(x = elevation, y = pred)) +
   theme_minimal()
 ```
 
-
-
-\begin{center}\includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-20-1} \end{center}
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" />
 
 #### 生态学意义验证
 
@@ -2354,28 +2264,20 @@ icc(mixed_model)
 plot(mixed_model)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-21-1} 
-
-}
-
-\caption{混合效应模型诊断图}(\#fig:unnamed-chunk-21-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-21-1.png" alt="混合效应模型诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-21-1)混合效应模型诊断图</p>
+</div>
 
 ``` r
 qqnorm(resid(mixed_model))
 qqline(resid(mixed_model))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-21-2} 
-
-}
-
-\caption{混合效应模型诊断图}(\#fig:unnamed-chunk-21-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-21-2.png" alt="混合效应模型诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-21-2)混合效应模型诊断图</p>
+</div>
 
 ``` r
 # 与普通线性模型比较
@@ -2795,14 +2697,10 @@ plot(fitted(final_model), residuals(final_model, type = "pearson"))
 abline(h = 0, col = "red")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-23-1} 
-
-}
-
-\caption{混合效应模型统计筛选诊断图}(\#fig:unnamed-chunk-23-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-23-1.png" alt="混合效应模型统计筛选诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-23-1)混合效应模型统计筛选诊断图</p>
+</div>
 
 ``` r
 # 随机效应诊断
@@ -2811,14 +2709,10 @@ qqnorm(random_effects)
 qqline(random_effects)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-23-2} 
-
-}
-
-\caption{混合效应模型统计筛选诊断图}(\#fig:unnamed-chunk-23-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-23-2.png" alt="混合效应模型统计筛选诊断图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-23-2)混合效应模型统计筛选诊断图</p>
+</div>
 
 ``` r
 # 9. 最终模型验证
@@ -3011,14 +2905,10 @@ ggplot(data.frame(effect = random_effects[[1]]), aes(x = effect)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-24-1} 
-
-}
-
-\caption{空间混合模型随机效应分布图}(\#fig:unnamed-chunk-24)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-24-1.png" alt="空间混合模型随机效应分布图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-24)空间混合模型随机效应分布图</p>
+</div>
 
 通过这个例子，我们可以看到混合效应模型如何帮助我们理解生态过程的空间变异，并为保护管理提供更准确的预测。
 
@@ -3046,14 +2936,10 @@ qqnorm(random_effects)
 qqline(random_effects)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-25-1} 
-
-}
-
-\caption{混合效应模型诊断示例图}(\#fig:unnamed-chunk-25-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-25-1.png" alt="混合效应模型诊断示例图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-25-1)混合效应模型诊断示例图</p>
+</div>
 
 ``` r
 # 检查残差的同方差性
@@ -3061,14 +2947,10 @@ plot(fitted(diagnostic_model), residuals(diagnostic_model))
 abline(h = 0, col = "red")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-25-2} 
-
-}
-
-\caption{混合效应模型诊断示例图}(\#fig:unnamed-chunk-25-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-25-2.png" alt="混合效应模型诊断示例图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-25-2)混合效应模型诊断示例图</p>
+</div>
 
 ``` r
 # 检查模型收敛
@@ -3493,14 +3375,10 @@ ggplot(spatial_data, aes(x = x_coord, y = y_coord, color = chlorophyll)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-26-1} 
-
-}
-
-\caption{湖泊叶绿素浓度空间分布图}(\#fig:unnamed-chunk-26)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-26-1.png" alt="湖泊叶绿素浓度空间分布图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-26)湖泊叶绿素浓度空间分布图</p>
+</div>
 
 在这个例子中，我们使用了几个关键函数：`moran.test()`用于检验空间自相关性，`lagsarlm()`用于构建空间滞后模型，`errorsarlm()`用于构建空间误差模型。通过这些函数，我们能够建模和检验生态数据的空间依赖性。
 
@@ -3638,14 +3516,10 @@ ggplot(spatial_plot_data, aes(x = x_coord, y = y_coord, color = predicted)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-27-1} 
-
-}
-
-\caption{鸟类物种丰富度空间预测格局图}(\#fig:unnamed-chunk-27)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-27-1.png" alt="鸟类物种丰富度空间预测格局图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-27)鸟类物种丰富度空间预测格局图</p>
+</div>
 
 ``` r
 cat("时空模型能够考虑空间位置和邻近站点的信息，\n")
@@ -3718,14 +3592,10 @@ ggplot(residual_data, aes(x = x, y = y, color = residuals)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-28-1} 
-
-}
-
-\caption{空间模型残差分布图}(\#fig:unnamed-chunk-28)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-28-1.png" alt="空间模型残差分布图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-28)空间模型残差分布图</p>
+</div>
 
 **模型比较与选择**：
 
@@ -4013,14 +3883,10 @@ semPaths(fit,
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{10-advanced_regressions_files/figure-latex/unnamed-chunk-32-1} 
-
-}
-
-\caption{森林生态系统结构方程模型路径图}(\#fig:unnamed-chunk-32)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-32-1.png" alt="森林生态系统结构方程模型路径图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-32)森林生态系统结构方程模型路径图</p>
+</div>
 
 ``` r
 # 计算直接效应、间接效应和总效应

@@ -155,14 +155,10 @@ plot(biomass ~ nutrient,
 lines(soil_nutrient, predict(model_overfit), col = "red", lwd = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-4-1} 
-
-}
-
-\caption{模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较}(\#fig:unnamed-chunk-4)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-4-1.png" alt="模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-4)模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较</p>
+</div>
 
 ``` r
 # 恢复单图布局
@@ -408,14 +404,10 @@ abline(h = 2, lty = 2, col = "blue")
 abline(h = 7, lty = 2, col = "red")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-10-1} 
-
-}
-
-\caption{信息准则可视化：ΔAIC和ΔBIC差异比较}(\#fig:unnamed-chunk-10)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-10-1.png" alt="信息准则可视化：ΔAIC和ΔBIC差异比较" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10)信息准则可视化：ΔAIC和ΔBIC差异比较</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -642,14 +634,10 @@ ggplot(pred_grid, aes(x = temp, y = pred_growth, color = factor(light))) +
   scale_color_manual(values = c("300" = "blue", "600" = "green", "900" = "red"))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-15-1} 
-
-}
-
-\caption{温度与光照对植物生长的交互作用：在不同光照强度下温度对植物生长速率的影响}(\#fig:unnamed-chunk-15)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-15-1.png" alt="温度与光照对植物生长的交互作用：在不同光照强度下温度对植物生长速率的影响" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-15)温度与光照对植物生长的交互作用：在不同光照强度下温度对植物生长速率的影响</p>
+</div>
 
 根据似然比检验的结果（p值 = 0.0263），我们可以得出重要的生态学解释。似然比检验显著 (p < 0.05)，表明温度与光照的交互作用对植物生长有显著影响，复杂模型显著改善了模型拟合，应该选择包含交互项的模型。
 
@@ -901,14 +889,10 @@ barplot(model_comparison$AIC_Weight,
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-20-1} 
-
-}
-
-\caption{模型平均结果：变量重要性和模型权重分布}(\#fig:unnamed-chunk-20)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-20-1.png" alt="模型平均结果：变量重要性和模型权重分布" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-20)模型平均结果：变量重要性和模型权重分布</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -1137,14 +1121,10 @@ ggplot(cv_performance, aes(x = Fold, y = RMSE)) +
   )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-25-1} 
-
-}
-
-\caption{10折交叉验证：RMSE在不同数据子集上的变化}(\#fig:unnamed-chunk-25)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-25-1.png" alt="10折交叉验证：RMSE在不同数据子集上的变化" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-25)10折交叉验证：RMSE在不同数据子集上的变化</p>
+</div>
 
 训练集和测试集性能的比较是检测过度拟合的直接方法。如果测试集性能明显差于训练集，说明模型可能过度适应训练数据的噪声。
 
@@ -1356,14 +1336,10 @@ ggplot(validation_plot_data, aes(x = Observed, y = Predicted, color = Type)) +
   facet_wrap(~Type)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-27-1} 
-
-}
-
-\caption{外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较}(\#fig:unnamed-chunk-27)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-27-1.png" alt="外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-27)外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较</p>
+</div>
 
 在这个植物物种丰富度的例子中，训练集基于某个地区的调查数据构建模型，测试集代表另一个生态条件略有不同的地区。外部验证检验了模型的空间普适性，如果模型在测试集上表现良好，说明其生态学适用性较广；如果性能显著下降，可能需要考虑地区特异性因素。
 
@@ -1480,14 +1456,10 @@ par(mfrow = c(2, 2))
 plot(model_diagnostic)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-30-1} 
-
-}
-
-\caption{模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图}(\#fig:unnamed-chunk-30)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-30-1.png" alt="模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-30)模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -1692,14 +1664,10 @@ ggplot(cook_data, aes(x = Observation, y = CooksD)) +
   )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-33-1} 
-
-}
-
-\caption{Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点}(\#fig:unnamed-chunk-33)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-33-1.png" alt="Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-33)Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点</p>
+</div>
 
 在生态学中，异常观测往往具有重要的生态学意义。高杠杆点可能代表极端环境条件，异常残差点可能反映特殊的生态情境。通过识别这些点，我们不仅能够确保模型的统计稳健性，还能够发现值得深入研究的生态学现象。
 
@@ -1960,7 +1928,7 @@ bf_12 <- model2 / model1
 bf_23 <- model3 / model2
 ```
 
-贝叶斯因子比较结果显示，模型2相对于模型1的贝叶斯因子为 1.28，模型3相对于模型2的贝叶斯因子为 \ensuremath{2.1013994\times 10^{5}}。
+贝叶斯因子比较结果显示，模型2相对于模型1的贝叶斯因子为 1.28，模型3相对于模型2的贝叶斯因子为 2.1013994\times 10^{5}。
 
 根据Jeffreys标准，贝叶斯因子的解释标准为：1-3表示微弱证据，3-10表示实质性证据，10-30表示强证据，30-100表示很强证据，大于100表示决定性证据。
 
@@ -2017,7 +1985,7 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 ## vegetation     0.9444822  9.8845073 4.31007528             1   2
 ## 
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"  "0.009779453 secs" 
+##            "2.9445"                 "8"                 "0"  "0.009158134 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -2025,12 +1993,10 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 ##     Shrinkage-Stats 
 ##         "Av=0.9877" 
 ## 
-## Time difference of 0.009779453 secs
+## Time difference of 0.009158134 secs
 ```
 
-
-
-\begin{center}\includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-38-1} \end{center}
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" />
 
 ``` r
 # 输出模型平均结果
@@ -2047,7 +2013,7 @@ print(summary(bma_result))
 
 ```
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"  "0.009779453 secs" 
+##            "2.9445"                 "8"                 "0"  "0.009158134 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -2121,8 +2087,8 @@ bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 ## Chain 1: 
-## Chain 1: Gradient evaluation took 1.2e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
+## Chain 1: Gradient evaluation took 1.7e-05 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.17 seconds.
 ## Chain 1: Adjust your expectations accordingly!
 ## Chain 1: 
 ## Chain 1: 
@@ -2139,9 +2105,9 @@ bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
 ## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
-## Chain 1:  Elapsed Time: 0.073 seconds (Warm-up)
+## Chain 1:  Elapsed Time: 0.074 seconds (Warm-up)
 ## Chain 1:                0.049 seconds (Sampling)
-## Chain 1:                0.122 seconds (Total)
+## Chain 1:                0.123 seconds (Total)
 ## Chain 1: 
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -2164,9 +2130,9 @@ bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
 ## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 2: 
-## Chain 2:  Elapsed Time: 0.073 seconds (Warm-up)
+## Chain 2:  Elapsed Time: 0.074 seconds (Warm-up)
 ## Chain 2:                0.047 seconds (Sampling)
-## Chain 2:                0.12 seconds (Total)
+## Chain 2:                0.121 seconds (Total)
 ## Chain 2:
 ```
 
@@ -2199,14 +2165,10 @@ ggplot(pred_data, aes(x = Observed, y = Predicted)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-39-1} 
-
-}
-
-\caption{贝叶斯预测：观测值与预测值的比较，包含95\%预测区间}(\#fig:unnamed-chunk-39-1)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-39-1.png" alt="贝叶斯预测：观测值与预测值的比较，包含95%预测区间" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-39-1)贝叶斯预测：观测值与预测值的比较，包含95%预测区间</p>
+</div>
 
 ``` r
 # 后验预测检查
@@ -2223,14 +2185,10 @@ pp_check <- pp_check(bayes_poisson)
 print(pp_check)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-39-2} 
-
-}
-
-\caption{贝叶斯预测：观测值与预测值的比较，包含95\%预测区间}(\#fig:unnamed-chunk-39-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-39-2.png" alt="贝叶斯预测：观测值与预测值的比较，包含95%预测区间" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-39-2)贝叶斯预测：观测值与预测值的比较，包含95%预测区间</p>
+</div>
 
 ``` r
 # 解释后验预测检查

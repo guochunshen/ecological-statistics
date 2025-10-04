@@ -142,9 +142,10 @@
 
 
 
-\begin{figure}
-\includegraphics[width=6.94in]{imgs/hardware_flow} \caption{程序运行中的数据流动示意图}(\#fig:hardware-flow-export)
-\end{figure}
+<div class="figure">
+<img src="imgs/hardware_flow.png" alt="程序运行中的数据流动示意图" width="250" />
+<p class="caption">(\#fig:hardware-flow-export)程序运行中的数据流动示意图</p>
+</div>
 
 图\@ref(fig:hardware-flow-export) 展示了程序运行过程中数据在不同硬件组件间的流动路径。在统计分析的具体场景中，这种数据流转体现得更加明显。例如，当运行一个线性回归分析时：R解释器从硬盘读取脚本文件到内存；数据文件从硬盘加载到内存的数据框中；CPU执行lm()函数，在内存中进行矩阵运算；计算结果（系数、p值等）存储在内存中的模型对象里；最终结果被写入硬盘的报告文件。如果分析涉及大规模数据，可能会出现内存瓶颈，此时需要采用分批处理或流式处理策略，让数据在硬盘和内存间分块流动。
 
@@ -743,7 +744,7 @@ test_that("多样性计算正确", {
 ```
 
 ```
-## Test passed
+## Test passed 🎊
 ```
 
 ``` r
@@ -1286,7 +1287,7 @@ calculate_shannon_diversity <- function(species_vector) {
 
 ```
 ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-## i Please use `linewidth` instead.
+## ℹ Please use `linewidth` instead.
 ## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 ```
@@ -1295,7 +1296,10 @@ calculate_shannon_diversity <- function(species_vector) {
 ## Warning in scale_y_log10(): log-10 transformation introduced infinite values.
 ```
 
-![(\#fig:complexity-curve)算法复杂度随数据规模增长的趋势图](01-statistical_programing_files/figure-latex/complexity-curve-1.pdf) 
+<div class="figure">
+<img src="01-statistical_programing_files/figure-html/complexity-curve-1.png" alt="算法复杂度随数据规模增长的趋势图" width="672" />
+<p class="caption">(\#fig:complexity-curve)算法复杂度随数据规模增长的趋势图</p>
+</div>
 
 图\@ref(fig:complexity-curve) 直观地展示了不同复杂度等级随数据规模增长的趋势。**结论**：O(1) 和 O(log n) 是极其高效的，O(n) 和 O(n log n) 是优秀的，O(n²) 在 n 较小时可以接受，而 O(2^n) 和 O(n!) 应尽量避免。
 
@@ -1448,18 +1452,18 @@ library(tidyverse)
 ```
 
 ```
-## -- Attaching core tidyverse packages --------------------------------------------------------------------------------------------------------- tidyverse 2.0.0 --
-## v forcats   1.0.0     v readr     2.1.5
-## v lubridate 1.9.4     v tibble    3.2.1
-## v purrr     1.1.0     v tidyr     1.3.1
-## -- Conflicts --------------------------------------------------------------------------------------------------------------------------- tidyverse_conflicts() --
-## x readr::edition_get()   masks testthat::edition_get()
-## x dplyr::filter()        masks stats::filter()
-## x purrr::is_null()       masks testthat::is_null()
-## x dplyr::lag()           masks stats::lag()
-## x readr::local_edition() masks testthat::local_edition()
-## x tidyr::matches()       masks testthat::matches(), dplyr::matches()
-## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+## ── Attaching core tidyverse packages ───────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+## ✔ forcats   1.0.0     ✔ readr     2.1.5
+## ✔ lubridate 1.9.4     ✔ tibble    3.2.1
+## ✔ purrr     1.1.0     ✔ tidyr     1.3.1
+## ── Conflicts ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ readr::edition_get()   masks testthat::edition_get()
+## ✖ dplyr::filter()        masks stats::filter()
+## ✖ purrr::is_null()       masks testthat::is_null()
+## ✖ dplyr::lag()           masks stats::lag()
+## ✖ readr::local_edition() masks testthat::local_edition()
+## ✖ tidyr::matches()       masks testthat::matches(), dplyr::matches()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
 #### 功能正确性验证方法

@@ -94,14 +94,10 @@
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=8.33in]{imgs/hypothesis_testing_flow} 
-
-}
-
-\caption{假设检验通用流程图：展示从明确研究问题到解释结果的完整统计推断过程}(\#fig:hypothesis-testing-flow-export)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="imgs/hypothesis_testing_flow.png" alt="假设检验通用流程图：展示从明确研究问题到解释结果的完整统计推断过程" width="300" />
+<p class="caption">(\#fig:hypothesis-testing-flow-export)假设检验通用流程图：展示从明确研究问题到解释结果的完整统计推断过程</p>
+</div>
 
 这个流程图清晰地展示了假设检验的完整过程，特别强调了模拟方法与传统方法的区别。在接下来的章节中，我们将详细探讨各种统计检验方法的具体实施，包括经典参数检验、非参数检验以及基于模拟的现代检验方法在生态学研究中的应用。
 
@@ -193,14 +189,10 @@ ggplot(df, aes(x = value, fill = distribution)) +
   scale_fill_manual(values = c("#1f77b4", "#ff7f0e"))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/null-alternative-distribution-1} 
-
-}
-
-\caption{零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值}(\#fig:null-alternative-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/null-alternative-distribution-1.png" alt="零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值" width="768" />
+<p class="caption">(\#fig:null-alternative-distribution)零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值</p>
+</div>
 
 这个图表直观展示了在零假设（蓝色）和备择假设（橙色）下的检验统计量分布。红色虚线表示显著性水平α=0.05的临界值，当检验统计量超过这个临界值时，我们就有足够的证据拒绝零假设。
 
@@ -269,14 +261,10 @@ ggplot(p_value_df, aes(x = test_stat)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/p-value-visualization-1} 
-
-}
-
-\caption{p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率}(\#fig:p-value-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/p-value-visualization-1.png" alt="p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率" width="768" />
+<p class="caption">(\#fig:p-value-visualization)p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率</p>
+</div>
 
 这个图表通过红色区域直观展示了p值的概念，即在零假设下观测到当前检验统计量值（红色垂直线）或更极端值的概率。p值越小，表明观测到的数据在零假设下越不可能发生，从而为我们拒绝零假设提供了更强的证据。
 
@@ -407,14 +395,10 @@ ggplot(error_df, aes(x = x, y = density, color = distribution)) +
   scale_color_manual(values = c("#1f77b4", "#ff7f0e"))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/error-types-visualization-1} 
-
-}
-
-\caption{第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布}(\#fig:error-types-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/error-types-visualization-1.png" alt="第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布" width="768" />
+<p class="caption">(\#fig:error-types-visualization)第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布</p>
+</div>
 
 这个图表清晰地显示了第一类错误（红色区域，假阳性）和第二类错误（蓝色区域，假阴性）的概念，以及统计功效（1-β）作为正确检测真实效应的概率。在生态学研究中，我们需要在这两类错误之间进行权衡，根据研究的具体目的选择合适的显著性水平。
 
@@ -458,14 +442,10 @@ ggplot(power_df, aes(
   scale_color_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/power-sample-size-visualization-1} 
-
-}
-
-\caption{样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效}(\#fig:power-sample-size-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/power-sample-size-visualization-1.png" alt="样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效" width="768" />
+<p class="caption">(\#fig:power-sample-size-visualization)样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效</p>
+</div>
 
 这个图表展示了不同效应大小下，样本量如何影响统计功效。通常我们期望统计功效达到0.8以上（灰色虚线），这意味着我们有80%的概率正确检测到真实存在的效应。从图表可以看出，效应大小越大，达到足够统计功效所需的样本量越小。
 
@@ -547,14 +527,10 @@ ggplot(study_df, aes(x = effect_size, y = study)) +
   theme(legend.position = "none")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/effect-size-ci-visualization-1} 
-
-}
-
-\caption{效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围}(\#fig:effect-size-ci-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/effect-size-ci-visualization-1.png" alt="效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围" width="768" />
+<p class="caption">(\#fig:effect-size-ci-visualization)效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围</p>
+</div>
 
 这个图表展示了多个研究的效应大小估计及其置信区间。我们可以清楚地看到哪些研究的结果是统计显著的（置信区间不包含0），以及不同研究的效应大小估计。
 
@@ -712,14 +688,10 @@ ggplot(t_df, aes(x = x, y = density)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/one-sample-t-test-visualization-1} 
-
-}
-
-\caption{单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域}(\#fig:one-sample-t-test-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/one-sample-t-test-visualization-1.png" alt="单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域" width="768" />
+<p class="caption">(\#fig:one-sample-t-test-visualization)单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域</p>
+</div>
 
 这个图表直观展示了单样本t检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
 
@@ -813,14 +785,10 @@ ggplot(binom_df, aes(x = x, y = density)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/sign-test-visualization-1} 
-
-}
-
-\caption{单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量}(\#fig:sign-test-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/sign-test-visualization-1.png" alt="单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量" width="768" />
+<p class="caption">(\#fig:sign-test-visualization)单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量</p>
+</div>
 
 这个图表直观展示了单样本符号检验的原理。蓝色柱状图表示在零假设下（正号和负号以相等概率出现）正号数量的二项分布，红色垂直线表示我们观测到的正号数量，红色区域表示$p$值——在零假设下观测到当前或更多正号的概率。
 
@@ -953,14 +921,10 @@ ggplot(t_df, aes(x = x, y = density)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/independent-t-test-visualization-1} 
-
-}
-
-\caption{独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域}(\#fig:independent-t-test-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/independent-t-test-visualization-1.png" alt="独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域" width="768" />
+<p class="caption">(\#fig:independent-t-test-visualization)独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域</p>
+</div>
 
 这个图表直观展示了独立样本t检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
 
@@ -1070,14 +1034,10 @@ ggplot(t_df, aes(x = x, y = density)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/paired-t-test-visualization-1} 
-
-}
-
-\caption{配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域}(\#fig:paired-t-test-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/paired-t-test-visualization-1.png" alt="配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域" width="768" />
+<p class="caption">(\#fig:paired-t-test-visualization)配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域</p>
+</div>
 
 这个图表直观展示了配对样本t检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
 
@@ -1174,14 +1134,10 @@ ggplot(data_df, aes(x = group, y = value, fill = group)) +
   scale_fill_manual(values = c("#ff7f0e", "#1f77b4"))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/mann-whitney-visualization-1} 
-
-}
-
-\caption{Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较}(\#fig:mann-whitney-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/mann-whitney-visualization-1.png" alt="Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较" width="768" />
+<p class="caption">(\#fig:mann-whitney-visualization)Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较</p>
+</div>
 
 这个图表直观展示了Mann-Whitney U检验的原理。箱线图显示了两个样本的分布情况，点表示各个观测值。检验基于这些观测值的秩次（排序位置）而不是原始数值来进行统计推断。
 
@@ -1375,14 +1331,10 @@ p1 + p2 + plot_annotation(
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/multiple-t-test-vs-anova-1} 
-
-}
-
-\caption{多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案}(\#fig:multiple-t-test-vs-anova)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-t-test-vs-anova-1.png" alt="多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案" width="960" />
+<p class="caption">(\#fig:multiple-t-test-vs-anova)多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案</p>
+</div>
 
 **图表解释**
 
@@ -1512,14 +1464,10 @@ ggplot(f_df, aes(x = x, y = density)) +
   theme_minimal()
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/anova-visualization-1} 
-
-}
-
-\caption{方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域}(\#fig:anova-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/anova-visualization-1.png" alt="方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域" width="768" />
+<p class="caption">(\#fig:anova-visualization)方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域</p>
+</div>
 
 这个图表直观展示了方差分析的原理。蓝色曲线表示在零假设下的$F$分布，红色垂直线表示我们观测到的$F$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$F$值的概率。
 
@@ -1611,14 +1559,10 @@ ggplot(pollution_data, aes(x = pollution_level, y = biomass,
   scale_fill_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/kruskal-wallis-visualization-1} 
-
-}
-
-\caption{Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较}(\#fig:kruskal-wallis-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/kruskal-wallis-visualization-1.png" alt="Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较" width="768" />
+<p class="caption">(\#fig:kruskal-wallis-visualization)Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较</p>
+</div>
 
 这个图表直观展示了Kruskal-Wallis检验的原理。箱线图显示了三个样本的分布情况，点表示各个观测值。检验基于这些观测值的秩次（排序位置）而不是原始数值来进行统计推断。
 
@@ -1670,14 +1614,10 @@ $$\alpha_{family} = 1 - (1 - \alpha)^m$$
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=8.33in]{imgs/multiple_comparison_flow} 
-
-}
-
-\caption{多重比较分析流程图：展示从方差分析到多重比较校正的完整统计分析流程}(\#fig:multiple-comparison-flowchart-export)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="imgs/multiple_comparison_flow.png" alt="多重比较分析流程图：展示从方差分析到多重比较校正的完整统计分析流程" width="300" />
+<p class="caption">(\#fig:multiple-comparison-flowchart-export)多重比较分析流程图：展示从方差分析到多重比较校正的完整统计分析流程</p>
+</div>
 
 这个流程图清晰地展示了多重比较校正在整个分析流程中的位置。只有在方差分析显示总体差异显著后，我们才需要进行多重比较校正来识别具体的差异组对。
 
@@ -1925,14 +1865,10 @@ p1 <- ggplot(summary_stats, aes(
 print(p1)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/multiple-comparison-mean-plot-1} 
-
-}
-
-\caption{不同森林类型的鸟类物种丰富度均值图：展示三种森林类型的平均物种丰富度及其标准误}(\#fig:multiple-comparison-mean-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-mean-plot-1.png" alt="不同森林类型的鸟类物种丰富度均值图：展示三种森林类型的平均物种丰富度及其标准误" width="768" />
+<p class="caption">(\#fig:multiple-comparison-mean-plot)不同森林类型的鸟类物种丰富度均值图：展示三种森林类型的平均物种丰富度及其标准误</p>
+</div>
 
 
 ``` r
@@ -1953,14 +1889,10 @@ p2 <- ggplot(forest_data, aes(
 print(p2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/multiple-comparison-boxplot-1} 
-
-}
-
-\caption{不同森林类型的鸟类物种丰富度箱线图：展示三种森林类型的物种丰富度分布情况}(\#fig:multiple-comparison-boxplot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-boxplot-1.png" alt="不同森林类型的鸟类物种丰富度箱线图：展示三种森林类型的物种丰富度分布情况" width="768" />
+<p class="caption">(\#fig:multiple-comparison-boxplot)不同森林类型的鸟类物种丰富度箱线图：展示三种森林类型的物种丰富度分布情况</p>
+</div>
 
 
 ``` r
@@ -1972,14 +1904,10 @@ combined_plot <- p1 + p2 + plot_layout(guides = "collect") &
 print(combined_plot)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/multiple-comparison-combined-plot-1} 
-
-}
-
-\caption{多重比较校正实例分析：展示不同森林类型鸟类物种丰富度的多重比较结果及其可视化}(\#fig:multiple-comparison-combined-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-combined-plot-1.png" alt="多重比较校正实例分析：展示不同森林类型鸟类物种丰富度的多重比较结果及其可视化" width="960" />
+<p class="caption">(\#fig:multiple-comparison-combined-plot)多重比较校正实例分析：展示不同森林类型鸟类物种丰富度的多重比较结果及其可视化</p>
+</div>
 
 **结果解释**：
 
@@ -2037,14 +1965,10 @@ ggplot(viz_data, aes(
   scale_shape_manual(values = c(16, 17, 15))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/multiple-comparison-visualization-1} 
-
-}
-
-\caption{多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响}(\#fig:multiple-comparison-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-visualization-1.png" alt="多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响" width="960" />
+<p class="caption">(\#fig:multiple-comparison-visualization)多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响</p>
+</div>
 
 **图表解释**：
 
@@ -2499,14 +2423,10 @@ ggplot(power_curve, aes(x = sample_size, y = power)) +
   )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/power-curve-plotting-1} 
-
-}
-
-\caption{样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效}(\#fig:power-curve-plotting)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/power-curve-plotting-1.png" alt="样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效" width="768" />
+<p class="caption">(\#fig:power-curve-plotting)样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效</p>
+</div>
 
 **图表解释：**
 - 蓝色曲线显示随着样本量增加，统计功效逐渐提高
@@ -2564,14 +2484,10 @@ ggplot(sensitivity_df, aes(x = effect_label, y = sample_need,
   scale_fill_brewer(palette = "Set2")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{06-classical_hypothesis_tests_files/figure-latex/sensitivity-analysis-plot-1} 
-
-}
-
-\caption{效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量}(\#fig:sensitivity-analysis-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/sensitivity-analysis-plot-1.png" alt="效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量" width="768" />
+<p class="caption">(\#fig:sensitivity-analysis-plot)效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量</p>
+</div>
 
 **实践建议：**
 

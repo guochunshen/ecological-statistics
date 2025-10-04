@@ -23,7 +23,7 @@
 <meta name="author" content="沈国春、李勤" />
 
 
-<meta name="date" content="2025-10-02" />
+<meta name="date" content="2025-10-04" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,11 +52,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-<script src="libs/viz-1.8.2/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -466,7 +461,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="8.1.1" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#为什么生态学本科生需要学习统计建模与预测"><i class="fa fa-check"></i><b>8.1.1</b> 为什么生态学本科生需要学习统计建模与预测？</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#线性回归模型"><i class="fa fa-check"></i><b>8.2</b> 线性回归模型</a></li>
+<li class="chapter" data-level="8.2" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#线性回归模型生态关系的数学表达"><i class="fa fa-check"></i><b>8.2</b> 线性回归模型：生态关系的数学表达</a></li>
 <li class="chapter" data-level="8.3" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#最小二乘估计"><i class="fa fa-check"></i><b>8.3</b> 最小二乘估计</a>
 <ul>
 <li class="chapter" data-level="8.3.1" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#r语言中的lm函数详解"><i class="fa fa-check"></i><b>8.3.1</b> R语言中的lm()函数详解</a></li>
@@ -476,14 +471,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3.5" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#提取回归结果的常用函数"><i class="fa fa-check"></i><b>8.3.5</b> 提取回归结果的常用函数</a></li>
 <li class="chapter" data-level="8.3.6" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#理解summary函数的输出"><i class="fa fa-check"></i><b>8.3.6</b> 理解summary()函数的输出</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#回归诊断"><i class="fa fa-check"></i><b>8.4</b> 回归诊断</a>
+<li class="chapter" data-level="8.4" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#回归诊断验证模型的生态学合理性"><i class="fa fa-check"></i><b>8.4</b> 回归诊断：验证模型的生态学合理性</a>
 <ul>
 <li class="chapter" data-level="8.4.1" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#回归诊断图的系统解读"><i class="fa fa-check"></i><b>8.4.1</b> 回归诊断图的系统解读</a></li>
 <li class="chapter" data-level="8.4.2" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#模型质量的综合评估"><i class="fa fa-check"></i><b>8.4.2</b> 模型质量的综合评估</a></li>
 <li class="chapter" data-level="8.4.3" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#生态学诊断问题的应对策略"><i class="fa fa-check"></i><b>8.4.3</b> 生态学诊断问题的应对策略</a></li>
 <li class="chapter" data-level="8.4.4" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#生态学应用实例-1"><i class="fa fa-check"></i><b>8.4.4</b> 生态学应用实例</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#多元线性回归"><i class="fa fa-check"></i><b>8.5</b> 多元线性回归</a>
+<li class="chapter" data-level="8.5" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#多元线性回归多因子生态关系的综合分析"><i class="fa fa-check"></i><b>8.5</b> 多元线性回归：多因子生态关系的综合分析</a>
 <ul>
 <li class="chapter" data-level="8.5.1" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#多元线性回归的模型公式"><i class="fa fa-check"></i><b>8.5.1</b> 多元线性回归的模型公式</a></li>
 </ul></li>
@@ -505,7 +500,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.6.14" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#生态学解释与模型选择价值"><i class="fa fa-check"></i><b>8.6.14</b> 生态学解释与模型选择价值</a></li>
 <li class="chapter" data-level="8.6.15" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#案例分析总结"><i class="fa fa-check"></i><b>8.6.15</b> 案例分析总结</a></li>
 </ul></li>
-<li class="chapter" data-level="8.7" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#多项式回归"><i class="fa fa-check"></i><b>8.7</b> 多项式回归</a>
+<li class="chapter" data-level="8.7" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#多项式回归非线性生态关系的数学描述"><i class="fa fa-check"></i><b>8.7</b> 多项式回归：非线性生态关系的数学描述</a>
 <ul>
 <li class="chapter" data-level="8.7.1" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#多项式回归模型"><i class="fa fa-check"></i><b>8.7.1</b> 多项式回归模型</a></li>
 <li class="chapter" data-level="8.7.2" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#r语言中的多项式回归实现"><i class="fa fa-check"></i><b>8.7.2</b> R语言中的多项式回归实现</a></li>
@@ -518,7 +513,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.7.9" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#统计指标与交叉验证"><i class="fa fa-check"></i><b>8.7.9</b> 统计指标与交叉验证</a></li>
 <li class="chapter" data-level="8.7.10" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#生态学应用建议"><i class="fa fa-check"></i><b>8.7.10</b> 生态学应用建议</a></li>
 </ul></li>
-<li class="chapter" data-level="8.8" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#总结-8"><i class="fa fa-check"></i><b>8.8</b> 总结</a></li>
+<li class="chapter" data-level="8.8" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#总结从线性到非线性从简单到复杂"><i class="fa fa-check"></i><b>8.8</b> 总结：从线性到非线性，从简单到复杂</a>
+<ul>
+<li class="chapter" data-level="8.8.1" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#核心概念回顾"><i class="fa fa-check"></i><b>8.8.1</b> 核心概念回顾</a></li>
+<li class="chapter" data-level="8.8.2" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#生态学建模思维"><i class="fa fa-check"></i><b>8.8.2</b> 生态学建模思维</a></li>
+<li class="chapter" data-level="8.8.3" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#实践应用价值"><i class="fa fa-check"></i><b>8.8.3</b> 实践应用价值</a></li>
+</ul></li>
 <li class="chapter" data-level="8.9" data-path="简单线性回归模型.html"><a href="简单线性回归模型.html#综合练习-6"><i class="fa fa-check"></i><b>8.9</b> 综合练习</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="模型选择与评估.html"><a href="模型选择与评估.html"><i class="fa fa-check"></i><b>9</b> 模型选择与评估</a>
@@ -552,7 +552,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.4.11" data-path="模型选择与评估.html"><a href="模型选择与评估.html#贝叶斯检验的生态学应用案例"><i class="fa fa-check"></i><b>9.4.11</b> 贝叶斯检验的生态学应用案例</a></li>
 <li class="chapter" data-level="9.4.12" data-path="模型选择与评估.html"><a href="模型选择与评估.html#贝叶斯方法的局限性"><i class="fa fa-check"></i><b>9.4.12</b> 贝叶斯方法的局限性</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="模型选择与评估.html"><a href="模型选择与评估.html#总结-9"><i class="fa fa-check"></i><b>9.5</b> 总结</a></li>
+<li class="chapter" data-level="9.5" data-path="模型选择与评估.html"><a href="模型选择与评估.html#总结-8"><i class="fa fa-check"></i><b>9.5</b> 总结</a></li>
 <li class="chapter" data-level="9.6" data-path="模型选择与评估.html"><a href="模型选择与评估.html#综合练习-7"><i class="fa fa-check"></i><b>9.6</b> 综合练习</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="高级回归模型.html"><a href="高级回归模型.html"><i class="fa fa-check"></i><b>10</b> 高级回归模型</a>
@@ -614,7 +614,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.7.3" data-path="高级回归模型.html"><a href="高级回归模型.html#结构方程模型在生态学中的特殊价值"><i class="fa fa-check"></i><b>10.7.3</b> 结构方程模型在生态学中的特殊价值</a></li>
 <li class="chapter" data-level="10.7.4" data-path="高级回归模型.html"><a href="高级回归模型.html#模型诊断与注意事项-2"><i class="fa fa-check"></i><b>10.7.4</b> 模型诊断与注意事项</a></li>
 </ul></li>
-<li class="chapter" data-level="10.8" data-path="高级回归模型.html"><a href="高级回归模型.html#总结-10"><i class="fa fa-check"></i><b>10.8</b> 总结</a></li>
+<li class="chapter" data-level="10.8" data-path="高级回归模型.html"><a href="高级回归模型.html#总结-9"><i class="fa fa-check"></i><b>10.8</b> 总结</a></li>
 <li class="chapter" data-level="10.9" data-path="高级回归模型.html"><a href="高级回归模型.html#综合练习-8"><i class="fa fa-check"></i><b>10.9</b> 综合练习</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="机器学习.html"><a href="机器学习.html"><i class="fa fa-check"></i><b>11</b> 机器学习</a>
@@ -666,7 +666,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.5.5" data-path="机器学习.html"><a href="机器学习.html#优势与局限-2"><i class="fa fa-check"></i><b>11.5.5</b> 优势与局限</a></li>
 <li class="chapter" data-level="11.5.6" data-path="机器学习.html"><a href="机器学习.html#生态学启示与未来展望-2"><i class="fa fa-check"></i><b>11.5.6</b> 生态学启示与未来展望</a></li>
 </ul></li>
-<li class="chapter" data-level="11.6" data-path="机器学习.html"><a href="机器学习.html#总结-11"><i class="fa fa-check"></i><b>11.6</b> 总结</a></li>
+<li class="chapter" data-level="11.6" data-path="机器学习.html"><a href="机器学习.html#总结-10"><i class="fa fa-check"></i><b>11.6</b> 总结</a></li>
 <li class="chapter" data-level="11.7" data-path="机器学习.html"><a href="机器学习.html#综合练习-9"><i class="fa fa-check"></i><b>11.7</b> 综合练习</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="附录1-r语言编程基础.html"><a href="附录1-r语言编程基础.html"><i class="fa fa-check"></i><b>12</b> 附录1 R语言编程基础</a>
@@ -791,7 +791,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">生态统计学</h1>
 <p class="author"><em>沈国春、李勤</em></p>
-<p class="date"><em>2025-10-02</em></p>
+<p class="date"><em>2025-10-04</em></p>
 </div>
 <div id="前言" class="section level1 unnumbered hasAnchor">
 <h1>前言<a href="index.html#前言" class="anchor-section" aria-label="Anchor link to header"></a></h1>

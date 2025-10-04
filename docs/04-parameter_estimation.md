@@ -538,14 +538,10 @@ plot(sample_sizes, ci_widths, type = "b", pch = 19,
      main = "样本量对置信区间宽度的影响")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/different-confidence-levels-1} 
-
-}
-
-\caption{不同置信水平的区间估计比较}(\#fig:different-confidence-levels)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/different-confidence-levels-1.png" alt="不同置信水平的区间估计比较" width="672" />
+<p class="caption">(\#fig:different-confidence-levels)不同置信水平的区间估计比较</p>
+</div>
 
 #### 置信水平的选择
 
@@ -915,8 +911,8 @@ fit_brm <- brm(
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 ## Chain 1: 
-## Chain 1: Gradient evaluation took 1.8e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.18 seconds.
+## Chain 1: Gradient evaluation took 2.3e-05 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.23 seconds.
 ## Chain 1: Adjust your expectations accordingly!
 ## Chain 1: 
 ## Chain 1: 
@@ -934,8 +930,8 @@ fit_brm <- brm(
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
 ## Chain 1:  Elapsed Time: 0.015 seconds (Warm-up)
-## Chain 1:                0.012 seconds (Sampling)
-## Chain 1:                0.027 seconds (Total)
+## Chain 1:                0.013 seconds (Sampling)
+## Chain 1:                0.028 seconds (Total)
 ## Chain 1: 
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
@@ -1008,9 +1004,9 @@ fit_brm <- brm(
 ## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 4: 
-## Chain 4:  Elapsed Time: 0.015 seconds (Warm-up)
+## Chain 4:  Elapsed Time: 0.016 seconds (Warm-up)
 ## Chain 4:                0.014 seconds (Sampling)
-## Chain 4:                0.029 seconds (Total)
+## Chain 4:                0.03 seconds (Total)
 ## Chain 4:
 ```
 
@@ -1079,14 +1075,10 @@ hist(posterior_samples$sigma, breaks = 30,
 abline(v = posterior_sd, col = "red", lwd = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-8-1} 
-
-}
-
-\caption{贝叶斯估计的后验分布}(\#fig:unnamed-chunk-8)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-8-1.png" alt="贝叶斯估计的后验分布" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-8)贝叶斯估计的后验分布</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -1391,14 +1383,10 @@ plot(capture_data$session, cumulative_estimates, type = "b",
 abline(h = population_schnabel, col = "red", lty = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-10-1} 
-
-}
-
-\caption{Schnabel估计的稳定性检验}(\#fig:unnamed-chunk-10)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-10-1.png" alt="Schnabel估计的稳定性检验" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10)Schnabel估计的稳定性检验</p>
+</div>
 
 **Jolly-Seber模型**是标记重捕法中最复杂和最强大的方法，专门用于处理开放种群的情况。开放种群是指存在出生、死亡、迁入和迁出的种群，这在真实的生态系统中更为常见。Jolly-Seber模型不仅能够估计种群大小，还能够估计存活率、迁入率等种群动态参数。
 
@@ -1540,14 +1528,10 @@ legend("topright", legend = paste("均值 =", round(mean_plants, 2)),
        col = "red", lwd = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-12-1} 
-
-}
-
-\caption{样方内植物数量分布}(\#fig:unnamed-chunk-12)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-12-1.png" alt="样方内植物数量分布" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-12)样方内植物数量分布</p>
+</div>
 
 **样线法**是面积取样法的另一种形式，特别适用于调查移动性较强的动物或在大尺度区域进行调查。研究人员沿着预设的样线（transect）行进，记录在样线两侧一定宽度内观察到的个体数量。
 
@@ -1625,14 +1609,10 @@ points(0.7, population_corrected, col = "red", pch = 19, cex = 2)
 legend("topright", legend = "基准估计", col = "red", pch = 19)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-13-1} 
-
-}
-
-\caption{样线法估计的敏感性分析}(\#fig:unnamed-chunk-13)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-13-1.png" alt="样线法估计的敏感性分析" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-13)样线法估计的敏感性分析</p>
+</div>
 
 **生态学意义**：面积取样法在植物生态学、无脊椎动物生态学和某些脊椎动物生态学中具有广泛的应用。它不仅是估计种群数量的重要工具，还为研究种群的空间分布、种间关系、生境偏好等生态学问题提供了数据基础。在生态监测中，面积取样法被用于长期跟踪种群的变化趋势；在保护生物学中，它被用于评估保护措施的效果；在生态恢复中，它被用于监测恢复过程的进展。
 
@@ -1733,14 +1713,10 @@ legend("topright", legend = paste("sigma =", round(sigma, 2)),
        lty = 1, lwd = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-14-1} 
-
-}
-
-\caption{半正态发现函数}(\#fig:unnamed-chunk-14)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-14-1.png" alt="半正态发现函数" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-14)半正态发现函数</p>
+</div>
 
 **生态学意义**：距离抽样法在野生动物生态学和保护生物学中具有重要的应用价值。它特别适用于调查分布范围广、密度较低的动物种群，如大型哺乳动物、鸟类和海洋哺乳动物。在保护生物学中，距离抽样法被用于监测濒危物种的种群趋势；在野生动物管理中，它被用于评估种群状况和制定管理策略；在生态监测中，它被用于长期跟踪种群的变化。
 
@@ -1835,14 +1811,10 @@ legend("topright", legend = c("观测数据", "拟合直线"),
        pch = c(19, NA), lty = c(NA, 1), col = c("black", "red"))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-15-1} 
-
-}
-
-\caption{去除法：捕获量随累积捕获量的变化}(\#fig:unnamed-chunk-15)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-15-1.png" alt="去除法：捕获量随累积捕获量的变化" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-15)去除法：捕获量随累积捕获量的变化</p>
+</div>
 
 ``` r
 cat("\n敏感性分析：不同捕获次数的估计\n")
@@ -2029,14 +2001,10 @@ legend("bottomright",
        lty = c(1, 1, 2), pch = c(19, NA, NA))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-16-1} 
-
-}
-
-\caption{样本积累曲线与外推}(\#fig:unnamed-chunk-16)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-16-1.png" alt="样本积累曲线与外推" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-16)样本积累曲线与外推</p>
+</div>
 
 ``` r
 r_squared <- 1 - sum(residuals(fit_exponential)^2) /
@@ -2118,14 +2086,10 @@ legend("bottomright", legend = c("样地A", "样地B"),
        col = c("blue", "red"), lwd = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-17-1} 
-
-}
-
-\caption{物种丰富度内插比较}(\#fig:unnamed-chunk-17)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-17-1.png" alt="物种丰富度内插比较" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-17)物种丰富度内插比较</p>
+</div>
 
 ``` r
 chao1_a <- estimateR(community_a)["S.chao1"]
@@ -2341,14 +2305,10 @@ legend("topright", legend = c("观测值", "Bootstrap估计"),
        col = c("red", "blue"), lwd = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-20-1} 
-
-}
-
-\caption{Bootstrap估计的抽样分布}(\#fig:unnamed-chunk-20)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-20-1.png" alt="Bootstrap估计的抽样分布" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-20)Bootstrap估计的抽样分布</p>
+</div>
 
 4. **多度分布模型**：基于物种多度分布的稀有性校正
 
@@ -2423,14 +2383,10 @@ legend("bottomright", legend = c("经验分布", "拟合分布"),
        col = c("black", "red"), lwd = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-21-1} 
-
-}
-
-\caption{多度分布模型拟合结果}(\#fig:unnamed-chunk-21)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-21-1.png" alt="多度分布模型拟合结果" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-21)多度分布模型拟合结果</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -2539,14 +2495,10 @@ hist(log10(observed_abundances), breaks = 20,
 abline(v = log10(rare_threshold), col = "red", lty = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-22-1} 
-
-}
-
-\caption{稀有种对多样性估计的影响分析}(\#fig:unnamed-chunk-22)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-22-1.png" alt="稀有种对多样性估计的影响分析" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-22)稀有种对多样性估计的影响分析</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -2636,7 +2588,7 @@ print(precision_analysis)
 ```
 
 ```
-## # A tibble: 5 x 7
+## # A tibble: 5 × 7
 ##   sample_size S_mean  S_sd H_mean   H_sd  S_bias H_bias
 ##         <dbl>  <dbl> <dbl>  <dbl>  <dbl>   <dbl>  <dbl>
 ## 1          50   11.6 1.24    2.15 0.108  -22.7   -6.18 
@@ -2692,14 +2644,10 @@ legend("topright", legend = c("物种丰富度", "Shannon多样性"),
        pch = c(19, 17), col = c("black", "blue"))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{04-parameter_estimation_files/figure-latex/unnamed-chunk-23-1} 
-
-}
-
-\caption{样本量对多样性估计精度的影响}(\#fig:unnamed-chunk-23)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/unnamed-chunk-23-1.png" alt="样本量对多样性估计精度的影响" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-23)样本量对多样性估计精度的影响</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))

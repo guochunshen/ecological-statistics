@@ -192,14 +192,10 @@ abline(lm(growth_rate ~ temperature, data = eco_data),
        col = "red", lwd = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-3-1} 
-
-}
-
-\caption{温度与植物生长速率的关系散点图及线性回归线。图中显示温度从10℃到30℃时，植物生长速率呈现明显的正相关关系，线性回归线（红色）表明温度每升高1℃，生长速率平均增加约0.5单位。}(\#fig:unnamed-chunk-3)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-3-1.png" alt="温度与植物生长速率的关系散点图及线性回归线。图中显示温度从10℃到30℃时，植物生长速率呈现明显的正相关关系，线性回归线（红色）表明温度每升高1℃，生长速率平均增加约0.5单位。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-3)温度与植物生长速率的关系散点图及线性回归线。图中显示温度从10℃到30℃时，植物生长速率呈现明显的正相关关系，线性回归线（红色）表明温度每升高1℃，生长速率平均增加约0.5单位。</p>
+</div>
 
 
 ``` r
@@ -322,14 +318,10 @@ for (r2 in r2_values) {
 }
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-6-1} 
-
-}
-
-\caption{不同R²值（决定系数）的生态学含义可视化。左图（R²=0.1）显示环境因子对生态响应影响较弱；中图（R²=0.5）表明环境因子是重要驱动因素；右图（R²=0.9）显示环境因子是生态响应的主要决定因素，模型具有很强的预测能力。}(\#fig:unnamed-chunk-6)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-6-1.png" alt="不同R²值（决定系数）的生态学含义可视化。左图（R²=0.1）显示环境因子对生态响应影响较弱；中图（R²=0.5）表明环境因子是重要驱动因素；右图（R²=0.9）显示环境因子是生态响应的主要决定因素，模型具有很强的预测能力。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-6)不同R²值（决定系数）的生态学含义可视化。左图（R²=0.1）显示环境因子对生态响应影响较弱；中图（R²=0.5）表明环境因子是重要驱动因素；右图（R²=0.9）显示环境因子是生态响应的主要决定因素，模型具有很强的预测能力。</p>
+</div>
 
 ``` r
 # 恢复默认图形设置
@@ -435,14 +427,10 @@ abline(v = 2, lty = 2, col = "gray")
 text(2, 0.1, "真实变量数量", srt = 90, col = "darkgreen", cex = 0.8)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-10-1} 
-
-}
-
-\caption{R²与调整R²随自变量数量变化的关系。蓝色线显示R²随变量增加持续上升，即使添加无关变量；红色线显示调整R²在真实变量数量（2个）后开始下降，惩罚模型复杂度，避免过度拟合。}(\#fig:unnamed-chunk-10)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-10-1.png" alt="R²与调整R²随自变量数量变化的关系。蓝色线显示R²随变量增加持续上升，即使添加无关变量；红色线显示调整R²在真实变量数量（2个）后开始下降，惩罚模型复杂度，避免过度拟合。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-10)R²与调整R²随自变量数量变化的关系。蓝色线显示R²随变量增加持续上升，即使添加无关变量；红色线显示调整R²在真实变量数量（2个）后开始下降，惩罚模型复杂度，避免过度拟合。</p>
+</div>
 
 
 ``` r
@@ -518,14 +506,10 @@ plot(y_nonsig ~ x_nonsig,
 abline(model_nonsig, col = "red", lwd = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-12-1} 
-
-}
-
-\caption{整体模型显著性比较。左图显示显著模型（p < 0.05），环境因子对生态响应有显著影响；右图显示不显著模型（p > 0.05），没有证据表明环境因子有显著影响。}(\#fig:unnamed-chunk-12)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-12-1.png" alt="整体模型显著性比较。左图显示显著模型（p &lt; 0.05），环境因子对生态响应有显著影响；右图显示不显著模型（p &gt; 0.05），没有证据表明环境因子有显著影响。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-12)整体模型显著性比较。左图显示显著模型（p < 0.05），环境因子对生态响应有显著影响；右图显示不显著模型（p > 0.05），没有证据表明环境因子有显著影响。</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -593,14 +577,10 @@ model <- lm(growth_rate ~ temperature, data = eco_data)
 plot(model, which = 1, main = "残差 vs 拟合值图")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-14-1} 
-
-}
-
-\caption{残差 vs 拟合值图。检查线性性和同方差性假设，理想情况下残差应随机分布在水平线y=0周围，无明显的模式或趋势。}(\#fig:unnamed-chunk-14)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-14-1.png" alt="残差 vs 拟合值图。检查线性性和同方差性假设，理想情况下残差应随机分布在水平线y=0周围，无明显的模式或趋势。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-14)残差 vs 拟合值图。检查线性性和同方差性假设，理想情况下残差应随机分布在水平线y=0周围，无明显的模式或趋势。</p>
+</div>
 
 **残差 vs 拟合值图**主要用于检查线性性和同方差性两个重要假设。在理想情况下，残差应该随机分布在水平线y=0周围，没有任何明显的模式。如果残差呈现U形或倒U形分布，这往往暗示着非线性关系的存在。例如，在研究植物生长与温度的关系时，如果存在最适温度范围，残差就可能呈现U形模式。另一方面，如果残差随着拟合值的增大而扩散，形成所谓的"喇叭形"模式，这表明存在异方差性问题。在生态学中，这种异方差性现象十分常见，比如物种丰富度在资源丰富的地区变异较小，而在资源贫瘠的地区变异较大。
 
@@ -611,14 +591,10 @@ plot(model, which = 1, main = "残差 vs 拟合值图")
 plot(model, which = 2, main = "正态Q-Q图")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-15-1} 
-
-}
-
-\caption{正态Q-Q图。检查残差的正态性假设，理想情况下标准化残差应大致沿着45度对角线分布，无系统性偏离。}(\#fig:unnamed-chunk-15)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-15-1.png" alt="正态Q-Q图。检查残差的正态性假设，理想情况下标准化残差应大致沿着45度对角线分布，无系统性偏离。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-15)正态Q-Q图。检查残差的正态性假设，理想情况下标准化残差应大致沿着45度对角线分布，无系统性偏离。</p>
+</div>
 
 **正态Q-Q图**专门用于评估残差的正态性。理想情况下，标准化残差应该大致沿着45度对角线分布。轻微的尾部偏离通常是可以接受的，但如果出现系统性偏离，特别是S形或弯曲模式，就表明残差不服从正态分布。生态学数据经常面临正态性挑战，特别是计数数据（如个体数量）和比例数据（如覆盖率）。当发现严重的非正态性时，我们需要考虑数据变换或使用更适合的统计模型。
 
@@ -630,14 +606,10 @@ plot(model, which = 2, main = "正态Q-Q图")
 plot(model, which = 3, main = "尺度-位置图")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-16-1} 
-
-}
-
-\caption{尺度-位置图。检查同方差性假设，展示标准化残差的平方根与拟合值的关系，理想情况下点应围绕水平线随机分布。}(\#fig:unnamed-chunk-16)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-16-1.png" alt="尺度-位置图。检查同方差性假设，展示标准化残差的平方根与拟合值的关系，理想情况下点应围绕水平线随机分布。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-16)尺度-位置图。检查同方差性假设，展示标准化残差的平方根与拟合值的关系，理想情况下点应围绕水平线随机分布。</p>
+</div>
 
 **尺度-位置图**提供了另一种检查同方差性的视角。这个图展示了标准化残差的平方根与拟合值的关系。理想情况下，点应该围绕水平线随机分布。如果出现明显的上升或下降趋势，就表明存在异方差性。在生态学研究中，这种异方差性往往与环境条件的极端性相关。例如，在干旱胁迫严重的地区，植物生长速率的变异可能显著增大；而在适宜的环境中，变异相对较小。
 
@@ -649,14 +621,10 @@ plot(model, which = 3, main = "尺度-位置图")
 plot(model, which = 5, main = "残差 vs 杠杆图")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-17-1} 
-
-}
-
-\caption{残差 vs 杠杆图。识别异常值和有影响的观测点，特别关注同时具有高杠杆和大残差的点，这些点可能对模型结果产生不成比例的影响。}(\#fig:unnamed-chunk-17)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-17-1.png" alt="残差 vs 杠杆图。识别异常值和有影响的观测点，特别关注同时具有高杠杆和大残差的点，这些点可能对模型结果产生不成比例的影响。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-17)残差 vs 杠杆图。识别异常值和有影响的观测点，特别关注同时具有高杠杆和大残差的点，这些点可能对模型结果产生不成比例的影响。</p>
+</div>
 
 **残差 vs 杠杆图**帮助我们识别异常值和有影响的观测点。在这个图中，我们需要特别关注那些同时具有高杠杆和大残差的点。高杠杆点是指在自变量空间中位置异常的观测，它们对回归线的位置有较大影响；大残差点则是模型预测效果很差的观测。在生态调查中，这些有影响的点可能代表着特殊的生境类型或异常的环境条件，需要仔细检查其生态学合理性。Cook's距离等高线提供了判断观测点影响程度的参考标准。
 
@@ -1349,14 +1317,10 @@ pairs(bird_data_full[, c("richness", "area", "vegetation",
       main = "鸟类丰富度与主要环境因子的关系")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-28-1} 
-
-}
-
-\caption{鸟类丰富度与主要环境因子的散点图矩阵。展示栖息地面积、植被密度、距水源距离和土壤pH值与鸟类丰富度之间的两两关系，用于初步探索变量间的相关性和分布特征。}(\#fig:unnamed-chunk-28)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-28-1.png" alt="鸟类丰富度与主要环境因子的散点图矩阵。展示栖息地面积、植被密度、距水源距离和土壤pH值与鸟类丰富度之间的两两关系，用于初步探索变量间的相关性和分布特征。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-28)鸟类丰富度与主要环境因子的散点图矩阵。展示栖息地面积、植被密度、距水源距离和土壤pH值与鸟类丰富度之间的两两关系，用于初步探索变量间的相关性和分布特征。</p>
+</div>
 
 ### 完整模型拟合
 
@@ -1738,14 +1702,10 @@ par(mfrow = c(2, 2))
 plot(bird_model)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-36-1} 
-
-}
-
-\caption{鸟类丰富度模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。}(\#fig:unnamed-chunk-36)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-36-1.png" alt="鸟类丰富度模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-36)鸟类丰富度模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -2039,14 +1999,10 @@ legend("topright",
        lwd = c(NA, 2, 2))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-41-1} 
-
-}
-
-\caption{物种丰富度与海拔关系的多项式回归分析。蓝色点为观测数据，红色虚线为线性回归线，绿色实线为二次多项式回归曲线。多项式模型更好地捕捉了物种丰富度随海拔变化的单峰分布模式。}(\#fig:unnamed-chunk-41)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-41-1.png" alt="物种丰富度与海拔关系的多项式回归分析。蓝色点为观测数据，红色虚线为线性回归线，绿色实线为二次多项式回归曲线。多项式模型更好地捕捉了物种丰富度随海拔变化的单峰分布模式。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-41)物种丰富度与海拔关系的多项式回归分析。蓝色点为观测数据，红色虚线为线性回归线，绿色实线为二次多项式回归曲线。多项式模型更好地捕捉了物种丰富度随海拔变化的单峰分布模式。</p>
+</div>
 
 ``` r
 # 模型比较
@@ -2262,14 +2218,10 @@ legend("topright",
        lwd = c(NA, 2, 2, 2, 2))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-44-1} 
-
-}
-
-\caption{多项式回归的过度拟合问题演示。蓝色点为观测数据，黑色虚线为真实关系，红色线为线性回归，绿色线为二次多项式，紫色线为9次多项式。高次多项式过度拟合训练数据，产生不合理的波动，泛化能力差。}(\#fig:unnamed-chunk-44)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-44-1.png" alt="多项式回归的过度拟合问题演示。蓝色点为观测数据，黑色虚线为真实关系，红色线为线性回归，绿色线为二次多项式，紫色线为9次多项式。高次多项式过度拟合训练数据，产生不合理的波动，泛化能力差。" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-44)多项式回归的过度拟合问题演示。蓝色点为观测数据，黑色虚线为真实关系，红色线为线性回归，绿色线为二次多项式，紫色线为9次多项式。高次多项式过度拟合训练数据，产生不合理的波动，泛化能力差。</p>
+</div>
 
 ### 统计指标与交叉验证
 
