@@ -1,5 +1,8 @@
 # 统计编程基础
 
+
+
+
 ## 引言
 
 在大语言模型（LLM）成为强大编程助手的今天，编程教育的重心正在发生根本性的转移。死记硬背语法和API细节的价值确实在大幅降低。这一变革标志着编程教育从"技能导向"向"思维导向"的深刻转型。过去，编程教学往往过分强调记忆各种语言的语法规则、函数库的API细节，以及特定框架的使用方法，学生需要花费大量时间在机械记忆上。然而，随着Deepseek等AI编程助手的普及，这些原本需要记忆的知识点现在可以通过简单的自然语言查询即时获得。这并不意味着编程变得不重要，恰恰相反，它意味着编程教育的价值需要重新定位。
@@ -142,7 +145,7 @@
 
 
 
-<div class="figure">
+<div class="figure" style="text-align: center">
 <img src="imgs/hardware_flow.png" alt="程序运行中的数据流动示意图" width="250" />
 <p class="caption">(\#fig:hardware-flow-export)程序运行中的数据流动示意图</p>
 </div>
@@ -345,26 +348,6 @@ for (plot in plots) {
 ``` r
 # 加载必要的包
 library(dplyr)
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-``` r
 library(stringr)
 
 # 定义计算物种多样性的函数
@@ -544,10 +527,6 @@ library(ggplot2) # 数据可视化
 library(vegan) # 生态学分析
 ```
 
-```
-## Loading required package: permute
-```
-
 模块化与包管理是构建可维护、可扩展分析系统的核心实践。模块化将复杂的分析流程分解为职责单一、接口清晰的代码单元，这种分解思维在生态学数据分析中具有深远的意义。从技术层面看，模块化显著提高了代码的可读性、可测试性和可维护性。一个典型的生态数据分析项目可能包含数据收集、清洗、统计分析、可视化等多个环节，将这些环节模块化后，每个模块都可以独立开发、测试和优化。例如，数据清洗模块可以专注于处理缺失值和异常值，统计分析模块可以专注于算法实现，可视化模块可以专注于图表设计。这种职责分离使得代码结构更加清晰，便于理解和维护。
 
 包管理则代表了现代编程的协作智慧，它充分利用社区资源，避免重复造轮子。在生态学领域，R语言的包生态系统尤为丰富，提供了大量专业工具。vegan包专门用于生态学多样性分析，spatstat包提供了空间点模式分析的完整解决方案，sp包处理空间数据，lme4包实现混合效应模型等。这些经过社区验证的包不仅提供了可靠的功能实现，还包含了最佳实践和标准方法。
@@ -718,20 +697,7 @@ test_diversity_calculation <- function() {
 
 # 使用testthat包进行更专业的测试
 library(testthat)
-```
 
-```
-## 
-## Attaching package: 'testthat'
-```
-
-```
-## The following object is masked from 'package:dplyr':
-## 
-##     matches
-```
-
-``` r
 test_that("多样性计算正确", {
   # 测试边界情况
   expect_equal(calculate_diversity(character(0)), 0) # 空向量
@@ -744,7 +710,7 @@ test_that("多样性计算正确", {
 ```
 
 ```
-## Test passed 🎉
+## Test passed 🌈
 ```
 
 ``` r
@@ -1150,20 +1116,6 @@ calculate_shannon_diversity <- function(species_vector) {
     
     # 测试（使用较小的n值避免输出过长）
     library(gmp)
-    ```
-    
-    ```
-    ## 
-    ## Attaching package: 'gmp'
-    ```
-    
-    ```
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     %*%, apply, crossprod, matrix, tcrossprod
-    ```
-    
-    ``` r
     result <- fibonacci_dp_bigint(50)
     cat("第50个斐波那契数：", as.character(result))
     ```
@@ -1276,27 +1228,7 @@ calculate_shannon_diversity <- function(species_vector) {
 
 下面这张图直观地展示了不同复杂度随数据量增长的趋势。**Y轴可以理解为时间或空间消耗**。
 
-
-```
-## Loading required package: sysfonts
-```
-
-```
-## Loading required package: showtextdb
-```
-
-```
-## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-## ℹ Please use `linewidth` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
-```
-
-```
-## Warning in scale_y_log10(): log-10 transformation introduced infinite values.
-```
-
-<div class="figure">
+<div class="figure" style="text-align: center">
 <img src="01-statistical_programing_files/figure-html/complexity-curve-1.png" alt="算法复杂度随数据规模增长的趋势图" width="672" />
 <p class="caption">(\#fig:complexity-curve)算法复杂度随数据规模增长的趋势图</p>
 </div>
@@ -1449,21 +1381,6 @@ calculate_density_safe <- function(area, count) {
 
 # 改进：使用更现代的tidyverse方法
 library(tidyverse)
-```
-
-```
-## ── Attaching core tidyverse packages ─────────────────────────────────────────── tidyverse 2.0.0 ──
-## ✔ forcats   1.0.0     ✔ readr     2.1.5
-## ✔ lubridate 1.9.4     ✔ tibble    3.2.1
-## ✔ purrr     1.1.0     ✔ tidyr     1.3.1
-## ── Conflicts ───────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ readr::edition_get()   masks testthat::edition_get()
-## ✖ dplyr::filter()        masks stats::filter()
-## ✖ purrr::is_null()       masks testthat::is_null()
-## ✖ dplyr::lag()           masks stats::lag()
-## ✖ readr::local_edition() masks testthat::local_edition()
-## ✖ tidyr::matches()       masks testthat::matches(), dplyr::matches()
-## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
 #### 功能正确性验证方法
