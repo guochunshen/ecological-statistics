@@ -2330,10 +2330,10 @@ summary(cooc_null)
 ```
 
 ```
-## Time Stamp:  Sun Oct  5 13:51:03 2025 
+## Time Stamp:  Tue Oct  7 08:58:22 2025 
 ## Reproducible:  
 ## Number of Replications:  
-## Elapsed Time:  0.23 secs 
+## Elapsed Time:  0.18 secs 
 ## Metric:  c_score 
 ## Algorithm:  sim9 
 ## Observed Index:  13.671 
