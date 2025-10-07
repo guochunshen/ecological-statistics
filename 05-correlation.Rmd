@@ -2202,17 +2202,21 @@ library(geoR)
 grf_model <- grf(
   n = n_sites,
   grid = "irreg",
-  coords = as.matrix(coords),
+  xlims = c(0, 100),
+  ylims = c(0, 100),
   cov.pars = c(10, 20), # 方差=10，变程=20
   cov.model = "exponential"
 )
 
-forest_biomass <- trend + heterogeneity + grf_model$data
+# 使用grf生成的坐标和空间数据
+grf_coords <- grf_model$coords
+forest_biomass <- 50 + 0.3 * grf_coords[,1] + 0.2 * grf_coords[,2] +
+  rnorm(n_sites, 0, 5 + 0.03 * grf_coords[,1]) + grf_model$data
 
 # 创建空间数据
 spatial_data <- data.frame(
-  x = coords$x,
-  y = coords$y,
+  x = grf_coords[,1],
+  y = grf_coords[,2],
   biomass = forest_biomass
 )
 coordinates(spatial_data) <- ~ x + y

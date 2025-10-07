@@ -2185,6 +2185,457 @@ Getis-Ord Gi*分析进一步验证了热点和冷点的存在，其专注于识�
 
 这个完整的分析流程从数据模拟、空间权重构建、局部统计量计算到多重比较校正，展示了局部空间自相关分析在城市生态学研究中的系统应用方法。它不仅帮助我们识别和量化局部空间模式，更重要的是为理解这些模式背后的生态过程提供了统计依据，为城市生态规划、生物多样性保护和栖息地管理提供了实用的技术框架。
 
+
+### 空间平稳性：空间分析的基础假设
+
+在研究森林生物量的空间分布时，我们需要首先检验空间数据的平稳性，因为非平稳空间过程可能导致有偏的空间预测和错误的统计推断。
+
+空间平稳性是空间统计学的基本假设，指的是空间过程的统计特性（如均值、方差和协方差结构）在空间上保持恒定。与时间序列平稳性类似，空间平稳性也分为严格平稳和弱平稳（二阶平稳）。严格平稳要求空间过程的任意有限维联合分布不随空间平移而改变，而弱平稳只要求均值恒定、方差有限且协方差只依赖于空间位置差而不依赖于具体位置。在生态学实践中，我们通常关注弱平稳性，因为它更容易检验且对于大多数空间分析方法已经足够。
+
+**数学定义**：弱平稳空间过程满足：
+
+1. $E[Z(\mathbf{s})] = \mu$（常数均值）
+2. $Var[Z(\mathbf{s})] = \sigma^2 < \infty$（有限常数方差）
+3. $Cov[Z(\mathbf{s}), Z(\mathbf{s}+\mathbf{h})] = C(\mathbf{h})$（协方差只依赖于空间滞后$\mathbf{h}$，不依赖于具体位置$\mathbf{s}$）
+
+为了直观理解空间平稳性的概念，让我们对比一下平稳和非平稳空间过程的典型特征。
+
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/spatial-stationarity-comparison-1.png" alt="空间平稳性对比示意图：左图显示平稳空间过程（恒定统计特性），右图显示非平稳空间过程（具有趋势和空间异质性）" width="672" />
+<p class="caption">(\#fig:spatial-stationarity-comparison)空间平稳性对比示意图：左图显示平稳空间过程（恒定统计特性），右图显示非平稳空间过程（具有趋势和空间异质性）</p>
+</div>
+
+上面的对比图（见\@ref(fig:spatial-stationarity-comparison)）清晰地展示了平稳空间过程和非平稳空间过程在统计特性上的根本差异，这对于理解空间分析的基本假设至关重要。
+
+在平稳空间过程的左侧部分，我们可以看到随机空间变异显示典型的平稳特征。空间分布图显示观测值在整个研究区域内随机分布，既没有明显的空间趋势，也没有系统性的空间模式，观测值之间表现出恒定的均值和方差。这种恒定的统计特性正是空间平稳性的核心特征。变异函数图进一步证实了平稳性，半方差随着距离增加而稳定收敛到基台值，表明空间依赖性在特定距离范围内存在且稳定。
+
+相比之下，非平稳空间过程的右侧部分展现了完全不同的特征。具有趋势和异质性的空间过程显示明显的非平稳性，空间分布图中可见从西北到东南的明显梯度变化，反映了空间变量的系统性趋势。同时观测值的变异程度也随空间位置变化，显示了空间异质性特征。变异函数图呈现出持续上升的模式，半方差随着距离增加而不断增大，无法稳定收敛到基台值，显示强烈的非平稳性特征。这种持续上升的变异函数主要源于空间过程中的趋势成分，而非真正的空间依赖性。
+
+在生态学研究中，正确识别空间过程的平稳性具有重要的实践意义。对于平稳空间过程，由于其统计特性在空间上稳定，适合直接应用经典的空间统计方法，如普通克里金插值、空间自相关分析等，统计推断相对可靠。而对于非平稳空间过程，如具有环境梯度的生态变量分布，则需要先进行平稳化处理，如趋势去除、空间变换等方法，否则可能导致严重的统计问题。空间趋势可能导致虚假的空间相关性，模型可能错误地拟合趋势而非真实的生态关系，置信区间和空间预测也可能严重偏离真实情况。通过图示法和变异函数分析识别空间平稳性是最直观的检验方法，为后续的空间统计分析和生态解释提供基础保障。
+
+空间平稳性检验在生态学空间分析中具有至关重要的意义。许多经典的空间统计方法，如克里金插值、空间自回归模型和地统计分析，都建立在平稳性假设的基础上。如果空间过程是非平稳的，直接应用这些方法可能导致严重的统计问题，如有偏估计和无效的假设检验。生态学中的许多空间数据都表现出非平稳特征，如环境梯度（海拔、纬度梯度）、人为影响的空间模式（城市化梯度、污染扩散）和生态系统演替的空间趋势等。
+
+检验空间平稳性的常用方法包括图示法、变异函数分析、趋势面检验和方向性变异函数分析等。图示法通过观察空间分布图来识别明显的趋势或空间模式；变异函数分析通过检查变异函数的收敛模式来判断平稳性——平稳空间过程的变异函数应该收敛到基台值，而非平稳空间过程的变异函数通常持续上升；趋势面检验通过拟合空间趋势模型来检验趋势的显著性；方向性变异函数分析则通过比较不同方向上的变异函数来检测各向异性。
+
+**趋势面检验**是检验空间平稳性的重要方法，它通过拟合多项式趋势面来量化空间趋势的显著性。趋势面模型的一般形式为：
+
+$$Z(\mathbf{s}) = \beta_0 + \beta_1x + \beta_2y + \beta_3x^2 + \beta_4xy + \beta_5y^2 + \cdots + \epsilon(\mathbf{s})$$
+
+其中$\mathbf{s} = (x,y)$表示空间坐标，$\beta_i$是趋势系数，$\epsilon(\mathbf{s})$是平稳的残差过程。
+
+趋势面检验的原假设$H_0$是：所有趋势系数$\beta_i = 0$（即没有空间趋势，过程是平稳的）；备择假设$H_1$是：至少有一个趋势系数$\beta_i \neq 0$（即存在空间趋势，过程是非平稳的）。检验统计量通常使用F统计量：
+
+$$F = \frac{(SSE_r - SSE_f)/(df_r - df_f)}{SSE_f/df_f}$$
+
+其中$SSE_r$是简化模型（无趋势）的残差平方和，$SSE_f$是完整模型（有趋势）的残差平方和，$df_r$和$df_f$分别是相应的自由度。
+
+在生态学研究中，趋势面检验具有重要的应用价值。例如，在分析物种丰富度的空间分布时，趋势面检验可以帮助判断是否存在环境梯度的影响；在研究污染物扩散时，趋势面检验可以识别污染源的空间影响模式；在生态系统监测中，趋势面检验为构建准确的空间模型提供了基础。
+
+需要注意的是，趋势面检验对趋势函数形式的选择比较敏感。多项式趋势面可能无法充分捕捉复杂的空间模式，有时需要使用更灵活的趋势函数或基于样条的方法。此外，趋势面检验需要足够的空间采样点来可靠估计趋势系数，在采样稀疏的区域检验功效可能较低。
+
+接下来我们就用一个简单的例子来演示空间平稳性的检验和处理。我们将使用森林生物量的空间分布数据来演示空间平稳性的检验和处理。
+
+首先，我们模拟了一个具有空间趋势和异质性的非平稳空间过程（图\@ref(fig:forest-biomass-spatial)），该过程模拟了森林生物量在100公顷样地内的空间分布。
+
+
+``` r
+# 空间平稳性检验示例：森林生物量的空间分布
+set.seed(123)
+
+# 模拟森林生物量数据（100个样点）
+n_sites <- 100
+
+# 生成空间坐标
+coords <- data.frame(
+  x = runif(n_sites, 0, 100),
+  y = runif(n_sites, 0, 100)
+)
+
+# 模拟非平稳空间过程：具有趋势和异质性的生物量分布
+# 趋势成分：从西北到东南的生物量梯度
+trend <- 50 + 0.3 * coords$x + 0.2 * coords$y
+# 空间异质性：方差随位置变化
+heterogeneity <- rnorm(n_sites, 0, 5 + 0.03 * coords$x)
+# 空间相关性：使用高斯随机场
+library(geoR)
+grf_model <- grf(
+  n = n_sites,
+  grid = "irreg",
+  xlims = c(0, 100),
+  ylims = c(0, 100),
+  cov.pars = c(10, 20), # 方差=10，变程=20
+  cov.model = "exponential"
+)
+```
+
+```
+## grf: simulation(s) on randomly chosen locations with  100  points
+## grf: process with  1  covariance structure(s)
+## grf: nugget effect is: tausq= 0 
+## grf: covariance model 1 is: exponential(sigmasq=10, phi=20)
+## grf: decomposition algorithm used is:  cholesky 
+## grf: End of simulation procedure. Number of realizations: 1
+```
+
+``` r
+# 使用grf生成的坐标和空间数据
+grf_coords <- grf_model$coords
+forest_biomass <- 50 + 0.3 * grf_coords[,1] + 0.2 * grf_coords[,2] +
+  rnorm(n_sites, 0, 5 + 0.03 * grf_coords[,1]) + grf_model$data
+
+# 创建空间数据
+spatial_data <- data.frame(
+  x = grf_coords[,1],
+  y = grf_coords[,2],
+  biomass = forest_biomass
+)
+coordinates(spatial_data) <- ~ x + y
+
+# 可视化空间分布
+spatial_df <- as.data.frame(spatial_data)
+
+ggplot(spatial_df, aes(x = x, y = y, color = biomass)) +
+  geom_point(size = 3) +
+  scale_color_viridis_c() +
+  labs(
+    title = "森林生物量的空间分布",
+    x = "X坐标 (m)", y = "Y坐标 (m)", color = "生物量 (t/ha)"
+  ) +
+  theme_minimal()
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/forest-biomass-spatial-1.png" alt="森林生物量的空间分布图，展示了具有趋势和空间异质性的非平稳空间过程" width="672" />
+<p class="caption">(\#fig:forest-biomass-spatial)森林生物量的空间分布图，展示了具有趋势和空间异质性的非平稳空间过程</p>
+</div>
+
+
+``` r
+# 检验空间平稳性：趋势面检验
+library(sp)
+
+# 拟合趋势面模型
+# 一阶趋势面（线性趋势）
+trend_linear <- lm(biomass ~ x + y, data = spatial_df)
+
+# 二阶趋势面（二次趋势）
+trend_quadratic <- lm(biomass ~ x + y + I(x^2) + I(y^2) + I(x*y), data = spatial_df)
+
+# 进行趋势面检验
+cat("趋势面检验结果：\n")
+```
+
+```
+## 趋势面检验结果：
+```
+
+``` r
+cat("一阶趋势面F检验：\n")
+```
+
+```
+## 一阶趋势面F检验：
+```
+
+``` r
+print(anova(trend_linear))
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: biomass
+##           Df Sum Sq Mean Sq F value    Pr(>F)    
+## x          1 5978.5  5978.5 118.647 < 2.2e-16 ***
+## y          1 3789.1  3789.1  75.197 9.842e-14 ***
+## Residuals 97 4887.7    50.4                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+``` r
+cat("\n二阶趋势面F检验：\n")
+```
+
+```
+## 
+## 二阶趋势面F检验：
+```
+
+``` r
+print(anova(trend_quadratic))
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: biomass
+##           Df Sum Sq Mean Sq  F value    Pr(>F)    
+## x          1 5978.5  5978.5 130.9930 < 2.2e-16 ***
+## y          1 3789.1  3789.1  83.0214 1.424e-14 ***
+## I(x^2)     1    0.0     0.0   0.0005 0.9821071    
+## I(y^2)     1  597.5   597.5  13.0917 0.0004799 ***
+## I(x * y)   1    0.1     0.1   0.0014 0.9706721    
+## Residuals 94 4290.1    45.6                       
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+``` r
+# 比较模型拟合
+cat("\n模型比较：\n")
+```
+
+```
+## 
+## 模型比较：
+```
+
+``` r
+cat("无趋势模型（仅截距）AIC：", AIC(lm(biomass ~ 1, data = spatial_df)), "\n")
+```
+
+```
+## 无趋势模型（仅截距）AIC： 786.5264
+```
+
+``` r
+cat("一阶趋势面AIC：", AIC(trend_linear), "\n")
+```
+
+```
+## 一阶趋势面AIC： 680.719
+```
+
+``` r
+cat("二阶趋势面AIC：", AIC(trend_quadratic), "\n")
+```
+
+```
+## 二阶趋势面AIC： 673.6782
+```
+
+``` r
+# 检查残差的平稳性
+residuals_linear <- residuals(trend_linear)
+residuals_quadratic <- residuals(trend_quadratic)
+
+cat("\n残差统计：\n")
+```
+
+```
+## 
+## 残差统计：
+```
+
+``` r
+cat("原始数据方差：", round(var(spatial_df$biomass), 2), "\n")
+```
+
+```
+## 原始数据方差： 148.03
+```
+
+``` r
+cat("一阶趋势面残差方差：", round(var(residuals_linear), 2), "\n")
+```
+
+```
+## 一阶趋势面残差方差： 49.37
+```
+
+``` r
+cat("二阶趋势面残差方差：", round(var(residuals_quadratic), 2), "\n")
+```
+
+```
+## 二阶趋势面残差方差： 43.33
+```
+
+当发现空间过程非平稳时，通常需要进行趋势去除或变换来使其平稳化。趋势去除可以通过拟合趋势面并计算残差来实现，空间变换（如对数变换）可以稳定方差。经过这些处理后的平稳空间过程就可以安全地应用各种空间统计分析方法了。在生态学应用中，理解空间过程的平稳性不仅关系到统计方法的正确使用，也帮助我们识别生态系统的空间变化模式和动态特征。
+
+趋势去除是处理非平稳空间过程最常用的方法之一，其数学原理基于空间过程的分解：$Z(\mathbf{s}) = m(\mathbf{s}) + \epsilon(\mathbf{s})$，其中$m(\mathbf{s})$是确定性趋势成分，$\epsilon(\mathbf{s})$是平稳的随机残差。通过估计趋势函数$\hat{m}(\mathbf{s})$，我们可以得到平稳的残差过程$\hat{\epsilon}(\mathbf{s}) = Z(\mathbf{s}) - \hat{m}(\mathbf{s})$。
+
+在生态学空间分析中，趋势去除具有重要的应用价值。许多生态过程，如物种分布、环境因子变异、生态系统生产力等，往往表现出明显的空间趋势特征。通过趋势去除，我们可以将这些趋势从原始数据中分离出来，从而更好地分析数据中的空间随机变异成分。例如，在研究森林生物量的空间分布时，趋势去除能够帮助我们识别局部的空间聚集模式，而不是仅仅关注整体的空间梯度。
+
+需要注意的是，趋势去除虽然能够分离趋势成分，但可能会引入新的问题。趋势函数的选择对结果有重要影响，不合适的趋势函数可能导致过度拟合或欠拟合。此外，趋势去除后的残差过程可能仍然存在空间异质性，需要进一步检验。在实际应用中，通常需要结合统计检验（如变异函数分析）来验证去趋势后过程的平稳性，确保趋势去除达到了预期效果。
+
+接下来我们就用趋势去除来处理上面例子中空间非平稳问题。通过趋势去除处理，我们可以将原始的非平稳空间过程转换为平稳过程，从而满足空间分析的基本假设。
+
+
+``` r
+# 如果非平稳，进行趋势去除处理
+if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
+  cat("\n进行趋势去除处理...\n")
+
+  # 使用最优趋势模型进行趋势去除
+  if (AIC(trend_quadratic) < AIC(trend_linear)) {
+    best_trend <- trend_quadratic
+    cat("使用二阶趋势面进行趋势去除\n")
+  } else {
+    best_trend <- trend_linear
+    cat("使用一阶趋势面进行趋势去除\n")
+  }
+
+  # 计算去趋势后的残差
+  detrended_biomass <- residuals(best_trend)
+
+  # 检验去趋势后过程的平稳性
+  cat("去趋势后过程的统计特性：\n")
+  cat("均值：", round(mean(detrended_biomass), 3), "\n")
+  cat("方差：", round(var(detrended_biomass), 3), "\n")
+}
+```
+
+```
+## 
+## 进行趋势去除处理...
+## 使用二阶趋势面进行趋势去除
+## 去趋势后过程的统计特性：
+## 均值： 0 
+## 方差： 43.335
+```
+
+图\@ref(fig:original-spatial-plot)展示了原始森林生物量的空间分布，可以观察到明显的空间趋势和异质性，这是典型的非平稳空间过程特征。
+
+
+``` r
+# 原始空间过程可视化
+if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
+  ggplot(spatial_df, aes(x = x, y = y, color = biomass)) +
+    geom_point(size = 3) +
+    scale_color_viridis_c() +
+    labs(
+      title = "原始空间过程",
+      x = "X坐标", y = "Y坐标", color = "生物量"
+    ) +
+    theme_minimal()
+}
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/original-spatial-plot-1.png" alt="原始森林生物量空间分布，显示明显的空间趋势和异质性" width="672" />
+<p class="caption">(\#fig:original-spatial-plot)原始森林生物量空间分布，显示明显的空间趋势和异质性</p>
+</div>
+
+经过趋势去除处理后，空间过程的趋势成分被有效去除，如图\@ref(fig:detrended-spatial-plot)所示，去趋势后的过程主要保留了空间随机变异成分。
+
+
+``` r
+# 去趋势后空间过程可视化
+if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
+  detrended_df <- data.frame(
+    x = spatial_df$x,
+    y = spatial_df$y,
+    residual = detrended_biomass
+  )
+
+  ggplot(detrended_df, aes(x = x, y = y, color = residual)) +
+    geom_point(size = 3) +
+    scale_color_gradient2(low = "blue", mid = "white", high = "red") +
+    labs(
+      title = "去趋势后空间过程",
+      x = "X坐标", y = "Y坐标", color = "残差"
+    ) +
+    theme_minimal()
+}
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/detrended-spatial-plot-1.png" alt="去趋势后的森林生物量空间分布，趋势成分已被去除" width="672" />
+<p class="caption">(\#fig:detrended-spatial-plot)去趋势后的森林生物量空间分布，趋势成分已被去除</p>
+</div>
+
+原始空间过程的变异函数（图\@ref(fig:original-variogram)）显示持续上升的特征，这是非平稳空间过程的典型表现。
+
+
+``` r
+# 原始空间过程变异函数
+if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
+  vario_original <- variogram(biomass ~ 1, data = spatial_data)
+  plot(vario_original,
+    main = "原始空间过程的变异函数",
+    xlab = "距离", ylab = "半方差", pch = 19, col = "blue"
+  )
+}
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/original-variogram-1.png" alt="原始空间过程的变异函数，显示持续上升的非平稳特征" width="672" />
+<p class="caption">(\#fig:original-variogram)原始空间过程的变异函数，显示持续上升的非平稳特征</p>
+</div>
+
+去趋势后空间过程的变异函数（图\@ref(fig:detrended-variogram)）显示收敛到基台值的特征，表明过程已经达到平稳状态。
+
+
+``` r
+# 去趋势后空间过程变异函数
+if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
+  detrended_data <- spatial_data
+  detrended_data$biomass <- detrended_biomass
+  vario_detrended <- variogram(biomass ~ 1, data = detrended_data)
+  plot(vario_detrended,
+    main = "去趋势后空间过程的变异函数",
+    xlab = "距离", ylab = "半方差", pch = 19, col = "green"
+  )
+}
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/detrended-variogram-1.png" alt="去趋势后空间过程的变异函数，显示收敛的平稳特征" width="672" />
+<p class="caption">(\#fig:detrended-variogram)去趋势后空间过程的变异函数，显示收敛的平稳特征</p>
+</div>
+
+图\@ref(fig:spatial-decomposition)展示了空间过程分解的结果，将原始过程分离为趋势成分和随机成分，帮助我们更好地理解空间过程的内在结构。
+
+
+``` r
+# 空间过程分解可视化
+if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
+  # 创建趋势面预测
+  trend_pred <- predict(best_trend, newdata = spatial_df)
+
+  decomposition_data <- data.frame(
+    x = spatial_df$x,
+    y = spatial_df$y,
+    original = spatial_df$biomass,
+    trend = trend_pred,
+    residual = detrended_biomass
+  )
+
+  # 创建分解图
+  p1 <- ggplot(decomposition_data, aes(x = x, y = y, color = original)) +
+    geom_point(size = 2) +
+    scale_color_viridis_c() +
+    labs(title = "原始过程", x = "X坐标", y = "Y坐标") +
+    theme_minimal()
+
+  p2 <- ggplot(decomposition_data, aes(x = x, y = y, color = trend)) +
+    geom_point(size = 2) +
+    scale_color_viridis_c() +
+    labs(title = "趋势成分", x = "X坐标", y = "Y坐标") +
+    theme_minimal()
+
+  p3 <- ggplot(decomposition_data, aes(x = x, y = y, color = residual)) +
+    geom_point(size = 2) +
+    scale_color_gradient2(low = "blue", mid = "white", high = "red") +
+    labs(title = "随机成分", x = "X坐标", y = "Y坐标") +
+    theme_minimal()
+
+  library(patchwork)
+  p1 + p2 + p3 +
+    plot_annotation(title = "空间过程分解：原始过程 = 趋势成分 + 随机成分")
+}
+```
+
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/spatial-decomposition-1.png" alt="空间过程分解结果，展示趋势成分和随机成分的分离" width="672" />
+<p class="caption">(\#fig:spatial-decomposition)空间过程分解结果，展示趋势成分和随机成分的分离</p>
+</div>
+
+
+
+
 ## 系统发育相关性
 
 系统发育相关性分析是进化生态学和比较生物学中的重要工具，它考虑了物种间的系统发育关系对性状相关性的影响。由于物种共享进化历史，它们之间的性状值往往不是独立的，这种非独立性可能导致传统的统计方法产生偏差。系统发育相关性分析通过整合系统发育信息，帮助我们区分性状间的生态关系和系统发育保守性。
@@ -2363,8 +2814,8 @@ legend("topleft",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-25-1.png" alt="植物叶片性状的系统发育信号分析和性状距离关系" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-25)植物叶片性状的系统发育信号分析和性状距离关系</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-27-1.png" alt="植物叶片性状的系统发育信号分析和性状距离关系" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-27)植物叶片性状的系统发育信号分析和性状距离关系</p>
 </div>
 
 ``` r
@@ -2578,8 +3029,8 @@ abline(lm(pic_sla ~ pic_nitrogen),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-26-1.png" alt="植物叶片性状的系统发育独立对比分析和性状关系" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-26-1)植物叶片性状的系统发育独立对比分析和性状关系</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-28-1.png" alt="植物叶片性状的系统发育独立对比分析和性状关系" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-28-1)植物叶片性状的系统发育独立对比分析和性状关系</p>
 </div>
 
 ``` r
@@ -2634,8 +3085,8 @@ tiplabels(pch = 19, col = photosynthesis_colors[round(photosynthesis_scaled * 99
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-26-2.png" alt="植物叶片性状的系统发育独立对比分析和性状关系" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-26-2)植物叶片性状的系统发育独立对比分析和性状关系</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-28-2.png" alt="植物叶片性状的系统发育独立对比分析和性状关系" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-28-2)植物叶片性状的系统发育独立对比分析和性状关系</p>
 </div>
 
 ``` r
@@ -2747,8 +3198,8 @@ corrplot(cor_matrix, method = "circle")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-30-1.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-30-1)功能性状相关性矩阵图和主成分分析双标图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-32-1.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-32-1)功能性状相关性矩阵图和主成分分析双标图</p>
 </div>
 
 ``` r
@@ -2770,8 +3221,8 @@ biplot(pca_result)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-30-2.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-30-2)功能性状相关性矩阵图和主成分分析双标图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-32-2.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-32-2)功能性状相关性矩阵图和主成分分析双标图</p>
 </div>
 
 对于经济型谱分析，可以使用线性模型来检验性状间的权衡关系：
@@ -2840,8 +3291,8 @@ abline(model1, col = "red")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-31-1.png" alt="叶片经济型谱关系散点图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-31)叶片经济型谱关系散点图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-33-1.png" alt="叶片经济型谱关系散点图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-33)叶片经济型谱关系散点图</p>
 </div>
 
 **结果解释与生态学意义**：功能性状相关性分析的结果解释需要结合相关系数的数值大小、显著性水平和生态学背景。相关系数$r$的绝对值大小反映了性状间关系的强度：$|r| > 0.7$表示强相关，$0.5 < |r| \leq 0.7$表示中等相关，$0.3 < |r| \leq 0.5$表示弱相关，$|r| \leq 0.3$表示无实质性相关。相关系数的正负号指示了关系的方向：正相关表示性状间协同变化，负相关表示性状间存在权衡关系。
@@ -2988,8 +3439,8 @@ plot(network,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-33-1.png" alt="种间关联网络图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-33)种间关联网络图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-35-1.png" alt="种间关联网络图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-35)种间关联网络图</p>
 </div>
 
 **结果解释与生态学意义**：种间相关性分析的结果解释需要结合相关系数的数值、显著性水平和生态学机制。对于种间关联系数$\phi$，通常认为：$|\phi| > 0.3$表示强关联，$0.2 < |\phi| \leq 0.3$表示中等关联，$|\phi| \leq 0.2$表示弱关联。正关联$\phi > 0$表示物种倾向于共同出现，可能源于互利共生或相似的环境需求；负关联$\phi < 0$表示物种相互排斥，可能源于竞争或不同的生态位需求。
@@ -3091,8 +3542,8 @@ plot(pca_result, display = "sites")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-34-1.png" alt="群落相似性分析的排序图和聚类图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-34-1)群落相似性分析的排序图和聚类图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-36-1.png" alt="群落相似性分析的排序图和聚类图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-36-1)群落相似性分析的排序图和聚类图</p>
 </div>
 
 ``` r
@@ -3103,8 +3554,8 @@ plot(nmds_result, type = "t")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-34-2.png" alt="群落相似性分析的排序图和聚类图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-34-2)群落相似性分析的排序图和聚类图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-36-2.png" alt="群落相似性分析的排序图和聚类图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-36-2)群落相似性分析的排序图和聚类图</p>
 </div>
 
 ``` r
@@ -3114,8 +3565,8 @@ plot(hc_result)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-34-3.png" alt="群落相似性分析的排序图和聚类图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-34-3)群落相似性分析的排序图和聚类图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-36-3.png" alt="群落相似性分析的排序图和聚类图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-36-3)群落相似性分析的排序图和聚类图</p>
 </div>
 
 ``` r
