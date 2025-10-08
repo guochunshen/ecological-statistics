@@ -2439,6 +2439,14 @@ $$K = \frac{MS_{obs}}{MS_{random}}$$
 
 - **Pagel's λ**：
 
+Pagel's λ 是一个介于0和1之间的参数，用于衡量性状在系统发育树上的进化保守性程度。λ=0表示性状进化完全独立于系统发育关系（无系统发育信号），λ=1表示性状进化遵循布朗运动模型（强系统发育信号）。
+
+Pagel's λ的数学模型为：
+
+$$\mathbf{V} = \lambda\mathbf{C} + (1-\lambda)\mathbf{I}$$
+
+其中$\mathbf{V}$是性状的协方差矩阵，$\mathbf{C}$是系统发育协方差矩阵（由系统发育树计算得到），$\mathbf{I}$是单位矩阵。
+
 通过最大化似然函数来估计：
 
 $$L(\lambda) = -\frac{1}{2}[(n-1)\ln(2\pi) + \ln|\lambda\mathbf{C} + (1-\lambda)\mathbf{I}| + \mathbf{y}^T(\lambda\mathbf{C} + (1-\lambda)\mathbf{I})^{-1}\mathbf{y}]$$
