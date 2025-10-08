@@ -1985,7 +1985,7 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 ## vegetation     0.9444822  9.8845073 4.31007528             1   2
 ## 
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"  "0.008999109 secs" 
+##            "2.9445"                 "8"                 "0"  "0.008777142 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -1993,7 +1993,7 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 ##     Shrinkage-Stats 
 ##         "Av=0.9877" 
 ## 
-## Time difference of 0.008999109 secs
+## Time difference of 0.008777142 secs
 ```
 
 <img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" />
@@ -2013,7 +2013,7 @@ print(summary(bma_result))
 
 ```
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"  "0.008999109 secs" 
+##            "2.9445"                 "8"                 "0"  "0.008777142 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -2106,14 +2106,14 @@ bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
 ## Chain 1:  Elapsed Time: 0.074 seconds (Warm-up)
-## Chain 1:                0.048 seconds (Sampling)
-## Chain 1:                0.122 seconds (Total)
+## Chain 1:                0.049 seconds (Sampling)
+## Chain 1:                0.123 seconds (Total)
 ## Chain 1: 
 ## 
 ## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
 ## Chain 2: 
-## Chain 2: Gradient evaluation took 5e-06 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
+## Chain 2: Gradient evaluation took 6e-06 seconds
+## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
 ## Chain 2: Adjust your expectations accordingly!
 ## Chain 2: 
 ## Chain 2: 

@@ -2662,6 +2662,14 @@ $$K = \frac{MS_{obs}}{MS_{random}}$$
 
 - **Pagel's λ**：
 
+Pagel's λ 是一个介于0和1之间的参数，用于衡量性状在系统发育树上的进化保守性程度。λ=0表示性状进化完全独立于系统发育关系（无系统发育信号），λ=1表示性状进化遵循布朗运动模型（强系统发育信号）。
+
+Pagel's λ的数学模型为：
+
+$$\mathbf{V} = \lambda\mathbf{C} + (1-\lambda)\mathbf{I}$$
+
+其中$\mathbf{V}$是性状的协方差矩阵，$\mathbf{C}$是系统发育协方差矩阵（由系统发育树计算得到），$\mathbf{I}$是单位矩阵。
+
 通过最大化似然函数来估计：
 
 $$L(\lambda) = -\frac{1}{2}[(n-1)\ln(2\pi) + \ln|\lambda\mathbf{C} + (1-\lambda)\mathbf{I}| + \mathbf{y}^T(\lambda\mathbf{C} + (1-\lambda)\mathbf{I})^{-1}\mathbf{y}]$$
@@ -3098,6 +3106,14 @@ par(mfrow = c(1, 1))
 
 ## 相似性与距离
 
+在前面的小节中，我们主要讨论了变量间的数值相关性——无论是线性相关、非线性相关，还是时间或空间上的自相关。这些分析关注的是变量间关系的强度和方向。现在，我们将转向一个相关但不同的概念：**相似性与距离**。
+
+相似性分析的核心是量化不同样本、群落或个体之间的相似程度或差异大小。与相关性分析不同，相似性分析更关注分类、比较和排序，而非变量间的函数关系。在生态学中，相似性分析广泛应用于群落分类、物种分布格局研究、功能性状比较以及生态区划等场景。
+
+相似性分析与相关性分析既有联系又有区别：相关性通常度量变量间的协变关系，而相似性则度量样本间的整体差异；相关性分析通常基于连续变量的数值计算，而相似性分析可以处理二元数据、分类数据和数量数据；相关性分析的结果是相关系数，而相似性分析的结果是相似性系数或距离矩阵。
+
+本小节将从基础到应用，系统介绍生态学中常用的相似性系数和距离度量方法，包括二元数据相似性、数量数据相似性、功能性状相关性、种内和种间相关性，以及群落相似性分析的综合方法。
+
 ### 常用相似性系数
 
 在生态学研究中，群落相似性分析是理解物种分布格局、群落构建机制以及环境梯度影响的关键工具。生态学家经常面临如何量化不同样地或群落之间相似程度的问题，这需要根据数据类型和研究目的选择合适的相似性系数。
@@ -3165,7 +3181,7 @@ cov_matrix <- cov(abundance_data)
 
 根系经济型谱则描述了根系功能性状的协变模式，涉及细根直径、根组织密度、根寿命等性状。通常，快速资源获取型的根系具有较细的直径、较低的组织密度和较短的寿命，而资源保存型的根系则相反。这些经济型谱的发现为理解植物功能策略的普遍模式提供了理论基础，在全球变化生态学、生物地理学和生态系统管理中具有重要应用价值。它们帮助我们预测植物群落对气候变化和人为干扰的响应，以及生态系统功能的变化趋势。
 
-在R语言中，功能性状相关性分析可以通过多种统计方法实现：
+在R语言中，功能性状相关性分析可以通过多种统计方法实现。图\@ref(fig:trait-correlation-pca)展示了功能性状相关性矩阵的可视化和主成分分析结果：
 
 
 ``` r
@@ -3198,8 +3214,8 @@ corrplot(cor_matrix, method = "circle")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-32-1.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-32-1)功能性状相关性矩阵图和主成分分析双标图</p>
+<img src="05-correlation_files/figure-html/trait-correlation-pca-1.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="672" />
+<p class="caption">(\#fig:trait-correlation-pca-1)功能性状相关性矩阵图和主成分分析双标图</p>
 </div>
 
 ``` r
@@ -3221,11 +3237,11 @@ biplot(pca_result)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-32-2.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-32-2)功能性状相关性矩阵图和主成分分析双标图</p>
+<img src="05-correlation_files/figure-html/trait-correlation-pca-2.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="672" />
+<p class="caption">(\#fig:trait-correlation-pca-2)功能性状相关性矩阵图和主成分分析双标图</p>
 </div>
 
-对于经济型谱分析，可以使用线性模型来检验性状间的权衡关系：
+对于经济型谱分析，可以使用线性模型来检验性状间的权衡关系。图\@ref(fig:leaf-economics-scatter)展示了叶片经济型谱关系的散点图：
 
 
 ``` r
@@ -3291,8 +3307,8 @@ abline(model1, col = "red")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-33-1.png" alt="叶片经济型谱关系散点图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-33)叶片经济型谱关系散点图</p>
+<img src="05-correlation_files/figure-html/leaf-economics-scatter-1.png" alt="叶片经济型谱关系散点图" width="672" />
+<p class="caption">(\#fig:leaf-economics-scatter)叶片经济型谱关系散点图</p>
 </div>
 
 **结果解释与生态学意义**：功能性状相关性分析的结果解释需要结合相关系数的数值大小、显著性水平和生态学背景。相关系数$r$的绝对值大小反映了性状间关系的强度：$|r| > 0.7$表示强相关，$0.5 < |r| \leq 0.7$表示中等相关，$0.3 < |r| \leq 0.5$表示弱相关，$|r| \leq 0.3$表示无实质性相关。相关系数的正负号指示了关系的方向：正相关表示性状间协同变化，负相关表示性状间存在权衡关系。
@@ -3439,8 +3455,8 @@ plot(network,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-35-1.png" alt="种间关联网络图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-35)种间关联网络图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-33-1.png" alt="种间关联网络图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-33)种间关联网络图</p>
 </div>
 
 **结果解释与生态学意义**：种间相关性分析的结果解释需要结合相关系数的数值、显著性水平和生态学机制。对于种间关联系数$\phi$，通常认为：$|\phi| > 0.3$表示强关联，$0.2 < |\phi| \leq 0.3$表示中等关联，$|\phi| \leq 0.2$表示弱关联。正关联$\phi > 0$表示物种倾向于共同出现，可能源于互利共生或相似的环境需求；负关联$\phi < 0$表示物种相互排斥，可能源于竞争或不同的生态位需求。
@@ -3542,8 +3558,8 @@ plot(pca_result, display = "sites")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-36-1.png" alt="群落相似性分析的排序图和聚类图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-36-1)群落相似性分析的排序图和聚类图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-34-1.png" alt="群落相似性分析的排序图和聚类图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-34-1)群落相似性分析的排序图和聚类图</p>
 </div>
 
 ``` r
@@ -3554,8 +3570,8 @@ plot(nmds_result, type = "t")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-36-2.png" alt="群落相似性分析的排序图和聚类图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-36-2)群落相似性分析的排序图和聚类图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-34-2.png" alt="群落相似性分析的排序图和聚类图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-34-2)群落相似性分析的排序图和聚类图</p>
 </div>
 
 ``` r
@@ -3565,8 +3581,8 @@ plot(hc_result)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-36-3.png" alt="群落相似性分析的排序图和聚类图" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-36-3)群落相似性分析的排序图和聚类图</p>
+<img src="05-correlation_files/figure-html/unnamed-chunk-34-3.png" alt="群落相似性分析的排序图和聚类图" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-34-3)群落相似性分析的排序图和聚类图</p>
 </div>
 
 ``` r
