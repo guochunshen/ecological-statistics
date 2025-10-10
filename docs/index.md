@@ -1,7 +1,7 @@
 ---
 title: "生态统计学"
 author: "沈国春、李勤"
-date: "2025-10-08"
+date: "2025-10-10"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
@@ -261,7 +261,7 @@ devtools::session_info()
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       Etc/UTC
-##  date     2025-10-08
+##  date     2025-10-10
 ##  pandoc   3.1.3 @ /usr/bin/ (via rmarkdown)
 ##  quarto   NA
 ## 

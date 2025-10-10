@@ -2331,10 +2331,10 @@ summary(cooc_null)
 ```
 
 ```
-## Time Stamp:  Wed Oct  8 09:14:19 2025 
+## Time Stamp:  Fri Oct 10 04:28:02 2025 
 ## Reproducible:  
 ## Number of Replications:  
-## Elapsed Time:  0.19 secs 
+## Elapsed Time:  0.18 secs 
 ## Metric:  c_score 
 ## Algorithm:  sim9 
 ## Observed Index:  13.671 
