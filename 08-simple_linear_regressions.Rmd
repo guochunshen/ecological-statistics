@@ -1,4 +1,4 @@
-# 简单线性回归模型
+# 线性回归模型
 
 ```{r include=FALSE}
 # 初始化设置
@@ -6,7 +6,9 @@ knitr::opts_chunk$set(
   echo = TRUE,
   warning = FALSE,
   message = FALSE,
-  fig.align = "center"
+  fig.align = "center",
+  out.width = "80%",
+  cache = TRUE
 )
 library(showtext)   # 中文字体支持
 showtext_auto()     # 自动启用中文字体
@@ -268,7 +270,7 @@ for (r2 in r2_values) {
 par(mfrow = c(1, 1))
 ```
 
-```{r}
+```{r, echo=FALSE}
 # 结果解释：不同R²值的生态学含义
 cat("=== 不同R²值的生态学解释 ===\n
 R² = 0.1 (左图): 模型只能解释10%的变异，表明环境因子对生态响应的影响很弱，
@@ -350,7 +352,7 @@ abline(v = 2, lty = 2, col = "gray")
 text(2, 0.1, "真实变量数量", srt = 90, col = "darkgreen", cex = 0.8)
 ```
 
-```{r}
+```{r, echo=FALSE}
 # 结果解释：R²与调整R²的差异
 cat("=== R²与调整R²差异演示 ===\n
 当添加无关变量时：
@@ -411,7 +413,9 @@ plot(y_nonsig ~ x_nonsig,
 abline(model_nonsig, col = "red", lwd = 2)
 
 par(mfrow = c(1, 1))
+```
 
+```{r, echo=FALSE}
 # 解释整体模型显著性
 cat("=== 整体模型显著性解释 ===\n
 显著模型 (左图):
@@ -557,7 +561,7 @@ cat("=== 整体回归模型结果 ===\n")
 summary(overall_model)
 ```
 
-```{r}
+```{r, echo=FALSE}
 # 结果输出：各树种模型比较
 cat("\n=== 各树种回归模型比较 ===\n
 橡树模型: 截距 =", round(coef(oak_model)[1], 3),
@@ -639,7 +643,7 @@ cat("=== 多元线性回归模型结果 ===\n")
 summary(multi_model)
 ```
 
-```{r}
+```{r, echo=FALSE}
 # 结果解释：系数生态学含义
 cat("\n=== 生态学解释 ===\n
 在控制其他变量的情况下：
@@ -784,13 +788,17 @@ model2 <- lm(richness ~ area + vegetation + water_distance,
              data = bird_data_full)
 model3 <- lm(richness ~ area + vegetation + water_distance + soil_ph,
              data = bird_data_full)
+```
 
+```{r, echo=FALSE}
 # 计算AIC
 cat("模型1 (面积+植被) AIC:", AIC(model1), "
 模型2 (面积+植被+水源) AIC:", AIC(model2), "
 模型3 (面积+植被+水源+pH) AIC:", AIC(model3), "
 逐步回归模型 AIC:", AIC(step_model), "\n")
+```
 
+```{r}
 # 4. 变量重要性分析
 cat("\n=== 变量重要性分析 ===\n")
 library(relaimpo)
@@ -801,7 +809,8 @@ cat("\n=== 多重共线性诊断 ===\n")
 library(car)
 vif_values <- vif(full_model)
 print(vif_values)
-
+```
+```{r, echo=FALSE}
 # 解释VIF值
 cat("\nVIF值解释：\n
 - VIF < 5: 多重共线性可接受
@@ -935,7 +944,9 @@ model_water <- lm(richness ~ area + vegetation + water_distance,
                   data = forest_ecosystem_data)
 model_soil <- lm(richness ~ area + vegetation + water_distance + soil_ph,
                  data = forest_ecosystem_data)
+```
 
+```{r, echo=FALSE}
 cat("简单模型 (面积+植被) AIC:", AIC(model_simple), "
 水源模型 (面积+植被+水源) AIC:", AIC(model_water), "
 土壤模型 (面积+植被+水源+pH) AIC:", AIC(model_soil), "
@@ -953,7 +964,8 @@ cat("\n--- 多重共线性诊断 ---\n")
 library(car)
 vif_full <- vif(full_model)
 print(vif_full)
-
+```
+```{r, echo=FALSE}
 # 解释多重共线性问题
 cat("\n多重共线性评估：\n
 VIF > 10 的变量：", names(vif_full)[vif_full > 10], "
@@ -976,7 +988,7 @@ print(summary(forest_model))
 
 **模型评估要点**：选择最优模型时，我们综合考虑了统计指标（AIC、R²）和生态学意义。一个好的模型应该既统计显著又具有明确的生态学解释。
 
-```{r}
+```{r, echo=FALSE}
 # 5. 模型比较与选择理由
 cat("\n=== 模型选择理由 ===\n
 选择当前模型的原因：
@@ -1093,7 +1105,9 @@ new_site <- data.frame(
 
 prediction <- predict(forest_model, newdata = new_site,
                       interval = "confidence")
+```
 
+```{r, echo=FALSE}
 cat("\n=== 预测示例 ===\n
 对于面积为50公顷、植被密度0.7、距水源1.2km的栖息地：
 预测物种丰富度 =", round(prediction[1, "fit"], 1), "种
@@ -1105,7 +1119,7 @@ cat("\n=== 预测示例 ===\n
 
 **模型评估要点**：模型比较是评估变量选择效果的关键环节。通过比较完整模型与选择模型在R²、调整R²和AIC等指标上的差异，我们可以量化变量选择带来的统计改善。在生态学中，这种比较不仅验证了统计方法的有效性，更重要的是证明了简约性原则在生态建模中的价值。
 
-```{r}
+```{r, echo=FALSE}
 # 10. 模型比较：完整模型 vs 选择模型
 cat("\n=== 模型比较：完整模型 vs 选择模型 ===\n
 完整模型 R²:", round(summary(full_model)$r.squared, 3), "
@@ -1114,7 +1128,9 @@ cat("\n=== 模型比较：完整模型 vs 选择模型 ===\n
 选择模型 R²:", round(summary(forest_model)$r.squared, 3), "
 选择模型 调整R²:", round(summary(forest_model)$adj.r.squared, 3), "
 选择模型 AIC:", round(AIC(forest_model), 1), "\n")
+```
 
+```{r}
 # 计算模型简约性改善
 aic_improvement <- AIC(full_model) - AIC(forest_model)
 cat("AIC改善:", round(aic_improvement, 1), "\n")
@@ -1130,7 +1146,7 @@ if (aic_improvement > 2) {
 
 **模型评估要点**：最终模型选择的合理性不仅体现在统计指标上，更重要的是其生态学解释性。通过对比完整模型和选择模型的生态学含义，我们可以理解变量选择在生态学研究中的实际价值。一个好的生态模型应该既统计可靠又具有明确的生态学意义。
 
-```{r}
+```{r, echo=FALSE}
 # 生态学解释对比
 cat("\n=== 生态学解释对比 ===\n
 完整模型包含所有8个环境因子，但其中部分因子可能：
@@ -1270,7 +1286,9 @@ legend("topright",
        pch = c(16, NA, NA),
        lty = c(NA, 2, 1),
        lwd = c(NA, 2, 2))
+```
 
+```{r, echo=FALSE}
 # 模型比较
 cat("=== 模型比较 ===\n
 线性模型 R²:", round(summary(linear_model)$r.squared, 3), "
@@ -1307,17 +1325,25 @@ degree_1 <- lm(richness ~ poly(altitude, degree = 1), data = altitude_data)
 degree_2 <- lm(richness ~ poly(altitude, degree = 2), data = altitude_data)
 degree_3 <- lm(richness ~ poly(altitude, degree = 3), data = altitude_data)
 degree_4 <- lm(richness ~ poly(altitude, degree = 4), data = altitude_data)
+```
 
+```{r, echo=FALSE}
 # 比较AIC值
 cat("=== 多项式阶数选择 ===\n
 1次多项式 AIC:", AIC(degree_1), "
 2次多项式 AIC:", AIC(degree_2), "
 3次多项式 AIC:", AIC(degree_3), "
 4次多项式 AIC:", AIC(degree_4), "\n")
+```
 
+```{r}
 # 选择最优模型
 best_degree <- which.min(c(AIC(degree_1), AIC(degree_2),
                            AIC(degree_3), AIC(degree_4)))
+
+```
+
+```{r, echo=FALSE}
 cat("\n最优多项式阶数:", best_degree, "\n")
 
 # 解释选择结果
@@ -1390,7 +1416,7 @@ plot(species ~ altitude, data = overfit_forest_data,
      main = "林小雨的教训：多项式回归的过度拟合问题",
      xlab = "海拔",
      ylab = "物种丰富度",
-     pch = 16, col = "blue", cex = 1.5, ylim = c(0, 4))
+     pch = 16, col = "blue", cex = 1.5, ylim = c(0, 8))
 
 # 添加真实关系曲线（通常未知）
 lines(altitude_seq, 2 + 0.5 * altitude_seq - 0.05 * altitude_seq^2,
@@ -1414,7 +1440,7 @@ legend("topright",
 
 **模型评估要点**：R²等拟合优度指标可能误导模型选择，因为它们总是随着模型复杂度增加而提高。交叉验证提供了更可靠的泛化能力评估，它通过模拟模型在新数据上的表现来识别过度拟合问题。
 
-```{r}
+```{r, echo=FALSE}
 # 模型比较
 cat("=== 模型拟合优度比较 ===\n
 线性模型 R²:", round(summary(linear_model)$r.squared, 4), "
@@ -1427,7 +1453,9 @@ cat("\n=== 过度拟合的数学解释 ===\n
 数据点数量:", n_points, "
 多项式阶数:", 7, "
 自由度:", n_points - 8, "（负值表明过度参数化）\n")
+```
 
+```{r}
 # 计算训练误差和泛化误差（通过留一法交叉验证）
 # 由于数据量小，使用留一法交叉验证
 library(boot)
@@ -1436,7 +1464,9 @@ library(boot)
 cv_quadratic <- cv.glm(overfit_forest_data, quadratic_model)$delta[1]
 # 7次多项式的留一法交叉验证误差
 cv_overfit <- cv.glm(overfit_forest_data, overfit_model)$delta[1]
+```
 
+```{r, echo=FALSE}
 cat("\n=== 留一法交叉验证误差比较 ===\n
 二次多项式 CV误差:", round(cv_quadratic, 4), "
 7次多项式 CV误差:", round(cv_overfit, 4), "\n")

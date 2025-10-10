@@ -7,7 +7,9 @@ knitr::opts_chunk$set(
   echo = TRUE,
   warning = FALSE,
   message = FALSE,
-  fig.align = "center"
+  fig.align = "center",
+  out.width = "80%",
+  cache = TRUE
 )
 library(showtext)   # 中文字体支持
 showtext_auto()     # 自动启用中文字体
@@ -332,7 +334,9 @@ sample_se <- sd(sample_data) / sqrt(length(sample_data))
 # 使用正态分布临界值1.96构建置信区间
 ci_lower <- sample_mean - 1.96 * sample_se  # 置信区间下限
 ci_upper <- sample_mean + 1.96 * sample_se  # 置信区间上限
+```
 
+```{r, echo=FALSE}
 # 输出置信区间计算结果
 cat("样本均值：", round(sample_mean, 2), "米\n",
     "标准误：", round(sample_se, 2), "米\n",
@@ -364,12 +368,16 @@ bird_counts <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 50) # 包含一个异常高值
 q1 <- quantile(bird_counts, 0.25)
 q3 <- quantile(bird_counts, 0.75)
 iqr_value <- IQR(bird_counts)
+```
 
+```{r, echo=FALSE}
 cat("下四分位数(Q1)：", q1, "\n",
     "上四分位数(Q3)：", q3, "\n",
     "四分位距(IQR)：", iqr_value, "\n",
     sep = "")
+```
 
+```{r}
 # 识别异常值
 lower_bound <- q1 - 1.5 * iqr_value
 upper_bound <- q3 + 1.5 * iqr_value
@@ -440,6 +448,9 @@ abundance_b <- runif(45, 10, 30)
 # 计算峰度
 kurtosis_a <- kurtosis(abundance_a)
 kurtosis_b <- kurtosis(abundance_b)
+```
+
+```{r, echo=FALSE}
 
 cat("物种A多度分布的峰度：", round(kurtosis_a, 2), "\n",
     "物种B多度分布的峰度：", round(kurtosis_b, 2), "\n",
@@ -475,7 +486,9 @@ mean_count <- mean(waterbird_counts) # 一阶矩：均值
 variance_count <- var(waterbird_counts) # 二阶矩：方差
 skewness_count <- skewness(waterbird_counts) # 三阶矩：偏度
 kurtosis_count <- kurtosis(waterbird_counts) # 四阶矩：峰度
+```
 
+```{r, echo=FALSE}
 cat("一阶矩（均值）：", round(mean_count, 2), "\n",
     "二阶矩（方差）：", round(variance_count, 2), "\n",
     "三阶矩（偏度）：", round(skewness_count, 2), "\n",
@@ -604,7 +617,9 @@ sample_mean <- mean(sample_means)
 sample_se <- sd(sample_means)
 ci_lower <- sample_mean - 1.96 * sample_se
 ci_upper <- sample_mean + 1.96 * sample_se
+```
 
+```{r, echo=FALSE}
 cat("总体均值：", round(mean(population), 2), "\n",
     "样本均值的均值：", round(sample_mean, 2), "\n",
     "样本均值的标准误：", round(sample_se, 2), "\n",
@@ -931,7 +946,7 @@ $$\text{总变异} = \text{空间变异} + \text{随机变异}$$
 $$\text{空间变异比例} = \frac{\text{空间变异}}{\text{总变异}} \times 100\%$$
 
 **R代码实现：**
-```{r, fig.cap="空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。"}
+```{r}
 # 示例数据：土壤养分值的空间分布
 soil_nutrient <- c(25, 28, 32, 35, 38, 40, 42, 45, 48, 50)
 coordinates <- data.frame(x = 1:10, y = rep(1, 10))
@@ -946,13 +961,16 @@ random_variance <- var(residuals(spatial_model))
 
 # 计算空间变异比例
 spatial_proportion <- spatial_variance / total_variance * 100
-
+```
+```{r, echo=FALSE }
 cat("总变异:", round(total_variance, 3), "\n",
     "空间变异:", round(spatial_variance, 3), "\n",
     "随机变异:", round(random_variance, 3), "\n",
     "空间变异比例:", round(spatial_proportion, 1), "%\n",
     sep = "")
+```
 
+```{r, fig.cap="空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。"}
 # 可视化变异分解
 library(ggplot2)
 variance_data <- data.frame(
@@ -1111,10 +1129,13 @@ plot(fit,
   col = "blue", lwd = 2
 )
 
-# 输出关键统计量
-cat("中位生存时间:", round(quantile(fit, probs = 0.5)$quantile, 1), "天\n")
 # 计算最大观测时间内的生存率
 max_time <- max(survival_times)
+```
+
+```{r, echo=FALSE}
+# 输出关键统计量
+cat("中位生存时间:", round(quantile(fit, probs = 0.5)$quantile, 1), "天\n")
 cat("最大观测时间(", max_time, "天)生存率:",
     round(summary(fit, times = max_time)$surv, 3), "\n")
 ```
@@ -1901,7 +1922,9 @@ complex_food_web <- matrix(c(0, 1, 1, 0, 0, 0, 1, 1,
 
 simple_complexity <- sum(simple_food_web) / (nrow(simple_food_web)^2)
 complex_complexity <- sum(complex_food_web) / (nrow(complex_food_web)^2)
+```
 
+```{r, echo=FALSE}
 cat("简单食物网连接复杂性:", round(simple_complexity, 3), "\n")
 cat("复杂食物网连接复杂性:", round(complex_complexity, 3), "\n")
 ```
@@ -1984,7 +2007,9 @@ wetland_biomass_stress <- c(75, 80, 70, 78, 82, 68, 85, 76, 82, 78)
 forest_resistance <- calculate_resistance(biomass_normal, biomass_stress)
 wetland_resistance <- calculate_resistance(wetland_biomass_normal,
                                            wetland_biomass_stress)
+```
 
+```{r, echo=FALSE}
 cat("森林生态系统抵抗力:", round(forest_resistance, 3), "\n")
 cat("湿地生态系统抵抗力:", round(wetland_resistance, 3), "\n")
 ```
@@ -2006,7 +2031,7 @@ $$\lambda = \frac{\ln(X_{final} / X_{before})}{t}$$
 - $t$ 为恢复时间
 
 **R代码实现：**
-```{r, fig.cap="生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。"}
+```{r}
 # 示例数据：模拟火灾后森林群落的恢复过程
 set.seed(123)
 # 火灾前的生物量（吨/公顷）
@@ -2031,11 +2056,15 @@ calculate_resilience <- function(pre_disturbance,
 
 resilience_result <- calculate_resilience(pre_fire_biomass,
                                           biomass_recovery, years_post_fire)
+```
 
+```{r, echo=FALSE }
 cat("恢复到95%原始状态所需时间:", resilience_result$recovery_time, "年\n",
     "恢复速率:", round(resilience_result$resilience_rate, 3), "\n",
     sep = "")
+```
 
+```{r , fig.cap="生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。"}
 # 可视化恢复过程
 recovery_data <- data.frame(
   年份 = years_post_fire,
@@ -2068,7 +2097,9 @@ light_resilience <- calculate_resilience(pre_fire_biomass,
 severe_resilience <- calculate_resilience(pre_fire_biomass,
                                           severe_disturbance_recovery,
                                           years_post_fire)
+```
 
+```{r, echo=FALSE}
 cat("轻度干扰恢复时间:", light_resilience$recovery_time, "年\n",
     "重度干扰恢复时间:", severe_resilience$recovery_time, "年\n",
     sep = "")
@@ -2149,7 +2180,9 @@ grassland_biomass <- 50 + 15 * sin(2 * pi * years / 8) + rnorm(50, 0, 5)
 
 forest_persistence <- calculate_persistence(forest_biomass, 85, 115)
 grassland_persistence <- calculate_persistence(grassland_biomass, 35, 65)
+```
 
+```{r, echo=FALSE}
 cat("森林生态系统持久性:", round(forest_persistence, 3), "\n",
     "草地生态系统持久性:", round(grassland_persistence, 3), "\n",
     sep = "")

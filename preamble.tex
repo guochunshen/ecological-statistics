@@ -32,7 +32,7 @@
 
 % 行间距设置
 \usepackage{setspace}
-\onehalfspacing  % 1.5倍行间距
+\setstretch{1.3}  % 1.3倍行间距
 
 % 段落缩进设置
 \usepackage{indentfirst}
@@ -76,14 +76,36 @@
   pdfauthor={沈国春、李勤}
 }
 
-% 代码环境
+% 代码环境 - R代码块使用Verbatim和Shaded环境
 \usepackage{listings}
 \lstset{
-  basicstyle=\footnotesize\ttfamily,  % 缩小代码字体
+  basicstyle=\footnotesize\ttfamily,
   breaklines=true,
   frame=single,
   numbers=left,
   numberstyle=\tiny,
   stepnumber=1,
-  numbersep=5pt
+  numbersep=5pt,
+  lineskip=-1pt
 }
+
+% 调整R代码块(Shaded/Highlighting环境)的行间距
+\usepackage{etoolbox}
+\makeatletter
+% 设置Verbatim环境(R代码块使用)的行间距
+\AtBeginEnvironment{Shaded}{%
+  \setstretch{0.9}%  % 代码块内行间距为0.8倍
+}
+% 设置代码块内空行的行高
+\AtBeginEnvironment{Highlighting}{%
+  \setlength{\baselineskip}{0.8\baselineskip}%  % 空行高度为0.8倍
+}
+% 设置verbatim环境(R代码输出)的行间距
+\AtBeginEnvironment{verbatim}{%
+  \setstretch{0.8}%  % verbatim环境行间距为0.8倍
+  \setlength{\baselineskip}{0.8\baselineskip}%  % 空行高度为0.8倍
+}
+% 或者使用更精细的控制
+%\preto\Shaded{\par\vspace{-0.5\baselineskip}}  % 代码块前减少空白
+%\appto\endShaded{\par\vspace{-0.5\baselineskip}}  % 代码块后减少空白
+\makeatother

@@ -7,7 +7,9 @@ knitr::opts_chunk$set(
   echo = TRUE,
   warning = FALSE,
   message = FALSE,
-  fig.align = "center"
+  fig.align = "center",
+  out.width = "80%",
+  cache = TRUE
 )
 library(showtext)   # 中文字体支持
 library(akima)      # 插值函数支持
@@ -89,6 +91,9 @@ legend("topleft",
 ```{r}
 # 进行相关性检验
 cor_test <- cor.test(dbh, height, method = "pearson")
+```
+
+```{r, echo=FALSE}
 cat("相关性检验结果：\n",
     "t统计量：", round(cor_test$statistic, 3), "\n",
     "p值：", format.pval(cor_test$p.value, digits = 3), "\n",
@@ -132,10 +137,13 @@ macroinvertebrate_diversity <- 10 + 0.5 * water_quality +
 
 # 计算Spearman相关系数
 spearman_cor <- cor(water_quality, macroinvertebrate_diversity, method = "spearman")
-cat("Spearman相关系数：", round(spearman_cor, 3), "\n")
 
 # 进行相关性检验
 spearman_test <- cor.test(water_quality, macroinvertebrate_diversity, method = "spearman")
+```
+
+```{r, echo=FALSE}
+cat("Spearman相关系数：", round(spearman_cor, 3), "\n")
 cat("Spearman检验p值：", format.pval(spearman_test$p.value, digits = 3), "\n")
 ```
 
@@ -173,7 +181,7 @@ Kendall's τ的计算公式反映了这种一致对与不一致对的净比例�
 
 **R代码实现**：
 
-```{r, fig.cap="鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性"}
+```{r}
 # Kendall's τ示例：鸟类迁徙时间与气温变化
 set.seed(123)
 
@@ -191,13 +199,17 @@ cat("Kendall's τ：", round(kendall_tau, 3), "\n")
 # 比较不同方法的结果
 pearson_comp <- cor(spring_temperature, arrival_date, method = "pearson")
 spearman_comp <- cor(spring_temperature, arrival_date, method = "spearman")
+```
 
+```{r, echo=FALSE}
 cat("不同相关性系数的比较：\n",
     "Pearson：", round(pearson_comp, 3), "\n",
     "Spearman：", round(spearman_comp, 3), "\n",
     "Kendall's τ：", round(kendall_tau, 3), "\n",
     sep = "")
+```
 
+```{r, fig.cap="鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性"}
 # 可视化数据
 plot(spring_temperature, arrival_date,
   pch = 19, col = "purple",
@@ -259,7 +271,9 @@ library(ppcor) # 需要安装：install.packages("ppcor")
 # 创建数据框
 eco_data <- data.frame(precipitation, temperature, productivity)
 partial_cor <- pcor(eco_data)$estimate
+```
 
+```{r, echo=FALSE}
 cat("偏相关系数矩阵：\n")
 print(round(partial_cor, 3))
 cat(
@@ -402,7 +416,9 @@ cat("距离相关系数：", round(dcor_result, 3), "\n")
 # 比较不同相关性方法
 pearson_dc <- cor(leaf_area, specific_leaf_area, method = "pearson")
 spearman_dc <- cor(leaf_area, specific_leaf_area, method = "spearman")
+```
 
+```{r, echo=FALSE}
 cat("不同相关性方法的比较：\n",
     "Pearson相关系数：", round(pearson_dc, 3), "\n",
     "Spearman相关系数：", round(spearman_dc, 3), "\n",
@@ -459,7 +475,7 @@ $$I(X;Y) = \sum_{x\in X}\sum_{y\in Y} p(x,y) \log\left(\frac{p(x,y)}{p(x)p(y)}\r
 
 **R代码实现**：
 
-```{r mutinformation-figure, fig.cap="环境因子与物种分布的关系逻辑回归曲线"}
+```{r}
 # 互信息示例：环境因子与物种分布的依赖关系
 set.seed(123)
 
@@ -485,13 +501,17 @@ precip_disc <- discretize(precipitation, disc = "equalfreq", nbins = 5)
 mi_temp <- mutinformation(temp_disc, species_presence)
 mi_precip <- mutinformation(precip_disc, species_presence)
 mi_joint <- mutinformation(cbind(temp_disc, precip_disc), species_presence)
+```
 
+```{r, echo=FALSE}
 cat("互信息分析结果：\n",
     "温度与物种出现的互信息：", round(mi_temp, 3), "\n",
     "降水量与物种出现的互信息：", round(mi_precip, 3), "\n",
     "温度与降水量联合与物种出现的互信息：", round(mi_joint, 3), "\n",
     sep = "")
+```
 
+```{r mutinformation-figure, fig.cap="环境因子与物种分布的关系逻辑回归曲线"}
 # 可视化物种出现与环境因子的关系
 par(mfrow = c(1, 2))
 
@@ -738,7 +758,9 @@ p4 <- ggplot(acf_data[acf_data$Type == "被捕食者种群", ], aes(x = Lag, y =
     subtitle = "基于不同生态过程的时间连续性模式",
     caption = "左上：强正自相关（缓慢衰减） | 右上：弱自相关（快速衰减） | 左下：捕食者负自相关 | 右下：被捕食者负自相关"
   )
+```
 
+```{r, echo=FALSE}
 # 输出关键统计信息
 cat("强正自相关序列（滞后1）：", round(acf_strong$acf[2], 3), "\n")
 cat("弱自相关序列（滞后1）：", round(acf_weak$acf[2], 3), "\n")
@@ -837,7 +859,9 @@ plot(pacf_result,
   xlab = "滞后（年）", ylab = "偏自相关系数"
 )
 abline(h = 0, lty = 2)
+```
 
+```{r, echo=FALSE}
 # 提取关键的偏自相关系数
 cat("关键滞后下的偏自相关系数：\n",
     "滞后1年：", round(pacf_result$acf[1], 3), "\n",
@@ -1069,6 +1093,9 @@ plot(years, bird_population,
 library(tseries)
 
 adf_test <- adf.test(bird_population)
+```
+
+```{r, echo=FALSE}
 cat("ADF单位根检验结果：\n",
     "检验统计量：", round(adf_test$statistic, 3), "\n",
     "p值：", format.pval(adf_test$p.value, digits = 3), "\n",
@@ -1079,9 +1106,14 @@ if (adf_test$p.value < 0.05) {
 } else {
   cat("结论：不能拒绝原假设，时间序列可能是非平稳的\n")
 }
+```
 
+```{r}
 # KPSS检验（另一种平稳性检验）
 kpss_test <- kpss.test(bird_population)
+```
+
+```{r, echo=FALSE}
 cat("\nKPSS平稳性检验结果：\n",
     "检验统计量：", round(kpss_test$statistic, 3), "\n",
     "p值：", format.pval(kpss_test$p.value, digits = 3), "\n",
@@ -1538,7 +1570,9 @@ plot(variogram_emp, variogram_fit,
   main = "变异函数拟合",
   xlab = "距离", ylab = "半方差"
 )
+```
 
+```{r, echo=FALSE}
 # 提取变异函数参数
 cat("变异函数参数：\n",
     "块金值 (nugget)：", variogram_fit$psill[1], "\n",
@@ -1598,7 +1632,9 @@ kriging_result <- autoKrige(pH ~ 1, spatial_data, grid)
 
 # 可视化插值结果
 plot(kriging_result)
+```
 
+```{r, echo=FALSE}
 # 提取克里金预测统计信息
 cat("克里金插值统计信息：\n")
 cat("预测值的范围：", round(range(kriging_result$krige_output$var1.pred), 2), "\n")
@@ -1715,7 +1751,7 @@ if (rcond(I_minus_rhoW) > 1e-10) {
 
 现在让我们先查看模拟数据的基本特征，并可视化树木的空间分布：
 
-```{r}
+```{r, echo=FALSE}
 # 首先可视化空间分布特征
 cat("=== 空间分布特征分析 ===\n")
 cat("树木总数：", n_trees, "\n")
@@ -1759,10 +1795,15 @@ par(mfrow = c(1, 1))
 
 ```{r}
 # 进行空间自相关分析
-cat("\n=== 空间自相关分析 ===\n")
-
 # 计算Moran's I
 moran_test <- moran.test(tree_dbh, listw_weights)
+# 计算Geary's C
+geary_test <- geary.test(tree_dbh, listw_weights)
+```
+
+```{r, echo=FALSE}
+cat("\n=== 空间自相关分析 ===\n")
+
 cat("Moran's I检验结果：\n",
     "Moran's I统计量：", round(moran_test$estimate[1], 3), "\n",
     "期望值：", round(moran_test$estimate[2], 3), "\n",
@@ -1770,8 +1811,7 @@ cat("Moran's I检验结果：\n",
     "p值：", format.pval(moran_test$p.value, digits = 3), "\n",
     sep = "")
 
-# 计算Geary's C
-geary_test <- geary.test(tree_dbh, listw_weights)
+
 cat("\nGeary's C检验结果：\n",
     "Geary's C统计量：", round(geary_test$estimate[1], 3), "\n",
     "期望值：", round(geary_test$estimate[2], 3), "\n",
@@ -1889,7 +1929,7 @@ listw_dist <- nb2listw(nb_dist, style = "W")
 
 首先查看模拟数据的基本特征：
 
-```{r}
+```{r, echo=FALSE}
 # 首先查看数据基本特征
 cat("=== 城市绿地鸟类物种丰富度分析 ===\n")
 cat("公园总数：", n_parks, "\n")
@@ -1975,7 +2015,7 @@ ggplot(lisa_results, aes(x = x, y = y, color = gi_type, size = abs(gi_star))) +
 
 现在让我们查看局部空间自相关分析的统计结果：
 
-```{r}
+```{r, echo=FALSE}
 # 统计结果摘要
 cat("LISA分析结果摘要：\n",
     "总公园数：", n_parks, "\n",
@@ -2244,7 +2284,9 @@ trend_linear <- lm(biomass ~ x + y, data = spatial_df)
 
 # 二阶趋势面（二次趋势）
 trend_quadratic <- lm(biomass ~ x + y + I(x^2) + I(y^2) + I(x*y), data = spatial_df)
+```
 
+```{r, echo=FALSE}
 # 进行趋势面检验
 cat("趋势面检验结果：\n")
 cat("一阶趋势面F检验：\n")
@@ -2258,11 +2300,15 @@ cat("\n模型比较：\n")
 cat("无趋势模型（仅截距）AIC：", AIC(lm(biomass ~ 1, data = spatial_df)), "\n")
 cat("一阶趋势面AIC：", AIC(trend_linear), "\n")
 cat("二阶趋势面AIC：", AIC(trend_quadratic), "\n")
+```
 
+```{r}
 # 检查残差的平稳性
 residuals_linear <- residuals(trend_linear)
 residuals_quadratic <- residuals(trend_quadratic)
+```
 
+```{r, echo=FALSE}
 cat("\n残差统计：\n")
 cat("原始数据方差：", round(var(spatial_df$biomass), 2), "\n")
 cat("一阶趋势面残差方差：", round(var(residuals_linear), 2), "\n")
@@ -2279,7 +2325,7 @@ cat("二阶趋势面残差方差：", round(var(residuals_quadratic), 2), "\n")
 
 接下来我们就用趋势去除来处理上面例子中空间非平稳问题。通过趋势去除处理，我们可以将原始的非平稳空间过程转换为平稳过程，从而满足空间分析的基本假设。
 
-```{r}
+```{r, echo=FALSE}
 # 如果非平稳，进行趋势去除处理
 if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
   cat("\n进行趋势去除处理...\n")
@@ -2455,7 +2501,7 @@ $$L(\lambda) = -\frac{1}{2}[(n-1)\ln(2\pi) + \ln|\lambda\mathbf{C} + (1-\lambda)
 
 **R代码实现**：
 
-```{r, fig.cap="植物叶片性状的系统发育信号分析和性状距离关系"}
+```{r}
 # 系统发育信号分析示例：植物叶片性状的系统发育保守性
 library(ape)
 library(phytools)
@@ -2480,23 +2526,26 @@ names(trait_random) <- phy_tree$tip.label
 K_conservative <- Kcalc(trait_conservative, phy_tree)
 K_random <- Kcalc(trait_random, phy_tree)
 
+# 进行置换检验（使用phylosig函数进行置换检验）
+K_perm_conservative <- phylosig(phy_tree, trait_conservative, method = "K", test = TRUE, nsim = 999)
+K_perm_random <- phylosig(phy_tree, trait_random, method = "K", test = TRUE, nsim = 999)
+
+# 计算Pagel's λ
+lambda_conservative <- phylosig(phy_tree, trait_conservative, method = "lambda")
+lambda_random <- phylosig(phy_tree, trait_random, method = "lambda")
+```
+
+```{r, echo=FALSE}
+
 cat("Blomberg's K分析结果：\n",
     "保守性状的K值：", round(K_conservative, 3), "\n",
     "随机性状的K值：", round(K_random, 3), "\n",
     sep = "")
 
-# 进行置换检验（使用phylosig函数进行置换检验）
-K_perm_conservative <- phylosig(phy_tree, trait_conservative, method = "K", test = TRUE, nsim = 999)
-K_perm_random <- phylosig(phy_tree, trait_random, method = "K", test = TRUE, nsim = 999)
-
 cat("\n置换检验p值：\n",
     "保守性状：", format.pval(K_perm_conservative$P, digits = 3), "\n",
     "随机性状：", format.pval(K_perm_random$P, digits = 3), "\n",
     sep = "")
-
-# 计算Pagel's λ
-lambda_conservative <- phylosig(phy_tree, trait_conservative, method = "lambda")
-lambda_random <- phylosig(phy_tree, trait_random, method = "lambda")
 
 cat("\nPagel's λ分析结果：\n",
     "保守性状的λ值：", round(lambda_conservative$lambda, 3), "\n",
@@ -2508,7 +2557,9 @@ cat("\n似然比检验p值：\n",
     "保守性状：", format.pval(lambda_conservative$P, digits = 3), "\n",
     "随机性状：", format.pval(lambda_random$P, digits = 3), "\n",
     sep = "")
+```
 
+```{r, fig.cap="植物叶片性状的系统发育信号分析和性状距离关系"}
 # 可视化系统发育信号
 par(mfrow = c(2, 2))
 
@@ -2560,16 +2611,19 @@ legend("topleft",
   legend = c("保守性状", "随机性状"),
   pch = 19, col = c("blue", "red")
 )
+par(mfrow = c(1, 1))
+```
 
+```{r, echo=FALSE}
 cat("\nMantel检验结果：\n",
     "保守性状的Mantel r：", round(conservative_cor$statistic, 3), "\n",
     "保守性状的p值：", format.pval(conservative_cor$signif, digits = 3), "\n",
     "随机性状的Mantel r：", round(random_cor$statistic, 3), "\n",
     "随机性状的p值：", format.pval(random_cor$signif, digits = 3), "\n",
     sep = "")
+```
 
-par(mfrow = c(1, 1))
-
+```{r}
 # 比较不同系统发育信号度量方法
 signal_comparison <- data.frame(
   性状类型 = c("保守性状", "随机性状"),
@@ -2603,7 +2657,7 @@ $$contrast = \frac{x_i - x_j}{\sqrt{v_i + v_j}}$$
 
 **R代码实现**：
 
-```{r, fig.cap="植物叶片性状的系统发育独立对比分析和性状关系"}
+```{r}
 # 系统发育独立对比示例：植物叶片性状的生态关系
 library(ape)
 library(picante)
@@ -2641,17 +2695,18 @@ print(round(cor_traditional, 3))
 # 进行相关性检验
 cor_test_np <- cor.test(trait_data$nitrogen, trait_data$photosynthesis)
 cor_test_ns <- cor.test(trait_data$nitrogen, trait_data$sla)
+```
 
+```{r, echo=FALSE}
 cat("\n传统相关性检验：\n",
     "氮含量 vs 光合速率：r =", round(cor_test_np$estimate, 3),
     ", p =", format.pval(cor_test_np$p.value, digits = 3), "\n",
     "氮含量 vs 比叶重：r =", round(cor_test_ns$estimate, 3),
     ", p =", format.pval(cor_test_ns$p.value, digits = 3), "\n",
     sep = "")
+```
 
-# 系统发育独立对比分析
-cat("\n系统发育独立对比分析：\n")
-
+```{r}
 # 计算PIC
 pic_nitrogen <- pic(trait_nitrogen, phy_tree)
 pic_photosynthesis <- pic(trait_photosynthesis, phy_tree)
@@ -2660,14 +2715,18 @@ pic_sla <- pic(trait_sla, phy_tree)
 # PIC相关性分析
 pic_cor_np <- cor.test(pic_nitrogen, pic_photosynthesis)
 pic_cor_ns <- cor.test(pic_nitrogen, pic_sla)
+```
 
+```{r, echo=FALSE}
 cat("PIC相关性检验：\n",
     "氮含量 vs 光合速率：r =", round(pic_cor_np$estimate, 3),
     ", p =", format.pval(pic_cor_np$p.value, digits = 3), "\n",
     "氮含量 vs 比叶重：r =", round(pic_cor_ns$estimate, 3),
     ", p =", format.pval(pic_cor_ns$p.value, digits = 3), "\n",
     sep = "")
+```
 
+```{r, fig.cap="植物叶片性状的系统发育独立对比分析和性状关系"}
 # 可视化对比结果
 par(mfrow = c(2, 2))
 

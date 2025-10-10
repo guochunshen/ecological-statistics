@@ -6,7 +6,9 @@ knitr::opts_chunk$set(
   echo = TRUE,
   warning = FALSE,
   message = FALSE,
-  fig.align = "center"
+  fig.align = "center",
+  out.width = "80%",
+  cache = TRUE
 )
 ```
 
@@ -138,7 +140,9 @@ detection_prob <- observed_species / survey_effort
 
 # 使用检测概率估计总体数量：观测数除以检测概率
 estimated_total <- observed_species / detection_prob
+```
 
+```{r, echo=FALSE}
 # 输出结果对比，展示古典概率估计的误差
 cat("实际濒危物种数量:", true_rare_species, "\n",
     "观测到的物种数量:", observed_species, "\n",
@@ -511,7 +515,9 @@ marginal_positive <-  sensitivity * prior_prob +
 # 使用贝叶斯定理计算后验概率 P(患病|阳性)
 # 公式：P(患病|阳性) = [P(阳性|患病) × P(患病)] / P(阳性)
 posterior_prob <- (sensitivity * prior_prob) / marginal_positive
+```
 
+```{r, echo=FALSE}
 # 输出贝叶斯分析结果
 cat("贝叶斯定理基础演示（疾病检测）:\n",
   "先验概率 P(患病):", prior_prob, "\n",
@@ -1158,7 +1164,9 @@ mcmc_result <- simple_mcmc(5000,
   prior_mean = 10, prior_sd = 5,
   data = observed_data, likelihood_sd = 1.0
 )
+```
 
+```{r, echo=FALSE}
 # 输出MCMC采样结果：评估算法性能和参数估计
 cat("MCMC采样结果:\n",
   "接受率:", round(mcmc_result$acceptance_rate, 3), "\n",
@@ -1166,7 +1174,9 @@ cat("MCMC采样结果:\n",
   "后验标准差:", round(sd(mcmc_result$samples), 3), "\n",
   "真实值:", true_value, "\n",
   "样本均值:", round(mean(observed_data), 3), "\n")
+```
 
+```{r}
 # 计算95%置信区间：基于后验样本的分位数
 ci_lower <- quantile(mcmc_result$samples, 0.025)
 ci_upper <- quantile(mcmc_result$samples, 0.975)
@@ -1191,7 +1201,7 @@ cat("95%置信区间: [", round(ci_lower, 3), ", ",
 
 随机变量的奇妙之处在于它的双重性：在每次具体观察之前，X的取值是完全不确定的——它可能是1、2或3中的任意一个，这种不确定性正是生态系统中生物行为的本质特征。然而，这种不确定性并非毫无规律可言。通过长期的观察和数据积累，我发现每个可能的取值都有其特定的发生概率。这种概率分布就像是你行为模式的“数学指纹"，精确地刻画了你在不同环境条件下的选择倾向。随机变量的引入，使我们能够从定性描述迈向定量分析，为理解生物决策机制提供了强有力的数学框架。
 
-```{r, eval=FALSE}
+```{r}
 # 用R语言演示随机变量的不确定性与规律性
 # 设置随机种子确保结果可重现，便于教学演示
 set.seed(123)
@@ -1219,7 +1229,9 @@ barplot(choice_counts,
   ylab = "选择次数",
   col = c("lightgreen", "lightblue", "lightyellow")
 )
+```
 
+```{r, echo=FALSE}
 # 显示理论概率与实际频率的对比
 # 验证大数定律：随着模拟次数增加，频率趋近于概率
 cat("理论概率分布:\n",
@@ -2898,7 +2910,9 @@ if (requireNamespace("gridExtra", quietly = TRUE)) {
   print(p3)
   print(p4)
 }
+```
 
+```{r, echo=FALSE}
 # 正态性检验
 cat("中心极限定理正态性检验结果:\n",
   "均匀分布样本均值Kolmogorov-Smirnov p值:",
@@ -3065,12 +3079,6 @@ ggplot(mixture_df, aes(x = value)) +
     axis.text = element_text(size = 9)
   )
 
-# 混合分布的生态学意义
-cat("混合分布的生态学应用:\n")
-cat("1. 不同年龄组的种群结构\n")
-cat("2. 异质环境中的物种分布\n")
-cat("3. 多物种混合的群落数据\n")
-cat("4. 季节性变化的环境因子\n")
 ```
 
 
@@ -3099,6 +3107,9 @@ for (i in 1:n_samples) {
 
 # 统计零值比例
 zero_proportion <- mean(zip_data == 0)
+```
+
+```{r, echo=FALSE}
 cat("零膨胀数据统计:\n",
   "零值比例:", round(zero_proportion, 3), "\n",
   "非零值均值:", round(mean(zip_data[zip_data > 0]), 3), "\n",
@@ -3112,12 +3123,6 @@ cat("\n与普通泊松分布比较:\n",
   "零膨胀方差:", round(var(zip_data), 3), "\n",
   "过度分散指数:", round(var(zip_data) / mean(zip_data), 3), "\n")
 
-# 零膨胀分布的生态学意义
-cat("\n零膨胀分布的生态学应用:\n")
-cat("1. 稀有物种的出现数据\n")
-cat("2. 低密度种群的分布数据\n")
-cat("3. 间歇性生态过程记录\n")
-cat("4. 不完全调查的观测数据\n")
 ```
 
 零膨胀分布在生态学中具有重要的应用价值，专门用于处理存在大量零值的计数数据。这种分布在以下生态学场景中特别有用：

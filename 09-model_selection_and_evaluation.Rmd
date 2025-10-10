@@ -7,7 +7,9 @@ knitr::opts_chunk$set(
   echo = TRUE,
   warning = FALSE,
   message = FALSE,
-  fig.align = "center"
+  fig.align = "center",
+  out.width = "80%",
+  cache = TRUE
 )
 library(showtext)   # 中文字体支持
 showtext_auto()     # 自动启用中文字体
@@ -155,7 +157,8 @@ par(mfrow = c(2, 2))
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
   # 标题包含R²和AIC值用于模型比较
-  main = paste("线性模型\n$R^2$ =", round(r2_linear, 3), "$\\text{AIC}$ =", round(aic_linear, 1)),
+  main = paste("线性模型\n$R^2$ =", round(r2_linear, 3),
+  "$\\text{AIC}$ =", round(aic_linear, 1)),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"  # 蓝色实心点
 )
@@ -165,7 +168,8 @@ lines(forest_soil_nutrient, predict(model_linear), col = "red", lwd = 2)
 # 二次模型图
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
-  main = paste("二次模型\n$R^2$ =", round(r2_quadratic, 3), "$\\text{AIC}$ =", round(aic_quadratic, 1)),
+  main = paste("二次模型\n$R^2$ =", round(r2_quadratic, 3),
+  "$\\text{AIC}$ =", round(aic_quadratic, 1)),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"
 )
@@ -174,7 +178,8 @@ lines(forest_soil_nutrient, predict(model_quadratic), col = "red", lwd = 2)
 # 三次模型图
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
-  main = paste("三次模型\n$R^2$ =", round(r2_cubic, 3), "$\\text{AIC}$ =", round(aic_cubic, 1)),
+  main = paste("三次模型\n$R^2$ =", round(r2_cubic, 3),
+  "$\\text{AIC}$ =", round(aic_cubic, 1)),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"
 )
@@ -183,7 +188,8 @@ lines(forest_soil_nutrient, predict(model_cubic), col = "red", lwd = 2)
 # 过度拟合模型图
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
-  main = paste("10次多项式\n$R^2$ =", round(r2_overfit, 3), "$\\text{AIC}$ =", round(aic_overfit, 1)),
+  main = paste("10次多项式\n$R^2$ =", round(r2_overfit, 3),
+  "$\\text{AIC}$ =", round(aic_overfit, 1)),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"
 )
@@ -193,7 +199,7 @@ lines(forest_soil_nutrient, predict(model_overfit), col = "red", lwd = 2)
 par(mfrow = c(1, 1))
 ```
 
-```{r}
+```{r, echo=FALSE}
 # 输出模型比较结果
 # 使用单个cat函数输出所有模型比较结果
 cat("=== 模型复杂度与拟合优度平衡演示 ===\n\n",
@@ -324,7 +330,7 @@ best_aic <- forest_bird_model_comparison$Model[1]
 best_bic <- forest_bird_model_comparison$Model[which.min(forest_bird_model_comparison$BIC)]
 ```
 
-```{r}
+```{r, echo=FALSE}
 # 输出模型比较结果
 cat("=== 林小雨的森林鸟类丰富度模型比较结果 ===\n")
 cat("信息准则帮助林小雨在多个候选模型中做出科学选择\n\n")
@@ -436,7 +442,10 @@ print(summary(nursery_model_complex))
 nursery_r2_simple <- summary(nursery_model_simple)$r.squared
 nursery_r2_complex <- summary(nursery_model_complex)$r.squared
 nursery_r2_improvement <- nursery_r2_complex - nursery_r2_simple
+```
 
+```{r, echo=FALSE}
+# 输出模型改善分析
 cat("\n=== 模型改善分析 ===\n",
     "R²改善:", round(nursery_r2_improvement, 4), "\n",
     "参数增加: 1个 (交互项)\n",
@@ -477,7 +486,7 @@ ggplot(nursery_pred_grid, aes(x = temp, y = pred_growth, color = factor(light)))
 
 根据似然比检验的结果（p值 = `r round(nursery_lrt_p_value, 4)`），我们可以得出重要的生态学解释。`r if(nursery_lrt_p_value < 0.05) { "似然比检验显著 (p < 0.05)，表明温度与光照的交互作用对植物生长有显著影响，复杂模型显著改善了模型拟合，应该选择包含交互项的模型。" } else { "似然比检验不显著 (p > 0.05)，表明温度与光照的交互作用对植物生长影响不显著，复杂模型没有带来统计显著的改善，应该选择更简约的简单模型。" }`
 
-```{r}
+```{r, echo=FALSE}
 # 生态学机制解释
 cat("=== 林小雨的苗圃实验生态学解释 ===\n")
 
@@ -661,7 +670,9 @@ stream_single_pred <- predict(stream_fish_models[["water_quality"]], newdata = s
 
 # 模型平均预测
 stream_avg_pred <- predict(stream_avg_model, newdata = stream_test_data)
+```
 
+```{r, echo=FALSE}
 cat("林小雨的溪流测试条件：水温18°C, 溶解氧6mg/L, pH7.5, 浊度20NTU\n")
 cat("单一模型预测:", round(exp(stream_single_pred) - 1, 1), "条鱼\n")
 cat("模型平均预测:", round(exp(stream_avg_pred) - 1, 1), "条鱼\n")
@@ -690,7 +701,9 @@ stream_boot_results <- boot(stream_fish_data, stream_predict_function, R = 1000)
 
 # 计算置信区间
 stream_ci <- boot.ci(stream_boot_results, type = "perc")
+```
 
+```{r, echo=FALSE}
 cat(
   "林小雨的溪流鱼类Bootstrap 95% 预测区间: [",
   round(stream_ci$percent[4], 1), ", ",
@@ -774,6 +787,9 @@ print(cv_model)
 
 # 提取交叉验证统计量
 cv_results <- cv_model$results
+```
+
+```{r, echo=FALSE}
 cat("\n交叉验证性能指标：\n平均$R^2$:",
     round(cv_results$Rsquared, 3), "\n平均RMSE:",
     round(cv_results$RMSE, 3), "\n平均MAE:",
@@ -825,7 +841,9 @@ test_pred <- predict(train_model, newdata = test_data)
 
 train_rmse <- sqrt(mean((log(train_data$richness + 1) - train_pred)^2))
 test_rmse <- sqrt(mean((log(test_data$richness + 1) - test_pred)^2))
+```
 
+```{r, echo=FALSE}
 cat("\n=== 林小雨的森林鸟类模型：训练集 vs 测试集性能 ===\n",
   "训练集RMSE:", round(train_rmse, 3), "\n",
   "测试集RMSE:", round(test_rmse, 3), "\n")
@@ -851,7 +869,7 @@ if (test_rmse > train_rmse * 1.2) {
 
 外部验证还帮助我们识别模型的边界条件。在生态学中，很少有模型能够适用于所有情境。通过外部验证，我们可以明确模型的适用范围，避免在不适当的条件下应用模型导致错误的生态学结论。
 
-```{r, fig.cap="林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域"}
+```{r}
 # 外部验证在生态学中的应用演示：林小雨的森林生态系统研究
 set.seed(3030)
 
@@ -913,7 +931,9 @@ train_rmse <- sqrt(mean((log(train_data$richness + 1) - train_pred)^2))
 test_pred <- predict(model_external, newdata = test_data)
 test_r2 <- cor(log(test_data$richness + 1), test_pred)^2
 test_rmse <- sqrt(mean((log(test_data$richness + 1) - test_pred)^2))
+```
 
+```{r, echo=FALSE}
 # 输出外部验证结果
 cat("=== 林小雨的森林生态系统外部验证结果 ===\n",
   "训练集性能（原森林区域）：\n",
@@ -923,11 +943,15 @@ cat("=== 林小雨的森林生态系统外部验证结果 ===\n",
 cat("测试集性能（新森林区域外部验证）：\n",
   "- $R^2$:", round(test_r2, 3), "\n",
   "- RMSE:", round(test_rmse, 3), "\n\n")
+```
 
+```{r}
 # 计算性能下降程度
 r2_decline <- (train_r2 - test_r2) / train_r2 * 100
 rmse_increase <- (test_rmse - train_rmse) / train_rmse * 100
+```
 
+```{r, echo=FALSE}
 cat("性能变化分析：\n",
   "$R^2$下降:", round(r2_decline, 1), "%\n",
   "RMSE增加:", round(rmse_increase, 1), "%\n\n")
@@ -940,7 +964,10 @@ if (test_r2 > 0.6) {
 } else {
   cat("外部验证结果较差：模型在新森林区域表现不佳\n")
 }
+```
 
+
+```{r, fig.cap="林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域"}
 # 可视化外部验证结果
 library(ggplot2)
 
@@ -977,7 +1004,9 @@ ggplot(validation_plot_data, aes(x = Observed, y = Predicted, color = Type)) +
 # 林小雨计算预测偏差：评估模型在新森林区域的系统性偏差
 bias_train <- mean(train_pred - log(train_data$richness + 1))
 bias_test <- mean(test_pred - log(test_data$richness + 1))
+```
 
+```{r, echo=FALSE}
 cat("\n=== 林小雨的预测偏差分析 ===\n",
   "原森林区域（训练集）平均偏差:", round(bias_train, 3), "\n",
   "新森林区域（测试集）平均偏差:", round(bias_test, 3), "\n")
@@ -1057,18 +1086,26 @@ cat("\n1. 残差分析\n")
 par(mfrow = c(2, 2))
 plot(model_diagnostic)
 par(mfrow = c(1, 1))
+```
 
+```{r}
 # 计算残差统计量
 residuals <- resid(model_diagnostic)
 fitted <- fitted(model_diagnostic)
-
+```
+```{r, echo=FALSE}
 cat("林小雨的残差统计量：\n",
   "均值:", round(mean(residuals), 3), "(理想值: 0)\n",
   "标准差:", round(sd(residuals), 3), "\n",
   "偏度:", round(moments::skewness(residuals), 3), "(理想值: 0)\n")
+```
 
+```{r}
 # 检验残差正态性
 shapiro_test <- shapiro.test(residuals)
+```
+
+```{r, echo=FALSE}
 cat("Shapiro-Wilk正态性检验p值:", round(shapiro_test$p.value, 4), "\n")
 if (shapiro_test$p.value < 0.05) {
   cat("林小雨的发现：残差可能不服从正态分布，需要考虑数据变换\n")
@@ -1091,7 +1128,9 @@ influence_measures <- influence.measures(model_diagnostic)
 hat_values <- hatvalues(model_diagnostic)
 p <- length(coef(model_diagnostic))
 high_leverage <- which(hat_values > 2 * p / n_forest_trees)
+```
 
+```{r, echo=FALSE}`
 cat("高杠杆点（可能对模型有过度影响）：\n")
 if (length(high_leverage) > 0) {
   cat("观测编号:", high_leverage, "\n",
@@ -1099,11 +1138,15 @@ if (length(high_leverage) > 0) {
 } else {
   cat("未发现高杠杆点\n")
 }
+```
 
+```{r}
 # 识别异常残差（标准化残差 > 2）
 std_residuals <- rstandard(model_diagnostic)
 outlier_residuals <- which(abs(std_residuals) > 2)
+```
 
+```{r, echo=FALSE}
 cat("\n异常残差点（|标准化残差| > 2）：\n")
 if (length(outlier_residuals) > 0) {
   cat("观测编号:", outlier_residuals, "\n",
@@ -1111,11 +1154,15 @@ if (length(outlier_residuals) > 0) {
 } else {
   cat("未发现异常残差点\n")
 }
+```
 
+```{r}
 # 识别强影响点（Cook's distance > 4/(n-p)）
 cooks_d <- cooks.distance(model_diagnostic)
 influential_points <- which(cooks_d > 4 / (n_forest_trees - p))
+```
 
+```{r, echo=FALSE}
 cat("\n强影响点（Cook's distance较大）：\n")
 if (length(influential_points) > 0) {
   cat("观测编号:", influential_points, "\n",
@@ -1131,6 +1178,9 @@ if (length(influential_points) > 0) {
 # 3. 多重共线性诊断
 cat("\n3. 多重共线性诊断\n")
 vif_values <- vif(model_diagnostic)
+```
+
+```{r, echo=FALSE}
 cat("方差膨胀因子(VIF)：\n")
 for (i in seq_along(vif_values)) {
   cat(names(vif_values)[i], ":", round(vif_values[i], 2))
@@ -1413,7 +1463,9 @@ bf_vector <- c(
   exp(bf_23@bayesFactor$bf) * exp(bf_12@bayesFactor$bf)
 )
 posterior_prob <- bf_vector * prior_prob / sum(bf_vector * prior_prob)
+```
 
+```{r, echo=FALSE}
 cat("\n=== 林小雨的森林鸟类模型后验模型概率 ===\n",
   "模型1 (只有栖息地面积):", round(posterior_prob[1], 3), "\n",
   "模型2 (栖息地面积+植被密度):", round(posterior_prob[2], 3), "\n",
@@ -1442,7 +1494,9 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 # 输出模型平均结果
 cat("=== 林小雨的森林鸟类贝叶斯模型平均结果 ===\n")
 print(summary(bma_result))
+```
 
+```{r, echo=FALSE}
 # 变量后验包含概率
 cat("\n=== 林小雨的森林鸟类变量后验包含概率 ===\n")
 # 使用更稳健的方法提取后验包含概率
@@ -1471,12 +1525,11 @@ if ("pip" %in% names(pip_values)) {
 
 贝叶斯方法通过后验预测分布提供完整的预测不确定性量化：
 
-```{r, fig.cap="贝叶斯预测：观测值与预测值的比较，包含95%预测区间"}
+```{r, fig.cap="贝叶斯预测：观测值与预测值的比较，包含95%预测区间", message=FALSE, warning=FALSE}
 # 贝叶斯预测评估演示
 library(brms)
 
 # 使用brms进行贝叶斯泊松回归
-# 注意：这里使用简化版本，实际应用需要更多MCMC迭代
 
 # 拟合贝叶斯泊松回归模型
 bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
@@ -1487,7 +1540,7 @@ bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
     prior(normal(0, 5), class = "Intercept")
   ),
   chains = 2, iter = 2000, warmup = 1000,
-  seed = 1234
+  seed = 1234, silent = 2, refresh = 0
 )
 
 # 后验预测分布
@@ -1524,6 +1577,7 @@ cat("=== 后验预测检查 ===\n")
 pp_check <- pp_check(bayes_poisson)
 print(pp_check)
 
+```{r, echo=FALSE}
 # 解释后验预测检查
 cat("\n后验预测检查帮助我们验证模型是否能够生成与观测数据相似的数据。\n")
 cat("如果模型拟合良好，后验预测分布应该与观测数据分布相似。\n")
@@ -1556,7 +1610,9 @@ blasso_result <- blasso(
 
 # 提取后验包含概率
 posterior_inclusion <- colMeans(blasso_result$beta != 0)
+```
 
+```{r, echo=FALSE}
 cat("=== 林小雨的森林鸟类贝叶斯LASSO变量选择结果 ===\n")
 for (i in seq_along(posterior_inclusion)) {
   cat(

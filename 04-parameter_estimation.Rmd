@@ -7,7 +7,9 @@ knitr::opts_chunk$set(
   echo = TRUE,
   warning = FALSE,
   message = FALSE,
-  fig.align = "center"
+  fig.align = "center",
+  out.width = "80%",
+  cache = TRUE
 )
 library(showtext)   # 中文字体支持
 showtext_auto()     # 自动启用中文字体
@@ -691,7 +693,8 @@ fit_brm <- brm(
   chains = 4,                       # 使用4条独立的MCMC链进行采样
   iter = 2000,                      # 每条链进行2000次迭代
   warmup = 1000,                    # 前1000次作为预热期（burn-in），不用于后验分析
-  seed = 123                        # 设置随机种子保证结果可重现
+  seed = 123,                       # 设置随机种子保证结果可重现
+  silent = 2,                       # 不输出采样过程信息
 )
 
 # 输出模型拟合结果
@@ -899,6 +902,7 @@ simulation_variance <- function(n_sim = 10000, n_sample = 10,
   cr_lower_bound <- 2 * true_sigma2^2 / n_sample
 
   relative_efficiency <- var_mle / var_s2
+  
   cat("有效性分析结果（样本量n =", n_sample, "）：\n",
       "无偏样本方差的方差：", var_s2, "\n",
       "最大似然估计的方差：", var_mle, "\n",
@@ -1673,7 +1677,7 @@ cat("模型拟合优度R²：", round(r_squared, 3), "\n")
 
 在实际生态学研究中，这些假设的满足程度会影响内插方法的准确性。特别是物种多度分布的稳定性假设，在异质性较强的群落中可能不成立。
 
-```{r rarefaction-comparison, fig.cap="物种丰富度内插比较"}
+```{r}
 
 library(vegan)
 
@@ -1686,12 +1690,14 @@ community_b <- c(80, 60, 40, 20, 10, 5, 3, 2, 1, 1)
 species_obs_a <- length(community_a)
 species_obs_b <- length(community_b)
 
+rare_a <- rarefy(community_a, sample = c(50, 100, 150))
+rare_b <- rarefy(community_b, sample = c(50, 100, 150))
+```
+
+```{r, echo=FALSE}
 cat("观测物种丰富度：\n",
   "样地A：", species_obs_a, "种\n",
   "样地B：", species_obs_b, "种\n")
-
-rare_a <- rarefy(community_a, sample = c(50, 100, 150))
-rare_b <- rarefy(community_b, sample = c(50, 100, 150))
 
 cat("\n内插比较（相同个体数下的期望物种数）：\n",
     "样本量50个体：样地A =", round(rare_a[1], 1),
@@ -1700,7 +1706,9 @@ cat("\n内插比较（相同个体数下的期望物种数）：\n",
     "种，样地B =", round(rare_b[2], 1), "种\n",
     "样本量150个体：样地A =", round(rare_a[3], 1),
     "种，样地B =", round(rare_b[3], 1), "种\n")
+```
 
+```{r rarefaction-comparison, fig.cap="物种丰富度内插比较"}
 plot(x=c(0,200), y= range(c(rare_a, rare_b)),
     xlab = "样本量", ylab = "期望物种数",
     main = "物种丰富度内插比较")
@@ -1712,7 +1720,9 @@ legend("bottomright", legend = c("样地A", "样地B"),
 
 chao1_a <- estimateR(community_a)["S.chao1"]
 chao1_b <- estimateR(community_b)["S.chao1"]
+```
 
+```{r, echo=FALSE}
 cat("\nChao1校正后的物种丰富度估计：\n",
     "样地A：", round(chao1_a), "种\n",
     "样地B：", round(chao1_b), "种\n")
@@ -1771,13 +1781,17 @@ freq_single <- sum(observed_species == 1)
 freq_double <- sum(observed_species == 2)
 
 species_chao1 <- species_obs + (freq_single^2) / (2 * freq_double)
+```
 
+```{r, echo=FALSE}
 cat("Chao1估计结果：\n",
     "观测物种数：", species_obs, "种\n",
     "单例种数(f1)：", freq_single, "种\n",
     "双例种数(f2)：", freq_double, "种\n",
     "Chao1校正估计：", round(species_chao1, 1), "种\n")
+```
 
+```{r}
 var_chao <- freq_double * ((freq_single / freq_double)^4 / 4 +
                             (freq_single / freq_double)^3 +
                             (freq_single / freq_double)^2 / 2)
@@ -2047,13 +2061,17 @@ observed_species <- which(sampled_species > 0)
 
 # 计算观测到的物种数
 S_obs <- length(observed_species)
+```
 
+```{r, echo=FALSE}
 # 输出基本分析结果：比较真实与观测的物种丰富度
 cat("稀有种影响分析：\n",
     "真实物种丰富度：", S_true, "种\n",
     "观测物种丰富度：", S_obs, "种\n",
     "观测遗漏率：", round((S_true - S_obs) / S_true * 100, 1), "%\n")
+```
 
+```{r}
 # =============================================================================
 # 第三部分：稀有种与常见种分析
 # 目的：分别分析稀有种和常见种的观测情况，揭示稀有种问题的严重性
@@ -2074,25 +2092,33 @@ rare_observed <- sum(sampled_species[rare_species] > 0)
 
 # 统计稀有种总数
 rare_total <- length(rare_species)
+```
 
+```{r, echo=FALSE}
 # 输出稀有种分析结果
 cat("\n稀有种分析：\n",
     "稀有种总数：", rare_total, "种\n",
     "观测到的稀有种：", rare_observed, "种\n",
     "稀有种观测率：", round(rare_observed / rare_total * 100, 1), "%\n")
+```
 
+```{r}
 # 统计在采样中被观测到的常见种数量
 common_observed <- sum(sampled_species[common_species] > 0)
 
 # 统计常见种总数
 common_total <- length(common_species)
+```
 
+```{r, echo=FALSE}
 # 输出常见种分析结果
 cat("\n常见种分析：\n",
     "常见种总数：", common_total, "种\n",
     "观测到的常见种：", common_observed, "种\n",
     "常见种观测率：", round(common_observed / common_total * 100, 1), "%\n")
+```
 
+```{r}
 # =============================================================================
 # 第四部分：稀有种校正效果评估
 # 目的：使用Chao1估计器校正稀有种遗漏，评估校正效果
@@ -2103,7 +2129,9 @@ cat("\n常见种分析：\n",
 # estimateR函数返回多个估计值，我们提取其中的Chao1估计
 chao1_estimate <- estimateR(as.numeric(sampled_species[observed_species]))[
   "S.chao1"]
+```
 
+```{r, echo=FALSE}
 # 输出Chao1校正结果和改善程度
 cat("\nChao1校正后的物种丰富度估计：", round(chao1_estimate), "种\n",
     "Chao1校正的改善程度：",
@@ -2189,12 +2217,16 @@ S_true <- length(real_community)  # 物种丰富度
 
 # 计算真实Shannon多样性：使用vegan包的diversity函数
 H_true <- diversity(real_community, index = "shannon")  # Shannon多样性
+```
 
+```{r, echo=FALSE }
 # 输出真实群落的多样性信息
 cat("真实群落多样性：\n",
     "物种丰富度：", S_true, "种\n",
     "Shannon多样性：", round(H_true, 3), "\n")
+```
 
+```{r}
 # =============================================================================
 # 第二部分：设置模拟参数
 # 目的：定义要测试的样本量范围和模拟重复次数
@@ -2258,7 +2290,9 @@ precision_analysis <- results %>%
     S_bias = (S_mean - S_true) / S_true * 100,  # 物种丰富度相对偏差(%)
     H_bias = (H_mean - H_true) / H_true * 100   # Shannon多样性相对偏差(%)
   )
+```
 
+```{r, echo=FALSE}
 # 输出统计分析结果
 cat("\n样本量对多样性估计精度的影响：\n")
 
@@ -2372,7 +2406,9 @@ model_H <- nls(H_sd ~ scale_H / sqrt(sample_size),
 
 required_n_S <- (coef(model_S) / (S_true * desired_precision))^2
 required_n_H <- (coef(model_H) / (H_true * desired_precision))^2
+```
 
+```{r, echo=FALSE}
 cat("\n基于期望精度的样本量规划：\n")
 cat("期望相对精度：", desired_precision * 100, "%\n")
 cat("物种丰富度估计所需样本量：", round(required_n_S), "\n")
