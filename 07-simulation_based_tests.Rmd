@@ -7,7 +7,9 @@ knitr::opts_chunk$set(
   echo = TRUE,
   warning = FALSE,
   message = FALSE,
-  fig.align = "center"
+  fig.align = "center",
+  out.width = "80%",
+  cache = TRUE
 )
 library(showtext)   # 中文字体支持
 showtext_auto()     # 自动启用中文字体
@@ -146,7 +148,9 @@ for (i in 1:n_perm) {
 # 计算p值：评估观测梅花鹿种群密度差异在零分布中的极端程度
 # p值定义为零分布中统计量绝对值大于等于观测统计量绝对值的比例
 p_value <- mean(abs(perm_diffs) >= abs(obs_diff))
+```
 
+```{r, echo=FALSE}
 # 输出梅花鹿保护研究置换检验结果
 cat("梅花鹿保护研究 - 置换检验结果：\n")
 cat("观测梅花鹿种群密度差异:", obs_diff, "\n")
@@ -343,7 +347,9 @@ obs_stat <- mean(dist(observed_pattern))
 # 计算p值：观测统计量在零分布中的位置
 # 这里使用单侧检验，检验观测数据是否比随机期望更聚集
 p_value <- mean(sim_stats <= obs_stat)
+```
 
+```{r, echo=FALSE}
 # 输出蒙特卡洛检验结果
 cat("蒙特卡洛检验结果：\n")
 cat("观测统计量:", obs_stat, "\n")
@@ -511,7 +517,9 @@ expected <- c(
 
 # 计算观测卡方统计量
 obs_chisq <- sum((observed - expected)^2 / expected)
+```
 
+```{r, echo=FALSE}
 # 输出Hardy-Weinberg平衡检验的观测结果
 cat("Hardy-Weinberg平衡检验 - 观测结果：\n")
 cat("期望基因型频率:", expected, "\n")
@@ -546,7 +554,9 @@ for (i in 1:n_sim) {
 
 # 计算经验p值
 p_value <- mean(sim_chisq >= obs_chisq)
+```
 
+```{r, echo=FALSE}
 # 输出蒙特卡洛模拟结果
 cat("Hardy-Weinberg平衡检验 - 蒙特卡洛模拟结果：\n")
 cat("经验p值:", p_value, "\n")
@@ -751,7 +761,9 @@ primary_forest <- c(
   rep("物种25", 1), rep("物种26", 1), rep("物种27", 1),
   rep("物种28", 1)
 )
+```
 
+```{r, echo=FALSE}
 # 输出各林分物种数统计
 cat("各林分物种丰富度统计：\n")
 cat("5年恢复林物种数:", length(unique(forest_5yr)), "\n")
@@ -790,7 +802,9 @@ boot_primary <- bootstrap_diversity(primary_forest)
 ci_5yr <- quantile(boot_5yr, c(0.025, 0.975))
 ci_10yr <- quantile(boot_10yr, c(0.025, 0.975))
 ci_primary <- quantile(boot_primary, c(0.025, 0.975))
+```
 
+```{r, echo=FALSE}
 # 输出结果
 cat(
   "5年恢复林 Shannon多样性: ", round(mean(boot_5yr), 3),
@@ -888,7 +902,7 @@ plot(anosim_result, main = "ANOSIM分析：不同河段底栖动物群落差异"
 
 ```{r nmds-community-plot, fig.cap="底栖动物群落组成的NMDS排序分析"}
 # 补充分析：群落组成排序图
-nmds_result <- metaMDS(species_matrix, distance = "bray")
+nmds_result <- metaMDS(species_matrix, distance = "bray", trace = 0)
 plot(nmds_result, type = "n", main = "底栖动物群落NMDS排序")
 points(nmds_result, col = as.numeric(groups), pch = 16, cex = 1.5)
 ordiellipse(nmds_result, groups, col = 1:3, lwd = 2)
@@ -1007,7 +1021,8 @@ for (i in 1:n_sim) {
 K_envelope <- envelope(observed_pattern, Kest,
   nsim = 999,
   correction = "border",
-  simulate = expression(rpoispp(85 / 10000))
+  simulate = expression(rpoispp(85 / 10000)),
+  verbose = FALSE
 )
 
 # 可视化结果
@@ -1024,8 +1039,6 @@ legend("topleft",
   col = c("black", "grey", "red"), lwd = c(1, 1, 2), lty = c(1, 1, 1)
 )
 
-# 计算显著性
-# 如果在某个距离范围内观测K函数超出包络，表明分布显著偏离随机
 ```
 
 **结果解释**：
@@ -1353,7 +1366,9 @@ tree <- rtree(40) # 40个物种的系统发育树
 
 # 模拟相关性状（受系统发育影响）
 defense_trait <- rTraitCont(tree, model = "BM", sigma = 1)
-growth_rate <- 0.6 * defense_trait + 0.4 * rTraitCont(tree, model = "BM", sigma = 1) + rnorm(40, 0, 0.5)
+growth_rate <- 0.6 * defense_trait +
+  0.4 * rTraitCont(tree, model = "BM", sigma = 1) +
+  rnorm(40, 0, 0.5)
 
 # 计算系统发育独立对比
 pic_defense <- pic(defense_trait, tree)
