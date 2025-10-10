@@ -2521,9 +2521,9 @@ trait_conservative <- rTraitCont(phy_tree, model = "BM", sigma = 1)
 trait_random <- rnorm(n_species, mean = 0, sd = 1)
 names(trait_random) <- phy_tree$tip.label
 
-# 计算Blomberg's K
-K_conservative <- Kcalc(trait_conservative, phy_tree)
-K_random <- Kcalc(trait_random, phy_tree)
+# 计算Blomberg's K, 并通过置换检验评估显著性
+K_perm_conservative <- phylosig(phy_tree, trait_conservative, method = "K", test = TRUE, nsim = 999)
+K_perm_random <- phylosig(phy_tree, trait_random, method = "K", test = TRUE, nsim = 999)
 
 cat("Blomberg's K分析结果：\n",
     "保守性状的K值：", round(K_perm_conservative$K, 3), "\n",
@@ -2535,12 +2535,15 @@ cat("\n置换检验p值：\n",
     "随机性状：", format.pval(K_perm_random$P, digits = 3), "\n",
     sep = "")
 
+# 计算Pagel's λ, 并通过似然比检验评估显著性
+lambda_conservative <- phylosig(phy_tree, trait_conservative, method = "lambda")
+lambda_random <- phylosig(phy_tree, trait_random, method = "lambda")
+
 cat("\nPagel's λ分析结果：\n",
     "保守性状的λ值：", round(lambda_conservative$lambda, 3), "\n",
     "随机性状的λ值：", round(lambda_random$lambda, 3), "\n",
     sep = "")
 
-# 进行似然比检验
 cat("\n似然比检验p值：\n",
     "保守性状：", format.pval(lambda_conservative$P, digits = 3), "\n",
     "随机性状：", format.pval(lambda_random$P, digits = 3), "\n",
