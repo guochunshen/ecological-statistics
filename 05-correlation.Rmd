@@ -2415,41 +2415,41 @@ if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
 
 ## 系统发育相关性
 
-系统发育相关性分析是进化生态学和比较生物学中的重要工具，用于研究物种间性状相关性时考虑其系统发育关系。由于物种共享进化历史，亲缘关系较近的物种在性状值上表现出的相似性，因此性状值间往往存在非独立性，这种非独立性可能导致传统统计方法的偏差。通过整合系统发育信息，系统发育相关性分析能够区分性状间的生态关系和进化保守性，从而更准确地揭示性状的生态和进化意义。
+系统发育相关性分析是进化生态学和比较生物学中的重要工具，用于研究物种间性状相关性时考虑其系统发育关系。由于物种共享进化历史，不同物种间的性状值往往存在非独立性，这种非独立性可能导致传统统计方法的偏差。通过整合系统发育信息，系统发育相关性分析能够区分性状间的生态关系和进化保守性，从而更准确地揭示性状的生态和进化意义。
 
 ### 系统发育信号：进化历史的印记
 
-在研究不同植物物种的叶片性状时，我们想要了解这些性状在系统发育树上的分布模式，即它们是否表现出系统发育信号——亲缘关系较近的物种是否具有相似的性状值。
+在研究不同植物物种的叶片性状时，我们想要了解这些性状在系统发育树（物种间进化关系的分支图）上的分布模式，即它们是否表现出系统发育信号——亲缘关系较近的物种是否具有相似的性状值。
 
 系统发育信号是指性状在系统发育树上的分布模式，反映了性状的进化保守性程度。如果亲缘关系较近的物种具有相似的性状值，我们说该性状具有强烈的系统发育信号；如果性状值在系统发育树上随机分布，与亲缘关系无关，则系统发育信号较弱或不存在。系统发育信号的量化对于理解性状的进化动态和生态适应具有重要意义。
 
-最常用的系统发育信号度量方法是Blomberg's K和Pagel's λ。Blomberg's K由Blomberg等人于2003年提出，它比较观测到的性状在系统发育树上的方差与在布朗运动模型下的期望方差。K值等于1表示性状的进化完全符合布朗运动模型（中等系统发育信号）；K值大于1表示性状比布朗运动模型预测的更保守（强系统发育信号）；K值小于1表示性状比布朗运动模型预测的更趋同（弱系统发育信号）。K值的统计显著性通常通过置换检验来评估。
+最常用的系统发育信号的度量指标是Blomberg's *K*和Pagel's $\lambda$。Blomberg's *K*由Blomberg等人于2003年提出，它比较观测到的性状在系统发育树上的方差与其在布朗运动模型下的期望方差。*K*值等于1表示性状的进化完全符合布朗运动模型（中等系统发育信号）；*K*值大于1表示性状比布朗运动模型预测的更保守（强系统发育信号）；*K*值小于1表示性状比布朗运动模型预测的更趋同（弱系统发育信号）。*K*值的统计显著性通常通过置换检验来评估。
 
-Pagel's λ是另一个广泛使用的系统发育信号度量，由Pagel于1999年提出。λ参数度量系统发育树在解释性状变异中的相对重要性。λ值在0到1之间变化，其中0表示性状变异与系统发育无关（没有系统发育信号），1表示性状变异完全由系统发育关系解释（强系统发育信号）。λ值可以通过最大似然法估计，其统计显著性可以通过似然比检验来评估。
+Pagel's $\lambda$是由Pagel于1999年提出的另一个广泛使用的系统发育信号度量指标。$\lambda$度量系统发育树在解释性状变异中的相对重要性（即相关性的缩放因子）。$\lambda$值在0到1之间变化，其中0表示性状变异与系统发育无关（没有系统发育信号），1表示性状变异完全符合布朗运动模型下的系统发育相关性（强系统发育信号）。$\lambda$值可以通过最大似然法估计，并可以通过似然比检验来评估其统计显著性。
 
 在生态学研究中，系统发育信号分析具有重要的应用价值。例如，在功能生态学中，系统发育信号分析可以帮助理解功能性状的进化保守性；在群落生态学中，它可以揭示群落构建中的系统发育过程；在保护生物学中，它可以指导基于系统发育多样性的保护策略。此外，系统发育信号分析还为系统发育比较方法提供了基础，确保生态关系的统计检验不受系统发育非独立性的影响。
 
 **数学定义**：
 
-- **Blomberg's K**：
+- **Blomberg's *K***：
 
 $$K = \frac{MS_{obs}}{MS_{random}}$$
 
-其中$MS_{obs}$是观测到的性状在系统发育树上的均方，$MS_{random}$是在布朗运动模型下的期望均方。
+上式为简化表达，其中$MS_{obs}$是性状观测值在系统发育树上的均方，$MS_{random}$是在布朗运动模型下的期望均方。实际计算时*K*反映了观测到的性状方差与布朗运动模型下期望方差的比值。
 
-- **Pagel's λ**：
+- **Pagel's $\lambda$**：
 
-Pagel's λ 是一个介于0和1之间的参数，用于衡量性状在系统发育树上的进化保守性程度。λ=0表示性状进化完全独立于系统发育关系（无系统发育信号），λ=1表示性状进化遵循布朗运动模型（强系统发育信号）。
+Pagel's $\lambda$是一个介于0和1之间的指标，用于衡量性状在系统发育树上的进化保守性程度。$\lambda$=0表示性状进化完全独立于系统发育关系，即无系统发育信号）；$\lambda$=1则表示性状进化遵循布朗运动模型，即强系统发育信号。
 
-Pagel's λ的数学模型为：
+Pagel's $\lambda$的数学模型为：
 
 $$\mathbf{V} = \lambda\mathbf{C} + (1-\lambda)\mathbf{I}$$
 
-其中$\mathbf{V}$是性状的协方差矩阵，$\mathbf{C}$是系统发育协方差矩阵（由系统发育树计算得到），$\mathbf{I}$是单位矩阵。
+其中$\mathbf{V}$是性状的协方差矩阵，$\mathbf{C}$是系统发育协方差矩阵（由系统发育树计算得到），$\mathbf{I}$是单位矩阵。$\lambda$的计算是通过缩放系统发育树的内部枝长进行实现的。
 
 通过最大化似然函数来估计：
 
-$$L(\lambda) = -\frac{1}{2}[(n-1)\ln(2\pi) + \ln|\lambda\mathbf{C} + (1-\lambda)\mathbf{I}| + \mathbf{y}^T(\lambda\mathbf{C} + (1-\lambda)\mathbf{I})^{-1}\mathbf{y}]$$
+$$\ln L(\lambda) = -\frac{1}{2}[(n-1)\ln(2\pi) + \ln|\lambda\mathbf{C} + (1-\lambda)\mathbf{I}| + \mathbf{y}^T(\lambda\mathbf{C} + (1-\lambda)\mathbf{I})^{-1}\mathbf{y}]$$
 
 其中$\mathbf{C}$是系统发育协方差矩阵，$\mathbf{I}$是单位矩阵，$\mathbf{y}$是性状向量。
 
@@ -2459,7 +2459,6 @@ $$L(\lambda) = -\frac{1}{2}[(n-1)\ln(2\pi) + \ln|\lambda\mathbf{C} + (1-\lambda)
 # 系统发育信号分析示例：植物叶片性状的系统发育保守性
 library(ape)
 library(phytools)
-library(picante)
 
 # 模拟系统发育树和性状数据
 set.seed(123)
@@ -2476,18 +2475,14 @@ trait_conservative <- rTraitCont(phy_tree, model = "BM", sigma = 1)
 trait_random <- rnorm(n_species, mean = 0, sd = 1)
 names(trait_random) <- phy_tree$tip.label
 
-# 计算Blomberg's K
-K_conservative <- Kcalc(trait_conservative, phy_tree)
-K_random <- Kcalc(trait_random, phy_tree)
-
-cat("Blomberg's K分析结果：\n",
-    "保守性状的K值：", round(K_conservative, 3), "\n",
-    "随机性状的K值：", round(K_random, 3), "\n",
-    sep = "")
-
-# 进行置换检验（使用phylosig函数进行置换检验）
+# 计算Blomberg's K, 并进行置换检验
 K_perm_conservative <- phylosig(phy_tree, trait_conservative, method = "K", test = TRUE, nsim = 999)
 K_perm_random <- phylosig(phy_tree, trait_random, method = "K", test = TRUE, nsim = 999)
+
+cat("Blomberg's K分析结果：\n",
+    "保守性状的K值：", round(K_perm_conservative$K, 3), "\n",
+    "随机性状的K值：", round(K_perm_random$K, 3), "\n",
+    sep = "")
 
 cat("\n置换检验p值：\n",
     "保守性状：", format.pval(K_perm_conservative$P, digits = 3), "\n",
@@ -2549,12 +2544,12 @@ random_dist <- as.matrix(dist(trait_random))
 random_cor <- mantel(random_dist, phy_dist, permutations = 999)
 
 plot(phy_dist[lower.tri(phy_dist)], conservative_dist[lower.tri(conservative_dist)],
-  pch = 19, col = adjustcolor("blue", alpha.f = 0.5),
+  pch = 19, cex = 0.5, col = adjustcolor("blue", alpha.f = 0.5),
   xlab = "系统发育距离", ylab = "性状距离",
   main = "性状距离与系统发育距离的关系"
 )
 points(phy_dist[lower.tri(phy_dist)], random_dist[lower.tri(random_dist)],
-  pch = 19, col = adjustcolor("red", alpha.f = 0.5)
+  pch = 19, cex = 0.5, col = adjustcolor("red", alpha.f = 0.5)
 )
 legend("topleft",
   legend = c("保守性状", "随机性状"),
@@ -2573,9 +2568,9 @@ par(mfrow = c(1, 1))
 # 比较不同系统发育信号度量方法
 signal_comparison <- data.frame(
   性状类型 = c("保守性状", "随机性状"),
-  Blomberg_K = c(K_conservative, K_random),
-  Pagel_lambda = c(lambda_conservative$lambda, lambda_random$lambda),
-  Mantel_r = c(conservative_cor$statistic, random_cor$statistic)
+  Blomberg_K = round(c(K_perm_conservative$K, K_perm_random$K), 3),
+  Pagel_lambda = round(c(lambda_conservative$lambda, lambda_random$lambda), 3),
+  Mantel_r = round(c(conservative_cor$statistic, random_cor$statistic), 3)
 )
 
 print(signal_comparison)
