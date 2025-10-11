@@ -1,5 +1,5 @@
 ---
-title: "生态统计学"
+title: "生态统计学AI+"
 author: "沈国春、李勤"
 date: "2025-10-11"
 site: bookdown::bookdown_site
