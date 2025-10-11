@@ -206,14 +206,14 @@ sd_a <- sd(lake_a_lengths)    # 标准差：方差的平方根
 # 计算湖泊B鲤鱼的方差和标准差
 var_b <- var(lake_b_lengths)  # 方差：个体间差异的平方和
 sd_b <- sd(lake_b_lengths)    # 标准差：方差的平方根
+```
 
-# 输出湖泊A的离散性指标
-print(paste("湖泊A鲤鱼体长方差：", round(var_a, 2)))
-print(paste("湖泊A鲤鱼体长标准差：", round(sd_a, 2), "厘米"))
-
-# 输出湖泊B的离散性指标
-print(paste("湖泊B鲤鱼体长方差：", round(var_b, 2)))
-print(paste("湖泊B鲤鱼体长标准差：", round(sd_b, 2), "厘米"))
+```{r, echo=FALSE}
+# 输出湖泊A和B的离散性指标
+cat("湖泊A鲤鱼体长方差：", round(var_a, 2), "\n",
+    "湖泊A鲤鱼体长标准差：", round(sd_a, 2), "厘米\n",
+    "湖泊B鲤鱼体长方差：", round(var_b, 2), "\n",
+    "湖泊B鲤鱼体长标准差：", round(sd_b, 2), "厘米\n", sep = "")
 ```
 
 湖泊A的鲤鱼体长标准差较小（约2.87厘米），说明个体间差异较小，种群相对均质；而湖泊B的标准差较大（约7.72厘米），表明个体间差异较大，种群异质性更高。在图形上，标准差较小的分布更加"瘦高"，而标准差较大的分布更加"矮胖"。
@@ -248,14 +248,14 @@ cv_weight_a <- cv(weight_a)
 # 计算物种B的生长速率和体重变异系数
 cv_growth_b <- cv(growth_rate_b)
 cv_weight_b <- cv(weight_b)
+```
 
-# 输出物种A的变异系数结果
-print(paste("物种A生长速率变异系数：", round(cv_growth_a, 1), "%"))
-print(paste("物种A体重变异系数：", round(cv_weight_a, 1), "%"))
-
-# 输出物种B的变异系数结果
-print(paste("物种B生长速率变异系数：", round(cv_growth_b, 1), "%"))
-print(paste("物种B体重变异系数：", round(cv_weight_b, 1), "%"))
+```{r, echo=FALSE}
+# 输出物种A和B的变异系数结果
+cat("物种A生长速率变异系数：", round(cv_growth_a, 1), "%\n",
+    "物种A体重变异系数：", round(cv_weight_a, 1), "%\n",
+    "物种B生长速率变异系数：", round(cv_growth_b, 1), "%\n",
+    "物种B体重变异系数：", round(cv_weight_b, 1), "%\n", sep = "")
 ```
 
 变异系数以百分比形式表示相对变异，使我们能够比较生长速率（厘米/年）和体重（公斤）这两种不同量纲数据的变异程度。
@@ -272,7 +272,7 @@ $$SE = \frac{s}{\sqrt{n}}$$
 
 考虑研究一片森林中树木高度的抽样调查：
 
-```{r, fig.cap="标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。"}
+```{r}
 # 模拟不同样本量下树木高度的标准误
 # 设置随机数种子确保结果可重现
 set.seed(123)
@@ -300,10 +300,10 @@ results <- data.frame(
   样本量 = sample_sizes,
   标准误 = round(standard_errors, 2)
 )
+```
 
-# 输出标准误计算结果
-print(results)
 
+```{r, fig.cap="标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。"}
 # 可视化标准误随样本量的变化
 # 创建散点图展示标准误与样本量的关系
 plot(sample_sizes, standard_errors,
@@ -1499,9 +1499,10 @@ for (i in seq_along(sample_sizes)) {
   diversity_comparison$Fisher_alpha[i] <-
     calculate_fisher_alpha(simulated_abundance)
 }
+```
 
-print("样本量对多样性指数的影响:")
-print(diversity_comparison)
+```{r, echo=FALSE}
+knitr::kable(diversity_comparison, caption = "样本量对多样性指数的影响")
 ```
 
 **生态学意义：**
@@ -1604,9 +1605,10 @@ comparison_data <- data.frame(
   Shannon指数 = c(shannon_A, shannon_B),
   Simpson指数 = c(simpson_A, simpson_B)
 )
+```
 
-print("不同群落的多样性比较:")
-print(comparison_data)
+```{r, echo=FALSE}
+knitr::kable(comparison_data, caption = "不同群落的多样性比较")
 ```
 
 **生态学意义：**
@@ -1670,9 +1672,10 @@ diversity_summary <- data.frame(
   数值 = c(shannon_index, simpson_index, fisher_alpha, pielou_index),
   解释 = c("综合多样性", "优势度敏感性", "样本稳定性", "均匀度度量")
 )
+```
 
-print("群落多样性综合评估:")
-print(diversity_summary)
+```{r, echo=FALSE}
+knitr::kable(diversity_summary, caption = "群落多样性综合评估")
 ```
 
 **生态学意义：**
@@ -1819,9 +1822,10 @@ network_metrics <- data.frame(
   数值 = c(connectance, modularity, nestedness),
   生态学意义 = c("相互作用密集度", "群落结构分化", "特化-泛化格局")
 )
+```
 
-print("网络拓扑指标综合分析:")
-print(network_metrics)
+```{r, echo=FALSE}
+knitr::kable(network_metrics, caption = "网络拓扑指标综合分析")
 ```
 
 **生态学意义：**
@@ -1889,6 +1893,12 @@ cat("连接复杂性:", round(connectance_complexity, 3), "\n")
 
 # 可视化食物网
 set.seed(123)
+# 使用par设置中文字体
+#par(family = "SimHei")  # Windows系统
+old_par <- par()
+par(family = "WenQuanYi Micro Hei")
+# 对于Mac系统可以使用：par(family = "STHeiti")
+
 plot(food_net,
   layout = layout_with_sugiyama,
   vertex.color = c("green", "yellow", "orange", "red"),
@@ -1902,6 +1912,8 @@ plot(food_net,
     "连接复杂性:", round(connectance_complexity, 3)
   )
 )
+# 恢复默认图形参数
+par(old_par)
 
 # 食物网特征综合分析
 food_web_analysis <- data.frame(
@@ -1909,10 +1921,13 @@ food_web_analysis <- data.frame(
   数值 = c(mean(trophic_levels), avg_chain_length, connectance_complexity),
   生态学意义 = c("能量传递效率", "营养级复杂度", "相互作用密度")
 )
+```
 
-print("食物网特征综合分析:")
-print(food_web_analysis)
+```{r, echo=FALSE}
+knitr::kable(food_web_analysis, caption = "食物网特征综合分析")
+```
 
+```{r}
 # 比较不同复杂度的食物网
 # 简单食物网
 simple_food_web <- matrix(c(0, 1, 0, 0, 0, 1, 0, 0), nrow = 3)
@@ -2194,9 +2209,10 @@ stability_analysis <- data.frame(
          persistence_index),
   生态学意义 = c("抗干扰能力", "恢复速度", "长期稳定性")
 )
+```
 
-cat("生态系统稳定性综合分析:\n")
-print(stability_analysis)
+```{r, echo=FALSE}
+knitr:kable(stability_analysis, caption = "生态系统稳定性综合分析结果")
 ```
 
 **生态学意义：**
@@ -2231,3 +2247,48 @@ print(stability_analysis)
 
 
 ## 综合练习
+
+### 练习1：森林群落多样性分析
+
+某生态学家在两个不同的森林样地（样地A和样地B）调查了树木物种的多度数据：
+
+- 样地A：物种1（20株）、物种2（15株）、物种3（10株）、物种4（5株）、物种5（2株）  
+- 样地B：物种1（15株）、物种2（15株）、物种3（15株）、物种4（15株）、物种5（2株）  
+
+1. 计算两个样地的Shannon-Wiener多样性指数和Simpson多样性指数  
+2. 计算两个样地的Pielou均匀度指数  
+3. 比较两个样地的多样性特征，分析其生态学意义  
+4. 使用R语言绘制两个样地的物种多度分布图  
+
+### 练习2：生态系统稳定性评估
+
+某生态学家监测了一个湖泊生态系统在受到营养盐输入干扰后的动态变化。收集了以下数据：
+
+- 干扰前生物量：100吨/公顷  
+- 干扰后生物量：60吨/公顷  
+- 恢复过程生物量：65, 75, 85, 90, 95, 98, 100, 102, 104吨/公顷（每年一次测量）  
+- 长期监测显示，在50年中有40年生物量维持在90-110吨/公顷的稳定范围内  
+
+1. 计算该生态系统的抵抗力指数  
+2. 计算恢复力指数和恢复时间  
+3. 计算持久性指数  
+4. 综合分析该生态系统的稳定性特征  
+5. 讨论这些稳定性指标在生态系统管理中的应用价值  
+
+### 练习3：种群资源分配与竞争分析
+
+某生态学家研究了一个松树种群中个体胸径的分布情况，收集了50棵松树的胸径数据（单位：cm）：
+
+```r
+pine_diameters <- c(15, 18, 20, 22, 25, 28, 30, 32, 35, 38,
+                    40, 42, 45, 48, 50, 52, 55, 58, 60, 62,
+                    65, 68, 70, 72, 75, 78, 80, 82, 85, 88,
+                    90, 92, 95, 98, 100, 102, 105, 108, 110, 112,
+                    115, 118, 120, 122, 125, 128, 130, 132, 135, 138)
+```
+
+1. 计算该种群胸径的均值、标准差和变异系数  
+2. 计算Gini系数并绘制Lorenz曲线  
+3. 分析胸径分布的偏度和峰度  
+4. 根据计算结果，分析该种群的资源分配模式和竞争强度  
+5. 讨论这些统计特征对理解种群动态和森林管理的意义  
