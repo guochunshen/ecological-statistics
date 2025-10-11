@@ -64,15 +64,10 @@ $$H = \frac{n}{\sum_{i=1}^{n}\frac{1}{x_i}}$$
 
 想象你正在研究一片温带森林中红松的胸径分布。你随机测量了100棵红松的胸径（单位：厘米），得到了以下数据：
 
-```{r, fig.cap="红松胸径数据示例。展示40棵红松的胸径观测值分布，用于计算算术平均值作为种群中心趋势的度量。"}
-# 模拟红松胸径数据 - 创建40棵红松的胸径观测值
-# 这些数据模拟了森林中红松种群的实际胸径分布
-pine_diameter <- c(
-  25, 28, 32, 35, 38, 40, 42, 45, 48, 50,
-  52, 55, 58, 60, 62, 65, 68, 70, 72, 75,
-  30, 33, 36, 39, 41, 43, 46, 49, 51, 53,
-  56, 59, 61, 63, 66, 69, 71, 73, 76, 78
-)
+```{r}
+# 读取红松胸径数据 - 从CSV文件加载40棵红松的胸径观测值
+pine_diameter_data <- read.csv("data/pine_diameter.csv")
+pine_diameter <- pine_diameter_data$pine_diameter
 
 # 计算算术平均 - 反映红松种群的平均胸径水平
 mean_diameter <- mean(pine_diameter)
@@ -85,7 +80,7 @@ print(paste("红松胸径的算术平均值：", round(mean_diameter, 2), "厘�
 
 几何平均特别适用于分析增长率数据。假设你研究一个湖泊中浮游植物生物量的年增长率：
 
-```{r, fig.cap="浮游植物年增长率数据示例。展示5年增长率观测值，用于计算几何平均值作为增长率中心趋势的度量。"}
+```{r}
 # 浮游植物年增长率数据 - 模拟5年的增长率观测值
 # 1.05表示5%增长，1.08表示8%增长，以此类推
 growth_rates <- c(1.05, 1.08, 1.12, 0.95, 1.15)
@@ -100,7 +95,7 @@ print(paste("浮游植物年增长率的几何平均值：", round(geometric_mea
 
 调和平均适用于速率数据，比如研究鸟类在不同生境中的飞行速度：
 
-```{r, fig.cap="鸟类飞行速度数据示例。展示5种不同生境中鸟类的飞行速度观测值，用于计算调和平均值作为速率中心趋势的度量。"}
+```{r}
 # 鸟类在不同生境中的飞行速度数据 - 单位：米/秒
 # 模拟5种不同生境中鸟类的典型飞行速度
 flight_speeds <- c(8, 12, 15, 10, 9)
@@ -124,7 +119,7 @@ x_{(\frac{n+1}{2})} & \text{如果 } n \text{ 是奇数} \\
 
 中位数对异常值不敏感，在生态学中特别有用。考虑一个受污染的河流中鱼类体内重金属含量的研究：
 
-```{r, fig.cap="鱼类汞含量数据示例。展示10条鱼类的汞含量观测值，包含一个异常高值，用于比较中位数和均值对异常值的敏感性。"}
+```{r}
 # 鱼类体内汞含量数据 - 单位：微克/克
 # 模拟10条鱼类的汞含量观测值，包含一个异常高值(2.50)
 mercury_content <- c(0.12, 0.15, 0.18, 0.21, 0.25, 0.28, 0.32, 0.35, 0.38, 2.50)
@@ -154,7 +149,7 @@ $$\text{Mode} = \arg\max_{x} f(x)$$
 
 众数告诉我们数据中最常见的值。在研究鸟类群落时，我们可能对不同物种的出现频率感兴趣：
 
-```{r, fig.cap="鸟类物种出现频率数据示例。展示9个样方中观察到的鸟类物种记录，用于计算众数作为分类数据中心趋势的度量。"}
+```{r}
 # 不同鸟类物种在样方中的出现次数数据
 # 模拟9个样方中观察到的鸟类物种记录
 bird_species <- c("麻雀", "乌鸦", "麻雀", "鸽子", "麻雀", "乌鸦", "麻雀", "鸽子", "麻雀")
@@ -195,9 +190,10 @@ $$s = \sqrt{s^2} = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2}$$
 
 ```{r}
 # 湖泊A和湖泊B中鲤鱼体长数据 - 单位：厘米
-# 模拟两个湖泊中各10条鲤鱼的体长观测值
-lake_a_lengths <- c(25, 26, 27, 28, 29, 30, 31, 32, 33, 34)
-lake_b_lengths <- c(20, 22, 25, 28, 30, 32, 35, 38, 40, 45)
+# 从CSV文件读取两个湖泊的鲤鱼体长数据
+lake_lengths_data <- read.csv("data/lake_carp_lengths.csv")
+lake_a_lengths <- lake_lengths_data$lake_a_lengths
+lake_b_lengths <- lake_lengths_data$lake_b_lengths
 
 # 计算湖泊A鲤鱼的方差和标准差
 var_a <- var(lake_a_lengths)  # 方差：个体间差异的平方和
@@ -229,11 +225,12 @@ $$CV = \frac{s}{\bar{x}} \times 100\%$$
 ```{r}
 # 物种A和物种B的生长速率和成年体重数据
 # 生长速率单位：厘米/年，成年体重单位：公斤
-# 模拟两个物种各6个个体的观测值
-growth_rate_a <- c(15, 16, 17, 18, 19, 20)
-weight_a <- c(8, 9, 10, 11, 12, 13)
-growth_rate_b <- c(25, 27, 29, 31, 33, 35)
-weight_b <- c(15, 17, 19, 21, 23, 25)
+# 从CSV文件读取两个物种各6个个体的观测值
+species_data <- read.csv("data/species_growth_data.csv")
+growth_rate_a <- species_data$growth_rate_a
+weight_a <- species_data$weight_a
+growth_rate_b <- species_data$growth_rate_b
+weight_b <- species_data$weight_b
 
 # 定义变异系数计算函数 - 用于比较不同量纲数据的相对变异
 cv <- function(x) {
@@ -302,8 +299,9 @@ results <- data.frame(
 )
 ```
 
+为了直观展示标准误与样本量之间的反比关系，我们绘制了图\@ref(fig:se-sample-plot)，该图清晰地展示了随着样本量的增加，标准误呈现递减趋势。
 
-```{r, fig.cap="标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。"}
+```{r se-sample-plot, fig.cap="标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。", echo=FALSE}
 # 可视化标准误随样本量的变化
 # 创建散点图展示标准误与样本量的关系
 plot(sample_sizes, standard_errors,
@@ -401,7 +399,9 @@ $$g_1 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^3}{s^3}$$
 
 偏度量化了分布的不对称性。在生态学中，许多自然现象都表现出偏斜分布。考虑研究森林中树木胸径的分布：
 
-```{r, fig.cap="树木胸径分布的直方图，展示右偏分布特征。红色虚线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。"}
+如图\@ref(fig:tree-skewness-plot)所示，我们模拟了一个右偏的树木胸径分布，该图通过直方图展示了分布的不对称性特征。
+
+```{r tree-skewness-plot, fig.cap="树木胸径分布的直方图，展示右偏分布特征。红色虚线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。", echo=FALSE}
 # 安装并加载moments包（如果未安装）
 # install.packages("moments")
 library(moments)
@@ -522,7 +522,9 @@ if (kurtosis_count > 3) {
 
 为了更好地理解这些统计概念，让我们在一个典型的概率分布图上可视化它们：
 
-```{r, fig.cap="统计概念在正态分布上的可视化。红色垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色箭头表示标准差的实际跨度。"}
+如图\@ref(fig:stats-concepts-plot)所示，我们使用标准正态分布来可视化关键统计概念。该图清晰地展示了均值、标准差等统计量在概率分布上的几何意义。
+
+```{r stats-concepts-plot, fig.cap="统计概念在正态分布上的可视化。红色垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色箭头表示标准差的实际跨度。", echo=FALSE}
 # 创建一个综合的可视化，展示所有统计概念
 library(ggplot2)
 library(gridExtra)
@@ -574,7 +576,9 @@ print(sd_plot)
 
 为了理解标准误的概念，让我们通过抽样模拟来展示标准误的意义：
 
-```{r, fig.cap="标准误的可视化分析。左图显示样本均值的分布，右图展示标准误与样本均值的关系。红色虚线表示总体均值，橙色虚线表示平均标准误。"}
+如图\@ref(fig:se-visualization-plot)所示，我们通过多次抽样模拟展示了标准误的统计意义。该图包含两个子图：左图显示样本均值的分布特征，右图展示标准误与样本均值的关系，帮助我们理解样本均值作为总体均值估计的精确程度。
+
+```{r se-visualization-plot, fig.cap="标准误的可视化分析。左图显示样本均值的分布，右图展示标准误与样本均值的关系。红色虚线表示总体均值，橙色虚线表示平均标准误。", echo=FALSE}
 # 标准误的可视化：抽样变异性
 set.seed(456)
 # 假设总体服从正态分布
@@ -636,7 +640,9 @@ cat("总体均值：", round(mean(population), 2), "\n",
 
 现在让我们比较不同统计参数值对应的分布形状：
 
-```{r, fig.cap="不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。", warning=FALSE}
+如图\@ref(fig:distribution-parameters-comparison)所示，我们系统地比较了均值、标准差、偏度和峰度四个关键统计参数对分布形状的影响。该图通过四个子图展示了不同参数值下分布特征的显著差异，帮助我们直观理解统计参数与分布形状之间的对应关系。
+
+```{r distribution-parameters-comparison, fig.cap="不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。", warning=FALSE, echo=FALSE}
 # 比较不同均值的分布
 x_range <- seq(-5, 10, length.out = 1000)
 df_means <- data.frame(
@@ -765,7 +771,9 @@ grid.arrange(mean_comparison, sd_comparison,
 
 为了更好地理解环境异质性的概念，我们可以通过图示来展示不同异质性水平的环境格局：
 
-```{r, echo=FALSE, fig.cap="环境异质性可视化分析。上图展示低环境异质性和高环境异质性的空间分布对比，下图通过箱线图比较两种异质性类型的土壤养分值分布。"}
+如图\@ref(fig:environmental-heterogeneity-plot)所示，我们通过土壤养分值的空间分布对比来可视化环境异质性。该图包含两个子图：上图展示低环境异质性和高环境异质性的空间分布模式，下图通过箱线图比较两种异质性类型的土壤养分值分布特征，帮助我们直观理解环境异质性对生态系统结构和功能的影响。
+
+```{r environmental-heterogeneity-plot, echo=FALSE, fig.cap="环境异质性可视化分析。上图展示低环境异质性和高环境异质性的空间分布对比，下图通过箱线图比较两种异质性类型的土壤养分值分布。"}
 # 环境异质性图示代码
 library(ggplot2)
 library(patchwork)
@@ -882,8 +890,13 @@ coords <- data.frame(x = 1:10, y = rep(1, 10))
 
 # 计算Moran's I
 library(spdep)
+# 步骤1：构建空间邻接关系 - 使用k最近邻方法
 nb <- spdep::knearneigh(as.matrix(coords), k = 2)
+
+# 步骤2：创建空间权重矩阵
 listw <- spdep::nb2listw(spdep::knn2nb(nb), style = "W")
+
+# 步骤3：执行Moran's I空间自相关检验
 moran_result <- spdep::moran.test(temp_data, listw)
 
 cat("Moran's I:", round(moran_result$estimate[1], 3), "\n",
@@ -907,7 +920,10 @@ $$H = -\sum_{i=1}^{S} p_i \ln(p_i)$$
 - $p_i$ 为第 $i$ 种环境类型的面积比例
 
 **R代码实现：**
-```{r, fig.cap="环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，用于计算环境异质性指数。"}
+
+如图\@ref(fig:heterogeneity-index-plot)所示，我们通过柱状图展示了四种生境类型的面积比例分布，并计算了相应的环境异质性指数。该图直观地呈现了基于信息熵的环境异质性度量方法在实际生态景观分析中的应用。
+
+```{r heterogeneity-index-plot, fig.cap="环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，用于计算环境异质性指数。", echo=FALSE}
 # 示例数据：4种生境类型的面积比例
 habitat_proportions <- c(0.4, 0.3, 0.2, 0.1) # 森林、草地、湿地、农田
 
@@ -970,7 +986,9 @@ cat("总变异:", round(total_variance, 3), "\n",
     sep = "")
 ```
 
-```{r, fig.cap="空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。"}
+如图\@ref(fig:variance-decomposition-plot)所示，我们通过饼图直观地展示了土壤养分值总变异中空间变异和随机变异的相对比例。该图清晰地呈现了环境异质性的形成机制，帮助我们理解空间过程在环境格局形成中的重要性。
+
+```{r variance-decomposition-plot, fig.cap="空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。", echo=FALSE}
 # 可视化变异分解
 library(ggplot2)
 variance_data <- data.frame(
@@ -1005,7 +1023,7 @@ $$D = \lim_{\epsilon \to 0} \frac{\log N(\epsilon)}{\log(1/\epsilon)}$$
 - $N(\epsilon)$ 为覆盖环境表面所需的大小为 $\epsilon$ 的盒子数量
 
 **R代码实现：**
-```{r, fig.cap="不同复杂程度环境表面的分形维数可视化。左图展示平滑环境表面（低分形维数），右图展示复杂环境表面（高分形维数）。"}
+```{r}
 # 盒计数法计算分形维数
 calculate_fractal_dimension <- function(surface_matrix) {
   sizes <- 2^(1:6) # 网格大小序列
@@ -1053,7 +1071,11 @@ fd_complex <- calculate_fractal_dimension(complex_surface)
 
 cat("平滑表面的分形维数:", round(fd_smooth, 3), "\n")
 cat("复杂表面的分形维数:", round(fd_complex, 3), "\n")
+```
 
+如图\@ref(fig:fractal-dimension-plot)所示，我们通过热图对比了不同复杂程度环境表面的分形维数特征。该图清晰地展示了平滑环境表面与复杂环境表面在空间结构复杂度上的显著差异，直观呈现了分形维数作为环境异质性度量指标的有效性。
+
+```{r fractal-dimension-plot, fig.cap="不同复杂程度环境表面的分形维数可视化。左图展示平滑环境表面（低分形维数），右图展示复杂环境表面（高分形维数）。", echo=FALSE}
 # 可视化两种表面
 library(ggplot2)
 library(reshape2)
@@ -1109,8 +1131,10 @@ $$S(t) = P(T > t) = 1 - F(t)$$
 - $T$ 为个体的存活时间（随机变量）
 - $F(t)$ 为累积分布函数
 
-**R代码实现：**
-```{r, fig.cap="鸟类个体生存函数曲线。使用Kaplan-Meier方法估计的生存概率随时间变化曲线，蓝色曲线表示生存概率，可用于分析个体存活率和寿命分布。"}
+
+如图\@ref(fig:survival-function-plot)所示，我们通过Kaplan-Meier方法估计并绘制了鸟类个体的生存函数曲线。该图直观地展示了生存概率随时间递减的模式，为分析种群动态和个体寿命分布提供了重要的可视化工具。
+
+```{r survival-function-plot, fig.cap="鸟类个体生存函数曲线。使用Kaplan-Meier方法估计的生存概率随时间变化曲线，蓝色曲线表示生存概率，可用于分析个体存活率和寿命分布。", echo=FALSE}
 # 示例数据：鸟类个体的存活时间（天）
 survival_times <- c(
   45, 67, 89, 102, 120, 145, 167, 189, 210, 234,
@@ -1155,7 +1179,10 @@ $$h(t) = \lim_{\Delta t \to 0} \frac{P(t \leq T < t + \Delta t | T \geq t)}{\Del
 - $S(t)$ 为生存函数
 
 **R代码实现：**
-```{r, fig.cap="瞬时死亡风险函数曲线。红色曲线表示在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，反映了死亡风险的瞬时变化模式。"}
+
+如图\@ref(fig:hazard-function-plot)所示，我们计算并绘制了瞬时死亡风险函数曲线。该图通过红色曲线展示了在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，为分析死亡风险的动态变化模式提供了重要的可视化工具。
+
+```{r hazard-function-plot, fig.cap="瞬时死亡风险函数曲线。红色曲线表示在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，反映了死亡风险的瞬时变化模式。", echo=FALSE}
 # 计算瞬时死亡风险函数
 hazard_function <- function(time_points, fit) {
   surv_summary <- summary(fit, times = time_points)
@@ -1196,8 +1223,9 @@ $$H(t) = -\ln S(t) = \int_0^t h(u)du$$
 - $h(u)$ 为瞬时死亡风险函数
 - $S(t)$ 为生存函数
 
-**R代码实现：**
-```{r, fig.cap="个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。"}
+如图\@ref(fig:survival-analysis-comprehensive-plot)所示，我们综合展示了生存分析中的三个核心函数。该图通过三个子图系统性地呈现了生存函数、瞬时死亡风险函数和累积风险函数之间的数学关系，为全面理解个体生存特征提供了完整的可视化分析框架。
+
+```{r survival-analysis-comprehensive-plot, fig.cap="个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。", echo=FALSE}
 # 计算累积风险函数
 cumulative_hazard <- function(time_points, fit) {
   surv_summary <- summary(fit, times = time_points)
@@ -1267,7 +1295,10 @@ $$G = \frac{\sum_{i=1}^{n}\sum_{j=1}^{n}|x_i - x_j|}{2n^2\bar{x}}$$
 - $\bar{x}$ 为个体大小的平均值
 
 **R代码实现：**
-```{r, fig.cap="树木胸径分布图。蓝色点表示个体胸径值，红色虚线表示平均胸径，用于计算和可视化Gini系数，反映种群内个体大小的不均等性。"}
+
+如图\@ref(fig:gini-coefficient-plot)所示，我们通过树木胸径分布图展示了Gini系数的计算和可视化。该图通过蓝色点表示个体胸径值，红色虚线表示平均胸径，直观地反映了种群内个体大小的不均等性程度，为分析资源分配格局提供了重要的可视化工具。
+
+```{r gini-coefficient-plot, fig.cap="树木胸径分布图。蓝色点表示个体胸径值，红色虚线表示平均胸径，用于计算和可视化Gini系数，反映种群内个体大小的不均等性。", echo=FALSE}
 # 示例数据：森林中树木的胸径（cm）
 tree_diameters <- c(
   15.2, 18.5, 22.1, 25.8, 28.3, 32.6, 35.9, 40.2,
@@ -1320,8 +1351,9 @@ Lorenz曲线上的点 $(p, L(p))$ 表示：
 - $p$：累积个体比例（从小到大排序）
 - $L(p)$：对应个体累积的资源比例
 
-**R代码实现：**
-```{r, fig.cap="Lorenz曲线图。深绿色曲线表示累积资源分配比例，灰色对角线表示完全均等分配，浅绿色区域表示基尼面积，用于可视化种群内资源分配的不均等性。"}
+如图\@ref(fig:lorenz-curve-plot)所示，我们绘制了Lorenz曲线图来可视化种群内资源分配的不均等性。该图通过深绿色曲线展示累积资源分配比例，灰色对角线表示完全均等分配的理想状态，浅绿色区域表示基尼面积，为分析资源分配格局提供了直观的图形工具。
+
+```{r lorenz-curve-plot, fig.cap="Lorenz曲线图。深绿色曲线表示累积资源分配比例，灰色对角线表示完全均等分配，浅绿色区域表示基尼面积，用于可视化种群内资源分配的不均等性。", echo=FALSE}
 # 计算Lorenz曲线数据
 calculate_lorenz <- function(x) {
   x_sorted <- sort(x)
@@ -1364,7 +1396,10 @@ Lorenz曲线直观地展示了种群内资源分配的不均等性。曲线越�
 基尼系数在生态学研究中具有广泛的应用价值，主要体现在以下几个方面：
 
 **评估种内竞争强度：**
-```{r, fig.cap="不同种群的个体大小分布比较。通过箱线图和散点图展示竞争强度不同的两个种群的个体大小分布，用于比较Gini系数和种内竞争格局。"}
+
+如图\@ref(fig:population-comparison-plot)所示，我们通过箱线图和散点图比较了竞争强度不同的两个种群的个体大小分布。该图直观地展示了高Gini系数种群（竞争较强）与低Gini系数种群（竞争较弱）在个体大小分布格局上的显著差异，为评估种内竞争强度提供了重要的可视化证据。
+
+```{r population-comparison-plot, fig.cap="不同种群的个体大小分布比较。通过箱线图和散点图展示竞争强度不同的两个种群的个体大小分布，用于比较Gini系数和种内竞争格局。", echo=FALSE}
 # 比较不同种群的竞争强度
 population_a <- c(12, 15, 18, 22, 25, 28, 32, 35, 40, 45) # 竞争较弱
 population_b <- c(8, 10, 12, 15, 20, 30, 42, 55, 68, 80) # 竞争较强
@@ -1447,7 +1482,10 @@ $$S = \alpha \ln(1 + \frac{N}{\alpha})$$
 - $\alpha$ 为Fisher's α 多样性指数
 
 **R代码实现：**
-```{r, fig.cap="森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。"}
+
+如图\@ref(fig:species-composition-plot)所示，我们通过森林群落物种组成柱状图展示了五种树种的个体数量分布。该图不仅用于计算和可视化Shannon-Wiener多样性指数，还为Fisher's α 多样性指数的计算提供了基础数据，为分析群落多样性特征提供了重要的可视化工具。
+
+```{r species-composition-plot, fig.cap="森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。", echo=FALSE}
 # 示例数据：森林群落中不同树种的个体数量
 species_abundance <- c(25, 18, 12, 8, 5) # 各树种的个体数量
 
@@ -1501,7 +1539,9 @@ for (i in seq_along(sample_sizes)) {
 }
 ```
 
-```{r, echo=FALSE}
+如图\@ref(tab:diversity-sample-size-table)所示，我们通过模拟不同样本量的群落数据，系统地分析了样本量对Shannon指数和Fisher's α多样性指数的影响。该表格清晰地展示了两种多样性指数随样本量变化的响应模式。
+
+```{r diversity-sample-size-table, echo=FALSE}
 knitr::kable(diversity_comparison, caption = "样本量对多样性指数的影响")
 ```
 
@@ -1519,8 +1559,9 @@ $$H' = -\sum_{i=1}^{S} p_i \ln(p_i)$$
 - $S$ 为物种总数
 - $p_i$ 为第 $i$ 个物种的相对多度
 
-**R代码实现：**
-```{r, fig.cap="森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。"}
+如图\@ref(fig:shannon-diversity-plot)所示，我们通过森林群落物种组成柱状图展示了五种树种的个体数量分布，并计算了相应的Shannon-Wiener多样性指数。该图直观地呈现了群落中物种多度的分布格局，为分析群落多样性和物种均匀度提供了重要的可视化工具。
+
+```{r shannon-diversity-plot, fig.cap="森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。", echo=FALSE}
 # 示例数据：森林群落中不同树种的个体数量
 tree_species <- c("橡树", "松树", "枫树", "桦树", "杉树")
 
@@ -1534,12 +1575,12 @@ calculate_shannon <- function(abundance) {
 
 shannon_index <- calculate_shannon(species_abundance)
 
-cat("Shannon-Wiener指数:", round(shannon_index, 3), "\n")
+#cat("Shannon-Wiener指数:", round(shannon_index, 3), "\n")
 
 # 使用vegan包验证计算结果
 library(vegan)
 shannon_vegan <- vegan::diversity(species_abundance, index = "shannon")
-cat("使用vegan包计算的Shannon指数:", round(shannon_vegan, 3), "\n")
+#cat("使用vegan包计算的Shannon指数:", round(shannon_vegan, 3), "\n")
 
 # 可视化物种组成
 library(ggplot2)
@@ -1607,7 +1648,9 @@ comparison_data <- data.frame(
 )
 ```
 
-```{r, echo=FALSE}
+如表\@ref(tab:community-diversity-comparison-table)所示，我们通过表格系统地比较了两个不同群落的Shannon指数和Simpson指数。该表格清晰地展示了群落A和群落B在物种多样性和优势度格局上的差异，为分析群落生态特征提供了量化的比较依据。
+
+```{r community-diversity-comparison-table, echo=FALSE}
 knitr::kable(comparison_data, caption = "不同群落的多样性比较")
 ```
 
@@ -1639,14 +1682,20 @@ calculate_pielou <- function(abundance) {
 pielou_index <- calculate_pielou(species_abundance)
 
 cat("Pielou均匀度指数:", round(pielou_index, 3), "\n")
+```
 
+```{r}
 # 比较不同均匀度的群落
 even_community <- c(20, 18, 22, 19, 21) # 均匀分布
 uneven_community <- c(50, 15, 10, 12, 13) # 不均匀分布
 
 pielou_even <- calculate_pielou(even_community)
 pielou_uneven <- calculate_pielou(uneven_community)
+```
 
+如图\@ref(fig:uniformity-comparison-plot)所示，我们通过群落均匀度比较图直观地展示了均匀分布和不均匀分布两种群落的物种多度格局。该图清晰地呈现了Pielou均匀度指数在量化群落内物种分布均匀性方面的有效性，为分析群落结构特征提供了重要的可视化工具。
+
+```{r uniformity-comparison-plot, echo=FALSE, fig.cap="群落均匀度比较。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Pielou均匀度指数。"}
 # 可视化均匀度比较
 uniformity_data <- rbind(
   data.frame(群落类型 = "均匀分布", 物种 = 1:5, 多度 = even_community),
@@ -1674,7 +1723,9 @@ diversity_summary <- data.frame(
 )
 ```
 
-```{r, echo=FALSE}
+如表\@ref(tab:diversity-comprehensive-assessment-table)所示，我们通过群落多样性综合评估表格系统地总结了四种主要多样性指数的计算结果和生态学解释。该表格为全面理解群落多样性特征提供了综合的分析框架，展示了不同指数在生态学研究中的互补作用。
+
+```{r diversity-comprehensive-assessment-table, echo=FALSE}
 knitr::kable(diversity_summary, caption = "群落多样性综合评估")
 ```
 
@@ -1766,40 +1817,32 @@ $$T = \frac{\sum_{i,j} |a_{ij} - p_{ij}|}{S \times T}$$
 
 随着计算生态学的发展，网络拓扑分析的方法和技术不断进步。现代生态网络研究不仅关注静态的拓扑特征，还关注网络结构的动态变化和演化规律。通过结合时间序列分析和网络建模，我们可以更好地理解生态系统的长期动态和适应机制。网络拓扑分析已经成为现代生态学研究不可或缺的重要工具，为我们揭示生态系统的复杂性和动态性提供了强有力的方法支持。
 
-**R代码实现：**
-```{r, fig.cap="植物-传粉者相互作用网络图。绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系。图中展示了网络的连接度、模块性和嵌套性等拓扑特征，反映了物种间相互作用的组织规律。", message=FALSE, warning=FALSE}
+
+```{r}
 # 示例数据：植物-传粉者相互作用网络
 library(igraph)
 
-# 创建植物-传粉者相互作用矩阵
-plant_pollinator_matrix <- matrix(c(
-  1, 1, 1, 0, 0, # 植物1
-  1, 1, 1, 1, 0, # 植物2
-  0, 1, 1, 1, 1, # 植物3
-  0, 0, 1, 1, 1, # 植物4
-  0, 0, 0, 1, 1 # 植物5
-), nrow = 5, byrow = TRUE)
-
-rownames(plant_pollinator_matrix) <- paste("植物", 1:5)
-colnames(plant_pollinator_matrix) <- paste("传粉者", 1:5)
+# 读取植物-传粉者相互作用矩阵（包含行列名称）
+plant_pollinator_matrix <- as.matrix(read.csv("data/plant_pollinator_matrix.csv", row.names = 1))
 
 # 创建网络对象
 net <- graph_from_incidence_matrix(plant_pollinator_matrix)
 
 # 计算连接度
 connectance <- ecount(net) / (vcount(net) * (vcount(net) - 1))
-cat("网络连接度:", round(connectance, 3), "\n")
 
 # 计算模块性
 modules <- cluster_louvain(net)
 modularity <- modularity(modules)
-cat("网络模块性:", round(modularity, 3), "\n")
 
 # 计算嵌套性（使用bipartite包）
 library(bipartite)
 nestedness <- nested(plant_pollinator_matrix, method = "NODF")
-cat("网络嵌套性(NODF):", round(nestedness, 3), "\n")
+```
 
+如图\@ref(fig:plant-pollinator-network-plot)所示，我们通过植物-传粉者相互作用网络图直观地展示了物种间相互作用的拓扑结构。该图通过绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系，清晰地呈现了网络的连接度、模块性和嵌套性等关键拓扑特征，为理解生态网络的组织规律提供了重要的可视化工具。
+
+```{r plant-pollinator-network-plot, fig.cap="植物-传粉者相互作用网络图。绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系。图中展示了网络的连接度、模块性和嵌套性等拓扑特征，反映了物种间相互作用的组织规律。", message=FALSE, warning=FALSE, echo=FALSE}
 # 可视化网络
 set.seed(123)
 plot(net,
@@ -1815,16 +1858,15 @@ plot(net,
     "嵌套性:", round(nestedness, 3)
   )
 )
+```
 
+```{r network-topology-metrics-table, echo=FALSE}
 # 网络拓扑指标综合分析
 network_metrics <- data.frame(
   指标 = c("连接度", "模块性", "嵌套性"),
   数值 = c(connectance, modularity, nestedness),
   生态学意义 = c("相互作用密集度", "群落结构分化", "特化-泛化格局")
 )
-```
-
-```{r, echo=FALSE}
 knitr::kable(network_metrics, caption = "网络拓扑指标综合分析")
 ```
 
@@ -1856,8 +1898,8 @@ $$CC = \frac{L}{S^2}$$
 - $L$ 为实际捕食连接数
 - $S$ 为物种总数
 
-**R代码实现：**
-```{r, fig.cap="简化食物网结构图。绿色节点表示生产者（植物），黄色节点表示草食动物，橙色节点表示初级捕食者，红色节点表示顶级捕食者。箭头表示能量流动方向，展示了食物网的平均链长和连接复杂性等特征。"}
+
+```{r food-web-structure, fig.cap="简化食物网结构图。绿色节点表示生产者（植物），黄色节点表示草食动物，橙色节点表示初级捕食者，红色节点表示顶级捕食者。箭头表示能量流动方向，展示了食物网的平均链长和连接复杂性等特征。", echo=FALSE}
 # 示例数据：简化食物网
 # 物种类型：1-生产者，2-初级消费者，3-次级消费者，4-顶级捕食者
 food_web_matrix <- matrix(c(
@@ -1876,20 +1918,14 @@ food_net <- graph_from_adjacency_matrix(food_web_matrix)
 # 计算营养级
 library(NetIndices)
 trophic_levels <- TrophInd(food_web_matrix)$TL
-cat("各物种营养级:\n")
-for (i in seq_along(trophic_levels)) {
-  cat(rownames(food_web_matrix)[i], ":", round(trophic_levels[i], 2), "\n")
-}
 
 # 计算平均链长
 chain_lengths <- sapply(all_simple_paths(food_net, from = 1, to = 4),
                         length) - 1
 avg_chain_length <- mean(chain_lengths)
-cat("平均食物链长度:", round(avg_chain_length, 2), "\n")
 
 # 计算连接复杂性
 connectance_complexity <- sum(food_web_matrix) / (nrow(food_web_matrix)^2)
-cat("连接复杂性:", round(connectance_complexity, 3), "\n")
 
 # 可视化食物网
 set.seed(123)
@@ -1923,9 +1959,13 @@ food_web_analysis <- data.frame(
 )
 ```
 
-```{r, echo=FALSE}
+如图\@ref(fig:food-web-structure)所示，该简化食物网结构图直观展示了由四个营养级组成的线性食物链。图中绿色节点代表生产者（植物），黄色节点代表草食动物，橙色节点代表初级捕食者，红色节点代表顶级捕食者，箭头方向表示能量从低营养级向高营养级的流动路径。该可视化不仅呈现了食物网的基本结构，还在图注中显示了计算得到的平均链长（2.00）和连接复杂性（0.188），为理解生态系统中能量流动和物种相互作用的复杂性提供了直观参考。
+
+```{r food-web-analysis-table, echo=FALSE}
 knitr::kable(food_web_analysis, caption = "食物网特征综合分析")
 ```
+
+如表\@ref(tab:food-web-analysis-table)所示，食物网特征综合分析表系统总结了三个关键指标：平均营养级（1.75）、平均链长（2.00）和连接复杂性（0.188）。这些指标分别反映了生态系统中能量传递效率、营养级复杂度和物种间相互作用密度，为定量评估食物网结构和功能提供了重要依据。
 
 ```{r}
 # 比较不同复杂度的食物网
@@ -1977,8 +2017,8 @@ $$R = 1 - \frac{|X_{after} - X_{before}|}{|X_{before}|}$$
 - $X_{before}$ 为干扰前的系统状态指标
 - $X_{after}$ 为干扰后的系统状态指标
 
-**R代码实现：**
-```{r, fig.cap="生态系统抵抗力分析图。蓝色线条表示正常条件下的生物量，红色线条表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。"}
+
+```{r ecosystem-resistance-analysis, fig.cap="生态系统抵抗力分析图。蓝色线条表示正常条件下的生物量，红色线条表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。", echo=FALSE}
 # 示例数据：模拟森林群落生物量对环境压力的响应
 set.seed(123)
 # 正常条件下的生物量（吨/公顷）
@@ -1995,7 +2035,7 @@ calculate_resistance <- function(before, after) {
 
 resistance_index <- calculate_resistance(biomass_normal, biomass_stress)
 
-cat("生态系统抵抗力指数:", round(resistance_index, 3), "\n")
+#cat("生态系统抵抗力指数:", round(resistance_index, 3), "\n")
 
 # 可视化抵抗力分析
 library(ggplot2)
@@ -2023,6 +2063,8 @@ forest_resistance <- calculate_resistance(biomass_normal, biomass_stress)
 wetland_resistance <- calculate_resistance(wetland_biomass_normal,
                                            wetland_biomass_stress)
 ```
+
+如图\@ref(fig:ecosystem-resistance-analysis)所示，生态系统抵抗力分析图直观展示了森林群落生物量在正常条件和环境压力下的变化趋势。蓝色线条代表正常条件下的生物量（120-130吨/公顷），红色线条代表环境压力后的生物量（100-125吨/公顷）。通过比较两种条件下生物量的变化程度，计算得到森林生态系统的抵抗力指数为0.908，表明该系统对环境干扰具有较强的抵抗能力。该可视化分析为理解生态系统稳定性提供了直观依据。
 
 ```{r, echo=FALSE}
 cat("森林生态系统抵抗力:", round(forest_resistance, 3), "\n")
@@ -2079,7 +2121,7 @@ cat("恢复到95%原始状态所需时间:", resilience_result$recovery_time, "�
     sep = "")
 ```
 
-```{r , fig.cap="生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。"}
+```{r ecosystem-resilience-analysis, fig.cap="生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。", echo=FALSE}
 # 可视化恢复过程
 recovery_data <- data.frame(
   年份 = years_post_fire,
@@ -2114,6 +2156,8 @@ severe_resilience <- calculate_resilience(pre_fire_biomass,
                                           years_post_fire)
 ```
 
+如图\@ref(fig:ecosystem-resilience-analysis)所示，生态系统恢复力分析图直观展示了森林火灾后生物量的恢复过程。蓝色曲线显示生物量从火灾后的低点（约50%）逐渐恢复到原始状态，红色虚线标记了95%恢复阈值。分析结果表明，森林生态系统需要约5年时间才能恢复到95%的原始生物量水平，恢复速率为0.090，反映了该系统具有中等程度的自我修复能力。该可视化分析为评估生态系统对干扰的响应和恢复潜力提供了重要依据。
+
 ```{r, echo=FALSE}
 cat("轻度干扰恢复时间:", light_resilience$recovery_time, "年\n",
     "重度干扰恢复时间:", severe_resilience$recovery_time, "年\n",
@@ -2135,8 +2179,8 @@ $$P = \frac{T_{stable}}{T_{total}}$$
 - $T_{stable}$ 为系统处于稳定状态的时间
 - $T_{total}$ 为总观测时间
 
-**R代码实现：**
-```{r, fig.cap="生态系统持久性分析图。蓝色曲线表示湖泊营养状态（总磷浓度）的长期动态变化，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。"}
+
+```{r ecosystem-persistence-analysis, fig.cap="生态系统持久性分析图。蓝色曲线表示湖泊营养状态（总磷浓度）的长期动态变化，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。", echo=FALSE}
 # 示例数据：模拟湖泊生态系统营养状态的长期动态
 set.seed(123)
 # 50年的营养状态监测数据（总磷浓度，mg/L）
@@ -2197,6 +2241,8 @@ forest_persistence <- calculate_persistence(forest_biomass, 85, 115)
 grassland_persistence <- calculate_persistence(grassland_biomass, 35, 65)
 ```
 
+如图\@ref(fig:ecosystem-persistence-analysis)所示，生态系统持久性分析图展示了湖泊营养状态（总磷浓度）在50年监测期内的动态变化。蓝色曲线显示总磷浓度在15-25 mg/L范围内波动，灰色虚线标记了稳定状态的上下阈值。分析结果表明，该湖泊生态系统的持久性指数为0.96，意味着在96%的观测时间内系统维持在稳定状态内，表现出较高的长期稳定性。该可视化分析为评估生态系统在长期尺度上的稳定性维持能力提供了重要依据。
+
 ```{r, echo=FALSE}
 cat("森林生态系统持久性:", round(forest_persistence, 3), "\n",
     "草地生态系统持久性:", round(grassland_persistence, 3), "\n",
@@ -2211,9 +2257,11 @@ stability_analysis <- data.frame(
 )
 ```
 
-```{r, echo=FALSE}
+```{r stability-analysis-table, echo=FALSE}
 knitr::kable(stability_analysis, caption = "生态系统稳定性综合分析结果")
 ```
+
+如表\@ref(tab:stability-analysis-table)所示，生态系统稳定性综合分析表系统总结了抵抗力（0.908）、恢复力（0.090）和持久性（0.960）三个关键指标。这些指标分别反映了生态系统的抗干扰能力、恢复速度和长期稳定性，共同构成了评估生态系统稳定性的完整框架。该综合分析为理解生态系统对环境变化的响应机制和制定有效的保护管理策略提供了重要科学依据。
 
 **生态学意义：**
 持久性反映了生态系统在长期尺度上的稳定性和可持续性。高持久性的生态系统能够在面对环境波动、物种演替和气候变化等长期过程时维持其基本结构和功能特征。例如，古老的森林生态系统通常具有较高的持久性，因为它们已经建立了稳定的物种组成和生态过程。持久性分析对于理解生态系统的演替动态、预测长期变化趋势以及制定可持续管理策略具有重要意义。
