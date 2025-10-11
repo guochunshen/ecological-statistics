@@ -185,7 +185,8 @@ abline(lm(growth_rate ~ temperature, data = forest_survey_data),
 model <- lm(growth_rate ~ temperature, data = forest_survey_data)
 
 # 显示模型摘要，包含系数估计和统计显著性
-summary(model)
+# 使用系数表格创建可显示的表格
+knitr::kable(summary(model)$coefficients, caption = "森林调查温度与植物生长速率的关系 - 系数估计")
 ```
 
 
@@ -555,10 +556,9 @@ maple_model <- lm(height ~ dbh,
                   data = forest_data[forest_data$species == "枫树", ])
 ```
 
-```{r}
+```{r, echo=FALSE}
 # 结果输出：整体模型结果
-cat("=== 整体回归模型结果 ===\n")
-summary(overall_model)
+knitr::kable(summary(overall_model)$coefficients, caption = "整体回归模型结果")
 ```
 
 ```{r, echo=FALSE}
@@ -637,10 +637,9 @@ multi_model <- lm(biomass ~ temperature + precipitation + soil_nitrogen,
                   data = forest_multi_data)
 ```
 
-```{r}
+```{r, echo=FALSE}
 # 结果输出：模型摘要
-cat("=== 多元线性回归模型结果 ===\n")
-summary(multi_model)
+knitr::kable(summary(multi_model)$coefficients, caption = "多元线性回归模型结果")
 ```
 
 ```{r, echo=FALSE}
@@ -770,15 +769,22 @@ bird_data_full <- data.frame(
 full_model <- lm(richness ~ area + vegetation + water_distance +
                    soil_ph + elevation + human_disturbance,
                  data = bird_data_full)
+```
 
-cat("=== 完整模型结果 ===\n")
-print(summary(full_model))
+```{r, echo=FALSE}
+knitr::kable(summary(full_model)$coefficients, caption = "完整模型结果")
+```
 
+```{r}
 # 2. 逐步回归选择
-cat("\n=== 逐步回归变量选择 ===\n")
 step_model <- step(full_model, direction = "both", trace = 0)
-print(summary(step_model))
+```
 
+```{r, echo=FALSE}
+knitr::kable(summary(step_model)$coefficients, caption = "逐步回归模型结果")
+```
+
+```{r}
 # 3. 基于AIC的模型比较
 cat("\n=== 基于AIC的模型比较 ===\n")
 
@@ -798,12 +804,28 @@ cat("模型1 (面积+植被) AIC:", AIC(model1), "
 逐步回归模型 AIC:", AIC(step_model), "\n")
 ```
 
-```{r}
+```{r variable-importance-plot, fig.cap="变量相对重要性柱状图：使用LMG方法计算的各预测变量对模型解释的相对贡献度，数值越大表示变量在解释响应变量变异中的重要性越高"}
 # 4. 变量重要性分析
-cat("\n=== 变量重要性分析 ===\n")
 library(relaimpo)
-calc.relimp(full_model, type = "lmg", rela = TRUE)
+importance_result <- calc.relimp(full_model, type = "lmg", rela = TRUE)
 
+# 创建变量重要性柱状图
+importance_df <- data.frame(
+  Variable = names(importance_result$lmg),
+  Importance = importance_result$lmg
+)
+
+library(ggplot2)
+ggplot(importance_df, aes(x = reorder(Variable, Importance), y = Importance)) +
+  geom_col(fill = "steelblue", alpha = 0.8) +
+  coord_flip() +
+  labs(title = "变量相对重要性 (LMG方法)",
+       x = "变量",
+       y = "相对重要性") +
+  theme_minimal()
+```
+
+```{r}
 # 5. 多重共线性诊断
 cat("\n=== 多重共线性诊断 ===\n")
 library(car)
@@ -891,7 +913,7 @@ forest_ecosystem_data <- data.frame(
 ```{r, fig.cap="物种丰富度与主要环境因子的散点图矩阵。展示栖息地面积、植被密度、距水源距离和土壤pH值与物种丰富度之间的两两关系，用于初步探索变量间的相关性和分布特征。"}
 # 1. 数据探索
 cat("=== 数据探索 ===\n")
-summary(forest_ecosystem_data)
+knitr::kable(summary(forest_ecosystem_data), caption = "数据框摘要")
 
 # 绘制散点图矩阵（只显示部分变量以避免图形过于拥挤）
 pairs(forest_ecosystem_data[, c("richness", "area", "vegetation",
@@ -906,13 +928,12 @@ pairs(forest_ecosystem_data[, c("richness", "area", "vegetation",
 
 ```{r}
 # 2. 拟合完整多元线性回归模型
-cat("\n=== 完整模型拟合 ===\n")
 full_model <- lm(richness ~ area + vegetation + water_distance +
                    soil_ph + elevation + precipitation + canopy_cover +
                    human_disturbance,
                  data = forest_ecosystem_data)
 
-print(summary(full_model))
+knitr::kable(summary(full_model)$coefficients, caption = "完整多元线性回归模型结果")
 
 ```
 
@@ -922,12 +943,9 @@ print(summary(full_model))
 
 ```{r}
 # 3. 变量选择过程
-cat("\n=== 变量选择过程 ===\n")
-
 # 3.1 逐步回归选择
-cat("--- 逐步回归变量选择 ---\n")
 step_model <- step(full_model, direction = "both", trace = 0)
-print(summary(step_model))
+knitr::kable(summary(step_model)$coefficients, caption = "逐步回归模型结果")
 ```
 
 **基于AIC的模型比较**
@@ -936,8 +954,6 @@ print(summary(step_model))
 
 ```{r}
 # 3.2 基于AIC的模型比较
-cat("\n--- 基于AIC的模型比较 ---\n")
-
 # 构建几个生态学上合理的候选模型
 model_simple <- lm(richness ~ area + vegetation, data = forest_ecosystem_data)
 model_water <- lm(richness ~ area + vegetation + water_distance,
@@ -981,7 +997,7 @@ VIF > 10 的变量：", names(vif_full)[vif_full > 10], "
 # 4. 选择最优模型进行后续分析
 cat("\n=== 选择最优模型进行后续分析 ===\n")
 forest_model <- step_model  # 使用逐步回归选择的最优模型
-print(summary(forest_model))
+knitr::kable(summary(forest_model)$coefficients, caption = "最优模型结果")
 ```
 
 **模型选择理由**
@@ -1055,8 +1071,7 @@ for (var in selected_vars) {
 }
 
 # 6. 置信区间
-cat("\n=== 95%置信区间 ===\n")
-print(confint(forest_model))
+knitr::kable(confint(forest_model), caption = "95%置信区间")
 ```
 
 ### 模型诊断与假设检验
@@ -1295,8 +1310,7 @@ cat("=== 模型比较 ===\n
 多项式模型 R²:", round(summary(poly_model)$r.squared, 3), "\n")
 
 # 多项式模型摘要
-cat("\n=== 多项式回归结果 ===\n")
-print(summary(poly_model))
+knitr::kable(summary(poly_model)$coefficients, caption = "多项式模型摘要")
 
 # 生态学解释
 cat("\n=== 生态学解释 ===\n
@@ -1553,3 +1567,122 @@ if (!is.na(cv_overfit) && !is.na(cv_quadratic) && cv_overfit > cv_quadratic) {
 通过本章的学习，我们跟随林小雨的足迹，从简单的线性关系到复杂的非线性模式，从单一因子分析到多因子综合评估，建立了完整的回归建模知识体系。更重要的是，我们理解了统计建模在生态学研究中的核心价值：用数学语言描述生态现象，用科学方法解决生态问题。
 
 ## 综合练习
+
+### 练习1：温度对植物光合作用速率的影响分析
+
+**背景**：生态学家王明在研究温带森林生态系统时，收集了不同温度条件下植物光合作用速率的数据。他希望通过线性回归分析来理解温度对光合作用的影响，并为森林管理提供科学依据。
+
+**数据**：
+```r
+# 模拟光合作用数据
+set.seed(2024)
+temperature <- seq(15, 35, length.out = 50)
+# 真实关系：光合作用速率 = 5 + 0.8×温度 - 0.02×温度² + 随机误差
+photosynthesis_rate <- 5 + 0.8 * temperature - 0.02 * temperature^2 + rnorm(50, 0, 1)
+
+plant_data <- data.frame(
+  temperature = temperature,
+  photosynthesis = photosynthesis_rate
+)
+```
+
+**任务**：  
+1. 使用简单线性回归分析温度与光合作用速率的关系  
+2. 计算并解释回归系数、R²和调整R²  
+3. 进行回归诊断，检查模型假设是否满足  
+4. 尝试使用多项式回归改进模型，并比较两种模型的优劣  
+5. 基于最佳模型，预测在25°C和30°C时的光合作用速率  
+
+**思考问题**：  
+- 线性模型是否充分描述了温度与光合作用的关系？为什么？  
+- 多项式回归在什么情况下比线性回归更合适？  
+- 如何解释多项式回归中二次项的生态学意义？  
+
+---
+
+### 练习2：森林鸟类多样性的多因子分析
+
+**背景**：生态学家李华在自然保护区进行了鸟类调查，同时测量了多个环境因子。她希望了解哪些环境因子对鸟类物种丰富度影响最大，并建立预测模型。
+
+**数据**：
+```r
+# 模拟鸟类多样性数据
+set.seed(2024)
+n_sites <- 60
+habitat_area <- runif(n_sites, 10, 100)        # 栖息地面积(公顷)
+vegetation_density <- runif(n_sites, 0.3, 0.9) # 植被密度
+canopy_cover <- runif(n_sites, 0.4, 0.95)      # 林冠覆盖度
+distance_to_edge <- runif(n_sites, 0.1, 2)     # 距林缘距离(km)
+soil_moisture <- runif(n_sites, 0.2, 0.8)      # 土壤湿度
+
+# 真实关系：鸟类丰富度主要受栖息地面积和植被密度影响
+bird_richness <- rpois(n_sites,
+                       exp(2.0 + 0.015 * habitat_area +
+                             1.5 * vegetation_density +
+                             rnorm(n_sites, 0, 0.3)))
+
+bird_data <- data.frame(
+  richness = bird_richness,
+  area = habitat_area,
+  vegetation = vegetation_density,
+  canopy = canopy_cover,
+  edge_distance = distance_to_edge,
+  soil_moisture = soil_moisture
+)
+```
+
+**任务**：  
+1. 使用多元线性回归分析所有环境因子对鸟类丰富度的影响  
+2. 进行变量选择，使用逐步回归方法识别重要环境因子  
+3. 比较完整模型与选择模型的AIC、R²和调整R²  
+4. 进行多重共线性诊断，检查变量间的相关性  
+5. 对最终模型进行回归诊断，确保模型假设满足  
+
+**思考问题**：  
+- 为什么变量选择在生态学研究中很重要？  
+- 如何平衡统计显著性和生态学意义？  
+- 多重共线性对模型解释有什么影响？  
+
+
+
+### 练习3：湖泊生态系统营养级关系的建模
+
+**背景**：生态学家张伟在研究湖泊生态系统时，发现浮游植物生物量与水体营养盐浓度存在复杂关系。他希望通过统计建模来理解这种关系，并为湖泊管理提供建议。
+
+**数据**：
+```r
+# 模拟湖泊生态系统数据
+set.seed(2024)
+n_lakes <- 45
+nutrient_concentration <- runif(n_lakes, 5, 50)  # 营养盐浓度(μg/L)
+water_temperature <- runif(n_lakes, 10, 25)      # 水温(°C)
+light_intensity <- runif(n_lakes, 100, 500)      # 光照强度(μmol/m²/s)
+
+# 真实关系：浮游植物生物量呈现饱和增长模式
+# 使用Michaelis-Menten动力学模拟
+max_biomass <- 100  # 最大生物量
+half_saturation <- 20  # 半饱和常数
+
+phytoplankton_biomass <- max_biomass * nutrient_concentration /
+  (half_saturation + nutrient_concentration) +
+  rnorm(n_lakes, 0, 8)
+
+lake_data <- data.frame(
+  biomass = phytoplankton_biomass,
+  nutrient = nutrient_concentration,
+  temperature = water_temperature,
+  light = light_intensity
+)
+```
+
+**任务**：  
+1. 使用简单线性回归分析营养盐浓度与浮游植物生物量的关系  
+2. 尝试使用二次多项式回归描述非线性关系  
+3. 比较线性模型和多项式模型的拟合效果  
+4. 进行模型诊断，识别可能的异方差性或非线性问题  
+5. 讨论哪种模型更适合描述这种生态关系  
+
+**思考问题**：  
+- 为什么生态学中经常遇到非线性关系？  
+- 如何判断线性模型是否足够描述生态关系？  
+- 在什么情况下应该考虑更复杂的非线性模型？  

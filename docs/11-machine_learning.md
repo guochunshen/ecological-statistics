@@ -171,7 +171,7 @@ rpart.plot(forest_tree,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-5-1.png" alt="森林健康状态分类决策树可视化，基于海拔、年均温和年降水量等环境因子构建的决策树模型" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-5-1.png" alt="森林健康状态分类决策树可视化，基于海拔、年均温和年降水量等环境因子构建的决策树模型" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-5)森林健康状态分类决策树可视化，基于海拔、年均温和年降水量等环境因子构建的决策树模型</p>
 </div>
 
@@ -229,7 +229,7 @@ ggplot() +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-6-1.png" alt="决策树分类边界可视化，展示基于海拔和年均温的森林健康状态分类结果" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-6-1.png" alt="决策树分类边界可视化，展示基于海拔和年均温的森林健康状态分类结果" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-6)决策树分类边界可视化，展示基于海拔和年均温的森林健康状态分类结果</p>
 </div>
 
@@ -334,7 +334,7 @@ rpart.plot(class_tree,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-7-1.png" alt="森林健康状态分类树，基于海拔、年均温和年降水量等环境因子构建的分类模型" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-7-1.png" alt="森林健康状态分类树，基于海拔、年均温和年降水量等环境因子构建的分类模型" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-7)森林健康状态分类树，基于海拔、年均温和年降水量等环境因子构建的分类模型</p>
 </div>
 
@@ -417,7 +417,7 @@ rpart.plot(reg_tree,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-8-1.png" alt="森林碳储量预测回归树，基于海拔、年均温和年降水量等环境因子构建的回归模型" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-8-1.png" alt="森林碳储量预测回归树，基于海拔、年均温和年降水量等环境因子构建的回归模型" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-8-1)森林碳储量预测回归树，基于海拔、年均温和年降水量等环境因子构建的回归模型</p>
 </div>
 
@@ -468,7 +468,7 @@ ggplot(plot_data, aes(x = 实际值, y = 预测值)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-8-2.png" alt="森林碳储量预测回归树，基于海拔、年均温和年降水量等环境因子构建的回归模型" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-8-2.png" alt="森林碳储量预测回归树，基于海拔、年均温和年降水量等环境因子构建的回归模型" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-8-2)森林碳储量预测回归树，基于海拔、年均温和年降水量等环境因子构建的回归模型</p>
 </div>
 
@@ -581,7 +581,7 @@ rpart.plot(tree_model,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-9-1.png" alt="森林生态系统分类决策树，基于环境因子构建的森林类型分类模型" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-9-1.png" alt="森林生态系统分类决策树，基于环境因子构建的森林类型分类模型" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-9)森林生态系统分类决策树，基于环境因子构建的森林类型分类模型</p>
 </div>
 
@@ -870,7 +870,7 @@ ggplot(importance_df, aes(x = reorder(特征, 重要性), y = 重要性)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-10-1.png" alt="随机森林特征重要性分析，展示森林数据集中各环境因子对生态系统分类的贡献度" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-10-1.png" alt="随机森林特征重要性分析，展示森林数据集中各环境因子对生态系统分类的贡献度" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-10)随机森林特征重要性分析，展示森林数据集中各环境因子对生态系统分类的贡献度</p>
 </div>
 
@@ -948,7 +948,7 @@ legend("topright",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-11-1.png" alt="随机森林袋外误差随树数量变化曲线，展示模型收敛过程和泛化能力" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-11-1.png" alt="随机森林袋外误差随树数量变化曲线，展示模型收敛过程和泛化能力" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-11)随机森林袋外误差随树数量变化曲线，展示模型收敛过程和泛化能力</p>
 </div>
 
@@ -1016,7 +1016,7 @@ ggplot(importance_df, aes(x = reorder(特征, 基尼重要性), y = 基尼重要
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-12-1.png" alt="随机森林变量重要性分析，基于基尼不纯度和准确率两种指标评估特征重要性" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-12-1.png" alt="随机森林变量重要性分析，基于基尼不纯度和准确率两种指标评估特征重要性" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-12-1)随机森林变量重要性分析，基于基尼不纯度和准确率两种指标评估特征重要性</p>
 </div>
 
@@ -1032,7 +1032,7 @@ ggplot(importance_df, aes(x = reorder(特征, 准确率重要性), y = 准确率
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-12-2.png" alt="随机森林变量重要性分析，基于基尼不纯度和准确率两种指标评估特征重要性" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-12-2.png" alt="随机森林变量重要性分析，基于基尼不纯度和准确率两种指标评估特征重要性" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-12-2)随机森林变量重要性分析，基于基尼不纯度和准确率两种指标评估特征重要性</p>
 </div>
 
@@ -1070,7 +1070,7 @@ plotPartial(pd_elevation,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-13-1.png" alt="随机森林部分依赖图，展示海拔对生态系统分类的影响以及海拔与年均温的交互作用" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-13-1.png" alt="随机森林部分依赖图，展示海拔对生态系统分类的影响以及海拔与年均温的交互作用" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-13-1)随机森林部分依赖图，展示海拔对生态系统分类的影响以及海拔与年均温的交互作用</p>
 </div>
 
@@ -1090,7 +1090,7 @@ plotPartial(pd_interaction,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-13-2.png" alt="随机森林部分依赖图，展示海拔对生态系统分类的影响以及海拔与年均温的交互作用" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-13-2.png" alt="随机森林部分依赖图，展示海拔对生态系统分类的影响以及海拔与年均温的交互作用" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-13-2)随机森林部分依赖图，展示海拔对生态系统分类的影响以及海拔与年均温的交互作用</p>
 </div>
 
@@ -1228,7 +1228,7 @@ legend("bottomright",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-14-1.png" alt="随机森林多分类ROC曲线，评估模型对森林生态系统类型的分类性能" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-14-1.png" alt="随机森林多分类ROC曲线，评估模型对森林生态系统类型的分类性能" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-14)随机森林多分类ROC曲线，评估模型对森林生态系统类型的分类性能</p>
 </div>
 
@@ -1302,7 +1302,7 @@ ggplot(stability_summary, aes(x = reorder(特征, 均值重要性), y = 均值�
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-15-1.png" alt="随机森林变量重要性稳定性分析，展示多次运行模型的特征重要性变化范围" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-15-1.png" alt="随机森林变量重要性稳定性分析，展示多次运行模型的特征重要性变化范围" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-15)随机森林变量重要性稳定性分析，展示多次运行模型的特征重要性变化范围</p>
 </div>
 
@@ -1671,7 +1671,7 @@ ggplot() +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-16-1.png" alt="支持向量机决策边界可视化，基于海拔和年均温对森林健康状态进行分类" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-16-1.png" alt="支持向量机决策边界可视化，基于海拔和年均温对森林健康状态进行分类" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-16)支持向量机决策边界可视化，基于海拔和年均温对森林健康状态进行分类</p>
 </div>
 
@@ -1770,7 +1770,7 @@ plot(svm_tune, main = "支持向量机参数调优")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-17-1.png" alt="支持向量机参数调优结果，展示不同参数组合对模型性能的影响" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-17-1.png" alt="支持向量机参数调优结果，展示不同参数组合对模型性能的影响" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-17)支持向量机参数调优结果，展示不同参数组合对模型性能的影响</p>
 </div>
 
@@ -1837,7 +1837,7 @@ ggplot(combined_data, aes(x = 海拔, fill = 类型)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-18-1.png" alt="支持向量分析，比较支持向量与所有样本的特征分布及空间分布" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-18-1.png" alt="支持向量分析，比较支持向量与所有样本的特征分布及空间分布" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-18-1)支持向量分析，比较支持向量与所有样本的特征分布及空间分布</p>
 </div>
 
@@ -1875,7 +1875,7 @@ ggplot(forest_health, aes(x = 海拔, y = 年均温, color = 森林健康状态)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-18-2.png" alt="支持向量分析，比较支持向量与所有样本的特征分布及空间分布" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-18-2.png" alt="支持向量分析，比较支持向量与所有样本的特征分布及空间分布" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-18-2)支持向量分析，比较支持向量与所有样本的特征分布及空间分布</p>
 </div>
 
@@ -1943,7 +1943,7 @@ ggplot() +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-19-1.png" alt="支持向量机详细决策边界分析，包含支持向量标记和分类置信度信息" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-19-1.png" alt="支持向量机详细决策边界分析，包含支持向量标记和分类置信度信息" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-19)支持向量机详细决策边界分析，包含支持向量标记和分类置信度信息</p>
 </div>
 
@@ -2070,7 +2070,7 @@ legend("bottomright",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="11-machine_learning_files/figure-html/unnamed-chunk-20-1.png" alt="支持向量机多分类ROC曲线，评估模型对鸢尾花三个物种的分类性能" width="672" />
+<img src="11-machine_learning_files/figure-html/unnamed-chunk-20-1.png" alt="支持向量机多分类ROC曲线，评估模型对鸢尾花三个物种的分类性能" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-20)支持向量机多分类ROC曲线，评估模型对鸢尾花三个物种的分类性能</p>
 </div>
 

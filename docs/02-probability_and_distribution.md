@@ -131,14 +131,8 @@ detection_prob <- observed_species / survey_effort
 
 # 使用检测概率估计总体数量：观测数除以检测概率
 estimated_total <- observed_species / detection_prob
-
-# 输出结果对比，展示古典概率估计的误差
-cat("实际濒危物种数量:", true_rare_species, "\n",
-    "观测到的物种数量:", observed_species, "\n",
-    "检测概率:", round(detection_prob, 3), "\n",
-    "估计的物种总数:", round(estimated_total, 1), "\n",
-    "估计误差:", round(abs(estimated_total - true_rare_species), 1), "\n")
 ```
+
 
 ```
 ## 实际濒危物种数量: 15 
@@ -178,8 +172,8 @@ cat("实际濒危物种数量:", true_rare_species, "\n",
 概率收敛理论是统计推断的数学基础，帮助我们理解样本统计量如何趋近于总体参数。
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-3-1.png" alt="大数定律可视化：样本均值随样本量增加收敛于总体均值" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-3)大数定律可视化：样本均值随样本量增加收敛于总体均值</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-4-1.png" alt="大数定律可视化：样本均值随样本量增加收敛于总体均值" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-4)大数定律可视化：样本均值随样本量增加收敛于总体均值</p>
 </div>
 
 
@@ -246,8 +240,8 @@ $$P(A) \approx \frac{\text{事件A发生的次数}}{\text{总试验次数}}$$
 频率概率需要大量重复试验，但生态学调查往往样本量有限：
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-4-1.png" alt="样本量对概率估计精度的影响：样本量越大，估计误差越小" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-4)样本量对概率估计精度的影响：样本量越大，估计误差越小</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-5-1.png" alt="样本量对概率估计精度的影响：样本量越大，估计误差越小" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-5)样本量对概率估计精度的影响：样本量越大，估计误差越小</p>
 </div>
 
 
@@ -322,8 +316,8 @@ $$P(\text{高营养}) = P(\text{高营养}|\text{晴天}) \times P(\text{晴天}
 
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-5-1.png" alt="全概率公式应用：各情景对总体灭绝概率的贡献分解" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-5)全概率公式应用：各情景对总体灭绝概率的贡献分解</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-6-1.png" alt="全概率公式应用：各情景对总体灭绝概率的贡献分解" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-6)全概率公式应用：各情景对总体灭绝概率的贡献分解</p>
 </div>
 
 
@@ -389,15 +383,8 @@ marginal_positive <-  sensitivity * prior_prob +
 # 使用贝叶斯定理计算后验概率 P(患病|阳性)
 # 公式：P(患病|阳性) = [P(阳性|患病) × P(患病)] / P(阳性)
 posterior_prob <- (sensitivity * prior_prob) / marginal_positive
-
-# 输出贝叶斯分析结果
-cat("贝叶斯定理基础演示（疾病检测）:\n",
-  "先验概率 P(患病):", prior_prob, "\n",
-  "检测灵敏度 P(阳性|患病):", sensitivity, "\n",
-  "检测特异度 P(阴性|健康):", specificity, "\n",
-  "边际概率 P(阳性):", round(marginal_positive, 4), "\n",
-  "后验概率 P(患病|阳性):", round(posterior_prob, 4), "\n")
 ```
+
 
 ```
 ## 贝叶斯定理基础演示（疾病检测）:
@@ -455,25 +442,17 @@ results <- data.frame(
   观测似然 = round(likelihood, 3),      # 四舍五入到3位小数
   贝叶斯后验 = round(posterior, 3)      # 四舍五入到3位小数
 )
-
-# 输出模型结果
-cat("贝叶斯物种分布模型结果:\n")
 ```
 
-```
-## 贝叶斯物种分布模型结果:
-```
 
-``` r
-print(results)
-```
+Table: (\#tab:unnamed-chunk-10)贝叶斯物种分布模型结果
 
-```
-##   栖息地类型 专家先验 观测似然 贝叶斯后验
-## 1       森林      0.6    0.643      0.806
-## 2       草地      0.3    0.286      0.179
-## 3       湿地      0.1    0.071      0.015
-```
+|栖息地类型 | 专家先验| 观测似然| 贝叶斯后验|
+|:----------|--------:|--------:|----------:|
+|森林       |      0.6|    0.643|      0.806|
+|草地       |      0.3|    0.286|      0.179|
+|湿地       |      0.1|    0.071|      0.015|
+
 
 ``` r
 # 计算信息增益：使用KL散度量化先验到后验的信息变化
@@ -491,22 +470,11 @@ cat("KL散度（信息增益）:", round(kl_divergence, 4), "\n")
 # 贝叶斯因子 = (后验优势比) / (先验优势比)
 bayes_factor <- (posterior[1] / (1 - posterior[1])) /
   (expert_prior[1] / (1 - expert_prior[1]))
-cat("贝叶斯因子（森林偏好）:", round(bayes_factor, 2), "\n")
 ```
+
 
 ```
 ## 贝叶斯因子（森林偏好）: 2.77
-```
-
-``` r
-# 根据贝叶斯因子大小判断证据强度
-if (bayes_factor > 3) {
-  cat("强烈支持物种偏好森林的假设\n")
-} else if (bayes_factor > 1) {
-  cat("微弱支持物种偏好森林的假设\n")
-} else {
-  cat("证据不支持物种偏好森林的假设\n")
-}
 ```
 
 ```
@@ -523,8 +491,8 @@ if (bayes_factor > 3) {
 
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-8-1.png" alt="贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-8)贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-13-1.png" alt="贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变" width="80%" />
+<p class="caption">贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变</p>
 </div>
 
 
@@ -534,8 +502,8 @@ if (bayes_factor > 3) {
 
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-9-1.png" alt="贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-9)贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-14-1.png" alt="贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策" width="80%" />
+<p class="caption">贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策</p>
 </div>
 
 
@@ -545,19 +513,59 @@ if (bayes_factor > 3) {
 
 
 
-```
-## 贝叶斯模型比较结果:
-```
 
-```
-##       模型     模型证据 贝叶斯因子
-## 1 线性模型 7.411531e-52       1.00
-## 2 季节模型 1.036188e-47   13980.76
+
+Table: 贝叶斯模型比较结果
+
+|模型     | 模型证据| 贝叶斯因子|
+|:--------|--------:|----------:|
+|线性模型 |        0|       1.00|
+|季节模型 |        0|   13980.76|
+
+
+``` r
+# 可视化模型拟合效果：比较观测数据与模型预测
+# 使用固定参数生成模型拟合曲线
+model1_fit <- model1_predict(c(10, 0.5), time)
+model2_fit <- model2_predict(c(10, 0.5, 2), time)
+
+# 创建绘图数据框：包含观测数据和两个模型预测
+plot_data <- data.frame(
+  时间 = rep(time, 3),
+  数值 = c(observed_data, model1_fit, model2_fit),
+  类型 = rep(c("观测数据", "线性模型", "季节模型"), each = length(time))
+)
+
+# 绘制模型比较图
+ggplot(plot_data, aes(x = 时间, y = 数值, color = 类型)) +
+  # 观测数据用浅色半透明线条
+  geom_line(data = subset(plot_data, 类型 == "观测数据"), alpha = 0.5) +
+  # 模型预测用实线突出显示
+  geom_line(data = subset(plot_data, 类型 != "观测数据"), linewidth = 1.2) +
+  # 设置颜色方案：观测数据灰色，线性模型红色，季节模型蓝色
+  scale_color_manual(values = c(
+    "观测数据" = "gray",
+    "线性模型" = "#E74C3C",
+    "季节模型" = "#3498DB"
+  )) +
+  labs(
+    title = "贝叶斯模型比较：种群增长模式",
+    subtitle = paste("贝叶斯因子 =", round(bayes_factor, 2)),
+    x = "时间", y = "种群数量", color = ""
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9),
+    legend.position = "bottom"
+  )
 ```
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-10-1.png" alt="贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-10)贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-17-1.png" alt="贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比" width="80%" />
+<p class="caption">贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比</p>
 </div>
 
 **6. 敏感性分析与稳健性检验**
@@ -602,27 +610,19 @@ sensitivity_df <- data.frame(
   后验均值 = round(sensitivity_results[, 1], 3),
   后验标准差 = round(sensitivity_results[, 2], 3)
 )
-
-cat("贝叶斯敏感性分析结果:\n")
 ```
 
-```
-## 贝叶斯敏感性分析结果:
-```
 
-``` r
-print(sensitivity_df)
-```
+Table: 贝叶斯敏感性分析结果
 
-```
-##   先验强度 后验均值 后验标准差
-## 1      0.1    0.708      0.097
-## 2      0.5    0.708      0.097
-## 3      1.0    0.708      0.097
-## 4      2.0    0.708      0.097
-## 5      5.0    0.706      0.097
-## 6     10.0    0.702      0.096
-```
+| 先验强度| 后验均值| 后验标准差|
+|--------:|--------:|----------:|
+|      0.1|    0.708|      0.097|
+|      0.5|    0.708|      0.097|
+|      1.0|    0.708|      0.097|
+|      2.0|    0.708|      0.097|
+|      5.0|    0.706|      0.097|
+|     10.0|    0.702|      0.096|
 
 
 ``` r
@@ -668,27 +668,18 @@ robustness_df <- data.frame(
   污染比例 = contamination_levels,
   后验均值 = round(robustness_results, 3)
 )
-
-cat("\n贝叶斯稳健性检验结果:\n")
 ```
 
-```
-## 
-## 贝叶斯稳健性检验结果:
-```
 
-``` r
-print(robustness_df)
-```
+Table: 贝叶斯稳健性检验结果
 
-```
-##   污染比例 后验均值
-## 1     0.00    0.539
-## 2     0.05    0.604
-## 3     0.10    0.683
-## 4     0.20    0.804
-## 5     0.30    0.888
-```
+| 污染比例| 后验均值|
+|--------:|--------:|
+|     0.00|    0.539|
+|     0.05|    0.604|
+|     0.10|    0.683|
+|     0.20|    0.804|
+|     0.30|    0.888|
 
 #### 贝叶斯概率的优势与局限性
 
@@ -697,8 +688,8 @@ print(robustness_df)
 然而，贝叶斯概率方法也存在不容忽视的局限性。**主观性**是其最受争议的方面，先验概率的选择往往依赖于研究者的主观判断，不同专家可能会给出不同的先验设定。**计算复杂性**是实际应用中的主要障碍，复杂的贝叶斯模型需要大量的计算资源，特别是使用马尔可夫链蒙特卡洛方法时，计算时间可能相当可观。**先验敏感性**问题意味着结果可能对先验选择高度敏感，不恰当的先验设定可能导致有偏的结论。**收敛问题**是MCMC方法特有的挑战，在复杂模型中可能出现收敛困难或收敛到局部最优解的情况。此外，**解释难度**限制了贝叶斯方法的普及，后验分布的理解和解释需要研究者具备相当的统计背景，这在一定程度上阻碍了其在生态学实践中的广泛应用。这些局限性提示我们在使用贝叶斯方法时需要谨慎处理先验设定，并充分考虑计算可行性和结果解释的清晰性。
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-15-1.png" alt="主观偏见问题：不同群体对同一生态风险评估的差异" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-15)主观偏见问题：不同群体对同一生态风险评估的差异</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-24-1.png" alt="主观偏见问题：不同群体对同一生态风险评估的差异" width="80%" />
+<p class="caption">主观偏见问题：不同群体对同一生态风险评估的差异</p>
 </div>
 
 
@@ -756,7 +747,7 @@ MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心�
 
 一个典型的**贝叶斯数据分析工作流程**包含三个关键阶段。首先，在模型建立阶段，研究者设定似然函数 \(P(E \mid \theta)\) 和先验分布 \(P(\theta)\)。接着进入计算阶段，使用MCMC算法（如Metropolis-Hastings、Gibbs抽样或Hamiltonian Monte Carlo）从后验分布 \(P(\theta \mid E)\) 中生成大量样本 \(\theta^{(1)}, \theta^{(2)}, ..., \theta^{(N)}\)。最后是推断阶段，利用生成的样本进行蒙特卡洛积分，包括计算后验均值 \(E[\theta \mid E] \approx \frac{1}{N} \sum_{i=1}^N \theta^{(i)}\)、构造后验区间以及生成对新数据的预测。
 
-**小结**
+Table: (\#tab:comparison-of-bayesian-and-mcmc) 贝叶斯统计与MCMC的比较
 
 | 特性 | 贝叶斯统计 | 马尔可夫链蒙特卡洛（MCMC） |
 | :--- | :--- | :--- |
@@ -825,15 +816,8 @@ mcmc_result <- simple_mcmc(5000,
   prior_mean = 10, prior_sd = 5,
   data = observed_data, likelihood_sd = 1.0
 )
-
-# 输出MCMC采样结果：评估算法性能和参数估计
-cat("MCMC采样结果:\n",
-  "接受率:", round(mcmc_result$acceptance_rate, 3), "\n",
-  "后验均值:", round(mean(mcmc_result$samples), 3), "\n",
-  "后验标准差:", round(sd(mcmc_result$samples), 3), "\n",
-  "真实值:", true_value, "\n",
-  "样本均值:", round(mean(observed_data), 3), "\n")
 ```
+
 
 ```
 ## MCMC采样结果:
@@ -843,6 +827,7 @@ cat("MCMC采样结果:\n",
 ##  真实值: 15 
 ##  样本均值: 14.92
 ```
+
 
 ``` r
 # 计算95%置信区间：基于后验样本的分位数
@@ -902,23 +887,30 @@ barplot(choice_counts,
   ylab = "选择次数",
   col = c("lightgreen", "lightblue", "lightyellow")
 )
+```
 
-# 显示理论概率与实际频率的对比
-# 验证大数定律：随着模拟次数增加，频率趋近于概率
-cat("理论概率分布:\n",
-  "黑麦草 (X=1):", probabilities[1], "\n",
-  "混合草甸 (X=2):", probabilities[2], "\n",
-  "三叶草 (X=3):", probabilities[3], "\n\n")
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-28-1.png" width="80%" style="display: block; margin: auto;" />
 
-cat("模拟100次的实际频率:\n",
-  "黑麦草 (X=1):", choice_counts["1"] / n_simulations, "\n",
-  "混合草甸 (X=2):", choice_counts["2"] / n_simulations, "\n",
-  "三叶草 (X=3):", choice_counts["3"] / n_simulations, "\n")
+
+```
+## 理论概率分布:
+##  黑麦草 (X=1): 0.64 
+##  混合草甸 (X=2): 0.29 
+##  三叶草 (X=3): 0.07
+```
+
+```
+## 模拟100次的实际频率:
+##  黑麦草 (X=1): 0.62 
+##  混合草甸 (X=2): 0.32 
+##  三叶草 (X=3): 0.06
 ```
 
 ### 概率分布
 
 接下来，我把随机变量X所有可能的取值及其对应的概率，整理成一张表。
+
+Table: (\#tab:plant-choice-probability) 蚱蜢午餐选择的概率分布
 
 | 随机变量 X 的取值 (植物类型) | 概率 P(X) |
 | :--- | :--- |
@@ -931,8 +923,8 @@ cat("模拟100次的实际频率:\n",
 如果我画成柱状图，就得到了一个**概率分布图**，直观地展示了这种"分布"情况。
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-18-1.png" alt="蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比" width="576" />
-<p class="caption">(\#fig:unnamed-chunk-18)蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-30-1.png" alt="蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比" width="80%" />
+<p class="caption">蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比</p>
 </div>
 
 ### 累积概率分布：从可能性到确定性
@@ -940,6 +932,8 @@ cat("模拟100次的实际频率:\n",
 除了了解每种植物被选择的概率，我们有时还需要回答这样的问题：“蚱蜢选择黑麦草或混合草甸的概率是多少？"或者”选择价值较低的植物（三叶草）的概率是多少？"这些问题引导我们认识**累积概率分布**。
 
 累积概率分布描述的是随机变量取值小于或等于某个特定值的概率。对于我们的蚱蜢午餐选择问题，我们可以构建如下的累积分布：
+
+Table: (\#tab:plant-choice-cumulative) 蚱蜢午餐选择的累积概率分布
 
 | 随机变量 X 的取值 | 概率 P(X) | 累积概率 F(x) = P(X ≤ x) |
 | :--- | :--- | :--- |
@@ -954,8 +948,8 @@ cat("模拟100次的实际频率:\n",
 - 蚱蜢选择任意一种植物的概率是 1.00（必然事件）。
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-19-1.png" alt="蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程" width="576" />
-<p class="caption">(\#fig:unnamed-chunk-19)蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-31-1.png" alt="蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程" width="80%" />
+<p class="caption">蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程</p>
 </div>
 
 累积概率分布图呈现为阶梯函数，在每个可能的取值处跳跃，跳跃的高度等于该取值的概率。这种分布特别有用，因为它：
@@ -984,6 +978,7 @@ R为各种概率分布提供了完整的函数家族，每个分布都包含四�
 
 这种统一的命名约定使得在R中学习和使用各种分布变得非常直观。生态学家可以轻松地进行概率计算、统计推断和随机模拟。
 
+Table: (\#tab:plant-choice-distribution) 蚱蜢午餐选择的概率分布函数家族
 
 | 分布类型 | 生态学应用场景 | R函数前缀 | 主要参数 |
 | :--- | :--- | :--- | :--- |
@@ -1028,8 +1023,8 @@ $$P(X = x) = p^x(1-p)^{1-x}, \quad x = 0,1$$
 
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-20-1.png" alt="伯努利分布：不同成功概率下的二元选择概率分布" width="432" />
-<p class="caption">(\#fig:unnamed-chunk-20)伯努利分布：不同成功概率下的二元选择概率分布</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-32-1.png" alt="伯努利分布：不同成功概率下的二元选择概率分布" width="80%" />
+<p class="caption">伯努利分布：不同成功概率下的二元选择概率分布</p>
 </div>
 
 **生态学肖像：**
@@ -1072,8 +1067,8 @@ $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, 2, \ldots, n$$
 - 当$p=0.5$时，分布对称；当$p<0.5$时右偏，$p>0.5$时左偏
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-21-1.png" alt="二项分布：不同成功概率下多次试验中成功次数的概率分布" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-21)二项分布：不同成功概率下多次试验中成功次数的概率分布</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-33-1.png" alt="二项分布：不同成功概率下多次试验中成功次数的概率分布" width="80%" />
+<p class="caption">二项分布：不同成功概率下多次试验中成功次数的概率分布</p>
 </div>
 
 **生态学肖像：**
@@ -1116,8 +1111,8 @@ $$P(X_1 = x_1, X_2 = x_2, \ldots, X_k = x_k) = \frac{n!}{x_1! x_2! \cdots x_k!} 
 - 当$k=2$时，多项式分布退化为二项分布
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-22-1.png" alt="多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-22)多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-34-1.png" alt="多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布" width="80%" />
+<p class="caption">多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布</p>
 </div>
 
 **生态学肖像：**
@@ -1158,8 +1153,8 @@ $$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots$$
 - 泊松分布是二项分布在$n \to \infty$，$p \to 0$，且$np = \lambda$时的极限情况
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-23-1.png" alt="泊松分布：不同平均发生率下稀有事件发生次数的概率分布" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-23)泊松分布：不同平均发生率下稀有事件发生次数的概率分布</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-35-1.png" alt="泊松分布：不同平均发生率下稀有事件发生次数的概率分布" width="80%" />
+<p class="caption">泊松分布：不同平均发生率下稀有事件发生次数的概率分布</p>
 </div>
 
 **生态学肖像：**
@@ -1203,8 +1198,8 @@ $$P(X = k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots$$
 - 当$p$较小时，分布右偏严重；当$p$接近1时，分布集中在较小的$k$值
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-24-1.png" alt="几何分布：不同成功概率下首次成功所需试验次数的概率分布" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-24)几何分布：不同成功概率下首次成功所需试验次数的概率分布</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-36-1.png" alt="几何分布：不同成功概率下首次成功所需试验次数的概率分布" width="80%" />
+<p class="caption">几何分布：不同成功概率下首次成功所需试验次数的概率分布</p>
 </div>
 
 **生态学肖像：**
@@ -1249,8 +1244,8 @@ $$P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots$$
 - 分布形状取决于$r$和$p$的值，可以呈现不同的偏斜形态
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-25-1.png" alt="负二项分布：不同参数组合下第r次成功所需试验次数的概率分布" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-25)负二项分布：不同参数组合下第r次成功所需试验次数的概率分布</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-37-1.png" alt="负二项分布：不同参数组合下第r次成功所需试验次数的概率分布" width="80%" />
+<p class="caption">负二项分布：不同参数组合下第r次成功所需试验次数的概率分布</p>
 </div>
 
 **生态学肖像：**
@@ -1313,8 +1308,8 @@ $$F(x) = P(X \leq x) = \int_{-\infty}^x f(t) dt$$
 - $P(X > x) = 1 - F(x)$
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-26-1.png" alt="连续随机变量的概率密度函数与累积分布函数对比" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-26)连续随机变量的概率密度函数与累积分布函数对比</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-38-1.png" alt="连续随机变量的概率密度函数与累积分布函数对比" width="80%" />
+<p class="caption">连续随机变量的概率密度函数与累积分布函数对比</p>
 </div>
 
 
@@ -1342,8 +1337,8 @@ $$f(x) = \begin{cases}
 在生态学研究中，均匀分布具有重要的应用价值。在觅食行为研究中，蚱蜢在均匀资源上的随机选择行为服从均匀分布。当食物资源分布均匀时，动物的觅食位置选择可以建模为均匀分布。在行为生态学实验中，动物的随机选择行为可以用均匀分布来描述，这为理解生物在理想化环境中的决策模式提供了理论基准。
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-27-1.png" alt="均匀分布：不同区间参数下的概率密度函数" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-27)均匀分布：不同区间参数下的概率密度函数</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-39-1.png" alt="均匀分布：不同区间参数下的概率密度函数" width="80%" />
+<p class="caption">均匀分布：不同区间参数下的概率密度函数</p>
 </div>
 
 ### 指数分布：等待的艺术
@@ -1368,8 +1363,8 @@ $$f(x) = \lambda e^{-\lambda x}, \quad x \geq 0$$
 指数分布在生态学中有着广泛的应用价值。它能够描述蚱蜢在觅食过程中被捕食者发现的等待时间，反映捕食事件的随机性特征，因而可用于捕食风险建模。指数分布的无记忆性特性尤为重要，它表明过去的等待时间不会影响未来的风险概率，这为生存策略研究提供了理论基础，有助于我们深入理解蚱蜢的警戒行为模式。在行为时间模式分析中，指数分布可以用来描述动物在危险环境中的活动间隔，捕捉它们在风险环境中的行为节律。在种群生存分析领域，特别是在高捕食压力的环境下，个体的生存时间分布通常近似于指数分布。这种特性为研究种群动态和制定保护策略提供了重要的数学工具。
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-28-1.png" alt="指数分布：不同速率参数下等待时间的概率密度函数" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-28)指数分布：不同速率参数下等待时间的概率密度函数</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-40-1.png" alt="指数分布：不同速率参数下等待时间的概率密度函数" width="80%" />
+<p class="caption">指数分布：不同速率参数下等待时间的概率密度函数</p>
 </div>
 
 ### 正态分布（高斯分布）：自然界的“钟形"法则
@@ -1395,8 +1390,8 @@ $$f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \quad -\i
 正态分布在生态学研究中扮演着重要角色。在摄食行为研究中，蚱蜢每次进食的食物量服从正态分布，这种分布模式反映了其稳定的摄食行为特征和生理调节机制。通过营养摄入分析，我们可以利用正态分布来描述个体间的摄食量差异，这种差异模式有助于理解种群内部的资源分配和竞争关系。在行为生态学领域，动物的许多连续行为特征，如觅食时间、移动距离等，往往近似正态分布，这为行为模式的量化分析提供了数学基础。在种群能量学研究中，通过摄食量的正态分布特征，我们可以更准确地估计种群的能量摄入模式，为生态系统能量流动研究提供重要依据。
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-29-1.png" alt="正态分布：不同参数组合下的概率密度函数" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-29)正态分布：不同参数组合下的概率密度函数</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-41-1.png" alt="正态分布：不同参数组合下的概率密度函数" width="80%" />
+<p class="caption">正态分布：不同参数组合下的概率密度函数</p>
 </div>
 
 
@@ -1450,7 +1445,7 @@ print(paste("样本均值:", round(mean(survival_times), 2)))
 ```
 
 ```
-## [1] "样本均值: 9.37"
+## [1] "样本均值: 8.79"
 ```
 
 ``` r
@@ -1459,7 +1454,7 @@ print(paste("样本标准差:", round(sd(survival_times), 2)))
 ```
 
 ```
-## [1] "样本标准差: 3.84"
+## [1] "样本标准差: 3.53"
 ```
 
 ``` r
@@ -1526,8 +1521,8 @@ legend("topright",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-32-1.png" alt="威布尔分布可视化：蚱蜢生存时间分布的直方图与理论曲线对比" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-32)威布尔分布可视化：蚱蜢生存时间分布的直方图与理论曲线对比</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-44-1.png" alt="威布尔分布可视化：蚱蜢生存时间分布的直方图与理论曲线对比" width="80%" />
+<p class="caption">威布尔分布可视化：蚱蜢生存时间分布的直方图与理论曲线对比</p>
 </div>
 
 
@@ -1543,30 +1538,13 @@ library(fitdistrplus)  # 加载fitdistrplus包用于最大似然估计和分布�
 fit_weibull <- fitdist(survival_times, "weibull")  # 拟合威布尔分布到生存时间数据
 
 # 输出参数估计结果：显示拟合的威布尔分布参数和统计信息
-print("威布尔分布参数估计结果:")  # 打印结果标题便于识别输出内容
-```
-
-```
-## [1] "威布尔分布参数估计结果:"
-```
-
-``` r
 # summary函数提供详细的拟合结果，包括参数估计值、标准误、置信区间等
-print(summary(fit_weibull))  # 输出完整的拟合结果摘要信息
+knitr::kable(summary(fit_weibull)$coefficients, caption="威布尔分布参数估计结果")  # 输出完整的拟合结果摘要信息
 ```
 
-```
-## Fitting of the distribution ' weibull ' by maximum likelihood 
-## Parameters : 
-##        estimate Std. Error
-## shape  2.647722  0.1480560
-## scale 10.549286  0.2962823
-## Loglikelihood:  -549.6808   AIC:  1103.362   BIC:  1109.958 
-## Correlation matrix:
-##           shape     scale
-## shape 1.0000000 0.3095952
-## scale 0.3095952 1.0000000
-```
+
+
+Table: (\#tab:unnamed-chunk-45)威布尔分布参数估计结果
 
 
 ``` r
@@ -1611,8 +1589,8 @@ for (shape_val in shape_values) {
 ```
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-34-1.png" alt="不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-34)不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-46-1.png" alt="不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-46)不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比</p>
 </div>
 
 ``` r
@@ -1642,27 +1620,15 @@ hazard_at_30_days <- (shape_param / scale_param) *
   (30 / scale_param)^(shape_param - 1)
 
 # 输出生存分析结果：显示计算得到的关键生存指标
-print(paste("中位生存时间:", round(median_survival, 2), "天"))
+cat("中位生存时间:", round(median_survival, 2), "天\n",
+    "90天生存概率:", round(survival_90_days, 4), "\n",
+    "30天时的瞬时死亡率:", round(hazard_at_30_days, 4), "\n", sep = "")
 ```
 
 ```
-## [1] "中位生存时间: 8.64 天"
-```
-
-``` r
-print(paste("90天生存概率:", round(survival_90_days, 4)))
-```
-
-```
-## [1] "90天生存概率: 0"
-```
-
-``` r
-print(paste("30天时的瞬时死亡率:", round(hazard_at_30_days, 4)))
-```
-
-```
-## [1] "30天时的瞬时死亡率: 1.299"
+## 中位生存时间:8.64天
+## 90天生存概率:0
+## 30天时的瞬时死亡率:1.299
 ```
 
 
@@ -1681,82 +1647,29 @@ print("与正态分布的比较:")  # 输出比较分析标题
 normal_fit <- fitdist(survival_times, "norm")
 
 # 输出正态分布拟合结果：显示参数估计和统计信息
-print("正态分布拟合:")
+knitr::kable(summary(normal_fit)$coefficients, caption="正态分布拟合")
 ```
 
-```
-## [1] "正态分布拟合:"
-```
 
-``` r
-print(summary(normal_fit))
-```
 
-```
-## Fitting of the distribution ' norm ' by maximum likelihood 
-## Parameters : 
-##      estimate Std. Error
-## mean 9.374573  0.2709354
-## sd   3.831605  0.1915802
-## Loglikelihood:  -552.4445   AIC:  1108.889   BIC:  1115.486 
-## Correlation matrix:
-##      mean sd
-## mean    1  0
-## sd      0  1
-```
+Table: (\#tab:unnamed-chunk-48)正态分布拟合
 
 ``` r
 # 输出威布尔分布拟合结果：与正态分布结果进行比较
-print("威布尔分布拟合:")
+knitr::kable(summary(fit_weibull)$coefficients, caption="威布尔分布拟合")
+```
+
+
+
+Table: (\#tab:unnamed-chunk-48)威布尔分布拟合
+
+
+```
+## [1] "正态分布AIC: 1075.52"
 ```
 
 ```
-## [1] "威布尔分布拟合:"
-```
-
-``` r
-print(summary(fit_weibull))
-```
-
-```
-## Fitting of the distribution ' weibull ' by maximum likelihood 
-## Parameters : 
-##        estimate Std. Error
-## shape  2.647722  0.1480560
-## scale 10.549286  0.2962823
-## Loglikelihood:  -549.6808   AIC:  1103.362   BIC:  1109.958 
-## Correlation matrix:
-##           shape     scale
-## shape 1.0000000 0.3095952
-## scale 0.3095952 1.0000000
-```
-
-``` r
-# AIC比较：使用赤池信息准则评估模型拟合质量
-# AIC值越小表示模型拟合效果越好，考虑了模型复杂度和拟合优度
-print(paste("正态分布AIC:", round(normal_fit$aic, 2)))
-```
-
-```
-## [1] "正态分布AIC: 1108.89"
-```
-
-``` r
-print(paste("威布尔分布AIC:", round(fit_weibull$aic, 2)))
-```
-
-```
-## [1] "威布尔分布AIC: 1103.36"
-```
-
-``` r
-# 基于AIC值判断哪个分布拟合效果更好
-# 比较两个分布的AIC值，选择AIC较小的模型
-if (fit_weibull$aic < normal_fit$aic) {
-  print("威布尔分布拟合效果更好（AIC更小）")
-} else {
-  print("正态分布拟合效果更好")
-}
+## [1] "威布尔分布AIC: 1069.64"
 ```
 
 ```
@@ -1787,8 +1700,8 @@ $$f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}, \quad x 
 伽马分布在生态学中广泛应用于描述累积过程和增长模式。在行为生态学中，伽马分布能够精确描述完成多次成功行为所需的总时间，如捕食者需要捕获多只猎物才能满足能量需求的过程。在生物量积累研究中，伽马分布适用于建模植物生长和动物体重增加的渐进过程，这些过程往往呈现累积性特征。在环境生态学中，特定时间段内的降雨量分布可以用伽马分布来描述，这种分布能够捕捉降水事件的累积效应。在种群动态研究中，伽马分布能够刻画在一定时间内种群数量的累积增长模式，为理解种群扩张过程提供数学工具。
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-37-1.png" alt="伽马分布：不同参数组合下的概率密度函数" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-37)伽马分布：不同参数组合下的概率密度函数</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-50-1.png" alt="伽马分布：不同参数组合下的概率密度函数" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-50)伽马分布：不同参数组合下的概率密度函数</p>
 </div>
 
 ### 贝塔分布：比例变量的天然选择
@@ -1814,8 +1727,8 @@ $$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha, \beta)}, \quad 0 \leq x \l
 贝塔分布在生态学中具有广泛的应用价值，特别适合描述比例变量的分布特征。在行为生态学中，贝塔分布能够精确刻画蚱蜢一天中用于觅食、休息、警戒等不同行为的时间比例分配模式。这种分布同样适用于建模蚱蜢对不同植物种类的资源选择偏好，通过比例值反映其选择倾向的强度。在能量预算分析方面，贝塔分布帮助研究者通过时间分配比例来深入探讨蚱蜢的能量摄入与消耗平衡机制。贝塔分布的灵活性使其特别适合描述动物在不同环境条件下的适应性行为调整，能够捕捉行为模式随环境变化的动态特征。
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-38-1.png" alt="贝塔分布：不同参数组合下的概率密度函数" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-38)贝塔分布：不同参数组合下的概率密度函数</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-51-1.png" alt="贝塔分布：不同参数组合下的概率密度函数" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-51)贝塔分布：不同参数组合下的概率密度函数</p>
 </div>
 
 ### 正态分布的魔力：中心极限定理
@@ -1845,9 +1758,10 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
 
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-39-1.png" alt="中心极限定理演示：不同总体分布下样本均值的正态收敛过程" width="960" />
-<p class="caption">(\#fig:unnamed-chunk-39)中心极限定理演示：不同总体分布下样本均值的正态收敛过程</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-52-1.png" alt="中心极限定理演示：不同总体分布下样本均值的正态收敛过程" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-52)中心极限定理演示：不同总体分布下样本均值的正态收敛过程</p>
 </div>
+
 
 ```
 ## 中心极限定理正态性检验结果:
@@ -1860,22 +1774,20 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
 #### 样本量对中心极限定理的影响
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-40-1.png" alt="样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-40)样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-54-1.png" alt="样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-54)样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态</p>
 </div>
 
-```
-## 偏度和峰度随样本量的变化:
-```
 
-```
-##   SampleSize  Skewness Kurtosis
-## 1          5 0.8974114 4.109759
-## 2         10 0.6504552 3.732605
-## 3         30 0.4054190 3.315501
-## 4         50 0.2691500 3.072610
-## 5        100 0.2423726 3.087874
-```
+Table: (\#tab:unnamed-chunk-55)偏度和峰度随样本量的变化
+
+| SampleSize|  Skewness| Kurtosis|
+|----------:|---------:|--------:|
+|          5| 0.8974114| 4.109759|
+|         10| 0.6504552| 3.732605|
+|         30| 0.4054190| 3.315501|
+|         50| 0.2691500| 3.072610|
+|        100| 0.2423726| 3.087874|
 
 #### 蚱蜢午餐中的中心极限定理
 
@@ -1914,29 +1826,9 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
 混合分布能够描述来自不同子总体的数据，在生态学中处理异质性非常有用。
 
 <div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-41-1.png" alt="混合分布：双峰数据的概率密度函数" width="768" />
-<p class="caption">(\#fig:unnamed-chunk-41)混合分布：双峰数据的概率密度函数</p>
+<img src="02-probability_and_distribution_files/figure-html/unnamed-chunk-56-1.png" alt="混合分布：双峰数据的概率密度函数" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-56)混合分布：双峰数据的概率密度函数</p>
 </div>
-
-```
-## 混合分布的生态学应用:
-```
-
-```
-## 1. 不同年龄组的种群结构
-```
-
-```
-## 2. 异质环境中的物种分布
-```
-
-```
-## 3. 多物种混合的群落数据
-```
-
-```
-## 4. 季节性变化的环境因子
-```
 
 
 ### 零膨胀分布：处理零值过多的数据
@@ -1965,11 +1857,8 @@ for (i in 1:n_samples) {
 
 # 统计零值比例
 zero_proportion <- mean(zip_data == 0)
-cat("零膨胀数据统计:\n",
-  "零值比例:", round(zero_proportion, 3), "\n",
-  "非零值均值:", round(mean(zip_data[zip_data > 0]), 3), "\n",
-  "总体均值:", round(mean(zip_data), 3), "\n")
 ```
+
 
 ```
 ## 零膨胀数据统计:
@@ -1978,15 +1867,12 @@ cat("零膨胀数据统计:\n",
 ##  总体均值: 0.676
 ```
 
+
 ``` r
 # 与普通泊松分布比较
 poisson_data <- rpois(n_samples, lambda = mean(zip_data))
-cat("\n与普通泊松分布比较:\n",
-  "泊松零值比例:", round(mean(poisson_data == 0), 3), "\n",
-  "泊松方差:", round(var(poisson_data), 3), "\n",
-  "零膨胀方差:", round(var(zip_data), 3), "\n",
-  "过度分散指数:", round(var(zip_data) / mean(zip_data), 3), "\n")
 ```
+
 
 ```
 ## 
@@ -1995,48 +1881,6 @@ cat("\n与普通泊松分布比较:\n",
 ##  泊松方差: 0.657 
 ##  零膨胀方差: 2.361 
 ##  过度分散指数: 3.493
-```
-
-``` r
-# 零膨胀分布的生态学意义
-cat("\n零膨胀分布的生态学应用:\n")
-```
-
-```
-## 
-## 零膨胀分布的生态学应用:
-```
-
-``` r
-cat("1. 稀有物种的出现数据\n")
-```
-
-```
-## 1. 稀有物种的出现数据
-```
-
-``` r
-cat("2. 低密度种群的分布数据\n")
-```
-
-```
-## 2. 低密度种群的分布数据
-```
-
-``` r
-cat("3. 间歇性生态过程记录\n")
-```
-
-```
-## 3. 间歇性生态过程记录
-```
-
-``` r
-cat("4. 不完全调查的观测数据\n")
-```
-
-```
-## 4. 不完全调查的观测数据
 ```
 
 零膨胀分布在生态学中具有重要的应用价值，专门用于处理存在大量零值的计数数据。这种分布在以下生态学场景中特别有用：
@@ -2070,3 +1914,32 @@ cat("4. 不完全调查的观测数据\n")
 生态学研究面对的是自然界中最复杂的系统之一。与物理实验不同，生态学观察通常无法在完全受控的条件下重复进行。概率与分布理论为我们提供了一种量化不确定性的工具，帮助我们设计更科学的生态调查方案，准确解读复杂的生态数据，与数据科学家高效合作，并在AI时代保持批批判性和创造性。
 
 通过本章的学习，我们不仅掌握了概率与分布的基本概念和计算方法，更重要的是建立了连接生态观察与数学分析的桥梁。这种数学框架使我们能够从定性的生态描述迈向定量的科学分析，为理解生物决策机制、种群动态、群落结构等生态学核心问题提供了强有力的工具。在数据驱动的生态学时代，概率与分布理论将继续发挥不可替代的作用，帮助我们更好地理解和保护这个充满不确定性的自然世界。
+
+## 综合练习
+
+### 练习1：蚱蜢觅食行为的概率建模
+
+某生态学家研究蚱蜢的觅食行为，观察到蚱蜢在三种植物（黑麦草、混合草甸、三叶草）上的选择概率分别为0.4、0.35、0.25。如果连续观察10只蚱蜢的觅食选择：
+
+1. 使用二项分布计算恰好有6只蚱蜢选择黑麦草的概率
+2. 使用多项式分布计算3只选择黑麦草、4只选择混合草甸、3只选择三叶草的概率
+3. 如果蚱蜢平均每分钟成功觅食2次，使用泊松分布计算在5分钟内成功觅食超过12次的概率
+
+### 练习2：生存分析与分布拟合
+
+某生态学家研究某种昆虫的生存时间，收集了100个个体的生存时间数据（单位：天）。经过初步分析，发现数据呈现右偏分布，适合使用威布尔分布进行拟合。
+
+1. 使用R语言生成模拟的生存时间数据（威布尔分布，形状参数k=1.5，尺度参数λ=50）
+2. 使用`fitdistrplus`包拟合威布尔分布，并输出参数估计结果
+3. 计算该种昆虫的中位生存时间、90天生存概率和30天时的瞬时死亡率
+4. 比较威布尔分布与正态分布的拟合效果，说明哪种分布更适合描述生存时间数据
+
+### 练习3：中心极限定理的生态学验证
+
+某生态学家研究森林中某种树木的胸径（直径）分布，已知单个树木的胸径服从伽马分布（形状参数α=2，速率参数β=0.1）。
+
+1. 使用R语言模拟从该伽马分布中随机抽取1000个样本，验证其原始分布形态
+2. 进行蒙特卡洛模拟：重复10000次，每次随机抽取30棵树计算平均胸径
+3. 绘制样本均值的分布图，验证其是否近似正态分布
+4. 计算样本均值分布的偏度和峰度，并与理论正态分布进行比较
+5. 讨论中心极限定理在生态学调查设计中的实际意义

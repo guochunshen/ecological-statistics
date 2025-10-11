@@ -96,22 +96,20 @@ cat("\n总体均值：", mean(forest_birds$abundance), "\n")
 ``` r
 random_sample <- forest_birds[sample(nrow(forest_birds), 100), ]
 
-cat("随机抽样结果：\n")
+knitr::kable(table(random_sample$species), caption="随机抽样结果")
 ```
 
-```
-## 随机抽样结果：
-```
 
-``` r
-print(table(random_sample$species))
-```
 
-```
-## 
-## 啄木鸟   杜鹃   画眉   麻雀   黄鹂 
-##     12     26     21     19     22
-```
+Table: (\#tab:random-sampling)随机抽样结果
+
+|Var1   | Freq|
+|:------|----:|
+|啄木鸟 |   12|
+|杜鹃   |   26|
+|画眉   |   21|
+|麻雀   |   19|
+|黄鹂   |   22|
 
 ``` r
 cat("随机抽样均值估计：", mean(random_sample$abundance), "\n")
@@ -131,26 +129,22 @@ stratified_sample <- forest_birds %>%
   group_by(habitat) %>%
   sample_n(size = 20)
 
-cat("分层抽样结果：\n")
+
+knitr::kable(table(stratified_sample$habitat, stratified_sample$species),
+  caption = "分层抽样结果")
 ```
 
-```
-## 分层抽样结果：
-```
 
-``` r
-print(table(stratified_sample$habitat, stratified_sample$species))
-```
 
-```
-##       
-##        啄木鸟 杜鹃 画眉 麻雀 黄鹂
-##   林内      0    0   20    0    0
-##   林冠     20    0    0    0    0
-##   林缘      0    0    0   20    0
-##   灌丛      0   20    0    0    0
-##   空地      0    0    0    0   20
-```
+Table: (\#tab:stratified-sampling)分层抽样结果
+
+|     | 啄木鸟| 杜鹃| 画眉| 麻雀| 黄鹂|
+|:----|------:|----:|----:|----:|----:|
+|林内 |      0|    0|   20|    0|    0|
+|林冠 |     20|    0|    0|    0|    0|
+|林缘 |      0|    0|    0|   20|    0|
+|灌丛 |      0|   20|    0|    0|    0|
+|空地 |      0|    0|    0|    0|   20|
 
 ``` r
 cat("分层抽样均值估计：", mean(stratified_sample$abundance), "\n")
@@ -167,22 +161,21 @@ cat("分层抽样均值估计：", mean(stratified_sample$abundance), "\n")
 systematic_indices <- seq(1, nrow(forest_birds), by = 10)
 systematic_sample <- forest_birds[systematic_indices, ]
 
-cat("系统抽样结果：\n")
+
+knitr::kable(table(systematic_sample$species), caption="系统抽样结果")
 ```
 
-```
-## 系统抽样结果：
-```
 
-``` r
-print(table(systematic_sample$species))
-```
 
-```
-## 
-## 啄木鸟   杜鹃   画眉   麻雀   黄鹂 
-##     20     20     20     20     20
-```
+Table: (\#tab:systematic-sampling)系统抽样结果
+
+|Var1   | Freq|
+|:------|----:|
+|啄木鸟 |   20|
+|杜鹃   |   20|
+|画眉   |   20|
+|麻雀   |   20|
+|黄鹂   |   20|
 
 ``` r
 cat("系统抽样均值估计：", mean(systematic_sample$abundance), "\n")
@@ -399,7 +392,7 @@ grid()
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/t-distribution-comparison-1.png" alt="t分布与正态分布的比较：不同自由度的t分布（红色、蓝色、绿色）与标准正态分布（黑色）的对比，展示随着自由度增加t分布逐渐趋近正态分布的趋势" width="672" />
+<img src="04-parameter_estimation_files/figure-html/t-distribution-comparison-1.png" alt="t分布与正态分布的比较：不同自由度的t分布（红色、蓝色、绿色）与标准正态分布（黑色）的对比，展示随着自由度增加t分布逐渐趋近正态分布的趋势" width="80%" />
 <p class="caption">(\#fig:t-distribution-comparison)t分布与正态分布的比较：不同自由度的t分布（红色、蓝色、绿色）与标准正态分布（黑色）的对比，展示随着自由度增加t分布逐渐趋近正态分布的趋势</p>
 </div>
 
@@ -500,7 +493,7 @@ plot(sample_sizes, ci_widths, type = "b", pch = 19,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/different-confidence-levels-1.png" alt="不同置信水平的区间估计比较" width="672" />
+<img src="04-parameter_estimation_files/figure-html/different-confidence-levels-1.png" alt="不同置信水平的区间估计比较" width="80%" />
 <p class="caption">(\#fig:different-confidence-levels)不同置信水平的区间估计比较</p>
 </div>
 
@@ -860,146 +853,40 @@ fit_brm <- brm(
   chains = 4,                       # 使用4条独立的MCMC链进行采样
   iter = 2000,                      # 每条链进行2000次迭代
   warmup = 1000,                    # 前1000次作为预热期（burn-in），不用于后验分析
-  seed = 123                        # 设置随机种子保证结果可重现
+  seed = 123,                       # 设置随机种子保证结果可重现
+  silent = 2,                       # 不输出采样过程信息
+  refresh = 0                       # 不输出采样进度条
 )
 ```
 
 ```
-## 
-## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 1.9e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.19 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.014 seconds (Warm-up)
-## Chain 1:                0.012 seconds (Sampling)
-## Chain 1:                0.026 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 5e-06 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.013 seconds (Warm-up)
-## Chain 2:                0.014 seconds (Sampling)
-## Chain 2:                0.027 seconds (Total)
-## Chain 2: 
-## 
-## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 3).
-## Chain 3: 
-## Chain 3: Gradient evaluation took 5e-06 seconds
-## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0.05 seconds.
-## Chain 3: Adjust your expectations accordingly!
-## Chain 3: 
-## Chain 3: 
-## Chain 3: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 3: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 3: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 3: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 3: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 3: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 3: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 3: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 3: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 3: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 3: 
-## Chain 3:  Elapsed Time: 0.014 seconds (Warm-up)
-## Chain 3:                0.012 seconds (Sampling)
-## Chain 3:                0.026 seconds (Total)
-## Chain 3: 
-## 
-## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 4).
-## Chain 4: 
-## Chain 4: Gradient evaluation took 4e-06 seconds
-## Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
-## Chain 4: Adjust your expectations accordingly!
-## Chain 4: 
-## Chain 4: 
-## Chain 4: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 4: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 4: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 4: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 4: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 4: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 4: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 4: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 4: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 4: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 4: 
-## Chain 4:  Elapsed Time: 0.015 seconds (Warm-up)
-## Chain 4:                0.013 seconds (Sampling)
-## Chain 4:                0.028 seconds (Total)
-## Chain 4:
+## Running /usr/lib/R/bin/R CMD SHLIB foo.c
+## using C compiler: ‘gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0’
+## gcc -I"/usr/share/R/include" -DNDEBUG   -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/Rcpp/include/"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppEigen/include/"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppEigen/include/unsupported"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/BH/include" -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/StanHeaders/include/src/"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/StanHeaders/include/"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppParallel/include/"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include '/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/StanHeaders/include/stan/math/prim/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1       -fpic  -g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/r-base-FPSnzf/r-base-4.3.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-FPSnzf/r-base-4.3.3=/usr/src/r-base-4.3.3-2build2 -Wdate-time -D_FORTIFY_SOURCE=3  -c foo.c -o foo.o
+## In file included from /home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppEigen/include/Eigen/Core:19,
+##                  from /home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppEigen/include/Eigen/Dense:1,
+##                  from /home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:22,
+##                  from <command-line>:
+## /home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppEigen/include/Eigen/src/Core/util/Macros.h:679:10: fatal error: cmath: No such file or directory
+##   679 | #include <cmath>
+##       |          ^~~~~~~
+## compilation terminated.
+## make: *** [/usr/lib/R/etc/Makeconf:191: foo.o] Error 1
 ```
 
 ``` r
 # 输出模型拟合结果
-cat("贝叶斯模型拟合结果：\n")
+knitr::kable(summary(fit_brm)$fixed, caption = "贝叶斯模型拟合结果")
 ```
 
-```
-## 贝叶斯模型拟合结果：
-```
 
-``` r
-print(summary(fit_brm))
-```
 
-```
-##  Family: gaussian 
-##   Links: mu = identity 
-## Formula: diameter ~ 1 
-##    Data: bayes_data (Number of observations: 50) 
-##   Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-##          total post-warmup draws = 4000
-## 
-## Regression Coefficients:
-##           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## Intercept    25.00      0.67    23.65    26.29 1.00     3058     2318
-## 
-## Further Distributional Parameters:
-##       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-## sigma     4.72      0.50     3.86     5.78 1.00     2723     2401
-## 
-## Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
-## and Tail_ESS are effective sample size measures, and Rhat is the potential
-## scale reduction factor on split chains (at convergence, Rhat = 1).
-```
+Table: (\#tab:unnamed-chunk-8)贝叶斯模型拟合结果
+
+|          | Estimate| Est.Error| l-95% CI| u-95% CI|     Rhat| Bulk_ESS| Tail_ESS|
+|:---------|--------:|---------:|--------:|--------:|--------:|--------:|--------:|
+|Intercept | 25.00149| 0.6695746| 23.65401| 26.29316| 1.002247| 3058.456| 2318.366|
+
 
 ``` r
 # 提取后验样本：将MCMC采样结果转换为数据框格式
@@ -1022,6 +909,7 @@ cat("\n贝叶斯估计结果：\n",
 ##  后验标准差： 4.72 cm
 ```
 
+
 ``` r
 # 设置图形布局：1行2列
 par(mfrow = c(1, 2))
@@ -1040,7 +928,7 @@ abline(v = posterior_sd, col = "red", lwd = 2)  # 添加均值垂直线
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/bayesian-posterior-distribution-1.png" alt="贝叶斯估计的后验分布" width="672" />
+<img src="04-parameter_estimation_files/figure-html/bayesian-posterior-distribution-1.png" alt="贝叶斯估计的后验分布" width="80%" />
 <p class="caption">(\#fig:bayesian-posterior-distribution)贝叶斯估计的后验分布</p>
 </div>
 
@@ -1227,6 +1115,7 @@ simulation_variance <- function(n_sim = 10000, n_sample = 10,
   cr_lower_bound <- 2 * true_sigma2^2 / n_sample
 
   relative_efficiency <- var_mle / var_s2
+  
   cat("有效性分析结果（样本量n =", n_sample, "）：\n",
       "无偏样本方差的方差：", var_s2, "\n",
       "最大似然估计的方差：", var_mle, "\n",
@@ -1475,7 +1364,7 @@ abline(h = population_schnabel, col = "red", lty = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/schnabel-stability-test-1.png" alt="Schnabel估计的稳定性检验" width="672" />
+<img src="04-parameter_estimation_files/figure-html/schnabel-stability-test-1.png" alt="Schnabel估计的稳定性检验" width="80%" />
 <p class="caption">(\#fig:schnabel-stability-test)Schnabel估计的稳定性检验</p>
 </div>
 
@@ -1642,7 +1531,7 @@ legend("topright", legend = paste("均值 =", round(mean_plants, 2)),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/quadrat-plant-distribution-1.png" alt="样方内植物数量分布" width="672" />
+<img src="04-parameter_estimation_files/figure-html/quadrat-plant-distribution-1.png" alt="样方内植物数量分布" width="80%" />
 <p class="caption">(\#fig:quadrat-plant-distribution)样方内植物数量分布</p>
 </div>
 
@@ -1723,7 +1612,7 @@ legend("topright", legend = "基准估计", col = "red", pch = 19)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/line-transect-sensitivity-1.png" alt="样线法估计的敏感性分析" width="672" />
+<img src="04-parameter_estimation_files/figure-html/line-transect-sensitivity-1.png" alt="样线法估计的敏感性分析" width="80%" />
 <p class="caption">(\#fig:line-transect-sensitivity)样线法估计的敏感性分析</p>
 </div>
 
@@ -1831,7 +1720,7 @@ legend("topright", legend = paste("sigma =", round(sigma, 2)),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/distance-sampling-halfnormal-1.png" alt="半正态发现函数" width="672" />
+<img src="04-parameter_estimation_files/figure-html/distance-sampling-halfnormal-1.png" alt="半正态发现函数" width="80%" />
 <p class="caption">(\#fig:distance-sampling-halfnormal)半正态发现函数</p>
 </div>
 
@@ -1962,7 +1851,7 @@ legend("topright", legend = c("观测数据", "拟合直线"),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/removal-method-analysis-1.png" alt="去除法：捕获量随累积捕获量的变化" width="672" />
+<img src="04-parameter_estimation_files/figure-html/removal-method-analysis-1.png" alt="去除法：捕获量随累积捕获量的变化" width="80%" />
 <p class="caption">(\#fig:removal-method-analysis)去除法：捕获量随累积捕获量的变化</p>
 </div>
 
@@ -2160,7 +2049,7 @@ legend("bottomright",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/accumulation-curve-extrapolation-1.png" alt="样本积累曲线与外推" width="672" />
+<img src="04-parameter_estimation_files/figure-html/accumulation-curve-extrapolation-1.png" alt="样本积累曲线与外推" width="80%" />
 <p class="caption">(\#fig:accumulation-curve-extrapolation)样本积累曲线与外推</p>
 </div>
 
@@ -2207,28 +2096,15 @@ community_b <- c(80, 60, 40, 20, 10, 5, 3, 2, 1, 1)
 species_obs_a <- length(community_a)
 species_obs_b <- length(community_b)
 
-cat("观测物种丰富度：\n",
-  "样地A：", species_obs_a, "种\n",
-  "样地B：", species_obs_b, "种\n")
+rare_a <- rarefy(community_a, sample = c(50, 100, 150))
+rare_b <- rarefy(community_b, sample = c(50, 100, 150))
 ```
+
 
 ```
 ## 观测物种丰富度：
 ##  样地A： 17 种
 ##  样地B： 10 种
-```
-
-``` r
-rare_a <- rarefy(community_a, sample = c(50, 100, 150))
-rare_b <- rarefy(community_b, sample = c(50, 100, 150))
-
-cat("\n内插比较（相同个体数下的期望物种数）：\n",
-    "样本量50个体：样地A =", round(rare_a[1], 1),
-    "种，样地B =", round(rare_b[1], 1), "种\n",
-    "样本量100个体：样地A =", round(rare_a[2], 1),
-    "种，样地B =", round(rare_b[2], 1), "种\n",
-    "样本量150个体：样地A =", round(rare_a[3], 1),
-    "种，样地B =", round(rare_b[3], 1), "种\n")
 ```
 
 ```
@@ -2238,6 +2114,7 @@ cat("\n内插比较（相同个体数下的期望物种数）：\n",
 ##  样本量100个体：样地A = 14.3 种，样地B = 8.4 种
 ##  样本量150个体：样地A = 15.5 种，样地B = 9.2 种
 ```
+
 
 ``` r
 plot(x=c(0,200), y= range(c(rare_a, rare_b)),
@@ -2251,18 +2128,15 @@ legend("bottomright", legend = c("样地A", "样地B"),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/rarefaction-comparison-1.png" alt="物种丰富度内插比较" width="672" />
+<img src="04-parameter_estimation_files/figure-html/rarefaction-comparison-1.png" alt="物种丰富度内插比较" width="80%" />
 <p class="caption">(\#fig:rarefaction-comparison)物种丰富度内插比较</p>
 </div>
 
 ``` r
 chao1_a <- estimateR(community_a)["S.chao1"]
 chao1_b <- estimateR(community_b)["S.chao1"]
-
-cat("\nChao1校正后的物种丰富度估计：\n",
-    "样地A：", round(chao1_a), "种\n",
-    "样地B：", round(chao1_b), "种\n")
 ```
+
 
 ```
 ## 
@@ -2324,13 +2198,8 @@ freq_single <- sum(observed_species == 1)
 freq_double <- sum(observed_species == 2)
 
 species_chao1 <- species_obs + (freq_single^2) / (2 * freq_double)
-
-cat("Chao1估计结果：\n",
-    "观测物种数：", species_obs, "种\n",
-    "单例种数(f1)：", freq_single, "种\n",
-    "双例种数(f2)：", freq_double, "种\n",
-    "Chao1校正估计：", round(species_chao1, 1), "种\n")
 ```
+
 
 ```
 ## Chao1估计结果：
@@ -2339,6 +2208,7 @@ cat("Chao1估计结果：\n",
 ##  双例种数(f2)： 8 种
 ##  Chao1校正估计： 50.1 种
 ```
+
 
 ``` r
 var_chao <- freq_double * ((freq_single / freq_double)^4 / 4 +
@@ -2497,7 +2367,7 @@ legend("topleft", legend = c("观测值", "Bootstrap估计"),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/bootstrap-estimation-1.png" alt="Bootstrap估计的抽样分布" width="672" />
+<img src="04-parameter_estimation_files/figure-html/bootstrap-estimation-1.png" alt="Bootstrap估计的抽样分布" width="80%" />
 <p class="caption">(\#fig:bootstrap-estimation)Bootstrap估计的抽样分布</p>
 </div>
 
@@ -2607,7 +2477,7 @@ legend("bottomright", legend = c("经验分布", "拟合分布"),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/abundance-distribution-fit-1.png" alt="多度分布模型拟合结果" width="672" />
+<img src="04-parameter_estimation_files/figure-html/abundance-distribution-fit-1.png" alt="多度分布模型拟合结果" width="80%" />
 <p class="caption">(\#fig:abundance-distribution-fit)多度分布模型拟合结果</p>
 </div>
 
@@ -2663,13 +2533,8 @@ observed_species <- which(sampled_species > 0)
 
 # 计算观测到的物种数
 S_obs <- length(observed_species)
-
-# 输出基本分析结果：比较真实与观测的物种丰富度
-cat("稀有种影响分析：\n",
-    "真实物种丰富度：", S_true, "种\n",
-    "观测物种丰富度：", S_obs, "种\n",
-    "观测遗漏率：", round((S_true - S_obs) / S_true * 100, 1), "%\n")
 ```
+
 
 ```
 ## 稀有种影响分析：
@@ -2677,6 +2542,7 @@ cat("稀有种影响分析：\n",
 ##  观测物种丰富度： 40 种
 ##  观测遗漏率： 60 %
 ```
+
 
 ``` r
 # =============================================================================
@@ -2699,13 +2565,8 @@ rare_observed <- sum(sampled_species[rare_species] > 0)
 
 # 统计稀有种总数
 rare_total <- length(rare_species)
-
-# 输出稀有种分析结果
-cat("\n稀有种分析：\n",
-    "稀有种总数：", rare_total, "种\n",
-    "观测到的稀有种：", rare_observed, "种\n",
-    "稀有种观测率：", round(rare_observed / rare_total * 100, 1), "%\n")
 ```
+
 
 ```
 ## 
@@ -2715,19 +2576,15 @@ cat("\n稀有种分析：\n",
 ##  稀有种观测率： 5.3 %
 ```
 
+
 ``` r
 # 统计在采样中被观测到的常见种数量
 common_observed <- sum(sampled_species[common_species] > 0)
 
 # 统计常见种总数
 common_total <- length(common_species)
-
-# 输出常见种分析结果
-cat("\n常见种分析：\n",
-    "常见种总数：", common_total, "种\n",
-    "观测到的常见种：", common_observed, "种\n",
-    "常见种观测率：", round(common_observed / common_total * 100, 1), "%\n")
 ```
+
 
 ```
 ## 
@@ -2736,6 +2593,7 @@ cat("\n常见种分析：\n",
 ##  观测到的常见种： 39 种
 ##  常见种观测率： 48.1 %
 ```
+
 
 ``` r
 # =============================================================================
@@ -2748,12 +2606,8 @@ cat("\n常见种分析：\n",
 # estimateR函数返回多个估计值，我们提取其中的Chao1估计
 chao1_estimate <- estimateR(as.numeric(sampled_species[observed_species]))[
   "S.chao1"]
-
-# 输出Chao1校正结果和改善程度
-cat("\nChao1校正后的物种丰富度估计：", round(chao1_estimate), "种\n",
-    "Chao1校正的改善程度：",
-    round((chao1_estimate - S_obs) / (S_true - S_obs) * 100, 1), "%\n")
 ```
+
 
 ```
 ## 
@@ -2795,7 +2649,7 @@ abline(v = log10(rare_threshold), col = "red", lty = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/rare-species-distribution-1.png" alt="稀有种对多样性估计的影响分析" width="672" />
+<img src="04-parameter_estimation_files/figure-html/rare-species-distribution-1.png" alt="稀有种对多样性估计的影响分析" width="80%" />
 <p class="caption">(\#fig:rare-species-distribution)稀有种对多样性估计的影响分析</p>
 </div>
 
@@ -2846,18 +2700,15 @@ S_true <- length(real_community)  # 物种丰富度
 
 # 计算真实Shannon多样性：使用vegan包的diversity函数
 H_true <- diversity(real_community, index = "shannon")  # Shannon多样性
-
-# 输出真实群落的多样性信息
-cat("真实群落多样性：\n",
-    "物种丰富度：", S_true, "种\n",
-    "Shannon多样性：", round(H_true, 3), "\n")
 ```
+
 
 ```
 ## 真实群落多样性：
 ##  物种丰富度： 15 种
 ##  Shannon多样性： 2.295
 ```
+
 
 ``` r
 # =============================================================================
@@ -2923,38 +2774,17 @@ precision_analysis <- results %>%
     S_bias = (S_mean - S_true) / S_true * 100,  # 物种丰富度相对偏差(%)
     H_bias = (H_mean - H_true) / H_true * 100   # Shannon多样性相对偏差(%)
   )
-
-# 输出统计分析结果
-cat("\n样本量对多样性估计精度的影响：\n")
 ```
+
 
 ```
 ## 
 ## 样本量对多样性估计精度的影响：
 ```
 
-``` r
-# 使用knitr::kable输出格式化的表格
-knitr::kable(
-  precision_analysis,
-  caption = "样本量对多样性估计精度的影响分析",
-  col.names = c(
-    "样本量",
-    "物种丰富度均值",
-    "物种丰富度标准差",
-    "Shannon多样性均值",
-    "Shannon多样性标准差",
-    "物种丰富度偏差(%)",
-    "Shannon多样性偏差(%)"
-  ),
-  digits = c(0, 1, 2, 3, 3, 1, 1),
-  align = "c"
-)
-```
 
 
-
-Table: (\#tab:unnamed-chunk-13)样本量对多样性估计精度的影响分析
+Table: (\#tab:unnamed-chunk-30)样本量对多样性估计精度的影响分析
 
 | 样本量 | 物种丰富度均值 | 物种丰富度标准差 | Shannon多样性均值 | Shannon多样性标准差 | 物种丰富度偏差(%) | Shannon多样性偏差(%) |
 |:------:|:--------------:|:----------------:|:-----------------:|:-------------------:|:-----------------:|:--------------------:|
@@ -3041,7 +2871,7 @@ legend("topright", legend = c("物种丰富度", "Shannon多样性"),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="04-parameter_estimation_files/figure-html/sample-size-precision-effect-1.png" alt="样本量对多样性估计精度的影响" width="672" />
+<img src="04-parameter_estimation_files/figure-html/sample-size-precision-effect-1.png" alt="样本量对多样性估计精度的影响" width="80%" />
 <p class="caption">(\#fig:sample-size-precision-effect)样本量对多样性估计精度的影响</p>
 </div>
 
@@ -3064,33 +2894,20 @@ model_H <- nls(H_sd ~ scale_H / sqrt(sample_size),
 
 required_n_S <- (coef(model_S) / (S_true * desired_precision))^2
 required_n_H <- (coef(model_H) / (H_true * desired_precision))^2
-
-cat("\n基于期望精度的样本量规划：\n")
 ```
+
 
 ```
 ## 
 ## 基于期望精度的样本量规划：
 ```
 
-``` r
-cat("期望相对精度：", desired_precision * 100, "%\n")
-```
-
 ```
 ## 期望相对精度： 10 %
 ```
 
-``` r
-cat("物种丰富度估计所需样本量：", round(required_n_S), "\n")
-```
-
 ```
 ## 物种丰富度估计所需样本量： 40
-```
-
-``` r
-cat("Shannon多样性估计所需样本量：", round(required_n_H), "\n")
 ```
 
 ```
@@ -3218,3 +3035,44 @@ Table: (\#tab:species-diversity-methods) 物种多样性估计方法比较
 
 
 ## 综合练习
+
+### 练习1：标记重捕法估计鱼类种群大小
+
+某生态学家在一个封闭湖泊中进行鱼类种群调查。第一次标记了150条鱼并放回湖中，一周后进行第二次捕捞，共捕获200条鱼，其中30条带有标记。
+
+1. 使用Lincoln-Petersen估计器计算该湖泊的鱼类种群大小  
+2. 计算该估计的95%置信区间  
+3. 如果第二次捕获的鱼中有标记的比例为0.1、0.15、0.2，分别计算对应的种群大小估计  
+4. 讨论标记重捕法的假设条件及其在生态学应用中的局限性  
+
+### 练习2：物种多样性估计与稀有种校正
+
+某生态学家在森林样地调查中记录了以下物种多度数据：
+
+```r
+species_abundances <- c(50, 45, 40, 35, 30, 25, 20, 15, 10, 8, 6, 4, 3, 2, 1, 1, 1, 1, 1)
+```
+
+1. 计算观测到的物种丰富度  
+2. 使用Chao1估计器校正稀有种影响，估计真实的物种丰富度  
+3. 使用Jackknife方法进行物种丰富度估计  
+4. 比较不同校正方法的结果，分析稀有种对多样性估计的影响  
+5. 讨论在生态调查中如何选择合适的多样性估计方法  
+
+### 练习3：最大似然估计与贝叶斯估计比较
+
+某生态学家研究某种昆虫的寿命分布，收集了20个个体的生存时间数据（单位：天）：
+
+```r
+survival_times <- c(15, 18, 22, 25, 28, 30, 32, 35, 38, 40,
+                    42, 45, 48, 50, 52, 55, 58, 60, 62, 65)
+```
+
+假设该昆虫的寿命服从指数分布，其概率密度函数为：
+$$f(x) = \lambda e^{-\lambda x}, \quad x > 0$$
+
+1. 使用最大似然估计方法估计指数分布的参数$\lambda$  
+2. 假设先验分布为Gamma分布（形状参数α=2，速率参数β=0.1），使用贝叶斯估计方法估计$\lambda$  
+3. 比较两种估计方法的结果和置信区间/可信区间  
+4. 讨论最大似然估计和贝叶斯估计在生态学应用中的优缺点  
+5. 分析小样本情况下两种估计方法的可靠性  

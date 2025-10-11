@@ -1,4 +1,4 @@
-# 简单线性回归模型
+# 线性回归模型
 
 
 
@@ -171,7 +171,7 @@ abline(lm(growth_rate ~ temperature, data = forest_survey_data),
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-4-1.png" alt="林小雨的森林调查数据：温度与植物生长速率的关系散点图及线性回归线。图中显示温度从10℃到30℃时，植物生长速率呈现明显的正相关关系，线性回归线（红色）表明温度每升高1℃，生长速率平均增加约0.5单位。" width="672" />
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-4-1.png" alt="林小雨的森林调查数据：温度与植物生长速率的关系散点图及线性回归线。图中显示温度从10℃到30℃时，植物生长速率呈现明显的正相关关系，线性回归线（红色）表明温度每升高1℃，生长速率平均增加约0.5单位。" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-4)林小雨的森林调查数据：温度与植物生长速率的关系散点图及线性回归线。图中显示温度从10℃到30℃时，植物生长速率呈现明显的正相关关系，线性回归线（红色）表明温度每升高1℃，生长速率平均增加约0.5单位。</p>
 </div>
 
@@ -182,29 +182,18 @@ abline(lm(growth_rate ~ temperature, data = forest_survey_data),
 model <- lm(growth_rate ~ temperature, data = forest_survey_data)
 
 # 显示模型摘要，包含系数估计和统计显著性
-summary(model)
+# 使用系数表格创建可显示的表格
+knitr::kable(summary(model)$coefficients, caption = "森林调查温度与植物生长速率的关系 - 系数估计")
 ```
 
-```
-## 
-## Call:
-## lm(formula = growth_rate ~ temperature, data = forest_survey_data)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -2.01120 -0.62223 -0.08193  0.66590  2.15966 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  2.10091    0.46818   4.487  4.5e-05 ***
-## temperature  0.49667    0.02246  22.118  < 2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.9353 on 48 degrees of freedom
-## Multiple R-squared:  0.9107,	Adjusted R-squared:  0.9088 
-## F-statistic: 489.2 on 1 and 48 DF,  p-value: < 2.2e-16
-```
+
+
+Table: (\#tab:unnamed-chunk-5)森林调查温度与植物生长速率的关系 - 系数估计
+
+|            |  Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
+|:-----------|---------:|----------:|---------:|------------------:|
+|(Intercept) | 2.1009145|  0.4681754|  4.487452|            4.5e-05|
+|temperature | 0.4966745|  0.0224552| 22.118467|            0.0e+00|
 
 
 ### 理解summary()函数的输出
@@ -289,7 +278,7 @@ for (r2 in r2_values) {
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-8-1.png" alt="不同R²值（决定系数）的生态学含义可视化。左图（R²=0.1）显示环境因子对生态响应影响较弱；中图（R²=0.5）表明环境因子是重要驱动因素；右图（R²=0.9）显示环境因子是生态响应的主要决定因素，模型具有很强的预测能力。" width="672" />
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-8-1.png" alt="不同R²值（决定系数）的生态学含义可视化。左图（R²=0.1）显示环境因子对生态响应影响较弱；中图（R²=0.5）表明环境因子是重要驱动因素；右图（R²=0.9）显示环境因子是生态响应的主要决定因素，模型具有很强的预测能力。" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-8)不同R²值（决定系数）的生态学含义可视化。左图（R²=0.1）显示环境因子对生态响应影响较弱；中图（R²=0.5）表明环境因子是重要驱动因素；右图（R²=0.9）显示环境因子是生态响应的主要决定因素，模型具有很强的预测能力。</p>
 </div>
 
@@ -298,19 +287,6 @@ for (r2 in r2_values) {
 par(mfrow = c(1, 1))
 ```
 
-
-``` r
-# 结果解释：不同R²值的生态学含义
-cat("=== 不同R²值的生态学解释 ===\n
-R² = 0.1 (左图): 模型只能解释10%的变异，表明环境因子对生态响应的影响很弱，
-    大部分变异由其他未考虑因素决定
-
-R² = 0.5 (中图): 模型解释了50%的变异，表明环境因子是重要的驱动因素，
-    但仍有相当一部分变异需要其他解释
-
-R² = 0.9 (右图): 模型解释了90%的变异，表明环境因子是生态响应的主要决定因素，
-    模型具有很强的预测能力\n")
-```
 
 ```
 ## === 不同R²值的生态学解释 ===
@@ -398,21 +374,10 @@ text(2, 0.1, "真实变量数量", srt = 90, col = "darkgreen", cex = 0.8)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-12-1.png" alt="R²与调整R²随自变量数量变化的关系。蓝色线显示R²随变量增加持续上升，即使添加无关变量；红色线显示调整R²在真实变量数量（2个）后开始下降，惩罚模型复杂度，避免过度拟合。" width="672" />
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-12-1.png" alt="R²与调整R²随自变量数量变化的关系。蓝色线显示R²随变量增加持续上升，即使添加无关变量；红色线显示调整R²在真实变量数量（2个）后开始下降，惩罚模型复杂度，避免过度拟合。" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-12)R²与调整R²随自变量数量变化的关系。蓝色线显示R²随变量增加持续上升，即使添加无关变量；红色线显示调整R²在真实变量数量（2个）后开始下降，惩罚模型复杂度，避免过度拟合。</p>
 </div>
 
-
-``` r
-# 结果解释：R²与调整R²的差异
-cat("=== R²与调整R²差异演示 ===\n
-当添加无关变量时：
-- R²持续增加（蓝色线），即使添加的是随机噪声
-- 调整R²先增加后减少（红色线），惩罚模型复杂度
-- 最优模型在自变量数量=2时（真实关系）
-
-生态学启示：使用调整R²选择模型，避免过度拟合\n")
-```
 
 ```
 ## === R²与调整R²差异演示 ===
@@ -477,24 +442,14 @@ abline(model_nonsig, col = "red", lwd = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-14-1.png" alt="整体模型显著性比较。左图显示显著模型（p &lt; 0.05），环境因子对生态响应有显著影响；右图显示不显著模型（p &gt; 0.05），没有证据表明环境因子有显著影响。" width="672" />
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-14-1.png" alt="整体模型显著性比较。左图显示显著模型（p &lt; 0.05），环境因子对生态响应有显著影响；右图显示不显著模型（p &gt; 0.05），没有证据表明环境因子有显著影响。" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-14)整体模型显著性比较。左图显示显著模型（p < 0.05），环境因子对生态响应有显著影响；右图显示不显著模型（p > 0.05），没有证据表明环境因子有显著影响。</p>
 </div>
 
 ``` r
 par(mfrow = c(1, 1))
-
-# 解释整体模型显著性
-cat("=== 整体模型显著性解释 ===\n
-显著模型 (左图):
-- p =", round(p_sig, 4), "< 0.05
-- 拒绝原假设：环境因子对生态响应有显著影响
-- 生态学意义：所研究的生态关系确实存在\n\n
-不显著模型 (右图):
-- p =", round(p_nonsig, 4), "> 0.05
-- 不能拒绝原假设：没有证据表明环境因子有显著影响
-- 生态学意义：可能需要考虑其他环境因子或更大的样本量\n")
 ```
+
 
 ```
 ## === 整体模型显著性解释 ===
@@ -548,8 +503,8 @@ plot(model, which = 1, main = "残差 vs 拟合值图")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-16-1.png" alt="残差 vs 拟合值图。检查线性性和同方差性假设，理想情况下残差应随机分布在水平线y=0周围，无明显的模式或趋势。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-16)残差 vs 拟合值图。检查线性性和同方差性假设，理想情况下残差应随机分布在水平线y=0周围，无明显的模式或趋势。</p>
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-17-1.png" alt="残差 vs 拟合值图。检查线性性和同方差性假设，理想情况下残差应随机分布在水平线y=0周围，无明显的模式或趋势。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-17)残差 vs 拟合值图。检查线性性和同方差性假设，理想情况下残差应随机分布在水平线y=0周围，无明显的模式或趋势。</p>
 </div>
 
 **残差 vs 拟合值图**主要用于检查线性性和同方差性两个重要假设。在理想情况下，残差应该随机分布在水平线y=0周围，没有任何明显的模式。如果残差呈现U形或倒U形分布，这往往暗示着非线性关系的存在。例如，在研究植物生长与温度的关系时，如果存在最适温度范围，残差就可能呈现U形模式。另一方面，如果残差随着拟合值的增大而扩散，形成所谓的"喇叭形"模式，这表明存在异方差性问题。在生态学中，这种异方差性现象十分常见，比如物种丰富度在资源丰富的地区变异较小，而在资源贫瘠的地区变异较大。
@@ -562,8 +517,8 @@ plot(model, which = 2, main = "正态Q-Q图")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-17-1.png" alt="正态Q-Q图。检查残差的正态性假设，理想情况下标准化残差应大致沿着45度对角线分布，无系统性偏离。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-17)正态Q-Q图。检查残差的正态性假设，理想情况下标准化残差应大致沿着45度对角线分布，无系统性偏离。</p>
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-18-1.png" alt="正态Q-Q图。检查残差的正态性假设，理想情况下标准化残差应大致沿着45度对角线分布，无系统性偏离。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-18)正态Q-Q图。检查残差的正态性假设，理想情况下标准化残差应大致沿着45度对角线分布，无系统性偏离。</p>
 </div>
 
 **正态Q-Q图**专门用于评估残差的正态性。理想情况下，标准化残差应该大致沿着45度对角线分布。轻微的尾部偏离通常是可以接受的，但如果出现系统性偏离，特别是S形或弯曲模式，就表明残差不服从正态分布。生态学数据经常面临正态性挑战，特别是计数数据（如个体数量）和比例数据（如覆盖率）。当发现严重的非正态性时，我们需要考虑数据变换或使用更适合的统计模型。
@@ -577,8 +532,8 @@ plot(model, which = 3, main = "尺度-位置图")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-18-1.png" alt="尺度-位置图。检查同方差性假设，展示标准化残差的平方根与拟合值的关系，理想情况下点应围绕水平线随机分布。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-18)尺度-位置图。检查同方差性假设，展示标准化残差的平方根与拟合值的关系，理想情况下点应围绕水平线随机分布。</p>
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-19-1.png" alt="尺度-位置图。检查同方差性假设，展示标准化残差的平方根与拟合值的关系，理想情况下点应围绕水平线随机分布。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-19)尺度-位置图。检查同方差性假设，展示标准化残差的平方根与拟合值的关系，理想情况下点应围绕水平线随机分布。</p>
 </div>
 
 **尺度-位置图**提供了另一种检查同方差性的视角。这个图展示了标准化残差的平方根与拟合值的关系。理想情况下，点应该围绕水平线随机分布。如果出现明显的上升或下降趋势，就表明存在异方差性。在生态学研究中，这种异方差性往往与环境条件的极端性相关。例如，在干旱胁迫严重的地区，植物生长速率的变异可能显著增大；而在适宜的环境中，变异相对较小。
@@ -592,8 +547,8 @@ plot(model, which = 5, main = "残差 vs 杠杆图")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-19-1.png" alt="残差 vs 杠杆图。识别异常值和有影响的观测点，特别关注同时具有高杠杆和大残差的点，这些点可能对模型结果产生不成比例的影响。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-19)残差 vs 杠杆图。识别异常值和有影响的观测点，特别关注同时具有高杠杆和大残差的点，这些点可能对模型结果产生不成比例的影响。</p>
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-20-1.png" alt="残差 vs 杠杆图。识别异常值和有影响的观测点，特别关注同时具有高杠杆和大残差的点，这些点可能对模型结果产生不成比例的影响。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-20)残差 vs 杠杆图。识别异常值和有影响的观测点，特别关注同时具有高杠杆和大残差的点，这些点可能对模型结果产生不成比例的影响。</p>
 </div>
 
 **残差 vs 杠杆图**帮助我们识别异常值和有影响的观测点。在这个图中，我们需要特别关注那些同时具有高杠杆和大残差的点。高杠杆点是指在自变量空间中位置异常的观测，它们对回归线的位置有较大影响；大残差点则是模型预测效果很差的观测。在生态调查中，这些有影响的点可能代表着特殊的生境类型或异常的环境条件，需要仔细检查其生态学合理性。Cook's距离等高线提供了判断观测点影响程度的参考标准。
@@ -666,54 +621,13 @@ maple_model <- lm(height ~ dbh,
 ```
 
 
-``` r
-# 结果输出：整体模型结果
-cat("=== 整体回归模型结果 ===\n")
-```
+Table: (\#tab:unnamed-chunk-23)整体回归模型结果
 
-```
-## === 整体回归模型结果 ===
-```
+|            |  Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
+|:-----------|---------:|----------:|---------:|------------------:|
+|(Intercept) | 1.4358832|  0.6029381|  2.381477|          0.0193989|
+|dbh         | 0.3733529|  0.0174277| 21.422995|          0.0000000|
 
-``` r
-summary(overall_model)
-```
-
-```
-## 
-## Call:
-## lm(formula = height ~ dbh, data = forest_data)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -3.7166 -1.4649 -0.1018  1.2996  4.9523 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)  1.43588    0.60294   2.381   0.0194 *  
-## dbh          0.37335    0.01743  21.423   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 2.028 on 88 degrees of freedom
-## Multiple R-squared:  0.8391,	Adjusted R-squared:  0.8373 
-## F-statistic: 458.9 on 1 and 88 DF,  p-value: < 2.2e-16
-```
-
-
-``` r
-# 结果输出：各树种模型比较
-cat("\n=== 各树种回归模型比较 ===\n
-橡树模型: 截距 =", round(coef(oak_model)[1], 3),
-    "斜率 =", round(coef(oak_model)[2], 3),
-    "R² =", round(summary(oak_model)$r.squared, 3), "\n
-松树模型: 截距 =", round(coef(pine_model)[1], 3),
-    "斜率 =", round(coef(pine_model)[2], 3),
-    "R² =", round(summary(pine_model)$r.squared, 3), "\n
-枫树模型: 截距 =", round(coef(maple_model)[1], 3),
-    "斜率 =", round(coef(maple_model)[2], 3),
-    "R² =", round(summary(maple_model)$r.squared, 3), "\n")
-```
 
 ```
 ## 
@@ -791,58 +705,15 @@ multi_model <- lm(biomass ~ temperature + precipitation + soil_nitrogen,
 ```
 
 
-``` r
-# 结果输出：模型摘要
-cat("=== 多元线性回归模型结果 ===\n")
-```
+Table: (\#tab:unnamed-chunk-27)多元线性回归模型结果
 
-```
-## === 多元线性回归模型结果 ===
-```
+|              |  Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
+|:-------------|---------:|----------:|---------:|------------------:|
+|(Intercept)   | 7.3208544|  1.4611221|  5.010433|          0.0000025|
+|temperature   | 0.5690084|  0.0504506| 11.278528|          0.0000000|
+|precipitation | 0.0022242|  0.0007307|  3.043824|          0.0030139|
+|soil_nitrogen | 0.3226185|  0.0177608| 18.164683|          0.0000000|
 
-``` r
-summary(multi_model)
-```
-
-```
-## 
-## Call:
-## lm(formula = biomass ~ temperature + precipitation + soil_nitrogen, 
-##     data = forest_multi_data)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -6.0671 -1.2584  0.0455  1.3841  4.2720 
-## 
-## Coefficients:
-##                Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)   7.3208544  1.4611221   5.010 2.47e-06 ***
-## temperature   0.5690084  0.0504506  11.279  < 2e-16 ***
-## precipitation 0.0022242  0.0007307   3.044  0.00301 ** 
-## soil_nitrogen 0.3226185  0.0177608  18.165  < 2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 2.058 on 96 degrees of freedom
-## Multiple R-squared:  0.8338,	Adjusted R-squared:  0.8286 
-## F-statistic: 160.6 on 3 and 96 DF,  p-value: < 2.2e-16
-```
-
-
-``` r
-# 结果解释：系数生态学含义
-cat("\n=== 生态学解释 ===\n
-在控制其他变量的情况下：
-
-- 温度每升高1°C，植物生物量平均增加",
-    round(coef(multi_model)["temperature"], 3), "单位
-
-- 降水量每增加1mm，植物生物量平均增加",
-    round(coef(multi_model)["precipitation"], 3), "单位
-
-- 土壤氮含量每增加1ppm，植物生物量平均增加",
-    round(coef(multi_model)["soil_nitrogen"], 3), "单位\n")
-```
 
 ```
 ## 
@@ -970,82 +841,37 @@ bird_data_full <- data.frame(
 full_model <- lm(richness ~ area + vegetation + water_distance +
                    soil_ph + elevation + human_disturbance,
                  data = bird_data_full)
-
-cat("=== 完整模型结果 ===\n")
 ```
 
-```
-## === 完整模型结果 ===
-```
 
-``` r
-print(summary(full_model))
-```
+Table: (\#tab:unnamed-chunk-30)完整模型结果
 
-```
-## 
-## Call:
-## lm(formula = richness ~ area + vegetation + water_distance + 
-##     soil_ph + elevation + human_disturbance, data = bird_data_full)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -23.739  -8.876  -0.930   4.640 100.871 
-## 
-## Coefficients:
-##                     Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)        5.4050454 12.9706398   0.417  0.67785    
-## area               0.2709460  0.0573412   4.725 8.14e-06 ***
-## vegetation        21.2671960  6.7996785   3.128  0.00235 ** 
-## water_distance    -4.5177805  1.0699676  -4.222 5.63e-05 ***
-## soil_ph           -0.9887673  1.4002666  -0.706  0.48187    
-## elevation          0.0004004  0.0067570   0.059  0.95288    
-## human_disturbance  8.5849872  5.9294367   1.448  0.15102    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 15.99 on 93 degrees of freedom
-## Multiple R-squared:  0.3671,	Adjusted R-squared:  0.3263 
-## F-statistic: 8.991 on 6 and 93 DF,  p-value: 9.633e-08
-```
+|                  |   Estimate| Std. Error|    t value| Pr(>&#124;t&#124;)|
+|:-----------------|----------:|----------:|----------:|------------------:|
+|(Intercept)       |  5.4050454| 12.9706398|  0.4167139|          0.6778480|
+|area              |  0.2709460|  0.0573412|  4.7251516|          0.0000081|
+|vegetation        | 21.2671960|  6.7996785|  3.1276767|          0.0023525|
+|water_distance    | -4.5177805|  1.0699676| -4.2223528|          0.0000563|
+|soil_ph           | -0.9887673|  1.4002666| -0.7061279|          0.4818738|
+|elevation         |  0.0004004|  0.0067570|  0.0592501|          0.9528800|
+|human_disturbance |  8.5849872|  5.9294367|  1.4478588|          0.1510194|
+
 
 ``` r
 # 2. 逐步回归选择
-cat("\n=== 逐步回归变量选择 ===\n")
-```
-
-```
-## 
-## === 逐步回归变量选择 ===
-```
-
-``` r
 step_model <- step(full_model, direction = "both", trace = 0)
-print(summary(step_model))
 ```
 
-```
-## 
-## Call:
-## lm(formula = richness ~ area + vegetation + water_distance, data = bird_data_full)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -23.548  -8.277  -1.514   4.553 103.281 
-## 
-## Coefficients:
-##                Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)     4.64438    5.25487   0.884  0.37900    
-## area            0.26143    0.05609   4.661 1.02e-05 ***
-## vegetation     19.44021    6.48292   2.999  0.00345 ** 
-## water_distance -4.46163    1.06426  -4.192 6.15e-05 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 15.94 on 96 degrees of freedom
-## Multiple R-squared:  0.3509,	Adjusted R-squared:  0.3306 
-## F-statistic:  17.3 on 3 and 96 DF,  p-value: 4.672e-09
-```
+
+Table: (\#tab:unnamed-chunk-32)逐步回归模型结果
+
+|               |   Estimate| Std. Error|    t value| Pr(>&#124;t&#124;)|
+|:--------------|----------:|----------:|----------:|------------------:|
+|(Intercept)    |  4.6443806|  5.2548668|  0.8838246|          0.3789990|
+|area           |  0.2614311|  0.0560943|  4.6605677|          0.0000102|
+|vegetation     | 19.4402062|  6.4829201|  2.9986805|          0.0034529|
+|water_distance | -4.4616331|  1.0642605| -4.1922379|          0.0000615|
+
 
 ``` r
 # 3. 基于AIC的模型比较
@@ -1064,13 +890,8 @@ model2 <- lm(richness ~ area + vegetation + water_distance,
              data = bird_data_full)
 model3 <- lm(richness ~ area + vegetation + water_distance + soil_ph,
              data = bird_data_full)
-
-# 计算AIC
-cat("模型1 (面积+植被) AIC:", AIC(model1), "
-模型2 (面积+植被+水源) AIC:", AIC(model2), "
-模型3 (面积+植被+水源+pH) AIC:", AIC(model3), "
-逐步回归模型 AIC:", AIC(step_model), "\n")
 ```
+
 
 ```
 ## 模型1 (面积+植被) AIC: 858.2375 
@@ -1079,58 +900,33 @@ cat("模型1 (面积+植被) AIC:", AIC(model1), "
 ## 逐步回归模型 AIC: 843.4262
 ```
 
+
 ``` r
 # 4. 变量重要性分析
-cat("\n=== 变量重要性分析 ===\n")
-```
-
-```
-## 
-## === 变量重要性分析 ===
-```
-
-``` r
 library(relaimpo)
-calc.relimp(full_model, type = "lmg", rela = TRUE)
+importance_result <- calc.relimp(full_model, type = "lmg", rela = TRUE)
+
+# 创建变量重要性柱状图
+importance_df <- data.frame(
+  Variable = names(importance_result$lmg),
+  Importance = importance_result$lmg
+)
+
+library(ggplot2)
+ggplot(importance_df, aes(x = reorder(Variable, Importance), y = Importance)) +
+  geom_col(fill = "steelblue", alpha = 0.8) +
+  coord_flip() +
+  labs(title = "变量相对重要性 (LMG方法)",
+       x = "变量",
+       y = "相对重要性") +
+  theme_minimal()
 ```
 
-```
-## Response variable: richness 
-## Total response variance: 379.3757 
-## Analysis based on 100 observations 
-## 
-## 6 Regressors: 
-## area vegetation water_distance soil_ph elevation human_disturbance 
-## Proportion of variance explained by model: 36.71%
-## Metrics are normalized to sum to 100% (rela=TRUE). 
-## 
-## Relative importance metrics: 
-## 
-##                           lmg
-## area              0.401511912
-## vegetation        0.211355298
-## water_distance    0.345420069
-## soil_ph           0.020709759
-## elevation         0.006270435
-## human_disturbance 0.014732527
-## 
-## Average coefficients for different model sizes: 
-## 
-##                             1X          2Xs          3Xs          4Xs
-## area               0.261910328  0.260826111  0.261400999  0.263425717
-## vegetation        23.919844372 23.020499060 22.302240628 21.769640738
-## water_distance    -4.704467439 -4.640948652 -4.594789700 -4.561511242
-## soil_ph           -1.901398552 -1.669703809 -1.469864414 -1.294618510
-## elevation         -0.005690002 -0.004506942 -0.003333422 -0.002139351
-## human_disturbance -2.346412512  0.075661238  2.374172895  4.553604420
-##                             5Xs           6Xs
-## area               0.2666765096  0.2709459599
-## vegetation        21.4247393369 21.2671960384
-## water_distance    -4.5369571984 -4.5177805044
-## soil_ph           -1.1367057212 -0.9887673133
-## elevation         -0.0009011426  0.0004003519
-## human_disturbance  6.6206690520  8.5849872158
-```
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/variable-importance-plot-1.png" alt="变量相对重要性柱状图：使用LMG方法计算的各预测变量对模型解释的相对贡献度，数值越大表示变量在解释响应变量变异中的重要性越高" width="80%" />
+<p class="caption">(\#fig:variable-importance-plot)变量相对重要性柱状图：使用LMG方法计算的各预测变量对模型解释的相对贡献度，数值越大表示变量在解释响应变量变异中的重要性越高</p>
+</div>
+
 
 ``` r
 # 5. 多重共线性诊断
@@ -1153,14 +949,6 @@ print(vif_values)
 ##          1.041265          1.111093          1.019863          1.044075 
 ##         elevation human_disturbance 
 ##          1.056749          1.102172
-```
-
-``` r
-# 解释VIF值
-cat("\nVIF值解释：\n
-- VIF < 5: 多重共线性可接受
-- VIF 5-10: 存在中等多重共线性
-- VIF > 10: 严重多重共线性，需要处理\n")
 ```
 
 ```
@@ -1253,32 +1041,21 @@ cat("=== 数据探索 ===\n")
 ```
 
 ``` r
-summary(forest_ecosystem_data)
+knitr::kable(summary(forest_ecosystem_data), caption = "数据框摘要")
 ```
 
-```
-##     richness          area          vegetation     water_distance  
-##  Min.   : 1.00   Min.   : 1.052   Min.   :0.1107   Min.   :0.1431  
-##  1st Qu.: 6.00   1st Qu.:29.358   1st Qu.:0.2462   1st Qu.:0.8951  
-##  Median :10.00   Median :46.215   Median :0.4880   Median :2.4927  
-##  Mean   :12.47   Mean   :49.982   Mean   :0.4783   Mean   :2.5488  
-##  3rd Qu.:17.00   3rd Qu.:71.325   3rd Qu.:0.6927   3rd Qu.:4.0514  
-##  Max.   :47.00   Max.   :97.365   Max.   :0.8962   Max.   :4.9714  
-##     soil_ph        elevation     precipitation     canopy_cover   
-##  Min.   :4.506   Min.   :123.1   Min.   : 503.1   Min.   :0.2039  
-##  1st Qu.:5.233   1st Qu.:420.1   1st Qu.: 798.9   1st Qu.:0.4133  
-##  Median :6.172   Median :678.0   Median :1032.9   Median :0.5919  
-##  Mean   :6.348   Mean   :628.0   Mean   :1033.5   Mean   :0.5752  
-##  3rd Qu.:7.350   3rd Qu.:845.7   3rd Qu.:1252.1   3rd Qu.:0.7574  
-##  Max.   :8.471   Max.   :990.3   Max.   :1492.8   Max.   :0.8795  
-##  human_disturbance
-##  Min.   :0.00419  
-##  1st Qu.:0.34514  
-##  Median :0.59159  
-##  Mean   :0.55623  
-##  3rd Qu.:0.78908  
-##  Max.   :0.99831
-```
+
+
+Table: (\#tab:unnamed-chunk-38)数据框摘要
+
+|   |   richness   |     area      |  vegetation   |water_distance |   soil_ph    |  elevation   |precipitation  | canopy_cover  |human_disturbance |
+|:--|:-------------|:--------------|:--------------|:--------------|:-------------|:-------------|:--------------|:--------------|:-----------------|
+|   |Min.   : 1.00 |Min.   : 1.052 |Min.   :0.1107 |Min.   :0.1431 |Min.   :4.506 |Min.   :123.1 |Min.   : 503.1 |Min.   :0.2039 |Min.   :0.00419   |
+|   |1st Qu.: 6.00 |1st Qu.:29.358 |1st Qu.:0.2462 |1st Qu.:0.8951 |1st Qu.:5.233 |1st Qu.:420.1 |1st Qu.: 798.9 |1st Qu.:0.4133 |1st Qu.:0.34514   |
+|   |Median :10.00 |Median :46.215 |Median :0.4880 |Median :2.4927 |Median :6.172 |Median :678.0 |Median :1032.9 |Median :0.5919 |Median :0.59159   |
+|   |Mean   :12.47 |Mean   :49.982 |Mean   :0.4783 |Mean   :2.5488 |Mean   :6.348 |Mean   :628.0 |Mean   :1033.5 |Mean   :0.5752 |Mean   :0.55623   |
+|   |3rd Qu.:17.00 |3rd Qu.:71.325 |3rd Qu.:0.6927 |3rd Qu.:4.0514 |3rd Qu.:7.350 |3rd Qu.:845.7 |3rd Qu.:1252.1 |3rd Qu.:0.7574 |3rd Qu.:0.78908   |
+|   |Max.   :47.00 |Max.   :97.365 |Max.   :0.8962 |Max.   :4.9714 |Max.   :8.471 |Max.   :990.3 |Max.   :1492.8 |Max.   :0.8795 |Max.   :0.99831   |
 
 ``` r
 # 绘制散点图矩阵（只显示部分变量以避免图形过于拥挤）
@@ -1288,8 +1065,8 @@ pairs(forest_ecosystem_data[, c("richness", "area", "vegetation",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-30-1.png" alt="物种丰富度与主要环境因子的散点图矩阵。展示栖息地面积、植被密度、距水源距离和土壤pH值与物种丰富度之间的两两关系，用于初步探索变量间的相关性和分布特征。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-30)物种丰富度与主要环境因子的散点图矩阵。展示栖息地面积、植被密度、距水源距离和土壤pH值与物种丰富度之间的两两关系，用于初步探索变量间的相关性和分布特征。</p>
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-38-1.png" alt="物种丰富度与主要环境因子的散点图矩阵。展示栖息地面积、植被密度、距水源距离和土壤pH值与物种丰富度之间的两两关系，用于初步探索变量间的相关性和分布特征。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-38)物种丰富度与主要环境因子的散点图矩阵。展示栖息地面积、植被密度、距水源距离和土壤pH值与物种丰富度之间的两两关系，用于初步探索变量间的相关性和分布特征。</p>
 </div>
 
 ### 完整模型拟合
@@ -1299,52 +1076,29 @@ pairs(forest_ecosystem_data[, c("richness", "area", "vegetation",
 
 ``` r
 # 2. 拟合完整多元线性回归模型
-cat("\n=== 完整模型拟合 ===\n")
-```
-
-```
-## 
-## === 完整模型拟合 ===
-```
-
-``` r
 full_model <- lm(richness ~ area + vegetation + water_distance +
                    soil_ph + elevation + precipitation + canopy_cover +
                    human_disturbance,
                  data = forest_ecosystem_data)
 
-print(summary(full_model))
+knitr::kable(summary(full_model)$coefficients, caption = "完整多元线性回归模型结果")
 ```
 
-```
-## 
-## Call:
-## lm(formula = richness ~ area + vegetation + water_distance + 
-##     soil_ph + elevation + precipitation + canopy_cover + human_disturbance, 
-##     data = forest_ecosystem_data)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -9.1507 -3.9457 -0.2001  3.9610 18.5651 
-## 
-## Coefficients:
-##                     Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)        1.0703826  5.9121852   0.181    0.857    
-## area               0.2159594  0.0239462   9.019 2.17e-13 ***
-## vegetation        11.6581168  2.7555428   4.231 6.85e-05 ***
-## water_distance    -2.8333733  0.4217195  -6.719 3.84e-09 ***
-## soil_ph            0.3317705  0.5335264   0.622    0.536    
-## elevation         -0.0014548  0.0025624  -0.568    0.572    
-## precipitation      0.0003581  0.0024916   0.144    0.886    
-## canopy_cover      -1.7460966  3.3155084  -0.527    0.600    
-## human_disturbance  3.0531542  2.3336352   1.308    0.195    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 5.665 on 71 degrees of freedom
-## Multiple R-squared:  0.6439,	Adjusted R-squared:  0.6038 
-## F-statistic: 16.05 on 8 and 71 DF,  p-value: 2.951e-13
-```
+
+
+Table: (\#tab:unnamed-chunk-39)完整多元线性回归模型结果
+
+|                  |   Estimate| Std. Error|    t value| Pr(>&#124;t&#124;)|
+|:-----------------|----------:|----------:|----------:|------------------:|
+|(Intercept)       |  1.0703826|  5.9121852|  0.1810469|          0.8568466|
+|area              |  0.2159594|  0.0239462|  9.0185272|          0.0000000|
+|vegetation        | 11.6581168|  2.7555428|  4.2307877|          0.0000685|
+|water_distance    | -2.8333733|  0.4217195| -6.7186213|          0.0000000|
+|soil_ph           |  0.3317705|  0.5335264|  0.6218446|          0.5360358|
+|elevation         | -0.0014548|  0.0025624| -0.5677731|          0.5719801|
+|precipitation     |  0.0003581|  0.0024916|  0.1437284|          0.8861221|
+|canopy_cover      | -1.7460966|  3.3155084| -0.5266452|          0.6000815|
+|human_disturbance |  3.0531542|  2.3336352|  1.3083254|          0.1949827|
 
 ### 变量选择过程
 
@@ -1353,50 +1107,21 @@ print(summary(full_model))
 
 ``` r
 # 3. 变量选择过程
-cat("\n=== 变量选择过程 ===\n")
-```
-
-```
-## 
-## === 变量选择过程 ===
-```
-
-``` r
 # 3.1 逐步回归选择
-cat("--- 逐步回归变量选择 ---\n")
-```
-
-```
-## --- 逐步回归变量选择 ---
-```
-
-``` r
 step_model <- step(full_model, direction = "both", trace = 0)
-print(summary(step_model))
+knitr::kable(summary(step_model)$coefficients, caption = "逐步回归模型结果")
 ```
 
-```
-## 
-## Call:
-## lm(formula = richness ~ area + vegetation + water_distance, data = forest_ecosystem_data)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -10.0233  -3.5809   0.1092   3.2950  20.8582 
-## 
-## Coefficients:
-##                Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)     3.28269    1.99941   1.642    0.105    
-## area            0.21407    0.02262   9.466 1.72e-14 ***
-## vegetation     12.23310    2.60698   4.692 1.17e-05 ***
-## water_distance -2.88687    0.40929  -7.053 6.97e-10 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 5.577 on 76 degrees of freedom
-## Multiple R-squared:  0.6306,	Adjusted R-squared:  0.616 
-## F-statistic: 43.24 on 3 and 76 DF,  p-value: < 2.2e-16
-```
+
+
+Table: (\#tab:unnamed-chunk-40)逐步回归模型结果
+
+|               |   Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
+|:--------------|----------:|----------:|---------:|------------------:|
+|(Intercept)    |  3.2826905|  1.9994067|  1.641832|          0.1047567|
+|area           |  0.2140697|  0.0226151|  9.465779|          0.0000000|
+|vegetation     | 12.2330984|  2.6069842|  4.692433|          0.0000117|
+|water_distance | -2.8868698|  0.4092891| -7.053375|          0.0000000|
 
 **基于AIC的模型比较**
 
@@ -1405,27 +1130,14 @@ print(summary(step_model))
 
 ``` r
 # 3.2 基于AIC的模型比较
-cat("\n--- 基于AIC的模型比较 ---\n")
-```
-
-```
-## 
-## --- 基于AIC的模型比较 ---
-```
-
-``` r
 # 构建几个生态学上合理的候选模型
 model_simple <- lm(richness ~ area + vegetation, data = forest_ecosystem_data)
 model_water <- lm(richness ~ area + vegetation + water_distance,
                   data = forest_ecosystem_data)
 model_soil <- lm(richness ~ area + vegetation + water_distance + soil_ph,
                  data = forest_ecosystem_data)
-
-cat("简单模型 (面积+植被) AIC:", AIC(model_simple), "
-水源模型 (面积+植被+水源) AIC:", AIC(model_water), "
-土壤模型 (面积+植被+水源+pH) AIC:", AIC(model_soil), "
-逐步回归模型 AIC:", AIC(step_model), "\n")
 ```
+
 
 ```
 ## 简单模型 (面积+植被) AIC: 546.2091 
@@ -1462,13 +1174,6 @@ print(vif_full)
 ##          1.034408          1.093919          1.053213          1.074336
 ```
 
-``` r
-# 解释多重共线性问题
-cat("\n多重共线性评估：\n
-VIF > 10 的变量：", names(vif_full)[vif_full > 10], "
-建议移除高VIF变量以避免共线性问题\n")
-```
-
 ```
 ## 
 ## 多重共线性评估：
@@ -1494,46 +1199,24 @@ cat("\n=== 选择最优模型进行后续分析 ===\n")
 
 ``` r
 forest_model <- step_model  # 使用逐步回归选择的最优模型
-print(summary(forest_model))
+knitr::kable(summary(forest_model)$coefficients, caption = "最优模型结果")
 ```
 
-```
-## 
-## Call:
-## lm(formula = richness ~ area + vegetation + water_distance, data = forest_ecosystem_data)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -10.0233  -3.5809   0.1092   3.2950  20.8582 
-## 
-## Coefficients:
-##                Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)     3.28269    1.99941   1.642    0.105    
-## area            0.21407    0.02262   9.466 1.72e-14 ***
-## vegetation     12.23310    2.60698   4.692 1.17e-05 ***
-## water_distance -2.88687    0.40929  -7.053 6.97e-10 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 5.577 on 76 degrees of freedom
-## Multiple R-squared:  0.6306,	Adjusted R-squared:  0.616 
-## F-statistic: 43.24 on 3 and 76 DF,  p-value: < 2.2e-16
-```
+
+
+Table: (\#tab:unnamed-chunk-45)最优模型结果
+
+|               |   Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
+|:--------------|----------:|----------:|---------:|------------------:|
+|(Intercept)    |  3.2826905|  1.9994067|  1.641832|          0.1047567|
+|area           |  0.2140697|  0.0226151|  9.465779|          0.0000000|
+|vegetation     | 12.2330984|  2.6069842|  4.692433|          0.0000117|
+|water_distance | -2.8868698|  0.4092891| -7.053375|          0.0000000|
 
 **模型选择理由**
 
 **模型评估要点**：选择最优模型时，我们综合考虑了统计指标（AIC、R²）和生态学意义。一个好的模型应该既统计显著又具有明确的生态学解释。
 
-
-``` r
-# 5. 模型比较与选择理由
-cat("\n=== 模型选择理由 ===\n
-选择当前模型的原因：
-- AIC值最低：", AIC(forest_model), "
-- 调整R²较高：", round(summary(forest_model)$adj.r.squared, 3), "
-- 所有变量统计显著（p < 0.05）
-- 生态学意义明确\n")
-```
 
 ```
 ## 
@@ -1544,18 +1227,6 @@ cat("\n=== 模型选择理由 ===\n
 ## - 调整R²较高： 0.616 
 ## - 所有变量统计显著（p < 0.05）
 ## - 生态学意义明确
-```
-
-``` r
-# 6. 提取关键结果
-cat("\n=== 关键统计量 ===\n
-R² =", round(summary(forest_model)$r.squared, 3), "
-调整R² =", round(summary(forest_model)$adj.r.squared, 3), "
-F统计量 =", round(summary(forest_model)$fstatistic[1], 2), "
-p值 =", format.pval(pf(summary(forest_model)$fstatistic[1],
-                           summary(forest_model)$fstatistic[2],
-                           summary(forest_model)$fstatistic[3],
-                           lower.tail = FALSE), digits = 3), "\n")
 ```
 
 ```
@@ -1632,25 +1303,19 @@ for (var in selected_vars) {
 
 ``` r
 # 6. 置信区间
-cat("\n=== 95%置信区间 ===\n")
+knitr::kable(confint(forest_model), caption = "95%置信区间")
 ```
 
-```
-## 
-## === 95%置信区间 ===
-```
 
-``` r
-print(confint(forest_model))
-```
 
-```
-##                     2.5 %     97.5 %
-## (Intercept)    -0.6994730  7.2648540
-## area            0.1690278  0.2591116
-## vegetation      7.0408394 17.4253573
-## water_distance -3.7020397 -2.0716998
-```
+Table: (\#tab:unnamed-chunk-47)95%置信区间
+
+|               |      2.5 %|     97.5 %|
+|:--------------|----------:|----------:|
+|(Intercept)    | -0.6994730|  7.2648540|
+|area           |  0.1690278|  0.2591116|
+|vegetation     |  7.0408394| 17.4253573|
+|water_distance | -3.7020397| -2.0716998|
 
 ### 模型诊断与假设检验
 
@@ -1673,8 +1338,8 @@ plot(forest_model)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-38-1.png" alt="森林生态系统模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-38)森林生态系统模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。</p>
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-48-1.png" alt="森林生态系统模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-48)森林生态系统模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。</p>
 </div>
 
 ``` r
@@ -1737,13 +1402,8 @@ new_site <- data.frame(
 
 prediction <- predict(forest_model, newdata = new_site,
                       interval = "confidence")
-
-cat("\n=== 预测示例 ===\n
-对于面积为50公顷、植被密度0.7、距水源1.2km的栖息地：
-预测物种丰富度 =", round(prediction[1, "fit"], 1), "种
-95%置信区间: [", round(prediction[1, "lwr"], 1), ", ",
-    round(prediction[1, "upr"], 1), "]\n")
 ```
+
 
 ```
 ## 
@@ -1759,17 +1419,6 @@ cat("\n=== 预测示例 ===\n
 **模型评估要点**：模型比较是评估变量选择效果的关键环节。通过比较完整模型与选择模型在R²、调整R²和AIC等指标上的差异，我们可以量化变量选择带来的统计改善。在生态学中，这种比较不仅验证了统计方法的有效性，更重要的是证明了简约性原则在生态建模中的价值。
 
 
-``` r
-# 10. 模型比较：完整模型 vs 选择模型
-cat("\n=== 模型比较：完整模型 vs 选择模型 ===\n
-完整模型 R²:", round(summary(full_model)$r.squared, 3), "
-完整模型 调整R²:", round(summary(full_model)$adj.r.squared, 3), "
-完整模型 AIC:", round(AIC(full_model), 1), "\n
-选择模型 R²:", round(summary(forest_model)$r.squared, 3), "
-选择模型 调整R²:", round(summary(forest_model)$adj.r.squared, 3), "
-选择模型 AIC:", round(AIC(forest_model), 1), "\n")
-```
-
 ```
 ## 
 ## === 模型比较：完整模型 vs 选择模型 ===
@@ -1782,6 +1431,7 @@ cat("\n=== 模型比较：完整模型 vs 选择模型 ===\n
 ## 选择模型 调整R²: 0.616 
 ## 选择模型 AIC: 507.9
 ```
+
 
 ``` r
 # 计算模型简约性改善
@@ -1809,21 +1459,6 @@ if (aic_improvement > 2) {
 
 **模型评估要点**：最终模型选择的合理性不仅体现在统计指标上，更重要的是其生态学解释性。通过对比完整模型和选择模型的生态学含义，我们可以理解变量选择在生态学研究中的实际价值。一个好的生态模型应该既统计可靠又具有明确的生态学意义。
 
-
-``` r
-# 生态学解释对比
-cat("\n=== 生态学解释对比 ===\n
-完整模型包含所有8个环境因子，但其中部分因子可能：
-- 统计不显著
-- 与其他变量高度相关（多重共线性）
-- 生态学意义不明确
-
-经过变量选择后的模型：
-- 只保留了统计显著且生态学意义明确的因子
-- 减少了模型复杂度，提高了泛化能力
-- 提供了更清晰的生态机制解释
-- 避免了过度拟合的风险\n")
-```
 
 ```
 ## 
@@ -1970,16 +1605,10 @@ legend("topright",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-43-1.png" alt="物种丰富度与海拔关系的多项式回归分析。蓝色点为观测数据，红色虚线为线性回归线，绿色实线为二次多项式回归曲线。多项式模型更好地捕捉了物种丰富度随海拔变化的单峰分布模式。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-43)物种丰富度与海拔关系的多项式回归分析。蓝色点为观测数据，红色虚线为线性回归线，绿色实线为二次多项式回归曲线。多项式模型更好地捕捉了物种丰富度随海拔变化的单峰分布模式。</p>
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-55-1.png" alt="物种丰富度与海拔关系的多项式回归分析。蓝色点为观测数据，红色虚线为线性回归线，绿色实线为二次多项式回归曲线。多项式模型更好地捕捉了物种丰富度随海拔变化的单峰分布模式。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-55)物种丰富度与海拔关系的多项式回归分析。蓝色点为观测数据，红色虚线为线性回归线，绿色实线为二次多项式回归曲线。多项式模型更好地捕捉了物种丰富度随海拔变化的单峰分布模式。</p>
 </div>
 
-``` r
-# 模型比较
-cat("=== 模型比较 ===\n
-线性模型 R²:", round(summary(linear_model)$r.squared, 3), "
-多项式模型 R²:", round(summary(poly_model)$r.squared, 3), "\n")
-```
 
 ```
 ## === 模型比较 ===
@@ -1988,48 +1617,15 @@ cat("=== 模型比较 ===\n
 ## 多项式模型 R²: 0.924
 ```
 
-``` r
-# 多项式模型摘要
-cat("\n=== 多项式回归结果 ===\n")
-```
 
-```
-## 
-## === 多项式回归结果 ===
-```
 
-``` r
-print(summary(poly_model))
-```
+Table: (\#tab:unnamed-chunk-56)多项式模型摘要
 
-```
-## 
-## Call:
-## lm(formula = richness ~ poly(altitude, degree = 2), data = altitude_data)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -12.0340  -2.9942  -0.1333   3.3871  10.9728 
-## 
-## Coefficients:
-##                              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)                   65.6022     0.4571  143.51   <2e-16 ***
-## poly(altitude, degree = 2)1  -97.8444     4.5714  -21.40   <2e-16 ***
-## poly(altitude, degree = 2)2 -123.1864     4.5714  -26.95   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 4.571 on 97 degrees of freedom
-## Multiple R-squared:  0.9243,	Adjusted R-squared:  0.9227 
-## F-statistic: 592.1 on 2 and 97 DF,  p-value: < 2.2e-16
-```
-
-``` r
-# 生态学解释
-cat("\n=== 生态学解释 ===\n
-二次多项式模型显著改善了拟合效果，表明物种丰富度与海拔之间存在非线性关系。
-这种单峰分布模式在生态学中很常见，反映了物种对海拔梯度的最适响应。\n")
-```
+|                            |   Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
+|:---------------------------|----------:|----------:|---------:|------------------:|
+|(Intercept)                 |   65.60220|  0.4571385| 143.50617|                  0|
+|poly(altitude, degree = 2)1 |  -97.84435|  4.5713852| -21.40366|                  0|
+|poly(altitude, degree = 2)2 | -123.18639|  4.5713852| -26.94728|                  0|
 
 ```
 ## 
@@ -2061,14 +1657,8 @@ degree_1 <- lm(richness ~ poly(altitude, degree = 1), data = altitude_data)
 degree_2 <- lm(richness ~ poly(altitude, degree = 2), data = altitude_data)
 degree_3 <- lm(richness ~ poly(altitude, degree = 3), data = altitude_data)
 degree_4 <- lm(richness ~ poly(altitude, degree = 4), data = altitude_data)
-
-# 比较AIC值
-cat("=== 多项式阶数选择 ===\n
-1次多项式 AIC:", AIC(degree_1), "
-2次多项式 AIC:", AIC(degree_2), "
-3次多项式 AIC:", AIC(degree_3), "
-4次多项式 AIC:", AIC(degree_4), "\n")
 ```
+
 
 ```
 ## === 多项式阶数选择 ===
@@ -2079,29 +1669,17 @@ cat("=== 多项式阶数选择 ===\n
 ## 4次多项式 AIC: 596.1912
 ```
 
+
 ``` r
 # 选择最优模型
 best_degree <- which.min(c(AIC(degree_1), AIC(degree_2),
                            AIC(degree_3), AIC(degree_4)))
-cat("\n最优多项式阶数:", best_degree, "\n")
 ```
+
 
 ```
 ## 
 ## 最优多项式阶数: 2
-```
-
-``` r
-# 解释选择结果
-if (best_degree == 1) {
-  cat("线性模型最优，表明关系基本为线性\n")
-} else if (best_degree == 2) {
-  cat("二次多项式最优，表明存在单峰或U形关系\n")
-} else if (best_degree == 3) {
-  cat("三次多项式最优，表明存在更复杂的曲线关系\n")
-} else {
-  cat("高次多项式最优，需要谨慎解释，可能过度拟合\n")
-}
 ```
 
 ```
@@ -2168,7 +1746,7 @@ plot(species ~ altitude, data = overfit_forest_data,
      main = "林小雨的教训：多项式回归的过度拟合问题",
      xlab = "海拔",
      ylab = "物种丰富度",
-     pch = 16, col = "blue", cex = 1.5, ylim = c(0, 4))
+     pch = 16, col = "blue", cex = 1.5, ylim = c(0, 8))
 
 # 添加真实关系曲线（通常未知）
 lines(altitude_seq, 2 + 0.5 * altitude_seq - 0.05 * altitude_seq^2,
@@ -2189,8 +1767,8 @@ legend("topright",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-46-1.png" alt="多项式回归的过度拟合问题演示。蓝色点为观测数据，黑色虚线为真实关系，红色线为线性回归，绿色线为二次多项式，紫色线为7次多项式。高次多项式过度拟合训练数据，产生不合理的波动，泛化能力差。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-46)多项式回归的过度拟合问题演示。蓝色点为观测数据，黑色虚线为真实关系，红色线为线性回归，绿色线为二次多项式，紫色线为7次多项式。高次多项式过度拟合训练数据，产生不合理的波动，泛化能力差。</p>
+<img src="08-simple_linear_regressions_files/figure-html/unnamed-chunk-62-1.png" alt="多项式回归的过度拟合问题演示。蓝色点为观测数据，黑色虚线为真实关系，红色线为线性回归，绿色线为二次多项式，紫色线为7次多项式。高次多项式过度拟合训练数据，产生不合理的波动，泛化能力差。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-62)多项式回归的过度拟合问题演示。蓝色点为观测数据，黑色虚线为真实关系，红色线为线性回归，绿色线为二次多项式，紫色线为7次多项式。高次多项式过度拟合训练数据，产生不合理的波动，泛化能力差。</p>
 </div>
 
 ### 统计指标与交叉验证
@@ -2198,29 +1776,12 @@ legend("topright",
 **模型评估要点**：R²等拟合优度指标可能误导模型选择，因为它们总是随着模型复杂度增加而提高。交叉验证提供了更可靠的泛化能力评估，它通过模拟模型在新数据上的表现来识别过度拟合问题。
 
 
-``` r
-# 模型比较
-cat("=== 模型拟合优度比较 ===\n
-线性模型 R²:", round(summary(linear_model)$r.squared, 4), "
-二次多项式 R²:", round(summary(quadratic_model)$r.squared, 4), "
-7次多项式 R²:", round(summary(overfit_model)$r.squared, 4), "\n")
-```
-
 ```
 ## === 模型拟合优度比较 ===
 ## 
 ## 线性模型 R²: 0.2891 
 ## 二次多项式 R²: 0.5268 
 ## 7次多项式 R²: 0.9307
-```
-
-``` r
-# 展示过度拟合的数学本质
-cat("\n=== 过度拟合的数学解释 ===\n
-对于n个数据点，n-1次多项式可以完美通过所有点：
-数据点数量:", n_points, "
-多项式阶数:", 7, "
-自由度:", n_points - 8, "（负值表明过度参数化）\n")
 ```
 
 ```
@@ -2233,6 +1794,7 @@ cat("\n=== 过度拟合的数学解释 ===\n
 ## 自由度: 2 （负值表明过度参数化）
 ```
 
+
 ``` r
 # 计算训练误差和泛化误差（通过留一法交叉验证）
 # 由于数据量小，使用留一法交叉验证
@@ -2242,11 +1804,8 @@ library(boot)
 cv_quadratic <- cv.glm(overfit_forest_data, quadratic_model)$delta[1]
 # 7次多项式的留一法交叉验证误差
 cv_overfit <- cv.glm(overfit_forest_data, overfit_model)$delta[1]
-
-cat("\n=== 留一法交叉验证误差比较 ===\n
-二次多项式 CV误差:", round(cv_quadratic, 4), "
-7次多项式 CV误差:", round(cv_overfit, 4), "\n")
 ```
+
 
 ```
 ## 
@@ -2254,14 +1813,6 @@ cat("\n=== 留一法交叉验证误差比较 ===\n
 ## 
 ## 二次多项式 CV误差: NaN 
 ## 7次多项式 CV误差: NaN
-```
-
-``` r
-if (!is.na(cv_overfit) && !is.na(cv_quadratic) && cv_overfit > cv_quadratic) {
-  cat("✓ 二次多项式具有更好的泛化能力\n")
-} else {
-  cat("⚠ 7次多项式可能过度拟合训练数据\n")
-}
 ```
 
 ```
@@ -2343,3 +1894,122 @@ if (!is.na(cv_overfit) && !is.na(cv_quadratic) && cv_overfit > cv_quadratic) {
 通过本章的学习，我们跟随林小雨的足迹，从简单的线性关系到复杂的非线性模式，从单一因子分析到多因子综合评估，建立了完整的回归建模知识体系。更重要的是，我们理解了统计建模在生态学研究中的核心价值：用数学语言描述生态现象，用科学方法解决生态问题。
 
 ## 综合练习
+
+### 练习1：温度对植物光合作用速率的影响分析
+
+**背景**：生态学家王明在研究温带森林生态系统时，收集了不同温度条件下植物光合作用速率的数据。他希望通过线性回归分析来理解温度对光合作用的影响，并为森林管理提供科学依据。
+
+**数据**：
+```r
+# 模拟光合作用数据
+set.seed(2024)
+temperature <- seq(15, 35, length.out = 50)
+# 真实关系：光合作用速率 = 5 + 0.8×温度 - 0.02×温度² + 随机误差
+photosynthesis_rate <- 5 + 0.8 * temperature - 0.02 * temperature^2 + rnorm(50, 0, 1)
+
+plant_data <- data.frame(
+  temperature = temperature,
+  photosynthesis = photosynthesis_rate
+)
+```
+
+**任务**：  
+1. 使用简单线性回归分析温度与光合作用速率的关系  
+2. 计算并解释回归系数、R²和调整R²  
+3. 进行回归诊断，检查模型假设是否满足  
+4. 尝试使用多项式回归改进模型，并比较两种模型的优劣  
+5. 基于最佳模型，预测在25°C和30°C时的光合作用速率  
+
+**思考问题**：  
+- 线性模型是否充分描述了温度与光合作用的关系？为什么？  
+- 多项式回归在什么情况下比线性回归更合适？  
+- 如何解释多项式回归中二次项的生态学意义？  
+
+---
+
+### 练习2：森林鸟类多样性的多因子分析
+
+**背景**：生态学家李华在自然保护区进行了鸟类调查，同时测量了多个环境因子。她希望了解哪些环境因子对鸟类物种丰富度影响最大，并建立预测模型。
+
+**数据**：
+```r
+# 模拟鸟类多样性数据
+set.seed(2024)
+n_sites <- 60
+habitat_area <- runif(n_sites, 10, 100)        # 栖息地面积(公顷)
+vegetation_density <- runif(n_sites, 0.3, 0.9) # 植被密度
+canopy_cover <- runif(n_sites, 0.4, 0.95)      # 林冠覆盖度
+distance_to_edge <- runif(n_sites, 0.1, 2)     # 距林缘距离(km)
+soil_moisture <- runif(n_sites, 0.2, 0.8)      # 土壤湿度
+
+# 真实关系：鸟类丰富度主要受栖息地面积和植被密度影响
+bird_richness <- rpois(n_sites,
+                       exp(2.0 + 0.015 * habitat_area +
+                             1.5 * vegetation_density +
+                             rnorm(n_sites, 0, 0.3)))
+
+bird_data <- data.frame(
+  richness = bird_richness,
+  area = habitat_area,
+  vegetation = vegetation_density,
+  canopy = canopy_cover,
+  edge_distance = distance_to_edge,
+  soil_moisture = soil_moisture
+)
+```
+
+**任务**：  
+1. 使用多元线性回归分析所有环境因子对鸟类丰富度的影响  
+2. 进行变量选择，使用逐步回归方法识别重要环境因子  
+3. 比较完整模型与选择模型的AIC、R²和调整R²  
+4. 进行多重共线性诊断，检查变量间的相关性  
+5. 对最终模型进行回归诊断，确保模型假设满足  
+
+**思考问题**：  
+- 为什么变量选择在生态学研究中很重要？  
+- 如何平衡统计显著性和生态学意义？  
+- 多重共线性对模型解释有什么影响？  
+
+
+
+### 练习3：湖泊生态系统营养级关系的建模
+
+**背景**：生态学家张伟在研究湖泊生态系统时，发现浮游植物生物量与水体营养盐浓度存在复杂关系。他希望通过统计建模来理解这种关系，并为湖泊管理提供建议。
+
+**数据**：
+```r
+# 模拟湖泊生态系统数据
+set.seed(2024)
+n_lakes <- 45
+nutrient_concentration <- runif(n_lakes, 5, 50)  # 营养盐浓度(μg/L)
+water_temperature <- runif(n_lakes, 10, 25)      # 水温(°C)
+light_intensity <- runif(n_lakes, 100, 500)      # 光照强度(μmol/m²/s)
+
+# 真实关系：浮游植物生物量呈现饱和增长模式
+# 使用Michaelis-Menten动力学模拟
+max_biomass <- 100  # 最大生物量
+half_saturation <- 20  # 半饱和常数
+
+phytoplankton_biomass <- max_biomass * nutrient_concentration /
+  (half_saturation + nutrient_concentration) +
+  rnorm(n_lakes, 0, 8)
+
+lake_data <- data.frame(
+  biomass = phytoplankton_biomass,
+  nutrient = nutrient_concentration,
+  temperature = water_temperature,
+  light = light_intensity
+)
+```
+
+**任务**：  
+1. 使用简单线性回归分析营养盐浓度与浮游植物生物量的关系  
+2. 尝试使用二次多项式回归描述非线性关系  
+3. 比较线性模型和多项式模型的拟合效果  
+4. 进行模型诊断，识别可能的异方差性或非线性问题  
+5. 讨论哪种模型更适合描述这种生态关系  
+
+**思考问题**：  
+- 为什么生态学中经常遇到非线性关系？  
+- 如何判断线性模型是否足够描述生态关系？  
+- 在什么情况下应该考虑更复杂的非线性模型？  

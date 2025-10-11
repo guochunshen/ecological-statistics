@@ -1,4 +1,4 @@
-# 统计编程基础
+# AI辅助编程基础
 
 
 
@@ -115,7 +115,7 @@
 
 在AI时代，编程教育的重点已从特定语言的语法细节转向通用的编程思维框架。通用编程思维基础之所以重要，是因为它提供了跨语言、跨工具的问题解决能力。无论使用R、Python还是其他编程语言，无论与哪种AI工具协作，扎实的编程思维都是有效沟通和高效解决问题的基石。这种思维框架确保学生能够理解计算的基本原理，而不仅仅是记忆特定API的使用方法。
 
-接下来仅介绍任何编程语言都需要掌握的核心编程思维，包括变量与常量、数据结构、算法与数据结构思维、编程核心概念等。如果需要参考有关R语言的详细资料，可参考本书的[附录1 R语言编程基础](#附录1-r语言编程基础)。
+接下来仅介绍任何编程语言都需要掌握的核心编程思维，包括变量与常量、数据结构、算法与数据结构思维、编程核心概念等。如果需要参考有关R语言的详细资料，可参考李东风老师的R语言教程(https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/index.html)。
 
 ### 编程核心概念
 
@@ -146,7 +146,7 @@
 
 
 <div class="figure" style="text-align: center">
-<img src="imgs/hardware_flow.png" alt="程序运行中的数据流动示意图" width="250" />
+<img src="imgs/hardware_flow.png" alt="程序运行中的数据流动示意图" width="80%" />
 <p class="caption">(\#fig:hardware-flow-export)程序运行中的数据流动示意图</p>
 </div>
 
@@ -710,7 +710,7 @@ test_that("多样性计算正确", {
 ```
 
 ```
-## Test passed 🥳
+## Test passed 😸
 ```
 
 ``` r
@@ -1229,7 +1229,7 @@ calculate_shannon_diversity <- function(species_vector) {
 下面这张图直观地展示了不同复杂度随数据量增长的趋势。**Y轴可以理解为时间或空间消耗**。
 
 <div class="figure" style="text-align: center">
-<img src="01-statistical_programing_files/figure-html/complexity-curve-1.png" alt="算法复杂度随数据规模增长的趋势图" width="672" />
+<img src="01-statistical_programing_files/figure-html/complexity-curve-1.png" alt="算法复杂度随数据规模增长的趋势图" width="80%" />
 <p class="caption">(\#fig:complexity-curve)算法复杂度随数据规模增长的趋势图</p>
 </div>
 

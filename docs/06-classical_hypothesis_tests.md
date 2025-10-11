@@ -117,25 +117,6 @@
 
 **生态学意义**：这个通用流程体现了科学研究的严谨性。它帮助生态学家在复杂的自然系统中做出基于证据的判断，避免将随机波动误认为生态规律，也避免错过真实的生态效应。无论使用经典检验方法还是模拟方法，这个基本框架都适用，确保我们的统计推断既严谨又具有生态学意义。例如，在梅花鹿保护研究中，这个流程帮助我们科学地评估保护措施的真实效果，避免将种群的自然波动误认为保护成效。
 
-让我们通过一个流程图来直观展示这个通用流程：
-
-
-
-
-
-
-
-
-
-
-
-<div class="figure" style="text-align: center">
-<img src="imgs/hypothesis_testing_flow.png" alt="假设检验通用流程图：展示从明确研究问题到解释结果的完整统计推断过程，包括模拟方法与经典方法的选择路径" width="300" />
-<p class="caption">(\#fig:hypothesis-testing-flow-export)假设检验通用流程图：展示从明确研究问题到解释结果的完整统计推断过程，包括模拟方法与经典方法的选择路径</p>
-</div>
-
-这个流程图清晰地展示了假设检验的完整过程，特别强调了模拟方法与传统方法的区别。在理解了假设检验的基本框架后，我们需要深入探讨这个框架中的核心概念——零假设与备择假设。这两个概念是统计推断的基石，它们将抽象的生态学问题转化为具体的统计问题，为后续的数据分析和决策提供了明确的方向。
-
 ### 零假设与备择假设
 
 在生态学研究中，我们常常需要回答这样的问题：某种生态干预是否产生了真实效应？不同生境中的物种多样性是否存在显著差异？某个环境因子是否与物种丰度相关？这些问题的核心都可以通过假设检验来回答。
@@ -231,7 +212,7 @@ ggplot(df, aes(x = value, fill = distribution)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/null-alternative-distribution-1.png" alt="零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/null-alternative-distribution-1.png" alt="零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值" width="80%" />
 <p class="caption">(\#fig:null-alternative-distribution)零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值</p>
 </div>
 
@@ -307,7 +288,7 @@ ggplot(p_value_df, aes(x = test_stat)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/p-value-visualization-1.png" alt="p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/p-value-visualization-1.png" alt="p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率" width="80%" />
 <p class="caption">(\#fig:p-value-visualization)p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率</p>
 </div>
 
@@ -336,6 +317,8 @@ ggplot(p_value_df, aes(x = test_stat)) +
 相反，在涉及重大政策决策或资源分配的研究中，第一类错误的后果可能更为严重。例如，在评估某种新型农药的环境安全性时，错误地宣称其安全（第二类错误）可能导致广泛的生态破坏，而错误地宣称其有害（第一类错误）可能只是造成一些经济损失。在这种情况下，我们可能选择更严格的α水平（如0.01）来减少假阳性的风险。
 
 让我们通过决策矩阵来系统理解这两类错误：
+
+Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 | 统计决策 \ 真实情况 | 零假设为真 | 备择假设为真 |
 |-------------------|------------|--------------|
@@ -445,7 +428,7 @@ ggplot(error_df, aes(x = x, y = density, color = distribution)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/error-types-visualization-1.png" alt="第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/error-types-visualization-1.png" alt="第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布" width="80%" />
 <p class="caption">(\#fig:error-types-visualization)第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布</p>
 </div>
 
@@ -492,7 +475,7 @@ ggplot(power_df, aes(
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/power-sample-size-visualization-1.png" alt="样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/power-sample-size-visualization-1.png" alt="样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效" width="80%" />
 <p class="caption">(\#fig:power-sample-size-visualization)样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效</p>
 </div>
 
@@ -579,7 +562,7 @@ ggplot(study_df, aes(x = effect_size, y = study)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/effect-size-ci-visualization-1.png" alt="效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/effect-size-ci-visualization-1.png" alt="效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围" width="80%" />
 <p class="caption">(\#fig:effect-size-ci-visualization)效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围</p>
 </div>
 
@@ -743,7 +726,7 @@ ggplot(t_df, aes(x = x, y = density)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/one-sample-t-test-visualization-1.png" alt="单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/one-sample-t-test-visualization-1.png" alt="单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域" width="80%" />
 <p class="caption">(\#fig:one-sample-t-test-visualization)单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域</p>
 </div>
 
@@ -840,7 +823,7 @@ ggplot(binom_df, aes(x = x, y = density)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/sign-test-visualization-1.png" alt="单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/sign-test-visualization-1.png" alt="单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量" width="80%" />
 <p class="caption">(\#fig:sign-test-visualization)单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量</p>
 </div>
 
@@ -981,7 +964,7 @@ ggplot(t_df, aes(x = x, y = density)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/independent-t-test-visualization-1.png" alt="独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/independent-t-test-visualization-1.png" alt="独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域" width="80%" />
 <p class="caption">(\#fig:independent-t-test-visualization)独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域</p>
 </div>
 
@@ -1095,7 +1078,7 @@ ggplot(t_df, aes(x = x, y = density)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/paired-t-test-visualization-1.png" alt="配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/paired-t-test-visualization-1.png" alt="配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域" width="80%" />
 <p class="caption">(\#fig:paired-t-test-visualization)配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域</p>
 </div>
 
@@ -1195,7 +1178,7 @@ ggplot(data_df, aes(x = group, y = value, fill = group)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/mann-whitney-visualization-1.png" alt="Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/mann-whitney-visualization-1.png" alt="Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较" width="80%" />
 <p class="caption">(\#fig:mann-whitney-visualization)Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较</p>
 </div>
 
@@ -1249,6 +1232,8 @@ $$m = \frac{k(k-1)}{2}$$
 - 至少犯一次第一类错误的概率：$1 - (1 - \alpha)^m$
 
 让我们计算不同组数下的累积第一类错误率：
+
+Table: (\#tab:comparsion-of-multiple-test-erros) 不同组数下的累积第一类错误率
 
 | 组数 ($k$) | 比较次数 ($m$) | 累积第一类错误率 |
 |-----------|---------------|------------------|
@@ -1403,7 +1388,7 @@ p1 + p2 + plot_annotation(
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-t-test-vs-anova-1.png" alt="多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案" width="960" />
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-t-test-vs-anova-1.png" alt="多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案" width="80%" />
 <p class="caption">(\#fig:multiple-t-test-vs-anova)多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案</p>
 </div>
 
@@ -1537,7 +1522,7 @@ ggplot(f_df, aes(x = x, y = density)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/anova-visualization-1.png" alt="方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/anova-visualization-1.png" alt="方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域" width="80%" />
 <p class="caption">(\#fig:anova-visualization)方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域</p>
 </div>
 
@@ -1633,7 +1618,7 @@ ggplot(pollution_data, aes(x = pollution_level, y = biomass,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/kruskal-wallis-visualization-1.png" alt="Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/kruskal-wallis-visualization-1.png" alt="Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较" width="80%" />
 <p class="caption">(\#fig:kruskal-wallis-visualization)Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较</p>
 </div>
 
@@ -1687,20 +1672,13 @@ $$\alpha_{family} = 1 - (1 - \alpha)^m$$
 
 **生态学意义**：在生态保护和管理决策中，错误的统计结论可能导致资源浪费或错失保护机会。多重比较校正帮助我们避免将随机波动误认为真实的生态效应，为科学决策提供更可靠的依据。
 
-让我们通过一个流程图来理解完整的分析流程：
+让我们通过文字描述来理解完整的分析流程：
 
+多重比较分析遵循一个清晰的逻辑流程，确保统计结论的可靠性。首先，我们执行方差分析（ANOVA）来检验多个组间的总体差异。如果方差分析结果显示总体差异不显著，我们停止分析，因为这意味着各组之间没有系统性的差异，继续进行多重比较只会增加第一类错误的风险。
 
+只有当方差分析显示总体差异显著时，我们才进入多重比较校正阶段。在这一步，我们需要根据研究目的选择适当的校正方法。常用的方法包括Tukey HSD（适用于所有组对比较）、Bonferroni校正（适用于预先指定的比较）和FDR控制（适用于探索性分析）。选择合适的方法后，我们进行多重比较校正，最终解释具体的组间差异，识别哪些组对存在统计上显著的差异。
 
-
-
-
-
-<div class="figure" style="text-align: center">
-<img src="imgs/multiple_comparison_flow.png" alt="多重比较分析流程图：展示从方差分析到多重比较校正的完整统计分析流程，强调只有在总体差异显著时才进行多重比较" width="300" />
-<p class="caption">(\#fig:multiple-comparison-flowchart-export)多重比较分析流程图：展示从方差分析到多重比较校正的完整统计分析流程，强调只有在总体差异显著时才进行多重比较</p>
-</div>
-
-这个流程图清晰地展示了多重比较校正在整个分析流程中的位置。只有在方差分析显示总体差异显著后，我们才需要进行多重比较校正来识别具体的差异组对。
+这个流程强调了一个重要原则：只有在总体差异显著的前提下，才需要进行多重比较校正来识别具体的差异组对。这样的分析策略既保证了统计结论的可靠性，又避免了不必要的多重检验带来的错误率膨胀。
 
 ### Bonferroni校正
 
@@ -1812,16 +1790,17 @@ cat("=== 方差分析结果 ===\n")
 ```
 
 ``` r
-print(summary(anova_result))
+knitr::kable(summary(anova_result)[[1]], caption = "方差分析结果")
 ```
 
-```
-##                    Df Sum Sq Mean Sq F value  Pr(>F)   
-## protection_measure  2  18.85   9.423   7.322 0.00233 **
-## Residuals          33  42.46   1.287                   
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
+
+
+Table: (\#tab:multiple-comparison-anova)方差分析结果
+
+|                   | Df|   Sum Sq|  Mean Sq|  F value|    Pr(>F)|
+|:------------------|--:|--------:|--------:|--------:|---------:|
+|protection_measure |  2| 18.84531| 9.422654| 7.322486| 0.0023345|
+|Residuals          | 33| 42.46475| 1.286811|       NA|        NA|
 
 ``` r
 # 提取F统计量和p值
@@ -1960,7 +1939,7 @@ print(p1)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-mean-plot-1.png" alt="不同保护措施的梅花鹿种群密度均值图：展示三种保护措施的平均梅花鹿密度及其标准误" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-mean-plot-1.png" alt="不同保护措施的梅花鹿种群密度均值图：展示三种保护措施的平均梅花鹿密度及其标准误" width="80%" />
 <p class="caption">(\#fig:multiple-comparison-mean-plot)不同保护措施的梅花鹿种群密度均值图：展示三种保护措施的平均梅花鹿密度及其标准误</p>
 </div>
 
@@ -1984,7 +1963,7 @@ print(p2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-boxplot-1.png" alt="不同保护措施的梅花鹿种群密度箱线图：展示三种保护措施的梅花鹿密度分布情况" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-boxplot-1.png" alt="不同保护措施的梅花鹿种群密度箱线图：展示三种保护措施的梅花鹿密度分布情况" width="80%" />
 <p class="caption">(\#fig:multiple-comparison-boxplot)不同保护措施的梅花鹿种群密度箱线图：展示三种保护措施的梅花鹿密度分布情况</p>
 </div>
 
@@ -1999,7 +1978,7 @@ print(combined_plot)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-combined-plot-1.png" alt="多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化" width="960" />
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-combined-plot-1.png" alt="多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化" width="80%" />
 <p class="caption">(\#fig:multiple-comparison-combined-plot)多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化</p>
 </div>
 
@@ -2060,7 +2039,7 @@ ggplot(viz_data, aes(
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-visualization-1.png" alt="多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响" width="960" />
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-visualization-1.png" alt="多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响" width="80%" />
 <p class="caption">(\#fig:multiple-comparison-visualization)多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响</p>
 </div>
 
@@ -2078,6 +2057,8 @@ ggplot(viz_data, aes(
 在生态学研究中正确应用多重比较校正至关重要。以下是一些实用的建议：
 
 **1. 选择合适的校正方法**
+
+Table: (\#tab:multiple-comparison-recommendation) 多重比较校正方法的推荐
 
 | 研究情境 | 推荐方法 | 理由 |
 |---------|----------|------|
@@ -2526,7 +2507,7 @@ ggplot(power_curve, aes(x = sample_size, y = power)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/power-curve-plotting-1.png" alt="样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/power-curve-plotting-1.png" alt="样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效" width="80%" />
 <p class="caption">(\#fig:power-curve-plotting)样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效</p>
 </div>
 
@@ -2587,20 +2568,81 @@ ggplot(sensitivity_df, aes(x = effect_label, y = sample_need,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/sensitivity-analysis-plot-1.png" alt="效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量" width="768" />
+<img src="06-classical_hypothesis_tests_files/figure-html/sensitivity-analysis-plot-1.png" alt="效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量" width="80%" />
 <p class="caption">(\#fig:sensitivity-analysis-plot)效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量</p>
 </div>
 
 **实践建议：**
 
-1. **效应大小估计**：基于文献回顾、预实验或专家经验合理估计效应大小
-2. **多重检验校正**：如果计划进行多个检验，考虑使用更严格的显著性水平
-3. **资源约束考量**：在功效分析和实际可行性之间找到平衡点
-4. **报告完整性**：在论文中详细报告功效分析的过程和结果
+在实际应用中，功效分析需要综合考虑多个关键因素。首先，效应大小的合理估计至关重要，这可以基于文献回顾、预实验或专家经验来完成。其次，如果研究计划进行多个检验，需要考虑多重检验校正，采用更严格的显著性水平来控制第一类错误率。同时，研究者需要在功效分析的理想要求与实际资源约束之间找到平衡点，确保研究设计既具有足够的统计检测能力，又在实际条件下可行。最后，在论文中详细报告功效分析的过程和结果，包括效应大小估计的依据、样本量计算的参数设置以及实际达到的功效水平，这对于研究的透明度和可重复性至关重要。
 
 通过这些详细的R语言实现示例，生态学家可以在研究设计阶段就对自己的研究有清晰的预期，确保研究既具有足够的统计检测能力，又在实际资源约束下可行。
 
 
 ## 总结
 
+本章系统介绍了经典假设检验方法在生态学研究中的应用，通过贯穿始终的梅花鹿保护案例，构建了一个从基础概念到高级应用的完整学习框架。假设检验作为生态统计学的核心工具，为生态学家在充满不确定性的自然系统中做出科学判断提供了严谨的数学基础。
+
+假设检验的核心在于将生态学问题转化为明确的统计问题，通过设定零假设和备择假设，在证据与不确定性之间建立科学的判断标准。零假设通常设定为"无效应"状态，体现了科学研究的保守性和可证伪性原则；备择假设则代表我们想要证明的生态效应。检验统计量和p值提供了量化证据强度的工具，而显著性水平α则设定了我们愿意接受的第一类错误风险。
+
+在生态学研究中，假设检验不仅是一种统计技术，更是一种科学的思维方式。它帮助我们在复杂的自然系统中区分真实的生态规律与随机波动，为保护决策、环境评估和生态管理提供基于证据的科学依据。
+
+单样本检验方法为生态基准验证提供了可靠工具。单样本t检验适用于检验样本均值是否与特定理论值存在显著差异，如检验梅花鹿种群密度是否达到保护目标、河流pH值是否偏离中性标准等。当数据不满足正态分布假设时，单样本符号检验提供了基于中位数比较的稳健替代方法。这些方法在生态保护标准制定、环境质量评估和物种保护目标验证中具有重要应用价值。
+
+双样本检验方法为生态对比研究提供了系统的统计框架。独立样本t检验适用于比较两个独立样本的均值差异，如比较不同处理对生态指标的影响；配对样本t检验则专门用于配对设计数据，通过考虑个体间相关性提高了统计功效。当数据存在偏态分布或极端值时，Mann-Whitney U检验提供了基于秩次的非参数替代方法。这些方法在保护措施效果评估、生境差异分析和污染影响研究中发挥着关键作用。
+
+多样本检验方法为同时比较多个处理或生境的生态效应提供了系统框架。方差分析（ANOVA）通过分解总变异为组间变异和组内变异，检验多个总体均值是否相等。当数据不满足正态分布假设时，Kruskal-Wallis检验提供了基于秩次的非参数替代方法。这些方法在比较多种保护措施效果、分析不同生境类型的生态差异以及评估复杂管理策略中具有广泛应用。
+
+多重比较校正是生态统计学中必须重视的问题。当同时进行多个统计检验时，直接使用多个t检验会导致第一类错误率显著膨胀。Bonferroni校正提供了最保守的校正方法，Tukey HSD检验专门为方差分析后的事后比较设计，而FDR控制则在发现力和错误控制之间取得平衡。正确的多重比较校正确保了统计结论的可靠性，避免了将随机波动误认为真实的生态效应。
+
+功效分析是连接统计理论与生态实践的重要桥梁。通过考虑效应大小、样本量、显著性水平和统计功效四个核心要素，功效分析帮助我们在研究设计阶段就评估检测预期效应的可能性。这不仅优化了资源利用，避免了样本过小导致的检测力不足或样本过大造成的资源浪费，更体现了生态学研究的科学严谨性和伦理责任。
+
+本章的学习不仅传授了具体的统计方法，更重要的是培养了生态学研究的统计思维方式。优秀的生态学家应该深刻理解统计概念的本质，认识到p值是在零假设下观测到当前证据强度的概率，而非零假设为真的概率；能够平衡统计显著性与生态学重要性，结合效应大小、置信区间和专业知识全面评估研究结果；善于考虑两类错误的权衡，根据研究问题的性质在假阳性和假阴性风险之间做出明智选择；重视研究设计的前瞻性，通过功效分析确保研究具有足够的检测能力；始终保持批判性思维，对统计结果保持合理的怀疑，理解统计结论的概率性质。
+
+从经典参数检验到传统非参数检验，本章介绍的假设检验方法构成了生态统计学的基础工具包。这些方法虽然不依赖于严格的正态分布假设，但它们仍然是基于经典统计理论的传统方法。随着生态学研究的深入和复杂化，我们越来越多地遇到这样的情况：我们感兴趣的统计量根本没有现成的理论分布可以参照，或者数据的复杂性超出了传统方法的处理能力。
+
+这种局限性为下一章介绍的基于模拟的假设检验方法提供了逻辑基础。从经典的非参数检验到现代的基于模拟方法，体现了统计方法学从理论驱动到数据驱动的演进，为生态学家应对日益复杂的生态问题提供了更强大的工具包。
+
+经典假设检验方法在生态保护实践中具有广泛的应用价值。在梅花鹿保护研究中，这些方法帮助我们：验证种群是否达到保护目标、评估保护措施的真实效果、比较不同保护策略的优劣、控制多重比较的风险、确保研究设计的科学性。这种系统的统计思维不仅提高了研究的科学价值，更为生态保护决策提供了可靠的科学依据。
+
+通过本章的学习，生态学本科生将建立起运用统计工具解决实际生态问题的能力，培养在数据海洋中发现真实生态规律的敏锐洞察力。这种能力将伴随整个科学生涯，无论从事生态研究、环境保护还是资源管理，都将受益无穷。经典假设检验作为生态统计学的基石，为我们探索统计推断与生态规律交汇之处的旅程奠定了坚实基础。
+
+
 ## 综合练习
+
+**练习题1：梅花鹿保护措施效果评估**
+
+某自然保护区为了评估禁猎保护措施对梅花鹿种群的影响，在保护措施实施前和实施一年后分别调查了15个样点的梅花鹿密度（只/平方公里）。数据如下：
+
+- 保护前：2.1, 2.3, 2.5, 2.8, 3.0, 2.4, 2.6, 2.9, 3.1, 2.7, 2.2, 2.8, 3.0, 2.5, 2.9
+- 保护后：3.8, 4.2, 4.5, 4.9, 5.1, 4.3, 4.6, 4.8, 5.2, 4.4, 3.9, 4.7, 5.0, 4.1, 4.6
+
+**问题：**  
+(1) 应该使用哪种统计检验方法来分析保护措施的效果？为什么？  
+(2) 设定适当的零假设和备择假设。  
+(3) 如果检验结果显示p = 0.003，如何解释这个结果？  
+(4) 除了统计显著性，还需要考虑哪些因素来全面评估保护措施的效果？  
+
+**练习题2：不同森林类型鸟类多样性比较**
+
+生态学家研究了三种不同森林类型（阔叶林、针叶林、混交林）中的鸟类物种丰富度。在每个森林类型中随机选择了12个样点进行调查，得到以下数据（单位：物种数）：
+
+- 阔叶林：18, 20, 22, 19, 21, 23, 17, 20, 22, 19, 21, 24  
+- 针叶林：12, 14, 15, 13, 16, 14, 11, 13, 15, 12, 14, 16  
+- 混交林：16, 18, 19, 17, 20, 18, 15, 17, 19, 16, 18, 21  
+ 
+**问题：**  
+(1) 应该使用哪种统计检验方法来比较三种森林类型的鸟类多样性？  
+(2) 如果方差分析结果显示F = 15.8，p < 0.001，如何解释这个结果？  
+(3) 为什么不能直接使用多个t检验来比较所有组对？  
+(4) 如果需要进行事后比较，推荐使用哪种多重比较校正方法？为什么？  
+
+**练习题3：研究设计与功效分析**
+
+某研究团队计划开展一项研究，评估新型栖息地恢复措施对濒危蝴蝶种群的影响。他们预期该措施能将蝴蝶密度从当前的每公顷5只提高到每公顷8只。已知蝴蝶密度的标准差约为2只/公顷。
+
+**问题：**  
+(1) 计算Cohen's d效应大小。  
+(2) 如果设定α = 0.05，期望功效为0.80，使用独立样本t检验，需要多大的样本量？  
+(3) 如果实地条件限制只能调查20个样点（每组10个），实际的统计功效是多少？  
+(4) 在保护生物学研究中，为什么有时需要接受较高的α水平（如0.10）？  

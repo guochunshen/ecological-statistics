@@ -6,7 +6,7 @@ bookdown::gitbook:
   config:
     toc:
       before: |
-        <li><a href="./">生态统计学</a></li>
+        <li><a href="./">生态统计学AI+</a></li>
       after: |
         <li><a href="https://gitee.com/gcshen/ecological-statistics" target="blank">Gitee</a></li>
     download: ["pdf", "epub"]
