@@ -260,7 +260,7 @@ plot(forest_am, pages = 1, residuals = TRUE, pch = 1, cex = 1)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/visualize-forest-am-1.png" alt="林小雨的森林调查：树木生长速率与环境因子关系的可加性模型平滑效应图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/visualize-forest-am-1.png" alt="林小雨的森林调查：树木生长速率与环境因子关系的可加性模型平滑效应图" width="80%" />
 <p class="caption">(\#fig:visualize-forest-am)林小雨的森林调查：树木生长速率与环境因子关系的可加性模型平滑效应图</p>
 </div>
 
@@ -274,7 +274,7 @@ gam.check(forest_am)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/diagnose-forest-am-1.png" alt="林小雨的森林调查：树木生长速率可加性模型诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/diagnose-forest-am-1.png" alt="林小雨的森林调查：树木生长速率可加性模型诊断图" width="80%" />
 <p class="caption">(\#fig:diagnose-forest-am)林小雨的森林调查：树木生长速率可加性模型诊断图</p>
 </div>
 
@@ -333,7 +333,7 @@ gam.check(forest_am)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-2-1.png" alt="森林树木生长可加性模型平滑复杂度诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-2-1.png" alt="森林树木生长可加性模型平滑复杂度诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-2-1)森林树木生长可加性模型平滑复杂度诊断图</p>
 </div>
 
@@ -371,7 +371,7 @@ gam.check(forest_am_adj)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-2-2.png" alt="森林树木生长可加性模型平滑复杂度诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-2-2.png" alt="森林树木生长可加性模型平滑复杂度诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-2-2)森林树木生长可加性模型平滑复杂度诊断图</p>
 </div>
 
@@ -420,7 +420,7 @@ abline(h = 0, col = "red")  # 添加零参考线
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/residual-vs-fitted-1.png" alt="残差与拟合值关系图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/residual-vs-fitted-1.png" alt="残差与拟合值关系图" width="80%" />
 <p class="caption">(\#fig:residual-vs-fitted)残差与拟合值关系图</p>
 </div>
 
@@ -435,7 +435,7 @@ qqline(residuals(forest_am), col = "red")  # 添加参考线
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/qq-plot-residuals-1.png" alt="残差正态性Q-Q图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/qq-plot-residuals-1.png" alt="残差正态性Q-Q图" width="80%" />
 <p class="caption">(\#fig:qq-plot-residuals)残差正态性Q-Q图</p>
 </div>
 
@@ -452,7 +452,7 @@ abline(h = 0, col = "red")  # 添加零参考线
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/residual-vs-temperature-1.png" alt="残差与温度关系图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/residual-vs-temperature-1.png" alt="残差与温度关系图" width="80%" />
 <p class="caption">(\#fig:residual-vs-temperature)残差与温度关系图</p>
 </div>
 
@@ -467,7 +467,7 @@ acf(residuals(forest_am), main = "残差自相关")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/acf-residuals-1.png" alt="残差自相关函数图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/acf-residuals-1.png" alt="残差自相关函数图" width="80%" />
 <p class="caption">(\#fig:acf-residuals)残差自相关函数图</p>
 </div>
 
@@ -662,7 +662,7 @@ ggplot(new_data, aes(x = temperature, y = pred)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/visualize-prediction-intervals-1.png" alt="温度对树木生长速率影响的预测曲线（含95%置信区间）" width="672" />
+<img src="10-advanced_regressions_files/figure-html/visualize-prediction-intervals-1.png" alt="温度对树木生长速率影响的预测曲线（含95%置信区间）" width="80%" />
 <p class="caption">(\#fig:visualize-prediction-intervals)温度对树木生长速率影响的预测曲线（含95%置信区间）</p>
 </div>
 
@@ -1089,7 +1089,7 @@ ggplot(new_moisture, aes(x = soil_moisture, y = pred)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/visualize-plant-survival-1.png" alt="土壤湿度对森林植物存活率影响的预测曲线（含95%置信区间）" width="672" />
+<img src="10-advanced_regressions_files/figure-html/visualize-plant-survival-1.png" alt="土壤湿度对森林植物存活率影响的预测曲线（含95%置信区间）" width="80%" />
 <p class="caption">(\#fig:visualize-plant-survival)土壤湿度对森林植物存活率影响的预测曲线（含95%置信区间）</p>
 </div>
 
@@ -1153,7 +1153,7 @@ plot(logistic_model, which = 5)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-6-1.png" alt="森林物种分布逻辑回归模型残差诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-6-1.png" alt="森林物种分布逻辑回归模型残差诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-6)森林物种分布逻辑回归模型残差诊断图</p>
 </div>
 
@@ -1248,7 +1248,7 @@ plot(roc_curve, main = "ROC曲线")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-8-1.png" alt="森林物种分布逻辑回归模型ROC曲线" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-8-1.png" alt="森林物种分布逻辑回归模型ROC曲线" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-8)森林物种分布逻辑回归模型ROC曲线</p>
 </div>
 
@@ -1389,7 +1389,7 @@ abline(h = 4 / length(cooks_d), col = "red") # 常用阈值
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-11-1.png" alt="森林物种分布逻辑回归模型影响点诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-11-1.png" alt="森林物种分布逻辑回归模型影响点诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-11-1)森林物种分布逻辑回归模型影响点诊断图</p>
 </div>
 
@@ -1404,7 +1404,7 @@ plot(leverage,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-11-2.png" alt="森林物种分布逻辑回归模型影响点诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-11-2.png" alt="森林物种分布逻辑回归模型影响点诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-11-2)森林物种分布逻辑回归模型影响点诊断图</p>
 </div>
 
@@ -1415,7 +1415,7 @@ influencePlot(logistic_model)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-11-3.png" alt="森林物种分布逻辑回归模型影响点诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-11-3.png" alt="森林物种分布逻辑回归模型影响点诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-11-3)森林物种分布逻辑回归模型影响点诊断图</p>
 </div>
 
@@ -1464,7 +1464,7 @@ ggplot(new_data, aes(x = temperature, y = pred)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-12-1.png" alt="温度对森林物种出现概率影响的预测曲线（含95%置信区间）" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-12-1.png" alt="温度对森林物种出现概率影响的预测曲线（含95%置信区间）" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-12)温度对森林物种出现概率影响的预测曲线（含95%置信区间）</p>
 </div>
 
@@ -1581,14 +1581,14 @@ summary(forest_bird_gam)
 plot(forest_bird_gam, pages = 1, residuals = TRUE, pch = 1, cex = 1)
 ```
 
-<img src="10-advanced_regressions_files/figure-html/visualize-forest-bird-gam-1.png" width="672" style="display: block; margin: auto;" />
+<img src="10-advanced_regressions_files/figure-html/visualize-forest-bird-gam-1.png" width="80%" style="display: block; margin: auto;" />
 
 ``` r
 # 模型诊断
 gam.check(forest_bird_gam)
 ```
 
-<img src="10-advanced_regressions_files/figure-html/visualize-forest-bird-gam-2.png" width="672" style="display: block; margin: auto;" />
+<img src="10-advanced_regressions_files/figure-html/visualize-forest-bird-gam-2.png" width="80%" style="display: block; margin: auto;" />
 
 ```
 ## 
@@ -1644,7 +1644,7 @@ ggplot(new_elevation, aes(x = elevation, y = pred)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/visualize-forest-bird-prediction-1.png" alt="林小雨的森林调查：鸟类物种丰富度与环境因子关系的广义可加模型分析" width="672" />
+<img src="10-advanced_regressions_files/figure-html/visualize-forest-bird-prediction-1.png" alt="林小雨的森林调查：鸟类物种丰富度与环境因子关系的广义可加模型分析" width="80%" />
 <p class="caption">(\#fig:visualize-forest-bird-prediction)林小雨的森林调查：鸟类物种丰富度与环境因子关系的广义可加模型分析</p>
 </div>
 
@@ -1758,7 +1758,7 @@ gam.check(forest_bird_gam)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-15-1.png" alt="森林鸟类丰富度广义可加模型平滑复杂度诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-15-1.png" alt="森林鸟类丰富度广义可加模型平滑复杂度诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-15-1)森林鸟类丰富度广义可加模型平滑复杂度诊断图</p>
 </div>
 
@@ -1798,7 +1798,7 @@ gam.check(bird_gam_adj)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-15-2.png" alt="森林鸟类丰富度广义可加模型平滑复杂度诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-15-2.png" alt="森林鸟类丰富度广义可加模型平滑复杂度诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-15-2)森林鸟类丰富度广义可加模型平滑复杂度诊断图</p>
 </div>
 
@@ -1857,7 +1857,7 @@ plot(fitted(forest_bird_gam), sqrt(abs(residuals(forest_bird_gam, type = "pearso
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-16-1.png" alt="森林鸟类丰富度广义可加模型残差诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-16-1.png" alt="森林鸟类丰富度广义可加模型残差诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-16)森林鸟类丰富度广义可加模型残差诊断图</p>
 </div>
 
@@ -1997,7 +1997,7 @@ ggplot(new_elevation, aes(x = elevation, y = pred)) +
   theme_minimal()
 ```
 
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-18-1.png" width="80%" style="display: block; margin: auto;" />
 
 #### 生态学意义验证
 
@@ -2195,7 +2195,7 @@ plot(forest_mixed_model)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-19-1.png" alt="林小雨的森林调查：混合效应模型诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-19-1.png" alt="林小雨的森林调查：混合效应模型诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-19-1)林小雨的森林调查：混合效应模型诊断图</p>
 </div>
 
@@ -2205,7 +2205,7 @@ qqline(resid(forest_mixed_model))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-19-2.png" alt="林小雨的森林调查：混合效应模型诊断图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-19-2.png" alt="林小雨的森林调查：混合效应模型诊断图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-19-2)林小雨的森林调查：混合效应模型诊断图</p>
 </div>
 
@@ -2635,7 +2635,7 @@ abline(h = 0, col = "red")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-27-1.png" alt="混合效应模型诊断验证" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-27-1.png" alt="混合效应模型诊断验证" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-27-1)混合效应模型诊断验证</p>
 </div>
 
@@ -2647,7 +2647,7 @@ qqline(random_effects)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-27-2.png" alt="混合效应模型诊断验证" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-27-2.png" alt="混合效应模型诊断验证" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-27-2)混合效应模型诊断验证</p>
 </div>
 
@@ -2843,7 +2843,7 @@ ggplot(data.frame(effect = random_effects[[1]]), aes(x = effect)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-28-1.png" alt="空间混合模型随机效应分布图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-28-1.png" alt="空间混合模型随机效应分布图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-28)空间混合模型随机效应分布图</p>
 </div>
 
@@ -2874,7 +2874,7 @@ qqline(random_effects)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-29-1.png" alt="混合效应模型诊断示例图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-29-1.png" alt="混合效应模型诊断示例图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-29-1)混合效应模型诊断示例图</p>
 </div>
 
@@ -2885,7 +2885,7 @@ abline(h = 0, col = "red")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-29-2.png" alt="混合效应模型诊断示例图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-29-2.png" alt="混合效应模型诊断示例图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-29-2)混合效应模型诊断示例图</p>
 </div>
 
@@ -3314,7 +3314,7 @@ ggplot(spatial_data, aes(x = x_coord, y = y_coord, color = growth_rate)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-34-1.png" alt="森林生态系统空间格局可视化" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-34-1.png" alt="森林生态系统空间格局可视化" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-34)森林生态系统空间格局可视化</p>
 </div>
 
@@ -3455,7 +3455,7 @@ ggplot(spatial_plot_data, aes(x = x_coord, y = y_coord, color = predicted)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-35-1.png" alt="鸟类物种丰富度空间预测格局图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-35-1.png" alt="鸟类物种丰富度空间预测格局图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-35)鸟类物种丰富度空间预测格局图</p>
 </div>
 
@@ -3531,7 +3531,7 @@ ggplot(residual_data, aes(x = x, y = y, color = residuals)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-36-1.png" alt="空间模型残差分布图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-36-1.png" alt="空间模型残差分布图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-36)空间模型残差分布图</p>
 </div>
 
@@ -3824,7 +3824,7 @@ semPaths(fit,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-40-1.png" alt="森林生态系统结构方程模型路径图" width="672" />
+<img src="10-advanced_regressions_files/figure-html/unnamed-chunk-40-1.png" alt="森林生态系统结构方程模型路径图" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-40)森林生态系统结构方程模型路径图</p>
 </div>
 

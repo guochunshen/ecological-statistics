@@ -226,38 +226,14 @@ sd_a <- sd(lake_a_lengths)    # 标准差：方差的平方根
 # 计算湖泊B鲤鱼的方差和标准差
 var_b <- var(lake_b_lengths)  # 方差：个体间差异的平方和
 sd_b <- sd(lake_b_lengths)    # 标准差：方差的平方根
-
-# 输出湖泊A的离散性指标
-print(paste("湖泊A鲤鱼体长方差：", round(var_a, 2)))
 ```
 
-```
-## [1] "湖泊A鲤鱼体长方差： 9.17"
-```
-
-``` r
-print(paste("湖泊A鲤鱼体长标准差：", round(sd_a, 2), "厘米"))
-```
 
 ```
-## [1] "湖泊A鲤鱼体长标准差： 3.03 厘米"
-```
-
-``` r
-# 输出湖泊B的离散性指标
-print(paste("湖泊B鲤鱼体长方差：", round(var_b, 2)))
-```
-
-```
-## [1] "湖泊B鲤鱼体长方差： 65.39"
-```
-
-``` r
-print(paste("湖泊B鲤鱼体长标准差：", round(sd_b, 2), "厘米"))
-```
-
-```
-## [1] "湖泊B鲤鱼体长标准差： 8.09 厘米"
+## 湖泊A鲤鱼体长方差：9.17
+## 湖泊A鲤鱼体长标准差：3.03厘米
+## 湖泊B鲤鱼体长方差：65.39
+## 湖泊B鲤鱼体长标准差：8.09厘米
 ```
 
 湖泊A的鲤鱼体长标准差较小（约2.87厘米），说明个体间差异较小，种群相对均质；而湖泊B的标准差较大（约7.72厘米），表明个体间差异较大，种群异质性更高。在图形上，标准差较小的分布更加"瘦高"，而标准差较大的分布更加"矮胖"。
@@ -293,38 +269,14 @@ cv_weight_a <- cv(weight_a)
 # 计算物种B的生长速率和体重变异系数
 cv_growth_b <- cv(growth_rate_b)
 cv_weight_b <- cv(weight_b)
-
-# 输出物种A的变异系数结果
-print(paste("物种A生长速率变异系数：", round(cv_growth_a, 1), "%"))
 ```
 
-```
-## [1] "物种A生长速率变异系数： 10.7 %"
-```
-
-``` r
-print(paste("物种A体重变异系数：", round(cv_weight_a, 1), "%"))
-```
 
 ```
-## [1] "物种A体重变异系数： 17.8 %"
-```
-
-``` r
-# 输出物种B的变异系数结果
-print(paste("物种B生长速率变异系数：", round(cv_growth_b, 1), "%"))
-```
-
-```
-## [1] "物种B生长速率变异系数： 12.5 %"
-```
-
-``` r
-print(paste("物种B体重变异系数：", round(cv_weight_b, 1), "%"))
-```
-
-```
-## [1] "物种B体重变异系数： 18.7 %"
+## 物种A生长速率变异系数：10.7%
+## 物种A体重变异系数：17.8%
+## 物种B生长速率变异系数：12.5%
+## 物种B体重变异系数：18.7%
 ```
 
 变异系数以百分比形式表示相对变异，使我们能够比较生长速率（厘米/年）和体重（公斤）这两种不同量纲数据的变异程度。
@@ -370,18 +322,9 @@ results <- data.frame(
   样本量 = sample_sizes,
   标准误 = round(standard_errors, 2)
 )
-
-# 输出标准误计算结果
-print(results)
 ```
 
-```
-##   样本量 标准误
-## 1     10   1.34
-## 2     30   0.74
-## 3     50   0.85
-## 4    100   0.47
-```
+
 
 ``` r
 # 可视化标准误随样本量的变化
@@ -398,8 +341,8 @@ plot(sample_sizes, standard_errors,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-9-1.png" alt="标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-9)标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-12-1.png" alt="标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-12)标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。</p>
 </div>
 
 标准误随着样本量的增加而减小，这意味着更大的样本量能够提供更精确的总体均值估计。在生态学研究中，标准误常用于构建置信区间：
@@ -420,13 +363,8 @@ sample_se <- sd(sample_data) / sqrt(length(sample_data))
 # 使用正态分布临界值1.96构建置信区间
 ci_lower <- sample_mean - 1.96 * sample_se  # 置信区间下限
 ci_upper <- sample_mean + 1.96 * sample_se  # 置信区间上限
-
-# 输出置信区间计算结果
-cat("样本均值：", round(sample_mean, 2), "米\n",
-    "标准误：", round(sample_se, 2), "米\n",
-    "95%置信区间：[ ", round(ci_lower, 2), ", ", round(ci_upper, 2), " ] 米\n",
-    sep = "")
 ```
+
 
 ```
 ## 样本均值：20.23米
@@ -459,18 +397,15 @@ bird_counts <- c(2, 3, 4, 5, 6, 7, 8, 9, 10, 50) # 包含一个异常高值
 q1 <- quantile(bird_counts, 0.25)
 q3 <- quantile(bird_counts, 0.75)
 iqr_value <- IQR(bird_counts)
-
-cat("下四分位数(Q1)：", q1, "\n",
-    "上四分位数(Q3)：", q3, "\n",
-    "四分位距(IQR)：", iqr_value, "\n",
-    sep = "")
 ```
+
 
 ```
 ## 下四分位数(Q1)：4.25
 ## 上四分位数(Q3)：8.75
 ## 四分位距(IQR)：4.5
 ```
+
 
 ``` r
 # 识别异常值
@@ -533,8 +468,8 @@ legend("topright",
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-12-1.png" alt="树木胸径分布的直方图，展示右偏分布特征。红色虚线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-12)树木胸径分布的直方图，展示右偏分布特征。红色虚线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-18-1.png" alt="树木胸径分布的直方图，展示右偏分布特征。红色虚线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-18)树木胸径分布的直方图，展示右偏分布特征。红色虚线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。</p>
 </div>
 
 正偏度（通常大于0.5）表明分布向右偏斜，意味着有较多的小树和少数大树。在图形上，右偏分布的右侧尾部较长，均值大于中位数。这种模式常见于年龄结构年轻的种群。
@@ -560,22 +495,12 @@ abundance_b <- runif(45, 10, 30)
 # 计算峰度
 kurtosis_a <- kurtosis(abundance_a)
 kurtosis_b <- kurtosis(abundance_b)
-
-cat("物种A多度分布的峰度：", round(kurtosis_a, 2), "\n",
-    "物种B多度分布的峰度：", round(kurtosis_b, 2), "\n",
-    sep = "")
 ```
+
 
 ```
 ## 物种A多度分布的峰度：2.53
 ## 物种B多度分布的峰度：2.06
-```
-
-``` r
-# 正态分布的峰度为3，大于3表示尖峰，小于3表示平峰
-cat("物种A相对于正态分布的峰度：", round(kurtosis_a - 3, 2), "\n",
-    "物种B相对于正态分布的峰度：", round(kurtosis_b - 3, 2), "\n",
-    sep = "")
 ```
 
 ```
@@ -608,27 +533,14 @@ mean_count <- mean(waterbird_counts) # 一阶矩：均值
 variance_count <- var(waterbird_counts) # 二阶矩：方差
 skewness_count <- skewness(waterbird_counts) # 三阶矩：偏度
 kurtosis_count <- kurtosis(waterbird_counts) # 四阶矩：峰度
-
-cat("一阶矩（均值）：", round(mean_count, 2), "\n",
-    "二阶矩（方差）：", round(variance_count, 2), "\n",
-    "三阶矩（偏度）：", round(skewness_count, 2), "\n",
-    "四阶矩（峰度）：", round(kurtosis_count, 2), "\n",
-    sep = "")
 ```
+
 
 ```
 ## 一阶矩（均值）：14.07
 ## 二阶矩（方差）：181.07
 ## 三阶矩（偏度）：1.54
 ## 四阶矩（峰度）：4.52
-```
-
-``` r
-# 综合描述分布特征
-cat("\n水鸟物种个体数量分布特征：\n",
-    "- 平均每个物种有", round(mean_count, 1), "个个体\n",
-    "- 个体数量变异较大（方差=", round(variance_count, 1), "）\n",
-    sep = "")
 ```
 
 ```
@@ -638,26 +550,8 @@ cat("\n水鸟物种个体数量分布特征：\n",
 ## - 个体数量变异较大（方差=181.1）
 ```
 
-``` r
-if (skewness_count > 0.5) {
-  cat("- 分布右偏，表明少数物种具有大量个体\n")
-} else if (skewness_count < -0.5) {
-  cat("- 分布左偏，表明多数物种个体数量较少\n")
-} else {
-  cat("- 分布基本对称\n")
-}
-```
-
 ```
 ## - 分布右偏，表明少数物种具有大量个体
-```
-
-``` r
-if (kurtosis_count > 3) {
-  cat("- 分布尖峰，表明极端多度物种出现概率较高\n")
-} else {
-  cat("- 分布相对平缓\n")
-}
 ```
 
 ```
@@ -717,8 +611,8 @@ print(sd_plot)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-15-1.png" alt="统计概念在正态分布上的可视化。红色垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色箭头表示标准差的实际跨度。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-15)统计概念在正态分布上的可视化。红色垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色箭头表示标准差的实际跨度。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-23-1.png" alt="统计概念在正态分布上的可视化。红色垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色箭头表示标准差的实际跨度。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-23)统计概念在正态分布上的可视化。红色垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色箭头表示标准差的实际跨度。</p>
 </div>
 
 这个可视化展示了：
@@ -771,8 +665,8 @@ legend("topright", legend = "平均标准误", col = "orange", lwd = 2, lty = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-16-1.png" alt="标准误的可视化分析。左图显示样本均值的分布，右图展示标准误与样本均值的关系。红色虚线表示总体均值，橙色虚线表示平均标准误。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-16)标准误的可视化分析。左图显示样本均值的分布，右图展示标准误与样本均值的关系。红色虚线表示总体均值，橙色虚线表示平均标准误。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-24-1.png" alt="标准误的可视化分析。左图显示样本均值的分布，右图展示标准误与样本均值的关系。红色虚线表示总体均值，橙色虚线表示平均标准误。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-24)标准误的可视化分析。左图显示样本均值的分布，右图展示标准误与样本均值的关系。红色虚线表示总体均值，橙色虚线表示平均标准误。</p>
 </div>
 
 ``` r
@@ -781,13 +675,8 @@ sample_mean <- mean(sample_means)
 sample_se <- sd(sample_means)
 ci_lower <- sample_mean - 1.96 * sample_se
 ci_upper <- sample_mean + 1.96 * sample_se
-
-cat("总体均值：", round(mean(population), 2), "\n",
-    "样本均值的均值：", round(sample_mean, 2), "\n",
-    "样本均值的标准误：", round(sample_se, 2), "\n",
-    "95%置信区间：[ ", round(ci_lower, 2), ", ", round(ci_upper, 2), " ]\n",
-    sep = "")
 ```
+
 
 ```
 ## 总体均值：50.16
@@ -888,8 +777,8 @@ grid.arrange(mean_comparison, sd_comparison,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-17-1.png" alt="不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-17)不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-26-1.png" alt="不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-26)不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。</p>
 </div>
 
 ### 生态学意义总结
@@ -941,8 +830,8 @@ grid.arrange(mean_comparison, sd_comparison,
 为了更好地理解环境异质性的概念，我们可以通过图示来展示不同异质性水平的环境格局：
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-18-1.png" alt="环境异质性可视化分析。上图展示低环境异质性和高环境异质性的空间分布对比，下图通过箱线图比较两种异质性类型的土壤养分值分布。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-18)环境异质性可视化分析。上图展示低环境异质性和高环境异质性的空间分布对比，下图通过箱线图比较两种异质性类型的土壤养分值分布。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-27-1.png" alt="环境异质性可视化分析。上图展示低环境异质性和高环境异质性的空间分布对比，下图通过箱线图比较两种异质性类型的土壤养分值分布。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-27)环境异质性可视化分析。上图展示低环境异质性和高环境异质性的空间分布对比，下图通过箱线图比较两种异质性类型的土壤养分值分布。</p>
 </div>
 
 在低环境异质性的情况下，环境因子值在空间上相对均匀，没有明显的梯度或斑块化格局。而在高环境异质性的情况下，环境因子值呈现出明显的空间结构，可能表现为梯度变化、斑块分布或复杂的空间格局。
@@ -1043,8 +932,8 @@ ggplot(habitat_data, aes(x = type, y = proportion, fill = type)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-20-1.png" alt="环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，用于计算环境异质性指数。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-20)环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，用于计算环境异质性指数。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-29-1.png" alt="环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，用于计算环境异质性指数。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-29)环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，用于计算环境异质性指数。</p>
 </div>
 
 这种方法的生态学意义在于它能够量化生境斑块类型的多样性。例如，在研究一个景观中的生境配置时，我们可以将景观划分为森林、草地、湿地、农田等不同类型，然后计算环境异质性指数。指数值越高，说明生境类型越多样，环境异质性越高。
@@ -1076,12 +965,6 @@ random_variance <- var(residuals(spatial_model))
 
 # 计算空间变异比例
 spatial_proportion <- spatial_variance / total_variance * 100
-
-cat("总变异:", round(total_variance, 3), "\n",
-    "空间变异:", round(spatial_variance, 3), "\n",
-    "随机变异:", round(random_variance, 3), "\n",
-    "空间变异比例:", round(spatial_proportion, 1), "%\n",
-    sep = "")
 ```
 
 ```
@@ -1090,6 +973,7 @@ cat("总变异:", round(total_variance, 3), "\n",
 ## 随机变异:0.473
 ## 空间变异比例:99.3%
 ```
+
 
 ``` r
 # 可视化变异分解
@@ -1110,8 +994,8 @@ ggplot(variance_data, aes(x = "", y = value, fill = component)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-21-1.png" alt="空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-21)空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-32-1.png" alt="空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-32)空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。</p>
 </div>
 
 在生态学研究中，空间变异分解帮助我们理解环境异质性的形成机制。如果空间变异占总变异的比例较高（如超过70%），说明环境因子具有强烈的空间格局，这种格局可能由地形、气候或其他空间过程所驱动。如果随机变异占主导，则表明环境因子的分布相对随机，缺乏明显的空间结构。
@@ -1227,8 +1111,8 @@ p1 + p2
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-22-1.png" alt="不同复杂程度环境表面的分形维数可视化。左图展示平滑环境表面（低分形维数），右图展示复杂环境表面（高分形维数）。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-22)不同复杂程度环境表面的分形维数可视化。左图展示平滑环境表面（低分形维数），右图展示复杂环境表面（高分形维数）。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-33-1.png" alt="不同复杂程度环境表面的分形维数可视化。左图展示平滑环境表面（低分形维数），右图展示复杂环境表面（高分形维数）。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-33)不同复杂程度环境表面的分形维数可视化。左图展示平滑环境表面（低分形维数），右图展示复杂环境表面（高分形维数）。</p>
 </div>
 
 在生态学研究中，分形维数帮助我们理解环境表面的结构复杂性。例如，在研究地形复杂度对物种分布的影响时，高分形维数的地形通常提供更多的微生境和生态位机会，从而支持更高的物种多样性。分形维数特别适用于描述连续环境因子的空间格局，如地形高程、植被覆盖度、土壤性质等。
@@ -1277,24 +1161,18 @@ plot(fit,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-23-1.png" alt="鸟类个体生存函数曲线。使用Kaplan-Meier方法估计的生存概率随时间变化曲线，蓝色曲线表示生存概率，可用于分析个体存活率和寿命分布。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-23)鸟类个体生存函数曲线。使用Kaplan-Meier方法估计的生存概率随时间变化曲线，蓝色曲线表示生存概率，可用于分析个体存活率和寿命分布。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-34-1.png" alt="鸟类个体生存函数曲线。使用Kaplan-Meier方法估计的生存概率随时间变化曲线，蓝色曲线表示生存概率，可用于分析个体存活率和寿命分布。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-34)鸟类个体生存函数曲线。使用Kaplan-Meier方法估计的生存概率随时间变化曲线，蓝色曲线表示生存概率，可用于分析个体存活率和寿命分布。</p>
 </div>
-
-``` r
-# 输出关键统计量
-cat("中位生存时间:", round(quantile(fit, probs = 0.5)$quantile, 1), "天\n")
-```
-
-```
-## 中位生存时间: 136.5 天
-```
 
 ``` r
 # 计算最大观测时间内的生存率
 max_time <- max(survival_times)
-cat("最大观测时间(", max_time, "天)生存率:",
-    round(summary(fit, times = max_time)$surv, 3), "\n")
+```
+
+
+```
+## 中位生存时间: 136.5 天
 ```
 
 ```
@@ -1342,8 +1220,8 @@ ggplot(hazard_data, aes(x = time, y = hazard)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-24-1.png" alt="瞬时死亡风险函数曲线。红色曲线表示在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，反映了死亡风险的瞬时变化模式。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-24)瞬时死亡风险函数曲线。红色曲线表示在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，反映了死亡风险的瞬时变化模式。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-36-1.png" alt="瞬时死亡风险函数曲线。红色曲线表示在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，反映了死亡风险的瞬时变化模式。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-36)瞬时死亡风险函数曲线。红色曲线表示在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，反映了死亡风险的瞬时变化模式。</p>
 </div>
 
 ``` r
@@ -1409,8 +1287,8 @@ ggplot(cum_hazard_data, aes(x = time, y = cum_hazard)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-25-1.png" alt="个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-25-1)个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-37-1.png" alt="个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-37-1)个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。</p>
 </div>
 
 ``` r
@@ -1442,8 +1320,8 @@ p3 <- ggplot(cum_hazard_data, aes(x = time, y = cum_hazard)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-25-2.png" alt="个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-25-2)个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-37-2.png" alt="个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-37-2)个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。</p>
 </div>
 
 **生态学意义：**
@@ -1521,8 +1399,8 @@ ggplot(tree_data, aes(x = rank, y = diameter)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-26-1.png" alt="树木胸径分布图。蓝色点表示个体胸径值，红色虚线表示平均胸径，用于计算和可视化Gini系数，反映种群内个体大小的不均等性。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-26)树木胸径分布图。蓝色点表示个体胸径值，红色虚线表示平均胸径，用于计算和可视化Gini系数，反映种群内个体大小的不均等性。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-38-1.png" alt="树木胸径分布图。蓝色点表示个体胸径值，红色虚线表示平均胸径，用于计算和可视化Gini系数，反映种群内个体大小的不均等性。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-38)树木胸径分布图。蓝色点表示个体胸径值，红色虚线表示平均胸径，用于计算和可视化Gini系数，反映种群内个体大小的不均等性。</p>
 </div>
 
 **生态学意义：**
@@ -1569,8 +1447,8 @@ ggplot(lorenz_data, aes(x = p, y = L)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-27-1.png" alt="Lorenz曲线图。深绿色曲线表示累积资源分配比例，灰色对角线表示完全均等分配，浅绿色区域表示基尼面积，用于可视化种群内资源分配的不均等性。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-27)Lorenz曲线图。深绿色曲线表示累积资源分配比例，灰色对角线表示完全均等分配，浅绿色区域表示基尼面积，用于可视化种群内资源分配的不均等性。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-39-1.png" alt="Lorenz曲线图。深绿色曲线表示累积资源分配比例，灰色对角线表示完全均等分配，浅绿色区域表示基尼面积，用于可视化种群内资源分配的不均等性。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-39)Lorenz曲线图。深绿色曲线表示累积资源分配比例，灰色对角线表示完全均等分配，浅绿色区域表示基尼面积，用于可视化种群内资源分配的不均等性。</p>
 </div>
 
 ``` r
@@ -1637,8 +1515,8 @@ ggplot(comparison_data, aes(x = population, y = value, fill = population)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-28-1.png" alt="不同种群的个体大小分布比较。通过箱线图和散点图展示竞争强度不同的两个种群的个体大小分布，用于比较Gini系数和种内竞争格局。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-28)不同种群的个体大小分布比较。通过箱线图和散点图展示竞争强度不同的两个种群的个体大小分布，用于比较Gini系数和种内竞争格局。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-40-1.png" alt="不同种群的个体大小分布比较。通过箱线图和散点图展示竞争强度不同的两个种群的个体大小分布，用于比较Gini系数和种内竞争格局。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-40)不同种群的个体大小分布比较。通过箱线图和散点图展示竞争强度不同的两个种群的个体大小分布，用于比较Gini系数和种内竞争格局。</p>
 </div>
 
 **分析资源利用效率：**
@@ -1787,25 +1665,17 @@ for (i in seq_along(sample_sizes)) {
   diversity_comparison$Fisher_alpha[i] <-
     calculate_fisher_alpha(simulated_abundance)
 }
-
-print("样本量对多样性指数的影响:")
 ```
 
-```
-## [1] "样本量对多样性指数的影响:"
-```
 
-``` r
-print(diversity_comparison)
-```
+Table: (\#tab:unnamed-chunk-43)样本量对多样性指数的影响
 
-```
-##   样本量 Shannon指数 Fisher_alpha
-## 1     50    2.224785     3.843383
-## 2    100    2.276299     2.681482
-## 3    200    2.279418     2.215373
-## 4    500    2.293935     1.758383
-```
+| 样本量| Shannon指数| Fisher_alpha|
+|------:|-----------:|------------:|
+|     50|    2.224785|     3.843383|
+|    100|    2.276299|     2.681482|
+|    200|    2.279418|     2.215373|
+|    500|    2.293935|     1.758383|
 
 **生态学意义：**
 Fisher's α在生态学研究中特别适用于比较不同采样强度或样本量的群落。由于其相对稳定性，Fisher's α能够减少采样偏差对多样性评估的影响，为跨研究比较提供可靠依据。在生物多样性监测和保护区评估中，Fisher's α是重要的参考指标。
@@ -1875,8 +1745,8 @@ ggplot(species_data, aes(x = species, y = abundance, fill = species)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-31-1.png" alt="森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-31)森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-44-1.png" alt="森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-44)森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。</p>
 </div>
 
 **生态学意义：**
@@ -1938,23 +1808,15 @@ comparison_data <- data.frame(
   Shannon指数 = c(shannon_A, shannon_B),
   Simpson指数 = c(simpson_A, simpson_B)
 )
-
-print("不同群落的多样性比较:")
 ```
 
-```
-## [1] "不同群落的多样性比较:"
-```
 
-``` r
-print(comparison_data)
-```
+Table: (\#tab:unnamed-chunk-46)不同群落的多样性比较
 
-```
-##   群落 Shannon指数 Simpson指数
-## 1    A    1.544480       0.775
-## 2    B    1.333074       0.675
-```
+|群落 | Shannon指数| Simpson指数|
+|:----|-----------:|-----------:|
+|A    |    1.544480|       0.775|
+|B    |    1.333074|       0.675|
 
 **生态学意义：**
 Simpson指数特别适用于分析群落中的优势物种格局。较低的Simpson指数值表明群落中存在明显的优势物种，这可能反映了强烈的竞争排斥或环境筛选作用。在生态监测和保护规划中，Simpson指数帮助我们识别需要特别关注的生态关键种和优势种。
@@ -2019,7 +1881,7 @@ ggplot(uniformity_data, aes(x = factor(物种), y = 多度, fill = 群落类型)
   facet_wrap(~群落类型, ncol = 2)
 ```
 
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" />
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-47-1.png" width="80%" style="display: block; margin: auto;" />
 
 ``` r
 # 综合多样性分析
@@ -2028,25 +1890,17 @@ diversity_summary <- data.frame(
   数值 = c(shannon_index, simpson_index, fisher_alpha, pielou_index),
   解释 = c("综合多样性", "优势度敏感性", "样本稳定性", "均匀度度量")
 )
-
-print("群落多样性综合评估:")
 ```
 
-```
-## [1] "群落多样性综合评估:"
-```
 
-``` r
-print(diversity_summary)
-```
+Table: (\#tab:unnamed-chunk-48)群落多样性综合评估
 
-```
-##         指数类型      数值         解释
-## 1 Shannon-Wiener 1.4695049   综合多样性
-## 2        Simpson 0.7443772 优势度敏感性
-## 3     Fisher's α 1.2439951   样本稳定性
-## 4   Pielou均匀度 0.9130547   均匀度度量
-```
+|指数类型       |      数值|解释         |
+|:--------------|---------:|:------------|
+|Shannon-Wiener | 1.4695049|综合多样性   |
+|Simpson        | 0.7443772|优势度敏感性 |
+|Fisher's α     | 1.2439951|样本稳定性   |
+|Pielou均匀度   | 0.9130547|均匀度度量   |
 
 **生态学意义：**
 Pielou均匀度指数在生态学中用于独立评估物种多度分布的均等程度，不受物种丰富度的影响。高均匀度指数表明群落中资源分配相对均等，种间竞争可能较为缓和；低均匀度指数则反映了明显的优势种格局和强烈的种间竞争。均匀度指数为理解群落构建机制和生态位分化提供了重要信息。
@@ -2207,8 +2061,8 @@ plot(net,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-34-1.png" alt="植物-传粉者相互作用网络图。绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系。图中展示了网络的连接度、模块性和嵌套性等拓扑特征，反映了物种间相互作用的组织规律。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-34)植物-传粉者相互作用网络图。绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系。图中展示了网络的连接度、模块性和嵌套性等拓扑特征，反映了物种间相互作用的组织规律。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-49-1.png" alt="植物-传粉者相互作用网络图。绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系。图中展示了网络的连接度、模块性和嵌套性等拓扑特征，反映了物种间相互作用的组织规律。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-49)植物-传粉者相互作用网络图。绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系。图中展示了网络的连接度、模块性和嵌套性等拓扑特征，反映了物种间相互作用的组织规律。</p>
 </div>
 
 ``` r
@@ -2218,24 +2072,16 @@ network_metrics <- data.frame(
   数值 = c(connectance, modularity, nestedness),
   生态学意义 = c("相互作用密集度", "群落结构分化", "特化-泛化格局")
 )
-
-print("网络拓扑指标综合分析:")
 ```
 
-```
-## [1] "网络拓扑指标综合分析:"
-```
 
-``` r
-print(network_metrics)
-```
+Table: (\#tab:unnamed-chunk-50)网络拓扑指标综合分析
 
-```
-##     指标       数值     生态学意义
-## 1 连接度  0.1777778 相互作用密集度
-## 2 模块性  0.2187500   群落结构分化
-## 3 嵌套性 29.1666667  特化-泛化格局
-```
+|指标   |       数值|生态学意义     |
+|:------|----------:|:--------------|
+|连接度 |  0.1777778|相互作用密集度 |
+|模块性 |  0.2187500|群落结构分化   |
+|嵌套性 | 29.1666667|特化-泛化格局  |
 
 **生态学意义：**
 网络拓扑指标揭示了物种间相互作用的组织规律。高连接度通常表明生态系统具有更强的功能冗余和稳定性；高模块性反映了生态位的分化和资源利用的专业化；高嵌套性则表明系统具有层级结构，特化物种依赖于泛化物种的存在。这些指标帮助我们理解生态系统的抗干扰能力和恢复力。
@@ -2331,6 +2177,12 @@ cat("连接复杂性:", round(connectance_complexity, 3), "\n")
 ``` r
 # 可视化食物网
 set.seed(123)
+# 使用par设置中文字体
+#par(family = "SimHei")  # Windows系统
+old_par <- par()
+par(family = "WenQuanYi Micro Hei")
+# 对于Mac系统可以使用：par(family = "STHeiti")
+
 plot(food_net,
   layout = layout_with_sugiyama,
   vertex.color = c("green", "yellow", "orange", "red"),
@@ -2347,35 +2199,31 @@ plot(food_net,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-35-1.png" alt="简化食物网结构图。绿色节点表示生产者（植物），黄色节点表示草食动物，橙色节点表示初级捕食者，红色节点表示顶级捕食者。箭头表示能量流动方向，展示了食物网的平均链长和连接复杂性等特征。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-35)简化食物网结构图。绿色节点表示生产者（植物），黄色节点表示草食动物，橙色节点表示初级捕食者，红色节点表示顶级捕食者。箭头表示能量流动方向，展示了食物网的平均链长和连接复杂性等特征。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-51-1.png" alt="简化食物网结构图。绿色节点表示生产者（植物），黄色节点表示草食动物，橙色节点表示初级捕食者，红色节点表示顶级捕食者。箭头表示能量流动方向，展示了食物网的平均链长和连接复杂性等特征。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-51)简化食物网结构图。绿色节点表示生产者（植物），黄色节点表示草食动物，橙色节点表示初级捕食者，红色节点表示顶级捕食者。箭头表示能量流动方向，展示了食物网的平均链长和连接复杂性等特征。</p>
 </div>
 
 ``` r
+# 恢复默认图形参数
+par(old_par)
+
 # 食物网特征综合分析
 food_web_analysis <- data.frame(
   特征指标 = c("平均营养级", "平均链长", "连接复杂性"),
   数值 = c(mean(trophic_levels), avg_chain_length, connectance_complexity),
   生态学意义 = c("能量传递效率", "营养级复杂度", "相互作用密度")
 )
-
-print("食物网特征综合分析:")
 ```
 
-```
-## [1] "食物网特征综合分析:"
-```
 
-``` r
-print(food_web_analysis)
-```
+Table: (\#tab:unnamed-chunk-52)食物网特征综合分析
 
-```
-##     特征指标   数值   生态学意义
-## 1 平均营养级 2.5000 能量传递效率
-## 2   平均链长 3.0000 营养级复杂度
-## 3 连接复杂性 0.1875 相互作用密度
-```
+|特征指标   |   数值|生态学意义   |
+|:----------|------:|:------------|
+|平均营养级 | 2.5000|能量传递效率 |
+|平均链长   | 3.0000|营养级复杂度 |
+|连接复杂性 | 0.1875|相互作用密度 |
+
 
 ``` r
 # 比较不同复杂度的食物网
@@ -2387,16 +2235,11 @@ complex_food_web <- matrix(c(0, 1, 1, 0, 0, 0, 1, 1,
 
 simple_complexity <- sum(simple_food_web) / (nrow(simple_food_web)^2)
 complex_complexity <- sum(complex_food_web) / (nrow(complex_food_web)^2)
-
-cat("简单食物网连接复杂性:", round(simple_complexity, 3), "\n")
 ```
+
 
 ```
 ## 简单食物网连接复杂性: 0.222
-```
-
-``` r
-cat("复杂食物网连接复杂性:", round(complex_complexity, 3), "\n")
 ```
 
 ```
@@ -2483,8 +2326,8 @@ ggplot(resistance_data, aes(x = 时间点, y = 生物量, color = 条件)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-36-1.png" alt="生态系统抵抗力分析图。蓝色线条表示正常条件下的生物量，红色线条表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-36)生态系统抵抗力分析图。蓝色线条表示正常条件下的生物量，红色线条表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-55-1.png" alt="生态系统抵抗力分析图。蓝色线条表示正常条件下的生物量，红色线条表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-55)生态系统抵抗力分析图。蓝色线条表示正常条件下的生物量，红色线条表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。</p>
 </div>
 
 ``` r
@@ -2495,16 +2338,11 @@ wetland_biomass_stress <- c(75, 80, 70, 78, 82, 68, 85, 76, 82, 78)
 forest_resistance <- calculate_resistance(biomass_normal, biomass_stress)
 wetland_resistance <- calculate_resistance(wetland_biomass_normal,
                                            wetland_biomass_stress)
-
-cat("森林生态系统抵抗力:", round(forest_resistance, 3), "\n")
 ```
+
 
 ```
 ## 森林生态系统抵抗力: 0.928
-```
-
-``` r
-cat("湿地生态系统抵抗力:", round(wetland_resistance, 3), "\n")
 ```
 
 ```
@@ -2554,16 +2392,14 @@ calculate_resilience <- function(pre_disturbance,
 
 resilience_result <- calculate_resilience(pre_fire_biomass,
                                           biomass_recovery, years_post_fire)
-
-cat("恢复到95%原始状态所需时间:", resilience_result$recovery_time, "年\n",
-    "恢复速率:", round(resilience_result$resilience_rate, 3), "\n",
-    sep = "")
 ```
+
 
 ```
 ## 恢复到95%原始状态所需时间:6年
 ## 恢复速率:0.002
 ```
+
 
 ``` r
 # 可视化恢复过程
@@ -2586,8 +2422,8 @@ ggplot(recovery_data, aes(x = 年份, y = 恢复比例)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-37-1.png" alt="生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-37)生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-59-1.png" alt="生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-59)生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。</p>
 </div>
 
 ``` r
@@ -2605,11 +2441,8 @@ light_resilience <- calculate_resilience(pre_fire_biomass,
 severe_resilience <- calculate_resilience(pre_fire_biomass,
                                           severe_disturbance_recovery,
                                           years_post_fire)
-
-cat("轻度干扰恢复时间:", light_resilience$recovery_time, "年\n",
-    "重度干扰恢复时间:", severe_resilience$recovery_time, "年\n",
-    sep = "")
 ```
+
 
 ```
 ## 轻度干扰恢复时间:2年
@@ -2693,8 +2526,8 @@ ggplot(persistence_data, aes(x = 年份, y = 营养水平, color = 状态)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="03-summary_statistics_files/figure-html/unnamed-chunk-38-1.png" alt="生态系统持久性分析图。蓝色曲线表示湖泊营养状态（总磷浓度）的长期动态变化，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-38)生态系统持久性分析图。蓝色曲线表示湖泊营养状态（总磷浓度）的长期动态变化，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。</p>
+<img src="03-summary_statistics_files/figure-html/unnamed-chunk-61-1.png" alt="生态系统持久性分析图。蓝色曲线表示湖泊营养状态（总磷浓度）的长期动态变化，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-61)生态系统持久性分析图。蓝色曲线表示湖泊营养状态（总磷浓度）的长期动态变化，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。</p>
 </div>
 
 ``` r
@@ -2706,43 +2539,22 @@ grassland_biomass <- 50 + 15 * sin(2 * pi * years / 8) + rnorm(50, 0, 5)
 
 forest_persistence <- calculate_persistence(forest_biomass, 85, 115)
 grassland_persistence <- calculate_persistence(grassland_biomass, 35, 65)
-
-cat("森林生态系统持久性:", round(forest_persistence, 3), "\n",
-    "草地生态系统持久性:", round(grassland_persistence, 3), "\n",
-    sep = "")
 ```
+
 
 ```
 ## 森林生态系统持久性:1
 ## 草地生态系统持久性:0.7
 ```
 
-``` r
-# 稳定性指标综合分析
-stability_analysis <- data.frame(
-  稳定性指标 = c("抵抗力", "恢复力", "持久性"),
-  数值 = c(resistance_index, resilience_result$resilience_rate,
-         persistence_index),
-  生态学意义 = c("抗干扰能力", "恢复速度", "长期稳定性")
-)
 
-cat("生态系统稳定性综合分析:\n")
-```
+Table: (\#tab:unnamed-chunk-63)生态系统稳定性综合分析结果
 
-```
-## 生态系统稳定性综合分析:
-```
-
-``` r
-print(stability_analysis)
-```
-
-```
-##   稳定性指标        数值 生态学意义
-## 1     抵抗力 0.928168009 抗干扰能力
-## 2     恢复力 0.001658388   恢复速度
-## 3     持久性 0.740000000 长期稳定性
-```
+|稳定性指标 |      数值|生态学意义 |
+|:----------|---------:|:----------|
+|抵抗力     | 0.9281680|抗干扰能力 |
+|恢复力     | 0.0016584|恢复速度   |
+|持久性     | 0.7400000|长期稳定性 |
 
 **生态学意义：**
 持久性反映了生态系统在长期尺度上的稳定性和可持续性。高持久性的生态系统能够在面对环境波动、物种演替和气候变化等长期过程时维持其基本结构和功能特征。例如，古老的森林生态系统通常具有较高的持久性，因为它们已经建立了稳定的物种组成和生态过程。持久性分析对于理解生态系统的演替动态、预测长期变化趋势以及制定可持续管理策略具有重要意义。
@@ -2776,3 +2588,48 @@ print(stability_analysis)
 
 
 ## 综合练习
+
+### 练习1：森林群落多样性分析
+
+某生态学家在两个不同的森林样地（样地A和样地B）调查了树木物种的多度数据：
+
+- 样地A：物种1（20株）、物种2（15株）、物种3（10株）、物种4（5株）、物种5（2株）  
+- 样地B：物种1（15株）、物种2（15株）、物种3（15株）、物种4（15株）、物种5（2株）  
+
+1. 计算两个样地的Shannon-Wiener多样性指数和Simpson多样性指数  
+2. 计算两个样地的Pielou均匀度指数  
+3. 比较两个样地的多样性特征，分析其生态学意义  
+4. 使用R语言绘制两个样地的物种多度分布图  
+
+### 练习2：生态系统稳定性评估
+
+某生态学家监测了一个湖泊生态系统在受到营养盐输入干扰后的动态变化。收集了以下数据：
+
+- 干扰前生物量：100吨/公顷  
+- 干扰后生物量：60吨/公顷  
+- 恢复过程生物量：65, 75, 85, 90, 95, 98, 100, 102, 104吨/公顷（每年一次测量）  
+- 长期监测显示，在50年中有40年生物量维持在90-110吨/公顷的稳定范围内  
+
+1. 计算该生态系统的抵抗力指数  
+2. 计算恢复力指数和恢复时间  
+3. 计算持久性指数  
+4. 综合分析该生态系统的稳定性特征  
+5. 讨论这些稳定性指标在生态系统管理中的应用价值  
+
+### 练习3：种群资源分配与竞争分析
+
+某生态学家研究了一个松树种群中个体胸径的分布情况，收集了50棵松树的胸径数据（单位：cm）：
+
+```r
+pine_diameters <- c(15, 18, 20, 22, 25, 28, 30, 32, 35, 38,
+                    40, 42, 45, 48, 50, 52, 55, 58, 60, 62,
+                    65, 68, 70, 72, 75, 78, 80, 82, 85, 88,
+                    90, 92, 95, 98, 100, 102, 105, 108, 110, 112,
+                    115, 118, 120, 122, 125, 128, 130, 132, 135, 138)
+```
+
+1. 计算该种群胸径的均值、标准差和变异系数  
+2. 计算Gini系数并绘制Lorenz曲线  
+3. 分析胸径分布的偏度和峰度  
+4. 根据计算结果，分析该种群的资源分配模式和竞争强度  
+5. 讨论这些统计特征对理解种群动态和森林管理的意义  

@@ -149,7 +149,8 @@ par(mfrow = c(2, 2))
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
   # 标题包含R²和AIC值用于模型比较
-  main = paste("线性模型\n$R^2$ =", round(r2_linear, 3), "$\\text{AIC}$ =", round(aic_linear, 1)),
+  main = paste("线性模型\n$R^2$ =", round(r2_linear, 3),
+  "$\\text{AIC}$ =", round(aic_linear, 1)),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"  # 蓝色实心点
 )
@@ -159,7 +160,8 @@ lines(forest_soil_nutrient, predict(model_linear), col = "red", lwd = 2)
 # 二次模型图
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
-  main = paste("二次模型\n$R^2$ =", round(r2_quadratic, 3), "$\\text{AIC}$ =", round(aic_quadratic, 1)),
+  main = paste("二次模型\n$R^2$ =", round(r2_quadratic, 3),
+  "$\\text{AIC}$ =", round(aic_quadratic, 1)),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"
 )
@@ -168,7 +170,8 @@ lines(forest_soil_nutrient, predict(model_quadratic), col = "red", lwd = 2)
 # 三次模型图
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
-  main = paste("三次模型\n$R^2$ =", round(r2_cubic, 3), "$\\text{AIC}$ =", round(aic_cubic, 1)),
+  main = paste("三次模型\n$R^2$ =", round(r2_cubic, 3),
+  "$\\text{AIC}$ =", round(aic_cubic, 1)),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"
 )
@@ -177,7 +180,8 @@ lines(forest_soil_nutrient, predict(model_cubic), col = "red", lwd = 2)
 # 过度拟合模型图
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
-  main = paste("10次多项式\n$R^2$ =", round(r2_overfit, 3), "$\\text{AIC}$ =", round(aic_overfit, 1)),
+  main = paste("10次多项式\n$R^2$ =", round(r2_overfit, 3),
+  "$\\text{AIC}$ =", round(aic_overfit, 1)),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"
 )
@@ -185,7 +189,7 @@ lines(forest_soil_nutrient, predict(model_overfit), col = "red", lwd = 2)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/model-complexity-comparison-1.png" alt="模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较" width="672" />
+<img src="09-model_selection_and_evaluation_files/figure-html/model-complexity-comparison-1.png" alt="模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较" width="80%" />
 <p class="caption">(\#fig:model-complexity-comparison)模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较</p>
 </div>
 
@@ -194,29 +198,6 @@ lines(forest_soil_nutrient, predict(model_overfit), col = "red", lwd = 2)
 par(mfrow = c(1, 1))
 ```
 
-
-``` r
-# 输出模型比较结果
-# 使用单个cat函数输出所有模型比较结果
-cat("=== 模型复杂度与拟合优度平衡演示 ===\n\n",
-    "线性模型 (欠拟合):\n",
-    "- $R^2$ =", round(r2_linear, 3), "$\\text{AIC}$ =", round(aic_linear, 1), "\n",
-    "- 问题：无法捕捉最适养分范围\n\n",
-
-    "二次模型 (最优):\n",
-    "- $R^2$ =", round(r2_quadratic, 3), "$\\text{AIC}$ =", round(aic_quadratic, 1), "\n",
-    "- 优势：正确反映了真实生态关系\n\n",
-
-    "三次模型 (过度参数化):\n",
-    "- $R^2$ =", round(r2_cubic, 3), "$\\text{AIC}$ =", round(aic_cubic, 1), "\n",
-    "- 问题：不必要的复杂度\n\n",
-
-    "10次多项式 (严重过拟合):\n",
-    "- $R^2$ =", round(r2_overfit, 3), "$\\text{AIC}$ =", round(aic_overfit, 1), "\n",
-    "- 问题：过度适应随机噪声，预测能力差\n\n",
-
-    "模型比较结果已生成，请查看图表和性能指标。\n")
-```
 
 ```
 ## === 模型复杂度与拟合优度平衡演示 ===
@@ -352,43 +333,26 @@ best_bic <- forest_bird_model_comparison$Model[which.min(forest_bird_model_compa
 ```
 
 
-``` r
-# 输出模型比较结果
-cat("=== 林小雨的森林鸟类丰富度模型比较结果 ===\n")
-```
-
 ```
 ## === 林小雨的森林鸟类丰富度模型比较结果 ===
-```
-
-``` r
-cat("信息准则帮助林小雨在多个候选模型中做出科学选择\n\n")
 ```
 
 ```
 ## 信息准则帮助林小雨在多个候选模型中做出科学选择
 ```
 
-``` r
-print(forest_bird_model_comparison, row.names = FALSE)
-```
 
-```
-##            Model        R2      AIC      BIC Parameters delta_AIC delta_BIC
-##       full_model 0.6061475 737.9981 753.6291          5  0.000000  0.000000
-##    overfit_model 0.6127788 740.3000 761.1414          7  2.301941  7.512282
-##       area_water 0.5108839 755.6604 766.0811          3 17.662332 12.451992
-##  area_vegetation 0.4191497 772.8497 783.2704          3 34.851646 29.641305
-##        area_only 0.3416164 783.3792 791.1947          2 45.381119 37.565609
-##  vegetation_only 0.1191910 812.4845 820.3000          2 74.486428 66.670918
-##    AIC_weight
-##  7.596039e-01
-##  2.402851e-01
-##  1.109840e-04
-##  2.054227e-08
-##  1.062190e-10
-##  5.082352e-17
-```
+
+Table: (\#tab:unnamed-chunk-7)信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣
+
+|                |Model           |        R2|      AIC|      BIC| Parameters| delta_AIC| delta_BIC| AIC_weight|
+|:---------------|:---------------|---------:|--------:|--------:|----------:|---------:|---------:|----------:|
+|full_model      |full_model      | 0.6061475| 737.9981| 753.6291|          5|  0.000000|  0.000000|  0.7596039|
+|overfit_model   |overfit_model   | 0.6127788| 740.3000| 761.1414|          7|  2.301941|  7.512282|  0.2402851|
+|area_water      |area_water      | 0.5108839| 755.6604| 766.0811|          3| 17.662332| 12.451992|  0.0001110|
+|area_vegetation |area_vegetation | 0.4191497| 772.8497| 783.2704|          3| 34.851645| 29.641305|  0.0000000|
+|area_only       |area_only       | 0.3416164| 783.3792| 791.1947|          2| 45.381119| 37.565609|  0.0000000|
+|vegetation_only |vegetation_only | 0.1191910| 812.4845| 820.3000|          2| 74.486428| 66.670918|  0.0000000|
 
 
 ``` r
@@ -423,7 +387,7 @@ abline(h = 7, lty = 2, col = "red")
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-8-1.png" alt="信息准则可视化：ΔAIC和ΔBIC差异比较" width="672" />
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-8-1.png" alt="信息准则可视化：ΔAIC和ΔBIC差异比较" width="80%" />
 <p class="caption">(\#fig:unnamed-chunk-8)信息准则可视化：ΔAIC和ΔBIC差异比较</p>
 </div>
 
@@ -491,66 +455,32 @@ nursery_lrt_p_value <- nursery_lrt_result$`Pr(>Chisq)`[2]
 
 ``` r
 # 输出似然比检验结果
-cat("=== 林小雨的苗圃实验：似然比检验结果 ===\n")
+knitr::kable(nursery_lrt_result, caption = "似然比检验结果：植物生长与温度、光照的关系")
 ```
 
-```
-## === 林小雨的苗圃实验：似然比检验结果 ===
-```
 
-``` r
-print(nursery_lrt_result)
-```
 
-```
-## Likelihood ratio test
-## 
-## Model 1: growth ~ temp + light
-## Model 2: growth ~ temp * light
-##   #Df  LogLik Df Chisq Pr(>Chisq)  
-## 1   4 -58.869                      
-## 2   5 -56.401  1 4.936     0.0263 *
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
+Table: (\#tab:unnamed-chunk-11)似然比检验结果：植物生长与温度、光照的关系
+
+| #Df|    LogLik| Df|    Chisq| Pr(>Chisq)|
+|---:|---------:|--:|--------:|----------:|
+|   4| -58.86869| NA|       NA|         NA|
+|   5| -56.40071|  1| 4.935962|  0.0263034|
 
 ``` r
 # 模型摘要比较
-cat("\n=== 模型摘要比较 ===\n",
-    "简单模型 (只有主效应):\n")
+knitr::kable(summary(nursery_model_simple)$coefficients, caption = "模型比较：简单模型 (只有主效应)")
 ```
 
-```
-## 
-## === 模型摘要比较 ===
-##  简单模型 (只有主效应):
-```
 
-``` r
-print(summary(nursery_model_simple))
-```
 
-```
-## 
-## Call:
-## lm(formula = growth ~ temp + light, data = nursery_plant_data)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.24188 -0.39315  0.08864  0.32660  1.46123 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(>|t|)    
-## (Intercept) 0.9522163  0.3475783    2.74  0.00764 ** 
-## temp        0.1589956  0.0149805   10.61  < 2e-16 ***
-## light       0.0037280  0.0002189   17.03  < 2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.5148 on 77 degrees of freedom
-## Multiple R-squared:  0.8452,	Adjusted R-squared:  0.8412 
-## F-statistic: 210.2 on 2 and 77 DF,  p-value: < 2.2e-16
-```
+Table: (\#tab:unnamed-chunk-11)模型比较：简单模型 (只有主效应)
+
+|            |  Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
+|:-----------|---------:|----------:|---------:|------------------:|
+|(Intercept) | 0.9522163|  0.3475783|  2.739574|          0.0076414|
+|temp        | 0.1589956|  0.0149805| 10.613532|          0.0000000|
+|light       | 0.0037280|  0.0002189| 17.031520|          0.0000000|
 
 ``` r
 cat("\n复杂模型 (包含交互项):\n")
@@ -562,43 +492,27 @@ cat("\n复杂模型 (包含交互项):\n")
 ```
 
 ``` r
-print(summary(nursery_model_complex))
+knitr::kable(summary(nursery_model_complex)$coefficients, caption = "模型比较：复杂模型 (包含交互项)")
 ```
 
-```
-## 
-## Call:
-## lm(formula = growth ~ temp * light, data = nursery_plant_data)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -1.3498 -0.2968  0.0838  0.3428  1.3353 
-## 
-## Coefficients:
-##              Estimate Std. Error t value Pr(>|t|)   
-## (Intercept) 2.622e+00  8.315e-01   3.153  0.00231 **
-## temp        8.192e-02  3.797e-02   2.157  0.03416 * 
-## light       9.325e-04  1.289e-03   0.723  0.47164   
-## temp:light  1.286e-04  5.847e-05   2.199  0.03090 * 
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.5024 on 76 degrees of freedom
-## Multiple R-squared:  0.8545,	Adjusted R-squared:  0.8487 
-## F-statistic: 148.7 on 3 and 76 DF,  p-value: < 2.2e-16
-```
+
+
+Table: (\#tab:unnamed-chunk-11)模型比较：复杂模型 (包含交互项)
+
+|            |  Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
+|:-----------|---------:|----------:|---------:|------------------:|
+|(Intercept) | 2.6217208|  0.8314621| 3.1531452|          0.0023129|
+|temp        | 0.0819161|  0.0379749| 2.1571128|          0.0341579|
+|light       | 0.0009324|  0.0012889| 0.7234173|          0.4716442|
+|temp:light  | 0.0001286|  0.0000585| 2.1992829|          0.0308988|
 
 ``` r
 # 计算模型改善程度
 nursery_r2_simple <- summary(nursery_model_simple)$r.squared
 nursery_r2_complex <- summary(nursery_model_complex)$r.squared
 nursery_r2_improvement <- nursery_r2_complex - nursery_r2_simple
-
-cat("\n=== 模型改善分析 ===\n",
-    "R²改善:", round(nursery_r2_improvement, 4), "\n",
-    "参数增加: 1个 (交互项)\n",
-    "似然比检验p值:", round(nursery_lrt_result$`Pr(>Chisq)`[2], 4), "\n")
 ```
+
 
 ```
 ## 
@@ -654,40 +568,15 @@ ggplot(nursery_pred_grid, aes(x = temp, y = pred_growth, color = factor(light)))
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-13-1.png" alt="林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-13)林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性</p>
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-14-1.png" alt="林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-14)林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性</p>
 </div>
 
 根据似然比检验的结果（p值 = 0.0263），我们可以得出重要的生态学解释。似然比检验显著 (p < 0.05)，表明温度与光照的交互作用对植物生长有显著影响，复杂模型显著改善了模型拟合，应该选择包含交互项的模型。
 
 
-``` r
-# 生态学机制解释
-cat("=== 林小雨的苗圃实验生态学解释 ===\n")
-```
-
 ```
 ## === 林小雨的苗圃实验生态学解释 ===
-```
-
-``` r
-if (nursery_lrt_p_value < 0.05) {
-  cat("林小雨的苗圃实验结果表明，温度与光照的交互作用对植物生长有显著影响。\n")
-  cat("生态学意义：\n")
-  cat("- 在低光照条件下，温度升高对植物生长的促进作用有限\n")
-  cat("- 在高光照条件下，温度升高显著促进植物生长\n")
-  cat("- 这种交互作用反映了植物对光热资源的协同利用机制\n")
-  cat("\n林小雨的启示：在苗圃管理中，需要同时考虑温度和光照的协同效应，\n")
-  cat("而不是单独优化单个环境因子。\n")
-} else {
-  cat("林小雨的苗圃实验结果表明，温度与光照的交互作用对植物生长影响不显著。\n")
-  cat("生态学意义：\n")
-  cat("- 温度和光照对植物生长的影响相对独立\n")
-  cat("- 单独优化温度或光照即可改善植物生长\n")
-  cat("- 简化了苗圃管理策略\n")
-  cat("\n林小雨的启示：在这种情况下，使用更简约的模型（只有主效应）\n")
-  cat("既统计可靠又便于生态学解释。\n")
-}
 ```
 
 ```
@@ -816,85 +705,23 @@ cat("\n=== 林小雨的溪流鱼类模型平均结果 ===\n")
 ```
 
 ``` r
-print(summary(stream_avg_model))
-```
-
-```
-## 
-## Call:
-## model.avg(object = get.models(object = stream_all_models, subset = NA))
-## 
-## Component model call: 
-## lm(formula = log(abundance + 1) ~ <16 unique rhs>, data = 
-##      stream_fish_data, na.action = na.fail)
-## 
-## Component models: 
-##        df  logLik   AICc  delta weight
-## 123     5   34.11 -57.70   0.00   0.73
-## 1234    6   34.21 -55.67   2.03   0.27
-## 12      4  -26.73  61.80 119.50   0.00
-## 124     5  -26.68  63.88 121.58   0.00
-## 23      4  -66.90 142.15 199.85   0.00
-## 234     5  -66.87 144.26 201.96   0.00
-## 2       3  -82.20 170.60 228.30   0.00
-## 24      4  -82.19 172.73 230.43   0.00
-## 13      4  -89.21 186.77 244.47   0.00
-## 134     5  -89.15 188.82 246.52   0.00
-## 1       3 -106.67 219.54 277.24   0.00
-## 14      4 -106.67 221.68 279.38   0.00
-## 3       3 -110.44 227.08 284.78   0.00
-## 34      4 -110.38 229.11 286.81   0.00
-## (Null)  2 -121.99 248.08 305.78   0.00
-## 4       3 -121.99 250.19 307.89   0.00
-## 
-## Term codes: 
-##    oxygen        ph      temp turbidity 
-##         1         2         3         4 
-## 
-## Model-averaged coefficients:  
-## (full average) 
-##               Estimate Std. Error Adjusted SE z value Pr(>|z|)    
-## (Intercept)  1.6226421  0.2324172   0.2348710   6.909   <2e-16 ***
-## oxygen       0.1702822  0.0075580   0.0076378  22.295   <2e-16 ***
-## ph           0.8242705  0.0293587   0.0296689  27.782   <2e-16 ***
-## temp         0.0531857  0.0037299   0.0037693  14.110   <2e-16 ***
-## turbidity   -0.0001485  0.0007176   0.0007243   0.205    0.838    
-##  
-## (conditional average) 
-##               Estimate Std. Error Adjusted SE z value Pr(>|z|)    
-## (Intercept)  1.6226421  0.2324172   0.2348710   6.909   <2e-16 ***
-## oxygen       0.1702822  0.0075580   0.0076378  22.295   <2e-16 ***
-## ph           0.8242705  0.0293587   0.0296689  27.782   <2e-16 ***
-## temp         0.0531857  0.0037299   0.0037693  14.110   <2e-16 ***
-## turbidity   -0.0005576  0.0013060   0.0013199   0.422    0.673    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-```
-
-``` r
 # 提取平均模型的系数
 stream_avg_coef <- summary(stream_avg_model)$coefmat.full
 
-cat("\n=== 平均模型系数 ===\n")
+knitr::kable(stream_avg_coef, caption = "林小雨的溪流鱼类模型平均结果：平均模型系数")
 ```
 
-```
-## 
-## === 平均模型系数 ===
-```
 
-``` r
-print(stream_avg_coef)
-```
 
-```
-##                  Estimate   Std. Error  Adjusted SE    z value  Pr(>|z|)
-## (Intercept)  1.6226421120 0.2324171588 0.2348710183  6.9086519 0.0000000
-## oxygen       0.1702821857 0.0075579564 0.0076378199 22.2946060 0.0000000
-## ph           0.8242705305 0.0293586568 0.0296688807 27.7823265 0.0000000
-## temp         0.0531856637 0.0037298612 0.0037692682 14.1103420 0.0000000
-## turbidity   -0.0001484903 0.0007175974 0.0007243327  0.2050028 0.8375699
-```
+Table: (\#tab:unnamed-chunk-18)林小雨的溪流鱼类模型平均结果：平均模型系数
+
+|            |   Estimate| Std. Error| Adjusted SE|    z value| Pr(>&#124;z&#124;)|
+|:-----------|----------:|----------:|-----------:|----------:|------------------:|
+|(Intercept) |  1.6226421|  0.2324172|   0.2348710|  6.9086519|          0.0000000|
+|oxygen      |  0.1702822|  0.0075580|   0.0076378| 22.2946060|          0.0000000|
+|ph          |  0.8242705|  0.0293587|   0.0296689| 27.7823265|          0.0000000|
+|temp        |  0.0531857|  0.0037299|   0.0037693| 14.1103420|          0.0000000|
+|turbidity   | -0.0001485|  0.0007176|   0.0007243|  0.2050028|          0.8375699|
 
 ``` r
 # 计算变量重要性
@@ -942,8 +769,8 @@ barplot(stream_model_comparison$AIC_Weight,
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-18-1.png" alt="林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-18)林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度</p>
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-19-1.png" alt="林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-19)林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度</p>
 </div>
 
 ``` r
@@ -968,24 +795,15 @@ stream_single_pred <- predict(stream_fish_models[["water_quality"]], newdata = s
 
 # 模型平均预测
 stream_avg_pred <- predict(stream_avg_model, newdata = stream_test_data)
-
-cat("林小雨的溪流测试条件：水温18°C, 溶解氧6mg/L, pH7.5, 浊度20NTU\n")
 ```
+
 
 ```
 ## 林小雨的溪流测试条件：水温18°C, 溶解氧6mg/L, pH7.5, 浊度20NTU
 ```
 
-``` r
-cat("单一模型预测:", round(exp(stream_single_pred) - 1, 1), "条鱼\n")
-```
-
 ```
 ## 单一模型预测: 17668.2 条鱼
-```
-
-``` r
-cat("模型平均预测:", round(exp(stream_avg_pred) - 1, 1), "条鱼\n")
 ```
 
 ```
@@ -1016,13 +834,8 @@ stream_boot_results <- boot(stream_fish_data, stream_predict_function, R = 1000)
 
 # 计算置信区间
 stream_ci <- boot.ci(stream_boot_results, type = "perc")
-
-cat(
-  "林小雨的溪流鱼类Bootstrap 95% 预测区间: [",
-  round(stream_ci$percent[4], 1), ", ",
-  round(stream_ci$percent[5], 1), "] 条鱼\n"
-)
 ```
+
 
 ```
 ## 林小雨的溪流鱼类Bootstrap 95% 预测区间: [ 17104.5 ,  18267.4 ] 条鱼
@@ -1131,11 +944,8 @@ print(cv_model)
 ``` r
 # 提取交叉验证统计量
 cv_results <- cv_model$results
-cat("\n交叉验证性能指标：\n平均$R^2$:",
-    round(cv_results$Rsquared, 3), "\n平均RMSE:",
-    round(cv_results$RMSE, 3), "\n平均MAE:",
-    round(cv_results$MAE, 3), "\n")
 ```
+
 
 ```
 ## 
@@ -1174,8 +984,8 @@ ggplot(cv_performance, aes(x = Fold, y = RMSE)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-23-1.png" alt="林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-23)林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力</p>
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-27-1.png" alt="林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-27)林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力</p>
 </div>
 
 训练集和测试集性能的比较是检测过度拟合的直接方法。如果测试集性能明显差于训练集，说明模型可能过度适应训练数据的噪声。
@@ -1197,25 +1007,14 @@ test_pred <- predict(train_model, newdata = test_data)
 
 train_rmse <- sqrt(mean((log(train_data$richness + 1) - train_pred)^2))
 test_rmse <- sqrt(mean((log(test_data$richness + 1) - test_pred)^2))
-
-cat("\n=== 林小雨的森林鸟类模型：训练集 vs 测试集性能 ===\n",
-  "训练集RMSE:", round(train_rmse, 3), "\n",
-  "测试集RMSE:", round(test_rmse, 3), "\n")
 ```
+
 
 ```
 ## 
 ## === 林小雨的森林鸟类模型：训练集 vs 测试集性能 ===
 ##  训练集RMSE: 0.205 
 ##  测试集RMSE: 0.234
-```
-
-``` r
-if (test_rmse > train_rmse * 1.2) {
-  cat("警告：测试集性能明显差于训练集，可能存在过度拟合\n")
-} else {
-  cat("模型在训练集和测试集上表现一致，泛化能力良好\n")
-}
 ```
 
 ```
@@ -1299,13 +1098,8 @@ train_rmse <- sqrt(mean((log(train_data$richness + 1) - train_pred)^2))
 test_pred <- predict(model_external, newdata = test_data)
 test_r2 <- cor(log(test_data$richness + 1), test_pred)^2
 test_rmse <- sqrt(mean((log(test_data$richness + 1) - test_pred)^2))
-
-# 输出外部验证结果
-cat("=== 林小雨的森林生态系统外部验证结果 ===\n",
-  "训练集性能（原森林区域）：\n",
-  "- $R^2$:", round(train_r2, 3), "\n",
-  "- RMSE:", round(train_rmse, 3), "\n\n")
 ```
+
 
 ```
 ## === 林小雨的森林生态系统外部验证结果 ===
@@ -1314,27 +1108,19 @@ cat("=== 林小雨的森林生态系统外部验证结果 ===\n",
 ##  - RMSE: 0.31
 ```
 
-``` r
-cat("测试集性能（新森林区域外部验证）：\n",
-  "- $R^2$:", round(test_r2, 3), "\n",
-  "- RMSE:", round(test_rmse, 3), "\n\n")
-```
-
 ```
 ## 测试集性能（新森林区域外部验证）：
 ##  - $R^2$: 0.772 
 ##  - RMSE: 0.576
 ```
 
+
 ``` r
 # 计算性能下降程度
 r2_decline <- (train_r2 - test_r2) / train_r2 * 100
 rmse_increase <- (test_rmse - train_rmse) / train_rmse * 100
-
-cat("性能变化分析：\n",
-  "$R^2$下降:", round(r2_decline, 1), "%\n",
-  "RMSE增加:", round(rmse_increase, 1), "%\n\n")
 ```
+
 
 ```
 ## 性能变化分析：
@@ -1342,20 +1128,11 @@ cat("性能变化分析：\n",
 ##  RMSE增加: 85.5 %
 ```
 
-``` r
-# 评估外部验证结果
-if (test_r2 > 0.6) {
-  cat("外部验证结果优秀：模型在新森林区域表现良好\n")
-} else if (test_r2 > 0.4) {
-  cat("外部验证结果可接受：模型在新森林区域表现尚可\n")
-} else {
-  cat("外部验证结果较差：模型在新森林区域表现不佳\n")
-}
-```
-
 ```
 ## 外部验证结果优秀：模型在新森林区域表现良好
 ```
+
+
 
 ``` r
 # 可视化外部验证结果
@@ -1389,8 +1166,8 @@ ggplot(validation_plot_data, aes(x = Observed, y = Predicted, color = Type)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-25-1.png" alt="林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-25)林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域</p>
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-34-1.png" alt="林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-34)林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域</p>
 </div>
 
 在林小雨的植物物种丰富度研究中，训练集基于她最初调查的山地森林区域数据，测试集代表邻近但生态条件略有不同的另一个山地森林区域。外部验证检验了她的模型在不同森林生态系统中的空间普适性。如果模型在测试集上表现良好，说明其在不同森林区域的适用性较广；如果性能显著下降，可能需要考虑森林区域特异性因素，如不同的优势树种、土壤类型、地形特征或干扰历史。林小雨通过外部验证深刻理解了森林生态系统的空间异质性，这为她制定更精准的森林保护策略提供了重要启示。
@@ -1400,25 +1177,14 @@ ggplot(validation_plot_data, aes(x = Observed, y = Predicted, color = Type)) +
 # 林小雨计算预测偏差：评估模型在新森林区域的系统性偏差
 bias_train <- mean(train_pred - log(train_data$richness + 1))
 bias_test <- mean(test_pred - log(test_data$richness + 1))
-
-cat("\n=== 林小雨的预测偏差分析 ===\n",
-  "原森林区域（训练集）平均偏差:", round(bias_train, 3), "\n",
-  "新森林区域（测试集）平均偏差:", round(bias_test, 3), "\n")
 ```
+
 
 ```
 ## 
 ## === 林小雨的预测偏差分析 ===
 ##  原森林区域（训练集）平均偏差: 0 
 ##  新森林区域（测试集）平均偏差: -0.343
-```
-
-``` r
-if (abs(bias_test) > 0.1) {
-  cat("林小雨的发现：模型在新森林区域存在系统性预测偏差\n",
-      "可能原因：不同森林区域的环境因子与物种丰富度关系存在差异\n",
-      "建议：考虑添加区域特异性变量或使用混合效应模型\n")
-}
 ```
 
 ```
@@ -1512,21 +1278,19 @@ plot(model_diagnostic)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-28-1.png" alt="林小雨的森林模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图。通过系统诊断，林小雨检查她的树木生长速率模型是否满足统计假设。" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-28)林小雨的森林模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图。通过系统诊断，林小雨检查她的树木生长速率模型是否满足统计假设。</p>
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-38-1.png" alt="林小雨的森林模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图。通过系统诊断，林小雨检查她的树木生长速率模型是否满足统计假设。" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-38)林小雨的森林模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图。通过系统诊断，林小雨检查她的树木生长速率模型是否满足统计假设。</p>
 </div>
 
 ``` r
 par(mfrow = c(1, 1))
+```
 
+
+``` r
 # 计算残差统计量
 residuals <- resid(model_diagnostic)
 fitted <- fitted(model_diagnostic)
-
-cat("林小雨的残差统计量：\n",
-  "均值:", round(mean(residuals), 3), "(理想值: 0)\n",
-  "标准差:", round(sd(residuals), 3), "\n",
-  "偏度:", round(moments::skewness(residuals), 3), "(理想值: 0)\n")
 ```
 
 ```
@@ -1536,22 +1300,15 @@ cat("林小雨的残差统计量：\n",
 ##  偏度: -2.672 (理想值: 0)
 ```
 
+
 ``` r
 # 检验残差正态性
 shapiro_test <- shapiro.test(residuals)
-cat("Shapiro-Wilk正态性检验p值:", round(shapiro_test$p.value, 4), "\n")
 ```
+
 
 ```
 ## Shapiro-Wilk正态性检验p值: 0
-```
-
-``` r
-if (shapiro_test$p.value < 0.05) {
-  cat("林小雨的发现：残差可能不服从正态分布，需要考虑数据变换\n")
-} else {
-  cat("林小雨的发现：残差基本服从正态分布\n")
-}
 ```
 
 ```
@@ -1580,15 +1337,10 @@ influence_measures <- influence.measures(model_diagnostic)
 hat_values <- hatvalues(model_diagnostic)
 p <- length(coef(model_diagnostic))
 high_leverage <- which(hat_values > 2 * p / n_forest_trees)
+```
 
+```{r, echo=FALSE}`
 cat("高杠杆点（可能对模型有过度影响）：\n")
-```
-
-```
-## 高杠杆点（可能对模型有过度影响）：
-```
-
-``` r
 if (length(high_leverage) > 0) {
   cat("观测编号:", high_leverage, "\n",
     "对应的hat值:", round(hat_values[high_leverage], 3), "\n")
@@ -1597,31 +1349,17 @@ if (length(high_leverage) > 0) {
 }
 ```
 
-```
-## 观测编号: 85 
-##  对应的hat值: 0.09
-```
 
 ``` r
 # 识别异常残差（标准化残差 > 2）
 std_residuals <- rstandard(model_diagnostic)
 outlier_residuals <- which(abs(std_residuals) > 2)
-
-cat("\n异常残差点（|标准化残差| > 2）：\n")
 ```
+
 
 ```
 ## 
 ## 异常残差点（|标准化残差| > 2）：
-```
-
-``` r
-if (length(outlier_residuals) > 0) {
-  cat("观测编号:", outlier_residuals, "\n",
-    "对应的标准化残差:", round(std_residuals[outlier_residuals], 3), "\n")
-} else {
-  cat("未发现异常残差点\n")
-}
 ```
 
 ```
@@ -1629,26 +1367,17 @@ if (length(outlier_residuals) > 0) {
 ##  对应的标准化残差: 3.133 -7.086 2.377
 ```
 
+
 ``` r
 # 识别强影响点（Cook's distance > 4/(n-p)）
 cooks_d <- cooks.distance(model_diagnostic)
 influential_points <- which(cooks_d > 4 / (n_forest_trees - p))
-
-cat("\n强影响点（Cook's distance较大）：\n")
 ```
+
 
 ```
 ## 
 ## 强影响点（Cook's distance较大）：
-```
-
-``` r
-if (length(influential_points) > 0) {
-  cat("观测编号:", influential_points, "\n",
-    "对应的Cook's distance:", round(cooks_d[influential_points], 3), "\n")
-} else {
-  cat("未发现强影响点\n")
-}
 ```
 
 ```
@@ -1671,24 +1400,11 @@ cat("\n3. 多重共线性诊断\n")
 
 ``` r
 vif_values <- vif(model_diagnostic)
-cat("方差膨胀因子(VIF)：\n")
 ```
+
 
 ```
 ## 方差膨胀因子(VIF)：
-```
-
-``` r
-for (i in seq_along(vif_values)) {
-  cat(names(vif_values)[i], ":", round(vif_values[i], 2))
-  if (vif_values[i] > 5) {
-    cat(" (可能存在多重共线性)\n")
-  } else if (vif_values[i] > 10) {
-    cat(" (严重多重共线性)\n")
-  } else {
-    cat("\n")
-  }
-}
 ```
 
 ```
@@ -1722,8 +1438,8 @@ ggplot(cook_data, aes(x = Observation, y = CooksD)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-31-1.png" alt="Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-31)Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点</p>
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-50-1.png" alt="Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-50)Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点</p>
 </div>
 
 在生态学中，异常观测往往具有重要的生态学意义。高杠杆点可能代表极端环境条件，异常残差点可能反映特殊的生态情境。通过识别这些点，我们不仅能够确保模型的统计稳健性，还能够发现值得深入研究的生态学现象。
@@ -2005,12 +1721,8 @@ bf_vector <- c(
   exp(bf_23@bayesFactor$bf) * exp(bf_12@bayesFactor$bf)
 )
 posterior_prob <- bf_vector * prior_prob / sum(bf_vector * prior_prob)
-
-cat("\n=== 林小雨的森林鸟类模型后验模型概率 ===\n",
-  "模型1 (只有栖息地面积):", round(posterior_prob[1], 3), "\n",
-  "模型2 (栖息地面积+植被密度):", round(posterior_prob[2], 3), "\n",
-  "模型3 (栖息地面积+植被密度+距水源距离):", round(posterior_prob[3], 3), "\n")
 ```
+
 
 ```
 ## 
@@ -2048,7 +1760,7 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 ## vegetation     0.9444822  9.8845073 4.31007528             1   2
 ## 
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"  "0.008864641 secs" 
+##            "2.9445"                 "8"                 "0"  "0.008826017 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -2056,10 +1768,10 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 ##     Shrinkage-Stats 
 ##         "Av=0.9877" 
 ## 
-## Time difference of 0.008864641 secs
+## Time difference of 0.008826017 secs
 ```
 
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-36-1.png" width="672" style="display: block; margin: auto;" />
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-56-1.png" width="80%" style="display: block; margin: auto;" />
 
 ``` r
 # 输出模型平均结果
@@ -2076,7 +1788,7 @@ print(summary(bma_result))
 
 ```
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"  "0.008864641 secs" 
+##            "2.9445"                 "8"                 "0"  "0.008826017 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -2085,34 +1797,10 @@ print(summary(bma_result))
 ##         "Av=0.9877"
 ```
 
-``` r
-# 变量后验包含概率
-cat("\n=== 林小雨的森林鸟类变量后验包含概率 ===\n")
-```
 
 ```
 ## 
 ## === 林小雨的森林鸟类变量后验包含概率 ===
-```
-
-``` r
-# 使用更稳健的方法提取后验包含概率
-pip_values <- coef(bma_result, order.by.pip = FALSE)
-if ("pip" %in% names(pip_values)) {
-  cat("栖息地面积:", round(pip_values["area", "pip"], 3), "\n",
-    "植被密度:", round(pip_values["vegetation", "pip"], 3), "\n",
-    "距水源距离:", round(pip_values["water_distance", "pip"], 3), "\n")
-} else {
-  # 备用方法：直接使用bma_result$pip
-  pip <- bma_result$pip
-  if (is.numeric(pip) && length(pip) >= 3) {
-    cat("栖息地面积:", round(pip[1], 3), "\n",
-      "植被密度:", round(pip[2], 3), "\n",
-      "距水源距离:", round(pip[3], 3), "\n")
-  } else {
-    cat("无法提取后验包含概率，请检查BMS包版本\n")
-  }
-}
 ```
 
 ```
@@ -2131,7 +1819,6 @@ if ("pip" %in% names(pip_values)) {
 library(brms)
 
 # 使用brms进行贝叶斯泊松回归
-# 注意：这里使用简化版本，实际应用需要更多MCMC迭代
 
 # 拟合贝叶斯泊松回归模型
 bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
@@ -2142,61 +1829,23 @@ bayes_poisson <- brm(richness ~ area + vegetation + water_distance,
     prior(normal(0, 5), class = "Intercept")
   ),
   chains = 2, iter = 2000, warmup = 1000,
-  seed = 1234
+  seed = 1234, silent = 2, refresh = 0
 )
 ```
 
 ```
-## 
-## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
-## Chain 1: 
-## Chain 1: Gradient evaluation took 1.2e-05 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.12 seconds.
-## Chain 1: Adjust your expectations accordingly!
-## Chain 1: 
-## Chain 1: 
-## Chain 1: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 1: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 1: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 1: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 1: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 1: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 1: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 1: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 1: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 1: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 1: 
-## Chain 1:  Elapsed Time: 0.073 seconds (Warm-up)
-## Chain 1:                0.048 seconds (Sampling)
-## Chain 1:                0.121 seconds (Total)
-## Chain 1: 
-## 
-## SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 2).
-## Chain 2: 
-## Chain 2: Gradient evaluation took 6e-06 seconds
-## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 0.06 seconds.
-## Chain 2: Adjust your expectations accordingly!
-## Chain 2: 
-## Chain 2: 
-## Chain 2: Iteration:    1 / 2000 [  0%]  (Warmup)
-## Chain 2: Iteration:  200 / 2000 [ 10%]  (Warmup)
-## Chain 2: Iteration:  400 / 2000 [ 20%]  (Warmup)
-## Chain 2: Iteration:  600 / 2000 [ 30%]  (Warmup)
-## Chain 2: Iteration:  800 / 2000 [ 40%]  (Warmup)
-## Chain 2: Iteration: 1000 / 2000 [ 50%]  (Warmup)
-## Chain 2: Iteration: 1001 / 2000 [ 50%]  (Sampling)
-## Chain 2: Iteration: 1200 / 2000 [ 60%]  (Sampling)
-## Chain 2: Iteration: 1400 / 2000 [ 70%]  (Sampling)
-## Chain 2: Iteration: 1600 / 2000 [ 80%]  (Sampling)
-## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
-## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
-## Chain 2: 
-## Chain 2:  Elapsed Time: 0.073 seconds (Warm-up)
-## Chain 2:                0.047 seconds (Sampling)
-## Chain 2:                0.12 seconds (Total)
-## Chain 2:
+## Running /usr/lib/R/bin/R CMD SHLIB foo.c
+## using C compiler: ‘gcc (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0’
+## gcc -I"/usr/share/R/include" -DNDEBUG   -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/Rcpp/include/"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppEigen/include/"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppEigen/include/unsupported"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/BH/include" -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/StanHeaders/include/src/"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/StanHeaders/include/"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppParallel/include/"  -I"/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/rstan/include" -DEIGEN_NO_DEBUG  -DBOOST_DISABLE_ASSERTS  -DBOOST_PENDING_INTEGER_LOG2_HPP  -DSTAN_THREADS  -DUSE_STANC3 -DSTRICT_R_HEADERS  -DBOOST_PHOENIX_NO_VARIADIC_EXPRESSION  -D_HAS_AUTO_PTR_ETC=0  -include '/home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/StanHeaders/include/stan/math/prim/fun/Eigen.hpp'  -D_REENTRANT -DRCPP_PARALLEL_USE_TBB=1       -fpic  -g -O2 -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer -ffile-prefix-map=/build/r-base-FPSnzf/r-base-4.3.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-FPSnzf/r-base-4.3.3=/usr/src/r-base-4.3.3-2build2 -Wdate-time -D_FORTIFY_SOURCE=3  -c foo.c -o foo.o
+## In file included from /home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppEigen/include/Eigen/Core:19,
+##                  from /home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppEigen/include/Eigen/Dense:1,
+##                  from /home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/StanHeaders/include/stan/math/prim/fun/Eigen.hpp:22,
+##                  from <command-line>:
+## /home/gcshen/R/x86_64-pc-linux-gnu-library/4.3/RcppEigen/include/Eigen/src/Core/util/Macros.h:679:10: fatal error: cmath: No such file or directory
+##   679 | #include <cmath>
+##       |          ^~~~~~~
+## compilation terminated.
+## make: *** [/usr/lib/R/etc/Makeconf:191: foo.o] Error 1
 ```
 
 ``` r
@@ -2229,8 +1878,8 @@ ggplot(pred_data, aes(x = Observed, y = Predicted)) +
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-37-1.png" alt="贝叶斯预测：观测值与预测值的比较，包含95%预测区间" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-37-1)贝叶斯预测：观测值与预测值的比较，包含95%预测区间</p>
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-58-1.png" alt="贝叶斯预测：观测值与预测值的比较，包含95%预测区间" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-58-1)贝叶斯预测：观测值与预测值的比较，包含95%预测区间</p>
 </div>
 
 ``` r
@@ -2249,22 +1898,15 @@ print(pp_check)
 ```
 
 <div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-37-2.png" alt="贝叶斯预测：观测值与预测值的比较，包含95%预测区间" width="672" />
-<p class="caption">(\#fig:unnamed-chunk-37-2)贝叶斯预测：观测值与预测值的比较，包含95%预测区间</p>
+<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-58-2.png" alt="贝叶斯预测：观测值与预测值的比较，包含95%预测区间" width="80%" />
+<p class="caption">(\#fig:unnamed-chunk-58-2)贝叶斯预测：观测值与预测值的比较，包含95%预测区间</p>
 </div>
 
-``` r
-# 解释后验预测检查
-cat("\n后验预测检查帮助我们验证模型是否能够生成与观测数据相似的数据。\n")
-```
+
 
 ```
 ## 
 ## 后验预测检查帮助我们验证模型是否能够生成与观测数据相似的数据。
-```
-
-``` r
-cat("如果模型拟合良好，后验预测分布应该与观测数据分布相似。\n")
 ```
 
 ```
@@ -2299,21 +1941,11 @@ blasso_result <- blasso(
 
 # 提取后验包含概率
 posterior_inclusion <- colMeans(blasso_result$beta != 0)
-
-cat("=== 林小雨的森林鸟类贝叶斯LASSO变量选择结果 ===\n")
 ```
+
 
 ```
 ## === 林小雨的森林鸟类贝叶斯LASSO变量选择结果 ===
-```
-
-``` r
-for (i in seq_along(posterior_inclusion)) {
-  cat(
-    names(posterior_inclusion)[i], ":",
-    round(posterior_inclusion[i], 3), "\n"
-  )
-}
 ```
 
 ```
@@ -2498,3 +2130,105 @@ for (i in seq_along(posterior_inclusion)) {
 夕阳透过窗户洒在林小雨的研究笔记上，她合上笔记本，脸上露出满足的微笑。通过系统学习模型选择与评估方法，她不仅完成了保护区的研究任务，更重要的是建立了科学的思维方式和严谨的研究态度。这些能力将伴随她的整个科研生涯，帮助她在生态学研究的道路上不断前行。她知道，这只是开始，前方还有更多的生态学谜题等待她去探索，更多的统计方法等待她去掌握。但她已经准备好了，带着数学的望远镜和生态学的心，继续她的森林探索之旅。
 
 ## 综合练习
+
+### 练习一：森林生态系统模型选择与评估综合应用
+
+**背景**：假设你是一名生态学研究者，正在研究某山地森林生态系统中植物物种丰富度与环境因子的关系。你收集了150个森林样地的数据，包括以下变量：
+
+- **物种丰富度**：样地内植物物种数量  
+- **海拔**：样地海拔高度（米）  
+- **年降水量**：样地年降水量（毫米）  
+- **土壤氮含量**：土壤全氮含量（%）  
+- **林冠开度**：林冠开度百分比（%）  
+- **坡度**：样地坡度（度）  
+
+**任务**：
+
+1. **模型选择**：基于生态学理论和统计准则，构建3-4个候选模型来描述植物物种丰富度与环境因子的关系。解释每个模型背后的生态学假设。
+
+2. **信息准则分析**：计算每个模型的AIC、BIC、ΔAIC和AIC权重。根据信息准则结果，确定最优模型并解释选择依据。
+
+3. **模型诊断**：对最优模型进行全面的模型诊断，包括：  
+   - 残差分析（正态性、异方差性）   
+   - 影响分析（高杠杆点、异常残差点、强影响点） 
+   - 多重共线性诊断  
+
+4. **交叉验证**：使用10折交叉验证评估最优模型的泛化能力，计算训练集和测试集的RMSE，分析是否存在过度拟合。
+
+5. **生态学解释**：基于最优模型结果，解释各环境因子对植物物种丰富度的影响，并提出森林保护管理建议。
+
+**思考题**：  
+- 如果AIC最优模型与BIC最优模型不同，你会如何选择？为什么？  
+- 在模型诊断中发现强影响点，你会如何处理？这些强影响点可能代表什么生态学现象？  
+
+
+### 练习二：贝叶斯模型选择与频率学派方法比较
+
+**背景**：你正在研究溪流生态系统中鱼类丰度与环境因子的关系。数据包括80个溪流样点的鱼类丰度以及水温、溶解氧、pH值、浊度等环境因子。
+
+**任务**：
+
+1. **频率学派分析**：  
+   - 使用逐步回归方法选择重要环境因子  
+   - 计算AIC和BIC值，确定最优模型  
+   - 进行模型诊断和交叉验证  
+
+2. **贝叶斯分析**：  
+   - 使用贝叶斯线性回归拟合模型  
+   - 计算贝叶斯因子比较不同模型  
+   - 执行贝叶斯模型平均，计算变量后验包含概率  
+   - 生成后验预测分布和95%可信区间  
+
+3. **方法比较**：  
+   - 比较频率学派和贝叶斯方法在变量选择结果上的异同  
+   - 分析两种方法在不确定性量化方面的差异  
+   - 讨论两种方法在生态学解释上的优势和局限性  
+
+4. **生态学应用**：  
+   - 基于分析结果，识别影响溪流鱼类丰度的关键环境因子  
+   - 提出溪流生态保护的具体建议  
+   - 讨论模型结果在溪流管理决策中的应用价值  
+
+**思考题**：  
+- 在什么情况下贝叶斯方法比频率学派方法更适合生态学研究？  
+- 如何合理设置贝叶斯分析中的先验分布？先验分布的选择对结果有多大影响？  
+- 贝叶斯模型平均与频率学派的模型平均有何异同？  
+
+
+### 练习三：模型评估在生态保护决策中的应用
+
+**背景**：某自然保护区需要制定鸟类保护策略，你负责构建鸟类丰富度预测模型来指导保护决策。你拥有该保护区过去5年的鸟类调查数据，以及详细的生境特征数据。
+
+**任务**：
+
+1. **模型构建与选择**：  
+   - 构建多个候选模型预测鸟类丰富度  
+   - 使用信息准则选择最优模型  
+   - 解释最优模型的生态学意义  
+
+2. **内部验证**：  
+   - 使用k折交叉验证评估模型泛化能力  
+   - 分析模型在不同数据子集上的稳定性  
+   - 识别潜在的过度拟合问题  
+
+3. **外部验证**：  
+   - 使用邻近保护区的独立数据验证模型  
+   - 分析模型的空间普适性  
+   - 识别模型的边界条件和适用范围  
+
+4. **不确定性量化**：  
+   - 计算预测置信区间  
+   - 使用Bootstrap方法量化预测不确定性  
+   - 分析不确定性来源（参数估计、模型选择、生态系统变异）  
+
+5. **保护决策支持**：  
+   - 基于模型预测识别保护优先区域  
+   - 评估不同管理措施对鸟类丰富度的潜在影响  
+   - 制定基于模型证据的保护策略  
+   - 明确模型预测的局限性和不确定性  
+
+**思考题**：  
+- 在向保护区管理者汇报模型结果时，你会如何平衡模型的预测精度和不确定性？  
+- 如果外部验证显示模型在新区域表现不佳，你会如何调整保护策略？  
+- 如何将模型评估结果转化为具体的、可操作的保护管理建议？  
+
