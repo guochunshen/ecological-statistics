@@ -882,7 +882,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>大数定律的数学基础</strong></p>
 <p>大数定律是频率概率的理论支柱。这个定律告诉我们：当试验次数足够多时，事件发生的频率会稳定地趋近于其真实的概率。这种稳定性不是偶然的，而是概率论的基本规律。</p>
 <p>在生态学中，频率概率意味着我们通过系统的观察来了解生物行为的真实模式。每一次观察都是对”真实概率”的一次逼近，随着观察次数的增加，我们的估计会越来越准确。</p>
-<p>概率收敛理论是统计推断的数学基础，帮助我们理解样本统计量如何趋近于总体参数。<a href="mailto:如@fig" class="email">如@fig</a>:law-of-large-numbers所示，大数定律的可视化演示清晰地展示了样本均值如何随样本量增加而收敛于总体均值，这种收敛过程体现了频率概率的核心思想。</p>
+<p>概率收敛理论是统计推断的数学基础，帮助我们理解样本统计量如何趋近于总体参数。如图<a href="概率与分布.html#fig:law-of-large-numbers">2.1</a>所示，大数定律的可视化演示清晰地展示了样本均值如何随样本量增加而收敛于总体均值，这种收敛过程体现了频率概率的核心思想。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:law-of-large-numbers"></span>
 <img src="02-probability_and_distribution_files/figure-html/law-of-large-numbers-1.png" alt="大数定律可视化：样本均值随样本量增加收敛于总体均值" width="80%" />
 <p class="caption">
@@ -1050,7 +1050,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>贝叶斯概率在现代生态学研究中越来越重要，以下是几个典型应用：</p>
 <p><strong>物种分布模型</strong></p>
 <p>结合专家知识和观测数据，建立更准确的物种分布预测模型。先验可以反映物种的生态习性，后验则结合了实际的分布数据。</p>
-<p>贝叶斯方法在物种分布建模中具有独特优势，能够结合专家知识和观测数据。下面的代码演示了一个完整的贝叶斯物种分布模型，展示了如何将专家对物种栖息地偏好的初始信念（先验）与实际野外观测数据（似然）相结合，通过贝叶斯更新得到更准确的物种分布概率（后验）。<a href="mailto:如表@tbl" class="email">如表@tbl</a>:bayesian-species-distribution所示，该模型清晰地展示了专家先验、观测似然和贝叶斯后验的对比结果。该模型还计算了KL散度来量化信息增益，并使用贝叶斯因子评估证据强度，为生态学家提供了一套完整的贝叶斯分析工具。</p>
+<p>贝叶斯方法在物种分布建模中具有独特优势，能够结合专家知识和观测数据。下面的代码演示了一个完整的贝叶斯物种分布模型，展示了如何将专家对物种栖息地偏好的初始信念（先验）与实际野外观测数据（似然）相结合，通过贝叶斯更新得到更准确的物种分布概率（后验）。如表<a href="概率与分布.html#tab:bayesian-species-distribution">2.1</a>所示，该模型清晰地展示了专家先验、观测似然和贝叶斯后验的对比结果。该模型还计算了KL散度来量化信息增益，并使用贝叶斯因子评估证据强度，为生态学家提供了一套完整的贝叶斯分析工具。</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="概率与分布.html#cb62-1" tabindex="-1"></a><span class="co"># 贝叶斯物种分布模型</span></span>
 <span id="cb62-2"><a href="概率与分布.html#cb62-2" tabindex="-1"></a><span class="co"># 演示如何结合专家知识和观测数据更新物种栖息地偏好</span></span>
 <span id="cb62-3"><a href="概率与分布.html#cb62-3" tabindex="-1"></a></span>
@@ -1258,7 +1258,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="贝叶斯概率的优势与局限性" class="section level4 hasAnchor" number="2.2.4.8">
 <h4><span class="header-section-number">2.2.4.8</span> 贝叶斯概率的优势与局限性<a href="概率与分布.html#贝叶斯概率的优势与局限性" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>贝叶斯概率方法在现代生态学研究中展现出独特的优势。其<strong>灵活性</strong>体现在能够有机地结合先验知识和新的观测证据，这种动态更新的特性使其特别适合处理环境变化和物种适应性研究。通过贝叶斯定理，研究者可以将专家经验、历史数据与最新的实地观察相结合，形成更加全面的认知。<strong>不确定性量化</strong>是贝叶斯方法的另一重要优势，它不仅提供点估计，还能明确表达参数的不确定性范围，这对于生态风险评估和保护决策具有重要意义。在<strong>小样本适用性</strong>方面，贝叶斯方法在数据有限的情况下仍然能够发挥作用，这对于研究稀有物种或难以大规模观察的生态现象尤为宝贵。<strong>模型复杂性处理</strong>能力使贝叶斯方法能够应对生态学中常见的多层次、多变量复杂系统，如考虑个体差异、空间异质性和时间动态的生态模型。最重要的是，贝叶斯方法提供<strong>决策支持</strong>，直接输出决策所需的概率信息，如物种灭绝风险、保护措施效果等，为生态管理提供科学依据。</p>
-<p>然而，贝叶斯概率方法也存在不容忽视的局限性。<strong>主观性</strong>是其最受争议的方面，先验概率的选择往往依赖于研究者的主观判断，不同专家可能会给出不同的先验设定。<a href="mailto:如@fig" class="email">如@fig</a>:subjective-bias-demo所示，不同群体（生态学家、森林管理者、当地社区）对同一生态风险评估给出了显著不同的结果，这凸显了在贝叶斯分析中谨慎处理先验信息的重要性。<strong>计算复杂性</strong>是实际应用中的主要障碍，复杂的贝叶斯模型需要大量的计算资源，特别是使用马尔可夫链蒙特卡洛方法时，计算时间可能相当可观。<strong>先验敏感性</strong>问题意味着结果可能对先验选择高度敏感，不恰当的先验设定可能导致有偏的结论。<strong>收敛问题</strong>是MCMC方法特有的挑战，在复杂模型中可能出现收敛困难或收敛到局部最优解的情况。此外，<strong>解释难度</strong>限制了贝叶斯方法的普及，后验分布的理解和解释需要研究者具备相当的统计背景，这在一定程度上阻碍了其在生态学实践中的广泛应用。这些局限性提示我们在使用贝叶斯方法时需要谨慎处理先验设定，并充分考虑计算可行性和结果解释的清晰性。</p>
+<p>然而，贝叶斯概率方法也存在不容忽视的局限性。<strong>主观性</strong>是其最受争议的方面，先验概率的选择往往依赖于研究者的主观判断，不同专家可能会给出不同的先验设定。如图<a href="概率与分布.html#fig:subjective-bias-demo">2.7</a>所示，不同群体（生态学家、森林管理者、当地社区）对同一生态风险评估给出了显著不同的结果，这凸显了在贝叶斯分析中谨慎处理先验信息的重要性。<strong>计算复杂性</strong>是实际应用中的主要障碍，复杂的贝叶斯模型需要大量的计算资源，特别是使用马尔可夫链蒙特卡洛方法时，计算时间可能相当可观。<strong>先验敏感性</strong>问题意味着结果可能对先验选择高度敏感，不恰当的先验设定可能导致有偏的结论。<strong>收敛问题</strong>是MCMC方法特有的挑战，在复杂模型中可能出现收敛困难或收敛到局部最优解的情况。此外，<strong>解释难度</strong>限制了贝叶斯方法的普及，后验分布的理解和解释需要研究者具备相当的统计背景，这在一定程度上阻碍了其在生态学实践中的广泛应用。这些局限性提示我们在使用贝叶斯方法时需要谨慎处理先验设定，并充分考虑计算可行性和结果解释的清晰性。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:subjective-bias-demo"></span>
 <img src="02-probability_and_distribution_files/figure-html/subjective-bias-demo-1.png" alt="主观偏见问题：不同群体对同一生态风险评估的差异" width="80%" />
 <p class="caption">
@@ -1416,7 +1416,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">2.3.1</span> 随机变量<a href="概率与分布.html#随机变量" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>现在，我想更系统地描述你这只“蚱蜢”的行为。作为一名生态学研究者，我面对的不仅仅是描述性的观察记录，而是需要建立一个能够量化、预测和分析的数学模型。“蚱蜢选择哪种植物进食”这个看似简单的行为，实际上蕴含着复杂的决策过程，受到营养需求、环境因素、个体偏好等多重影响。我需要一个强大的数学工具来捕捉这种不确定性，将模糊的行为模式转化为精确的概率描述。</p>
 <p>于是，我引入<strong>随机变量</strong>的概念，将其命名为X。随机变量是概率论中的核心工具，它就像一个数学翻译器，将现实世界中的随机现象转化为数学语言。我精心定义：当X=1时，代表你选择了营养丰富的黑麦草；当X=2时，代表你选择了环境复杂的混合草甸；当X=3时，代表你选择了相对稀少的三叶草。这种编码方式不仅简化了描述，更重要的是为后续的数学分析奠定了基础。</p>
-<p>随机变量的奇妙之处在于它的双重性：在每次具体观察之前，X的取值是完全不确定的——它可能是1、2或3中的任意一个，这种不确定性正是生态系统中生物行为的本质特征。然而，这种不确定性并非毫无规律可言。通过长期的观察和数据积累，我发现每个可能的取值都有其特定的发生概率。这种概率分布就像是你行为模式的”数学指纹”，精确地刻画了你在不同环境条件下的选择倾向。<a href="mailto:如@fig" class="email">如@fig</a>:random-variable-demo所示，通过随机模拟可以直观地展示这种概率分布的实际表现，其中黑麦草被选择的频率最高，三叶草相对较少，这与我们观察到的概率分布一致。随机变量的引入，使我们能够从定性描述迈向定量分析，为理解生物决策机制提供了强有力的数学框架。</p>
+<p>随机变量的奇妙之处在于它的双重性：在每次具体观察之前，X的取值是完全不确定的——它可能是1、2或3中的任意一个，这种不确定性正是生态系统中生物行为的本质特征。然而，这种不确定性并非毫无规律可言。通过长期的观察和数据积累，我发现每个可能的取值都有其特定的发生概率。这种概率分布就像是你行为模式的”数学指纹”，精确地刻画了你在不同环境条件下的选择倾向。如图<a href="概率与分布.html#fig:random-variable-demo">2.8</a>所示，通过随机模拟可以直观地展示这种概率分布的实际表现，其中黑麦草被选择的频率最高，三叶草相对较少，这与我们观察到的概率分布一致。随机变量的引入，使我们能够从定性描述迈向定量分析，为理解生物决策机制提供了强有力的数学框架。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:random-variable-demo"></span>
 <img src="02-probability_and_distribution_files/figure-html/random-variable-demo-1.png" alt="随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟" width="80%" />
 <p class="caption">
@@ -1459,7 +1459,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>这张表，就构成了一个<strong>概率分布</strong>！它完整地描绘了你的选择偏好全景。它清晰地显示，你最可能去哪（黑麦草），最不可能去哪（三叶草）。</p>
-<p>如果我画成柱状图，就得到了一个<strong>概率分布图</strong>，直观地展示了这种”分布”情况。<a href="mailto:如@fig" class="email">如@fig</a>:plant-choice-distribution所示，通过柱状图可以更直观地看到蚱蜢对三种植物的选择偏好差异：黑麦草的选择概率最高（64%），混合草甸次之（29%），三叶草的选择概率最低（7%）。这种可视化方式让概率分布的特征一目了然，帮助我们更好地理解生物行为模式。</p>
+<p>如果我画成柱状图，就得到了一个<strong>概率分布图</strong>，直观地展示了这种”分布”情况。如图<a href="概率与分布.html#fig:plant-choice-distribution">2.9</a>所示，通过柱状图可以更直观地看到蚱蜢对三种植物的选择偏好差异：黑麦草的选择概率最高（64%），混合草甸次之（29%），三叶草的选择概率最低（7%）。这种可视化方式让概率分布的特征一目了然，帮助我们更好地理解生物行为模式。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:plant-choice-distribution"></span>
 <img src="02-probability_and_distribution_files/figure-html/plant-choice-distribution-1.png" alt="蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比" width="80%" />
 <p class="caption">
@@ -1504,7 +1504,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>蚱蜢选择黑麦草<strong>或</strong>混合草甸的概率是 0.64 + 0.29 = 0.93；</li>
 <li>蚱蜢选择任意一种植物的概率是 1.00（必然事件）。</li>
 </ul>
-<p><a href="mailto:如@fig" class="email">如@fig</a>:cumulative-distribution所示，累积概率分布通过阶梯函数的形式直观地展示了概率的累积过程。这种图形清晰地显示了随着植物类型的增加，累积概率如何逐步上升：从黑麦草的0.64，到混合草甸的0.93，最终达到三叶草的1.00。阶梯函数的跳跃点正好对应着每个植物类型的概率值，让我们能够一目了然地看到”小于等于某个值”的概率是如何累积的。</p>
+<p>如图<a href="概率与分布.html#fig:cumulative-distribution">2.10</a>所示，累积概率分布通过阶梯函数的形式直观地展示了概率的累积过程。这种图形清晰地显示了随着植物类型的增加，累积概率如何逐步上升：从黑麦草的0.64，到混合草甸的0.93，最终达到三叶草的1.00。阶梯函数的跳跃点正好对应着每个植物类型的概率值，让我们能够一目了然地看到”小于等于某个值”的概率是如何累积的。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:cumulative-distribution"></span>
 <img src="02-probability_and_distribution_files/figure-html/cumulative-distribution-1.png" alt="蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程" width="80%" />
 <p class="caption">
@@ -1613,7 +1613,7 @@ p &amp; \text{如果 } x = 1 \\
 \end{cases}\]</span></p>
 <p>或者更简洁地表示为： <span class="math display">\[P(X = x) = p^x(1-p)^{1-x}, \quad x = 0,1\]</span></p>
 <p>其中，<span class="math inline">\(X\)</span>是伯努利随机变量，<span class="math inline">\(p\)</span>是成功的概率（<span class="math inline">\(0 \leq p \leq 1\)</span>）。</p>
-<p><a href="mailto:如@fig" class="email">如@fig</a>:bernoulli-distribution所示，伯努利分布通过分面图的形式直观地展示了不同成功概率下的二元选择概率分布。该图清晰地显示了当成功概率<span class="math inline">\(p\)</span>分别为0.2、0.5、0.8时，成功与失败两种结果的概率如何变化。这种可视化帮助我们理解伯努利分布的核心特征：对于任何给定的成功概率<span class="math inline">\(p\)</span>，失败的概率总是<span class="math inline">\(1-p\)</span>，且两者之和始终为1。</p>
+<p>如图<a href="概率与分布.html#fig:bernoulli-distribution">2.11</a>所示，伯努利分布通过分面图的形式直观地展示了不同成功概率下的二元选择概率分布。该图清晰地显示了当成功概率<span class="math inline">\(p\)</span>分别为0.2、0.5、0.8时，成功与失败两种结果的概率如何变化。这种可视化帮助我们理解伯努利分布的核心特征：对于任何给定的成功概率<span class="math inline">\(p\)</span>，失败的概率总是<span class="math inline">\(1-p\)</span>，且两者之和始终为1。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:bernoulli-distribution"></span>
 <img src="02-probability_and_distribution_files/figure-html/bernoulli-distribution-1.png" alt="伯努利分布：不同成功概率下的二元选择概率分布" width="80%" />
 <p class="caption">
@@ -1652,7 +1652,7 @@ p &amp; \text{如果 } x = 1 \\
 <li>方差：<span class="math inline">\(Var(X) = np(1-p)\)</span></li>
 <li>当<span class="math inline">\(p=0.5\)</span>时，分布对称；当<span class="math inline">\(p&lt;0.5\)</span>时右偏，<span class="math inline">\(p&gt;0.5\)</span>时左偏</li>
 </ul>
-<p><a href="mailto:如@fig" class="email">如@fig</a>:binomial-distribution所示，二项分布通过分面图的形式直观地展示了不同成功概率下多次试验中成功次数的概率分布。该图清晰地显示了当试验次数<span class="math inline">\(n=10\)</span>固定时，成功概率<span class="math inline">\(p\)</span>分别为0.2、0.5、0.8时的概率分布特征：当<span class="math inline">\(p=0.5\)</span>时分布对称，当<span class="math inline">\(p=0.2\)</span>时分布右偏（成功次数集中在较小值），当<span class="math inline">\(p=0.8\)</span>时分布左偏（成功次数集中在较大值）。这种可视化帮助我们理解二项分布的形状如何随成功概率的变化而变化。</p>
+<p>如图<a href="概率与分布.html#fig:binomial-distribution">2.12</a>所示，二项分布通过分面图的形式直观地展示了不同成功概率下多次试验中成功次数的概率分布。该图清晰地显示了当试验次数<span class="math inline">\(n=10\)</span>固定时，成功概率<span class="math inline">\(p\)</span>分别为0.2、0.5、0.8时的概率分布特征：当<span class="math inline">\(p=0.5\)</span>时分布对称，当<span class="math inline">\(p=0.2\)</span>时分布右偏（成功次数集中在较小值），当<span class="math inline">\(p=0.8\)</span>时分布左偏（成功次数集中在较大值）。这种可视化帮助我们理解二项分布的形状如何随成功概率的变化而变化。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:binomial-distribution"></span>
 <img src="02-probability_and_distribution_files/figure-html/binomial-distribution-1.png" alt="二项分布：不同成功概率下多次试验中成功次数的概率分布" width="80%" />
 <p class="caption">
@@ -1692,7 +1692,7 @@ p &amp; \text{如果 } x = 1 \\
 <li>协方差：<span class="math inline">\(Cov(X_i, X_j) = -np_i p_j\)</span>（<span class="math inline">\(i \neq j\)</span>）</li>
 <li>当<span class="math inline">\(k=2\)</span>时，多项式分布退化为二项分布</li>
 </ul>
-<p><a href="mailto:如@fig" class="email">如@fig</a>:multinomial-distribution所示，多项式分布通过分面图的形式直观地展示了蚱蜢10次观察中不同植物选择组合的概率分布。该图清晰地显示了四种典型组合模式（6-3-1、5-4-1、7-2-1、4-4-2）的概率分布，其中每种组合都满足黑麦草、混合草甸、三叶草选择次数之和为10。这种可视化帮助我们理解多项式分布如何描述多类别事件的联合概率分布，以及不同组合模式对应的概率差异。</p>
+<p>如图<a href="概率与分布.html#fig:multinomial-distribution">2.13</a>所示，多项式分布通过分面图的形式直观地展示了蚱蜢10次观察中不同植物选择组合的概率分布。该图清晰地显示了四种典型组合模式（6-3-1、5-4-1、7-2-1、4-4-2）的概率分布，其中每种组合都满足黑麦草、混合草甸、三叶草选择次数之和为10。这种可视化帮助我们理解多项式分布如何描述多类别事件的联合概率分布，以及不同组合模式对应的概率差异。</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:multinomial-distribution"></span>
 <img src="02-probability_and_distribution_files/figure-html/multinomial-distribution-1.png" alt="多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布" width="80%" />
 <p class="caption">
