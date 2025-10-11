@@ -110,7 +110,7 @@ systematic_indices <- seq(1, nrow(forest_birds), by = 10)
 systematic_sample <- forest_birds[systematic_indices, ]
 
 
-knitr:kable(table(systematic_sample$species), caption="系统抽样结果")
+knitr::kable(table(systematic_sample$species), caption="系统抽样结果")
 cat("系统抽样均值估计：", mean(systematic_sample$abundance), "\n")
 ```
 
@@ -699,7 +699,7 @@ fit_brm <- brm(
 )
 
 # 输出模型拟合结果
-knitr::kable(summary(fit_brm), caption = "贝叶斯模型拟合结果")
+knitr::kable(summary(fit_brm)$fixed, caption = "贝叶斯模型拟合结果")
 ```
 
 ```{r}

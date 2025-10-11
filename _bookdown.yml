@@ -26,8 +26,8 @@ rmd_files: [
   "06-classical_hypothesis_tests.Rmd",
   "07-simulation_based_tests.Rmd",
   "08-simple_linear_regressions.Rmd",
-  "09-model_selection_and_evaluation.Rmd"
- # "10-advanced_regressions.Rmd",
-  #"11-machine_learning.Rmd"
+  "09-model_selection_and_evaluation.Rmd",
+  "10-advanced_regressions.Rmd",
+  "11-machine_learning.Rmd"
   #"15-Appendix1_R_language.Rmd"
 ]

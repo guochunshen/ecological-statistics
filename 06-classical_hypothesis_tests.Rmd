@@ -1706,7 +1706,7 @@ protection_data <- data.frame(
 # 第一步：执行方差分析
 anova_result <- aov(density ~ protection_measure, data = protection_data)
 cat("=== 方差分析结果 ===\n")
-knitr::kable(summary(anova_result), caption = "方差分析结果")
+knitr::kable(summary(anova_result)[[1]], caption = "方差分析结果")
 
 # 提取F统计量和p值
 f_stat <- summary(anova_result)[[1]]["forest_type", "F value"]

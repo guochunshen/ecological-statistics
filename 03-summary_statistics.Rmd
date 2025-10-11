@@ -2212,7 +2212,7 @@ stability_analysis <- data.frame(
 ```
 
 ```{r, echo=FALSE}
-knitr:kable(stability_analysis, caption = "生态系统稳定性综合分析结果")
+knitr::kable(stability_analysis, caption = "生态系统稳定性综合分析结果")
 ```
 
 **生态学意义：**

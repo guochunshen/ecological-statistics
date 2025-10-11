@@ -591,9 +591,9 @@ cat("KL散度（信息增益）:", round(kl_divergence, 4), "\n")
 bayes_factor <- (posterior[1] / (1 - posterior[1])) /
   (expert_prior[1] / (1 - expert_prior[1]))
 
-  ```
+```
 
-  ```{r, echo=FALSE}
+```{r, echo=FALSE}
 # 输出贝叶斯因子结果
 cat("贝叶斯因子（森林偏好）:", round(bayes_factor, 2), "\n")
 
@@ -2510,7 +2510,7 @@ fit_weibull <- fitdist(survival_times, "weibull")  # 拟合威布尔分布到生
 
 # 输出参数估计结果：显示拟合的威布尔分布参数和统计信息
 # summary函数提供详细的拟合结果，包括参数估计值、标准误、置信区间等
-knitr::kable(summary(fit_weibull), caption="威布尔分布参数估计结果")  # 输出完整的拟合结果摘要信息
+knitr::kable(summary(fit_weibull)$coefficients, caption="威布尔分布参数估计结果")  # 输出完整的拟合结果摘要信息
 ```
 
 ```{r, fig.cap="不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比"}
@@ -2586,10 +2586,10 @@ print("与正态分布的比较:")  # 输出比较分析标题
 normal_fit <- fitdist(survival_times, "norm")
 
 # 输出正态分布拟合结果：显示参数估计和统计信息
-knitr::kable(summary(normal_fit), caption="正态分布拟合")
+knitr::kable(summary(normal_fit)$coefficients, caption="正态分布拟合")
 
 # 输出威布尔分布拟合结果：与正态分布结果进行比较
-knitr::kable(summary(fit_weibull), caption="威布尔分布拟合")
+knitr::kable(summary(fit_weibull)$coefficients, caption="威布尔分布拟合")
 ```
 
 ```{r, echo=FALSE}
@@ -3009,7 +3009,7 @@ skewness_kurtosis <- data.frame(
 ```
 
 ```{r, echo=FALSE}
-knitr:kable(skewness_kurtosis, caption="偏度和峰度随样本量的变化")
+knitr::kable(skewness_kurtosis, caption="偏度和峰度随样本量的变化")
 ```
 
 #### 蚱蜢午餐中的中心极限定理
