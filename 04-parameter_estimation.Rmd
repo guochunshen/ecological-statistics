@@ -56,7 +56,8 @@ showtext_auto()     # 自动启用中文字体
 
 首先创建模拟的森林鸟类种群数据，为后续抽样方法演示提供基础数据集：
 
-```{r forest-birds-data}
+```{r forest-birds-data, include=FALSE}
+# 生成并保存森林鸟类数据
 set.seed(123)
 
 forest_birds <- data.frame(
@@ -65,6 +66,14 @@ forest_birds <- data.frame(
                 rpois(200, 15), rpois(200, 25)),
   habitat = rep(c("林缘", "林内", "林冠", "灌丛", "空地"), each = 200)
 )
+
+# 保存数据到data文件夹
+save(forest_birds, file = "data/forest_birds.rda")
+```
+
+```{r forest-birds-load}
+# 加载森林鸟类数据
+load("data/forest_birds.rda")
 
 cat("数据集结构概览：\n")
 str(forest_birds)
@@ -80,6 +89,8 @@ knitr::kable(table(random_sample$species), caption="随机抽样结果")
 cat("随机抽样均值估计：", mean(random_sample$abundance), "\n")
 ```
 
+表\@ref(tab:random-sampling)展示了随机抽样的结果，我们可以看到不同物种在100个样本中的分布情况。
+
 分层抽样方法针对生态系统的异质性特点，按生境类型分层进行抽样：
 
 ```{r stratified-sampling}
@@ -94,6 +105,8 @@ knitr::kable(table(stratified_sample$habitat, stratified_sample$species),
 cat("分层抽样均值估计：", mean(stratified_sample$abundance), "\n")
 ```
 
+表\@ref(tab:stratified-sampling)展示了分层抽样的结果，我们可以看到不同生境类型中各个物种的分布情况。
+
 系统抽样按照固定间隔进行抽样，操作简便且覆盖均匀：
 
 ```{r systematic-sampling}
@@ -103,6 +116,8 @@ systematic_sample <- forest_birds[systematic_indices, ]
 knitr::kable(table(systematic_sample$species), caption="系统抽样结果")
 cat("系统抽样均值估计：", mean(systematic_sample$abundance), "\n")
 ```
+
+表\@ref(tab:systematic-sampling)展示了系统抽样的结果，我们可以看到按照固定间隔抽样得到的物种分布情况。
 
 最后比较不同抽样方法的估计效果，评估各种方法的性能差异：
 
@@ -240,7 +255,7 @@ $$\bar{x} \pm t_{\alpha/2, n-1} \times \frac{s}{\sqrt{n}}$$
 
 Student‘s *t*分布（简称*t*分布）由英国统计学家威廉·戈塞特（William Gosset）在1908年应用笔名Student提出，当时他在吉尼斯啤酒厂从事质量控制工作，为了解决小样本问题而发展了这种分布。*t*分布的形状比正态分布更加扁平，尾部更厚，这反映了小样本情况下估计不确定性的增加（图\@ref(fig:t-distribution-comparison)）。随着样本量的增加，*t*分布逐渐趋近于正态分布。
 
-```{r t-distribution-comparison, fig.cap="t分布与正态分布的比较：不同自由度的t分布（红色、蓝色、绿色）与标准正态分布（黑色）的对比，展示随着自由度增加t分布逐渐趋近正态分布的趋势"}
+```{r t-distribution-comparison, fig.cap="t分布与正态分布的比较：不同自由度的t分布（红色、蓝色、绿色）与标准正态分布（黑色）的对比，展示随着自由度增加t分布逐渐趋近正态分布的趋势", echo=FALSE}
 # 生成x轴数据
 x <- seq(-4, 4, length.out = 1000)
 
@@ -285,11 +300,8 @@ grid()
 
 在生态学研究中，自助法具有独特的优势。许多生态学数据的分布形式复杂，可能不满足传统参数方法的分布假设。例如，物种多度分布往往呈现偏态分布，种群空间分布可能呈现聚集分布，这些复杂的分布模式使得传统的参数方法难以适用。自助法不依赖于特定的分布假设，能够适应各种复杂的生态学数据分布。
 
-自助法置信区间的生态学意义在于，它为处理复杂生态学数据提供了灵活而强大的统计工具。无论是研究物种-面积关系、种群空间分布格局，还是分析生态系统的非线性响应，自助法都能够提供可靠的置信区间估计。此外，自助法特别适用于小样本情况，在生态学研究中，由于研究对象的稀有性或调查成本的限制，小样本问题普遍存在，自助法为这些情况下的统计推断提供了有效的解决方案。
-
-图\@ref(fig:different-confidence-levels)展示了不同置信水平下区间估计的比较，帮助我们理解置信水平对估计精度的影响。
-
-```{r different-confidence-levels, fig.cap="不同置信水平的区间估计比较"}
+在R中，我们可以用以下方法来实现自助法：
+```{r}
 library(boot)
 
 set.seed(123)
@@ -303,7 +315,14 @@ boot_result <- boot(egret_counts, statistic = mean_func, R = 1000)
 
 ci_bootstrap <- boot.ci(boot_result, type = "perc", conf = 0.95)
 cat("自助法95%置信区间：", ci_bootstrap$percent[4:5], "\n")
+```
 
+
+自助法置信区间的生态学意义在于，它为处理复杂生态学数据提供了灵活而强大的统计工具。无论是研究物种-面积关系、种群空间分布格局，还是分析生态系统的非线性响应，自助法都能够提供可靠的置信区间估计。此外，自助法特别适用于小样本情况，在生态学研究中，由于研究对象的稀有性或调查成本的限制，小样本问题普遍存在，自助法为这些情况下的统计推断提供了有效的解决方案。
+
+为了直观理解置信水平和样本量对区间估计的影响，我们通过可视化分析来展示这些关系。图\@ref(fig:different-confidence-levels)展示了两个关键概念：不同置信水平下区间估计的比较以及样本量对置信区间宽度的影响。
+
+```{r different-confidence-levels, fig.cap="不同置信水平的区间估计比较", echo=FALSE}
 par(mfrow = c(1, 2))
 
 set.seed(123)
@@ -343,6 +362,14 @@ plot(sample_sizes, ci_widths, type = "b", pch = 19,
      xlab = "样本量", ylab = "置信区间宽度",
      main = "样本量对置信区间宽度的影响")
 ```
+
+图\@ref(fig:different-confidence-levels)通过两个子图直观展示了置信区间估计的两个重要方面。
+
+左图展示了不同置信水平的区间估计比较，呈现了90%、95%和99%三种置信水平下的白鹭种群数量估计区间。图中红色圆点表示点估计值（样本均值），水平线段表示置信区间。从图中可以明显看出，置信水平越高（如99%），置信区间越宽，这反映了更高的可靠性要求；而置信水平越低（如90%），置信区间越窄，但估计的不确定性也相应增加。
+
+右图展示了样本量对置信区间宽度的影响，呈现了随着样本量从10增加到100，置信区间宽度的变化趋势。结果显示样本量越大，置信区间越窄，估计精度越高，这种关系遵循统计理论中置信区间宽度与样本量的平方根成反比的规律。
+
+这两个图形共同说明了在生态学研究中需要在置信水平、样本量和估计精度之间进行权衡。
 
 #### 置信水平的选择
 
@@ -418,7 +445,7 @@ $$\ln L = \sum_{i=1}^{n} \left[-\frac{1}{2} \ln(2\pi) - \ln(\sigma) - \frac{(x_i
 
 $$\ln L = -\frac{n}{2} \ln(2\pi) - n \ln(\sigma) - \frac{\sum_{i=1}^{n} (x_i-\mu)^2}{2\sigma^2}$$
 
-这就是我们在代码中使用的对数似然函数形式。这个推导过程展示了如何从基本的概率密度函数出发，通过数学变换得到便于优化的对数似然函数。根据这个似然函数的定义，我们就可以使用优化算法来求解最大似然估计。
+这就是我们在下面的代码中使用的对数似然函数形式。这个推导过程展示了如何从基本的概率密度函数出发，通过数学变换得到便于优化的对数似然函数。根据这个似然函数的定义，我们就可以使用优化算法来求解最大似然估计。
 
 现在让我们回到刚才的森林树木胸径的例子。假设我们测量了50棵树的胸径，发现这些数据大致服从正态分布。我们想要估计两个参数：
 
@@ -650,7 +677,9 @@ $$p(\theta|x) \propto p(x|\theta) \times p(\theta)$$
 
 简单来说：**后验 $\propto$ 似然 $\times$ 先验**， 具体有关贝叶斯的介绍请参考上一章节的相关内容。我们这里直接从如何实现这样的贝叶斯估计角度来讲解。
 
-```{r}
+下面通过一个具体的生态学实例来展示贝叶斯估计的实现过程。我们将使用R语言的`brms`包来拟合贝叶斯模型，估计森林树木胸径的总体均值和标准差。
+
+```{r bayesian-estimation-example}
 # 加载贝叶斯回归模型包
 library(brms)
 
@@ -681,6 +710,12 @@ fit_brm <- brm(
 knitr::kable(summary(fit_brm)$fixed, caption = "贝叶斯模型拟合结果")
 ```
 
+这段代码展示了贝叶斯估计在生态学中的具体实现过程。首先加载`brms`包，这是一个基于Stan的贝叶斯回归建模包，专门用于拟合复杂的层次模型。代码将树木胸径数据转换为数据框格式，这是`brms`包要求的输入格式。
+
+在定义先验分布时，我们基于已有的生态学知识设定了合理的先验：对于总体均值参数，使用均值为22cm、标准差为3cm的正态分布先验，这反映了基于过去研究的先验信念；对于标准差参数，使用自由度为3的学生t分布先验，这种重尾分布能够更好地处理异常值，提高模型的稳健性。
+
+模型拟合过程使用了马尔可夫链蒙特卡洛（MCMC）采样方法，设置了4条独立的马尔可夫链，每条链进行2000次迭代，其中前1000次作为预热期（burn-in）用于算法收敛，后1000次用于后验分析。这种多链设置有助于验证MCMC采样的收敛性，而预热期的设置则确保了采样从稳定状态开始。模型输出结果通过`knitr::kable`函数以表格形式展示，提供了参数的后验分布统计量，包括均值、标准差和分位数等信息。
+
 ```{r}
 # 提取后验样本：将MCMC采样结果转换为数据框格式
 posterior_samples <- as.data.frame(fit_brm)
@@ -694,6 +729,10 @@ cat("\n贝叶斯估计结果：\n",
     "后验均值：", round(posterior_mean, 2), "cm\n",
     "后验标准差：", round(posterior_sd, 2), "cm\n")
 ```
+
+这段代码从拟合的贝叶斯模型中提取后验样本，这是贝叶斯分析的核心步骤。`as.data.frame(fit_brm)`将MCMC采样结果转换为数据框格式，便于后续的统计分析。后验样本包含了所有MCMC迭代中参数的采样值，反映了参数的不确定性分布。
+
+我们计算后验分布的均值作为参数的点估计：`b_Intercept`对应总体均值的后验分布，`sigma`对应标准差参数的后验分布。在贝叶斯框架下，这些后验均值代表了在考虑先验信息和样本数据后，对参数的最优估计。输出结果显示了我们基于贝叶斯方法估计的树木胸径总体均值和标准差。
 
 ```{r bayesian-posterior-distribution, fig.cap="贝叶斯估计的后验分布"}
 # 设置图形布局：1行2列
@@ -723,6 +762,10 @@ cat("\n95%可信区间：\n",
     "均值：[", round(ci_mean[1], 2), ", ", round(ci_mean[2], 2), "] cm\n",
     "标准差：[", round(ci_sigma[1], 2), ", ", round(ci_sigma[2], 2), "] cm\n")
 ```
+
+图\@ref(fig:bayesian-posterior-distribution)展示了贝叶斯估计得到的参数后验分布，这是贝叶斯统计的核心优势之一。图形采用1行2列的布局，分别显示总体均值和标准差的后验分布直方图。左侧图形展示了总体均值的后验分布，使用浅蓝色直方图显示，红色垂直线标记了后验均值；右侧图形展示了标准差参数的后验分布，使用浅绿色直方图显示。
+
+这些后验分布直方图直观地反映了参数估计的不确定性：分布的形状越集中，说明估计越精确；分布越分散，说明不确定性越大。与频率学派的置信区间不同，贝叶斯可信区间具有更直观的概率解释——我们有95%的把握认为真实参数值落在该区间内。代码计算了95%可信区间，分别给出了总体均值和标准差参数的可信范围，为生态学决策提供了完整的不确定性信息。
 
 贝叶斯估计的核心思想包括：结合先验信息和样本信息、得到参数的后验分布而非点估计（图\@ref(fig:bayesian-posterior-distribution)）、提供完整的参数不确定性信息，以及特别适用于有先验知识的生态学问题。
 
@@ -1171,7 +1214,7 @@ $$N = \frac{100,000}{50} \times 8 = 16,000$$
 
 通过样方调查获得的植物数量分布数据可以帮助我们了解种群的分布模式（图\@ref(fig:quadrat-plant-distribution)）。
 
-```{r quadrat-plant-distribution, fig.cap="样方内植物数量分布"}
+```{r quadrat-plant-distribution, fig.cap="样方内植物数量分布", echo=FALSE}
 
 area_total <- 100000
 
@@ -1206,6 +1249,8 @@ legend("topright", legend = paste("均值 =", round(mean_plants, 2)),
        col = "red", lwd = 2)
 ```
 
+图\@ref(fig:quadrat-plant-distribution)展示了通过样方调查获得的植物数量分布情况。该直方图清晰地显示了50个样方中植物个体数量的分布模式，红色垂直线标记了样本均值的位置。从图中可以看出，植物数量大致呈现正态分布，集中在均值附近，这反映了该植物种群在草原中的相对均匀分布特征。这种分布模式为生态学家提供了关于种群空间格局的重要信息，有助于理解物种的生态位和种间竞争关系。
+
 **样线法**是面积取样法的另一种形式，特别适用于调查移动性较强的动物或在大尺度区域进行调查。研究人员沿着预设的样线（transect）行进，记录在样线两侧一定宽度内观察到的个体数量。
 
 样线估计的基本公式为：
@@ -1222,7 +1267,7 @@ $$N = \frac{A}{2wL} \times n$$
 
 样线法的主要优势在于它能够覆盖较大的区域，调查效率较高。然而，样线法的准确性依赖于对样线宽度内个体发现概率的准确估计，这通常需要额外的校正方法。发现概率的变化对种群估计结果具有重要影响，需要进行敏感性分析（图\@ref(fig:line-transect-sensitivity)）。
 
-```{r line-transect-sensitivity, fig.cap="样线法估计的敏感性分析"}
+```{r line-transect-sensitivity, fig.cap="样线法估计的敏感性分析", echo=FALSE}
 
 area_total <- 100
 
@@ -1234,12 +1279,12 @@ n_observed <- 60
 population_transect <- (area_total / (2 * transect_width * transect_length)) *
   n_observed
 
-cat("样线法估计的种群数量：", round(population_transect), "只\n")
+#cat("样线法估计的种群数量：", round(population_transect), "只\n")
 
 detection_prob <- 0.7
 population_corrected <- population_transect / detection_prob
 
-cat("校正后的种群估计：", round(population_corrected), "只\n")
+#cat("校正后的种群估计：", round(population_corrected), "只\n")
 
 detection_probs <- seq(0.5, 0.9, 0.1)
 population_estimates <- population_transect / detection_probs
@@ -1250,7 +1295,7 @@ for (i in seq_along(detection_probs)) {
                         sprintf("发现概率 %.1f: %.0f 只\n",
                                 detection_probs[i], population_estimates[i]))
 }
-cat(output_lines)
+#cat(output_lines)
 
 plot(detection_probs, population_estimates, type = "b",
      xlab = "发现概率", ylab = "种群估计",
@@ -1258,6 +1303,8 @@ plot(detection_probs, population_estimates, type = "b",
 points(0.7, population_corrected, col = "red", pch = 19, cex = 2)
 legend("topright", legend = "基准估计", col = "red", pch = 19)
 ```
+
+图\@ref(fig:line-transect-sensitivity)展示了样线法估计对发现概率变化的敏感性分析。该图表清晰地显示了当发现概率从0.5变化到0.9时，种群估计值呈现反比关系的变化趋势。红色标记点表示基准估计值（发现概率为0.7时的种群估计）。这种敏感性分析对于生态学研究至关重要，因为它揭示了样线法估计结果对关键假设的依赖程度。在实际野外调查中，发现概率可能受到多种因素的影响，包括观察者经验、环境条件、动物行为等。通过敏感性分析，研究人员可以评估估计结果的不确定性范围，为保护决策提供更加可靠的依据。
 
 **生态学意义**：面积取样法在植物生态学、无脊椎动物生态学和某些脊椎动物生态学中具有广泛的应用。它不仅是估计种群数量的重要工具，还为研究种群的空间分布、种间关系、生境偏好等生态学问题提供了数据基础。在生态监测中，面积取样法被用于长期跟踪种群的变化趋势；在保护生物学中，它被用于评估保护措施的效果；在生态恢复中，它被用于监测恢复过程的进展。
 
@@ -1302,7 +1349,7 @@ $$N = \frac{100}{2 \times 0.1 \times 50} \times \frac{60}{0.7} = \frac{100}{10} 
 
 在R语言中，距离抽样法可以通过`Distance`包来实现。这个包提供了完整的距离抽样分析框架，包括发现函数的拟合、种群数量的估计以及不确定性分析。半正态发现函数是距离抽样中最常用的发现函数形式之一（图\@ref(fig:distance-sampling-halfnormal)）。
 
-```{r distance-sampling-halfnormal, fig.cap="半正态发现函数"}
+```{r distance-sampling-halfnormal, fig.cap="半正态发现函数", echo=FALSE}
 library(Distance)
 
 set.seed(123)
@@ -1328,14 +1375,14 @@ sigma <- fit_halfnormal(distance_data$distance, transect_width * 1000)  # 转换
 
 detection_prob_avg <- sqrt(2 / pi) * sigma / (transect_width * 1000)
 
-cat("半正态发现函数参数sigma：", round(sigma, 2), "米\n",
-  "平均发现概率：", round(detection_prob_avg, 3), "\n")
+#cat("半正态发现函数参数sigma：", round(sigma, 2), "米\n",
+#  "平均发现概率：", round(detection_prob_avg, 3), "\n")
 
 n_observed <- nrow(distance_data)
 population_distance <- (area_total / (2 * transect_width * transect_length)) *
   (n_observed / detection_prob_avg)
 
-cat("距离抽样法估计的种群数量：", round(population_distance), "只\n")
+#cat("距离抽样法估计的种群数量：", round(population_distance), "只\n")
 
 x_vals <- seq(0, transect_width * 1000, length.out = 100)
 g_x <- exp(-x_vals^2 / (2 * sigma^2))
@@ -1349,6 +1396,8 @@ legend("topright", legend = paste("sigma =", round(sigma, 2)),
        lty = 1, lwd = 2)
 
 ```
+
+图\@ref(fig:distance-sampling-halfnormal)展示了距离抽样法中使用的半正态发现函数。该函数描述了发现概率随个体与样线距离增加而递减的规律，是距离抽样法的核心组成部分。图中蓝色竖线表示实际观测到的个体距离分布，黑色曲线表示拟合的半正态发现函数。参数sigma决定了函数下降的速率，较小的sigma值表示发现概率随距离快速下降，而较大的sigma值表示发现概率下降较慢。这种发现函数模型反映了生态调查中的现实情况：距离样线越近的个体越容易被发现，而距离越远的个体被发现的可能性越低。通过拟合发现函数，研究人员可以更准确地估计整个样线宽度范围内的平均发现概率，从而获得更可靠的种群数量估计。
 
 **生态学意义**：距离抽样法在野生动物生态学和保护生物学中具有重要的应用价值。它特别适用于调查分布范围广、密度较低的动物种群，如大型哺乳动物、鸟类和海洋哺乳动物。在保护生物学中，距离抽样法被用于监测濒危物种的种群趋势；在野生动物管理中，它被用于评估种群状况和制定管理策略；在生态监测中，它被用于长期跟踪种群的变化。
 
@@ -1390,7 +1439,7 @@ $$C_i = q(N - K_i)$$
 
 在实际生态学研究中，这些假设往往难以完全满足。特别是捕获效率恒定和个体同质性的假设，在真实的生态系统中经常被违反。因此，去除法通常只适用于人工环境或高度控制的自然环境。通过分析捕获量随累积捕获量的变化关系，可以估计种群的初始规模（图\@ref(fig:removal-method-analysis)）。
 
-```{r removal-method-analysis, fig.cap="去除法：捕获量随累积捕获量的变化"}
+```{r}
 # 定义三次捕获的个体数量数据
 # 这些数据模拟了一个池塘中鱼类种群的连续捕获过程
 captures <- c(80, 60, 40)  # 三次捕获的个体数
@@ -1443,7 +1492,9 @@ ci_upper <- population_multiple_removal + 1.96 * standard_error_population
 
 # 输出置信区间结果
 cat("95%置信区间：[", round(ci_lower), ",", round(ci_upper), "]\n")
+```
 
+```{r removal-method-analysis, fig.cap="去除法：捕获量随累积捕获量的变化", echo=FALSE}
 # 绘制捕获量随累积捕获量变化的散点图和拟合直线
 # 展示去除法的核心关系：捕获量随累积捕获量线性递减
 plot(previous_captures, captures, type = "b", pch = 19, cex = 1.5,
@@ -1455,6 +1506,11 @@ abline(model, col = "red", lwd = 2)
 legend("topright", legend = c("观测数据", "拟合直线"),
        pch = c(19, NA), lty = c(NA, 1), col = c("black", "red"))
 
+```
+
+图\@ref(fig:removal-method-analysis)展示了去除法中捕获量随累积捕获量变化的线性关系，这是去除法估计种群规模的核心理论基础。图中黑色点表示观测数据，红色直线表示通过线性回归拟合的捕获量递减趋势。这种线性递减模式反映了在封闭种群中，随着捕获的进行，剩余种群数量减少，导致单位努力捕获量（CPUE）相应下降的生态学规律。通过拟合这种关系，研究人员可以估计种群的初始规模，同时获得捕获效率系数的估计值。图中展示的敏感性分析比较了使用不同捕获次数获得的估计结果，这有助于评估估计结果的稳健性，并为生态学家在野外调查中选择合适的捕获次数提供参考依据。
+
+```{r, echo=FALSE}
 # 进行敏感性分析：比较使用不同捕获次数的估计结果
 cat("\n敏感性分析：不同捕获次数的估计\n")
 # 循环分析使用2次和3次捕获数据的情况
@@ -1483,6 +1539,7 @@ for (n_captures in 2:length(captures)) {
               n_captures, method, population_estimate))
 }
 ```
+
 
 **生态学意义**：去除法在渔业管理、害虫控制和某些野生动物管理中具有重要的应用价值。它特别适用于估计封闭或半封闭环境中的动物种群数量，如池塘中的鱼类、围栏中的哺乳动物、温室中的昆虫等。在渔业管理中，去除法被用于评估养殖池塘的鱼类数量；在害虫控制中，它被用于估计害虫种群的规模；在野生动物管理中，它被用于评估特定区域的动物承载量。
 
@@ -1577,7 +1634,7 @@ Table: (\#tab:bird-species-accumulation) 森林鸟类多样性调查的物种积
 
 在实际生态学研究中，这些假设往往难以完全满足。例如，物种可能呈现聚集分布，采样可能不是完全随机的，积累曲线可能没有明显的渐近线。因此，基于积累曲线的外推通常需要结合其他方法进行验证。
 
-```{r accumulation-curve-extrapolation, fig.cap="样本积累曲线与外推"}
+```{r}
 
 # 定义样本努力量（样点数）
 sample_effort <- c(5, 10, 15, 20, 25)  # 样点数
@@ -1608,7 +1665,9 @@ predicted_effort <- seq(5, 50, by = 5)
 # 使用拟合模型预测不同样点数下的物种数
 predicted_species <- predict(fit_exponential,
   newdata = data.frame(sample_effort = predicted_effort))
+```
 
+```{r accumulation-curve-extrapolation, fig.cap="样本积累曲线与外推", echo=FALSE}
 # 绘制观测数据点（黑色实心圆点连线）
 plot(sample_effort, species_accumulated, type = "b", pch = 19,
      xlab = "样点数", ylab = "累计物种数",
@@ -1626,7 +1685,11 @@ legend("bottomright",
        legend = c("观测数据", "拟合曲线", "渐近线估计"),
        col = c("black", "red", "blue"),
        lty = c(1, 1, 2), pch = c(19, NA, NA))
+```
 
+图\@ref(fig:accumulation-curve-extrapolation)展示了基于样本积累曲线的外推方法，通过拟合指数增长模型来估计群落的真实物种丰富度。
+
+```{r, echo=FALSE}
 # 计算模型拟合优度R²
 # R² = 1 - (残差平方和 / 总平方和)
 r_squared <- 1 - sum(residuals(fit_exponential)^2) /
@@ -1637,7 +1700,6 @@ cat("模型拟合优度R²：", round(r_squared, 3), "\n")
 
 ```
 
-图\@ref(fig:accumulation-curve-extrapolation)展示了基于样本积累曲线的外推方法，通过拟合指数增长模型来估计群落的真实物种丰富度。
 
 **基于物种多度分布的内插**是另一种重要的多样性估计方法。这种方法基于观测到的物种多度分布，通过统计模型来预测整个群落的多样性特征。与基于积累曲线的外推不同，内插方法通常用于估计特定样本量下的期望多样性，或者比较不同群落的多样性。
 
@@ -1655,19 +1717,28 @@ cat("模型拟合优度R²：", round(r_squared, 3), "\n")
 在实际生态学研究中，这些假设的满足程度会影响内插方法的准确性。特别是物种多度分布的稳定性假设，在异质性较强的群落中可能不成立。
 
 ```{r}
-
+# 加载vegan包，提供生态学数据分析函数
 library(vegan)
 
+# 设置随机数种子，确保结果可重现
 set.seed(123)
 
+# 创建群落A的物种多度向量，表示17个物种的个体数
 community_a <- c(50, 40, 35, 30, 25, 20, 15, 10, 8, 6, 5, 4, 3, 2, 1, 1, 1)
 
+# 创建群落B的物种多度向量，表示10个物种的个体数
 community_b <- c(80, 60, 40, 20, 10, 5, 3, 2, 1, 1)
 
+# 计算群落A中观察到的物种数
 species_obs_a <- length(community_a)
+
+# 计算群落B中观察到的物种数
 species_obs_b <- length(community_b)
 
+# 对群落A进行稀有种校正，估计在50、100、150个个体样本量下的期望物种数
 rare_a <- rarefy(community_a, sample = c(50, 100, 150))
+
+# 对群落B进行稀有种校正，估计在50、100、150个个体样本量下的期望物种数
 rare_b <- rarefy(community_b, sample = c(50, 100, 150))
 ```
 
@@ -1742,7 +1813,7 @@ $$\hat{S}_{Chao1} = S_{obs} + \frac{f_1^2}{2f_2}$$
 
 Chao估计器的优势在于其计算简单、对数据要求低，且具有较好的统计性质。然而，它也有局限性：当样本量较小时，估计可能不稳定；当群落中稀有种比例很高时，可能仍然低估真实物种数。
 
-```{r}
+```{r, echo=FALSE}
 
 set.seed(123)
 observed_species <- c(
@@ -1768,7 +1839,7 @@ cat("Chao1估计结果：\n",
     "Chao1校正估计：", round(species_chao1, 1), "种\n")
 ```
 
-```{r}
+```{r, echo=FALSE}
 var_chao <- freq_double * ((freq_single / freq_double)^4 / 4 +
                             (freq_single / freq_double)^3 +
                             (freq_single / freq_double)^2 / 2)
@@ -1794,7 +1865,7 @@ $$\hat{S}_{jack2} = S_{obs} + \frac{2n-3}{n}f_1 - \frac{(n-2)^2}{n(n-1)}f_2$$
 
 Jackknife估计的优势在于它不依赖于特定的分布假设，适用于各种类型的群落数据。然而，当样本量较小时，估计可能不够稳定。
 
-```{r Jackknife-results, fig.cap="Jackknife估计结果"}
+```{r Jackknife-results, echo=FALSE}
 
 library(vegan)
 
@@ -1822,7 +1893,6 @@ S_jack1_manual <- S_obs + ((n_samples - 1) / n_samples) * f1
 cat("手动计算的一阶Jackknife：", round(S_jack1_manual, 1), "种\n")
 ```
 
-<!--图\@ref(fig:Jackknife-results)-->
 以上代码展示了Jackknife估计方法的结果，通过样本重组技术来校正稀有种对物种丰富度估计的影响。
 
 #### Bootstrap估计：基于重抽样的稀有性校正
@@ -1843,7 +1913,7 @@ $$\hat{S}_{boot} = 2S_{obs} - \frac{1}{B}\sum_{b=1}^B S_b^*$$
 
 Bootstrap方法的优势在于它能够提供完整的不确定性信息，且不依赖于特定的分布假设。然而，计算量较大，且在小样本情况下可能不够准确。
 
-```{r bootstrap-estimation, fig.cap="Bootstrap估计的抽样分布"}
+```{r bootstrap-estimation, fig.cap="Bootstrap估计的抽样分布", echo=FALSE}
 
 # 设置随机数种子，确保结果可重现
 set.seed(123)
@@ -1916,11 +1986,31 @@ legend("topleft", legend = c("观测值", "Bootstrap估计"),
 
 $$\hat{S} = S_{obs} + S_0 \Phi(-\frac{\log x_0 - \mu}{\sigma})$$
 
-其中$S_0$是估计的稀有种总数，$x_0$是观测阈值，$\Phi$是标准正态分布函数。
+其中各变量的生态学意义如下：
+
+- **$\hat{S}$**：**估计的群落总物种数**，即经过稀有种校正后的物种丰富度估计值
+
+- **$S_{obs}$**：**观测到的物种数**，即在实际采样中发现的物种数量
+
+- **$S_0$**：**估计的稀有种总数**，基于对数正态分布模型预测的未观测稀有种数量。这个值通过拟合观测物种的多度分布来估计
+
+- **$x_0$**：**观测阈值**，表示能够被检测到的最小个体数。在生态学中，这通常取值为1，表示只要有一个个体就能被观测到。对于某些特殊研究，可能需要调整这个阈值
+
+- **$\mu$** 和 **$\sigma$**：**对数正态分布的参数**，通过对观测物种的多度数据进行对数转换后拟合得到：
+  - $\mu$：对数多度的均值，反映群落的平均多度水平
+  - $\sigma$：对数多度的标准差，反映群落多度的变异程度
+
+- **$\Phi$**：**标准正态分布函数**，用于计算在给定阈值下未观测物种的累积概率
+
+- **$\frac{\log x_0 - \mu}{\sigma}$**：**标准化值**，表示观测阈值在对数正态分布中的位置
+
+- **$\Phi(-\frac{\log x_0 - \mu}{\sigma})$**：**未观测物种的比例**，表示在对数正态分布中，多度低于观测阈值的物种所占的比例
+
+这个公式的核心思想是：通过对观测物种的多度分布进行拟合，推断出整个群落的物种多度分布模式，然后基于这个分布模型预测那些由于个体数太少而未被观测到的物种数量。
 
 多度分布模型方法的优势在于它能够充分利用物种多度信息，提供更精细的校正。然而，它对分布假设的依赖性较强，当真实分布与假设分布不符时，估计可能产生偏差。
 
-```{r abundance-distribution-fit, fig.cap="多度分布模型拟合结果"}
+```{r abundance-distribution-fit, fig.cap="多度分布模型拟合结果", echo=FALSE}
 
 # 加载fitdistrplus包，用于分布拟合
 library(fitdistrplus)
@@ -1996,6 +2086,14 @@ legend("bottomright", legend = c("经验分布", "拟合分布"),
 par(mfrow = c(1, 1))
 ```
 
+图\@ref(fig:abundance-distribution-fit)展示了多度分布模型方法的具体应用过程。该图包含两个子图：
+
+**左图**展示了在对数尺度下观测物种多度分布的直方图与拟合的对数正态分布密度曲线。红色曲线表示基于最大似然估计得到的对数正态分布拟合结果，黑色直方图表示实际观测数据的分布。通过比较可以看出拟合分布与观测数据的匹配程度，这是评估模型适用性的重要依据。
+
+**右图**展示了经验累积分布函数与拟合累积分布函数的比较。经验分布（黑色阶梯线）表示观测数据的实际累积分布，拟合分布（红色曲线）表示基于对数正态分布模型的预测累积分布。两个分布的重合程度反映了模型对数据分布的拟合质量。
+
+代码执行结果显示，从30个观测物种的多度数据中，通过对数正态分布模型估计出群落总物种数约为35种，其中估计有5种物种由于个体数过少而未被观测到。这种方法的优势在于利用了物种多度的完整信息，能够提供更精细的稀有种校正估计。
+
 **生态学意义与选择建议**：
 
 这些稀有种校正方法在生态学研究中具有重要的应用价值。Chao估计器适合快速初步估计，Jackknife方法适用于样本量适中的情况，Bootstrap方法能够提供完整的不确定性信息，而多度分布模型方法则适合对群落结构有较深理解的研究。图\@ref(fig:abundance-distribution-fit)展示了多度分布模型拟合的结果，通过拟合对数正态分布来估计未观测物种的数量。
@@ -2004,7 +2102,7 @@ par(mfrow = c(1, 1))
 
 下面我们就用一个综合的例子来展示稀有种对多样性估计的影响。
 
-```{r}
+```{r comprehensive-example, echo=FALSE}
 # =============================================================================
 # 第一部分：构建真实群落
 # 目的：模拟一个真实的生态群落，包含100个物种，多度呈对数正态分布
@@ -2042,17 +2140,7 @@ observed_species <- which(sampled_species > 0)
 
 # 计算观测到的物种数
 S_obs <- length(observed_species)
-```
 
-```{r, echo=FALSE}
-# 输出基本分析结果：比较真实与观测的物种丰富度
-cat("稀有种影响分析：\n",
-    "真实物种丰富度：", S_true, "种\n",
-    "观测物种丰富度：", S_obs, "种\n",
-    "观测遗漏率：", round((S_true - S_obs) / S_true * 100, 1), "%\n")
-```
-
-```{r}
 # =============================================================================
 # 第三部分：稀有种与常见种分析
 # 目的：分别分析稀有种和常见种的观测情况，揭示稀有种问题的严重性
@@ -2073,33 +2161,13 @@ rare_observed <- sum(sampled_species[rare_species] > 0)
 
 # 统计稀有种总数
 rare_total <- length(rare_species)
-```
 
-```{r, echo=FALSE}
-# 输出稀有种分析结果
-cat("\n稀有种分析：\n",
-    "稀有种总数：", rare_total, "种\n",
-    "观测到的稀有种：", rare_observed, "种\n",
-    "稀有种观测率：", round(rare_observed / rare_total * 100, 1), "%\n")
-```
-
-```{r}
 # 统计在采样中被观测到的常见种数量
 common_observed <- sum(sampled_species[common_species] > 0)
 
 # 统计常见种总数
 common_total <- length(common_species)
-```
 
-```{r, echo=FALSE}
-# 输出常见种分析结果
-cat("\n常见种分析：\n",
-    "常见种总数：", common_total, "种\n",
-    "观测到的常见种：", common_observed, "种\n",
-    "常见种观测率：", round(common_observed / common_total * 100, 1), "%\n")
-```
-
-```{r}
 # =============================================================================
 # 第四部分：稀有种校正效果评估
 # 目的：使用Chao1估计器校正稀有种遗漏，评估校正效果
@@ -2112,13 +2180,6 @@ chao1_estimate <- estimateR(as.numeric(sampled_species[observed_species]))[
   "S.chao1"]
 ```
 
-```{r, echo=FALSE}
-# 输出Chao1校正结果和改善程度
-cat("\nChao1校正后的物种丰富度估计：", round(chao1_estimate), "种\n",
-    "Chao1校正的改善程度：",
-    round((chao1_estimate - S_obs) / (S_true - S_obs) * 100, 1), "%\n")
-
-```
 
 ```{r rare-species-distribution, fig.cap="稀有种对多样性估计的影响分析"}
 # =============================================================================
@@ -2156,7 +2217,9 @@ par(mfrow = c(1, 1))
 
 ```
 
-图\@ref(fig:rare-species-distribution)直观展示了稀有种对多样性估计的影响，通过对比真实群落与观测群落的分布差异，揭示了稀有种在采样过程中容易被遗漏的问题。
+图\@ref(fig:rare-species-distribution)通过对比真实群落与观测群落的分布差异，直观展示了稀有种对多样性估计的影响。左图显示真实群落呈现典型的对数正态分布，包含完整的稀有种和常见种结构；右图显示观测群落由于采样限制，稀有种数量显著减少，分布呈现右偏形态。
+
+这种对比揭示了稀有种在采样过程中容易被遗漏的系统性偏差，导致基于观测数据的物种丰富度估计偏低。可视化分析清晰地说明了为什么需要稀有种校正方法来弥补采样偏差，获得更准确的多样性估计。
 
 **样本量对多样性估计的影响**是另一个重要的抽样偏差来源。样本量不足会导致多样性估计的不稳定和偏差，这种影响在多样性指数的估计中尤为明显。
 
@@ -2178,7 +2241,7 @@ $$\text{Var}(\hat{S}) \propto \frac{1}{n}$$
 
 下面我们将用一段详细的例子代码展示样本量对多样性估计的影响。这个例子通过模拟不同样本量下的抽样过程，分析样本量如何影响物种丰富度和Shannon多样性估计的精度和稳定性。
 
-```{r}
+```{r, echo=FALSE}
 
 # =============================================================================
 # 第一部分：定义真实群落和基准多样性
@@ -2198,16 +2261,7 @@ S_true <- length(real_community)  # 物种丰富度
 
 # 计算真实Shannon多样性：使用vegan包的diversity函数
 H_true <- diversity(real_community, index = "shannon")  # Shannon多样性
-```
 
-```{r, echo=FALSE }
-# 输出真实群落的多样性信息
-cat("真实群落多样性：\n",
-    "物种丰富度：", S_true, "种\n",
-    "Shannon多样性：", round(H_true, 3), "\n")
-```
-
-```{r}
 # =============================================================================
 # 第二部分：设置模拟参数
 # 目的：定义要测试的样本量范围和模拟重复次数
@@ -2273,11 +2327,10 @@ precision_analysis <- results %>%
   )
 ```
 
+表 \@ref(tab:样本量对多样性估计精度的影响分析) 展示了不同样本量下多样性估计的精度分析结果。
+
 ```{r, echo=FALSE}
 # 输出统计分析结果
-cat("\n样本量对多样性估计精度的影响：\n")
-
-# 使用knitr::kable输出格式化的表格
 knitr::kable(
   precision_analysis,
   caption = "样本量对多样性估计精度的影响分析",
@@ -2295,7 +2348,9 @@ knitr::kable(
 )
 ```
 
-```{r sample-size-precision-effect, fig.cap="样本量对多样性估计精度的影响"}
+为了更直观地展示样本量对多样性估计精度的影响，图 \@ref(fig:sample-size-precision-effect) 通过四个子图系统分析了样本量与估计精度之间的关系。该综合可视化展示了：(1) 样本量对物种丰富度估计的影响，包括估计均值及其标准差范围；(2) 样本量对Shannon多样性估计的影响；(3) 样本量对估计偏差的影响，比较了物种丰富度和Shannon多样性的偏差变化趋势；(4) 样本量对估计方差的影响，反映了估计精度的稳定性。所有图形均以红色虚线标示真实值作为参考基准，便于评估估计的准确性和可靠性。
+
+```{r sample-size-precision-effect, fig.cap="样本量对多样性估计精度的影响", echo=FALSE}
 # =============================================================================
 # 第五部分：可视化分析
 # 目的：通过图形直观展示样本量对估计精度的影响
@@ -2375,7 +2430,7 @@ par(mfrow = c(1, 1))
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 desired_precision <- 0.1  # 期望的相对精度（10%）
 
 model_S <- nls(S_sd ~ scale_S / sqrt(sample_size),
@@ -2387,9 +2442,7 @@ model_H <- nls(H_sd ~ scale_H / sqrt(sample_size),
 
 required_n_S <- (coef(model_S) / (S_true * desired_precision))^2
 required_n_H <- (coef(model_H) / (H_true * desired_precision))^2
-```
 
-```{r, echo=FALSE}
 cat("\n基于期望精度的样本量规划：\n")
 cat("期望相对精度：", desired_precision * 100, "%\n")
 cat("物种丰富度估计所需样本量：", round(required_n_S), "\n")

@@ -81,10 +81,16 @@ legend("topleft",
 )
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/pearson-figure-1.png" alt="树木胸径与树高的关系散点图，显示线性相关关系" width="80%" />
-<p class="caption">(\#fig:pearson-figure)树木胸径与树高的关系散点图，显示线性相关关系</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/pearson-figure-1} 
+
+}
+
+\caption{树木胸径与树高的关系散点图，显示线性相关关系}(\#fig:pearson-figure)
+\end{figure}
+
+图\@ref(fig:pearson-figure)展示了树木胸径与树高之间的线性相关关系。该散点图使用蓝色实心圆点表示每个观测样本，横轴为树木胸径（单位：厘米），纵轴为树高（单位：米）。图中添加的红色直线是基于线性回归模型`lm(height ~ dbh)`的拟合线，直观地显示了两个变量间的线性趋势。图例位于左上角，显示计算得到的Pearson相关系数数值，为读者提供了量化的相关强度指标。该可视化清晰地展示了生态学中常见的形态特征相关性，胸径较大的树木通常具有较高的树高，符合树木生长的基本规律。
 
 
 ``` r
@@ -122,18 +128,11 @@ Spearman相关系数的取值范围在-1到1之间。正值表示正单调关系
 **R代码实现Spearman相关性**：
 
 
+
+
 ``` r
-# Spearman秩相关示例：河流水质与底栖动物多样性
-set.seed(123)
-
-# 模拟河流数据
-n_rivers <- 30
-water_quality <- runif(n_rivers, 0, 100) # 水质指数（0-100）
-# 模拟单调但非线性的关系
-macroinvertebrate_diversity <- 10 + 0.5 * water_quality +
-  0.01 * water_quality^2 +
-  rnorm(n_rivers, 0, 5)
-
+# 加载数据
+load("data/spearman.RData")
 # 计算Spearman相关系数
 spearman_cor <- cor(water_quality, macroinvertebrate_diversity, method = "spearman")
 
@@ -165,10 +164,16 @@ legend("topleft",
 )
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/spearman-figure-1.png" alt="河流水质与底栖动物多样性的关系散点图，显示单调非线性关系" width="80%" />
-<p class="caption">(\#fig:spearman-figure)河流水质与底栖动物多样性的关系散点图，显示单调非线性关系</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/spearman-figure-1} 
+
+}
+
+\caption{河流水质与底栖动物多样性的关系散点图，显示单调非线性关系}(\#fig:spearman-figure)
+\end{figure}
+
+图\@ref(fig:spearman-figure)展示了河流水质与底栖动物多样性之间的单调非线性关系。该散点图使用深绿色实心圆点表示各观测样本，横轴为水质指数（综合反映水体理化性质），纵轴为底栖动物多样性（反映河流生态系统健康状况）。图中添加的红色曲线是基于局部加权回归平滑（LOWESS）的非参数拟合线，能够更好地捕捉变量间的非线性趋势。图例位于左上角，显示计算得到的Spearman相关系数（ρ），该系数衡量的是变量间的单调相关强度而非线性相关强度。该可视化清晰地展示了水质改善与底栖动物多样性增加之间的正相关关系，体现了Spearman相关在处理生态学中常见非线性关系时的优势。
 
 
 在生态学研究中，这种特性使得Spearman相关特别适用于分析等级数据、存在异常值的数据、或者分布未知的数据。例如，在分析环境梯度对物种分布的影响时，许多生态响应关系本质上是单调但非线性的，如物种丰富度随海拔或纬度的变化、生物量随养分浓度的变化等。此外，Spearman相关对数据的分布形式没有严格要求，不要求变量满足正态分布假设，这使其在处理生态学中常见的偏态分布数据时具有明显优势。然而，生态学家需要注意，Spearman相关只能检测单调关系，对于非单调的复杂关系（如U型关系、周期性关系）仍然无法有效识别。
@@ -191,31 +196,20 @@ Kendall's τ的计算公式反映了这种一致对与不一致对的净比例�
 **R代码实现**：
 
 
-``` r
-# Kendall's τ示例：鸟类迁徙时间与气温变化
-set.seed(123)
-
-# 模拟迁徙数据
-n_years <- 25
-spring_temperature <- rnorm(n_years, mean = 15, sd = 3) # 春季平均温度
-# 添加一个异常值
-spring_temperature[10] <- 25 # 异常温暖的年份
-arrival_date <- 100 - 2 * spring_temperature + rnorm(n_years, 0, 5) # 到达日期（儒略日）
-
-# 计算Kendall's τ
-kendall_tau <- cor(spring_temperature, arrival_date, method = "kendall")
-cat("Kendall's τ：", round(kendall_tau, 3), "\n")
-```
-
 ```
 ## Kendall's τ： -0.54
 ```
 
-``` r
-# 比较不同方法的结果
-pearson_comp <- cor(spring_temperature, arrival_date, method = "pearson")
-spearman_comp <- cor(spring_temperature, arrival_date, method = "spearman")
-```
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/kendall-figure-1} 
+
+}
+
+\caption{鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性}(\#fig:kendall-figure)
+\end{figure}
+
+图\@ref(fig:kendall-figure)展示了Kendall's τ在存在异常值情况下的稳健性。该散点图可视化春季平均温度与鸟类迁徙到达日期之间的关系，其中紫色圆点代表正常观测数据，红色三角形标记表示人为添加的异常值（异常温暖的年份）。图中清晰地显示了温度升高与鸟类提前到达之间的负相关趋势，但异常值的存在可能对其他相关性系数产生较大影响。Kendall's τ基于数据对的排序一致性进行计算，对异常值相对不敏感，因此在生态学时间序列数据分析中具有重要价值，特别是在处理气候变化对物候影响的长期观测数据时，能够提供更加稳健的相关性估计。
 
 
 ```
@@ -224,26 +218,6 @@ spearman_comp <- cor(spring_temperature, arrival_date, method = "spearman")
 ## Spearman：-0.692
 ## Kendall's τ：-0.54
 ```
-
-
-``` r
-# 可视化数据
-plot(spring_temperature, arrival_date,
-  pch = 19, col = "purple",
-  xlab = "春季平均温度 (°C)", ylab = "鸟类到达日期（儒略日）",
-  main = "气温变化与鸟类迁徙时间的关系"
-)
-points(spring_temperature[10], arrival_date[10], pch = 17, col = "red", cex = 1.5)
-legend("topright",
-  legend = c("正常数据", "异常值"),
-  pch = c(19, 17), col = c("purple", "red")
-)
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-9-1.png" alt="鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-9)鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性</p>
-</div>
 
 
 Kendall's τ的一个重要特点是其对异常值的极端稳健性。由于它只关注数据对的相对排序而不关心具体的数值大小，单个异常值对整体估计的影响非常有限。这种特性使得Kendall's τ特别适用于生态学中常见的小样本研究、存在测量误差的数据、或者包含极端观测值的情况。例如，在气候变化对物候影响的研究中，个别异常温暖的年份可能会显著影响Pearson相关系数的估计，但对Kendall's τ的影响相对较小。另一个重要优势是Kendall's τ具有更直观的概率解释：当Kendall's τ等于0.6时，可以理解为任意随机选择的一对观测值，它们在这两个变量上具有一致排序的概率比不一致排序的概率高60%。这种概率解释在生态学应用中往往比相关系数本身更容易理解和传达。此外，Kendall's τ的抽样分布在小样本情况下更加稳定，其标准误的计算也比Spearman相关更为精确。然而，Kendall's τ的计算复杂度较高，对于大样本数据计算时间较长，这是其在实际应用中的一个局限。在生态学研究中，Kendall's τ特别适用于时间序列分析、物种对环境梯度的响应研究、以及需要处理等级数据或存在大量结（ties）的情况。
@@ -271,77 +245,32 @@ $$r_{XY.Z} = \frac{r_{XY} - r_{XZ}r_{YZ}}{\sqrt{(1-r_{XZ}^2)(1-r_{YZ}^2)}}$$
 **R代码实现**：
 
 
-``` r
-# 偏相关分析示例：森林生产力与降水量的关系
-set.seed(123)
-
-# 模拟森林生态系统数据
-n_plots <- 40
-precipitation <- rnorm(n_plots, mean = 1000, sd = 200) # 年降水量(mm)
-temperature <- rnorm(n_plots, mean = 15, sd = 3) # 年平均温度(°C)
-# 生产力同时受降水和温度影响
-productivity <- 5 + 0.002 * precipitation + 0.3 * temperature + rnorm(n_plots, 0, 1)
-
-# 计算简单相关系数
-simple_cor <- cor(precipitation, productivity)
-cat("降水量与生产力的简单相关系数：", round(simple_cor, 3), "\n")
-```
-
 ```
 ## 降水量与生产力的简单相关系数： 0.33
 ```
 
+\begin{table}
 
-``` r
-# 计算偏相关系数（控制温度影响）
-library(ppcor) # 需要安装：install.packages("ppcor")
-
-# 创建数据框
-eco_data <- data.frame(precipitation, temperature, productivity)
-partial_cor <- pcor(eco_data)$estimate
-```
-
-
-Table: (\#tab:unnamed-chunk-12)偏相关系数矩阵
-
-|              | precipitation| temperature| productivity|
-|:-------------|-------------:|-----------:|------------:|
-|precipitation |         1.000|      -0.223|        0.389|
-|temperature   |        -0.223|       1.000|        0.666|
-|productivity  |         0.389|       0.666|        1.000|
+\caption{(\#tab:unnamed-chunk-10)偏相关系数矩阵}
+\centering
+\begin{tabular}[t]{l|r|r|r}
+\hline
+  & precipitation & temperature & productivity\\
+\hline
+precipitation & 1.000 & -0.223 & 0.389\\
+\hline
+temperature & -0.223 & 1.000 & 0.666\\
+\hline
+productivity & 0.389 & 0.666 & 1.000\\
+\hline
+\end{tabular}
+\end{table}
 
 ```
 ## 
 ## 控制温度后，降水量与生产力的偏相关系数： 0.389
 ```
 
-
-``` r
-# 可视化偏相关关系
-# 使用残差法展示偏相关
-resid_precip <- resid(lm(precipitation ~ temperature))
-resid_prod <- resid(lm(productivity ~ temperature))
-
-plot(resid_precip, resid_prod,
-  pch = 19, col = "brown",
-  xlab = "降水量残差（控制温度后）",
-  ylab = "生产力残差（控制温度后）",
-  main = "控制温度影响后的降水量与生产力关系"
-)
-abline(lm(resid_prod ~ resid_precip), col = "red", lwd = 2)
-legend("topleft",
-  legend = paste(
-    "偏相关系数 =",
-    round(partial_cor["precipitation", "productivity"], 3)
-  ),
-  bty = "n"
-)
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-13-1.png" alt="控制温度影响后的降水量与生产力关系散点图" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-13)控制温度影响后的降水量与生产力关系散点图</p>
-</div>
 
 在生态学应用中，偏相关分析具有极其重要的价值。例如，在研究森林生产力与降水量的关系时，温度可能同时影响这两个变量——温度较高时通常降水量也较多，同时温度本身也直接影响植物的光合作用效率。如果不控制温度的影响，我们可能会高估降水量对生产力的直接作用。偏相关分析能够帮助我们识别这种"伪相关"或"间接相关"，从而更准确地理解生态系统的内在机制。此外，偏相关分析在生态网络构建、物种相互作用分析、环境因子筛选等复杂生态学问题中都有广泛应用。然而，生态学家需要注意，偏相关分析仍然基于线性关系的假设，且要求控制变量与目标变量之间的关系大致满足线性模型的前提条件。在高度非线性的生态系统中，偏相关分析的结果需要谨慎解释。
 
@@ -374,12 +303,16 @@ $$dCor(X,Y) = \frac{dCov(X,Y)}{\sqrt{dVar(X)dVar(Y)}}$$
 
 距离相关的核心思想很简单：**通过比较所有数据点之间的距离模式来检测变量间的依赖关系**。想象你有两个变量，比如植物的叶面积和光合速率。如果这两个变量相关，那么当两个植物的叶面积很接近时，它们的光合速率也应该很接近；当两个植物的叶面积差异很大时，它们的光合速率差异也应该很大。为了更直观地理解距离相关的概念，我们可以通过下面的示意图来展示弱距离相关和强距离相关的区别：
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/distance-correlation-diagram-1.png" alt="距离相关强弱对比示意图：左图显示弱距离相关（变量间距离模式不同步），右图显示强距离相关（变量间距离模式高度同步）" width="80%" />
-<p class="caption">(\#fig:distance-correlation-diagram)距离相关强弱对比示意图：左图显示弱距离相关（变量间距离模式不同步），右图显示强距离相关（变量间距离模式高度同步）</p>
-</div>
+\begin{figure}
 
-**图解说明**：
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/distance-correlation-diagram-1} 
+
+}
+
+\caption{距离相关强弱对比示意图：左图显示弱距离相关（变量间距离模式不同步），右图显示强距离相关（变量间距离模式高度同步）}(\#fig:distance-correlation-diagram)
+\end{figure}
+
+上图显示了弱距离相关和强距离相关的区别：
 
 - **弱距离相关**（左图）：变量X和Y之间没有明显的依赖关系。当两个数据点在X轴上很接近时，它们在Y轴上的值可能相差很大，反之亦然。这种距离模式的不同步导致距离相关系数接近0。
 
@@ -390,76 +323,21 @@ $$dCor(X,Y) = \frac{dCov(X,Y)}{\sqrt{dVar(X)dVar(Y)}}$$
 
 距离相关系数的取值范围在0到1之间，其中0表示变量间完全独立，1表示变量间存在确定的函数关系。值得注意的是，距离相关具有一个非常重要的性质：当且仅当两个变量相互独立时，距离相关系数等于0。这一性质使得距离相关成为检验变量独立性的有力工具。
 
-在生态学研究中，这种特性具有重要的应用价值。许多生态关系本质上是非线性的，如物种-面积关系、功能性状权衡、种群动态模型等，传统的线性相关方法往往无法充分描述这些复杂模式。距离相关能够有效捕捉这些非线性关系，为生态学家提供了更全面的分析工具。例如，在分析植物功能性状间的关系时，我们可能发现叶面积与比叶重之间存在U型关系——中等大小的叶片具有最高的比叶重，而过大或过小的叶片比叶重较低。这种复杂的非线性关系用Pearson或Spearman相关可能无法有效检测，但距离相关能够给出显著的非零值。此外，距离相关对变量的分布形式没有要求，适用于连续变量、离散变量甚至混合类型的数据，这使其在处理生态学中常见的复杂数据类型时具有明显优势。然而，生态学家需要注意，距离相关的计算复杂度较高，对于大样本数据可能需要较长的计算时间，且其统计性质在小样本情况下的表现仍需谨慎评估。
+在生态学研究中，这种特性具有重要的应用价值。许多生态关系本质上是非线性的，如物种-面积关系、功能性状权衡、种群动态模型等，传统的线性相关方法往往无法充分描述这些复杂模式。距离相关能够有效捕捉这些非线性关系，为生态学家提供了更全面的分析工具。例如，在分析植物功能性状间的关系时，我们可能发现叶面积与比叶重之间存在U型关系（如图\@ref(fig:non-linear-relationship)）——中等大小的叶片具有最高的比叶重，而过大或过小的叶片比叶重较低。这种复杂的非线性关系用Pearson或Spearman相关可能无法有效检测，但距离相关能够给出显著的非零值。此外，距离相关对变量的分布形式没有要求，适用于连续变量、离散变量甚至混合类型的数据，这使其在处理生态学中常见的复杂数据类型时具有明显优势。然而，生态学家需要注意，距离相关的计算复杂度较高，对于大样本数据可能需要较长的计算时间，且其统计性质在小样本情况下的表现仍需谨慎评估。
 
-
-**R代码实现**：
-
-
-``` r
-# 距离相关示例：植物功能性状间的关系
-set.seed(123)
-
-# 模拟植物功能性状数据
-n_plants <- 50
-leaf_area <- rnorm(n_plants, mean = 20, sd = 5) # 叶面积(cm²)
-# 模拟非线性关系：比叶重与叶面积的U型关系
-specific_leaf_area <- 150 + 0.5 * (leaf_area - 20)^2 + rnorm(n_plants, 0, 10)
-
-# 计算距离相关
-library(energy) # 需要安装：install.packages("energy")
-
-dcor_result <- dcor(leaf_area, specific_leaf_area)
-cat("距离相关系数：", round(dcor_result, 3), "\n")
-```
 
 ```
 ## 距离相关系数： 0.454
 ```
 
-``` r
-# 比较不同相关性方法
-pearson_dc <- cor(leaf_area, specific_leaf_area, method = "pearson")
-spearman_dc <- cor(leaf_area, specific_leaf_area, method = "spearman")
-```
+\begin{figure}
 
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/non-linear-relationship-1} 
 
-```
-## 不同相关性方法的比较：
-## Pearson相关系数：0.133
-## Spearman相关系数：0.04
-## 距离相关系数：0.454
-```
+}
 
-
-``` r
-# 可视化非线性关系
-plot(leaf_area, specific_leaf_area,
-  pch = 19, col = "darkgreen",
-  xlab = "叶面积 (cm²)", ylab = "比叶重 (g/m²)",
-  main = "植物功能性状间的非线性关系"
-)
-
-# 添加局部回归曲线
-lines(lowess(leaf_area, specific_leaf_area), col = "red", lwd = 2)
-
-# 添加二次拟合曲线
-quad_fit <- lm(specific_leaf_area ~ poly(leaf_area, 2))
-leaf_seq <- seq(min(leaf_area), max(leaf_area), length.out = 100)
-pred_quad <- predict(quad_fit, newdata = data.frame(leaf_area = leaf_seq))
-lines(leaf_seq, pred_quad, col = "blue", lwd = 2, lty = 2)
-
-legend("top",
-  legend = c("观测数据", "局部回归", "二次拟合"),
-  col = c("darkgreen", "red", "blue"),
-  pch = c(19, NA, NA), lty = c(NA, 1, 2), lwd = 2
-)
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-16-1.png" alt="植物功能性状间的非线性关系散点图，显示U型关系" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-16)植物功能性状间的非线性关系散点图，显示U型关系</p>
-</div>
+\caption{植物功能性状间的非线性关系散点图，显示U型关系}(\#fig:non-linear-relationship)
+\end{figure}
 
 
 ### 互信息
@@ -487,24 +365,13 @@ $$I(X;Y) = \sum_{x\in X}\sum_{y\in Y} p(x,y) \log\left(\frac{p(x,y)}{p(x)p(y)}\r
 **R代码实现**：
 
 
+
+
 ``` r
-# 互信息示例：环境因子与物种分布的依赖关系
-set.seed(123)
-
-# 模拟环境数据和物种出现数据
-n_sites <- 100
-temperature <- rnorm(n_sites, mean = 20, sd = 5) # 温度
-precipitation <- rnorm(n_sites, mean = 800, sd = 200) # 降水量
-
-# 物种出现概率与环境因子的复杂关系
-# 调整参数使物种出现概率更合理
-species_prob <- plogis(0.1 * temperature + 0.002 * precipitation -
-  0.0001 * temperature * precipitation - 5)
-species_presence <- rbinom(n_sites, size = 1, prob = species_prob)
-
 # 计算互信息
 library(infotheo) # 需要安装：install.packages("infotheo")
 
+load("data/mutinformation.RData")
 # 离散化连续变量（互信息计算需要离散数据）
 temp_disc <- discretize(temperature, disc = "equalfreq", nbins = 5)
 precip_disc <- discretize(precipitation, disc = "equalfreq", nbins = 5)
@@ -523,46 +390,16 @@ mi_joint <- mutinformation(cbind(temp_disc, precip_disc), species_presence)
 ## 温度与降水量联合与物种出现的互信息：0.089
 ```
 
+\begin{figure}
 
-``` r
-# 可视化物种出现与环境因子的关系
-par(mfrow = c(1, 2))
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/mutinformation-figure-1} 
 
-# 温度与物种出现
-plot(temperature, species_presence,
-  pch = 19, col = adjustcolor("blue", alpha.f = 0.6),
-  xlab = "温度 (°C)", ylab = "物种出现 (0/1)",
-  main = "温度与物种出现的关系"
-)
-# 添加逻辑回归曲线
-temp_seq <- seq(min(temperature), max(temperature), length.out = 100)
-logit_fit <- glm(species_presence ~ temperature, family = binomial)
-pred_prob <- predict(logit_fit,
-  newdata = data.frame(temperature = temp_seq),
-  type = "response"
-)
-lines(temp_seq, pred_prob, col = "red", lwd = 2)
+}
 
-# 降水量与物种出现
-plot(precipitation, species_presence,
-  pch = 19, col = adjustcolor("green", alpha.f = 0.6),
-  xlab = "降水量 (mm)", ylab = "物种出现 (0/1)",
-  main = "降水量与物种出现的关系"
-)
-# 添加逻辑回归曲线
-precip_seq <- seq(min(precipitation), max(precipitation), length.out = 100)
-logit_fit2 <- glm(species_presence ~ precipitation, family = binomial)
-pred_prob2 <- predict(logit_fit2,
-  newdata = data.frame(precipitation = precip_seq),
-  type = "response"
-)
-lines(precip_seq, pred_prob2, col = "red", lwd = 2)
-```
+\caption{环境因子与物种分布的关系逻辑回归曲线}(\#fig:mutinformation-figure)
+\end{figure}
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/mutinformation-figure-1.png" alt="环境因子与物种分布的关系逻辑回归曲线" width="80%" />
-<p class="caption">(\#fig:mutinformation-figure)环境因子与物种分布的关系逻辑回归曲线</p>
-</div>
+图\@ref(fig:mutinformation-figure)展示了环境因子与物种分布之间的非线性关系，采用逻辑回归曲线可视化二元响应变量（物种出现/不出现）与连续环境因子的关系。该图采用双面板布局，左侧显示温度与物种出现的关系，右侧显示降水量与物种出现的关系。蓝色半透明圆点表示温度观测数据，绿色半透明圆点表示降水量观测数据，红色曲线为逻辑回归拟合线，表示物种出现的概率随环境因子变化的趋势。这种可视化方法能够清晰地展示环境因子对物种分布的非线性影响，特别适用于生态位模型和物种分布预测研究。逻辑回归曲线呈现典型的S型特征，反映了物种对环境因子的响应阈值，为理解物种-环境关系提供了直观的图形表示。
 
 
 
@@ -594,12 +431,16 @@ lines(precip_seq, pred_prob2, col = "red", lwd = 2)
 
 为了直观理解不同强度的时间自相关，让我们通过几个典型的生态学实例来观察：
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/time-autocorrelation-examples-1.png" alt="生态学中不同强度时间自相关的实例对比：左图显示强正自相关（多年生植物种群动态），中图显示弱自相关（随机环境波动），右图显示负自相关（捕食-被捕食系统振荡）" width="80%" />
-<p class="caption">(\#fig:time-autocorrelation-examples)生态学中不同强度时间自相关的实例对比：左图显示强正自相关（多年生植物种群动态），中图显示弱自相关（随机环境波动），右图显示负自相关（捕食-被捕食系统振荡）</p>
-</div>
+\begin{figure}
 
-**图解说明**：
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/time-autocorrelation-examples-1} 
+
+}
+
+\caption{生态学中不同强度时间自相关的实例对比：左图显示强正自相关（多年生植物种群动态），中图显示弱自相关（随机环境波动），右图显示负自相关（捕食-被捕食系统振荡）}(\#fig:time-autocorrelation-examples)
+\end{figure}
+
+上图说明了生态学中不同强度时间自相关的实例：
 
 - **强正自相关**（左图）：多年生植物种群动态显示明显的增长趋势，相邻年份的种群数量高度相关。这种模式反映了种群增长的惯性效应——良好的环境条件和繁殖成功会持续影响后续年份的种群规模。
 
@@ -626,68 +467,25 @@ $$\rho_k = \frac{\sum_{t=k+1}^{n}(X_t - \bar{X})(X_{t-k} - \bar{X})}{\sum_{t=1}^
 接下来就让我们用ACF这个工具，来看看上面的三个例子中的时间自相关模式。
 
 
-``` r
-library(ggplot2)
-library(patchwork)
 
-set.seed(123)
+\begin{figure}
 
-# 使用与前面时间序列示例相同的数据
-years <- 1:20
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/acf-patterns-figure-1} 
 
-# 1. 强正自相关：多年生植物种群动态（与558-618行相同）
-plant_pop <- 100 + cumsum(rnorm(20, 2, 5))  # 累积随机游走
-
-# 2. 弱自相关：随机环境波动（与558-618行相同）
-rainfall <- 50 + rnorm(20, 0, 15)  # 纯随机过程
-
-# 3. 负自相关：捕食-被捕食系统（与558-618行相同）
-predator <- 50 + 20 * sin(2 * pi * years / 8) + rnorm(20, 0, 5)
-prey <- 100 - 20 * sin(2 * pi * years / 8) + rnorm(20, 0, 5)
-
-# 计算各序列的自相关函数
-acf_strong <- acf(plant_pop, lag.max = 10, plot = FALSE)
-acf_weak <- acf(rainfall, lag.max = 10, plot = FALSE)
-acf_predator <- acf(predator, lag.max = 10, plot = FALSE)
-acf_prey <- acf(prey, lag.max = 10, plot = FALSE)
-
-# 创建ACF数据框用于ggplot绘图
-create_acf_df <- function(acf_obj, type_name) {
-  data.frame(
-    Lag = 0:10,
-    ACF = as.numeric(acf_obj$acf),
-    Type = type_name
-  )
 }
 
-acf_data <- rbind(
-  create_acf_df(acf_strong, "强正自相关"),
-  create_acf_df(acf_weak, "弱自相关"),
-  create_acf_df(acf_predator, "捕食者种群"),
-  create_acf_df(acf_prey, "被捕食者种群")
-)
-```
+\caption{四种时间自相关模式的自相关函数对比：左上显示强正自相关的缓慢衰减模式，右上显示弱自相关的快速衰减模式，左下显示捕食者种群的负自相关振荡模式，右下显示被捕食者种群的负自相关振荡模式}(\#fig:acf-patterns-figure)
+\end{figure}
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-21-1.png" alt="四种时间自相关模式的自相关函数对比：左上显示强正自相关的缓慢衰减模式，右上显示弱自相关的快速衰减模式，左下显示捕食者种群的负自相关振荡模式，右下显示被捕食者种群的负自相关振荡模式" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-21)四种时间自相关模式的自相关函数对比：左上显示强正自相关的缓慢衰减模式，右上显示弱自相关的快速衰减模式，左下显示捕食者种群的负自相关振荡模式，右下显示被捕食者种群的负自相关振荡模式</p>
-</div>
+图\@ref(fig:acf-patterns-figure)系统展示了生态学中常见的四种时间自相关模式的自相关函数特征。该2×2组合图采用ggplot2包创建，每个子图使用不同颜色区分不同的生态过程：蓝色表示强正自相关（多年生植物种群动态），紫色表示弱自相关（随机环境波动），橙色表示捕食者种群的负自相关振荡，红色表示被捕食者种群的负自相关振荡。强正自相关模式显示ACF缓慢衰减，反映了生态系统的长期记忆效应；弱自相关模式显示ACF快速衰减至零，体现了随机环境波动的时间独立性；捕食者与被捕食者种群的负自相关模式呈现交替正负值，直观展示了捕食-被捕食系统的振荡动力学特征。这种可视化方法为生态学家识别时间序列数据的自相关结构提供了有力的工具，有助于理解不同生态过程的时间动态特征。
 
 
 ```
-## 强正自相关序列（滞后1）： 0.823
-```
-
-```
-## 弱自相关序列（滞后1）： 0.195
-```
-
-```
-## 捕食者序列（滞后1）： 0.593
-```
-
-```
-## 被捕食者序列（滞后1）： 0.623
+## 四种时间序列的自相关函数（滞后1）结果：
+## 强正自相关序列：0.823
+## 弱自相关序列：0.195
+## 捕食者序列：0.593
+## 被捕食者序列：0.623
 ```
 
 **生态学意义**：自相关函数在生态学中广泛应用于检测种群波动的周期性、环境因子的记忆效应、生态过程的持续性等时间动态特征。
@@ -744,35 +542,40 @@ $$\begin{bmatrix}
 
 接下来我们通过一个森林年轮宽度的具体案例来演示偏自相关函数的应用。这个例子将展示如何：
 
-1. 模拟一个具有自回归特性的森林年轮宽度时间序列（见\@ref(fig:tree-ring-time-series)）
-2. 计算并可视化偏自相关函数（见\@ref(fig:pacf-example)）
-3. 比较ACF和PACF的差异（见\@ref(fig:acf-pacf-comparison)）
-4. 使用统计方法确定最优的自回归模型阶数
+1. 计算并可视化偏自相关函数（见\@ref(fig:pacf-example)）
+2. 比较ACF和PACF的差异（见\@ref(fig:acf-pacf-comparison)）
+3. 使用统计方法确定最优的自回归模型阶数
 
-首先，我们生成模拟数据并计算PACF：
+
+
+首先，我们可视化原始的时间序列数据，这有助于直观理解数据的动态特征：
 
 
 ``` r
-# 偏自相关函数示例：森林年轮宽度的时间序列
-set.seed(123)
+load("tree_ring_width.RData")
 
-# 模拟森林年轮宽度数据（100年）
-n_years <- 100
-years <- 1:n_years
+# 可视化原始时间序列
+plot(years, tree_ring_width,
+  type = "l", lwd = 2, col = "darkgreen",
+  xlab = "年份", ylab = "年轮宽度 (mm)",
+  main = "森林年轮宽度的时间序列"
+)
+```
 
-# 模拟自回归过程：当前年轮宽度受前2年影响
-# AR(2)过程：X_t = 0.6*X_{t-1} - 0.3*X_{t-2} + ε_t
-tree_ring_width <- numeric(n_years)
-tree_ring_width[1] <- rnorm(1, 10, 1)
-tree_ring_width[2] <- rnorm(1, 10, 1)
+\begin{figure}
 
-for (t in 3:n_years) {
-  tree_ring_width[t] <- 0.6 * tree_ring_width[t - 1] - 0.3 * tree_ring_width[t - 2] + rnorm(1, 0, 1)
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/tree-ring-time-series-1} 
+
 }
 
-# 添加趋势和季节性（年际变化）
-tree_ring_width <- tree_ring_width + 0.02 * years + 2 * sin(2 * pi * years / 30)
+\caption{森林年轮宽度的时间序列图}(\#fig:tree-ring-time-series)
+\end{figure}
 
+然后，我们计算PACF：
+
+
+``` r
+load("tree_ring_width.RData")
 # 计算偏自相关函数
 pacf_result <- pacf(tree_ring_width, lag.max = 15, plot = FALSE)
 
@@ -784,10 +587,14 @@ plot(pacf_result,
 abline(h = 0, lty = 2)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/pacf-example-1.png" alt="森林年轮宽度的偏自相关函数" width="80%" />
-<p class="caption">(\#fig:pacf-example)森林年轮宽度的偏自相关函数</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/pacf-example-1} 
+
+}
+
+\caption{森林年轮宽度的偏自相关函数}(\#fig:pacf-example)
+\end{figure}
 
 
 ```
@@ -799,26 +606,16 @@ abline(h = 0, lty = 2)
 
 现在我们来比较ACF和PACF的差异，这有助于理解两种函数在识别时间序列结构时的不同作用：
 
+\begin{figure}
 
-``` r
-# 比较ACF和PACF
-par(mfrow = c(1, 2))
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/acf-pacf-comparison-1} 
 
-# ACF图
-acf(tree_ring_width, lag.max = 15, main = "自相关函数")
+}
 
-# PACF图
-pacf(tree_ring_width, lag.max = 15, main = "偏自相关函数")
-```
+\caption{森林年轮宽度的自相关函数与偏自相关函数对比}(\#fig:acf-pacf-comparison)
+\end{figure}
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/acf-pacf-comparison-1.png" alt="森林年轮宽度的自相关函数与偏自相关函数对比" width="80%" />
-<p class="caption">(\#fig:acf-pacf-comparison)森林年轮宽度的自相关函数与偏自相关函数对比</p>
-</div>
-
-``` r
-par(mfrow = c(1, 1))
-```
+图\@ref(fig:acf-pacf-comparison)展示了森林年轮宽度时间序列的自相关函数与偏自相关函数对比。该双面板图采用并排布局，左侧为自相关函数图，显示年轮宽度与自身滞后值之间的总相关性；右侧为偏自相关函数图，显示在控制中间滞后影响后，年轮宽度与特定滞后值之间的直接相关性。通过对比两种函数，可以识别时间序列的自回归结构：ACF的缓慢衰减模式表明时间序列具有持续性特征，而PACF的截尾模式则有助于确定自回归模型的合适阶数。在生态学应用中，这种对比分析对于理解森林生长对环境因子的响应模式、识别气候变化的滞后效应以及构建准确的时间序列预测模型具有重要意义。
 
 接下来，我们使用统计方法来确定最优的自回归模型阶数。这在实际生态学研究中非常重要，可以帮助我们选择最合适的模型来描述生态过程：
 
@@ -851,22 +648,6 @@ print(coef(best_ar))
 ##  1.1139434 -0.5072173  0.2773914  2.0968099
 ```
 
-最后，我们可视化原始的时间序列数据，这有助于直观理解数据的动态特征：
-
-
-``` r
-# 可视化原始时间序列
-plot(years, tree_ring_width,
-  type = "l", lwd = 2, col = "darkgreen",
-  xlab = "年份", ylab = "年轮宽度 (mm)",
-  main = "森林年轮宽度的时间序列"
-)
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/tree-ring-time-series-1.png" alt="森林年轮宽度的时间序列图" width="80%" />
-<p class="caption">(\#fig:tree-ring-time-series)森林年轮宽度的时间序列图</p>
-</div>
 
 **生态学意义**：偏自相关函数在生态学中主要用于识别时间序列模型的自回归阶数，帮助理解生态过程的直接时间依赖关系和内在动态机制。通过上面的森林年轮宽度示例（见\@ref(fig:pacf-example)和\@ref(fig:acf-pacf-comparison)），我们可以看到PACF如何帮助识别生态时间序列中的直接时间依赖关系，为构建准确的生态模型提供重要依据。
 
@@ -886,10 +667,14 @@ plot(years, tree_ring_width,
 
 为了直观理解时间序列平稳性的概念，让我们对比一下平稳和非平稳时间序列的典型特征。
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/time-series-stationarity-comparison-1.png" alt="时间序列平稳性对比示意图：左图显示平稳时间序列（恒定统计特性），右图显示非平稳时间序列（具有趋势和季节性变化）" width="80%" />
-<p class="caption">(\#fig:time-series-stationarity-comparison)时间序列平稳性对比示意图：左图显示平稳时间序列（恒定统计特性），右图显示非平稳时间序列（具有趋势和季节性变化）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/time-series-stationarity-comparison-1} 
+
+}
+
+\caption{时间序列平稳性对比示意图：左图显示平稳时间序列（恒定统计特性），右图显示非平稳时间序列（具有趋势和季节性变化）}(\#fig:time-series-stationarity-comparison)
+\end{figure}
 
 
 上面的对比图（见\@ref(fig:time-series-stationarity-comparison)）清晰地展示了平稳时间序列和非平稳时间序列在统计特性上的根本差异，这对于理解时间序列分析的基本假设至关重要。
@@ -930,37 +715,14 @@ ADF检验的原假设$H_0$是：$\gamma = 0$，即时间序列存在单位根（
 
 首先，我们模拟了一个具有趋势、季节性和随机成分的非平稳时间序列（图\@ref(fig:bird-population-ts)），该序列模拟了鸟类种群在50年间的动态变化。
 
+\begin{figure}
 
-``` r
-# 时间序列平稳性检验示例：鸟类种群数量监测
-set.seed(123)
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/bird-population-ts-1} 
 
-# 模拟鸟类种群数量数据（50年）
-n_years <- 50
-years <- 1:n_years
+}
 
-# 模拟非平稳时间序列：具有趋势和季节性的种群动态
-# 趋势成分：种群总体下降趋势
-trend <- 100 - 0.8 * years
-# 季节性成分：年际波动
-seasonal <- 15 * sin(2 * pi * years / 5)
-# 随机成分
-random <- cumsum(rnorm(n_years, 0, 2)) # 随机游走，增加非平稳性
-
-bird_population <- trend + seasonal + random + rnorm(n_years, 0, 5)
-
-# 可视化原始时间序列
-plot(years, bird_population,
-  type = "l", lwd = 2, col = "brown",
-  xlab = "年份", ylab = "鸟类种群数量",
-  main = "鸟类种群数量的时间序列"
-)
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/bird-population-ts-1.png" alt="鸟类种群数量的时间序列图，展示了具有趋势、季节性和随机成分的非平稳时间序列" width="80%" />
-<p class="caption">(\#fig:bird-population-ts)鸟类种群数量的时间序列图，展示了具有趋势、季节性和随机成分的非平稳时间序列</p>
-</div>
+\caption{鸟类种群数量的时间序列图，展示了具有趋势、季节性和随机成分的非平稳时间序列}(\#fig:bird-population-ts)
+\end{figure}
 
 
 
@@ -1048,10 +810,14 @@ if (adf_test$p.value >= 0.05) {
 }
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/original-ts-plot-1.png" alt="原始鸟类种群数量时间序列，显示明显的下降趋势和周期性波动" width="80%" />
-<p class="caption">(\#fig:original-ts-plot)原始鸟类种群数量时间序列，显示明显的下降趋势和周期性波动</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/original-ts-plot-1} 
+
+}
+
+\caption{原始鸟类种群数量时间序列，显示明显的下降趋势和周期性波动}(\#fig:original-ts-plot)
+\end{figure}
 
 图\@ref(fig:original-ts-plot)展示了原始鸟类种群数量时间序列，可以观察到明显的下降趋势和周期性波动，这是典型的非平稳时间序列特征。
 
@@ -1066,10 +832,14 @@ if (adf_test$p.value >= 0.05) {
 }
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/diff-ts-plot-1.png" alt="一阶差分后的鸟类种群序列，趋势成分已被去除，主要保留随机波动" width="80%" />
-<p class="caption">(\#fig:diff-ts-plot)一阶差分后的鸟类种群序列，趋势成分已被去除，主要保留随机波动</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/diff-ts-plot-1} 
+
+}
+
+\caption{一阶差分后的鸟类种群序列，趋势成分已被去除，主要保留随机波动}(\#fig:diff-ts-plot)
+\end{figure}
 
 经过一阶差分处理后，序列的趋势成分被有效去除，如图\@ref(fig:diff-ts-plot)所示，差分后的序列主要保留了随机波动成分。
 
@@ -1081,10 +851,14 @@ if (adf_test$p.value >= 0.05) {
 }
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/original-acf-1.png" alt="原始序列的自相关函数，显示缓慢衰减的非平稳特征" width="80%" />
-<p class="caption">(\#fig:original-acf)原始序列的自相关函数，显示缓慢衰减的非平稳特征</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/original-acf-1} 
+
+}
+
+\caption{原始序列的自相关函数，显示缓慢衰减的非平稳特征}(\#fig:original-acf)
+\end{figure}
 
 原始序列的自相关函数（图\@ref(fig:original-acf)）显示缓慢衰减的特征，这是非平稳时间序列的典型表现。
 
@@ -1096,10 +870,14 @@ if (adf_test$p.value >= 0.05) {
 }
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/diff-acf-1.png" alt="差分后序列的自相关函数，显示快速衰减的平稳特征" width="80%" />
-<p class="caption">(\#fig:diff-acf)差分后序列的自相关函数，显示快速衰减的平稳特征</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/diff-acf-1} 
+
+}
+
+\caption{差分后序列的自相关函数，显示快速衰减的平稳特征}(\#fig:diff-acf)
+\end{figure}
 
 差分后序列的自相关函数（图\@ref(fig:diff-acf)）显示快速衰减的特征，表明序列已经达到平稳状态。
 
@@ -1113,10 +891,14 @@ if (length(bird_population) >= 2 * 12) { # 需要足够的数据点进行季节�
 }
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/ts-decomposition-1.png" alt="时间序列分解结果，展示趋势、季节性和随机成分的分离" width="80%" />
-<p class="caption">(\#fig:ts-decomposition)时间序列分解结果，展示趋势、季节性和随机成分的分离</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/ts-decomposition-1} 
+
+}
+
+\caption{时间序列分解结果，展示趋势、季节性和随机成分的分离}(\#fig:ts-decomposition)
+\end{figure}
 
 图\@ref(fig:ts-decomposition)展示了时间序列分解的结果，将原始序列分离为趋势、季节性和随机成分，帮助我们更好地理解时间序列的内在结构。
 
@@ -1136,23 +918,28 @@ if (length(bird_population) >= 2 * 12) { # 需要足够的数据点进行季节�
 
 
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/spatial-patterns-1.png" alt="空间自相关模式的直观展示：有空间自相关（左上）、无空间自相关（右上）、强空间自相关（左下）、弱空间自相关（右下）" width="80%" />
-<p class="caption">(\#fig:spatial-patterns)空间自相关模式的直观展示：有空间自相关（左上）、无空间自相关（右上）、强空间自相关（左下）、弱空间自相关（右下）</p>
-</div>
+\begin{figure}
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/spatial-heatmaps-1.png" alt="空间自相关的热力图展示：通过插值方法生成的热力图能够更清晰地显示空间格局" width="80%" />
-<p class="caption">(\#fig:spatial-heatmaps)空间自相关的热力图展示：通过插值方法生成的热力图能够更清晰地显示空间格局</p>
-</div>
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/spatial-patterns-1} 
+
+}
+
+\caption{空间自相关模式的直观展示：有空间自相关（左上）、无空间自相关（右上）、强空间自相关（左下）、弱空间自相关（右下）}(\#fig:spatial-patterns)
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/spatial-heatmaps-1} 
+
+}
+
+\caption{空间自相关的热力图展示：通过插值方法生成的热力图能够更清晰地显示空间格局}(\#fig:spatial-heatmaps)
+\end{figure}
 
 
 通过空间分布图、热力图和等值线图等直观的图形工具，我们能够直接"看到"空间自相关的存在与否及其强度。这些图形就像生态系统的空间肖像，记录着生态过程在空间维度上的印记。当我们观察一片草原的植被覆盖度分布图时，那些绿色的斑块和过渡带不仅美化了图形，更重要的是它们揭示了植被生长的空间依赖性；当我们研究河流水质参数的空间分布时，那些沿着河流流向逐渐变化的色彩梯度，正是空间自相关在水环境中的生动体现。
 
 空间自相关分析因此成为我们理解生态现象空间结构和空间过程的重要工具。它帮助我们解读生态系统的空间语言，识别生态过程的作用尺度，为生态保护、资源管理和环境监测提供科学依据。在这个充满联系和依赖的生态世界中，空间自相关就像一把钥匙，帮助我们打开理解生态空间格局的大门。
-
-
-
 
 
 ### 变异函数（Variogram）：空间依赖性的量化
@@ -1161,15 +948,23 @@ if (length(bird_population) >= 2 * 12) { # 需要足够的数据点进行季节�
 
 变异函数是地统计学中的核心工具，用于量化空间自相关随距离的变化模式。变异函数描述的是空间变量在特定距离下的半方差，即相同距离的观测点对之间差异的期望值的一半。变异函数的核心思想是：在空间上相近的观测值往往比相距较远的观测值更相似，这种相似性随着距离的增加而逐渐减弱，直到达到某个距离后相似性不再随距离变化。变异函数通常通过三个关键参数来描述空间依赖结构：块金值（nugget）、基台值（sill）和变程（range）。块金值代表距离为零时的半方差，反映了测量误差或小尺度变异；基台值代表半方差达到稳定时的值，反映了变量的总空间变异；变程代表空间自相关存在的最大距离，反映了空间依赖性的尺度。
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/variogram-parameters-explanation-1.png" alt="变异函数三个关键参数的技术解释：块金值（nugget）、基台值（sill）和变程（range）的直观展示" width="80%" />
-<p class="caption">(\#fig:variogram-parameters-explanation)变异函数三个关键参数的技术解释：块金值（nugget）、基台值（sill）和变程（range）的直观展示</p>
-</div>
+\begin{figure}
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/variogram-parameters-comparison-1.png" alt="不同变异函数参数组合的对比：展示块金值、基台值和变程对空间依赖结构的影响" width="80%" />
-<p class="caption">(\#fig:variogram-parameters-comparison)不同变异函数参数组合的对比：展示块金值、基台值和变程对空间依赖结构的影响</p>
-</div>
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/variogram-parameters-explanation-1} 
+
+}
+
+\caption{变异函数三个关键参数的技术解释：块金值（nugget）、基台值（sill）和变程（range）的直观展示}(\#fig:variogram-parameters-explanation)
+\end{figure}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/variogram-parameters-comparison-1} 
+
+}
+
+\caption{不同变异函数参数组合的对比：展示块金值、基台值和变程对空间依赖结构的影响}(\#fig:variogram-parameters-comparison)
+\end{figure}
 
 图\@ref(fig:variogram-parameters-explanation)和\@ref(fig:variogram-parameters-comparison)通过R代码技术性地解释了变异函数的三个关键参数。这些图形清晰地展示了块金值、基台值和变程在变异函数曲线中的位置和意义，帮助我们直观理解空间依赖结构的不同方面。
 
@@ -1181,47 +976,8 @@ $$\gamma(\mathbf{h}) = \frac{1}{2}E[(Z(\mathbf{s} + \mathbf{h}) - Z(\mathbf{s}))
 
 其中$\mathbf{h}$是空间滞后向量，$E[\cdot]$表示期望值。
 
-**R代码实现**：
-
 首先，我们通过图\@ref(fig:soil-ph-sampling)展示土壤pH值的空间取样分布，这有助于我们直观理解数据的空间格局。然后，通过图\@ref(fig:soil-ph-variogram)展示如何用变异函数来捕捉其中的空间自相关。
 
-
-``` r
-# 变异函数示例：土壤pH值的空间分布
-set.seed(123)
-
-# 模拟空间数据：100个样点的坐标和土壤pH值
-library(gstat)
-library(sp)
-library(ggplot2)
-
-n_sites <- 100
-
-# 生成随机空间坐标
-coords <- data.frame(
-  x = runif(n_sites, 0, 100),
-  y = runif(n_sites, 0, 100)
-)
-
-# 模拟具有空间自相关的土壤pH值数据
-# 使用高斯随机场模拟空间相关性
-library(geoR)
-
-# 设置空间相关参数
-mean_pH <- 6.5 # 平均土壤pH值
-spatial_range <- 30 # 空间相关范围
-spatial_variance <- 0.8 # 空间方差
-
-# 生成高斯随机场
-grf_model <- grf(
-  n = n_sites,
-  grid = "irreg",
-  xlims = c(0, 100),
-  ylims = c(0, 100),
-  cov.pars = c(spatial_variance, spatial_range),
-  cov.model = "exponential"
-)
-```
 
 ```
 ## grf: simulation(s) on randomly chosen locations with  100  points
@@ -1232,67 +988,31 @@ grf_model <- grf(
 ## grf: End of simulation procedure. Number of realizations: 1
 ```
 
-``` r
-soil_pH <- mean_pH + grf_model$data
+\begin{figure}
 
-# 创建空间数据框
-spatial_data <- data.frame(
-  x = grf_model$coords[, 1],
-  y = grf_model$coords[, 2],
-  pH = soil_pH
-)
-coordinates(spatial_data) <- ~ x + y
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/soil-ph-sampling-1} 
 
-# 可视化空间取样分布
-spatial_df <- as.data.frame(spatial_data)
+}
 
-ggplot(spatial_df, aes(x = x, y = y, color = pH)) +
-  geom_point(size = 3) +
-  scale_color_gradient(low = "red", high = "blue") +
-  labs(
-    title = "土壤pH值的空间取样分布",
-    x = "X坐标", y = "Y坐标", color = "pH值"
-  ) +
-  theme_minimal()
-```
+\caption{土壤pH值的空间取样分布图}(\#fig:soil-ph-sampling)
+\end{figure}
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/soil-ph-sampling-1.png" alt="土壤pH值的空间取样分布图" width="80%" />
-<p class="caption">(\#fig:soil-ph-sampling)土壤pH值的空间取样分布图</p>
-</div>
+\begin{figure}
 
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/soil-ph-variogram-1} 
 
-``` r
-# 计算经验变异函数
-variogram_emp <- variogram(pH ~ 1, data = spatial_data)
+}
 
-# 可视化经验变异函数
-plot(variogram_emp,
-  main = "土壤pH值的经验变异函数",
-  xlab = "距离", ylab = "半方差", pch = 19, col = "blue"
-)
-```
+\caption{土壤pH值的经验变异函数和空间分布图}(\#fig:soil-ph-variogram-1)
+\end{figure}
+\begin{figure}
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/soil-ph-variogram-1.png" alt="土壤pH值的经验变异函数和空间分布图" width="80%" />
-<p class="caption">(\#fig:soil-ph-variogram-1)土壤pH值的经验变异函数和空间分布图</p>
-</div>
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/soil-ph-variogram-2} 
 
-``` r
-# 拟合理论变异函数模型（指数模型）
-variogram_fit <- fit.variogram(variogram_emp, model = vgm(0.8, "Exp", 30, 0.1))
+}
 
-# 可视化拟合结果
-plot(variogram_emp, variogram_fit,
-  main = "变异函数拟合",
-  xlab = "距离", ylab = "半方差"
-)
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/soil-ph-variogram-2.png" alt="土壤pH值的经验变异函数和空间分布图" width="80%" />
-<p class="caption">(\#fig:soil-ph-variogram-2)土壤pH值的经验变异函数和空间分布图</p>
-</div>
+\caption{土壤pH值的经验变异函数和空间分布图}(\#fig:soil-ph-variogram-2)
+\end{figure}
 
 
 ```
@@ -1362,10 +1082,14 @@ kriging_result <- autoKrige(pH ~ 1, spatial_data, grid)
 plot(kriging_result)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/kriging-result-1.png" alt="土壤pH值的克里金插值结果" width="80%" />
-<p class="caption">(\#fig:kriging-result)土壤pH值的克里金插值结果</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/kriging-result-1} 
+
+}
+
+\caption{土壤pH值的克里金插值结果}(\#fig:kriging-result)
+\end{figure}
 
 
 ```
@@ -1413,136 +1137,15 @@ $$C = \frac{(n-1)}{2\sum_{i=1}^{n}\sum_{j=1}^{n}w_{ij}} \cdot \frac{\sum_{i=1}^{
 **R代码实现**：
 
 
-``` r
-# 加载必要的包
-library(spdep)
 
-# 设置随机种子确保结果可重现
-set.seed(123)
-```
+\begin{figure}
 
-接下来，我们模拟森林树木的空间分布。我们假设树木在空间上呈现聚集分布模式，这在真实的森林中很常见：
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/forest-spatial-distribution-1} 
 
-
-``` r
-# 模拟森林树木数据
-n_trees <- 100
-
-# 生成树木坐标（模拟聚集分布）
-# 使用聚类过程生成聚集分布的坐标
-cluster_centers <- data.frame(
-  x = runif(5, 0, 100),
-  y = runif(5, 0, 100)
-)
-
-tree_coords <- data.frame(x = numeric(0), y = numeric(0))
-
-for (i in 1:nrow(cluster_centers)) {
-  n_cluster <- sample(15:25, 1) # 每个簇的树木数量
-  cluster_trees <- data.frame(
-    x = rnorm(n_cluster, cluster_centers$x[i], 8),
-    y = rnorm(n_cluster, cluster_centers$y[i], 8)
-  )
-  tree_coords <- rbind(tree_coords, cluster_trees)
 }
 
-# 确保总数为n_trees
-if (nrow(tree_coords) > n_trees) {
-  tree_coords <- tree_coords[1:n_trees, ]
-} else {
-  # 添加一些随机分布的树木
-  n_extra <- n_trees - nrow(tree_coords)
-  extra_trees <- data.frame(
-    x = runif(n_extra, 0, 100),
-    y = runif(n_extra, 0, 100)
-  )
-  tree_coords <- rbind(tree_coords, extra_trees)
-}
-```
-
-现在，我们模拟树木的胸径数据。在真实的生态系统中，相邻树木的胸径往往具有相似性，即存在空间自相关：
-
-
-``` r
-# 模拟树木胸径（具有空间自相关）
-# 使用空间平滑过程
-coordinates(tree_coords) <- ~ x + y
-
-# 创建空间权重矩阵（基于k近邻）
-knn_weights <- knn2nb(knearneigh(tree_coords, k = 5))
-listw_weights <- nb2listw(knn_weights, style = "W")
-
-# 模拟具有空间自相关的胸径数据
-# 使用空间自回归过程
-set.seed(123)
-spatial_autocorr <- 0.7 # 空间自相关强度
-
-# 生成空间自相关数据
-n <- n_trees
-W <- listw2mat(listw_weights)
-I_minus_rhoW <- diag(n) - spatial_autocorr * W
-
-# 确保矩阵可逆
-if (rcond(I_minus_rhoW) > 1e-10) {
-  tree_dbh <- as.vector(solve(I_minus_rhoW) %*% rnorm(n, 25, 5))
-} else {
-  # 如果矩阵不可逆，使用近似方法
-  tree_dbh <- 25 + 5 * rnorm(n)
-}
-```
-
-现在让我们先查看模拟数据的基本特征，并可视化树木的空间分布：
-
-
-```
-## === 空间分布特征分析 ===
-```
-
-```
-## 树木总数： 100
-```
-
-```
-## 胸径统计：均值 = 85.16 , 标准差 = 5.79
-```
-
-
-``` r
-# 可视化空间分布和自相关
-par(mfrow = c(1, 2))
-
-# 树木坐标分布
-plot(tree_coords,
-  pch = 19, col = "darkgreen",
-  main = "树木空间分布",
-  xlab = "X坐标", ylab = "Y坐标"
-)
-
-# 胸径的空间变异（颜色表示大小）
-dbh_colors <- colorRampPalette(c("blue", "red"))(100)
-dbh_col_idx <- cut(tree_dbh, breaks = 100)
-
-plot(tree_coords,
-  pch = 19, col = dbh_colors[dbh_col_idx],
-  main = "树木胸径的空间分布",
-  xlab = "X坐标", ylab = "Y坐标"
-)
-
-# 添加图例
-legend("topright",
-  legend = c("小胸径", "大胸径"),
-  pch = 19, col = c("blue", "red")
-)
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/forest-spatial-distribution-1.png" alt="森林树木的空间分布和胸径变异" width="80%" />
-<p class="caption">(\#fig:forest-spatial-distribution)森林树木的空间分布和胸径变异</p>
-</div>
-
-``` r
-par(mfrow = c(1, 1))
-```
+\caption{森林树木的空间分布和胸径变异}(\#fig:forest-spatial-distribution)
+\end{figure}
 
 从图\@ref(fig:forest-spatial-distribution)中我们可以观察到：左图显示了树木在空间中的分布模式，可以看到明显的聚集现象；右图用颜色表示胸径大小，蓝色表示小胸径，红色表示大胸径，我们可以初步观察到胸径在空间上可能存在一定的聚集模式。
 
@@ -1550,6 +1153,10 @@ par(mfrow = c(1, 1))
 
 
 ``` r
+load("data/forest_trees.RData")
+knn_weights <- knn2nb(knearneigh(tree_coords, k = 5))
+listw_weights <- nb2listw(knn_weights, style = "W")
+
 # 进行空间自相关分析
 # 计算Moran's I
 moran_test <- moran.test(tree_dbh, listw_weights)
@@ -1601,22 +1208,14 @@ cat("p值：", format.pval(moran_mc$p.value, digits = 3), "\n")
 ## p值： 0.001
 ```
 
+\begin{figure}
 
-``` r
-# 可视化蒙特卡洛检验结果
-hist(moran_mc$res,
-  breaks = 30, col = "lightblue",
-  main = "Moran's I的蒙特卡洛分布",
-  xlab = "Moran's I统计量"
-)
-abline(v = moran_test$estimate[1], col = "red", lwd = 2)
-legend("topright", legend = "观测值", col = "red", lwd = 2)
-```
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/moran-monte-carlo-1} 
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/moran-monte-carlo-1.png" alt="Moran's I的蒙特卡洛检验结果" width="80%" />
-<p class="caption">(\#fig:moran-monte-carlo)Moran's I的蒙特卡洛检验结果</p>
-</div>
+}
+
+\caption{Moran's I的蒙特卡洛检验结果}(\#fig:moran-monte-carlo)
+\end{figure}
 
 通过这个完整的分析流程，我们能够深入理解森林生态系统的空间结构特征及其统计意义。首先，从空间分布特征来看，模拟的森林树木呈现出明显的聚集分布模式，这种分布特征在真实的森林生态系统中十分常见，反映了种子传播、微环境适宜性等生态过程的空间异质性。树木胸径数据也显示出显著的空间变异模式，相邻树木的胸径值往往相近，这种空间依赖性暗示着可能存在某种生态机制在驱动胸径的空间分布格局。
 
@@ -1649,53 +1248,15 @@ $$G_i^* = \frac{\sum_{j=1}^{n}w_{ij}x_j}{\sum_{j=1}^{n}x_j}$$
 现在，我们通过一个城市绿地鸟类物种丰富度的案例来演示局部空间自相关分析的具体应用：
 
 
-``` r
-# 局部空间自相关示例：城市绿地鸟类物种丰富度
-set.seed(123)
 
-# 模拟城市绿地数据
-library(spdep)
-library(ggplot2)
 
-n_parks <- 50
-
-# 生成公园坐标（模拟城市分布）
-park_coords <- data.frame(
-  x = runif(n_parks, 0, 100),
-  y = runif(n_parks, 0, 100)
-)
-```
-
-现在让我们模拟具有空间聚集模式的鸟类物种丰富度数据：
+现在，我们进行局部空间自相关分析来识别局部热点和冷点：
 
 
 ``` r
-# 模拟鸟类物种丰富度（具有空间聚集模式）
-# 创建几个热点区域
-hotspot_centers <- data.frame(
-  x = c(20, 80, 40, 60, 30),
-  y = c(20, 80, 60, 30, 70)
-)
-
-bird_richness <- numeric(n_parks)
-
-for (i in 1:n_parks) {
-  # 计算到各个热点的距离
-  distances <- sqrt((park_coords$x[i] - hotspot_centers$x)^2 +
-    (park_coords$y[i] - hotspot_centers$y)^2)
-
-  # 物种丰富度与到热点的距离负相关
-  richness_base <- 15 - 0.1 * min(distances)
-
-  # 添加随机变异
-  bird_richness[i] <- max(5, richness_base + rnorm(1, 0, 3))
-}
-
-# 创建空间数据
-coordinates(park_coords) <- ~ x + y
+load("data/city_parks.RData")
 
 # 创建空间权重矩阵（基于距离的权重）
-# 使用距离阈值定义邻居
 dist_threshold <- 20 # 20单位内的公园视为邻居
 
 # 创建基于距离的邻居列表
@@ -1713,27 +1274,7 @@ if (any(card(nb_dist) == 0)) {
 
 ``` r
 listw_dist <- nb2listw(nb_dist, style = "W")
-```
 
-首先查看模拟数据的基本特征：
-
-
-```
-## === 城市绿地鸟类物种丰富度分析 ===
-```
-
-```
-## 公园总数： 50
-```
-
-```
-## 物种丰富度统计：均值 = 13.62 , 标准差 = 2.93
-```
-
-现在，我们进行局部空间自相关分析来识别局部热点和冷点：
-
-
-``` r
 # 计算局部Moran's I（LISA）
 local_moran <- localmoran(bird_richness, listw_dist)
 
@@ -1773,51 +1314,27 @@ lisa_results$gi_type[lisa_results$gi_star < -1.96] <- "冷点"
 
 现在让我们可视化局部空间自相关分析的结果：
 
+\begin{figure}
 
-``` r
-# 可视化LISA分析结果
-# LISA类型分布
-ggplot(lisa_results, aes(x = x, y = y, color = lisa_type, size = richness)) +
-  geom_point(alpha = 0.7) +
-  scale_color_manual(values = c(
-    "高-高" = "red", "低-低" = "blue",
-    "高-低" = "pink", "低-高" = "lightblue",
-    "不显著" = "gray"
-  )) +
-  labs(
-    title = "鸟类物种丰富度的LISA分析",
-    x = "X坐标", y = "Y坐标",
-    color = "LISA类型", size = "物种数"
-  ) +
-  theme_minimal()
-```
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/lisa-analysis-1} 
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/lisa-analysis-1.png" alt="鸟类物种丰富度的LISA分析结果" width="80%" />
-<p class="caption">(\#fig:lisa-analysis)鸟类物种丰富度的LISA分析结果</p>
-</div>
+}
 
+\caption{鸟类物种丰富度的LISA分析结果}(\#fig:lisa-analysis)
+\end{figure}
 
-``` r
-# Gi*热点分析
-ggplot(lisa_results, aes(x = x, y = y, color = gi_type, size = abs(gi_star))) +
-  geom_point(alpha = 0.7) +
-  scale_color_manual(values = c(
-    "热点" = "red", "冷点" = "blue",
-    "不显著" = "gray"
-  )) +
-  labs(
-    title = "鸟类物种丰富度的Getis-Ord Gi*分析",
-    x = "X坐标", y = "Y坐标",
-    color = "热点类型", size = "|Gi*|"
-  ) +
-  theme_minimal()
-```
+图\@ref(fig:lisa-analysis)展示了鸟类物种丰富度的局部空间自相关分析结果。该散点图采用颜色编码系统表示不同的LISA类型：红色表示"高-高"聚集区（热点区域，即物种丰富度高且周边地区也高），蓝色表示"低-低"聚集区（冷点区域，即物种丰富度低且周边地区也低），粉色表示"高-低"异常区（高值被低值包围），浅蓝色表示"低-高"异常区（低值被高值包围），灰色表示统计不显著的区域。点的大小与物种丰富度成正比，直观地显示了空间格局的异质性。这种可视化方法对于识别生物多样性保护的关键区域、理解物种分布的空间依赖性以及制定区域化的生态保护策略具有重要价值，能够揭示传统全局统计方法无法发现的局部空间关联模式。
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/gi-analysis-1.png" alt="鸟类物种丰富度的Getis-Ord Gi*分析结果" width="80%" />
-<p class="caption">(\#fig:gi-analysis)鸟类物种丰富度的Getis-Ord Gi*分析结果</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/gi-analysis-1} 
+
+}
+
+\caption{鸟类物种丰富度的Getis-Ord Gi*分析结果}(\#fig:gi-analysis)
+\end{figure}
+
+图\@ref(fig:gi-analysis)展示了鸟类物种丰富度的Getis-Ord Gi*热点分析结果。该散点图采用简化的颜色编码系统：红色表示统计显著的热点区域（高值聚集区），蓝色表示统计显著的冷点区域（低值聚集区），灰色表示统计不显著的区域。点的大小与Gi*统计量的绝对值成正比，反映了局部空间聚集的强度。与LISA分析相比，Getis-Ord Gi*分析更专注于识别高值或低值的空间聚集，而不区分"高-低"或"低-高"等异常模式。这种可视化方法在生态学保护规划中特别有用，能够快速识别生物多样性的核心保护区域（热点）和生态恢复的优先区域（冷点），为制定差异化的空间管理策略提供科学依据。
 
 现在让我们查看局部空间自相关分析的统计结果：
 
@@ -1842,50 +1359,21 @@ ggplot(lisa_results, aes(x = x, y = y, color = gi_type, size = abs(gi_star))) +
 进行局部空间自相关分析时，需要注意多重比较问题。由于同时检验多个局部统计量，传统的显著性水平可能需要调整，如使用错误发现率（FDR）控制：
 
 
-``` r
-# 多重比较校正
-# 使用FDR校正p值
-lisa_results$p_fdr <- p.adjust(lisa_results$p_value, method = "fdr")
-
-cat("经过FDR校正后的显著LISA模式：\n",
-    "数量：", sum(lisa_results$p_fdr < 0.05), "\n",
-    sep = "")
-```
-
 ```
 ## 经过FDR校正后的显著LISA模式：
 ## 数量：0
 ```
 
-``` r
-# 可视化校正前后的对比
-par(mfrow = c(1, 2))
+\begin{figure}
 
-# 原始p值
-hist(lisa_results$p_value,
-  breaks = 20, col = "lightblue",
-  main = "原始p值分布", xlab = "p值"
-)
-abline(v = 0.05, col = "red", lwd = 2)
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/multiple-comparison-1} 
 
-# FDR校正后p值
-hist(lisa_results$p_fdr,
-  breaks = 20, col = "lightgreen",
-  main = "FDR校正后p值分布", xlab = "校正后p值"
-)
-abline(v = 0.05, col = "red", lwd = 2)
-```
+}
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/multiple-comparison-1.png" alt="多重比较校正前后的p值分布对比" width="80%" />
-<p class="caption">(\#fig:multiple-comparison)多重比较校正前后的p值分布对比</p>
-</div>
+\caption{多重比较校正前后的p值分布对比}(\#fig:multiple-comparison)
+\end{figure}
 
-``` r
-par(mfrow = c(1, 1))
-```
-
-通过这个完整的局部空间自相关分析流程，我们能够深入理解城市绿地鸟类物种丰富度的空间异质性特征及其生态学意义。首先，从模拟的城市绿地分布来看，我们创建了多个鸟类物种丰富度热点区域，这些热点模拟了现实中由于栖息地质量、食物资源、植被结构等因素形成的生物多样性聚集区。
+图\@ref(fig:multiple-comparison)展示了多重比较校正前后p值分布的对比。该双面板直方图采用并排布局，左侧显示原始p值分布（浅蓝色），右侧显示经过错误发现率校正后的p值分布（浅绿色）。红色垂直线标记0.05显著性水平，直观展示了FDR校正对统计显著性的影响。在局部空间自相关分析中，由于同时检验多个空间单元，多重比较问题可能导致假阳性结果增加。FDR校正通过调整p值来控制错误发现率，确保统计推断的可靠性。这种可视化方法帮助生态学家理解多重比较校正的必要性，并在空间统计分析中做出更保守但更可靠的结论。
 
 LISA分析为我们提供了对局部空间模式的详细分类。高-高聚集区（热点）代表了物种丰富度高的绿地聚集在一起，这些区域可能是城市中生态条件最优越、保护价值最高的区域；低-低聚集区（冷点）则代表了物种丰富度低的绿地聚集，可能反映了城市环境压力较大或生态条件较差的区域。高-低异常值和低-高异常值则揭示了空间异质性的复杂模式，高值被低值包围可能表示孤立的优质栖息地，而低值被高值包围可能表示受到局部干扰的区域。
 
@@ -1910,10 +1398,14 @@ Getis-Ord Gi*分析进一步验证了热点和冷点的存在，其专注于识�
 
 为了直观理解空间平稳性的概念，让我们对比一下平稳和非平稳空间过程的典型特征。
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/spatial-stationarity-comparison-1.png" alt="空间平稳性对比示意图：左图显示平稳空间过程（恒定统计特性），右图显示非平稳空间过程（具有趋势和空间异质性）" width="80%" />
-<p class="caption">(\#fig:spatial-stationarity-comparison)空间平稳性对比示意图：左图显示平稳空间过程（恒定统计特性），右图显示非平稳空间过程（具有趋势和空间异质性）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/spatial-stationarity-comparison-1} 
+
+}
+
+\caption{空间平稳性对比示意图：左图显示平稳空间过程（恒定统计特性），右图显示非平稳空间过程（具有趋势和空间异质性）}(\#fig:spatial-stationarity-comparison)
+\end{figure}
 
 上面的对比图（见\@ref(fig:spatial-stationarity-comparison)）清晰地展示了平稳空间过程和非平稳空间过程在统计特性上的根本差异，这对于理解空间分析的基本假设至关重要。
 
@@ -1948,36 +1440,6 @@ $$F = \frac{(SSE_r - SSE_f)/(df_r - df_f)}{SSE_f/df_f}$$
 首先，我们模拟了一个具有空间趋势和异质性的非平稳空间过程（图\@ref(fig:forest-biomass-spatial)），该过程模拟了森林生物量在100公顷样地内的空间分布。
 
 
-``` r
-# 空间平稳性检验示例：森林生物量的空间分布
-set.seed(123)
-
-# 模拟森林生物量数据（100个样点）
-n_sites <- 100
-
-# 生成空间坐标
-coords <- data.frame(
-  x = runif(n_sites, 0, 100),
-  y = runif(n_sites, 0, 100)
-)
-
-# 模拟非平稳空间过程：具有趋势和异质性的生物量分布
-# 趋势成分：从西北到东南的生物量梯度
-trend <- 50 + 0.3 * coords$x + 0.2 * coords$y
-# 空间异质性：方差随位置变化
-heterogeneity <- rnorm(n_sites, 0, 5 + 0.03 * coords$x)
-# 空间相关性：使用高斯随机场
-library(geoR)
-grf_model <- grf(
-  n = n_sites,
-  grid = "irreg",
-  xlims = c(0, 100),
-  ylims = c(0, 100),
-  cov.pars = c(10, 20), # 方差=10，变程=20
-  cov.model = "exponential"
-)
-```
-
 ```
 ## grf: simulation(s) on randomly chosen locations with  100  points
 ## grf: process with  1  covariance structure(s)
@@ -1987,37 +1449,14 @@ grf_model <- grf(
 ## grf: End of simulation procedure. Number of realizations: 1
 ```
 
-``` r
-# 使用grf生成的坐标和空间数据
-grf_coords <- grf_model$coords
-forest_biomass <- 50 + 0.3 * grf_coords[,1] + 0.2 * grf_coords[,2] +
-  rnorm(n_sites, 0, 5 + 0.03 * grf_coords[,1]) + grf_model$data
+\begin{figure}
 
-# 创建空间数据
-spatial_data <- data.frame(
-  x = grf_coords[,1],
-  y = grf_coords[,2],
-  biomass = forest_biomass
-)
-coordinates(spatial_data) <- ~ x + y
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/forest-biomass-spatial-1} 
 
-# 可视化空间分布
-spatial_df <- as.data.frame(spatial_data)
+}
 
-ggplot(spatial_df, aes(x = x, y = y, color = biomass)) +
-  geom_point(size = 3) +
-  scale_color_viridis_c() +
-  labs(
-    title = "森林生物量的空间分布",
-    x = "X坐标 (m)", y = "Y坐标 (m)", color = "生物量 (t/ha)"
-  ) +
-  theme_minimal()
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/forest-biomass-spatial-1.png" alt="森林生物量的空间分布图，展示了具有趋势和空间异质性的非平稳空间过程" width="80%" />
-<p class="caption">(\#fig:forest-biomass-spatial)森林生物量的空间分布图，展示了具有趋势和空间异质性的非平稳空间过程</p>
-</div>
+\caption{森林生物量的空间分布图，展示了具有趋势和空间异质性的非平稳空间过程}(\#fig:forest-biomass-spatial)
+\end{figure}
 
 
 ``` r
@@ -2032,32 +1471,46 @@ trend_linear <- lm(biomass ~ x + y, data = spatial_df)
 trend_quadratic <- lm(biomass ~ x + y + I(x^2) + I(y^2) + I(x*y), data = spatial_df)
 ```
 
+\begin{table}
 
-Table: (\#tab:unnamed-chunk-44)一阶趋势面F检验结果
+\caption{(\#tab:trend-linear-anova)一阶趋势面F检验结果}
+\centering
+\begin{tabular}[t]{l|r|r|r|r|r}
+\hline
+  & Df & Sum Sq & Mean Sq & F value & Pr(>F)\\
+\hline
+x & 1 & 5978.493 & 5978.49335 & 118.64693 & 0\\
+\hline
+y & 1 & 3789.080 & 3789.07994 & 75.19666 & 0\\
+\hline
+Residuals & 97 & 4887.727 & 50.38894 & NA & NA\\
+\hline
+\end{tabular}
+\end{table}
 
-|          | Df|   Sum Sq|    Mean Sq|   F value| Pr(>F)|
-|:---------|--:|--------:|----------:|---------:|------:|
-|x         |  1| 5978.493| 5978.49335| 118.64693|      0|
-|y         |  1| 3789.080| 3789.07994|  75.19666|      0|
-|Residuals | 97| 4887.727|   50.38894|        NA|     NA|
+\begin{table}
 
-```
-## 
-## 二阶趋势面F检验：
-```
+\caption{(\#tab:trend-quadratic-anova)二阶趋势面F检验结果}
+\centering
+\begin{tabular}[t]{l|r|r|r|r|r}
+\hline
+  & Df & Sum Sq & Mean Sq & F value & Pr(>F)\\
+\hline
+x & 1 & 5978.4933486 & 5978.4933486 & 130.9929680 & 0.0000000\\
+\hline
+y & 1 & 3789.0799404 & 3789.0799404 & 83.0213899 & 0.0000000\\
+\hline
+I(x\textasciicircum{}2) & 1 & 0.0230785 & 0.0230785 & 0.0005057 & 0.9821071\\
+\hline
+I(y\textasciicircum{}2) & 1 & 597.5007693 & 597.5007693 & 13.0916595 & 0.0004799\\
+\hline
+I(x * y) & 1 & 0.0620205 & 0.0620205 & 0.0013589 & 0.9706721\\
+\hline
+Residuals & 94 & 4290.1415490 & 45.6398037 & NA & NA\\
+\hline
+\end{tabular}
+\end{table}
 
-
-
-Table: (\#tab:unnamed-chunk-44)二阶趋势面F检验结果
-
-|          | Df|       Sum Sq|      Mean Sq|     F value|    Pr(>F)|
-|:---------|--:|------------:|------------:|-----------:|---------:|
-|x         |  1| 5978.4933486| 5978.4933486| 130.9929680| 0.0000000|
-|y         |  1| 3789.0799404| 3789.0799404|  83.0213899| 0.0000000|
-|I(x^2)    |  1|    0.0230785|    0.0230785|   0.0005057| 0.9821071|
-|I(y^2)    |  1|  597.5007693|  597.5007693|  13.0916595| 0.0004799|
-|I(x * y)  |  1|    0.0620205|    0.0620205|   0.0013589| 0.9706721|
-|Residuals | 94| 4290.1415490|   45.6398037|          NA|        NA|
 
 ```
 ## 
@@ -2076,6 +1529,8 @@ Table: (\#tab:unnamed-chunk-44)二阶趋势面F检验结果
 ## 二阶趋势面AIC： 673.6782
 ```
 
+表\@ref(tab:trend-linear-anova)展示了一阶趋势面的F检验结果，用于评估线性趋势对生物量空间变异的解释程度。表\@ref(tab:trend-quadratic-anova)展示了二阶趋势面的F检验结果，用于评估线性趋势对生物量空间变异的解释程度。
+
 
 ``` r
 # 检查残差的平稳性
@@ -2085,20 +1540,10 @@ residuals_quadratic <- residuals(trend_quadratic)
 
 
 ```
-## 
 ## 残差统计：
-```
-
-```
-## 原始数据方差： 148.03
-```
-
-```
-## 一阶趋势面残差方差： 49.37
-```
-
-```
-## 二阶趋势面残差方差： 43.33
+## 原始数据方差：148.03
+## 一阶趋势面残差方差：49.37
+## 二阶趋势面残差方差：43.33
 ```
 
 当发现空间过程非平稳时，通常需要进行趋势去除或变换来使其平稳化。趋势去除可以通过拟合趋势面并计算残差来实现，空间变换（如对数变换）可以稳定方差。经过这些处理后的平稳空间过程就可以安全地应用各种空间统计分析方法了。在生态学应用中，理解空间过程的平稳性不仅关系到统计方法的正确使用，也帮助我们识别生态系统的空间变化模式和动态特征。
@@ -2117,146 +1562,64 @@ residuals_quadratic <- residuals(trend_quadratic)
 ## 进行趋势去除处理...
 ## 使用二阶趋势面进行趋势去除
 ## 去趋势后过程的统计特性：
-## 均值： 0 
-## 方差： 43.335
+## 均值：0
+## 方差：43.335
 ```
 
 图\@ref(fig:original-spatial-plot)展示了原始森林生物量的空间分布，可以观察到明显的空间趋势和异质性，这是典型的非平稳空间过程特征。
 
+\begin{figure}
 
-``` r
-# 原始空间过程可视化
-if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
-  ggplot(spatial_df, aes(x = x, y = y, color = biomass)) +
-    geom_point(size = 3) +
-    scale_color_viridis_c() +
-    labs(
-      title = "原始空间过程",
-      x = "X坐标", y = "Y坐标", color = "生物量"
-    ) +
-    theme_minimal()
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/original-spatial-plot-1} 
+
 }
-```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/original-spatial-plot-1.png" alt="原始森林生物量空间分布，显示明显的空间趋势和异质性" width="80%" />
-<p class="caption">(\#fig:original-spatial-plot)原始森林生物量空间分布，显示明显的空间趋势和异质性</p>
-</div>
+\caption{原始森林生物量空间分布，显示明显的空间趋势和异质性}(\#fig:original-spatial-plot)
+\end{figure}
 
 经过趋势去除处理后，空间过程的趋势成分被有效去除，如图\@ref(fig:detrended-spatial-plot)所示，去趋势后的过程主要保留了空间随机变异成分。
 
+\begin{figure}
 
-``` r
-# 去趋势后空间过程可视化
-if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
-  detrended_df <- data.frame(
-    x = spatial_df$x,
-    y = spatial_df$y,
-    residual = detrended_biomass
-  )
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/detrended-spatial-plot-1} 
 
-  ggplot(detrended_df, aes(x = x, y = y, color = residual)) +
-    geom_point(size = 3) +
-    scale_color_gradient2(low = "blue", mid = "white", high = "red") +
-    labs(
-      title = "去趋势后空间过程",
-      x = "X坐标", y = "Y坐标", color = "残差"
-    ) +
-    theme_minimal()
 }
-```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/detrended-spatial-plot-1.png" alt="去趋势后的森林生物量空间分布，趋势成分已被去除" width="80%" />
-<p class="caption">(\#fig:detrended-spatial-plot)去趋势后的森林生物量空间分布，趋势成分已被去除</p>
-</div>
+\caption{去趋势后的森林生物量空间分布，趋势成分已被去除}(\#fig:detrended-spatial-plot)
+\end{figure}
 
 原始空间过程的变异函数（图\@ref(fig:original-variogram)）显示持续上升的特征，这是非平稳空间过程的典型表现。
 
+\begin{figure}
 
-``` r
-# 原始空间过程变异函数
-if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
-  vario_original <- variogram(biomass ~ 1, data = spatial_data)
-  plot(vario_original,
-    main = "原始空间过程的变异函数",
-    xlab = "距离", ylab = "半方差", pch = 19, col = "blue"
-  )
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/original-variogram-1} 
+
 }
-```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/original-variogram-1.png" alt="原始空间过程的变异函数，显示持续上升的非平稳特征" width="80%" />
-<p class="caption">(\#fig:original-variogram)原始空间过程的变异函数，显示持续上升的非平稳特征</p>
-</div>
+\caption{原始空间过程的变异函数，显示持续上升的非平稳特征}(\#fig:original-variogram)
+\end{figure}
 
 去趋势后空间过程的变异函数（图\@ref(fig:detrended-variogram)）显示收敛到基台值的特征，表明过程已经达到平稳状态。
 
+\begin{figure}
 
-``` r
-# 去趋势后空间过程变异函数
-if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
-  detrended_data <- spatial_data
-  detrended_data$biomass <- detrended_biomass
-  vario_detrended <- variogram(biomass ~ 1, data = detrended_data)
-  plot(vario_detrended,
-    main = "去趋势后空间过程的变异函数",
-    xlab = "距离", ylab = "半方差", pch = 19, col = "green"
-  )
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/detrended-variogram-1} 
+
 }
-```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/detrended-variogram-1.png" alt="去趋势后空间过程的变异函数，显示收敛的平稳特征" width="80%" />
-<p class="caption">(\#fig:detrended-variogram)去趋势后空间过程的变异函数，显示收敛的平稳特征</p>
-</div>
+\caption{去趋势后空间过程的变异函数，显示收敛的平稳特征}(\#fig:detrended-variogram)
+\end{figure}
 
 图\@ref(fig:spatial-decomposition)展示了空间过程分解的结果，将原始过程分离为趋势成分和随机成分，帮助我们更好地理解空间过程的内在结构。
 
+\begin{figure}
 
-``` r
-# 空间过程分解可视化
-if (AIC(trend_linear) < AIC(lm(biomass ~ 1, data = spatial_df))) {
-  # 创建趋势面预测
-  trend_pred <- predict(best_trend, newdata = spatial_df)
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/spatial-decomposition-1} 
 
-  decomposition_data <- data.frame(
-    x = spatial_df$x,
-    y = spatial_df$y,
-    original = spatial_df$biomass,
-    trend = trend_pred,
-    residual = detrended_biomass
-  )
-
-  # 创建分解图
-  p1 <- ggplot(decomposition_data, aes(x = x, y = y, color = original)) +
-    geom_point(size = 2) +
-    scale_color_viridis_c() +
-    labs(title = "原始过程", x = "X坐标", y = "Y坐标") +
-    theme_minimal()
-
-  p2 <- ggplot(decomposition_data, aes(x = x, y = y, color = trend)) +
-    geom_point(size = 2) +
-    scale_color_viridis_c() +
-    labs(title = "趋势成分", x = "X坐标", y = "Y坐标") +
-    theme_minimal()
-
-  p3 <- ggplot(decomposition_data, aes(x = x, y = y, color = residual)) +
-    geom_point(size = 2) +
-    scale_color_gradient2(low = "blue", mid = "white", high = "red") +
-    labs(title = "随机成分", x = "X坐标", y = "Y坐标") +
-    theme_minimal()
-
-  library(patchwork)
-  p1 + p2 + p3 +
-    plot_annotation(title = "空间过程分解：原始过程 = 趋势成分 + 随机成分")
 }
-```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/spatial-decomposition-1.png" alt="空间过程分解结果，展示趋势成分和随机成分的分离" width="80%" />
-<p class="caption">(\#fig:spatial-decomposition)空间过程分解结果，展示趋势成分和随机成分的分离</p>
-</div>
+\caption{空间过程分解结果，展示趋势成分和随机成分的分离}(\#fig:spatial-decomposition)
+\end{figure}
 
 
 
@@ -2386,72 +1749,16 @@ cat("\n似然比检验p值：\n",
 ## 随机性状：
 ```
 
+\begin{figure}
 
-``` r
-# 加载所需包
-library(vegan)  # 用于mantel检验
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/phylogenetic-signal-figure-1} 
 
-# 可视化系统发育信号
-par(mfrow = c(2, 2))
+}
 
-# 保守性状的系统发育树
-plot(phy_tree, show.tip.label = FALSE, main = "系统发育树")
+\caption{植物叶片性状的系统发育信号分析和性状距离关系}(\#fig:phylogenetic-signal-figure)
+\end{figure}
 
-# 保守性状在系统发育树上的分布
-trait_colors <- colorRampPalette(c("blue", "red"))(100)
-trait_conservative_scaled <- (trait_conservative - min(trait_conservative)) /
-  (max(trait_conservative) - min(trait_conservative))
-
-plot(phy_tree,
-  show.tip.label = FALSE,
-  main = "保守性状的系统发育信号"
-)
-tiplabels(pch = 19, col = trait_colors[round(trait_conservative_scaled * 99) + 1])
-
-# 随机性状在系统发育树上的分布
-trait_random_scaled <- (trait_random - min(trait_random)) /
-  (max(trait_random) - min(trait_random))
-
-plot(phy_tree,
-  show.tip.label = FALSE,
-  main = "随机性状的系统发育信号"
-)
-tiplabels(pch = 19, col = trait_colors[round(trait_random_scaled * 99) + 1])
-
-# 性状值与系统发育距离的关系
-# 计算系统发育距离矩阵
-phy_dist <- cophenetic(phy_tree)
-
-# 保守性状的距离相关性
-conservative_dist <- as.matrix(dist(trait_conservative))
-conservative_cor <- mantel(conservative_dist, phy_dist, permutations = 999)
-
-# 随机性状的距离相关性
-random_dist <- as.matrix(dist(trait_random))
-random_cor <- mantel(random_dist, phy_dist, permutations = 999)
-
-plot(phy_dist[lower.tri(phy_dist)], conservative_dist[lower.tri(conservative_dist)],
-  pch = 19, cex = 0.5, col = adjustcolor("blue", alpha.f = 0.5),
-  xlab = "系统发育距离", ylab = "性状距离",
-  main = "性状距离与系统发育距离的关系"
-)
-points(phy_dist[lower.tri(phy_dist)], random_dist[lower.tri(random_dist)],
-  pch = 19, cex = 0.5, col = adjustcolor("red", alpha.f = 0.5)
-)
-legend("topleft",
-  legend = c("保守性状", "随机性状"),
-  pch = 19, col = c("blue", "red")
-)
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-49-1.png" alt="植物叶片性状的系统发育信号分析和性状距离关系" width="80%" />
-<p class="caption">植物叶片性状的系统发育信号分析和性状距离关系</p>
-</div>
-
-``` r
-par(mfrow = c(1, 1))
-```
+图\@ref(fig:phylogenetic-signal-figure)展示了植物叶片性状的系统发育信号分析和性状距离关系。该2×2组合图系统比较了保守性状和随机性状的系统发育模式：左上角显示系统发育树结构，右上角展示保守性状在系统发育树上的分布（蓝色到红色的颜色梯度表示性状值大小），左下角展示随机性状在系统发育树上的分布，右下角通过散点图比较性状距离与系统发育距离的关系（蓝色点表示保守性状，红色点表示随机性状）。保守性状显示明显的系统发育信号，亲缘关系近的物种具有相似的性状值；而随机性状在系统发育树上呈现随机分布模式。这种可视化方法对于理解性状的进化保守性、识别适应性进化的证据以及构建考虑系统发育关系的生态学模型具有重要价值。
 
 
 ```
@@ -2463,29 +1770,22 @@ par(mfrow = c(1, 1))
 ## 随机性状的p值：0.659
 ```
 
+\begin{table}
 
-``` r
-# 比较不同系统发育信号度量方法
-signal_comparison <- data.frame(
-  性状类型 = c("保守性状", "随机性状"),
-  Blomberg_K = round(c(K_perm_conservative$K, K_perm_random$K), 3),
-  Pagel_lambda = round(c(lambda_conservative$lambda, lambda_random$lambda), 3),
-  Mantel_r = round(c(conservative_cor$statistic, random_cor$statistic), 3)
-)
+\caption{(\#tab:signal-comparison-table)不同系统发育信号度量方法的比较}
+\centering
+\begin{tabular}[t]{l|r|r|r}
+\hline
+性状类型 & Blomberg\_K & Pagel\_lambda & Mantel\_r\\
+\hline
+保守性状 & 1.104 & 1 & 0.337\\
+\hline
+随机性状 & 0.168 & 0 & -0.021\\
+\hline
+\end{tabular}
+\end{table}
 
-knitr::kable(signal_comparison, caption = "不同系统发育信号度量方法的比较")
-```
-
-
-
-Table: 不同系统发育信号度量方法的比较
-
-|性状类型 | Blomberg_K| Pagel_lambda| Mantel_r|
-|:--------|----------:|------------:|--------:|
-|保守性状 |      1.104|            1|    0.337|
-|随机性状 |      0.168|            0|   -0.021|
-
-**生态学意义**：系统发育信号分析在生态学中广泛应用于检验性状的系统发育保守性，理解功能性状的进化动态，以及确保生态关系的统计检验不受系统发育非独立性的影响。
+表\@ref(tab:signal-comparison-table)比较了三种常用的系统发育信号度量方法（Blomberg's K、Pagel's λ和Mantel检验）在保守性状和随机性状上的表现。**生态学意义**：系统发育信号分析在生态学中广泛应用于检验性状的系统发育保守性，理解功能性状的进化动态，以及确保生态关系的统计检验不受系统发育非独立性的影响。
 
 ### 系统发育独立对比：去除系统发育影响的性状比较
 
@@ -2508,50 +1808,31 @@ $$contrast = \frac{x_i - x_j}{\sqrt{v_i + v_j}}$$
 **R代码实现**：
 
 
+
+
 ``` r
-# 系统发育独立对比示例：植物叶片性状的生态关系
-library(ape)
-library(picante)
-
-# 模拟系统发育树和多个性状数据
-set.seed(123)
-
-# 生成随机系统发育树（30个物种）
-n_species <- 30
-phy_tree <- rtree(n_species)
-
-# 模拟相关的性状数据（具有系统发育信号）
-# 性状1：叶片氮含量
-trait_nitrogen <- rTraitCont(phy_tree, model = "BM", sigma = 0.5)
-
-# 性状2：光合速率（与氮含量相关，但也受其他因素影响）
-trait_photosynthesis <- 2 + 0.8 * trait_nitrogen + rTraitCont(phy_tree, model = "BM", sigma = 0.3)
-
-# 性状3：比叶重（与氮含量负相关）
-trait_sla <- 200 - 15 * trait_nitrogen + rTraitCont(phy_tree, model = "BM", sigma = 2)
-
-# 创建性状数据框
-trait_data <- data.frame(
-  species = phy_tree$tip.label,
-  nitrogen = trait_nitrogen,
-  photosynthesis = trait_photosynthesis,
-  sla = trait_sla
-)
-
+load("data/trait_data.RData")
 # 传统相关性分析（忽略系统发育）
 cor_traditional <- cor(trait_data[, 2:4])
 knitr::kable(round(cor_traditional, 3), caption = "传统相关性分析结果（忽略系统发育）")
 ```
 
+\begin{table}
 
-
-Table: 传统相关性分析结果（忽略系统发育）
-
-|               | nitrogen| photosynthesis|    sla|
-|:--------------|--------:|--------------:|------:|
-|nitrogen       |    1.000|          0.497| -0.967|
-|photosynthesis |    0.497|          1.000| -0.368|
-|sla            |   -0.967|         -0.368|  1.000|
+\caption{(\#tab:unnamed-chunk-42)传统相关性分析结果（忽略系统发育）}
+\centering
+\begin{tabular}[t]{l|r|r|r}
+\hline
+  & nitrogen & photosynthesis & sla\\
+\hline
+nitrogen & 1.000 & 0.497 & -0.967\\
+\hline
+photosynthesis & 0.497 & 1.000 & -0.368\\
+\hline
+sla & -0.967 & -0.368 & 1.000\\
+\hline
+\end{tabular}
+\end{table}
 
 ``` r
 # 进行相关性检验
@@ -2586,73 +1867,17 @@ pic_cor_ns <- cor.test(pic_nitrogen, pic_sla)
 ## 氮含量 vs 比叶重：r =-0.92, p =1.78e-12
 ```
 
+\begin{figure}
 
-``` r
-# 可视化对比结果
-par(mfrow = c(2, 2))
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/pic-comparison-figure-1} 
 
-# 传统散点图
-plot(trait_data$nitrogen, trait_data$photosynthesis,
-  pch = 19, col = "blue",
-  xlab = "叶片氮含量 (%)", ylab = "光合速率 (μmol/m²/s)",
-  main = "传统分析：氮含量 vs 光合速率"
-)
-abline(lm(photosynthesis ~ nitrogen, data = trait_data),
-  col = "red", lwd = 2
-)
+}
 
-# PIC散点图
-plot(pic_nitrogen, pic_photosynthesis,
-  pch = 19, col = "darkgreen",
-  xlab = "氮含量PIC", ylab = "光合速率PIC",
-  main = "PIC分析：氮含量 vs 光合速率"
-)
-abline(lm(pic_photosynthesis ~ pic_nitrogen),
-  col = "red", lwd = 2
-)
+\caption{植物叶片性状的系统发育独立对比分析和性状关系}(\#fig:pic-comparison-figure)
+\end{figure}
 
-# 传统散点图：氮含量 vs 比叶重
-plot(trait_data$nitrogen, trait_data$sla,
-  pch = 19, col = "purple",
-  xlab = "叶片氮含量 (%)", ylab = "比叶重 (g/m²)",
-  main = "传统分析：氮含量 vs 比叶重"
-)
-abline(lm(sla ~ nitrogen, data = trait_data),
-  col = "red", lwd = 2
-)
+图\@ref(fig:pic-comparison-figure)展示了植物叶片性状的系统发育独立对比分析和性状关系。该2×2组合图系统比较了传统分析和PIC分析在两种性状关系上的差异：第一行比较氮含量与光合速率的关系，第二行比较氮含量与比叶重的关系。左侧子图显示传统分析结果（蓝色和紫色散点），右侧子图显示PIC分析结果（深绿色和橙色散点），红色直线表示线性回归拟合。PIC分析通过去除系统发育非独立性，能够更准确地评估性状间的进化相关性，避免因物种间亲缘关系导致的统计偏差。这种对比可视化方法对于理解性状关系的进化基础、识别真正的功能权衡以及构建考虑系统发育历史的生态学模型具有重要价值。
 
-# PIC散点图：氮含量 vs 比叶重
-plot(pic_nitrogen, pic_sla,
-  pch = 19, col = "orange",
-  xlab = "氮含量PIC", ylab = "比叶重PIC",
-  main = "PIC分析：氮含量 vs 比叶重"
-)
-abline(lm(pic_sla ~ pic_nitrogen),
-  col = "red", lwd = 2
-)
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-56-1.png" alt="植物叶片性状的系统发育独立对比分析和性状关系" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-56-1)植物叶片性状的系统发育独立对比分析和性状关系</p>
-</div>
-
-``` r
-par(mfrow = c(1, 1))
-
-# 比较传统分析和PIC分析的结果
-results_comparison <- data.frame(
-  关系 = c("氮含量-光合速率", "氮含量-比叶重"),
-  传统_r = c(cor_test_np$estimate, cor_test_ns$estimate),
-  传统_p = c(cor_test_np$p.value, cor_test_ns$p.value),
-  PIC_r = c(pic_cor_np$estimate, pic_cor_ns$estimate),
-  PIC_p = c(pic_cor_np$p.value, pic_cor_ns$p.value)
-)
-
-# 只对数值列进行四舍五入
-results_comparison[, 2:5] <- round(results_comparison[, 2:5], 4)
-print(results_comparison)
-```
 
 ```
 ##              关系  传统_r 传统_p   PIC_r PIC_p
@@ -2660,38 +1885,16 @@ print(results_comparison)
 ## 2   氮含量-比叶重 -0.9670 0.0000 -0.9197 0e+00
 ```
 
-``` r
-# 注意：PGLS分析需要caper包，这里为了简化暂时跳过
-# 有兴趣的读者可以自行安装caper包并运行以下代码：
-# library(caper)
-# comp_data <- comparative.data(phy_tree, trait_data, names.col = "species")
-# pgls_np <- gls(photosynthesis ~ nitrogen, data = comp_data$data, correlation = corBrownian(phy = comp_data$phy))
-# pgls_ns <- gls(sla ~ nitrogen, data = comp_data$data, correlation = corBrownian(phy = comp_data$phy))
-# print(summary(pgls_np))
-# print(summary(pgls_ns))
+\begin{figure}
 
-# 可视化系统发育树和性状
-par(mfrow = c(1, 2))
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/phylogenetic-distribution-figure-1} 
 
-# 氮含量在系统发育树上的分布
-plot(phy_tree, show.tip.label = FALSE, main = "叶片氮含量的系统发育分布")
-nitrogen_colors <- colorRampPalette(c("blue", "red"))(100)
-nitrogen_scaled <- (trait_nitrogen - min(trait_nitrogen)) /
-  (max(trait_nitrogen) - min(trait_nitrogen))
-tiplabels(pch = 19, col = nitrogen_colors[round(nitrogen_scaled * 99) + 1])
+}
 
-# 光合速率在系统发育树上的分布
-plot(phy_tree, show.tip.label = FALSE, main = "光合速率的系统发育分布")
-photosynthesis_colors <- colorRampPalette(c("lightblue", "darkgreen"))(100)
-photosynthesis_scaled <- (trait_photosynthesis - min(trait_photosynthesis)) /
-  (max(trait_photosynthesis) - min(trait_photosynthesis))
-tiplabels(pch = 19, col = photosynthesis_colors[round(photosynthesis_scaled * 99) + 1])
-```
+\caption{植物叶片性状的系统发育分布}(\#fig:phylogenetic-distribution-figure)
+\end{figure}
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-56-2.png" alt="植物叶片性状的系统发育独立对比分析和性状关系" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-56-2)植物叶片性状的系统发育独立对比分析和性状关系</p>
-</div>
+图\@ref(fig:phylogenetic-distribution-figure)展示了植物叶片性状的系统发育分布。该代码首先比较了传统分析和PIC分析的结果，然后通过双面板系统发育树可视化展示了氮含量和光合速率在物种间的分布模式。左侧子图显示叶片氮含量的系统发育分布（蓝色到红色颜色梯度），右侧子图显示光合速率的系统发育分布（浅蓝色到深绿色颜色梯度）。这种可视化方法能够直观地展示性状在系统发育树上的保守性模式，亲缘关系近的物种如果具有相似的颜色，表明该性状具有较强的系统发育信号。同时，代码还提供了PGLS分析的示例说明，为读者进一步探索系统发育广义最小二乘法提供了参考。这种综合分析方法对于理解植物功能性状的进化保守性、识别适应性进化事件以及构建准确的系统发育生态学模型具有重要价值。
 
 
 
@@ -2732,20 +1935,12 @@ $$
 **R代码实现**：
 
 
+
+
 ``` r
 library(picante)
 library(ape)
-
-# 模拟系统发育树（50个物种）
-set.seed(123)
-phy_tree <- rtree(50)
-
-# 模拟群落矩阵（10个样地 × 50个物种）
-comm <- matrix(sample(0:1, 10*50, replace = TRUE, prob = c(0.8, 0.2)),
-               nrow = 10, ncol = 50)
-rownames(comm) <- paste0("Site", 1:10)
-colnames(comm) <- phy_tree$tip.label
-
+load(file = "data/phy_comm.Rdata")
 # 计算群落的系统发育结构的标准化指标
 mpd_values <- ses.mpd(comm, cophenetic(phy_tree), null.model = "taxa.labels", runs = 999)
 mntd_values <- ses.mntd(comm, cophenetic(phy_tree), null.model = "taxa.labels", runs = 999)
@@ -2855,128 +2050,101 @@ cov_matrix <- cov(abundance_data)
 
 在R语言中，功能性状相关性分析可以通过多种统计方法实现。图\@ref(fig:trait-correlation-pca)展示了功能性状相关性矩阵的可视化和主成分分析结果：
 
+\begin{table}
 
-``` r
-# 创建示例功能性状数据
-trait_data <- data.frame(
-  物种 = c("物种A", "物种B", "物种C", "物种D", "物种E"),
-  比叶面积 = c(15.2, 8.7, 22.1, 12.5, 18.9),
-  叶片氮含量 = c(2.1, 1.5, 2.8, 1.9, 2.4),
-  光合速率 = c(12.5, 8.2, 15.3, 10.1, 13.8),
-  叶片寿命 = c(8, 15, 5, 12, 7)
-)
+\caption{(\#tab:trait-correlation-pca)功能性状相关性矩阵}
+\centering
+\begin{tabular}[t]{l|r|r|r|r}
+\hline
+  & 比叶面积 & 叶片氮含量 & 光合速率 & 叶片寿命\\
+\hline
+比叶面积 & 1.0000000 & 0.9964051 & 0.9906672 & -0.9740756\\
+\hline
+叶片氮含量 & 0.9964051 & 1.0000000 & 0.9821403 & -0.9647267\\
+\hline
+光合速率 & 0.9906672 & 0.9821403 & 1.0000000 & -0.9951811\\
+\hline
+叶片寿命 & -0.9740756 & -0.9647267 & -0.9951811 & 1.0000000\\
+\hline
+\end{tabular}
+\end{table}
 
-# 计算性状间相关性矩阵
-cor_matrix <- cor(trait_data[, -1])
-knitr::kable(cor_matrix, caption = "功能性状相关性矩阵")
-```
+\begin{figure}
 
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/trait-correlation-pca-1} 
 
+}
 
-Table: 功能性状相关性矩阵
+\caption{功能性状相关性矩阵图和主成分分析双标图}(\#fig:trait-correlation-pca-1)
+\end{figure}
+\begin{table}
 
-|           |   比叶面积| 叶片氮含量|   光合速率|   叶片寿命|
-|:----------|----------:|----------:|----------:|----------:|
-|比叶面积   |  1.0000000|  0.9964051|  0.9906672| -0.9740756|
-|叶片氮含量 |  0.9964051|  1.0000000|  0.9821403| -0.9647267|
-|光合速率   |  0.9906672|  0.9821403|  1.0000000| -0.9951811|
-|叶片寿命   | -0.9740756| -0.9647267| -0.9951811|  1.0000000|
+\caption{(\#tab:trait-correlation-pca)主成分分析结果：方差解释比例}
+\centering
+\begin{tabular}[t]{l|l|r|r|r}
+\hline
+  & 主成分 & 标准差 & 方差比例 & 累积方差比例\\
+\hline
+PC1 & PC1 & 1.988 & 0.988 & 0.988\\
+\hline
+PC2 & PC2 & 0.211 & 0.011 & 0.999\\
+\hline
+PC3 & PC3 & 0.059 & 0.001 & 1.000\\
+\hline
+PC4 & PC4 & 0.015 & 0.000 & 1.000\\
+\hline
+\end{tabular}
+\end{table}
 
-``` r
-# 可视化相关性矩阵
-library(corrplot)
-corrplot(cor_matrix, method = "circle")
-```
+\begin{figure}
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/trait-correlation-pca-1.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="80%" />
-<p class="caption">功能性状相关性矩阵图和主成分分析双标图</p>
-</div>
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/trait-correlation-pca-2} 
 
-``` r
-# 进行主成分分析探索性状协变模式
-pca_result <- prcomp(trait_data[, -1], scale. = TRUE)
+}
 
-# 提取主成分分析的重要结果
-pca_summary <- summary(pca_result)
-pca_importance <- pca_summary$importance
-pca_rotation <- pca_summary$rotation
-
-# 创建主成分重要性表格
-importance_table <- data.frame(
-  主成分 = colnames(pca_importance),
-  标准差 = round(pca_importance[1, ], 3),
-  方差比例 = round(pca_importance[2, ], 3),
-  累积方差比例 = round(pca_importance[3, ], 3)
-)
-knitr::kable(importance_table, caption = "主成分分析结果：方差解释比例")
-```
-
-
-
-Table: 主成分分析结果：方差解释比例
-
-|    |主成分 | 标准差| 方差比例| 累积方差比例|
-|:---|:------|------:|--------:|------------:|
-|PC1 |PC1    |  1.988|    0.988|        0.988|
-|PC2 |PC2    |  0.211|    0.011|        0.999|
-|PC3 |PC3    |  0.059|    0.001|        1.000|
-|PC4 |PC4    |  0.015|    0.000|        1.000|
-
-``` r
-biplot(pca_result)
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/trait-correlation-pca-2.png" alt="功能性状相关性矩阵图和主成分分析双标图" width="80%" />
-<p class="caption">功能性状相关性矩阵图和主成分分析双标图</p>
-</div>
+\caption{功能性状相关性矩阵图和主成分分析双标图}(\#fig:trait-correlation-pca-2)
+\end{figure}
 
 对于经济型谱分析，可以使用线性模型来检验性状间的权衡关系。图\@ref(fig:leaf-economics-scatter)展示了叶片经济型谱关系的散点图：
 
+\begin{table}
 
-``` r
-# 检验叶片经济型谱关系
-model1 <- lm(光合速率 ~ 比叶面积, data = trait_data)
-knitr::kable(summary(model1)$coefficients, caption = "叶片经济型谱关系线性回归结果")
-```
+\caption{(\#tab:leaf-economics-scatter)叶片经济型谱关系线性回归结果}
+\centering
+\begin{tabular}[t]{l|r|r|r|r}
+\hline
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\hline
+(Intercept) & 3.6704042 & 0.6898330 & 5.320714 & 0.0129693\\
+\hline
+比叶面积 & 0.5367956 & 0.0426408 & 12.588774 & 0.0010808\\
+\hline
+\end{tabular}
+\end{table}
 
+\begin{table}
 
+\caption{(\#tab:leaf-economics-scatter)叶片寿命与比叶面积关系线性回归结果}
+\centering
+\begin{tabular}[t]{l|r|r|r|r}
+\hline
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\hline
+(Intercept) & 20.9853325 & 1.6234494 & 12.926385 & 0.0009994\\
+\hline
+比叶面积 & -0.7484065 & 0.1003507 & -7.457912 & 0.0049911\\
+\hline
+\end{tabular}
+\end{table}
 
-Table: (\#tab:leaf-economics-scatter)叶片经济型谱关系线性回归结果
+\begin{figure}
 
-|            |  Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
-|:-----------|---------:|----------:|---------:|------------------:|
-|(Intercept) | 3.6704042|  0.6898330|  5.320714|          0.0129693|
-|比叶面积    | 0.5367956|  0.0426408| 12.588774|          0.0010808|
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/leaf-economics-scatter-1} 
 
-``` r
-model2 <- lm(叶片寿命 ~ 比叶面积, data = trait_data)
-knitr::kable(summary(model2)$coefficients, caption = "叶片寿命与比叶面积关系线性回归结果")
-```
+}
 
-
-
-Table: (\#tab:leaf-economics-scatter)叶片寿命与比叶面积关系线性回归结果
-
-|            |   Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
-|:-----------|----------:|----------:|---------:|------------------:|
-|(Intercept) | 20.9853325|  1.6234494| 12.926385|          0.0009994|
-|比叶面积    | -0.7484065|  0.1003507| -7.457912|          0.0049911|
-
-``` r
-# 可视化经济型谱关系
-plot(trait_data$比叶面积, trait_data$光合速率,
-  xlab = "比叶面积", ylab = "光合速率",
-  main = "叶片经济型谱：比叶面积与光合速率关系"
-)
-abline(model1, col = "red")
-```
-
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/leaf-economics-scatter-1.png" alt="叶片经济型谱关系散点图" width="80%" />
-<p class="caption">(\#fig:leaf-economics-scatter)叶片经济型谱关系散点图</p>
-</div>
+\caption{叶片经济型谱关系散点图}(\#fig:leaf-economics-scatter)
+\end{figure}
 
 **结果解释与生态学意义**：功能性状相关性分析的结果解释需要结合相关系数的数值大小、显著性水平和生态学背景。相关系数$r$的绝对值大小反映了性状间关系的强度：$|r| > 0.7$表示强相关，$0.5 < |r| \leq 0.7$表示中等相关，$0.3 < |r| \leq 0.5$表示弱相关，$|r| \leq 0.3$表示无实质性相关。相关系数的正负号指示了关系的方向：正相关表示性状间协同变化，负相关表示性状间存在权衡关系。
 
@@ -3060,32 +2228,34 @@ if (variance_mean_ratio > 1.2) {
 在R语言中，种间相关性分析和生态网络构建可以通过以下方法实现：
 
 
-``` r
-# 创建示例种间关联数据
-species_data <- matrix(c(
-  1, 1, 0, 1, 0, # 物种A在5个样地的分布
-  1, 0, 1, 1, 1, # 物种B
-  0, 1, 1, 0, 1, # 物种C
-  1, 1, 1, 1, 0 # 物种D
-), nrow = 4, byrow = TRUE)
-rownames(species_data) <- c("物种A", "物种B", "物种C", "物种D")
 
+
+``` r
+load(file="data/species_net_data.RData")
 # 计算种间关联矩阵
 library(vegan)
 association_matrix <- cor(t(species_data))
 knitr::kable((association_matrix), caption = "种间关联矩阵")
 ```
 
+\begin{table}
 
-
-Table: (\#tab:unnamed-chunk-63)种间关联矩阵
-
-|      |      物种A|      物种B|      物种C|      物种D|
-|:-----|----------:|----------:|----------:|----------:|
-|物种A |  1.0000000| -0.4082483| -0.6666667|  0.6123724|
-|物种B | -0.4082483|  1.0000000| -0.4082483| -0.2500000|
-|物种C | -0.6666667| -0.4082483|  1.0000000| -0.4082483|
-|物种D |  0.6123724| -0.2500000| -0.4082483|  1.0000000|
+\caption{(\#tab:unnamed-chunk-54)种间关联矩阵}
+\centering
+\begin{tabular}[t]{l|r|r|r|r}
+\hline
+  & 物种A & 物种B & 物种C & 物种D\\
+\hline
+物种A & 1.0000000 & -0.4082483 & -0.6666667 & 0.6123724\\
+\hline
+物种B & -0.4082483 & 1.0000000 & -0.4082483 & -0.2500000\\
+\hline
+物种C & -0.6666667 & -0.4082483 & 1.0000000 & -0.4082483\\
+\hline
+物种D & 0.6123724 & -0.2500000 & -0.4082483 & 1.0000000\\
+\hline
+\end{tabular}
+\end{table}
 
 ``` r
 # 构建生态网络
@@ -3127,10 +2297,14 @@ plot(network,
 )
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-63-1.png" alt="种间关联网络图" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-63)种间关联网络图</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/unnamed-chunk-54-1} 
+
+}
+
+\caption{种间关联网络图}(\#fig:unnamed-chunk-54)
+\end{figure}
 
 ``` r
 # 恢复默认图形参数
@@ -3156,32 +2330,12 @@ par(old_par)
 在R语言中，群落相似性分析可以通过以下方法实现：
 
 
+
+
+
 ``` r
 library(vegan)
-
-# 创建示例群落数据
-community_data <- matrix(c(
-  10, 5, 0, 8, 15, # 样地1的物种多度
-  2, 8, 12, 3, 6, # 样地2
-  15, 2, 7, 10, 4, # 样地3
-  5, 12, 3, 6, 18, # 样地4
-  8, 3, 10, 5, 12, # 样地5
-  12, 6, 4, 9, 7, # 样地6
-  3, 10, 8, 4, 14, # 样地7
-  7, 4, 11, 7, 9 # 样地8
-), nrow = 8, byrow = TRUE)
-rownames(community_data) <- c(
-  "样地1", "样地2", "样地3",
-  "样地4", "样地5", "样地6", "样地7", "样地8"
-)
-
-# 创建环境数据
-env_data <- data.frame(
-  温度 = c(15, 18, 12, 20, 16, 14, 19, 13),
-  湿度 = c(65, 75, 60, 80, 70, 68, 78, 62),
-  pH = c(6.5, 7.2, 6.8, 7.5, 6.9, 7.0, 7.3, 6.7)
-)
-
+load(file="data/community_net_data.RData")
 # Mantel检验
 comm_dist <- vegdist(community_data, method = "bray")
 env_dist <- dist(env_data)
@@ -3197,14 +2351,15 @@ print(mantel_test)
 ## mantel(xdis = comm_dist, ydis = env_dist) 
 ## 
 ## Mantel statistic r: 0.4779 
-##       Significance: 0.01 
+##       Significance: 0.013 
 ## 
 ## Upper quantiles of permutations (null model):
 ##   90%   95% 97.5%   99% 
-## 0.261 0.348 0.420 0.467 
+## 0.278 0.358 0.408 0.513 
 ## Permutation: free
 ## Number of permutations: 999
 ```
+
 
 ``` r
 # 排序分析 - PCA
@@ -3212,24 +2367,36 @@ pca_result <- rda(community_data, scale = TRUE)
 knitr::kable(summary(pca_result)$cont[[1]], caption = "群落相似性PCA分析结果")
 ```
 
+\begin{table}
 
+\caption{(\#tab:pca-analysis-table)群落相似性PCA分析结果}
+\centering
+\begin{tabular}[t]{l|r|r|r|r|r}
+\hline
+  & PC1 & PC2 & PC3 & PC4 & PC5\\
+\hline
+Eigenvalue & 2.8024582 & 1.7268720 & 0.3559326 & 0.0857154 & 0.0290218\\
+\hline
+Proportion Explained & 0.5604916 & 0.3453744 & 0.0711865 & 0.0171431 & 0.0058044\\
+\hline
+Cumulative Proportion & 0.5604916 & 0.9058660 & 0.9770526 & 0.9941956 & 1.0000000\\
+\hline
+\end{tabular}
+\end{table}
 
-Table: (\#tab:unnamed-chunk-64)群落相似性PCA分析结果
+表\@ref(tab:pca-analysis-table)展示了群落相似性的主成分分析结果，包括各主成分的特征值、方差解释比例和累积方差解释比例，为理解群落组成的多维变异结构提供了量化指标。
 
-|                      |       PC1|       PC2|       PC3|       PC4|       PC5|
-|:---------------------|---------:|---------:|---------:|---------:|---------:|
-|Eigenvalue            | 2.8024582| 1.7268720| 0.3559326| 0.0857154| 0.0290218|
-|Proportion Explained  | 0.5604916| 0.3453744| 0.0711865| 0.0171431| 0.0058044|
-|Cumulative Proportion | 0.5604916| 0.9058660| 0.9770526| 0.9941956| 1.0000000|
 
 ``` r
 plot(pca_result, display = "sites")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-64-1.png" alt="群落相似性分析的排序图和聚类图" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-64-1)群落相似性分析的排序图和聚类图</p>
-</div>
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/pca-plot-figure-1} \end{center}
+
+这段代码生成图\@ref(fig:pca-plot-figure)，使用`plot()`函数可视化PCA分析结果，`display = "sites"`参数指定只显示样方在排序空间中的位置。该散点图展示了不同群落样方在主成分1和主成分2构成的二维空间中的分布，样方间的距离反映了群落组成的相似性，距离越近表示群落组成越相似。这种可视化方法能够直观地展示群落结构的梯度变化、识别群落类型以及发现环境梯度对群落组成的影响模式。
+
 
 ``` r
 # 排序分析 - NMDS
@@ -3238,10 +2405,13 @@ nmds_result <- monoMDS(comm_dist)
 plot(nmds_result, type = "t")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-64-2.png" alt="群落相似性分析的排序图和聚类图" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-64-2)群落相似性分析的排序图和聚类图</p>
-</div>
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/nmds-plot-figure-1} \end{center}
+
+这段代码执行非度量多维尺度分析并生成图\@ref(fig:nmds-plot-figure)。`vegdist()`函数使用Bray-Curtis距离计算群落相似性矩阵，`monoMDS()`函数执行NMDS排序，`plot()`函数可视化结果，`type = "t"`参数指定显示样方标签。NMDS是一种非参数排序方法，不依赖线性假设，特别适用于生态学中常见的非线性关系数据。该散点图展示了样方在NMDS排序空间中的分布，样方间距离反映了群落组成的Bray-Curtis相似性，能够更好地处理物种多度数据的非线性关系和零值问题。
+
+
 
 ``` r
 # 聚类分析 - 层次聚类
@@ -3249,10 +2419,12 @@ hc_result <- hclust(comm_dist, method = "average")
 plot(hc_result)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="05-correlation_files/figure-html/unnamed-chunk-64-3.png" alt="群落相似性分析的排序图和聚类图" width="80%" />
-<p class="caption">(\#fig:unnamed-chunk-64-3)群落相似性分析的排序图和聚类图</p>
-</div>
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/hclust-figure-1} \end{center}
+
+这段代码执行层次聚类分析并生成图\@ref(fig:hclust-figure)。`hclust()`函数基于群落Bray-Curtis距离矩阵执行层次聚类，`method = "average"`参数指定使用平均连接法（UPGMA），`plot()`函数可视化聚类树状图。层次聚类通过逐步合并最相似的群落样方，构建嵌套的群落分类结构，树状图的高度表示群落间的相异性程度。这种可视化方法能够清晰地展示群落的分类关系、识别群落类型以及确定合适的分类等级，为群落生态学的分类和分区研究提供直观依据。
+
 
 ``` r
 # Beta多样性计算
@@ -3260,20 +2432,34 @@ beta_div <- betadiver(community_data, method = "w")
 knitr::kable(as.matrix(beta_div), caption = "群落相似性Beta多样性分析结果")
 ```
 
+\begin{table}
 
+\caption{(\#tab:beta-diversity-table)群落相似性Beta多样性分析结果}
+\centering
+\begin{tabular}[t]{l|r|r|r|r|r|r|r|r}
+\hline
+  & 样地1 & 样地2 & 样地3 & 样地4 & 样地5 & 样地6 & 样地7 & 样地8\\
+\hline
+样地1 & 0.0000000 & 0.1111111 & 0.1111111 & 0.1111111 & 0.1111111 & 0.1111111 & 0.1111111 & 0.1111111\\
+\hline
+样地2 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
+\hline
+样地3 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
+\hline
+样地4 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
+\hline
+样地5 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
+\hline
+样地6 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
+\hline
+样地7 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
+\hline
+样地8 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
+\hline
+\end{tabular}
+\end{table}
 
-Table: (\#tab:unnamed-chunk-64)群落相似性Beta多样性分析结果
-
-|      |     样地1|     样地2|     样地3|     样地4|     样地5|     样地6|     样地7|     样地8|
-|:-----|---------:|---------:|---------:|---------:|---------:|---------:|---------:|---------:|
-|样地1 | 0.0000000| 0.1111111| 0.1111111| 0.1111111| 0.1111111| 0.1111111| 0.1111111| 0.1111111|
-|样地2 | 0.1111111| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000|
-|样地3 | 0.1111111| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000|
-|样地4 | 0.1111111| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000|
-|样地5 | 0.1111111| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000|
-|样地6 | 0.1111111| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000|
-|样地7 | 0.1111111| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000|
-|样地8 | 0.1111111| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000| 0.0000000|
+表\@ref(tab:beta-diversity-table)展示了群落相似性的Beta多样性分析结果，使用Whittaker方法计算群落间的相异性矩阵，为理解群落组成的空间变异模式提供了量化指标。
 
 **结果解释与生态学意义**：群落相似性分析的结果解释需要结合统计显著性、效应大小和生态学背景。对于Mantel检验，通常认为$p < 0.05$表示环境距离与群落距离存在显著相关性，而Mantel统计量$r_M$的大小反映了相关性的强度：$|r_M| > 0.3$表示强相关，$0.2 < |r_M| \leq 0.3$表示中等相关，$|r_M| \leq 0.2$表示弱相关。
 
