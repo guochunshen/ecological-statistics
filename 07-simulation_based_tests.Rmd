@@ -110,7 +110,7 @@ showtext_auto()     # 自动启用中文字体
 
 首先进行数据准备和观测统计量计算：
 
-```{r}
+```{r, echo=FALSE}
 # 数据准备：模拟保护区内外的梅花鹿种群密度数据
 set.seed(123)  # 设置随机种子确保结果可重复
 
@@ -120,9 +120,12 @@ protected <- rpois(20, lambda = 15)  # 保护区内梅花鹿种群密度
 
 # 模拟保护区外梅花鹿种群密度，假设保护效果导致密度较低
 unprotected <- rpois(20, lambda = 10)  # 保护区外梅花鹿种群密度
+save(protected, unprotected, file="data/protected_unprotected.Rdata")
+```
 
+```{r}
+load(file="data/protected_unprotected.Rdata")
 # 计算观测统计量：两组平均梅花鹿种群密度的差异
-# 这是置换检验中需要评估的统计量
 obs_diff <- mean(protected) - mean(unprotected)
 ```
 
@@ -137,16 +140,13 @@ combined <- c(protected, unprotected)  # 合并两组梅花鹿种群密度数据
 # 置换检验循环：每次迭代进行一次随机重排
 for (i in 1:n_perm) {
   # 随机重排合并后的数据，模拟零假设下的随机分配
-  # 模拟"如果保护措施无效，梅花鹿种群密度在保护区内外的分布是随机的"
   perm_sample <- sample(combined)
 
   # 计算重排后的组间梅花鹿种群密度差异
-  # 前20个值作为"伪保护区内"，后20个作为"伪保护区外"
   perm_diffs[i] <- mean(perm_sample[1:20]) - mean(perm_sample[21:40])
 }
 
 # 计算p值：评估观测梅花鹿种群密度差异在零分布中的极端程度
-# p值定义为零分布中统计量绝对值大于等于观测统计量绝对值的比例
 p_value <- mean(abs(perm_diffs) >= abs(obs_diff))
 ```
 
@@ -161,9 +161,7 @@ cat("p值:", p_value, "\n")
 
 群落组成差异检验在梅花鹿保护研究中具有重要意义，特别是在评估不同栖息地类型对植物群落组成的影响时。下面使用vegan包中的adonis2函数进行置换多元方差分析（PERMANOVA），检验核心栖息地和边缘栖息地在植物群落组成上的差异。
 
-首先加载必要的包并准备梅花鹿栖息地植物群落数据：
-
-```{r}
+```{r, echo=FALSE}
 # 加载群落生态学分析包
 library(vegan)  # 提供群落数据分析函数，包括置换检验
 
@@ -179,11 +177,12 @@ colnames(comm_data) <- c("梅花鹿喜食植物A", "梅花鹿喜食植物B", "�
 
 # 定义栖息地类型分组变量：10个核心栖息地样点和10个边缘栖息地样点
 groups <- rep(c("核心栖息地", "边缘栖息地"), each = 10)
+save(comm_data, groups, file="data/comm_data_groups.Rdata")
 ```
 
-接下来进行置换ANOVA分析：
 
-```{r}
+```{r adonis-result-table}
+load(file="data/comm_data_groups.Rdata")
 # 置换ANOVA检验群落组成差异
 # adonis2函数执行基于距离的置换多元方差分析（PERMANOVA）
 # 该方法通过置换检验评估组间在群落组成上的差异显著性
@@ -192,6 +191,8 @@ adonis_result <- adonis2(comm_data ~ groups, method = "bray")
 # 输出分析结果
 knitr::kable(adonis_result, caption = "置换ANOVA分析结果")
 ```
+
+表 \@ref(tab:adonis-result-table) 展示了置换ANOVA分析的结果，从中可以看出不同栖息地类型对植物群落组成的影响是否具有统计显著性。
 
 **示例3：空间自相关检验**
 
@@ -337,7 +338,6 @@ for (i in 1:n_sim) {
   # 模拟完全空间随机过程：在相同区域内随机生成100个点
   sim_pattern <- matrix(runif(100), ncol = 2)
   # 计算空间聚集统计量：使用点间平均距离作为聚集程度指标
-  # 较小的平均距离表示空间聚集，较大的平均距离表示空间分散
   sim_stats[i] <- mean(dist(sim_pattern))
 }
 
@@ -345,7 +345,6 @@ for (i in 1:n_sim) {
 obs_stat <- mean(dist(observed_pattern))
 
 # 计算p值：观测统计量在零分布中的位置
-# 这里使用单侧检验，检验观测数据是否比随机期望更聚集
 p_value <- mean(sim_stats <= obs_stat)
 ```
 
@@ -720,9 +719,7 @@ cat("经验p值:", p_value, "\n")
 
 **R语言实现示例**：
 
-首先，我们准备模拟的植物调查数据：
-
-```{r}
+```{r, echo=FALSE}
 # 群落多样性比较：数据准备
 library(vegan)
 set.seed(123)
@@ -761,19 +758,13 @@ primary_forest <- c(
   rep("物种25", 1), rep("物种26", 1), rep("物种27", 1),
   rep("物种28", 1)
 )
+save(forest_5yr, forest_10yr, primary_forest, file="data/forest_data_simu.RData")
 ```
 
-```{r, echo=FALSE}
-# 输出各林分物种数统计
-cat("各林分物种丰富度统计：\n")
-cat("5年恢复林物种数:", length(unique(forest_5yr)), "\n")
-cat("10年恢复林物种数:", length(unique(forest_10yr)), "\n")
-cat("原生林物种数:", length(unique(primary_forest)), "\n")
-```
-
-接下来，我们定义自助法函数并进行多样性估计：
+我们定义自助法函数并进行多样性估计：
 
 ```{r}
+load(file="data/forest_data_simu.RData")
 # 群落多样性比较：定义自助法函数
 bootstrap_diversity <- function(data, n_boot = 1000) {
   boot_diversity <- numeric(n_boot)
@@ -855,9 +846,7 @@ cat(
 
 下面的代码展示了ANOSIM分析的具体实现过程。首先我们模拟底栖动物群落数据并执行分析：
 
-```{r anosim-data-analysis}
-# ANOSIM分析：污染对底栖动物群落的影响
-library(vegan)
+```{r, echo=FALSE}
 set.seed(123)
 
 # 模拟底栖动物群落数据
@@ -884,6 +873,15 @@ for (i in 11:15) {
 # 分组变量
 groups <- factor(rep(c("上游清洁区", "排放口附近", "下游恢复区"), each = 5))
 
+save(species_matrix, groups, file="data/anosim_data.RData")
+```
+
+
+```{r anosim-data-analysis}
+# ANOSIM分析：污染对底栖动物群落的影响
+library(vegan)
+
+load(file="data/anosim_data.RData")
 # 执行ANOSIM分析
 anosim_result <- anosim(species_matrix, groups, distance = "bray", permutations = 1000)
 
@@ -893,14 +891,14 @@ print(anosim_result)
 
 图\@ref(fig:anosim-rank-plot)展示了ANOSIM分析的排序差异箱线图：
 
-```{r anosim-rank-plot, fig.cap="ANOSIM分析：不同河段底栖动物群落排序差异检验"}
+```{r anosim-rank-plot, fig.cap="ANOSIM分析：不同河段底栖动物群落排序差异检验", echo=FALSE}
 # 可视化ANOSIM结果
 plot(anosim_result, main = "ANOSIM分析：不同河段底栖动物群落差异")
 ```
 
 图\@ref(fig:nmds-community-plot)展示了底栖动物群落组成的NMDS排序图：
 
-```{r nmds-community-plot, fig.cap="底栖动物群落组成的NMDS排序分析", message=FALSE}
+```{r nmds-community-plot, fig.cap="底栖动物群落组成的NMDS排序分析", message=FALSE, echo=FALSE}
 # 补充分析：群落组成排序图
 nmds_result <- metaMDS(species_matrix, distance = "bray", trace = 0)
 plot(nmds_result, type = "n", main = "底栖动物群落NMDS排序")
@@ -990,7 +988,7 @@ legend("topright", legend = levels(groups), col = 1:3, pch = 16)
 
 下面的代码展示了空间分布模式检验的具体实现过程（图\@ref(fig:ripley-k-envelope)）：
 
-```{r ripley-k-envelope, fig.cap="巴西坚果树空间分布模式检验：Ripley's K函数包络分析"}
+```{r}
 # 物种空间分布模式的蒙特卡洛检验
 library(spatstat)
 set.seed(123)
@@ -1024,7 +1022,9 @@ K_envelope <- envelope(observed_pattern, Kest,
   simulate = expression(rpoispp(85 / 10000)),
   verbose = FALSE
 )
+```
 
+```{r ripley-k-envelope, fig.cap="巴西坚果树空间分布模式检验：Ripley's K函数包络分析", echo=FALSE}
 # 可视化结果
 plot(K_envelope,
   main = "巴西坚果树空间分布模式检验",
@@ -1040,6 +1040,8 @@ legend("topleft",
 )
 
 ```
+
+图 \@ref(fig:ripley-k-envelope) 展示了Ripley's K函数包络分析的可视化结果。图中黑色实线表示观测到的K函数曲线，灰色区域表示基于999次蒙特卡洛模拟构建的置信包络，红色实线表示完全空间随机性（CSR）的理论期望值。通过比较观测曲线与包络线的相对位置，可以判断巴西坚果树的空间分布模式是否显著偏离随机分布。
 
 **结果解释**：
 - 如果观测K函数在包络线之上：表明空间聚集分布
@@ -1105,14 +1107,14 @@ knitr::kable(summary(fit_model)$coefs.SE.CI)
 
 图\@ref(fig:coral-coverage-dist)展示了模拟的珊瑚覆盖率分布情况：
 
-```{r coral-coverage-dist, fig.cap="模拟的珊瑚覆盖率空间分布"}
+```{r coral-coverage-dist, fig.cap="模拟的珊瑚覆盖率空间分布", echo=FALSE}
 # 可视化珊瑚覆盖率分布
 plot(coral_coverage, main = "珊瑚覆盖率分布")
 ```
 
 图\@ref(fig:fish-distribution-coral)展示了小丑鱼在珊瑚覆盖率背景下的实际分布：
 
-```{r fish-distribution-coral, fig.cap="小丑鱼在珊瑚覆盖率背景下的空间分布"}
+```{r fish-distribution-coral, fig.cap="小丑鱼在珊瑚覆盖率背景下的空间分布", echo=FALSE}
 # 可视化小丑鱼在珊瑚覆盖率背景下的分布
 plot(coral_coverage, main = "小丑鱼分布与珊瑚覆盖率")
 plot(observed_fish, add = TRUE, cols = "red", pch = 16, cex = 0.8)
@@ -1152,7 +1154,7 @@ cat("拟合优度检验p值:", p_value, "\n")
 
 图\@ref(fig:predicted-fish-intensity)展示了模型预测的小丑鱼分布强度：
 
-```{r predicted-fish-intensity, fig.cap="点过程模型预测的小丑鱼分布强度"}
+```{r predicted-fish-intensity, fig.cap="点过程模型预测的小丑鱼分布强度", echo=FALSE}
 # 模型预测强度图
 predicted_intensity <- predict(fit_model)
 plot(predicted_intensity, main = "预测的小丑鱼分布强度")
@@ -1509,11 +1511,7 @@ text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
 
 下面的代码展示了群落组装零模型检验的具体实现过程。首先我们模拟热带雨林群落数据并执行零模型分析：
 
-```{r community-null-model-analysis}
-# 群落组装零模型检验
-library(vegan)
-library(bipartite)
-
+```{r, echo=FALSE}
 # 模拟热带雨林群落数据（物种×样点矩阵）
 set.seed(123)
 n_species <- 30
@@ -1539,7 +1537,15 @@ for (i in 1:n_species) {
     comm_matrix[i, j] <- rbinom(1, 1, prob)
   }
 }
+save(comm_matrix, file="data/comm_matrix.RData")
+```
 
+```{r community-null-model-analysis}
+# 群落组装零模型检验
+library(vegan)
+library(bipartite)
+
+load(file="data/comm_matrix.RData")
 # 计算观测C-score（物种共现非随机性）
 calc_c_score <- function(mat) {
   n_spp <- nrow(mat)
@@ -1586,7 +1592,7 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:c-score-null-dist)展示了群落组装零模型检验的C-score零分布：
 
-```{r c-score-null-dist, fig.cap="热带雨林群落组装零模型检验：C-score零分布与观测值比较"}
+```{r c-score-null-dist, fig.cap="热带雨林群落组装零模型检验：C-score零分布与观测值比较", echo=FALSE}
 # 可视化零分布结果
 library(ggplot2)
 
@@ -1610,7 +1616,7 @@ ggplot(null_dist_df, aes(x = c_score)) +
 
 图\@ref(fig:community-matrix-heatmap)展示了热带雨林群落的物种分布热图：
 
-```{r community-matrix-heatmap, fig.cap="热带雨林群落物种分布热图：基于环境梯度的物种分布模式"}
+```{r community-matrix-heatmap, fig.cap="热带雨林群落物种分布热图：基于环境梯度的物种分布模式", echo=FALSE}
 # 群落矩阵热图
 library(reshape2)
 comm_melt <- melt(comm_matrix)
@@ -1670,10 +1676,7 @@ ggplot(comm_melt, aes(x = 样点, y = 物种, fill = factor(存在))) +
 
 下面的代码展示了传粉网络嵌套性零模型检验的具体实现过程。首先我们模拟传粉网络数据并执行零模型分析：
 
-```{r pollination-network-analysis}
-# 生态网络零模型检验：传粉网络嵌套性
-library(bipartite)
-library(igraph)
+```{r, echo=FALSE}
 
 # 模拟传粉网络数据（植物×传粉者矩阵）
 set.seed(123)
@@ -1695,6 +1698,15 @@ for (i in 1:n_plants) {
   }
 }
 
+save(pollination_network, file="data/pollination_network.RData")
+```
+
+```{r pollination-network-analysis}
+# 生态网络零模型检验：传粉网络嵌套性
+library(bipartite)
+library(igraph)
+
+load(file="data/pollination_network.RData")
 # 计算观测嵌套性（NODF）
 obs_nestedness <- nested(pollination_network, method = "NODF2")
 
@@ -1724,7 +1736,7 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:nestedness-null-dist)展示了传粉网络嵌套性零模型检验的零分布：
 
-```{r nestedness-null-dist, fig.cap="传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较"}
+```{r nestedness-null-dist, fig.cap="传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较", echo=FALSE}
 # 可视化零分布结果
 library(ggplot2)
 
@@ -1748,7 +1760,7 @@ ggplot(null_dist_df, aes(x = nestedness)) +
 
 图\@ref(fig:pollination-network-structure)展示了传粉网络的结构图：
 
-```{r pollination-network-structure, fig.cap="传粉网络结构可视化：植物与传粉者的二分网络"}
+```{r pollination-network-structure, fig.cap="传粉网络结构可视化：植物与传粉者的二分网络", echo=FALSE}
 # 网络可视化
 library(igraph)
 
@@ -1780,7 +1792,7 @@ legend("bottomleft",
 
 图\@ref(fig:pollination-matrix-heatmap)展示了传粉网络相互作用的矩阵热图：
 
-```{r pollination-matrix-heatmap, fig.cap="传粉网络相互作用矩阵热图：嵌套结构的可视化"}
+```{r pollination-matrix-heatmap, fig.cap="传粉网络相互作用矩阵热图：嵌套结构的可视化", echo=FALSE}
 # 网络矩阵热图
 library(reshape2)
 network_melt <- melt(pollination_network)
@@ -1873,14 +1885,14 @@ cat("p值:", p_value, "\n")
 
 图\@ref(fig:cooc-null-model-plot)展示了EcoSimR包中物种共现零模型的检验结果：
 
-```{r cooc-null-model-plot, fig.cap="物种共现零模型检验：EcoSimR包分析结果"}
+```{r cooc-null-model-plot, fig.cap="物种共现零模型检验：EcoSimR包分析结果", echo=FALSE}
 # 可视化物种共现零模型结果
 plot(cooc_null)
 ```
 
 图\@ref(fig:nestedness-null-hist)展示了网络嵌套性零模型的零分布直方图：
 
-```{r nestedness-null-hist, fig.cap="网络嵌套性零模型检验：嵌套性指数零分布"}
+```{r nestedness-null-hist, fig.cap="网络嵌套性零模型检验：嵌套性指数零分布", echo=FALSE}
 # 可视化嵌套性零分布
 hist(null_results, main = "嵌套性零分布", xlab = "嵌套性指数")
 abline(v = obs_nestedness, col = "red", lwd = 2)
