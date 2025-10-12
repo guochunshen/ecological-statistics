@@ -1077,52 +1077,7 @@ p值 =", format.pval(pf(summary(forest_model)$fstatistic[1],
 
 **生态学解释与系数分析**
 
-**模型评估要点**：系数的生态学解释是模型评估的重要环节。我们不仅要关注统计显著性，还要理解系数的生态学意义和实际影响大小。为了评估系数估计的可靠性，我们计算了95%置信区间，结果如表\@ref(tab:confidence-intervals)所示。
-
-```{r, confidence-intervals, echo=FALSE}
-# 7. 系数解释
-cat("\n=== 生态学解释 ===\n
-经过变量选择后，最终模型包含以下重要环境因子：\n")
-
-# 动态生成系数解释
-selected_vars <- names(coef(forest_model))[-1]  # 排除截距项
-
-for (var in selected_vars) {
-  coef_val <- coef(forest_model)[var]
-  p_val <- summary(forest_model)$coefficients[var, "Pr(>|t|)"]
-
-  if (var == "area") {
-    cat("- 栖息地面积：每增加1公顷，鸟类丰富度平均增加",
-        round(coef_val, 3), "种")
-  } else if (var == "vegetation") {
-    cat("- 植被密度：每增加0.1单位，鸟类丰富度平均增加",
-        round(coef_val * 0.1, 3), "种")
-  } else if (var == "water_distance") {
-    cat("- 距水源距离：每增加1km，鸟类丰富度平均减少",
-        round(abs(coef_val), 3), "种")
-  } else if (var == "soil_ph") {
-    cat("- 土壤pH值：每增加1单位，鸟类丰富度平均",
-        ifelse(coef_val > 0, "增加", "减少"),
-        round(abs(coef_val), 3), "种")
-  } else {
-    cat("-", var, "：系数 =", round(coef_val, 3))
-  }
-
-  # 添加显著性标记
-  if (p_val < 0.001) {
-    cat(" (***)\n")
-  } else if (p_val < 0.01) {
-    cat(" (**)\n")
-  } else if (p_val < 0.05) {
-    cat(" (*)\n")
-  } else {
-    cat(" (不显著)\n")
-  }
-}
-
-# 6. 置信区间
-knitr::kable(confint(forest_model), caption = "95%置信区间")
-```
+**模型评估要点**：系数的生态学解释是模型评估的重要环节。我们不仅要关注统计显著性，还要理解系数的生态学意义和实际影响大小。
 
 ### 模型诊断与假设检验
 

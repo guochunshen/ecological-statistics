@@ -1131,13 +1131,13 @@ if (!file.exists("data/forest_diagnostic_data.rds")) {
   )
 
   # 保存数据到文件
-  saveRDS(forest_diagnostic_data, "data/forest_diagnostic_data.rds")
+  save(forest_diagnostic_data, n_forest_trees, file="data/forest_diagnostic_data.rds")
 }
 ```
 
 ```{r forest-diagnostic-data-loading}
 # 加载林小雨的森林模型诊断数据
-forest_diagnostic_data <- readRDS("data/forest_diagnostic_data.rds")
+load("data/forest_diagnostic_data.rds")
 
 # 林小雨构建树木生长速率的线性回归模型
 model_diagnostic <- lm(growth_rate ~ canopy_openness + soil_moisture +
@@ -1346,37 +1346,13 @@ if (length(influential_points) > 0) {
 
 ### 贝叶斯与频率学派的根本差异
 
-理解贝叶斯方法的第一步是认识到它与频率学派方法的本质区别：
+理解贝叶斯方法的第一步是认识到它与频率学派方法的本质区别。从哲学基础来看，频率学派基于重复抽样思想，关注长期频率性质，而贝叶斯方法则基于主观概率解释，将参数视为随机变量。这种根本差异导致了两种方法在不确定性处理上的显著不同：频率学派通过置信区间表示参数不确定性，而贝叶斯方法则通过后验分布完全量化参数的不确定性。
 
-**1. 哲学基础不同**  
-- **频率学派**：基于重复抽样思想，关注长期频率性质  
-- **贝叶斯方法**：基于主观概率解释，将参数视为随机变量  
+在先验信息的使用方面，频率学派通常不利用先验信息，而贝叶斯方法则明确使用先验分布来整合领域知识。这种差异进一步体现在模型选择标准上，频率学派主要依赖AIC/BIC等信息准则，而贝叶斯方法则基于贝叶斯因子和后验模型概率进行模型比较。
 
-**2. 不确定性处理方式不同**  
-- **频率学派**：参数不确定性通过置信区间表示  
-- **贝叶斯方法**：参数不确定性通过后验分布完全量化  
+在预测评估方法上，两种方法也展现出明显区别。频率学派主要基于点估计进行预测，而贝叶斯方法则提供基于后验预测分布的完整预测。变量选择方法同样存在差异，频率学派采用逐步回归、LASSO等惩罚方法，而贝叶斯方法则使用贝叶斯变量选择和稀疏先验等技术。
 
-**3. 先验信息的使用**  
-- **频率学派**：通常不使用先验信息  
-- **贝叶斯方法**：明确使用先验分布整合领域知识  
-
-**4. 模型选择标准不同**  
-- **频率学派**：基于AIC/BIC等信息准则  
-- **贝叶斯方法**：基于贝叶斯因子和后验模型概率  
-
-**5. 预测评估方法不同**  
-- **频率学派**：基于点估计的预测  
-- **贝叶斯方法**：基于后验预测分布的完整预测  
-
-**6. 变量选择方法不同**  
-- **频率学派**：逐步回归、LASSO等惩罚方法  
-- **贝叶斯方法**：贝叶斯变量选择、稀疏先验  
-
-**7. 生态学解释差异**  
-- **频率学派**："我们有95%置信度参数在区间内"  
-- **贝叶斯方法**："参数有95%概率落在区间内"  
-
-这些根本差异使得贝叶斯方法在生态学中特别有价值，特别是在处理小样本数据、整合先验知识、量化不确定性等方面具有独特优势。
+这些技术差异最终反映在生态学解释上。频率学派会表述为"我们有95%置信度参数在区间内"，而贝叶斯方法则直接表述为"参数有95%概率落在区间内"。这些根本差异使得贝叶斯方法在生态学中特别有价值，特别是在处理小样本数据、整合先验知识、量化不确定性等方面具有独特优势。
 
 ### 贝叶斯模型选择基本原理
 
@@ -1499,7 +1475,7 @@ if (!file.exists("data/forest_bird_data_bayes.rds")) {
   )
 
   # 保存数据到文件
-  saveRDS(forest_bird_data_bayes, "data/forest_bird_data_bayes.rds")
+  save(forest_bird_data_bayes, n_forest_birds, file="data/forest_bird_data_bayes.rds")
 }
 ```
 
@@ -1511,7 +1487,7 @@ if (!file.exists("data/forest_bird_data_bayes.rds")) {
 # 贝叶斯因子计算
 library(BayesFactor)
 
-forest_bird_data_bayes <- readRDS("data/forest_bird_data_bayes.rds")
+load("data/forest_bird_data_bayes.rds")
 # 构建候选模型
 # 模型1：只有栖息地面积
 model1 <- lmBF(richness ~ area, data = forest_bird_data_bayes)

@@ -2545,7 +2545,7 @@ fit_weibull <- fitdist(survival_times, "weibull")  # 拟合威布尔分布到生
 
 # 输出参数估计结果：显示拟合的威布尔分布参数和统计信息
 # summary函数提供详细的拟合结果，包括参数估计值、标准误、置信区间等
-knitr::kable(summary(fit_weibull)$coefficients, caption="威布尔分布参数估计结果", label = "weibull-parameter-estimation")  # 输出完整的拟合结果摘要信息
+knitr::kable(summary(fit_weibull)$estimate, caption="威布尔分布参数估计结果", label = "weibull-parameter-estimation")  # 输出完整的拟合结果摘要信息
 ```
 
 表 \@ref(tab:weibull-parameter-estimation) 展示了通过最大似然估计得到的威布尔分布参数估计结果，包括形状参数和尺度参数的点估计值、标准误和置信区间。
