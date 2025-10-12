@@ -1556,7 +1556,6 @@ cv_overfit <- cv.glm(overfit_forest_data, overfit_model)$delta[1]
 
 **数据文件**：`data/plant_data_p1.Rdata`
 
-**数据**：
 
 
 **任务**：  
@@ -1579,7 +1578,6 @@ cv_overfit <- cv.glm(overfit_forest_data, overfit_model)$delta[1]
 
 **数据文件**：`data/bird_data_p1.Rdata`
 
-**数据**：
 
 
 **任务**：  
@@ -1602,7 +1600,6 @@ cv_overfit <- cv.glm(overfit_forest_data, overfit_model)$delta[1]
 
 **数据文件**：`data/lake_data_p1.Rdata`
 
-**数据**：
 
 
 **任务**：  

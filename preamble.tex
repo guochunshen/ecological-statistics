@@ -1,22 +1,8 @@
 % 中文支持 - 使用 ctex 包提供更好的中文排版
 \usepackage{ctex}
 
-% 中文字体设置 - 提供多个选项，取消注释其中一个配置
-
-% 选项1：思源宋体 + 思源黑体（现代、清晰的专业字体）
-% \setCJKmainfont{Noto Serif CJK SC}[BoldFont={Noto Serif CJK SC Bold},ItalicFont={AR PL KaitiM GB}]
-% \setCJKsansfont{Noto Sans CJK SC}
-% \setCJKmonofont{Noto Sans Mono CJK SC}
-
-% 选项2：文鼎字体系列（传统、优雅的中文字体）
-%\setCJKmainfont{AR PL UMing CN}[BoldFont={AR PL UMing CN},ItalicFont={AR PL KaitiM GB}]
-%\setCJKsansfont{AR PL SungtiL GB}
-%\setCJKmonofont{Noto Sans Mono CJK SC}
-
-% 选项3：系统默认字体（确保兼容性）
-% \setCJKmainfont{}
-% \setCJKsansfont{}
-% \setCJKmonofont{}
+% 中文字体设置 - 使用 ctex 默认字体，不进行额外设置
+% ctex 包会自动选择合适的中文字体
 
 
 % 英文字体设置
@@ -65,16 +51,29 @@
 \usepackage{caption}
 \captionsetup{font=small,labelsep=quad}
 
-% 超链接
-\usepackage{hyperref}
+% 超链接 - 合并所有选项到单个配置
+\usepackage[unicode]{hyperref}
 \hypersetup{
   colorlinks=true,
   linkcolor=blue,
-  filecolor=magenta,      
+  filecolor=magenta,
   urlcolor=cyan,
-  pdftitle={生态统计学},
-  pdfauthor={沈国春、李勤}
+  pdftitle={生态统计学AI+},
+  pdfauthor={沈国春、李勤},
+  bookmarks=true,
+  bookmarksopen=true,
+  bookmarksnumbered=true,
+  pdfencoding=auto
 }
+
+% 解决重复标签问题
+\usepackage[all]{hypcap}
+
+% 防止重复标签警告
+\usepackage{cleveref}
+\crefname{figure}{图}{图}
+\crefname{table}{表}{表}
+\crefname{equation}{公式}{公式}
 
 % 代码环境 - R代码块使用Verbatim和Shaded环境
 \usepackage{listings}
