@@ -830,13 +830,13 @@ for (t in 3:n_years) {
 
 # 添加趋势和季节性（年际变化）
 tree_ring_width <- tree_ring_width + 0.02 * years + 2 * sin(2 * pi * years / 30)
-save(years, tree_ring_width, file = "tree_ring_width.RData")
+save(years, tree_ring_width, file = "data/tree_ring_width.RData")
 ```
 
 首先，我们可视化原始的时间序列数据，这有助于直观理解数据的动态特征：
 
 ```{r tree-ring-time-series, fig.cap="森林年轮宽度的时间序列图"}
-load("tree_ring_width.RData")
+load("data/tree_ring_width.RData")
 
 # 可视化原始时间序列
 plot(years, tree_ring_width,

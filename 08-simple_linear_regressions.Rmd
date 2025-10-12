@@ -1550,7 +1550,6 @@ if (!is.na(cv_overfit) && !is.na(cv_quadratic) && cv_overfit > cv_quadratic) {
 
 **数据文件**：`data/plant_data_p1.Rdata`
 
-**数据**：
 ```{r, echo=FALSE}
 # 模拟光合作用数据
 set.seed(2024)
@@ -1585,7 +1584,6 @@ save(plant_data, file="data/plant_data_p1.Rdata")
 
 **数据文件**：`data/bird_data_p1.Rdata`
 
-**数据**：
 ```{r, echo=FALSE}
 # 模拟鸟类多样性数据
 set.seed(2024)
@@ -1633,7 +1631,6 @@ save(bird_data, file="data/bird_data_p1.Rdata")
 
 **数据文件**：`data/lake_data_p1.Rdata`
 
-**数据**：
 ```{r, echo=FALSE}
 # 模拟湖泊生态系统数据
 set.seed(2024)
