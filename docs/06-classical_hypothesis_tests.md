@@ -176,40 +176,7 @@
 >
 > 这是一个双侧检验的例子，因为我们没有预设施肥一定会提高生产力（在某些情况下，过度施肥可能反而抑制生长）。
 
-为了更好地理解零假设与备择假设的分布关系，让我们通过R代码生成一个可视化图表：
-
-
-``` r
-# 加载必要的包
-library(ggplot2)
-
-# 设置随机种子以确保结果可重现
-set.seed(123)
-
-# 模拟零假设分布（均值=0）和备择假设分布（均值=2）
-n <- 1000
-null_dist <- rnorm(n, mean = 0, sd = 1)
-alt_dist <- rnorm(n, mean = 2, sd = 1)
-
-# 创建数据框
-df <- data.frame(
-  value = c(null_dist, alt_dist),
-  distribution = rep(c("零假设分布 (H₀)", "备择假设分布 (H₁)"), each = n)
-)
-
-# 绘制分布图
-ggplot(df, aes(x = value, fill = distribution)) +
-  geom_density(alpha = 0.6) +
-  geom_vline(xintercept = 1.96, linetype = "dashed", color = "red", size = 1) +
-  annotate("text", x = 2.2, y = 0.2, label = "临界值", color = "red") +
-  labs(
-    title = "零假设与备择假设分布",
-    x = "检验统计量", y = "密度",
-    subtitle = "红色虚线表示显著性水平α=0.05的临界值"
-  ) +
-  theme_minimal() +
-  scale_fill_manual(values = c("#1f77b4", "#ff7f0e"))
-```
+为了更好地理解零假设与备择假设的分布关系，让我们生成一个可视化图表：
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/null-alternative-distribution-1.png" alt="零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值" width="80%" />
@@ -244,48 +211,6 @@ p值的解释需要特别注意：
 在梅花鹿保护研究中，即使我们得到p < 0.05的结果，表明保护措施统计上显著，我们还需要考虑这种种群增长的生态学意义：这种增长是否足以维持种群的长期生存？是否达到了保护目标？同样，如果p值不显著，我们也不能简单地认为保护措施无效，而应该考虑样本量是否足够、效应大小是否具有生态学意义等问题。
 
 为了更直观地理解p值的概念，让我们通过R代码生成一个可视化图表：
-
-
-``` r
-# 模拟在零假设下的检验统计量分布
-null_test_stats <- rnorm(10000, mean = 0, sd = 1)
-
-# 假设我们观测到的检验统计量是2.5
-observed_stat <- 2.5
-
-# 计算p值（单侧检验）
-p_value <- 1 - pnorm(observed_stat)
-
-# 创建p值可视化数据
-p_value_df <- data.frame(test_stat = null_test_stats)
-
-# 计算密度数据
-density_data <- density(null_test_stats)
-density_df <- data.frame(x = density_data$x, y = density_data$y)
-
-# 绘制p值可视化图
-ggplot(p_value_df, aes(x = test_stat)) +
-  geom_density(fill = "lightblue", alpha = 0.7) +
-  geom_vline(xintercept = observed_stat, color = "red", size = 1) +
-  geom_area(
-    data = subset(density_df, x >= observed_stat),
-    aes(x = x, y = y), fill = "red", alpha = 0.5
-  ) +
-  annotate("text",
-    x = observed_stat + 0.5, y = 0.1,
-    label = paste("观测统计量 =", round(observed_stat, 2)), color = "red"
-  ) +
-  annotate("text",
-    x = observed_stat + 0.5, y = 0.08,
-    label = paste("p值 =", round(p_value, 4)), color = "red"
-  ) +
-  labs(
-    title = "p值的可视化解释",
-    x = "检验统计量（在零假设下）", y = "密度",
-    subtitle = "红色区域表示p值：在H₀下观测到当前或更极端结果的概率"
-  ) +
-  theme_minimal()
-```
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/p-value-visualization-1.png" alt="p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率" width="80%" />
@@ -360,72 +285,9 @@ Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 在生态学研究中，避免这两类错误的最佳策略包括：进行充分的功效分析来确定合适的样本量，使用适当的统计方法，考虑多重比较校正，以及结合效应大小和置信区间来全面评估研究结果。通过这种全面的方法，我们可以在统计严谨性和生态学实用性之间找到平衡，为生态保护和管理决策提供更可靠的科学依据。
 
-为了更好地理解第一类错误和第二类错误的概念，让我们通过R代码生成一个可视化图表：
+为了更好地理解第一类错误和第二类错误的概念，让我们生成一个可视化图表：
 
 
-``` r
-# 设置参数
-alpha <- 0.05 # 显著性水平
-effect_size <- 1.5 # 效应大小
-
-# 计算临界值（单侧检验）
-critical_value <- qnorm(1 - alpha)
-
-# 计算第二类错误概率
-beta <- pnorm(critical_value, mean = effect_size)
-
-# 创建错误类型可视化数据
-x_vals <- seq(-3, 5, length.out = 1000)
-null_density <- dnorm(x_vals, mean = 0)
-alt_density <- dnorm(x_vals, mean = effect_size)
-
-error_df <- data.frame(
-  x = rep(x_vals, 2),
-  density = c(null_density, alt_density),
-  distribution = rep(c("零假设分布", "备择假设分布"), each = 1000)
-)
-```
-
-
-``` r
-# 绘制错误类型可视化图
-ggplot(error_df, aes(x = x, y = density, color = distribution)) +
-  geom_line(size = 1) +
-  geom_vline(xintercept = critical_value, linetype = "dashed",
-             color = "black") +
-  # 第一类错误区域（假阳性）
-  geom_area(
-    data = subset(error_df, x >= critical_value &
-                    distribution == "零假设分布"),
-    aes(x = x, y = density), fill = "red", alpha = 0.3
-  ) +
-  # 第二类错误区域（假阴性）
-  geom_area(
-    data = subset(error_df, x < critical_value &
-                    distribution == "备择假设分布"),
-    aes(x = x, y = density), fill = "blue", alpha = 0.3
-  ) +
-  annotate("text",
-    x = critical_value + 0.5, y = 0.1,
-    label = paste("第一类错误\nα =", alpha), color = "red"
-  ) +
-  annotate("text",
-    x = critical_value - 0.8, y = 0.1,
-    label = paste("第二类错误\nβ =", round(beta, 3)), color = "blue"
-  ) +
-  annotate("text",
-    x = critical_value + 1.5, y = 0.2,
-    label = paste("统计功效\n1-β =", round(1 - beta, 3)),
-    color = "darkgreen"
-  ) +
-  labs(
-    title = "第一类错误与第二类错误",
-    x = "检验统计量", y = "密度",
-    subtitle = "红色：第一类错误（假阳性），蓝色：第二类错误（假阴性）"
-  ) +
-  theme_minimal() +
-  scale_color_manual(values = c("#1f77b4", "#ff7f0e"))
-```
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/error-types-visualization-1.png" alt="第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布" width="80%" />
@@ -434,45 +296,7 @@ ggplot(error_df, aes(x = x, y = density, color = distribution)) +
 
 这个图表清晰地显示了第一类错误（红色区域，假阳性）和第二类错误（蓝色区域，假阴性）的概念，以及统计功效（1-β）作为正确检测真实效应的概率。在生态学研究中，我们需要在这两类错误之间进行权衡，根据研究的具体目的选择合适的显著性水平。
 
-统计功效受到多个因素的影响，其中样本量是一个关键因素。让我们通过R代码生成一个图表来展示样本量如何影响统计功效：
-
-
-``` r
-# 模拟不同样本量下的统计功效
-sample_sizes <- seq(10, 200, by = 10)
-effect_sizes <- c(0.2, 0.5, 0.8) # 小、中、大效应
-
-power_df <- expand.grid(sample_size = sample_sizes, effect_size = effect_sizes)
-power_df$power <- NA
-
-for (i in seq_len(nrow(power_df))) {
-  n <- power_df$sample_size[i]
-  d <- power_df$effect_size[i]
-  # 使用t检验的近似功效计算
-  power_df$power[i] <- power.t.test(
-    n = n, delta = d, sd = 1,
-    sig.level = 0.05, type = "two.sample"
-  )$power
-}
-
-# 绘制样本量对功效的影响图
-ggplot(power_df, aes(
-  x = sample_size, y = power,
-  color = factor(effect_size)
-)) +
-  geom_line(size = 1) +
-  geom_point() +
-  geom_hline(yintercept = 0.8, linetype = "dashed", color = "gray") +
-  annotate("text", x = 150, y = 0.82, label = "常用功效阈值 (0.8)", color = "gray") +
-  labs(
-    title = "样本量对统计功效的影响",
-    x = "每组样本量", y = "统计功效 (1-β)",
-    color = "效应大小 (Cohen's d)",
-    subtitle = "效应大小越大，达到足够统计功效所需的样本量越小"
-  ) +
-  theme_minimal() +
-  scale_color_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
-```
+统计功效受到多个因素的影响，其中样本量是一个关键因素。让我们图表来展示样本量如何影响统计功效：
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/power-sample-size-visualization-1.png" alt="样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效" width="80%" />
@@ -523,43 +347,7 @@ ggplot(power_df, aes(
 - 真实的保护效应可能在1.5-3.1只/平方公里之间
 - 这个效应大小在生态学上具有重要意义，因为从2.5只增加到4.8只意味着种群密度几乎翻倍
 
-让我们通过R代码生成一个可视化图表来理解效应大小和置信区间的概念：
-
-
-``` r
-# 模拟多个研究的效应大小和置信区间
-set.seed(123)
-studies <- 10
-effect_sizes <- rnorm(studies, mean = 0.5, sd = 0.3)
-ci_lower <- effect_sizes - 0.4 + rnorm(studies, 0, 0.1)
-ci_upper <- effect_sizes + 0.4 + rnorm(studies, 0, 0.1)
-
-# 创建数据框
-study_df <- data.frame(
-  study = 1:studies,
-  effect_size = effect_sizes,
-  ci_lower = ci_lower,
-  ci_upper = ci_upper,
-  significant = (ci_lower > 0 | ci_upper < 0)
-)
-
-# 绘制效应大小森林图
-library(ggplot2)
-ggplot(study_df, aes(x = effect_size, y = study)) +
-  geom_vline(xintercept = 0, linetype = "dashed", color = "gray") +
-  geom_point(aes(color = significant), size = 3) +
-  geom_errorbarh(aes(xmin = ci_lower, xmax = ci_upper, color = significant),
-    height = 0.2
-  ) +
-  scale_color_manual(values = c("FALSE" = "red", "TRUE" = "blue")) +
-  labs(
-    title = "效应大小与置信区间的森林图",
-    x = "效应大小 (Cohen's d)", y = "研究编号",
-    subtitle = "蓝色点表示统计显著的结果，红色点表示不显著的结果"
-  ) +
-  theme_minimal() +
-  theme(legend.position = "none")
-```
+让我们用一个图来理解效应大小和置信区间的概念：
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/effect-size-ci-visualization-1.png" alt="效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围" width="80%" />
@@ -661,69 +449,9 @@ $t$分布与正态分布形状相似，都是钟形曲线，但$t$分布的尾�
 
 单样本t检验的使用需要满足一些前提条件：数据应该近似正态分布，观测值之间相互独立。如果数据严重偏离正态分布，或者样本量很小，我们可能需要考虑使用非参数检验方法。
 
-为了更好地理解单样本t检验的原理，让我们通过R代码生成一个可视化图表：
+为了更好地理解单样本t检验的原理，让我们通过一个图来理解：
 
 
-``` r
-# 设置参数
-set.seed(123)
-mu0 <- 7.0 # 理论值 $\mu_0$（中性pH）
-sample_mean <- 6.8 # 样本均值 $\bar{x}$
-sample_sd <- 0.3 # 样本标准差 $s$
-n <- 15 # 样本量 $n$
-
-# 计算t统计量
-t_stat <- (sample_mean - mu0) / (sample_sd / sqrt(n))
-
-# 生成t分布数据
-df <- n - 1 # 自由度 $n-1$
-x_vals <- seq(-4, 4, length.out = 1000)
-t_density <- dt(x_vals, df = df)
-
-# 创建数据框
-t_df <- data.frame(x = x_vals, density = t_density)
-
-# 计算p值（双侧检验）
-p_value <- 2 * (1 - pt(abs(t_stat), df = df))
-```
-
-
-``` r
-# 绘制t分布图
-ggplot(t_df, aes(x = x, y = density)) +
-  geom_line(color = "blue", size = 1) +
-  geom_vline(
-    xintercept = t_stat, color = "red", size = 1,
-    linetype = "solid"
-  ) +
-  geom_vline(
-    xintercept = -t_stat, color = "red", size = 1,
-    linetype = "solid"
-  ) +
-  geom_area(
-    data = subset(t_df, x >= abs(t_stat)),
-    aes(x = x, y = density), fill = "red", alpha = 0.3
-  ) +
-  geom_area(
-    data = subset(t_df, x <= -abs(t_stat)),
-    aes(x = x, y = density), fill = "red", alpha = 0.3
-  ) +
-  geom_vline(xintercept = 0, color = "black", linetype = "dashed") +
-  annotate("text",
-    x = t_stat + 0.5, y = 0.2,
-    label = paste("$t$ =", round(t_stat, 2)), color = "red"
-  ) +
-  annotate("text",
-    x = t_stat + 0.5, y = 0.15,
-    label = paste("$p$ =", round(p_value, 4)), color = "red"
-  ) +
-  labs(
-    title = "单样本t检验的可视化解释",
-    x = "$t$统计量", y = "密度",
-    subtitle = "红色区域表示$p$值，垂直线表示观测到的$t$统计量"
-  ) +
-  theme_minimal()
-```
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/one-sample-t-test-visualization-1.png" alt="单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域" width="80%" />
@@ -771,56 +499,7 @@ ggplot(t_df, aes(x = x, y = density)) +
 
 符号检验的主要优点是它对分布形态没有要求，对极端值不敏感。然而，它的缺点是统计功效通常低于对应的参数检验，因为它忽略了差异的大小信息。
 
-为了更好地理解单样本符号检验的原理，让我们通过R代码生成一个可视化图表：
-
-
-``` r
-# 设置参数
-set.seed(123)
-m0 <- 50 # 理论中位值 $M_0$（环境标准）
-
-# 模拟土壤铅浓度数据（偏态分布）
-soil_lead <- c(45, 48, 52, 55, 58, 62, 65, 68, 72, 75, 85, 120)
-
-# 计算与理论值的差异
-signs <- sign(soil_lead - m0)
-positive_count <- sum(signs == 1) # 正号数量
-negative_count <- sum(signs == -1) # 负号数量
-n <- length(soil_lead) - sum(signs == 0) # 有效样本量 $n$（排除等于理论值的观测）
-
-# 计算p值（单侧检验）
-p_value <- 1 - pbinom(positive_count - 1, size = n, prob = 0.5)
-
-# 生成二项分布数据
-x_vals <- 0:n
-binom_density <- dbinom(x_vals, size = n, prob = 0.5)
-
-# 创建数据框
-binom_df <- data.frame(x = x_vals, density = binom_density)
-
-# 绘制二项分布图
-ggplot(binom_df, aes(x = x, y = density)) +
-  geom_col(fill = "lightblue", alpha = 0.7) +
-  geom_vline(xintercept = positive_count, color = "red", size = 1) +
-  geom_area(
-    data = subset(binom_df, x >= positive_count),
-    aes(x = x, y = density), fill = "red", alpha = 0.5
-  ) +
-  annotate("text",
-    x = positive_count + 1, y = max(binom_density) * 0.8,
-    label = paste("正号数量 =", positive_count), color = "red"
-  ) +
-  annotate("text",
-    x = positive_count + 1, y = max(binom_density) * 0.7,
-    label = paste("$p$ =", round(p_value, 4)), color = "red"
-  ) +
-  labs(
-    title = "单样本符号检验的可视化解释",
-    x = "正号数量", y = "概率",
-    subtitle = "红色区域表示$p$值，垂直线表示观测到的正号数量"
-  ) +
-  theme_minimal()
-```
+为了更好地理解单样本符号检验的原理，让我们通过一个图来理解：
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/sign-test-visualization-1.png" alt="单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量" width="80%" />
@@ -883,85 +562,11 @@ $$s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$$
 
 独立样本t检验的使用需要满足一些前提条件：数据应该近似正态分布，两个样本的方差应该相等（方差齐性），观测值之间相互独立。如果这些条件不满足，我们可能需要考虑使用非参数检验方法。
 
-为了更好地理解独立样本t检验的原理，让我们通过R代码生成一个可视化图表：
+为了更好地理解独立样本t检验的原理，让我们通过一个图来理解：
 
 
-``` r
-# 设置参数
-set.seed(123)
-
-# 模拟施肥组和对照组的数据
-fertilizer_group <- rnorm(10, mean = 25, sd = 3) # 施肥组，均值25
-control_group <- rnorm(10, mean = 20, sd = 3) # 对照组，均值20
-
-# 计算样本统计量
-mean_fert <- mean(fertilizer_group)
-mean_control <- mean(control_group)
-sd_fert <- sd(fertilizer_group)
-sd_control <- sd(control_group)
-
-# 计算合并标准差
-n_fert <- length(fertilizer_group)
-n_control <- length(control_group)
-sp <- sqrt(((n_fert - 1) * sd_fert^2 +
-              (n_control - 1) * sd_control^2) / (n_fert + n_control - 2))
-
-# 计算t统计量
-t_stat <- (mean_fert - mean_control) / (sp * sqrt(1 / n_fert + 1 / n_control))
-```
 
 
-``` r
-# 生成t分布数据
-df <- n_fert + n_control - 2 # 自由度 $n_1 + n_2 - 2$
-x_vals <- seq(-4, 4, length.out = 1000)
-t_density <- dt(x_vals, df = df)
-
-# 创建数据框
-t_df <- data.frame(x = x_vals, density = t_density)
-
-# 计算p值（双侧检验）
-p_value <- 2 * (1 - pt(abs(t_stat), df = df))
-```
-
-
-``` r
-# 绘制t分布图
-library(ggplot2)
-ggplot(t_df, aes(x = x, y = density)) +
-  geom_line(color = "blue", size = 1) +
-  geom_vline(
-    xintercept = t_stat, color = "red", size = 1,
-    linetype = "solid"
-  ) +
-  geom_vline(
-    xintercept = -t_stat, color = "red", size = 1,
-    linetype = "solid"
-  ) +
-  geom_area(
-    data = subset(t_df, x >= abs(t_stat)),
-    aes(x = x, y = density), fill = "red", alpha = 0.3
-  ) +
-  geom_area(
-    data = subset(t_df, x <= -abs(t_stat)),
-    aes(x = x, y = density), fill = "red", alpha = 0.3
-  ) +
-  geom_vline(xintercept = 0, color = "black", linetype = "dashed") +
-  annotate("text",
-    x = t_stat + 0.5, y = 0.2,
-    label = paste("$t$ =", round(t_stat, 2)), color = "red"
-  ) +
-  annotate("text",
-    x = t_stat + 0.5, y = 0.15,
-    label = paste("$p$ =", round(p_value, 4)), color = "red"
-  ) +
-  labs(
-    title = "独立样本t检验的可视化解释",
-    x = "$t$统计量", y = "密度",
-    subtitle = "红色区域表示$p$值，垂直线表示观测到的$t$统计量"
-  ) +
-  theme_minimal()
-```
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/independent-t-test-visualization-1.png" alt="独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域" width="80%" />
@@ -1010,72 +615,11 @@ $$t = \frac{\bar{d}}{s_d / \sqrt{n}}$$
 
 配对样本t检验的使用需要满足一些前提条件：配对差异应该近似正态分布。如果这个条件不满足，我们可能需要考虑使用非参数检验方法，如Wilcoxon符号秩检验。
 
-为了更好地理解配对样本t检验的原理，让我们通过R代码生成一个可视化图表：
+为了更好地理解配对样本t检验的原理，让我们通过一个图理解：
 
 
-``` r
-# 设置参数
-set.seed(123)
-
-# 模拟保护措施实施前后的鸟类数量数据
-before_protection <- c(15, 18, 12, 20, 16, 14, 17, 19, 13, 21) # 实施前
-after_protection <- c(18, 22, 15, 24, 19, 17, 20, 23, 16, 25) # 实施后
-
-# 计算配对差异
-differences <- after_protection - before_protection
-
-# 计算配对差异的统计量
-mean_diff <- mean(differences)
-sd_diff <- sd(differences)
-n <- length(differences)
-
-# 计算t统计量
-t_stat <- mean_diff / (sd_diff / sqrt(n))
-```
 
 
-``` r
-# 生成t分布数据
-df <- n - 1 # 自由度 $n-1$
-x_vals <- seq(-4, 4, length.out = 1000)
-t_density <- dt(x_vals, df = df)
-
-# 创建数据框
-t_df <- data.frame(x = x_vals, density = t_density)
-
-# 计算p值（单侧检验）
-p_value <- 1 - pt(t_stat, df = df)
-```
-
-
-``` r
-# 绘制t分布图
-ggplot(t_df, aes(x = x, y = density)) +
-  geom_line(color = "blue", size = 1) +
-  geom_vline(
-    xintercept = t_stat, color = "red", size = 1,
-    linetype = "solid"
-  ) +
-  geom_area(
-    data = subset(t_df, x >= t_stat),
-    aes(x = x, y = density), fill = "red", alpha = 0.3
-  ) +
-  geom_vline(xintercept = 0, color = "black", linetype = "dashed") +
-  annotate("text",
-    x = t_stat + 0.5, y = 0.2,
-    label = paste("$t$ =", round(t_stat, 2)), color = "red"
-  ) +
-  annotate("text",
-    x = t_stat + 0.5, y = 0.15,
-    label = paste("$p$ =", round(p_value, 4)), color = "red"
-  ) +
-  labs(
-    title = "配对样本t检验的可视化解释",
-    x = "$t$统计量", y = "密度",
-    subtitle = "红色区域表示$p$值，垂直线表示观测到的$t$统计量"
-  ) +
-  theme_minimal()
-```
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/paired-t-test-visualization-1.png" alt="配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域" width="80%" />
@@ -1129,53 +673,7 @@ $$U = n_1 n_2 + \frac{n_1(n_1 + 1)}{2} - R_1$$
 
 Mann-Whitney U检验的主要优点是它对分布形态没有要求，对极端值不敏感。然而，它的缺点是统计功效通常低于对应的参数检验（t检验），因为它忽略了数据的数值信息，只使用秩次信息。
 
-为了更好地理解Mann-Whitney U检验的原理，让我们通过R代码生成一个可视化图表：
-
-
-``` r
-# 设置参数
-set.seed(123)
-
-# 模拟污染区域和清洁区域的底栖动物生物量数据（偏态分布）
-polluted_area <- c(2.1, 3.5, 4.2, 5.8, 7.3, 9.1, 12.5, 15.8) # 污染区域
-clean_area <- c(8.2, 10.5, 12.8, 15.3, 18.7, 22.1, 25.4, 28.9) # 清洁区域
-
-# 合并数据并计算秩次
-all_data <- c(polluted_area, clean_area)
-ranks <- rank(all_data)
-
-# 计算污染区域的秩和
-rank_polluted <- sum(ranks[seq_along(polluted_area)])
-
-# 计算U统计量
-n1 <- length(polluted_area)
-n2 <- length(clean_area)
-u_stat <- n1 * n2 + n1 * (n1 + 1) / 2 - rank_polluted
-
-# 执行Mann-Whitney U检验
-mw_test <- wilcox.test(polluted_area, clean_area, alternative = "less")
-
-# 创建数据框用于可视化
-data_df <- data.frame(
-  group = rep(c("污染区域", "清洁区域"), each = 8),
-  value = c(polluted_area, clean_area),
-  rank = ranks
-)
-
-# 绘制箱线图和秩次图
-library(ggplot2)
-ggplot(data_df, aes(x = group, y = value, fill = group)) +
-  geom_boxplot(alpha = 0.7) +
-  geom_jitter(width = 0.2, size = 2, alpha = 0.6) +
-  labs(
-    title = "Mann-Whitney U检验的可视化解释",
-    x = "区域类型", y = "底栖动物生物量",
-    subtitle = paste("U统计量 =", round(u_stat, 2),
-                     ", p值 =", round(mw_test$p.value, 4))
-  ) +
-  theme_minimal() +
-  scale_fill_manual(values = c("#ff7f0e", "#1f77b4"))
-```
+为了更好地理解Mann-Whitney U检验的原理，让我们通过一个图来理解：
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/mann-whitney-visualization-1.png" alt="Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较" width="80%" />
@@ -1267,125 +765,13 @@ $$H_1: \text{至少有一对组的均值不相等}$$
 - 研究结论的可靠性会大大降低
 - 后续的保护决策或管理措施可能基于错误的发现
 
-让我们通过R代码生成一个可视化图表来直观理解这个问题：
+让我们通过一个图来直观理解这个问题：
 
 
-``` r
-# 设置随机种子 - 确保结果可重现
-set.seed(123)
-
-# 模拟数据：实际上所有组来自相同的分布（零假设为真）
-k <- 5 # 组数 - 模拟5个不同的处理组
-n_per_group <- 10 # 每组样本量 - 每个组包含10个观测值
-
-# 生成数据 - 所有组都来自N(0,1)分布，即零假设为真
-# 这意味着所有组实际上没有差异，任何"显著"结果都是假阳性
-group_data <- list()
-for (i in 1:k) {
-  group_data[[i]] <- rnorm(n_per_group, mean = 0, sd = 1)
-}
-
-# 计算所有两两比较的t检验
-# 使用combn函数生成所有可能的组对组合
-comparisons <- combn(1:k, 2) # 所有可能的组对 - 对于5个组，共有10种组合
-m <- ncol(comparisons) # 比较次数 - 记录需要进行多少次两两比较
-
-# 存储p值 - 创建一个数值向量来存储每次t检验的p值
-p_values <- numeric(m)
-for (i in 1:m) {
-  group1 <- comparisons[1, i] # 提取第一个组的编号
-  group2 <- comparisons[2, i] # 提取第二个组的编号
-  # 执行独立样本t检验，比较两个组的均值差异
-  t_test_result <- t.test(group_data[[group1]], group_data[[group2]])
-  p_values[i] <- t_test_result$p.value # 存储p值
-}
-
-# 执行方差分析 - 使用正确的方法检验总体差异
-# 将所有组的数据合并为一个向量
-all_data <- unlist(group_data)
-# 创建组标签向量，用于方差分析
-group_labels <- rep(1:k, each = n_per_group)
-# 执行单因素方差分析
-anova_result <- aov(all_data ~ factor(group_labels))
-# 提取方差分析的p值
-anova_p <- summary(anova_result)[[1]]["factor(group_labels)", "Pr(>F)"]
-```
-
-**数据生成说明**：这段代码模拟了5个组的数据，所有组实际上来自相同的正态分布（零假设为真）。然后进行了所有可能的组对t检验（共10次比较），并执行了方差分析。
 
 
-``` r
-# 创建可视化数据
-library(ggplot2)
-
-# 数据框1：多个t检验的结果
-t_test_df <- data.frame(
-  comparison = 1:m,
-  p_value = p_values,
-  significant = p_values < 0.05
-)
-
-# 数据框2：方差分析结果
-anova_df <- data.frame(
-  method = "ANOVA",
-  p_value = anova_p,
-  significant = anova_p < 0.05
-)
-
-# 计算累积第一类错误率
-cumulative_error <- data.frame(
-  k = 2:8,
-  comparisons = choose(2:8, 2),
-  error_rate = 1 - (1 - 0.05)^choose(2:8, 2)
-)
-```
-
-**数据准备说明**：这段代码准备了用于可视化的数据，包括多个t检验的结果、方差分析结果，以及计算了不同组数下的累积第一类错误率。
 
 
-``` r
-# 绘制多个t检验的p值分布
-p1 <- ggplot(t_test_df, aes(
-  x = comparison, y = p_value,
-  color = significant, shape = significant
-)) +
-  geom_point(size = 3) +
-  geom_hline(yintercept = 0.05, linetype = "dashed", color = "red") +
-  scale_color_manual(values = c("FALSE" = "blue", "TRUE" = "red")) +
-  scale_shape_manual(values = c("FALSE" = 16, "TRUE" = 17)) +
-  labs(
-    title = "多个t检验：p值分布",
-    x = "比较编号", y = "p值",
-    subtitle = paste("假阳性数量：", sum(t_test_df$significant), "/", m)
-  ) +
-  theme_minimal() +
-  theme(legend.position = "none")
-
-# 绘制累积第一类错误率
-p2 <- ggplot(cumulative_error, aes(x = k, y = error_rate)) +
-  geom_line(color = "blue", size = 1) +
-  geom_point(color = "blue", size = 2) +
-  geom_hline(yintercept = 0.05, linetype = "dashed", color = "red") +
-  geom_text(aes(label = paste0(round(error_rate * 100, 1), "%")),
-    vjust = -0.5, size = 3
-  ) +
-  labs(
-    title = "累积第一类错误率",
-    x = "组数 (k)", y = "累积第一类错误率",
-    subtitle = "红色虚线表示期望的5%错误率"
-  ) +
-  theme_minimal()
-
-# 使用patchwork包组合图形
-library(patchwork)
-p1 + p2 + plot_annotation(
-  title = "多个t检验 vs 方差分析：第一类错误率控制",
-  subtitle = paste(
-    "ANOVA p值：", round(anova_p, 4),
-    "（正确不拒绝零假设）"
-  )
-)
-```
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/multiple-t-test-vs-anova-1.png" alt="多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案" width="80%" />
@@ -1453,73 +839,11 @@ p1 + p2 + plot_annotation(
 
 方差分析的使用需要满足一些前提条件：数据应该近似正态分布，各组方差应该相等（方差齐性），观测值之间相互独立。如果这些条件不满足，我们可能需要考虑使用非参数检验方法。
 
-为了更好地理解方差分析的原理，让我们通过R代码生成一个可视化图表：
+为了更好地理解方差分析的原理，让我们通过一个图来理解：
 
 
-``` r
-# 设置参数
-set.seed(123)
-
-# 模拟三种森林类型的鸟类物种丰富度数据
-broadleaf <- rnorm(10, mean = 15, sd = 2) # 阔叶林
-coniferous <- rnorm(10, mean = 12, sd = 2) # 针叶林
-mixed <- rnorm(10, mean = 14, sd = 2) # 混交林
-
-# 创建数据框
-forest_data <- data.frame(
-  richness = c(broadleaf, coniferous, mixed),
-  forest_type = rep(c("阔叶林", "针叶林", "混交林"), each = 10)
-)
-
-# 执行方差分析
-anova_result <- aov(richness ~ forest_type, data = forest_data)
-
-# 提取F统计量和p值
-f_stat <- summary(anova_result)[[1]]["forest_type", "F value"]
-p_value <- summary(anova_result)[[1]]["forest_type", "Pr(>F)"]
-```
 
 
-``` r
-# 生成F分布数据
-df1 <- 2 # 组间自由度 $k-1$
-df2 <- 27 # 组内自由度 $N-k$
-x_vals <- seq(0, 8, length.out = 1000)
-f_density <- df(x_vals, df1 = df1, df2 = df2)
-
-# 创建数据框
-f_df <- data.frame(x = x_vals, density = f_density)
-```
-
-
-``` r
-# 绘制F分布图
-library(ggplot2)
-ggplot(f_df, aes(x = x, y = density)) +
-  geom_line(color = "blue", size = 1) +
-  geom_vline(
-    xintercept = f_stat, color = "red", size = 1,
-    linetype = "solid"
-  ) +
-  geom_area(
-    data = subset(f_df, x >= f_stat),
-    aes(x = x, y = density), fill = "red", alpha = 0.3
-  ) +
-  annotate("text",
-    x = f_stat + 1, y = 0.2,
-    label = paste("$F$ =", round(f_stat, 2)), color = "red"
-  ) +
-  annotate("text",
-    x = f_stat + 1, y = 0.15,
-    label = paste("$p$ =", round(p_value, 4)), color = "red"
-  ) +
-  labs(
-    title = "方差分析的可视化解释",
-    x = "$F$统计量", y = "密度",
-    subtitle = "红色区域表示$p$值，垂直线表示观测到的$F$统计量"
-  ) +
-  theme_minimal()
-```
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/anova-visualization-1.png" alt="方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域" width="80%" />
@@ -1580,42 +904,7 @@ $$H = \frac{12}{N(N+1)} \sum_{i=1}^k \frac{R_i^2}{n_i} - 3(N+1)$$
 
 Kruskal-Wallis检验的主要优点是它对分布形态没有要求，对极端值不敏感。然而，它的缺点是统计功效通常低于对应的参数检验（方差分析），因为它忽略了数据的数值信息，只使用秩次信息。
 
-为了更好地理解Kruskal-Wallis检验的原理，让我们通过R代码生成一个可视化图表：
-
-
-``` r
-# 设置参数
-set.seed(123)
-
-# 模拟三种污染程度区域的底栖动物生物量数据（偏态分布）
-light_pollution <- c(8.2, 10.5, 12.8, 15.3, 18.7, 22.1, 25.4, 28.9) # 轻度污染
-moderate_pollution <- c(5.8, 7.3, 9.1, 12.5, 15.8, 18.2, 21.7, 24.3) # 中度污染
-heavy_pollution <- c(2.1, 3.5, 4.2, 5.8, 7.3, 9.1, 12.5, 15.8) # 重度污染
-
-# 创建数据框
-pollution_data <- data.frame(
-  biomass = c(light_pollution, moderate_pollution, heavy_pollution),
-  pollution_level = rep(c("轻度污染", "中度污染", "重度污染"), each = 8)
-)
-
-# 执行Kruskal-Wallis检验
-kw_test <- kruskal.test(biomass ~ pollution_level, data = pollution_data)
-
-# 创建数据框用于可视化
-library(ggplot2)
-ggplot(pollution_data, aes(x = pollution_level, y = biomass,
-                           fill = pollution_level)) +
-  geom_boxplot(alpha = 0.7) +
-  geom_jitter(width = 0.2, size = 2, alpha = 0.6) +
-  labs(
-    title = "Kruskal-Wallis检验的可视化解释",
-    x = "污染程度", y = "底栖动物生物量",
-    subtitle = paste("H统计量 =", round(kw_test$statistic, 2),
-                     ", p值 =", round(kw_test$p.value, 4))
-  ) +
-  theme_minimal() +
-  scale_fill_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
-```
+为了更好地理解Kruskal-Wallis检验的原理，让我们通过一个图来理解：
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/kruskal-wallis-visualization-1.png" alt="Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较" width="80%" />
@@ -1914,73 +1203,15 @@ summary_stats <- protection_data %>%
 ```
 
 
-``` r
-# 绘制均值图
-p1 <- ggplot(summary_stats, aes(
-  x = protection_measure, y = mean_density,
-  fill = protection_measure
-)) +
-  geom_col(alpha = 0.7) +
-  geom_errorbar(
-    aes(
-      ymin = mean_density - se_density,
-      ymax = mean_density + se_density
-    ),
-    width = 0.2
-  ) +
-  labs(
-    title = "不同保护措施的梅花鹿种群密度",
-    x = "保护措施", y = "梅花鹿密度（只/平方公里，均值±标准误）"
-  ) +
-  theme_minimal() +
-  scale_fill_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
-
-print(p1)
-```
-
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-mean-plot-1.png" alt="不同保护措施的梅花鹿种群密度均值图：展示三种保护措施的平均梅花鹿密度及其标准误" width="80%" />
-<p class="caption">(\#fig:multiple-comparison-mean-plot)不同保护措施的梅花鹿种群密度均值图：展示三种保护措施的平均梅花鹿密度及其标准误</p>
-</div>
 
 
-``` r
-# 绘制箱线图
-p2 <- ggplot(protection_data, aes(
-  x = protection_measure, y = density,
-  fill = protection_measure
-)) +
-  geom_boxplot(alpha = 0.7) +
-  geom_jitter(width = 0.2, alpha = 0.6) +
-  labs(
-    title = "梅花鹿种群密度分布",
-    x = "保护措施", y = "梅花鹿密度（只/平方公里）"
-  ) +
-  theme_minimal() +
-  scale_fill_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
-
-print(p2)
-```
-
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-boxplot-1.png" alt="不同保护措施的梅花鹿种群密度箱线图：展示三种保护措施的梅花鹿密度分布情况" width="80%" />
-<p class="caption">(\#fig:multiple-comparison-boxplot)不同保护措施的梅花鹿种群密度箱线图：展示三种保护措施的梅花鹿密度分布情况</p>
-</div>
-
-
-``` r
-# 使用patchwork包组合图形
-library(patchwork)
-combined_plot <- p1 + p2 + plot_layout(guides = "collect") &
-  theme(legend.position = "bottom")
-
-print(combined_plot)
-```
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-combined-plot-1.png" alt="多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化" width="80%" />
 <p class="caption">(\#fig:multiple-comparison-combined-plot)多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化</p>
 </div>
+
+图 \@ref(fig:multiple-comparison-combined-plot) 展示了多重比较校正的综合可视化结果。该组合图形将均值图（左侧）和箱线图（右侧）并排显示，便于直观比较三种保护措施下梅花鹿种群密度的统计特征。均值图显示各组的平均密度及其标准误，箱线图则展示了数据的分布特征和个体观测值。这种组合可视化方式有助于全面理解多重比较分析的结果。
 
 **结果解释**：
 
@@ -1996,52 +1227,12 @@ print(combined_plot)
 
 让我们通过另一个可视化来理解多重比较校正如何影响p值的解释：
 
-
-``` r
-# 模拟多个比较的p值
-set.seed(123)
-num_tests <- 20
-
-# 生成p值（大部分来自零假设，少数来自备择假设）
-null_pvalues <- runif(15, 0, 1) # 零假设下的p值
-alt_pvalues <- runif(5, 0, 0.05) # 备择假设下的p值
-all_pvalues <- c(null_pvalues, alt_pvalues)
-
-# 应用不同的多重比较校正
-bonferroni_p <- p.adjust(all_pvalues, method = "bonferroni")
-bh_p <- p.adjust(all_pvalues, method = "BH")
-
-# 创建可视化数据
-viz_data <- data.frame(
-  test_id = rep(1:num_tests, 3),
-  p_value = c(all_pvalues, bonferroni_p, bh_p),
-  method = rep(c("未校正", "Bonferroni", "FDR控制"), each = num_tests),
-  true_effect = rep(c(rep("无效应", 15), rep("有效应", 5)), 3)
-)
-
-# 绘制p值比较图
-library(ggplot2)
-ggplot(viz_data, aes(
-  x = test_id, y = -log10(p_value),
-  color = true_effect, shape = method
-)) +
-  geom_point(size = 3, alpha = 0.8) +
-  geom_hline(yintercept = -log10(0.05), linetype = "dashed", color = "red") +
-  facet_wrap(~method, ncol = 1) +
-  labs(
-    title = "多重比较校正对p值的影响",
-    x = "检验编号", y = "-log10(p值)",
-    subtitle = "红色虚线表示显著性阈值 (p = 0.05)"
-  ) +
-  theme_minimal() +
-  scale_color_manual(values = c("无效应" = "blue", "有效应" = "red")) +
-  scale_shape_manual(values = c(16, 17, 15))
-```
-
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-visualization-1.png" alt="多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响" width="80%" />
 <p class="caption">(\#fig:multiple-comparison-visualization)多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响</p>
 </div>
+
+图 \@ref(fig:multiple-comparison-visualization) 展示了多重比较校正效果的直观可视化。该图形模拟了20个假设检验的情景，其中15个来自零假设（无真实效应，蓝色点），5个来自备择假设（有真实效应，红色点）。图形采用三面板布局，分别显示未校正、Bonferroni校正和FDR控制三种方法处理后的p值。通过比较各面板中超过红色虚线（显著性阈值）的点数，可以直观理解不同校正方法在错误控制和发现力之间的权衡。
 
 **图表解释**：
 
@@ -2240,9 +1431,6 @@ library(pwr)
 ``` r
 # 实例：禁猎保护对梅花鹿种群密度影响的功效分析
 # 研究问题：比较禁猎保护区域和未保护区域的梅花鹿密度
-# 预期效应大小：中等效应（Cohen's d = 0.5）
-# 显著性水平：α = 0.05
-# 期望功效：0.80
 
 # 计算所需样本量 - 使用pwr.t.test函数进行t检验的功效分析
 t_power <- pwr.t.test(
@@ -2296,10 +1484,6 @@ print(t_power)
 ``` r
 # 实例：不同保护措施对梅花鹿种群密度影响的功效分析
 # 研究问题：比较禁猎保护、栖息地恢复、人工投食三种保护措施的梅花鹿密度
-# 组数：3
-# 预期效应大小：中等效应（f = 0.25）
-# 显著性水平：α = 0.05
-# 期望功效：0.80
 
 # 计算所需样本量
 anova_power <- pwr.anova.test(
@@ -2352,9 +1536,6 @@ $$f = \sqrt{\frac{\eta^2}{1-\eta^2}}$$
 ``` r
 # 实例：温度与物种丰富度关系的功效分析
 # 研究问题：检验年平均温度与鸟类物种丰富度的相关性
-# 预期相关系数：r = 0.3（中等相关）
-# 显著性水平：α = 0.05
-# 期望功效：0.80
 
 # 计算所需样本量
 cor_power <- pwr.r.test(
@@ -2398,10 +1579,6 @@ print(cor_power)
 ``` r
 # 实例：物种在不同生境中分布差异的功效分析
 # 研究问题：检验物种在三种生境类型中的分布是否存在差异
-# 效应大小：w = 0.3（中等效应）
-# 自由度：df = 2（(行数-1)×(列数-1)）
-# 显著性水平：α = 0.05
-# 期望功效：0.80
 
 # 计算所需样本量
 chisq_power <- pwr.chisq.test(
@@ -2447,64 +1624,6 @@ print(chisq_power)
 功效曲线可以直观地展示样本量与统计功效之间的关系，帮助我们理解样本量选择的权衡：
 
 
-``` r
-# 加载绘图包 - 用于创建功效曲线的可视化图表
-library(ggplot2)
-
-# 生成不同样本量下的功效数据
-# 创建样本量序列，从10到100，步长为5
-sample_sizes <- seq(10, 100, by = 5)
-
-# 计算每个样本量对应的统计功效
-# 使用sapply函数对每个样本量进行功效计算
-power_values <- sapply(sample_sizes, function(n) {
-  # 对每个样本量n，计算对应的统计功效
-  pwr.t.test(
-    n = n, # 样本量 - 每组样本量
-    d = 0.5, # 效应大小 - 中等效应（Cohen's d = 0.5）
-    sig.level = 0.05, # 显著性水平 - 第一类错误风险
-    type = "two.sample", # 检验类型 - 独立样本t检验
-    alternative = "two.sided" # 备择假设 - 双侧检验
-  )$power # 提取功效值
-})
-
-# 创建数据框 - 用于绘制功效曲线
-power_curve <- data.frame(
-  sample_size = sample_sizes, # 样本量列
-  power = power_values # 功效值列
-)
-```
-
-
-``` r
-# 绘制功效曲线
-ggplot(power_curve, aes(x = sample_size, y = power)) +
-  geom_line(color = "blue", size = 1) +
-  geom_point(color = "blue", size = 1.5) +
-  geom_hline(yintercept = 0.8, linetype = "dashed", color = "red", size = 1) +
-  geom_vline(xintercept = t_power$n, linetype = "dashed",
-             color = "green", size = 1) +
-  annotate("text",
-    x = 80, y = 0.82,
-    label = "期望功效阈值 (0.8)", color = "red", size = 4
-  ) +
-  annotate("text",
-    x = t_power$n + 8, y = 0.3,
-    label = paste("所需样本量 =", round(t_power$n)),
-    color = "green", size = 4
-  ) +
-  labs(
-    title = "样本量对统计功效的影响",
-    x = "每组样本量",
-    y = "统计功效",
-    subtitle = "展示在中等效应大小(d=0.5)和α=0.05条件下，样本量与统计功效的关系"
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    plot.subtitle = element_text(hjust = 0.5)
-  )
-```
 
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/power-curve-plotting-1.png" alt="样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效" width="80%" />
@@ -2543,34 +1662,12 @@ sensitivity_df <- data.frame(
 )
 ```
 
-
-``` r
-# 绘制敏感性分析图
-ggplot(sensitivity_df, aes(x = effect_label, y = sample_need,
-                           fill = effect_label)) +
-  geom_col(alpha = 0.7) +
-  geom_text(aes(label = paste("n =", round(sample_need))),
-    vjust = -0.5, size = 4
-  ) +
-  labs(
-    title = "不同效应大小下的样本量需求",
-    x = "效应大小",
-    y = "所需样本量（每组）",
-    subtitle = "在α=0.05和功效=0.80条件下"
-  ) +
-  theme_minimal(base_size = 12) +
-  theme(
-    plot.title = element_text(hjust = 0.5, face = "bold"),
-    plot.subtitle = element_text(hjust = 0.5),
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  ) +
-  scale_fill_brewer(palette = "Set2")
-```
-
 <div class="figure" style="text-align: center">
 <img src="06-classical_hypothesis_tests_files/figure-html/sensitivity-analysis-plot-1.png" alt="效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量" width="80%" />
 <p class="caption">(\#fig:sensitivity-analysis-plot)效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量</p>
 </div>
+
+图 \@ref(fig:sensitivity-analysis-plot) 展示了效应大小对样本量需求的敏感性分析结果。该柱状图直观地比较了四种不同效应大小水平（小效应d=0.2、中小效应d=0.3、中效应d=0.5、大效应d=0.8）下达到80%统计功效所需的样本量。从图中可以清晰地看到，随着效应大小的增加，所需的样本量显著减少。例如，检测小效应需要每组约394个样本，而检测大效应仅需每组约26个样本。这种敏感性分析有助于研究者在研究设计阶段根据预期的效应大小合理规划样本量。
 
 **实践建议：**
 

@@ -79,9 +79,23 @@ showtext_auto()     # 自动启用中文字体
 林小雨开始实施她的模型复杂度平衡研究。她首先需要生成模拟数据来演示不同复杂度模型的拟合效果。这些数据模拟了她在森林调查中观察到的植物生物量与土壤养分的关系，其中真实生态关系是二次的，反映了物种对养分的最适响应模式。
 数据导入后，林小雨开始拟合不同复杂度的模型。她构建了四个模型：线性模型、二次模型、三次模型和10次多项式模型，每个模型代表了对植物生物量与土壤养分关系的不同假设。
 
+```{r, echo=FALSE}
+# 林小雨的森林土壤调查数据：演示模型复杂度与拟合优度的平衡
+set.seed(123)
+n_forest_plots <- 100
+forest_soil_nutrient <- seq(10, 100, length.out = n_forest_plots)
+forest_biomass_true <- 50 + 0.8 * forest_soil_nutrient - 0.005 * forest_soil_nutrient^2
+forest_biomass_observed <- forest_biomass_true + rnorm(n_forest_plots, 0, 10)
+forest_soil_data <- data.frame(
+  soil_nutrient = forest_soil_nutrient,
+  plant_biomass = forest_biomass_observed
+)
+save(forest_soil_data, file = "data/forest_soil_data.rds")
+```
+
 ```{r}
 # 从data文件夹读取预先生成的森林土壤数据
-forest_soil_data <- readRDS("data/forest_soil_data.rds")
+load("data/forest_soil_data.rds")
 
 # 拟合不同复杂度的模型
 # 线性模型：最简单的模型，假设线性关系
