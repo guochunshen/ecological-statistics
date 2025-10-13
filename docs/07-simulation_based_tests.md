@@ -1,4 +1,4 @@
-# 基于模拟的假设检验
+# 生态假设的模拟检验方法
 
 
 
@@ -44,7 +44,7 @@
 
 在深入探讨具体的基于模拟的统计方法之前，我们需要首先建立对这些方法在整个统计方法学体系中定位的清晰认识。理解统计方法的发展脉络和层次结构，将帮助我们更好地把握不同方法的应用场景和相互关系。
 
-## 方法学层次与演进脉络
+## 生态假设检验的方法学演进
 
 为了准确把握本章内容在梅花鹿保护研究统计方法体系中的定位，我们需要简要回顾统计方法学的发展历程及其在保护生物学中的应用演进。
 
@@ -63,7 +63,7 @@
 
 基于对统计方法学演进脉络的理解，我们现在可以深入探讨本章的核心内容——基于模拟的假设检验方法。我们将从最基础且应用广泛的置换检验开始，逐步展开对各类基于模拟方法的系统学习。
 
-## 置换检验
+## 生态假设的置换检验
 
 置换检验（Permutation Test），又称随机化检验（Randomization Test），是一种基于数据重排的非参数统计检验方法。其核心思想可以追溯到20世纪30年代，由R.A. Fisher和E.J.G. Pitman等人提出，但直到计算机技术普及后才在梅花鹿保护研究中得到广泛应用。
 
@@ -161,22 +161,15 @@ adonis_result <- adonis2(comm_data ~ groups, method = "bray")
 knitr::kable(adonis_result, caption = "置换ANOVA分析结果")
 ```
 
-\begin{table}
 
-\caption{(\#tab:adonis-result-table)置换ANOVA分析结果}
-\centering
-\begin{tabular}[t]{l|r|r|r|r|r}
-\hline
-  & Df & SumOfSqs & R2 & F & Pr(>F)\\
-\hline
-Model & 1 & 0.0098147 & 0.0145518 & 0.2658007 & 0.791\\
-\hline
-Residual & 18 & 0.6646505 & 0.9854482 & NA & NA\\
-\hline
-Total & 19 & 0.6744652 & 1.0000000 & NA & NA\\
-\hline
-\end{tabular}
-\end{table}
+
+Table: (\#tab:adonis-result-table)置换ANOVA分析结果
+
+|         | Df|  SumOfSqs|        R2|         F| Pr(>F)|
+|:--------|--:|---------:|---------:|---------:|------:|
+|Model    |  1| 0.0098147| 0.0145518| 0.2658007|  0.791|
+|Residual | 18| 0.6646505| 0.9854482|        NA|     NA|
+|Total    | 19| 0.6744652| 1.0000000|        NA|     NA|
 
 表 \@ref(tab:adonis-result-table) 展示了置换ANOVA分析的结果，从中可以看出不同栖息地类型对植物群落组成的影响是否具有统计显著性。
 
@@ -295,7 +288,7 @@ print(test_result)
 
 在掌握了置换检验的基本原理和应用方法后，我们现在转向另一种重要的基于模拟的统计方法——蒙特卡洛检验。虽然两者都基于随机模拟的思想，但它们在数据生成机制和应用场景上存在重要差异，理解这些差异将帮助我们更好地选择合适的方法。
 
-## 蒙特卡洛检验
+## 生态假设的蒙特卡洛检验
 
 ### 蒙特卡洛方法的概念体系
 
@@ -397,7 +390,7 @@ p_value <- mean(sim_stats <= obs_stat)
 
 在了解了参数化蒙特卡洛检验后，我们现在转向蒙特卡洛方法中的另一个重要分支——非参数化蒙特卡洛方法，其中最具代表性的就是自助法检验。自助法作为蒙特卡洛方法的一种特殊形式，在参数估计和置信区间构建方面具有独特的优势。
 
-## 自助法检验
+## 生态假设的自助法检验
 
 ### 自助法的基本原理
 
@@ -746,6 +739,7 @@ cat("经验p值:", p_value, "\n")
 4. **直观性**：经验分布比理论分布更易于理解和解释
 
 **适用场景推荐**：
+
 - **样本量 < 50**：优先考虑模拟方法
 - **稀有等位基因**（频率 < 0.05）：模拟方法更可靠
 - **多位点同时检验**：模拟方法便于多重比较校正
@@ -764,6 +758,7 @@ cat("经验p值:", p_value, "\n")
 **生态学问题背景**：群落多样性比较是生态学研究中最常见的问题之一。生态学家经常需要比较不同生境、不同处理或不同时间点的物种多样性。常用的多样性指数包括物种丰富度（物种数）、Shannon多样性指数、Simpson多样性指数等。然而，这些多样性指数的抽样分布通常未知，使得传统的参数检验方法难以适用。
 
 **传统方法的局限性**：
+
 - **分布未知**：大多数多样性指数没有已知的理论分布
 - **抽样效应**：不同样本的抽样努力和覆盖度不同，影响多样性估计
 - **多重比较问题**：同时比较多个群落时，传统方法难以处理多重比较校正
@@ -774,6 +769,7 @@ cat("经验p值:", p_value, "\n")
 **生态学实例：梅花鹿栖息地恢复对植物多样性的影响评估**
 
 假设我们研究不同恢复年限的梅花鹿栖息地对植物多样性的影响。我们在三种栖息地类型中设置样方调查：
+
 - 5年恢复栖息地：调查到15种植物
 - 10年恢复栖息地：调查到22种植物
 - 原生栖息地（对照）：调查到28种植物
@@ -849,6 +845,7 @@ ci_primary <- quantile(boot_primary, c(0.025, 0.975))
 **传统方法的挑战**：传统的多元方差分析（MANOVA）要求数据满足多元正态性和方差-协方差矩阵齐性等严格假设，这些假设在群落数据中往往不成立。群落数据通常是多变量的、非正态的，且存在大量的零值。
 
 **基于模拟的优势**：ANOSIM通过置换检验来构建R统计量的零分布，不依赖于数据的分布假设，特别适合处理：
+
 - 多变量群落数据
 - 非正态分布数据
 - 存在大量零值的数据
@@ -857,6 +854,7 @@ ci_primary <- quantile(boot_primary, c(0.025, 0.975))
 **生态学实例：梅花鹿采食对植物群落的影响研究**
 
 假设我们研究梅花鹿采食活动对植物群落的影响。我们在三个区域设置采样点：
+
 - 梅花鹿高密度区（5个样点）
 - 梅花鹿中密度区（5个样点）
 - 梅花鹿低密度区（5个样点）
@@ -906,27 +904,20 @@ print(anosim_result)
 
 图\@ref(fig:anosim-rank-plot)展示了ANOSIM分析的排序差异箱线图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/anosim-rank-plot-1} 
-
-}
-
-\caption{ANOSIM分析：不同河段底栖动物群落排序差异检验}(\#fig:anosim-rank-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/anosim-rank-plot-1.png" alt="ANOSIM分析：不同河段底栖动物群落排序差异检验" width="80%" />
+<p class="caption">(\#fig:anosim-rank-plot)ANOSIM分析：不同河段底栖动物群落排序差异检验</p>
+</div>
 
 图\@ref(fig:nmds-community-plot)展示了底栖动物群落组成的NMDS排序图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nmds-community-plot-1} 
-
-}
-
-\caption{底栖动物群落组成的NMDS排序分析}(\#fig:nmds-community-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/nmds-community-plot-1.png" alt="底栖动物群落组成的NMDS排序分析" width="80%" />
+<p class="caption">(\#fig:nmds-community-plot)底栖动物群落组成的NMDS排序分析</p>
+</div>
 
 **结果解释**：
+
 - **R统计量**：取值范围-1到1，值越大表示组间差异越明显
 - **p值**：检验组间差异的统计显著性
 - **典型解读**：R > 0.75表示组间分离很好；R > 0.5表示组间分离明显；R > 0.25表示组间存在分离趋势
@@ -959,6 +950,7 @@ print(anosim_result)
 4. **生态学解释**：统计显著性必须结合生态学机制进行解释，避免过度依赖p值
 
 **保护生物学应用**：在保护生物学中，基于模拟的多样性检验方法特别有价值：
+
 - **濒危物种监测**：小样本情况下的可靠性评估
 - **保护效果评估**：比较保护区内外的生物多样性
 - **恢复生态学**：评估生态恢复项目的成效
@@ -977,6 +969,7 @@ print(anosim_result)
 **生态学问题背景**：理解物种在空间中的分布模式是生态学的基本问题。物种可能呈现三种基本的空间分布模式：随机分布、聚集分布和均匀分布。这些分布模式反映了物种的生态学特性、种内种间关系以及环境异质性的影响。
 
 **传统方法的局限性**：传统的空间分布检验方法往往依赖于严格的数学假设，如：
+
 - 空间独立性假设
 - 均匀生境假设
 - 大样本渐近分布
@@ -1044,14 +1037,10 @@ K_envelope <- envelope(observed_pattern, Kest,
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/ripley-k-envelope-1} 
-
-}
-
-\caption{巴西坚果树空间分布模式检验：Ripley's K函数包络分析}(\#fig:ripley-k-envelope)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/ripley-k-envelope-1.png" alt="巴西坚果树空间分布模式检验：Ripley's K函数包络分析" width="80%" />
+<p class="caption">(\#fig:ripley-k-envelope)巴西坚果树空间分布模式检验：Ripley's K函数包络分析</p>
+</div>
 
 图 \@ref(fig:ripley-k-envelope) 展示了Ripley's K函数包络分析的可视化结果。图中黑色实线表示观测到的K函数曲线，灰色区域表示基于999次蒙特卡洛模拟构建的置信包络，红色实线表示完全空间随机性（CSR）的理论期望值。通过比较观测曲线与包络线的相对位置，可以判断巴西坚果树的空间分布模式是否显著偏离随机分布。
 
@@ -1119,37 +1108,25 @@ knitr::kable(summary(fit_model)$coefs.SE.CI)
 ```
 
 
-\begin{tabular}{l|r|r|r|r|l|r}
-\hline
-  & Estimate & S.E. & CI95.lo & CI95.hi & Ztest & Zval\\
-\hline
-(Intercept) & -4.2767794 & 0.2117614 & -4.6918241 & -3.861735 & *** & -20.196218\\
-\hline
-coral\_coverage & 0.6330506 & 0.3749223 & -0.1017836 & 1.367885 &  & 1.688485\\
-\hline
-\end{tabular}
+
+|               |   Estimate|      S.E.|    CI95.lo|   CI95.hi|Ztest |       Zval|
+|:--------------|----------:|---------:|----------:|---------:|:-----|----------:|
+|(Intercept)    | -4.2767794| 0.2117614| -4.6918241| -3.861735|***   | -20.196218|
+|coral_coverage |  0.6330506| 0.3749223| -0.1017836|  1.367885|      |   1.688485|
 
 图\@ref(fig:coral-coverage-dist)展示了模拟的珊瑚覆盖率分布情况：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/coral-coverage-dist-1} 
-
-}
-
-\caption{模拟的珊瑚覆盖率空间分布}(\#fig:coral-coverage-dist)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/coral-coverage-dist-1.png" alt="模拟的珊瑚覆盖率空间分布" width="80%" />
+<p class="caption">(\#fig:coral-coverage-dist)模拟的珊瑚覆盖率空间分布</p>
+</div>
 
 图\@ref(fig:fish-distribution-coral)展示了小丑鱼在珊瑚覆盖率背景下的实际分布：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/fish-distribution-coral-1} 
-
-}
-
-\caption{小丑鱼在珊瑚覆盖率背景下的空间分布}(\#fig:fish-distribution-coral)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/fish-distribution-coral-1.png" alt="小丑鱼在珊瑚覆盖率背景下的空间分布" width="80%" />
+<p class="caption">(\#fig:fish-distribution-coral)小丑鱼在珊瑚覆盖率背景下的空间分布</p>
+</div>
 
 接下来进行拟合优度检验：
 
@@ -1197,14 +1174,10 @@ cat("拟合优度检验p值:", p_value, "\n")
 
 图\@ref(fig:predicted-fish-intensity)展示了模型预测的小丑鱼分布强度：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/predicted-fish-intensity-1} 
-
-}
-
-\caption{点过程模型预测的小丑鱼分布强度}(\#fig:predicted-fish-intensity)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/predicted-fish-intensity-1.png" alt="点过程模型预测的小丑鱼分布强度" width="80%" />
+<p class="caption">(\#fig:predicted-fish-intensity)点过程模型预测的小丑鱼分布强度</p>
+</div>
 
 **生态学意义**：如果拟合优度检验显示模型拟合良好（p值不显著），表明小丑鱼的分布主要受珊瑚覆盖率的影响。这支持了"栖息地选择"假说——小丑鱼倾向于选择珊瑚覆盖率高的区域。如果模型拟合不佳，可能表明存在其他重要因素，如：
 - 种内竞争导致的空间排斥
@@ -1276,16 +1249,19 @@ print(moran_test)
 ### 生态学应用与保护意义
 
 **保护生物学应用**：
+
 - **保护区设计**：基于物种空间分布模式优化保护区网络
 - **栖息地破碎化评估**：检验生境破碎对物种分布的影响
 - **入侵物种监测**：检测入侵物种的空间扩散模式
 
 **恢复生态学应用**：
+
 - **恢复效果评估**：比较恢复前后物种空间分布的变化
 - **种子源定位**：识别重要的种群补充源
 - **连通性分析**：评估生境斑块间的功能连通性
 
 **气候变化研究**：
+
 - **分布范围变化**：监测物种分布范围对气候变化的响应
 - **分布边界移动**：检验分布边界的气候驱动因素
 - **避难所识别**：识别气候变化的潜在避难所
@@ -1303,12 +1279,14 @@ print(moran_test)
 **生态学问题背景**：系统发育保守性描述的是亲缘关系较近的物种在性状上比随机期望更为相似的现象。理解性状的系统发育信号对于揭示生态适应的进化历史、预测物种对环境变化的响应以及指导保护策略都具有重要意义。
 
 **传统方法的局限性**：传统的系统发育信号检验方法（如Blomberg's K检验、Pagel's $\lambda$检验）依赖于特定的演化模型假设，如布朗运动模型。然而，这些假设在真实的生态系统中往往过于简化：
+
 - 布朗运动假设性状演化是随机的，忽略了自然选择的作用
 - 模型对异常物种或快速辐射事件敏感
 - 在小样本情况下，理论分布的近似可能不准确
 - 难以处理复杂的演化过程，如性状的趋同进化
 
 **基于模拟的优势**：蒙特卡洛模拟通过随机化系统发育树尖端的性状值来构建零分布，不依赖于特定的演化模型假设，特别适合处理：
+
 - 非标准演化模型的检验
 - 小样本系统发育分析
 - 复杂性状演化模式的识别
@@ -1408,14 +1386,10 @@ legend("bottomleft",
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/phylogenetic-signal-1} 
-
-}
-
-\caption{植物功能性状系统发育信号检验与可视化}(\#fig:phylogenetic-signal)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/phylogenetic-signal-1.png" alt="植物功能性状系统发育信号检验与可视化" width="80%" />
+<p class="caption">(\#fig:phylogenetic-signal)植物功能性状系统发育信号检验与可视化</p>
+</div>
 
 **生态学意义**：如果检验显示显著的系统发育信号（p < 0.05），表明这些功能性状在亲缘关系较近的物种间更为相似。这支持了"系统发育生态位保守性"假说——物种倾向于保留祖先的生态特性。这种信息对于理解群落组装机制、预测物种对气候变化的响应以及设计基于系统发育多样性的保护策略都具有重要价值。
 
@@ -1530,14 +1504,10 @@ text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/phylogenetic-contrasts-1} 
-
-}
-
-\caption{植物防御性状与生长速率关系的系统发育独立对比分析}(\#fig:phylogenetic-contrasts)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/phylogenetic-contrasts-1.png" alt="植物防御性状与生长速率关系的系统发育独立对比分析" width="80%" />
+<p class="caption">(\#fig:phylogenetic-contrasts)植物防御性状与生长速率关系的系统发育独立对比分析</p>
+</div>
 
 **生态学意义**：通过系统发育独立对比的置换检验，我们可以更可靠地推断防御性状与生长速率之间的生态权衡关系。如果检验显示显著的正相关（p < 0.05），表明在去除系统发育影响后，防御物质含量高的物种确实具有较慢的生长速率，支持了"生长-防御权衡"假说。这种分析为理解植物生活史策略的进化提供了重要证据。
 
@@ -1568,6 +1538,7 @@ text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
 4. **保护应用**：在保护生物学中考虑系统发育多样性的价值
 
 **进化生态学应用**：系统发育信号检验在进化生态学中具有广泛的应用价值：
+
 - **适应性进化研究**：检验性状是否受到自然选择的作用
 - **群落生态学**：理解系统发育对群落组装的约束
 - **保护生物学**：基于系统发育多样性设计保护优先区
@@ -1691,25 +1662,17 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:c-score-null-dist)展示了群落组装零模型检验的C-score零分布：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/c-score-null-dist-1} 
-
-}
-
-\caption{热带雨林群落组装零模型检验：C-score零分布与观测值比较}(\#fig:c-score-null-dist)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/c-score-null-dist-1.png" alt="热带雨林群落组装零模型检验：C-score零分布与观测值比较" width="80%" />
+<p class="caption">(\#fig:c-score-null-dist)热带雨林群落组装零模型检验：C-score零分布与观测值比较</p>
+</div>
 
 图\@ref(fig:community-matrix-heatmap)展示了热带雨林群落的物种分布热图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/community-matrix-heatmap-1} 
-
-}
-
-\caption{热带雨林群落物种分布热图：基于环境梯度的物种分布模式}(\#fig:community-matrix-heatmap)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/community-matrix-heatmap-1.png" alt="热带雨林群落物种分布热图：基于环境梯度的物种分布模式" width="80%" />
+<p class="caption">(\#fig:community-matrix-heatmap)热带雨林群落物种分布热图：基于环境梯度的物种分布模式</p>
+</div>
 
 **生态学意义**：如果零模型检验显示显著的C-score（p < 0.05），表明树种的共现模式显著偏离随机期望。较高的C-score通常表示物种间存在竞争排斥——物种倾向于避免在相同的样点中共存。这支持了"竞争排斥"假说在热带雨林群落组装中的重要性。
 
@@ -1800,36 +1763,24 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:nestedness-null-dist)展示了传粉网络嵌套性零模型检验的零分布：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nestedness-null-dist-1} 
-
-}
-
-\caption{传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较}(\#fig:nestedness-null-dist)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/nestedness-null-dist-1.png" alt="传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较" width="80%" />
+<p class="caption">(\#fig:nestedness-null-dist)传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较</p>
+</div>
 
 图\@ref(fig:pollination-network-structure)展示了传粉网络的结构图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/pollination-network-structure-1} 
-
-}
-
-\caption{传粉网络结构可视化：植物与传粉者的二分网络}(\#fig:pollination-network-structure)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/pollination-network-structure-1.png" alt="传粉网络结构可视化：植物与传粉者的二分网络" width="80%" />
+<p class="caption">(\#fig:pollination-network-structure)传粉网络结构可视化：植物与传粉者的二分网络</p>
+</div>
 
 图\@ref(fig:pollination-matrix-heatmap)展示了传粉网络相互作用的矩阵热图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/pollination-matrix-heatmap-1} 
-
-}
-
-\caption{传粉网络相互作用矩阵热图：嵌套结构的可视化}(\#fig:pollination-matrix-heatmap)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/pollination-matrix-heatmap-1.png" alt="传粉网络相互作用矩阵热图：嵌套结构的可视化" width="80%" />
+<p class="caption">(\#fig:pollination-matrix-heatmap)传粉网络相互作用矩阵热图：嵌套结构的可视化</p>
+</div>
 
 **生态学意义**：如果零模型检验显示显著的嵌套性（p < 0.05），表明传粉网络的结构确实具有嵌套模式。嵌套结构通常被认为能够增强生态网络的稳定性和韧性——当某些物种消失时，嵌套结构有助于维持网络的连接性。这种结构信息对于理解传粉服务的稳定性和设计保护策略具有重要意义。
 
@@ -1887,10 +1838,10 @@ summary(cooc_null)
 ```
 
 ```
-## Time Stamp:  Fri Oct 10 08:49:23 2025 
+## Time Stamp:  Sat Oct 11 06:56:49 2025 
 ## Reproducible:  
 ## Number of Replications:  
-## Elapsed Time:  0.19 secs 
+## Elapsed Time:  0.62 secs 
 ## Metric:  c_score 
 ## Algorithm:  sim9 
 ## Observed Index:  13.671 
@@ -1940,39 +1891,34 @@ cat("p值:", p_value, "\n")
 
 图\@ref(fig:cooc-null-model-plot)展示了EcoSimR包中物种共现零模型的检验结果：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/cooc-null-model-plot-1} 
-
-}
-
-\caption{物种共现零模型检验：EcoSimR包分析结果}(\#fig:cooc-null-model-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/cooc-null-model-plot-1.png" alt="物种共现零模型检验：EcoSimR包分析结果" width="80%" />
+<p class="caption">(\#fig:cooc-null-model-plot)物种共现零模型检验：EcoSimR包分析结果</p>
+</div>
 
 图\@ref(fig:nestedness-null-hist)展示了网络嵌套性零模型的零分布直方图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nestedness-null-hist-1} 
-
-}
-
-\caption{网络嵌套性零模型检验：嵌套性指数零分布}(\#fig:nestedness-null-hist)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/nestedness-null-hist-1.png" alt="网络嵌套性零模型检验：嵌套性指数零分布" width="80%" />
+<p class="caption">(\#fig:nestedness-null-hist)网络嵌套性零模型检验：嵌套性指数零分布</p>
+</div>
 
 ### 生态学应用与保护意义
 
 **保护生物学应用**：
+
 - **保护区设计**：基于物种共现模式优化保护区网络
 - **入侵物种风险评估**：检验外来物种与本地物种的相互作用模式
 - **生态系统恢复**：评估恢复后群落的组装过程
 
 **群落生态学应用**：
+
 - **群落构建机制**：区分环境过滤、竞争排斥、扩散限制的相对重要性
 - **生物多样性维持**：理解物种共存机制
 - **生态系统功能**：检验网络结构与生态系统功能的关系
 
 **全球变化研究**：
+
 - **气候变化响应**：监测群落结构对气候变化的响应
 - **栖息地破碎化**：检验生境破碎对物种相互作用的影响
 - **物种分布变化**：预测物种分布范围变化的生态后果

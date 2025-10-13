@@ -19,7 +19,7 @@
 
 本章将介绍AI时代的编程思维框架，帮助学生培养与LLM协同工作的核心能力，并通过R语言实践掌握现代数据分析方法。
 
-## 核心能力培养框架
+## 生态数据分析的核心能力
 
 以下是学生在学习编程课程时最需要培养的核心技能，我将其分为三大类：
 
@@ -111,7 +111,7 @@
 
 在应对气候变化对生物多样性影响的研究中，持续学习能力发挥着关键作用。假设一位研究者十年前主要使用传统的物种分布模型（如BIOCLIM、DOMAIN）来预测气候变化的影响。随着技术的发展，他需要主动学习新的建模方法，首先学习基于最大熵的MaxEnt模型，理解其相对于传统方法的优势；然后掌握集成建模方法（如ensemble forecasting），学会组合多个模型的预测结果；接着探索机器学习方法（如随机森林、支持向量机）在生态学中的应用；最近可能需要学习深度学习技术（如卷积神经网络）处理高分辨率的遥感数据。在这个过程中，研究者不仅需要学习技术本身，还需要批判性评估每种方法的适用条件——MaxEnt适合小样本数据，但可能过度依赖环境变量；机器学习方法预测性能好，但可解释性较差；深度学习方法能够捕捉复杂模式，但需要大量数据和计算资源。通过这种持续的学习过程，研究者能够根据具体的研究问题和数据条件，选择最合适的技术方法，确保研究成果既技术先进又科学可靠。更重要的是，这种学习过程本身会激发新的研究思路——比如将网络分析方法应用于物种互作研究，或将时间序列分析技术应用于长期生态监测数据，从而推动生态学研究的创新发展。
 
-## 通用编程思维基础
+## AI编程思维基础
 
 在AI时代，编程教育的重点已从特定语言的语法细节转向通用的编程思维框架。通用编程思维基础之所以重要，是因为它提供了跨语言、跨工具的问题解决能力。无论使用R、Python还是其他编程语言，无论与哪种AI工具协作，扎实的编程思维都是有效沟通和高效解决问题的基石。这种思维框架确保学生能够理解计算的基本原理，而不仅仅是记忆特定API的使用方法。
 
@@ -145,14 +145,10 @@
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{imgs/hardware_flow} 
-
-}
-
-\caption{程序运行中的数据流动示意图}(\#fig:hardware-flow-export)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="imgs/hardware_flow.png" alt="程序运行中的数据流动示意图" width="80%" />
+<p class="caption">(\#fig:hardware-flow-export)程序运行中的数据流动示意图</p>
+</div>
 
 图\@ref(fig:hardware-flow-export) 展示了程序运行过程中数据在不同硬件组件间的流动路径。在统计分析的具体场景中，这种数据流转体现得更加明显。例如，当运行一个线性回归分析时：R解释器从硬盘读取脚本文件到内存；数据文件从硬盘加载到内存的数据框中；CPU执行lm()函数，在内存中进行矩阵运算；计算结果（系数、p值等）存储在内存中的模型对象里；最终结果被写入硬盘的报告文件。如果分析涉及大规模数据，可能会出现内存瓶颈，此时需要采用分批处理或流式处理策略，让数据在硬盘和内存间分块流动。
 
@@ -714,7 +710,7 @@ test_that("多样性计算正确", {
 ```
 
 ```
-## Test passed
+## Test passed 😸
 ```
 
 ``` r
@@ -1232,14 +1228,10 @@ calculate_shannon_diversity <- function(species_vector) {
 
 下面这张图直观地展示了不同复杂度随数据量增长的趋势。**Y轴可以理解为时间或空间消耗**。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{01-statistical_programing_files/figure-latex/complexity-curve-1} 
-
-}
-
-\caption{算法复杂度随数据规模增长的趋势图}(\#fig:complexity-curve)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="01-statistical_programing_files/figure-html/complexity-curve-1.png" alt="算法复杂度随数据规模增长的趋势图" width="80%" />
+<p class="caption">(\#fig:complexity-curve)算法复杂度随数据规模增长的趋势图</p>
+</div>
 
 图\@ref(fig:complexity-curve) 直观地展示了不同复杂度等级随数据规模增长的趋势。**结论**：O(1) 和 O(log n) 是极其高效的，O(n) 和 O(n log n) 是优秀的，O(n²) 在 n 较小时可以接受，而 O(2^n) 和 O(n!) 应尽量避免。
 

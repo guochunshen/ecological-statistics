@@ -1,4 +1,4 @@
-# 描述统计
+# 生态特征的简单定量描述
 
 
 
@@ -327,14 +327,10 @@ results <- data.frame(
 
 为了直观展示标准误与样本量之间的反比关系，我们绘制了图\@ref(fig:se-sample-plot)，该图清晰地展示了随着样本量的增加，标准误呈现递减趋势。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/se-sample-plot-1} 
-
-}
-
-\caption{标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。}(\#fig:se-sample-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/se-sample-plot-1.png" alt="标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。" width="80%" />
+<p class="caption">标准误随样本量的变化关系图。随着样本量的增加，标准误逐渐减小，表明更大的样本量能够提供更精确的总体均值估计。</p>
+</div>
 
 可以从上图看到，标准误随着样本量的增加而减小，这意味着更大的样本量能够提供更精确的总体均值估计。在生态学研究中，标准误常用于构建估计值的置信区间：
 
@@ -434,14 +430,10 @@ $$g_1 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^3}{s^3}$$
 ## [1] "树木胸径分布的偏度： 0.65"
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/tree-skewness-plot-1} 
-
-}
-
-\caption{树木胸径分布的直方图，展示右偏分布特征。红色虚线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。}(\#fig:tree-skewness-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/tree-skewness-plot-1.png" alt="树木胸径分布的直方图，展示右偏分布特征。红色虚线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。" width="80%" />
+<p class="caption">树木胸径分布的直方图，展示右偏分布特征。红色虚线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。</p>
+</div>
 
 上述例子中，正偏度（通常大于0.5）表明分布向右偏斜，意味着有较多的小树和少数大树。在图形上，右偏分布的右侧尾部较长，均值大于中位数。这种模式常见于年龄结构年轻的种群。
 
@@ -472,12 +464,12 @@ kurtosis_b <- kurtosis(abundance_b)
 
 ```
 ## 物种A多度分布的峰度：2.53
-## 物种B多度分布的峰度：1.81
+## 物种B多度分布的峰度：2.06
 ```
 
 ```
 ## 物种A相对于正态分布的峰度：-0.47
-## 物种B相对于正态分布的峰度：-1.19
+## 物种B相对于正态分布的峰度：-0.94
 ```
 
 
@@ -539,14 +531,10 @@ kurtosis_count <- kurtosis(waterbird_counts) # 四阶矩：峰度
 
 如图\@ref(fig:stats-concepts-plot)所示，我们使用标准正态分布来可视化关键统计概念。该图清晰地展示了均值、标准差等统计量在概率分布上的几何意义。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/stats-concepts-plot-1} 
-
-}
-
-\caption{统计概念在正态分布上的可视化。红色垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色箭头表示标准差的实际跨度。}(\#fig:stats-concepts-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/stats-concepts-plot-1.png" alt="统计概念在正态分布上的可视化。红色垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色箭头表示标准差的实际跨度。" width="80%" />
+<p class="caption">统计概念在正态分布上的可视化。红色垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色箭头表示标准差的实际跨度。</p>
+</div>
 
 这个可视化展示了：
 
@@ -560,14 +548,10 @@ kurtosis_count <- kurtosis(waterbird_counts) # 四阶矩：峰度
 
 如图\@ref(fig:se-visualization-plot)所示，我们通过多次抽样模拟展示了标准误的统计意义。该图包含两个子图：左图显示样本均值的分布特征，右图展示标准误与样本均值的关系，帮助我们理解样本均值作为总体均值估计的精确程度。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/se-visualization-plot-1} 
-
-}
-
-\caption{标准误的可视化分析。左图显示样本均值的抽样分布，右图展示标准误与样本均值的关系。红色虚线表示总体均值，橙色虚线表示平均标准误。}(\#fig:se-visualization-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/se-visualization-plot-1.png" alt="标准误的可视化分析。左图显示样本均值的抽样分布，右图展示标准误与样本均值的关系。红色虚线表示总体均值，橙色虚线表示平均标准误。" width="80%" />
+<p class="caption">(\#fig:se-visualization-plot)标准误的可视化分析。左图显示样本均值的抽样分布，右图展示标准误与样本均值的关系。红色虚线表示总体均值，橙色虚线表示平均标准误。</p>
+</div>
 
 
 ```
@@ -589,14 +573,10 @@ kurtosis_count <- kurtosis(waterbird_counts) # 四阶矩：峰度
 
 如图\@ref(fig:distribution-parameters-comparison)所示，我们系统地比较了均值、标准差、偏度和峰度四个关键统计参数对分布形状的影响。该图通过四个子图展示了不同参数值下分布特征的显著差异，帮助我们直观理解统计参数与分布形状之间的对应关系。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/distribution-parameters-comparison-1} 
-
-}
-
-\caption{不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。}(\#fig:distribution-parameters-comparison)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/distribution-parameters-comparison-1.png" alt="不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。" width="80%" />
+<p class="caption">不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。</p>
+</div>
 
 ### 生态学意义总结
 
@@ -654,14 +634,10 @@ kurtosis_count <- kurtosis(waterbird_counts) # 四阶矩：峰度
 
 如图\@ref(fig:environmental-heterogeneity-plot)所示，我们通过土壤养分值的空间分布对比来可视化环境异质性。该图包含两个子图：上图展示低环境异质性和高环境异质性的空间分布模式，下图通过箱线图比较两种异质性类型的土壤养分值分布特征，帮助我们直观理解环境异质性对生态系统结构和功能的影响。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/environmental-heterogeneity-plot-1} 
-
-}
-
-\caption{环境异质性可视化分析。上图展示低环境异质性和高环境异质性的空间分布对比，下图通过箱线图比较两种异质性类型的土壤养分值分布。}(\#fig:environmental-heterogeneity-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/environmental-heterogeneity-plot-1.png" alt="环境异质性可视化分析。上图展示低环境异质性和高环境异质性的空间分布对比，下图通过箱线图比较两种异质性类型的土壤养分值分布。" width="80%" />
+<p class="caption">环境异质性可视化分析。上图展示低环境异质性和高环境异质性的空间分布对比，下图通过箱线图比较两种异质性类型的土壤养分值分布。</p>
+</div>
 
 在低环境异质性的情况下，环境因子值在空间上相对均匀，没有明显的梯度或斑块化格局。而在高环境异质性的情况下，环境因子值呈现出明显的空间结构，可能表现为梯度变化、斑块分布或复杂的空间格局。
 
@@ -738,14 +714,10 @@ $$H = -\sum_{i=1}^{S} p_i \ln(p_i)$$
 ## 环境异质性指数: 1.28
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/heterogeneity-index-plot-1} 
-
-}
-
-\caption{环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，用于计算环境异质性指数。}(\#fig:heterogeneity-index-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/heterogeneity-index-plot-1.png" alt="环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，用于计算环境异质性指数。" width="80%" />
+<p class="caption">环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，用于计算环境异质性指数。</p>
+</div>
 
 这种方法的生态学意义在于它能够量化生境斑块类型的多样性。例如，在研究一个景观中的生境配置时，我们可以将景观划分为森林、草地、湿地、农田等不同类型，然后计算环境异质性指数。指数值越高，说明生境类型越多样，环境异质性越高。环境异质性指数特别适用于描述分类环境因子的异质性，如土地利用类型、植被类型、土壤类型等。它能够捕捉到环境在类型组成上的复杂性，但不能反映同一类型内部的变异程度。
 
@@ -785,14 +757,10 @@ spatial_proportion <- spatial_variance / total_variance * 100
 
 如图\@ref(fig:variance-decomposition-plot)所示，我们通过饼图直观地展示了土壤养分值总变异中空间变异和随机变异的相对比例。该图清晰地呈现了环境异质性的形成机制，帮助我们理解空间过程在环境格局形成中的重要性。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/variance-decomposition-plot-1} 
-
-}
-
-\caption{空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。}(\#fig:variance-decomposition-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/variance-decomposition-plot-1.png" alt="空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。" width="80%" />
+<p class="caption">空间变异分解饼图。展示土壤养分值的总变异中空间变异和随机变异的相对比例，用于分析环境异质性的形成机制。</p>
+</div>
 
 在生态学研究中，空间变异分解帮助我们理解环境异质性的形成机制。如果空间变异占总变异的比例较高（如超过70%），说明环境因子具有强烈的空间格局，这种格局可能由地形、气候或其他空间过程所驱动。如果随机变异占主导，则表明环境因子的分布相对随机，缺乏明显的空间结构。空间变异分解通常通过地统计学方法实现，如克里金插值或变异函数分析。这种方法不仅能够量化空间变异的相对重要性，还能够识别空间依赖的范围和方向，为理解生态过程的空间尺度提供重要信息。
 
@@ -875,14 +843,10 @@ cat("复杂表面的分形维数:", round(fd_complex, 3), "\n")
 
 如图\@ref(fig:fractal-dimension-plot)所示，我们通过热图对比了不同复杂程度环境表面的分形维数特征。该图清晰地展示了平滑环境表面与复杂环境表面在空间结构复杂度上的显著差异，直观呈现了分形维数作为环境异质性度量指标的有效性。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/fractal-dimension-plot-1} 
-
-}
-
-\caption{不同复杂程度环境表面的分形维数可视化。左图展示平滑环境表面（低分形维数），右图展示复杂环境表面（高分形维数）。}(\#fig:fractal-dimension-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/fractal-dimension-plot-1.png" alt="不同复杂程度环境表面的分形维数可视化。左图展示平滑环境表面（低分形维数），右图展示复杂环境表面（高分形维数）。" width="80%" />
+<p class="caption">不同复杂程度环境表面的分形维数可视化。左图展示平滑环境表面（低分形维数），右图展示复杂环境表面（高分形维数）。</p>
+</div>
 
 在生态学研究中，分形维数帮助我们理解环境表面的结构复杂性。例如，在研究地形复杂度对物种分布的影响时，高分形维数的地形通常提供更多的微生境和生态位机会，从而支持更高的物种多样性。分形维数特别适用于描述连续环境因子的空间格局，如地形高程、植被覆盖度、土壤性质等。
 
@@ -911,14 +875,10 @@ $$S(t) = P(T > t) = 1 - F(t)$$
 
 如图\@ref(fig:survival-function-plot)所示，我们通过Kaplan-Meier方法估计并绘制了鸟类个体的生存函数曲线。该图直观地展示了生存概率随时间递减的模式，为分析种群动态和个体寿命分布提供了重要的可视化工具。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/survival-function-plot-1} 
-
-}
-
-\caption{鸟类个体生存函数曲线。使用Kaplan-Meier方法估计的生存概率随时间变化曲线，蓝色曲线表示生存概率，可用于分析个体存活率和寿命分布。}(\#fig:survival-function-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/survival-function-plot-1.png" alt="鸟类个体生存函数曲线。使用Kaplan-Meier方法估计的生存概率随时间变化曲线，蓝色曲线表示生存概率，可用于分析个体存活率和寿命分布。" width="80%" />
+<p class="caption">鸟类个体生存函数曲线。使用Kaplan-Meier方法估计的生存概率随时间变化曲线，蓝色曲线表示生存概率，可用于分析个体存活率和寿命分布。</p>
+</div>
 
 
 ```
@@ -948,14 +908,10 @@ $$h(t) = \lim_{\Delta t \to 0} \frac{P(t \leq T < t + \Delta t | T \geq t)}{\Del
 
 如图\@ref(fig:hazard-function-plot)所示，我们计算并绘制了瞬时死亡风险函数曲线。该图通过红色曲线展示了在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，为分析死亡风险的动态变化模式提供了重要的可视化工具。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/hazard-function-plot-1} 
-
-}
-
-\caption{瞬时死亡风险函数曲线。红色曲线表示在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，反映了死亡风险的瞬时变化模式。}(\#fig:hazard-function-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/hazard-function-plot-1.png" alt="瞬时死亡风险函数曲线。红色曲线表示在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，反映了死亡风险的瞬时变化模式。" width="80%" />
+<p class="caption">瞬时死亡风险函数曲线。红色曲线表示在不同时间点仍然存活的个体在下一瞬间死亡的条件概率密度，反映了死亡风险的瞬时变化模式。</p>
+</div>
 
 ```
 ## 死亡风险随时间变化模式:
@@ -988,22 +944,13 @@ $$H(t) = -\ln S(t) = \int_0^t h(u)du$$
 
 如图\@ref(fig:survival-analysis-comprehensive-plot)所示，我们综合展示了生存分析中的三个核心函数。该图通过三个子图系统性地呈现了生存函数、瞬时死亡风险函数和累积风险函数之间的数学关系，为全面理解个体生存特征提供了完整的可视化分析框架。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/survival-analysis-comprehensive-plot-1} 
-
-}
-
-\caption{个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。}(\#fig:survival-analysis-comprehensive-plot-1)
-\end{figure}
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/survival-analysis-comprehensive-plot-2} 
-
-}
-
-\caption{个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。}(\#fig:survival-analysis-comprehensive-plot-2)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/survival-analysis-comprehensive-plot-1.png" alt="个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。" width="80%" />
+<p class="caption">个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。</p>
+</div><div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/survival-analysis-comprehensive-plot-2.png" alt="个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。" width="80%" />
+<p class="caption">个体生存特征综合分析。左图：生存函数（蓝色）表示生存概率；中图：瞬时死亡风险函数（红色）表示死亡风险率；右图：累积风险函数（深绿色）表示累积死亡风险。</p>
+</div>
 
 **生态学意义：**
 累积风险函数综合评估个体在整个生命周期中的死亡风险积累，为理解种群生存压力提供整体视角。在保护生物学中，累积风险函数帮助评估濒危物种面临的生存威胁程度；在种群管理中，它为制定保护策略提供量化依据。高累积风险值表明种群面临严重的生存压力，需要采取干预措施。
@@ -1038,14 +985,10 @@ $$G = \frac{\sum_{i=1}^{n}\sum_{j=1}^{n}|x_i - x_j|}{2n^2\bar{x}}$$
 ## 使用ineq包计算的Gini系数: 0.222
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/gini-coefficient-plot-1} 
-
-}
-
-\caption{树木胸径分布图。蓝色点表示个体胸径值，红色虚线表示平均胸径，用于计算和可视化Gini系数，反映种群内个体大小的不均等性。}(\#fig:gini-coefficient-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/gini-coefficient-plot-1.png" alt="树木胸径分布图。蓝色点表示个体胸径值，红色虚线表示平均胸径，用于计算和可视化Gini系数，反映种群内个体大小的不均等性。" width="80%" />
+<p class="caption">树木胸径分布图。蓝色点表示个体胸径值，红色虚线表示平均胸径，用于计算和可视化Gini系数，反映种群内个体大小的不均等性。</p>
+</div>
 
 **生态学意义：**
 Gini系数在生态学中常用于评估种群内个体竞争强度、分析资源利用效率和分配公平性、以及比较不同种群的个体大小分布模式。例如，在森林生态系统中，高Gini系数表明少数大树占据了大部分资源，反映了强烈的种内竞争；低Gini系数则表明资源分配相对均等，个体间竞争较弱。Gini系数帮助我们理解种群的结构动态和资源利用模式。
@@ -1063,14 +1006,10 @@ Lorenz曲线上的点 $(p, L(p))$ 表示：
 
 如图\@ref(fig:lorenz-curve-plot)所示，我们绘制了Lorenz曲线图来可视化种群内资源分配的不均等性。该图通过深绿色曲线展示累积资源分配比例，灰色对角线表示完全均等分配的理想状态，浅绿色区域表示基尼面积，为分析资源分配格局提供了直观的图形工具。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/lorenz-curve-plot-1} 
-
-}
-
-\caption{Lorenz曲线图。深绿色曲线表示累积资源分配比例，灰色对角线表示完全均等分配，浅绿色区域表示基尼面积，用于可视化种群内资源分配的不均等性。}(\#fig:lorenz-curve-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/lorenz-curve-plot-1.png" alt="Lorenz曲线图。深绿色曲线表示累积资源分配比例，灰色对角线表示完全均等分配，浅绿色区域表示基尼面积，用于可视化种群内资源分配的不均等性。" width="80%" />
+<p class="caption">Lorenz曲线图。深绿色曲线表示累积资源分配比例，灰色对角线表示完全均等分配，浅绿色区域表示基尼面积，用于可视化种群内资源分配的不均等性。</p>
+</div>
 
 ```
 ## 基尼面积: 0.1118
@@ -1096,14 +1035,10 @@ Lorenz曲线直观地展示了种群内资源分配的不均等性。曲线越�
 ## 种群B的Gini系数: 0.4 (竞争较强)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/population-comparison-plot-1} 
-
-}
-
-\caption{不同种群的个体大小分布比较。通过箱线图和散点图展示竞争强度不同的两个种群的个体大小分布，用于比较Gini系数和种内竞争格局。}(\#fig:population-comparison-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/population-comparison-plot-1.png" alt="不同种群的个体大小分布比较。通过箱线图和散点图展示竞争强度不同的两个种群的个体大小分布，用于比较Gini系数和种内竞争格局。" width="80%" />
+<p class="caption">不同种群的个体大小分布比较。通过箱线图和散点图展示竞争强度不同的两个种群的个体大小分布，用于比较Gini系数和种内竞争格局。</p>
+</div>
 
 **分析资源利用效率：**
 高Gini系数的种群通常表明资源集中在少数个体手中，这可能反映了高效的资源捕获能力，但也可能导致种群稳定性下降。通过监测Gini系数的变化，可以评估种群对环境的适应性和资源利用策略的演化。
@@ -1199,24 +1134,15 @@ $$S = \alpha \ln(1 + \frac{N}{\alpha})$$
 
 如图\@ref(tab:diversity-sample-size-table)所示，我们通过模拟不同样本量的群落数据，系统地分析了样本量对Shannon指数和Fisher's α多样性指数的影响。该表格清晰地展示了两种多样性指数随样本量变化的响应模式。
 
-\begin{table}
 
-\caption{(\#tab:diversity-sample-size-table)样本量对多样性指数的影响}
-\centering
-\begin{tabular}[t]{r|r|r}
-\hline
-样本量 & Shannon指数 & Fisher\_alpha\\
-\hline
-50 & 2.224785 & 3.843383\\
-\hline
-100 & 2.276299 & 2.681482\\
-\hline
-200 & 2.279418 & 2.215373\\
-\hline
-500 & 2.293935 & 1.758383\\
-\hline
-\end{tabular}
-\end{table}
+Table: 样本量对多样性指数的影响
+
+| 样本量| Shannon指数| Fisher_alpha|
+|------:|-----------:|------------:|
+|     50|    2.224785|     3.843383|
+|    100|    2.276299|     2.681482|
+|    200|    2.279418|     2.215373|
+|    500|    2.293935|     1.758383|
 
 **生态学意义：**
 Fisher's $\alpha$ 在生态学研究中特别适用于比较不同采样强度或样本量的群落。由于其相对稳定性，Fisher's $\alpha$ 能够减少采样偏差对多样性评估的影响，为跨研究比较提供可靠依据。在生物多样性监测和保护区评估中，Fisher's $\alpha$ 是重要的参考指标。
@@ -1235,14 +1161,10 @@ $$H' = -\sum_{i=1}^{S} p_i \ln(p_i)$$
 
 如图\@ref(fig:shannon-diversity-plot)所示，我们通过森林群落物种组成柱状图展示了五种树种的个体数量分布，并计算了相应的Shannon-Wiener多样性指数。该图直观地呈现了群落中物种多度的分布格局，为分析群落多样性和物种均匀度提供了重要的可视化工具。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/shannon-diversity-plot-1} 
-
-}
-
-\caption{森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。}(\#fig:shannon-diversity-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/shannon-diversity-plot-1.png" alt="森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。" width="80%" />
+<p class="caption">森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。</p>
+</div>
 
 **生态学意义：**
 Shannon-Wiener指数在生态学中广泛应用于评估群落的物种多样性水平。较高的Shannon指数值表明群落具有较高的物种丰富度和均匀度，生态系统通常更加稳定和具有更强的恢复力。该指数对稀有物种较为敏感，能够较好地反映群落的保护价值和生态功能。
@@ -1308,20 +1230,13 @@ comparison_data <- data.frame(
 
 如表\@ref(tab:community-diversity-comparison-table)所示，我们通过表格系统地比较了两个不同群落的Shannon指数和Simpson指数。该表格清晰地展示了群落A和群落B在物种多样性和优势度格局上的差异，为分析群落生态特征提供了量化的比较依据。
 
-\begin{table}
 
-\caption{(\#tab:community-diversity-comparison-table)不同群落的多样性比较}
-\centering
-\begin{tabular}[t]{l|r|r}
-\hline
-群落 & Shannon指数 & Simpson指数\\
-\hline
-A & 1.544480 & 0.775\\
-\hline
-B & 1.333074 & 0.675\\
-\hline
-\end{tabular}
-\end{table}
+Table: 不同群落的多样性比较
+
+|群落 | Shannon指数| Simpson指数|
+|:----|-----------:|-----------:|
+|A    |    1.544480|       0.775|
+|B    |    1.333074|       0.675|
 
 **生态学意义：**
 Simpson指数特别适用于分析群落中的优势物种格局。较低的Simpson指数值表明群落中存在明显的优势物种，这可能反映了强烈的竞争排斥或环境筛选作用。在生态监测和保护规划中，Simpson指数帮助我们识别需要特别关注的生态关键种和优势种。
@@ -1371,35 +1286,22 @@ pielou_uneven <- calculate_pielou(uneven_community)
 
 如图\@ref(fig:uniformity-comparison-plot)所示，我们通过群落均匀度比较图直观地展示了均匀分布和不均匀分布两种群落的物种多度格局。该图清晰地呈现了Pielou均匀度指数在量化群落内物种分布均匀性方面的有效性，为分析群落结构特征提供了重要的可视化工具。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/uniformity-comparison-plot-1} 
-
-}
-
-\caption{群落均匀度比较。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Pielou均匀度指数。}(\#fig:uniformity-comparison-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/uniformity-comparison-plot-1.png" alt="群落均匀度比较。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Pielou均匀度指数。" width="80%" />
+<p class="caption">群落均匀度比较。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Pielou均匀度指数。</p>
+</div>
 
 如表\@ref(tab:diversity-comprehensive-assessment-table)所示，我们通过群落多样性综合评估表格系统地总结了四种主要多样性指数的计算结果和生态学解释。该表格为全面理解群落多样性特征提供了综合的分析框架，展示了不同指数在生态学研究中的互补作用。
 
-\begin{table}
 
-\caption{(\#tab:diversity-comprehensive-assessment-table)群落多样性综合评估}
-\centering
-\begin{tabular}[t]{l|r|l}
-\hline
-指数类型 & 数值 & 解释\\
-\hline
-Shannon-Wiener & 1.4695049 & 综合多样性\\
-\hline
-Simpson & 0.7443772 & 优势度敏感性\\
-\hline
-Fisher's α & 1.2439951 & 样本稳定性\\
-\hline
-Pielou均匀度 & 0.9130547 & 均匀度度量\\
-\hline
-\end{tabular}
-\end{table}
+Table: 群落多样性综合评估
+
+|指数类型       |      数值|解释         |
+|:--------------|---------:|:------------|
+|Shannon-Wiener | 1.4695049|综合多样性   |
+|Simpson        | 0.7443772|优势度敏感性 |
+|Fisher's α     | 1.2439951|样本稳定性   |
+|Pielou均匀度   | 0.9130547|均匀度度量   |
 
 **生态学意义：**
 Pielou均匀度指数在生态学中用于独立评估物种多度分布的均等程度，不受物种丰富度的影响。高均匀度指数表明群落中资源分配相对均等，种间竞争可能较为缓和；低均匀度指数则反映了明显的优势种格局和强烈的种间竞争。均匀度指数为理解群落构建机制和生态位分化提供了重要信息。
@@ -1514,31 +1416,19 @@ nestedness <- nested(plant_pollinator_matrix, method = "NODF")
 
 如图\@ref(fig:plant-pollinator-network-plot)所示，我们通过植物-传粉者相互作用网络图直观地展示了物种间相互作用的拓扑结构。该图通过绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系，清晰地呈现了网络的连接度、模块性和嵌套性等关键拓扑特征，为理解生态网络的组织规律提供了重要的可视化工具。
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/plant-pollinator-network-plot-1.png" alt="植物-传粉者相互作用网络图。绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系。图中展示了网络的连接度、模块性和嵌套性等拓扑特征，反映了物种间相互作用的组织规律。" width="80%" />
+<p class="caption">植物-传粉者相互作用网络图。绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系。图中展示了网络的连接度、模块性和嵌套性等拓扑特征，反映了物种间相互作用的组织规律。</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/plant-pollinator-network-plot-1} 
 
-}
+Table: 网络拓扑指标综合分析
 
-\caption{植物-传粉者相互作用网络图。绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系。图中展示了网络的连接度、模块性和嵌套性等拓扑特征，反映了物种间相互作用的组织规律。}(\#fig:plant-pollinator-network-plot)
-\end{figure}
-
-\begin{table}
-
-\caption{(\#tab:network-topology-metrics-table)网络拓扑指标综合分析}
-\centering
-\begin{tabular}[t]{l|r|l}
-\hline
-指标 & 数值 & 生态学意义\\
-\hline
-连接度 & 0.1777778 & 相互作用密集度\\
-\hline
-模块性 & 0.2187500 & 群落结构分化\\
-\hline
-嵌套性 & 29.1666667 & 特化-泛化格局\\
-\hline
-\end{tabular}
-\end{table}
+|指标   |       数值|生态学意义     |
+|:------|----------:|:--------------|
+|连接度 |  0.1777778|相互作用密集度 |
+|模块性 |  0.2187500|群落结构分化   |
+|嵌套性 | 29.1666667|特化-泛化格局  |
 
 **生态学意义：**
 网络拓扑指标揭示了物种间相互作用的组织规律。高连接度通常表明生态系统具有更强的功能冗余和稳定性；高模块性反映了生态位的分化和资源利用的专业化；高嵌套性则表明系统具有层级结构，特化物种依赖于泛化物种的存在。这些指标帮助我们理解生态系统的抗干扰能力和恢复力。
@@ -1571,33 +1461,21 @@ $$CC = \frac{L}{S^2}$$
 - $S$ 为物种总数
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/food-web-structure-1} 
-
-}
-
-\caption{简化食物网结构图。绿色节点表示生产者（植物），黄色节点表示草食动物，橙色节点表示初级捕食者，红色节点表示顶级捕食者。箭头表示能量流动方向，展示了食物网的平均链长和连接复杂性等特征。}(\#fig:food-web-structure)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/food-web-structure-1.png" alt="简化食物网结构图。绿色节点表示生产者（植物），黄色节点表示草食动物，橙色节点表示初级捕食者，红色节点表示顶级捕食者。箭头表示能量流动方向，展示了食物网的平均链长和连接复杂性等特征。" width="80%" />
+<p class="caption">简化食物网结构图。绿色节点表示生产者（植物），黄色节点表示草食动物，橙色节点表示初级捕食者，红色节点表示顶级捕食者。箭头表示能量流动方向，展示了食物网的平均链长和连接复杂性等特征。</p>
+</div>
 
 如图\@ref(fig:food-web-structure)所示，该简化食物网结构图直观展示了由四个营养级组成的线性食物链。图中绿色节点代表生产者（植物），黄色节点代表草食动物，橙色节点代表初级捕食者，红色节点代表顶级捕食者，箭头方向表示能量从低营养级向高营养级的流动路径。该可视化不仅呈现了食物网的基本结构，还在图注中显示了计算得到的平均链长（2.00）和连接复杂性（0.188），为理解生态系统中能量流动和物种相互作用的复杂性提供了直观参考。
 
-\begin{table}
 
-\caption{(\#tab:food-web-analysis-table)食物网特征综合分析}
-\centering
-\begin{tabular}[t]{l|r|l}
-\hline
-特征指标 & 数值 & 生态学意义\\
-\hline
-平均营养级 & 2.5000 & 能量传递效率\\
-\hline
-平均链长 & 3.0000 & 营养级复杂度\\
-\hline
-连接复杂性 & 0.1875 & 相互作用密度\\
-\hline
-\end{tabular}
-\end{table}
+Table: 食物网特征综合分析
+
+|特征指标   |   数值|生态学意义   |
+|:----------|------:|:------------|
+|平均营养级 | 2.5000|能量传递效率 |
+|平均链长   | 3.0000|营养级复杂度 |
+|连接复杂性 | 0.1875|相互作用密度 |
 
 如表\@ref(tab:food-web-analysis-table)所示，食物网特征综合分析表系统总结了三个关键指标：平均营养级（1.75）、平均链长（2.00）和连接复杂性（0.188）。这些指标分别反映了生态系统中能量传递效率、营养级复杂度和物种间相互作用密度，为定量评估食物网结构和功能提供了重要依据。
 
@@ -1626,7 +1504,7 @@ complex_complexity <- sum(complex_food_web) / (nrow(complex_food_web)^2)
 **生态学意义：**
 食物网特征反映了生态系统中能量流动的效率和稳定性。较长的食物链通常表明系统具有更高的能量利用效率，但也可能增加系统的不稳定性；较高的连接复杂性通常与更强的系统稳定性和功能冗余相关，但也可能增加物种间的竞争强度。这些特征帮助我们理解生态系统的能量动态、物种共存机制以及对环境变化的响应能力。生态网络分析为保护生物学、生态系统管理和全球变化研究提供了重要的量化工具。
 
-## 稳定性描述
+## 生态系统稳定性描述
 
 稳定性描述关注生态系统在面对外界干扰时的响应特征和维持功能的能力，这些指标在生态学研究中对于理解生态系统的可持续性和适应能力具有重要意义。生态系统稳定性是生态学研究中的核心概念，它描述了系统在面对环境变化、物种丧失或人为干扰时维持其结构和功能的能力。稳定性分析不仅关注系统的当前状态，更注重系统对外界干扰的响应模式和长期动态特征。
 
@@ -1658,14 +1536,10 @@ $$R = 1 - \frac{|X_{after} - X_{before}|}{|X_{before}|}$$
 - $X_{after}$ 为干扰后的系统状态指标
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/ecosystem-resistance-analysis-1} 
-
-}
-
-\caption{生态系统抵抗力分析图。蓝色线条表示正常条件下的生物量，红色线条表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。}(\#fig:ecosystem-resistance-analysis)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/ecosystem-resistance-analysis-1.png" alt="生态系统抵抗力分析图。蓝色线条表示正常条件下的生物量，红色线条表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。" width="80%" />
+<p class="caption">生态系统抵抗力分析图。蓝色线条表示正常条件下的生物量，红色线条表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。</p>
+</div>
 
 如图\@ref(fig:ecosystem-resistance-analysis)所示，生态系统抵抗力分析图直观展示了森林群落生物量在正常条件和环境压力下的变化趋势。蓝色线条代表正常条件下的生物量（120-130吨/公顷），红色线条代表环境压力后的生物量（100-125吨/公顷）。通过比较两种条件下生物量的变化程度，计算得到森林生态系统的抵抗力指数为0.908，表明该系统对环境干扰具有较强的抵抗能力。该可视化分析为理解生态系统稳定性提供了直观依据。
 
@@ -1730,14 +1604,10 @@ resilience_result <- calculate_resilience(pre_fire_biomass,
 ## 恢复速率:0.002
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/ecosystem-resilience-analysis-1} 
-
-}
-
-\caption{生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95\%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。}(\#fig:ecosystem-resilience-analysis)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/ecosystem-resilience-analysis-1.png" alt="生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。" width="80%" />
+<p class="caption">生态系统恢复力分析图。蓝色曲线表示火灾后森林生物量的恢复过程，红色虚线表示95%恢复阈值。通过分析生物量恢复到原始状态所需的时间和速率，量化生态系统的自我修复能力。</p>
+</div>
 
 如图\@ref(fig:ecosystem-resilience-analysis)所示，生态系统恢复力分析图直观展示了森林火灾后生物量的恢复过程。蓝色曲线显示生物量从火灾后的低点（约50%）逐渐恢复到原始状态，红色虚线标记了95%恢复阈值。分析结果表明，森林生态系统需要约5年时间才能恢复到95%的原始生物量水平，恢复速率为0.090，反映了该系统具有中等程度的自我修复能力。该可视化分析为评估生态系统对干扰的响应和恢复潜力提供了重要依据。
 
@@ -1770,14 +1640,10 @@ $$P = \frac{T_{stable}}{T_{total}}$$
 ## 稳定状态时间比例:74%
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{03-summary_statistics_files/figure-latex/ecosystem-persistence-analysis-1} 
-
-}
-
-\caption{生态系统持久性分析图。蓝色曲线表示湖泊营养状态（总磷浓度）的长期动态变化，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。}(\#fig:ecosystem-persistence-analysis)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="03-summary_statistics_files/figure-html/ecosystem-persistence-analysis-1.png" alt="生态系统持久性分析图。蓝色曲线表示湖泊营养状态（总磷浓度）的长期动态变化，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。" width="80%" />
+<p class="caption">生态系统持久性分析图。蓝色曲线表示湖泊营养状态（总磷浓度）的长期动态变化，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。</p>
+</div>
 
 如图\@ref(fig:ecosystem-persistence-analysis)所示，生态系统持久性分析图展示了湖泊营养状态（总磷浓度）在50年监测期内的动态变化。蓝色曲线显示总磷浓度在15-25 mg/L范围内波动，灰色虚线标记了稳定状态的上下阈值。分析结果表明，该湖泊生态系统的持久性指数为0.96，意味着在96%的观测时间内系统维持在稳定状态内，表现出较高的长期稳定性。该可视化分析为评估生态系统在长期尺度上的稳定性维持能力提供了重要依据。
 
@@ -1787,22 +1653,14 @@ $$P = \frac{T_{stable}}{T_{total}}$$
 ## 草地生态系统持久性:0.7
 ```
 
-\begin{table}
 
-\caption{(\#tab:stability-analysis-table)生态系统稳定性综合分析结果}
-\centering
-\begin{tabular}[t]{l|r|l}
-\hline
-稳定性指标 & 数值 & 生态学意义\\
-\hline
-抵抗力 & 0.9281680 & 抗干扰能力\\
-\hline
-恢复力 & 0.0016584 & 恢复速度\\
-\hline
-持久性 & 0.7400000 & 长期稳定性\\
-\hline
-\end{tabular}
-\end{table}
+Table: 生态系统稳定性综合分析结果
+
+|稳定性指标 |      数值|生态学意义 |
+|:----------|---------:|:----------|
+|抵抗力     | 0.9281680|抗干扰能力 |
+|恢复力     | 0.0016584|恢复速度   |
+|持久性     | 0.7400000|长期稳定性 |
 
 如表\@ref(tab:stability-analysis-table)所示，生态系统稳定性综合分析表系统总结了抵抗力（0.908）、恢复力（0.090）和持久性（0.960）三个关键指标。这些指标分别反映了生态系统的抗干扰能力、恢复速度和长期稳定性，共同构成了评估生态系统稳定性的完整框架。该综合分析为理解生态系统对环境变化的响应机制和制定有效的保护管理策略提供了重要科学依据。
 
