@@ -178,10 +178,14 @@
 
 为了更好地理解零假设与备择假设的分布关系，让我们生成一个可视化图表：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/null-alternative-distribution-1.png" alt="零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值" width="80%" />
-<p class="caption">(\#fig:null-alternative-distribution)零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/null-alternative-distribution-1} 
+
+}
+
+\caption{零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值}(\#fig:null-alternative-distribution)
+\end{figure}
 
 这个图表直观展示了在零假设（蓝色）和备择假设（橙色）下的检验统计量分布。红色虚线表示显著性水平$\alpha$=0.05的临界值，当检验统计量超过这个临界值时，我们就有足够的证据拒绝零假设。
 
@@ -212,10 +216,14 @@ p值的解释需要特别注意：
 
 为了更直观地理解p值的概念，让我们通过R代码生成一个可视化图表：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/p-value-visualization-1.png" alt="p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率" width="80%" />
-<p class="caption">(\#fig:p-value-visualization)p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/p-value-visualization-1} 
+
+}
+
+\caption{p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率}(\#fig:p-value-visualization)
+\end{figure}
 
 这个图表通过红色区域直观展示了p值的概念，即在零假设下观测到当前检验统计量值（红色垂直线）或更极端值的概率。p值越小，表明观测到的数据在零假设下越不可能发生，从而为我们拒绝零假设提供了更强的证据。
 
@@ -290,19 +298,27 @@ Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/error-types-visualization-1.png" alt="第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布" width="80%" />
-<p class="caption">(\#fig:error-types-visualization)第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/error-types-visualization-1} 
+
+}
+
+\caption{第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布}(\#fig:error-types-visualization)
+\end{figure}
 
 这个图表清晰地显示了第一类错误（红色区域，假阳性）和第二类错误（蓝色区域，假阴性）的概念，以及统计功效（1-$\beta$）作为正确检测真实效应的概率。在生态学研究中，我们需要在这两类错误之间进行权衡，根据研究的具体目的选择合适的显著性水平。
 
 统计功效受到多个因素的影响，其中样本量是一个关键因素。让我们图表来展示样本量如何影响统计功效：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/power-sample-size-visualization-1.png" alt="样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效" width="80%" />
-<p class="caption">(\#fig:power-sample-size-visualization)样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/power-sample-size-visualization-1} 
+
+}
+
+\caption{样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效}(\#fig:power-sample-size-visualization)
+\end{figure}
 
 这个图表展示了不同效应大小下，样本量如何影响统计功效。通常我们期望统计功效达到0.8以上（灰色虚线），这意味着我们有80%的概率正确检测到真实存在的效应。从图表可以看出，效应大小越大，达到足够统计功效所需的样本量越小。
 
@@ -351,10 +367,14 @@ Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 让我们用一个图来理解效应大小和置信区间的概念：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/effect-size-ci-visualization-1.png" alt="效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围" width="80%" />
-<p class="caption">(\#fig:effect-size-ci-visualization)效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/effect-size-ci-visualization-1} 
+
+}
+
+\caption{效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围}(\#fig:effect-size-ci-visualization)
+\end{figure}
 
 这个图表展示了多个研究的效应大小估计及其置信区间。我们可以清楚地看到哪些研究的结果是统计显著的（置信区间不包含0），以及不同研究的效应大小估计。
 
@@ -455,10 +475,14 @@ $t$分布与正态分布形状相似，都是钟形曲线，但$t$分布的尾�
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/one-sample-t-test-visualization-1.png" alt="单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域" width="80%" />
-<p class="caption">(\#fig:one-sample-t-test-visualization)单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/one-sample-t-test-visualization-1} 
+
+}
+
+\caption{单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域}(\#fig:one-sample-t-test-visualization)
+\end{figure}
 
 这个图表直观展示了单样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
 
@@ -503,10 +527,14 @@ $t$分布与正态分布形状相似，都是钟形曲线，但$t$分布的尾�
 
 为了更好地理解单样本符号检验的原理，让我们通过一个图来理解：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/sign-test-visualization-1.png" alt="单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量" width="80%" />
-<p class="caption">(\#fig:sign-test-visualization)单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/sign-test-visualization-1} 
+
+}
+
+\caption{单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量}(\#fig:sign-test-visualization)
+\end{figure}
 
 这个图表直观展示了单样本符号检验的原理。蓝色柱状图表示在零假设下（正号和负号以相等概率出现）正号数量的二项分布，红色垂直线表示我们观测到的正号数量，红色区域表示$p$值——在零假设下观测到当前或更多正号的概率。
 
@@ -570,10 +598,14 @@ $$s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$$
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/independent-t-test-visualization-1.png" alt="独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域" width="80%" />
-<p class="caption">(\#fig:independent-t-test-visualization)独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/independent-t-test-visualization-1} 
+
+}
+
+\caption{独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域}(\#fig:independent-t-test-visualization)
+\end{figure}
 
 这个图表直观展示了独立样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
 
@@ -623,10 +655,14 @@ $$t = \frac{\bar{d}}{s_d / \sqrt{n}}$$
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/paired-t-test-visualization-1.png" alt="配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域" width="80%" />
-<p class="caption">(\#fig:paired-t-test-visualization)配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/paired-t-test-visualization-1} 
+
+}
+
+\caption{配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域}(\#fig:paired-t-test-visualization)
+\end{figure}
 
 这个图表直观展示了配对样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布（差异为0），红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
 
@@ -677,10 +713,14 @@ Mann-Whitney U检验的主要优点是它对分布形态没有要求，对极端
 
 为了更好地理解Mann-Whitney U检验的原理，让我们通过一个图来理解：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/mann-whitney-visualization-1.png" alt="Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较" width="80%" />
-<p class="caption">(\#fig:mann-whitney-visualization)Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/mann-whitney-visualization-1} 
+
+}
+
+\caption{Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较}(\#fig:mann-whitney-visualization)
+\end{figure}
 
 这个图表直观展示了Mann-Whitney U检验的原理。箱线图显示了两个样本的分布情况，点表示各个观测值。检验基于这些观测值的秩次（排序位置）而不是原始数值来进行统计推断。
 
@@ -776,10 +816,14 @@ $$H_1: \text{至少有一对组的均值不相等}$$
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-t-test-vs-anova-1.png" alt="多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案" width="80%" />
-<p class="caption">(\#fig:multiple-t-test-vs-anova)多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/multiple-t-test-vs-anova-1} 
+
+}
+
+\caption{多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案}(\#fig:multiple-t-test-vs-anova)
+\end{figure}
 
 **图表解释**
 
@@ -848,10 +892,14 @@ $$H_1: \text{至少有一对组的均值不相等}$$
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/anova-visualization-1.png" alt="方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域" width="80%" />
-<p class="caption">(\#fig:anova-visualization)方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/anova-visualization-1} 
+
+}
+
+\caption{方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域}(\#fig:anova-visualization)
+\end{figure}
 
 这个图表直观展示了方差分析的原理。蓝色曲线表示在零假设下的$F$分布，红色垂直线表示我们观测到的$F$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$F$值的概率。
 
@@ -910,10 +958,14 @@ Kruskal-Wallis检验的主要优点是它对分布形态没有要求，对极端
 
 为了更好地理解Kruskal-Wallis检验的原理，让我们通过一个图来理解：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/kruskal-wallis-visualization-1.png" alt="Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较" width="80%" />
-<p class="caption">(\#fig:kruskal-wallis-visualization)Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/kruskal-wallis-visualization-1} 
+
+}
+
+\caption{Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较}(\#fig:kruskal-wallis-visualization)
+\end{figure}
 
 这个图表直观展示了Kruskal-Wallis检验的原理。箱线图显示了三个样本的分布情况，点表示各个观测值。检验基于这些观测值的秩次（排序位置）而不是原始数值来进行统计推断。
 
@@ -1091,17 +1143,25 @@ cat("=== 方差分析结果 ===\n")
 ```
 
 ``` r
-knitr::kable(summary(anova_result)[[1]], caption = "方差分析结果")
+knitr::kable(summary(anova_result)[[1]],
+             caption = "方差分析结果",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-
-
-Table: (\#tab:multiple-comparison-anova)方差分析结果
-
-|                   | Df|   Sum Sq|  Mean Sq|  F value|    Pr(>F)|
-|:------------------|--:|--------:|--------:|--------:|---------:|
-|protection_measure |  2| 18.84531| 9.422654| 7.322486| 0.0023345|
-|Residuals          | 33| 42.46475| 1.286811|       NA|        NA|
+\begin{table}[!h]
+\centering
+\caption{(\#tab:multiple-comparison-anova)方差分析结果}
+\centering
+\begin{tabular}[t]{lrrrrr}
+\toprule
+  & Df & Sum Sq & Mean Sq & F value & Pr(>F)\\
+\midrule
+protection\_measure & 2 & 18.84531 & 9.422654 & 7.322486 & 0.0023345\\
+Residuals & 33 & 42.46475 & 1.286811 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 ``` r
 # 提取F统计量和p值
@@ -1218,10 +1278,14 @@ summary_stats <- protection_data %>%
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-combined-plot-1.png" alt="多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化" width="80%" />
-<p class="caption">(\#fig:multiple-comparison-combined-plot)多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/multiple-comparison-combined-plot-1} 
+
+}
+
+\caption{多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化}(\#fig:multiple-comparison-combined-plot)
+\end{figure}
 
 图 \@ref(fig:multiple-comparison-combined-plot) 展示了多重比较校正的综合可视化结果。该组合图形将均值图（左侧）和箱线图（右侧）并排显示，便于直观比较三种保护措施下梅花鹿种群密度的统计特征。均值图显示各组的平均密度及其标准误，箱线图则展示了数据的分布特征和个体观测值。这种组合可视化方式有助于全面理解多重比较分析的结果。
 
@@ -1239,10 +1303,14 @@ summary_stats <- protection_data %>%
 
 让我们通过另一个可视化来理解多重比较校正如何影响p值的解释：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-visualization-1.png" alt="多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响" width="80%" />
-<p class="caption">(\#fig:multiple-comparison-visualization)多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/multiple-comparison-visualization-1} 
+
+}
+
+\caption{多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响}(\#fig:multiple-comparison-visualization)
+\end{figure}
 
 图 \@ref(fig:multiple-comparison-visualization) 展示了多重比较校正效果的直观可视化。该图形模拟了20个假设检验的情景，其中15个来自零假设（无真实效应，蓝色点），5个来自备择假设（有真实效应，红色点）。图形采用三面板布局，分别显示未校正、Bonferroni校正和FDR控制三种方法处理后的p值。通过比较各面板中超过红色虚线（显著性阈值）的点数，可以直观理解不同校正方法在错误控制和发现力之间的权衡。
 
@@ -1639,10 +1707,14 @@ print(chisq_power)
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/power-curve-plotting-1.png" alt="样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效" width="80%" />
-<p class="caption">(\#fig:power-curve-plotting)样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/power-curve-plotting-1} 
+
+}
+
+\caption{样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效}(\#fig:power-curve-plotting)
+\end{figure}
 
 **图表解释：**
 - 蓝色曲线显示随着样本量增加，统计功效逐渐提高
@@ -1676,10 +1748,14 @@ sensitivity_df <- data.frame(
 )
 ```
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/sensitivity-analysis-plot-1.png" alt="效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量" width="80%" />
-<p class="caption">(\#fig:sensitivity-analysis-plot)效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/sensitivity-analysis-plot-1} 
+
+}
+
+\caption{效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量}(\#fig:sensitivity-analysis-plot)
+\end{figure}
 
 图 \@ref(fig:sensitivity-analysis-plot) 展示了效应大小对样本量需求的敏感性分析结果。该柱状图直观地比较了四种不同效应大小水平（小效应d=0.2、中小效应d=0.3、中效应d=0.5、大效应d=0.8）下达到80%统计功效所需的样本量。从图中可以清晰地看到，随着效应大小的增加，所需的样本量显著减少。例如，检测小效应需要每组约394个样本，而检测大效应仅需每组约26个样本。这种敏感性分析有助于研究者在研究设计阶段根据预期的效应大小合理规划样本量。
 

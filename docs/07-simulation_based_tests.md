@@ -158,18 +158,24 @@ load(file="data/comm_data_groups.Rdata")
 adonis_result <- adonis2(comm_data ~ groups, method = "bray")
 
 # 输出分析结果
-knitr::kable(adonis_result, caption = "置换ANOVA分析结果")
+knitr::kable(adonis_result, caption = "置换ANOVA分析结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-
-
-Table: (\#tab:adonis-result-table)置换ANOVA分析结果
-
-|         | Df|  SumOfSqs|        R2|         F| Pr(>F)|
-|:--------|--:|---------:|---------:|---------:|------:|
-|Model    |  1| 0.0098147| 0.0145518| 0.2658007|  0.791|
-|Residual | 18| 0.6646505| 0.9854482|        NA|     NA|
-|Total    | 19| 0.6744652| 1.0000000|        NA|     NA|
+\begin{table}[!h]
+\centering
+\caption{(\#tab:adonis-result-table)置换ANOVA分析结果}
+\centering
+\begin{tabular}[t]{lrrrrr}
+\toprule
+  & Df & SumOfSqs & R2 & F & Pr(>F)\\
+\midrule
+Model & 1 & 0.0098147 & 0.0145518 & 0.2658007 & 0.791\\
+Residual & 18 & 0.6646505 & 0.9854482 & NA & NA\\
+Total & 19 & 0.6744652 & 1.0000000 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 表 \@ref(tab:adonis-result-table) 展示了置换ANOVA分析的结果，从中可以看出不同栖息地类型对植物群落组成的影响是否具有统计显著性。
 
@@ -253,7 +259,8 @@ data <- data.frame(
 # 使用近似分布，重抽样1000次构建零分布
 test_result <- independence_test(value ~ group,
                                 data = data,
-                                distribution = approximate(nresample = 1000))
+                                distribution = approximate(
+                                  nresample = 1000))
 
 # 输出检验结果
 print(test_result)
@@ -883,7 +890,9 @@ library(vegan)
 
 load(file="data/anosim_data.RData")
 # 执行ANOSIM分析
-anosim_result <- anosim(species_matrix, groups, distance = "bray", permutations = 1000)
+anosim_result <- anosim(species_matrix, groups,
+                         distance = "bray",
+                         permutations = 1000)
 
 # 输出结果
 print(anosim_result)
@@ -904,17 +913,25 @@ print(anosim_result)
 
 图\@ref(fig:anosim-rank-plot)展示了ANOSIM分析的排序差异箱线图：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/anosim-rank-plot-1.png" alt="ANOSIM分析：不同河段底栖动物群落排序差异检验" width="80%" />
-<p class="caption">(\#fig:anosim-rank-plot)ANOSIM分析：不同河段底栖动物群落排序差异检验</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/anosim-rank-plot-1} 
+
+}
+
+\caption{ANOSIM分析：不同河段底栖动物群落排序差异检验}(\#fig:anosim-rank-plot)
+\end{figure}
 
 图\@ref(fig:nmds-community-plot)展示了底栖动物群落组成的NMDS排序图：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/nmds-community-plot-1.png" alt="底栖动物群落组成的NMDS排序分析" width="80%" />
-<p class="caption">(\#fig:nmds-community-plot)底栖动物群落组成的NMDS排序分析</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nmds-community-plot-1} 
+
+}
+
+\caption{底栖动物群落组成的NMDS排序分析}(\#fig:nmds-community-plot)
+\end{figure}
 
 **结果解释**：
 
@@ -1037,10 +1054,14 @@ K_envelope <- envelope(observed_pattern, Kest,
 )
 ```
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/ripley-k-envelope-1.png" alt="巴西坚果树空间分布模式检验：Ripley's K函数包络分析" width="80%" />
-<p class="caption">(\#fig:ripley-k-envelope)巴西坚果树空间分布模式检验：Ripley's K函数包络分析</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/ripley-k-envelope-1} 
+
+}
+
+\caption{巴西坚果树空间分布模式检验：Ripley's K函数包络分析}(\#fig:ripley-k-envelope)
+\end{figure}
 
 图 \@ref(fig:ripley-k-envelope) 展示了Ripley's K函数包络分析的可视化结果。图中黑色实线表示观测到的K函数曲线，灰色区域表示基于999次蒙特卡洛模拟构建的置信包络，红色实线表示完全空间随机性（CSR）的理论期望值。通过比较观测曲线与包络线的相对位置，可以判断巴西坚果树的空间分布模式是否显著偏离随机分布。
 
@@ -1104,29 +1125,47 @@ observed_fish <- rpoispp(intensity)
 
 # 拟合非齐次泊松点过程模型
 fit_model <- ppm(observed_fish ~ coral_coverage)
-knitr::kable(summary(fit_model)$coefs.SE.CI)
+knitr::kable(summary(fit_model)$coefs.SE.CI,
+             caption = "非齐次泊松点过程模型拟合结果",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-
-
-|               |   Estimate|      S.E.|    CI95.lo|   CI95.hi|Ztest |       Zval|
-|:--------------|----------:|---------:|----------:|---------:|:-----|----------:|
-|(Intercept)    | -4.2767794| 0.2117614| -4.6918241| -3.861735|***   | -20.196218|
-|coral_coverage |  0.6330506| 0.3749223| -0.1017836|  1.367885|      |   1.688485|
+\begin{table}[!h]
+\centering
+\caption{(\#tab:point-process-model-setup)非齐次泊松点过程模型拟合结果}
+\centering
+\begin{tabular}[t]{lrrrrlr}
+\toprule
+  & Estimate & S.E. & CI95.lo & CI95.hi & Ztest & Zval\\
+\midrule
+(Intercept) & -4.2767794 & 0.2117614 & -4.6918241 & -3.861735 & *** & -20.196218\\
+coral\_coverage & 0.6330506 & 0.3749223 & -0.1017836 & 1.367885 &  & 1.688485\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 图\@ref(fig:coral-coverage-dist)展示了模拟的珊瑚覆盖率分布情况：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/coral-coverage-dist-1.png" alt="模拟的珊瑚覆盖率空间分布" width="80%" />
-<p class="caption">(\#fig:coral-coverage-dist)模拟的珊瑚覆盖率空间分布</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/coral-coverage-dist-1} 
+
+}
+
+\caption{模拟的珊瑚覆盖率空间分布}(\#fig:coral-coverage-dist)
+\end{figure}
 
 图\@ref(fig:fish-distribution-coral)展示了小丑鱼在珊瑚覆盖率背景下的实际分布：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/fish-distribution-coral-1.png" alt="小丑鱼在珊瑚覆盖率背景下的空间分布" width="80%" />
-<p class="caption">(\#fig:fish-distribution-coral)小丑鱼在珊瑚覆盖率背景下的空间分布</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/fish-distribution-coral-1} 
+
+}
+
+\caption{小丑鱼在珊瑚覆盖率背景下的空间分布}(\#fig:fish-distribution-coral)
+\end{figure}
 
 接下来进行拟合优度检验：
 
@@ -1174,10 +1213,14 @@ cat("拟合优度检验p值:", p_value, "\n")
 
 图\@ref(fig:predicted-fish-intensity)展示了模型预测的小丑鱼分布强度：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/predicted-fish-intensity-1.png" alt="点过程模型预测的小丑鱼分布强度" width="80%" />
-<p class="caption">(\#fig:predicted-fish-intensity)点过程模型预测的小丑鱼分布强度</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/predicted-fish-intensity-1} 
+
+}
+
+\caption{点过程模型预测的小丑鱼分布强度}(\#fig:predicted-fish-intensity)
+\end{figure}
 
 **生态学意义**：如果拟合优度检验显示模型拟合良好（p值不显著），表明小丑鱼的分布主要受珊瑚覆盖率的影响。这支持了"栖息地选择"假说——小丑鱼倾向于选择珊瑚覆盖率高的区域。如果模型拟合不佳，可能表明存在其他重要因素，如：
 - 种内竞争导致的空间排斥
@@ -1386,10 +1429,14 @@ legend("bottomleft",
 )
 ```
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/phylogenetic-signal-1.png" alt="植物功能性状系统发育信号检验与可视化" width="80%" />
-<p class="caption">(\#fig:phylogenetic-signal)植物功能性状系统发育信号检验与可视化</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/phylogenetic-signal-1} 
+
+}
+
+\caption{植物功能性状系统发育信号检验与可视化}(\#fig:phylogenetic-signal)
+\end{figure}
 
 **生态学意义**：如果检验显示显著的系统发育信号（p < 0.05），表明这些功能性状在亲缘关系较近的物种间更为相似。这支持了"系统发育生态位保守性"假说——物种倾向于保留祖先的生态特性。这种信息对于理解群落组装机制、预测物种对气候变化的响应以及设计基于系统发育多样性的保护策略都具有重要价值。
 
@@ -1504,10 +1551,14 @@ text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
 )
 ```
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/phylogenetic-contrasts-1.png" alt="植物防御性状与生长速率关系的系统发育独立对比分析" width="80%" />
-<p class="caption">(\#fig:phylogenetic-contrasts)植物防御性状与生长速率关系的系统发育独立对比分析</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/phylogenetic-contrasts-1} 
+
+}
+
+\caption{植物防御性状与生长速率关系的系统发育独立对比分析}(\#fig:phylogenetic-contrasts)
+\end{figure}
 
 **生态学意义**：通过系统发育独立对比的置换检验，我们可以更可靠地推断防御性状与生长速率之间的生态权衡关系。如果检验显示显著的正相关（p < 0.05），表明在去除系统发育影响后，防御物质含量高的物种确实具有较慢的生长速率，支持了"生长-防御权衡"假说。这种分析为理解植物生活史策略的进化提供了重要证据。
 
@@ -1637,7 +1688,8 @@ for (i in 1:n_sim) {
 
   # 简单的随机化：保持行和列总和不变
   # 在实际应用中可以使用更复杂的算法如swap算法
-  sim_matrix <- r2dtable(1, rowSums(comm_matrix), colSums(comm_matrix))[[1]]
+  sim_matrix <- r2dtable(1, rowSums(comm_matrix),
+                         colSums(comm_matrix))[[1]]
   sim_matrix[sim_matrix > 0] <- 1
 
   sim_c_scores[i] <- calc_c_score(sim_matrix)
@@ -1662,17 +1714,25 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:c-score-null-dist)展示了群落组装零模型检验的C-score零分布：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/c-score-null-dist-1.png" alt="热带雨林群落组装零模型检验：C-score零分布与观测值比较" width="80%" />
-<p class="caption">(\#fig:c-score-null-dist)热带雨林群落组装零模型检验：C-score零分布与观测值比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/c-score-null-dist-1} 
+
+}
+
+\caption{热带雨林群落组装零模型检验：C-score零分布与观测值比较}(\#fig:c-score-null-dist)
+\end{figure}
 
 图\@ref(fig:community-matrix-heatmap)展示了热带雨林群落的物种分布热图：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/community-matrix-heatmap-1.png" alt="热带雨林群落物种分布热图：基于环境梯度的物种分布模式" width="80%" />
-<p class="caption">(\#fig:community-matrix-heatmap)热带雨林群落物种分布热图：基于环境梯度的物种分布模式</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/community-matrix-heatmap-1} 
+
+}
+
+\caption{热带雨林群落物种分布热图：基于环境梯度的物种分布模式}(\#fig:community-matrix-heatmap)
+\end{figure}
 
 **生态学意义**：如果零模型检验显示显著的C-score（p < 0.05），表明树种的共现模式显著偏离随机期望。较高的C-score通常表示物种间存在竞争排斥——物种倾向于避免在相同的样点中共存。这支持了"竞争排斥"假说在热带雨林群落组装中的重要性。
 
@@ -1763,24 +1823,36 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:nestedness-null-dist)展示了传粉网络嵌套性零模型检验的零分布：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/nestedness-null-dist-1.png" alt="传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较" width="80%" />
-<p class="caption">(\#fig:nestedness-null-dist)传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nestedness-null-dist-1} 
+
+}
+
+\caption{传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较}(\#fig:nestedness-null-dist)
+\end{figure}
 
 图\@ref(fig:pollination-network-structure)展示了传粉网络的结构图：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/pollination-network-structure-1.png" alt="传粉网络结构可视化：植物与传粉者的二分网络" width="80%" />
-<p class="caption">(\#fig:pollination-network-structure)传粉网络结构可视化：植物与传粉者的二分网络</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/pollination-network-structure-1} 
+
+}
+
+\caption{传粉网络结构可视化：植物与传粉者的二分网络}(\#fig:pollination-network-structure)
+\end{figure}
 
 图\@ref(fig:pollination-matrix-heatmap)展示了传粉网络相互作用的矩阵热图：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/pollination-matrix-heatmap-1.png" alt="传粉网络相互作用矩阵热图：嵌套结构的可视化" width="80%" />
-<p class="caption">(\#fig:pollination-matrix-heatmap)传粉网络相互作用矩阵热图：嵌套结构的可视化</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/pollination-matrix-heatmap-1} 
+
+}
+
+\caption{传粉网络相互作用矩阵热图：嵌套结构的可视化}(\#fig:pollination-matrix-heatmap)
+\end{figure}
 
 **生态学意义**：如果零模型检验显示显著的嵌套性（p < 0.05），表明传粉网络的结构确实具有嵌套模式。嵌套结构通常被认为能够增强生态网络的稳定性和韧性——当某些物种消失时，嵌套结构有助于维持网络的连接性。这种结构信息对于理解传粉服务的稳定性和设计保护策略具有重要意义。
 
@@ -1838,10 +1910,10 @@ summary(cooc_null)
 ```
 
 ```
-## Time Stamp:  Sat Oct 11 06:56:49 2025 
+## Time Stamp:  Mon Oct 13 05:55:10 2025 
 ## Reproducible:  
 ## Number of Replications:  
-## Elapsed Time:  0.62 secs 
+## Elapsed Time:  0.17 secs 
 ## Metric:  c_score 
 ## Algorithm:  sim9 
 ## Observed Index:  13.671 
@@ -1862,7 +1934,9 @@ summary(cooc_null)
 ``` r
 # 网络嵌套性零模型
 # 使用vegan包中的permatswap函数
-net_null <- permatswap(pollination_network, method = "quasiswap", times = 1000)
+net_null <- permatswap(pollination_network,
+                       method = "quasiswap",
+                       times = 1000)
 
 # 提取模拟结果并计算嵌套性
 null_results <- sapply(net_null$perm, function(mat) {
@@ -1891,17 +1965,25 @@ cat("p值:", p_value, "\n")
 
 图\@ref(fig:cooc-null-model-plot)展示了EcoSimR包中物种共现零模型的检验结果：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/cooc-null-model-plot-1.png" alt="物种共现零模型检验：EcoSimR包分析结果" width="80%" />
-<p class="caption">(\#fig:cooc-null-model-plot)物种共现零模型检验：EcoSimR包分析结果</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/cooc-null-model-plot-1} 
+
+}
+
+\caption{物种共现零模型检验：EcoSimR包分析结果}(\#fig:cooc-null-model-plot)
+\end{figure}
 
 图\@ref(fig:nestedness-null-hist)展示了网络嵌套性零模型的零分布直方图：
 
-<div class="figure" style="text-align: center">
-<img src="07-simulation_based_tests_files/figure-html/nestedness-null-hist-1.png" alt="网络嵌套性零模型检验：嵌套性指数零分布" width="80%" />
-<p class="caption">(\#fig:nestedness-null-hist)网络嵌套性零模型检验：嵌套性指数零分布</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nestedness-null-hist-1} 
+
+}
+
+\caption{网络嵌套性零模型检验：嵌套性指数零分布}(\#fig:nestedness-null-hist)
+\end{figure}
 
 ### 生态学应用与保护意义
 
@@ -1949,54 +2031,25 @@ cat("p值:", p_value, "\n")
 
 **练习1：梅花鹿保护效果的综合评估**
 
-假设你在一个梅花鹿自然保护区工作，需要评估不同保护措施对梅花鹿种群和栖息地的影响。你收集了以下数据：
+假设你在一个梅花鹿自然保护区工作，需要评估不同保护措施对梅花鹿种群和栖息地的影响。你收集了种群数据（在保护区内和保护区外记录的梅花鹿种群密度）、遗传数据（保护区内梅花鹿种群的微卫星位点基因型频率）、植物群落数据（不同保护年限栖息地的植物物种组成）和空间分布数据（保护区内梅花鹿个体的空间坐标）。
 
-- **种群数据**：在保护区内（10个样点）和保护区外（10个样点）记录的梅花鹿种群密度（个体/km²）  
-- **遗传数据**：保护区内梅花鹿种群的微卫星位点基因型频率  
-- **植物群落数据**：不同保护年限（5年、10年、原生林）栖息地的植物物种组成  
-- **空间分布数据**：保护区内梅花鹿个体的空间坐标  
-
-请设计一个综合的统计分析方案，使用本章介绍的基于模拟的假设检验方法回答以下问题：
-  
-1. 保护区内外的梅花鹿种群密度是否存在显著差异？使用置换检验进行检验。  
-2. 保护区内梅花鹿种群是否处于Hardy-Weinberg平衡状态？使用蒙特卡洛检验进行检验。  
-3. 不同保护年限栖息地的植物群落组成是否存在显著差异？使用ANOSIM置换检验。  
-4. 梅花鹿在保护区内的空间分布是否显著偏离随机模式？使用Ripley's K函数包络分析。  
+请设计一个综合的统计分析方案，使用本章介绍的基于模拟的假设检验方法回答以下问题：保护区内外的梅花鹿种群密度是否存在显著差异？使用置换检验进行检验。保护区内梅花鹿种群是否处于Hardy-Weinberg平衡状态？使用蒙特卡洛检验进行检验。不同保护年限栖息地的植物群落组成是否存在显著差异？使用ANOSIM置换检验。梅花鹿在保护区内的空间分布是否显著偏离随机模式？使用Ripley's K函数包络分析。  
 
 请详细说明每种检验的零假设、检验统计量、随机化策略，并解释统计结果在梅花鹿保护实践中的生态学意义。
 
 **练习2：生态网络结构与保护优先区识别**
 
-你正在研究一个包含梅花鹿、其主要食物植物和传粉昆虫的生态网络。网络数据包括：
+你正在研究一个包含梅花鹿、其主要食物植物和传粉昆虫的生态网络。网络数据包括植物-传粉者网络（15种植物与20种传粉者的相互作用矩阵）、梅花鹿-植物网络（梅花鹿对10种主要食物植物的取食偏好）和空间分布数据（所有物种在景观中的分布位置）。
 
-- **植物-传粉者网络**：15种植物与20种传粉者的相互作用矩阵  
-- **梅花鹿-植物网络**：梅花鹿对10种主要食物植物的取食偏好  
-- **空间分布数据**：所有物种在景观中的分布位置  
-
-请使用基于模拟的零模型检验方法：
-
-1. 检验植物-传粉者网络是否具有显著的嵌套结构，并解释嵌套结构对网络稳定性的意义。  
-2. 检验梅花鹿-植物网络中是否存在显著的物种共现模式（使用C-score检验），分析竞争排斥或生态位分化的证据。  
-3. 结合空间分布数据，使用系统发育信号检验分析梅花鹿食物偏好的系统发育保守性。  
-4. 基于以上分析结果，提出保护优先区的识别标准，并说明如何利用网络结构信息优化保护策略。  
+请使用基于模拟的零模型检验方法：检验植物-传粉者网络是否具有显著的嵌套结构，并解释嵌套结构对网络稳定性的意义。检验梅花鹿-植物网络中是否存在显著的物种共现模式（使用C-score检验），分析竞争排斥或生态位分化的证据。结合空间分布数据，使用系统发育信号检验分析梅花鹿食物偏好的系统发育保守性。基于以上分析结果，提出保护优先区的识别标准，并说明如何利用网络结构信息优化保护策略。  
 
 请详细说明每种零模型检验的算法选择理由，并讨论统计结果对梅花鹿栖息地管理的指导意义。
 
 **练习3：气候变化对梅花鹿栖息地影响的模拟研究**
 
-假设你正在评估气候变化对梅花鹿栖息地适宜性的潜在影响。你拥有以下数据：
+假设你正在评估气候变化对梅花鹿栖息地适宜性的潜在影响。你拥有历史气候数据（过去30年的温度、降水等气候变量）、梅花鹿分布数据（当前梅花鹿在保护区的分布点位）、栖息地变量（植被类型、海拔、坡度等环境因子）和未来气候情景（两种气候变化情景下的预测数据）。
 
-- **历史气候数据**：过去30年的温度、降水等气候变量  
-- **梅花鹿分布数据**：当前梅花鹿在保护区的分布点位  
-- **栖息地变量**：植被类型、海拔、坡度等环境因子  
-- **未来气候情景**：两种气候变化情景下的预测数据  
-
-请设计一个基于蒙特卡洛模拟的综合分析方法：
-
-1. 使用自助法构建当前栖息地适宜性模型的参数置信区间，评估模型的不确定性。  
-2. 使用置换检验检验梅花鹿分布与环境因子之间的空间关联显著性。  
-3. 基于未来气候情景，使用蒙特卡洛模拟预测梅花鹿适宜栖息地的变化范围和不确定性。  
-4. 设计一个零模型检验，评估观测到的栖息地变化是否显著偏离随机期望。  
+请设计一个基于蒙特卡洛模拟的综合分析方法：使用自助法构建当前栖息地适宜性模型的参数置信区间，评估模型的不确定性。使用置换检验检验梅花鹿分布与环境因子之间的空间关联显著性。基于未来气候情景，使用蒙特卡洛模拟预测梅花鹿适宜栖息地的变化范围和不确定性。设计一个零模型检验，评估观测到的栖息地变化是否显著偏离随机期望。  
 
 请详细说明每种模拟方法的技术细节，包括模拟次数、随机化策略、统计量选择等，并讨论分析结果对梅花鹿保护气候适应策略的启示。  
 

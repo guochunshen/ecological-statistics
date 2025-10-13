@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   cache = TRUE
 )
 library(showtext)   # 中文字体支持
+library(dplyr)      # 数据整理和管道操作
 showtext_auto()     # 自动启用中文字体
 ```
 
@@ -189,7 +190,8 @@ load(file="data/comm_data_groups.Rdata")
 adonis_result <- adonis2(comm_data ~ groups, method = "bray")
 
 # 输出分析结果
-knitr::kable(adonis_result, caption = "置换ANOVA分析结果")
+knitr::kable(adonis_result, caption = "置换ANOVA分析结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 表 \@ref(tab:adonis-result-table) 展示了置换ANOVA分析的结果，从中可以看出不同栖息地类型对植物群落组成的影响是否具有统计显著性。
@@ -258,7 +260,8 @@ data <- data.frame(
 # 使用近似分布，重抽样1000次构建零分布
 test_result <- independence_test(value ~ group,
                                 data = data,
-                                distribution = approximate(nresample = 1000))
+                                distribution = approximate(
+                                  nresample = 1000))
 
 # 输出检验结果
 print(test_result)
@@ -888,7 +891,9 @@ library(vegan)
 
 load(file="data/anosim_data.RData")
 # 执行ANOSIM分析
-anosim_result <- anosim(species_matrix, groups, distance = "bray", permutations = 1000)
+anosim_result <- anosim(species_matrix, groups,
+                         distance = "bray",
+                         permutations = 1000)
 
 # 输出结果
 print(anosim_result)
@@ -1110,7 +1115,10 @@ observed_fish <- rpoispp(intensity)
 
 # 拟合非齐次泊松点过程模型
 fit_model <- ppm(observed_fish ~ coral_coverage)
-knitr::kable(summary(fit_model)$coefs.SE.CI)
+knitr::kable(summary(fit_model)$coefs.SE.CI,
+             caption = "非齐次泊松点过程模型拟合结果",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 图\@ref(fig:coral-coverage-dist)展示了模拟的珊瑚覆盖率分布情况：
@@ -1592,7 +1600,8 @@ for (i in 1:n_sim) {
 
   # 简单的随机化：保持行和列总和不变
   # 在实际应用中可以使用更复杂的算法如swap算法
-  sim_matrix <- r2dtable(1, rowSums(comm_matrix), colSums(comm_matrix))[[1]]
+  sim_matrix <- r2dtable(1, rowSums(comm_matrix),
+                         colSums(comm_matrix))[[1]]
   sim_matrix[sim_matrix > 0] <- 1
 
   sim_c_scores[i] <- calc_c_score(sim_matrix)
@@ -1881,7 +1890,9 @@ summary(cooc_null)
 
 # 网络嵌套性零模型
 # 使用vegan包中的permatswap函数
-net_null <- permatswap(pollination_network, method = "quasiswap", times = 1000)
+net_null <- permatswap(pollination_network,
+                       method = "quasiswap",
+                       times = 1000)
 
 # 提取模拟结果并计算嵌套性
 null_results <- sapply(net_null$perm, function(mat) {
@@ -1958,54 +1969,25 @@ abline(v = obs_nestedness, col = "red", lwd = 2)
 
 **练习1：梅花鹿保护效果的综合评估**
 
-假设你在一个梅花鹿自然保护区工作，需要评估不同保护措施对梅花鹿种群和栖息地的影响。你收集了以下数据：
+假设你在一个梅花鹿自然保护区工作，需要评估不同保护措施对梅花鹿种群和栖息地的影响。你收集了种群数据（在保护区内和保护区外记录的梅花鹿种群密度）、遗传数据（保护区内梅花鹿种群的微卫星位点基因型频率）、植物群落数据（不同保护年限栖息地的植物物种组成）和空间分布数据（保护区内梅花鹿个体的空间坐标）。
 
-- **种群数据**：在保护区内（10个样点）和保护区外（10个样点）记录的梅花鹿种群密度（个体/km²）  
-- **遗传数据**：保护区内梅花鹿种群的微卫星位点基因型频率  
-- **植物群落数据**：不同保护年限（5年、10年、原生林）栖息地的植物物种组成  
-- **空间分布数据**：保护区内梅花鹿个体的空间坐标  
-
-请设计一个综合的统计分析方案，使用本章介绍的基于模拟的假设检验方法回答以下问题：
-  
-1. 保护区内外的梅花鹿种群密度是否存在显著差异？使用置换检验进行检验。  
-2. 保护区内梅花鹿种群是否处于Hardy-Weinberg平衡状态？使用蒙特卡洛检验进行检验。  
-3. 不同保护年限栖息地的植物群落组成是否存在显著差异？使用ANOSIM置换检验。  
-4. 梅花鹿在保护区内的空间分布是否显著偏离随机模式？使用Ripley's K函数包络分析。  
+请设计一个综合的统计分析方案，使用本章介绍的基于模拟的假设检验方法回答以下问题：保护区内外的梅花鹿种群密度是否存在显著差异？使用置换检验进行检验。保护区内梅花鹿种群是否处于Hardy-Weinberg平衡状态？使用蒙特卡洛检验进行检验。不同保护年限栖息地的植物群落组成是否存在显著差异？使用ANOSIM置换检验。梅花鹿在保护区内的空间分布是否显著偏离随机模式？使用Ripley's K函数包络分析。  
 
 请详细说明每种检验的零假设、检验统计量、随机化策略，并解释统计结果在梅花鹿保护实践中的生态学意义。
 
 **练习2：生态网络结构与保护优先区识别**
 
-你正在研究一个包含梅花鹿、其主要食物植物和传粉昆虫的生态网络。网络数据包括：
+你正在研究一个包含梅花鹿、其主要食物植物和传粉昆虫的生态网络。网络数据包括植物-传粉者网络（15种植物与20种传粉者的相互作用矩阵）、梅花鹿-植物网络（梅花鹿对10种主要食物植物的取食偏好）和空间分布数据（所有物种在景观中的分布位置）。
 
-- **植物-传粉者网络**：15种植物与20种传粉者的相互作用矩阵  
-- **梅花鹿-植物网络**：梅花鹿对10种主要食物植物的取食偏好  
-- **空间分布数据**：所有物种在景观中的分布位置  
-
-请使用基于模拟的零模型检验方法：
-
-1. 检验植物-传粉者网络是否具有显著的嵌套结构，并解释嵌套结构对网络稳定性的意义。  
-2. 检验梅花鹿-植物网络中是否存在显著的物种共现模式（使用C-score检验），分析竞争排斥或生态位分化的证据。  
-3. 结合空间分布数据，使用系统发育信号检验分析梅花鹿食物偏好的系统发育保守性。  
-4. 基于以上分析结果，提出保护优先区的识别标准，并说明如何利用网络结构信息优化保护策略。  
+请使用基于模拟的零模型检验方法：检验植物-传粉者网络是否具有显著的嵌套结构，并解释嵌套结构对网络稳定性的意义。检验梅花鹿-植物网络中是否存在显著的物种共现模式（使用C-score检验），分析竞争排斥或生态位分化的证据。结合空间分布数据，使用系统发育信号检验分析梅花鹿食物偏好的系统发育保守性。基于以上分析结果，提出保护优先区的识别标准，并说明如何利用网络结构信息优化保护策略。  
 
 请详细说明每种零模型检验的算法选择理由，并讨论统计结果对梅花鹿栖息地管理的指导意义。
 
 **练习3：气候变化对梅花鹿栖息地影响的模拟研究**
 
-假设你正在评估气候变化对梅花鹿栖息地适宜性的潜在影响。你拥有以下数据：
+假设你正在评估气候变化对梅花鹿栖息地适宜性的潜在影响。你拥有历史气候数据（过去30年的温度、降水等气候变量）、梅花鹿分布数据（当前梅花鹿在保护区的分布点位）、栖息地变量（植被类型、海拔、坡度等环境因子）和未来气候情景（两种气候变化情景下的预测数据）。
 
-- **历史气候数据**：过去30年的温度、降水等气候变量  
-- **梅花鹿分布数据**：当前梅花鹿在保护区的分布点位  
-- **栖息地变量**：植被类型、海拔、坡度等环境因子  
-- **未来气候情景**：两种气候变化情景下的预测数据  
-
-请设计一个基于蒙特卡洛模拟的综合分析方法：
-
-1. 使用自助法构建当前栖息地适宜性模型的参数置信区间，评估模型的不确定性。  
-2. 使用置换检验检验梅花鹿分布与环境因子之间的空间关联显著性。  
-3. 基于未来气候情景，使用蒙特卡洛模拟预测梅花鹿适宜栖息地的变化范围和不确定性。  
-4. 设计一个零模型检验，评估观测到的栖息地变化是否显著偏离随机期望。  
+请设计一个基于蒙特卡洛模拟的综合分析方法：使用自助法构建当前栖息地适宜性模型的参数置信区间，评估模型的不确定性。使用置换检验检验梅花鹿分布与环境因子之间的空间关联显著性。基于未来气候情景，使用蒙特卡洛模拟预测梅花鹿适宜栖息地的变化范围和不确定性。设计一个零模型检验，评估观测到的栖息地变化是否显著偏离随机期望。  
 
 请详细说明每种模拟方法的技术细节，包括模拟次数、随机化策略、统计量选择等，并讨论分析结果对梅花鹿保护气候适应策略的启示。  
 

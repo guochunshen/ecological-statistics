@@ -85,7 +85,9 @@ cat("\n总体均值：", mean(forest_birds$abundance), "\n")
 ```{r random-sampling}
 random_sample <- forest_birds[sample(nrow(forest_birds), 100), ]
 
-knitr::kable(table(random_sample$species), caption="随机抽样结果")
+knitr::kable(table(random_sample$species),
+             caption="随机抽样结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 cat("随机抽样均值估计：", mean(random_sample$abundance), "\n")
 ```
 
@@ -101,7 +103,8 @@ stratified_sample <- forest_birds %>%
   sample_n(size = 20)
 
 knitr::kable(table(stratified_sample$habitat, stratified_sample$species),
-  caption = "分层抽样结果")
+  caption = "分层抽样结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 cat("分层抽样均值估计：", mean(stratified_sample$abundance), "\n")
 ```
 
@@ -113,7 +116,9 @@ cat("分层抽样均值估计：", mean(stratified_sample$abundance), "\n")
 systematic_indices <- seq(1, nrow(forest_birds), by = 10)
 systematic_sample <- forest_birds[systematic_indices, ]
 
-knitr::kable(table(systematic_sample$species), caption="系统抽样结果")
+knitr::kable(table(systematic_sample$species),
+             caption="系统抽样结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 cat("系统抽样均值估计：", mean(systematic_sample$abundance), "\n")
 ```
 
@@ -133,9 +138,11 @@ cat("\n估计偏差分析：\n",
     "随机抽样偏差：",
     (mean(random_sample$abundance) - true_mean) / true_mean * 100, "%\n",
     "分层抽样偏差：",
-    (mean(stratified_sample$abundance) - true_mean) / true_mean * 100, "%\n",
+    (mean(stratified_sample$abundance) - true_mean) / true_mean * 100,
+    "%\n",
     "系统抽样偏差：",
-    (mean(systematic_sample$abundance) - true_mean) / true_mean * 100, "%\n")
+    (mean(systematic_sample$abundance) - true_mean) / true_mean * 100,
+    "%\n")
 ```
 
 ### 抽样误差与样本量确定
@@ -150,7 +157,8 @@ desired_margin <- 2
 confidence_level <- 0.95
 
 z_value <- qnorm(1 - (1 - confidence_level) / 2)
-required_sample_size <- ceiling((z_value * population_sd / desired_margin)^2)
+required_sample_size <- ceiling(
+  (z_value * population_sd / desired_margin)^2)
 cat("基于精度要求的所需样本量：", required_sample_size, "\n")
 
 effect_size <- 0.5  # 中等效应大小
@@ -688,7 +696,8 @@ bayes_data <- data.frame(diameter = tree_diameter)
 
 # 定义先验分布：基于已有知识设定参数的先验分布
 priors <- c(
-  prior(normal(22, 3), class = Intercept),  # 均值的先验：基于过去研究，认为均值在22cm左右，标准差3cm
+  prior(normal(22, 3), class = Intercept),  # 均值的先验：基于过去研究，
+  # 认为均值在22cm左右，标准差3cm
   prior(student_t(3, 0, 5), class = sigma)  # 标准差的先验：使用学生t分布，自由度3，位置0，尺度5
 )
 
@@ -707,7 +716,10 @@ fit_brm <- brm(
 )
 
 # 输出模型拟合结果
-knitr::kable(summary(fit_brm)$fixed, caption = "贝叶斯模型拟合结果")
+knitr::kable(summary(fit_brm)$fixed,
+             caption = "贝叶斯模型拟合结果",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 这段代码展示了贝叶斯估计在生态学中的具体实现过程。首先加载`brms`包，这是一个基于Stan的贝叶斯回归建模包，专门用于拟合复杂的层次模型。代码将树木胸径数据转换为数据框格式，这是`brms`包要求的输入格式。
@@ -1054,9 +1066,10 @@ cat("Chapman修正后的种群估计：", population_chapman, "只\n")
 # 计算Lincoln-Petersen估计的标准误
 # 标准误公式：SE = sqrt[M² × C × (C - R) / R³]
 # 这个公式基于超几何分布的方差推导
-standard_error_population <- sqrt((marked_first^2 * captured_second *
-                                     (captured_second - recaptured_marked)) /
-                                     (recaptured_marked^3))
+standard_error_population <- sqrt(
+  (marked_first^2 * captured_second *
+   (captured_second - recaptured_marked)) /
+  (recaptured_marked^3))
 
 # 计算95%置信区间：使用正态近似
 # 下界：估计值 - 1.96 × 标准误
@@ -1760,8 +1773,10 @@ cat("\n内插比较（相同个体数下的期望物种数）：\n",
 plot(x=c(0,200), y= range(c(rare_a, rare_b)),
     xlab = "样本量", ylab = "期望物种数",
     main = "物种丰富度内插比较")
-lines(x=c(50, 100, 150), y=rare_a, type = "b", col = "blue", lwd = 2, pch = 19)
-lines(x=c(50,100,150), y=rare_b, type = "b", col = "red", lwd = 2, pch = 17)
+lines(x=c(50, 100, 150), y=rare_a, type = "b",
+      col = "blue", lwd = 2, pch = 19)
+lines(x=c(50,100,150), y=rare_b, type = "b",
+      col = "red", lwd = 2, pch = 17)
 
 legend("bottomright", legend = c("样地A", "样地B"),
        col = c("blue", "red"), lwd = 2, pch = c(19, 17))
@@ -2168,7 +2183,7 @@ common_observed <- sum(sampled_species[common_species] > 0)
 # 统计常见种总数
 common_total <- length(common_species)
 
-# =============================================================================
+# ===================================================================
 # 第四部分：稀有种校正效果评估
 # 目的：使用Chao1估计器校正稀有种遗漏，评估校正效果
 # 展示统计方法如何帮助我们更准确地估计物种丰富度
@@ -2182,11 +2197,11 @@ chao1_estimate <- estimateR(as.numeric(sampled_species[observed_species]))[
 
 
 ```{r rare-species-distribution, fig.cap="稀有种对多样性估计的影响分析"}
-# =============================================================================
+# ===========================================================
 # 第五部分：可视化分析
 # 目的：通过图形直观展示真实群落与观测群落的差异
 # 帮助读者理解稀有种问题的可视化表现
-# =============================================================================
+# ===========================================================
 
 # 设置图形布局：1行2列，便于对比真实和观测分布
 par(mfrow = c(1, 2))
@@ -2344,8 +2359,10 @@ knitr::kable(
     "Shannon多样性偏差(%)"
   ),
   digits = c(0, 1, 2, 3, 3, 1, 1),
-  align = "c"
-)
+  align = "c",
+  booktabs = TRUE
+) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 为了更直观地展示样本量对多样性估计精度的影响，图 \@ref(fig:sample-size-precision-effect) 通过四个子图系统分析了样本量与估计精度之间的关系。该综合可视化展示了：(1) 样本量对物种丰富度估计的影响，包括估计均值及其标准差范围；(2) 样本量对Shannon多样性估计的影响；(3) 样本量对估计偏差的影响，比较了物种丰富度和Shannon多样性的偏差变化趋势；(4) 样本量对估计方差的影响，反映了估计精度的稳定性。所有图形均以红色虚线标示真实值作为参考基准，便于评估估计的准确性和可靠性。

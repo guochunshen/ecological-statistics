@@ -677,7 +677,8 @@ ForestPlot <- R6Class("ForestPlot",
       table(self$species_list) %>% diversity()
     },
     print_info = function() {
-      cat("样地", self$plot_id, "有", length(unique(self$species_list)), "个物种\n")
+      cat("样地", self$plot_id, "有",
+          length(unique(self$species_list)), "个物种\n")
     }
   )
 )

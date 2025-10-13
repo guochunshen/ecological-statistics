@@ -1,4 +1,4 @@
-# 自然生态系统的随机性与规律
+# 生态系统的随机性与规律
 
 ```{r include=FALSE}
 # 初始化设置
@@ -580,7 +580,9 @@ results <- data.frame(
 
 ```{r, echo=FALSE}
 # 输出模型结果
-knitr::kable(results, caption = "贝叶斯物种分布模型结果", label = "bayesian-species-distribution")
+knitr::kable(results, caption = "贝叶斯物种分布模型结果",
+             label = "bayesian-species-distribution", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 ```{r}
@@ -864,7 +866,9 @@ model_comparison <- data.frame(
 
 ```{r, echo=FALSE}
 # 输出模型比较结果
-knitr::kable(model_comparison, caption = "贝叶斯模型比较结果", label = "bayesian-model-comparison")
+knitr::kable(model_comparison, caption = "贝叶斯模型比较结果",
+             label = "bayesian-model-comparison", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 表 \@ref(tab:bayesian-model-comparison) 展示了贝叶斯模型比较的结果，包括线性模型和季节模型的模型证据值以及它们之间的贝叶斯因子，为模型选择提供了定量依据。
@@ -960,7 +964,9 @@ sensitivity_df <- data.frame(
 ```
 
 ```{r, echo=FALSE}
-knitr::kable(sensitivity_df, caption="贝叶斯敏感性分析结果", label = "bayesian-sensitivity-analysis")
+knitr::kable(sensitivity_df, caption="贝叶斯敏感性分析结果",
+             label = "bayesian-sensitivity-analysis", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 表 \@ref(tab:bayesian-sensitivity-analysis) 展示了贝叶斯敏感性分析的结果，通过比较不同先验强度下的后验均值和标准差，揭示了先验信息对贝叶斯推断的影响程度。
@@ -1010,7 +1016,9 @@ robustness_df <- data.frame(
 ```
 
 ```{r, echo=FALSE}
-knitr::kable(robustness_df, caption="贝叶斯稳健性检验结果", label = "bayesian-robustness-test")
+knitr::kable(robustness_df, caption="贝叶斯稳健性检验结果",
+             label = "bayesian-robustness-test", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 表 \@ref(tab:bayesian-robustness-test) 展示了贝叶斯稳健性检验的结果，通过模拟不同污染比例下的后验均值变化，验证了贝叶斯方法对数据污染的鲁棒性。
@@ -2545,7 +2553,8 @@ fit_weibull <- fitdist(survival_times, "weibull")  # 拟合威布尔分布到生
 
 # 输出参数估计结果：显示拟合的威布尔分布参数和统计信息
 # summary函数提供详细的拟合结果，包括参数估计值、标准误、置信区间等
-knitr::kable(summary(fit_weibull)$estimate, caption="威布尔分布参数估计结果", label = "weibull-parameter-estimation")  # 输出完整的拟合结果摘要信息
+knitr::kable(summary(fit_weibull)$estimate, caption="威布尔分布参数估计结果", label = "weibull-parameter-estimation", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))  # 输出完整的拟合结果摘要信息
 ```
 
 表 \@ref(tab:weibull-parameter-estimation) 展示了通过最大似然估计得到的威布尔分布参数估计结果，包括形状参数和尺度参数的点估计值、标准误和置信区间。
@@ -3007,7 +3016,8 @@ skewness_kurtosis <- data.frame(
 表 \@ref(tab:skewness-kurtosis) 展示了不同样本量下样本均值分布的偏度和峰度值，这些数值量化了分布形态随样本量增加而趋向正态分布的过程。
 
 ```{r, echo=FALSE}
-knitr::kable(skewness_kurtosis, caption="偏度和峰度随样本量的变化", label = "skewness-kurtosis")
+knitr::kable(skewness_kurtosis, caption="偏度和峰度随样本量的变化", label = "skewness-kurtosis", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 #### 蚱蜢午餐中的中心极限定理

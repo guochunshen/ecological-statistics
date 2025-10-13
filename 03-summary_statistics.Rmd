@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
 )
 library(showtext)   # 中文字体支持
 showtext_auto()     # 自动启用中文字体
+library(dplyr)      # 数据整理和管道操作
 ```
 
 
@@ -124,7 +125,8 @@ x_{(\frac{n+1}{2})} & \text{如果 } n \text{ 是奇数} \\
 ```{r}
 # 鱼类体内汞含量数据 - 单位：微克/克
 # 模拟10条鱼类的汞含量观测值，包含一个异常高值(2.50)
-mercury_content <- c(0.12, 0.15, 0.18, 0.21, 0.25, 0.28, 0.32, 0.35, 0.38, 2.50)
+mercury_content <- c(0.12, 0.15, 0.18, 0.21, 0.25,
+                   0.28, 0.32, 0.35, 0.38, 2.50)
 
 # 计算中位数 - 对异常值不敏感的中心趋势度量
 median_mercury <- median(mercury_content)
@@ -384,7 +386,8 @@ cat("下四分位数(Q1)：", q1, "\n",
 # 识别异常值
 lower_bound <- q1 - 1.5 * iqr_value
 upper_bound <- q3 + 1.5 * iqr_value
-outliers <- bird_counts[bird_counts < lower_bound | bird_counts > upper_bound]
+outliers <- bird_counts[bird_counts < lower_bound |
+                         bird_counts > upper_bound]
 print(paste("异常值：", outliers))
 ```
 
@@ -447,7 +450,8 @@ $$g_2 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^4}{s^4} - 3$$
 set.seed(123)
 # 模拟两种不同的物种多度分布
 # 分布A：尖峰分布（高峰度）
-abundance_a <- c(rep(10, 8), rep(15, 2), rep(20, 25), rep(25, 2), rep(30, 8))
+abundance_a <- c(rep(10, 8), rep(15, 2), rep(20, 25),
+                rep(25, 2), rep(30, 8))
 # 分布B：平峰分布（低峰度）
 abundance_b <- runif(45, 10, 30)
 
@@ -1556,7 +1560,8 @@ for (i in seq_along(sample_sizes)) {
 如图\@ref(tab:diversity-sample-size-table)所示，我们通过模拟不同样本量的群落数据，系统地分析了样本量对Shannon指数和Fisher's α多样性指数的影响。该表格清晰地展示了两种多样性指数随样本量变化的响应模式。
 
 ```{r diversity-sample-size-table, echo=FALSE}
-knitr::kable(diversity_comparison, caption = "样本量对多样性指数的影响")
+knitr::kable(diversity_comparison, caption = "样本量对多样性指数的影响", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 **生态学意义：**
@@ -1667,7 +1672,8 @@ comparison_data <- data.frame(
 如表\@ref(tab:community-diversity-comparison-table)所示，我们通过表格系统地比较了两个不同群落的Shannon指数和Simpson指数。该表格清晰地展示了群落A和群落B在物种多样性和优势度格局上的差异，为分析群落生态特征提供了量化的比较依据。
 
 ```{r community-diversity-comparison-table, echo=FALSE}
-knitr::kable(comparison_data, caption = "不同群落的多样性比较")
+knitr::kable(comparison_data, caption = "不同群落的多样性比较", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 **生态学意义：**
@@ -1743,7 +1749,8 @@ diversity_summary <- data.frame(
 如表\@ref(tab:diversity-comprehensive-assessment-table)所示，我们通过群落多样性综合评估表格系统地总结了四种主要多样性指数的计算结果和生态学解释。该表格为全面理解群落多样性特征提供了综合的分析框架，展示了不同指数在生态学研究中的互补作用。
 
 ```{r diversity-comprehensive-assessment-table, echo=FALSE}
-knitr::kable(diversity_summary, caption = "群落多样性综合评估")
+knitr::kable(diversity_summary, caption = "群落多样性综合评估", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 **生态学意义：**
@@ -1839,7 +1846,8 @@ $$T = \frac{\sum_{i,j} |a_{ij} - p_{ij}|}{S \times T}$$
 library(igraph)
 
 # 读取植物-传粉者相互作用矩阵（包含行列名称）
-plant_pollinator_matrix <- as.matrix(read.csv("data/plant_pollinator_matrix.csv", row.names = 1))
+plant_pollinator_matrix <- as.matrix(
+  read.csv("data/plant_pollinator_matrix.csv", row.names = 1))
 
 # 创建网络对象
 net <- graph_from_incidence_matrix(plant_pollinator_matrix)
@@ -1883,7 +1891,8 @@ network_metrics <- data.frame(
   数值 = c(connectance, modularity, nestedness),
   生态学意义 = c("相互作用密集度", "群落结构分化", "特化-泛化格局")
 )
-knitr::kable(network_metrics, caption = "网络拓扑指标综合分析")
+knitr::kable(network_metrics, caption = "网络拓扑指标综合分析", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 **生态学意义：**
@@ -1980,7 +1989,8 @@ food_web_analysis <- data.frame(
 如图\@ref(fig:food-web-structure)所示，该简化食物网结构图直观展示了由四个营养级组成的线性食物链。图中绿色节点代表生产者（植物），黄色节点代表草食动物，橙色节点代表初级捕食者，红色节点代表顶级捕食者，箭头方向表示能量从低营养级向高营养级的流动路径。该可视化不仅呈现了食物网的基本结构，还在图注中显示了计算得到的平均链长（2.00）和连接复杂性（0.188），为理解生态系统中能量流动和物种相互作用的复杂性提供了直观参考。
 
 ```{r food-web-analysis-table, echo=FALSE}
-knitr::kable(food_web_analysis, caption = "食物网特征综合分析")
+knitr::kable(food_web_analysis, caption = "食物网特征综合分析", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 如表\@ref(tab:food-web-analysis-table)所示，食物网特征综合分析表系统总结了三个关键指标：平均营养级（1.75）、平均链长（2.00）和连接复杂性（0.188）。这些指标分别反映了生态系统中能量传递效率、营养级复杂度和物种间相互作用密度，为定量评估食物网结构和功能提供了重要依据。
@@ -2128,11 +2138,13 @@ calculate_resilience <- function(pre_disturbance,
   resilience_rate <- log(recovery_series[length(recovery_series)] /
                            pre_disturbance) / recovery_time
 
-  return(list(recovery_time = recovery_time, resilience_rate = resilience_rate))
+  return(list(recovery_time = recovery_time,
+              resilience_rate = resilience_rate))
 }
 
 resilience_result <- calculate_resilience(pre_fire_biomass,
-                                          biomass_recovery, years_post_fire)
+                                          biomass_recovery,
+                                          years_post_fire)
 ```
 
 ```{r, echo=FALSE }
@@ -2279,7 +2291,8 @@ stability_analysis <- data.frame(
 ```
 
 ```{r stability-analysis-table, echo=FALSE}
-knitr::kable(stability_analysis, caption = "生态系统稳定性综合分析结果")
+knitr::kable(stability_analysis, caption = "生态系统稳定性综合分析结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 如表\@ref(tab:stability-analysis-table)所示，生态系统稳定性综合分析表系统总结了抵抗力（0.908）、恢复力（0.090）和持久性（0.960）三个关键指标。这些指标分别反映了生态系统的抗干扰能力、恢复速度和长期稳定性，共同构成了评估生态系统稳定性的完整框架。该综合分析为理解生态系统对环境变化的响应机制和制定有效的保护管理策略提供了重要科学依据。

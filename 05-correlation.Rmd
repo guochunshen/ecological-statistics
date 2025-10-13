@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
 )
 library(showtext)   # 中文字体支持
 library(akima)      # 插值函数支持
+library(dplyr)      # 数据整理和管道操作
 showtext_auto()     # 自动启用中文字体
 ```
 
@@ -144,10 +145,12 @@ save(water_quality, macroinvertebrate_diversity, file = "data/spearman.RData")
 # 加载数据
 load("data/spearman.RData")
 # 计算Spearman相关系数
-spearman_cor <- cor(water_quality, macroinvertebrate_diversity, method = "spearman")
+spearman_cor <- cor(water_quality, macroinvertebrate_diversity,
+                   method = "spearman")
 
 # 进行相关性检验
-spearman_test <- cor.test(water_quality, macroinvertebrate_diversity, method = "spearman")
+spearman_test <- cor.test(water_quality, macroinvertebrate_diversity,
+                      method = "spearman")
 ```
 
 ```{r, echo=FALSE}
@@ -162,7 +165,8 @@ plot(water_quality, macroinvertebrate_diversity,
   xlab = "水质指数", ylab = "底栖动物多样性",
   main = "河流水质与底栖动物多样性的关系"
 )
-lines(lowess(water_quality, macroinvertebrate_diversity), col = "red", lwd = 2)
+lines(lowess(water_quality, macroinvertebrate_diversity),
+      col = "red", lwd = 2)
 legend("topleft",
   legend = paste("ρ =", round(spearman_cor, 3)),
   bty = "n"
@@ -282,7 +286,8 @@ partial_cor <- pcor(eco_data)$estimate
 ```
 
 ```{r, echo=FALSE}
-knitr::kable(round(partial_cor, 3), caption = "偏相关系数矩阵")
+knitr::kable(round(partial_cor, 3), caption = "偏相关系数矩阵", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 cat(
   "\n控制温度后，降水量与生产力的偏相关系数：",
   round(partial_cor["precipitation", "productivity"], 3), "\n"
@@ -2253,16 +2258,19 @@ library(sp)
 trend_linear <- lm(biomass ~ x + y, data = spatial_df)
 
 # 二阶趋势面（二次趋势）
-trend_quadratic <- lm(biomass ~ x + y + I(x^2) + I(y^2) + I(x*y), data = spatial_df)
+trend_quadratic <- lm(biomass ~ x + y + I(x^2) + I(y^2) + I(x*y),
+                      data = spatial_df)
 ```
 
 ```{r trend-linear-anova, echo=FALSE}
 # 进行趋势面检验
-knitr::kable(anova(trend_linear), caption = "一阶趋势面F检验结果")
+knitr::kable(anova(trend_linear), caption = "一阶趋势面F检验结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 ```{r trend-quadratic-anova, echo=FALSE}
-knitr::kable(anova(trend_quadratic), caption = "二阶趋势面F检验结果")
+knitr::kable(anova(trend_quadratic), caption = "二阶趋势面F检验结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 ```{r, echo=FALSE}
@@ -2497,8 +2505,10 @@ trait_random <- rnorm(n_species, mean = 0, sd = 1)
 names(trait_random) <- phy_tree$tip.label
 
 # 计算Blomberg's K, 并通过置换检验评估显著性
-K_perm_conservative <- phylosig(phy_tree, trait_conservative, method = "K", test = TRUE, nsim = 999)
-K_perm_random <- phylosig(phy_tree, trait_random, method = "K", test = TRUE, nsim = 999)
+K_perm_conservative <- phylosig(phy_tree, trait_conservative,
+                               method = "K", test = TRUE, nsim = 999)
+K_perm_random <- phylosig(phy_tree, trait_random,
+                         method = "K", test = TRUE, nsim = 999)
 
 cat("Blomberg's K分析结果：\n",
     "保守性状的K值：", round(K_perm_conservative$K, 3), "\n",
@@ -2511,8 +2521,10 @@ cat("\n置换检验p值：\n",
     sep = "")
 
 # 计算Pagel's λ, 并通过似然比检验评估显著性
-lambda_conservative <- phylosig(phy_tree, trait_conservative, method = "lambda")
-lambda_random <- phylosig(phy_tree, trait_random, method = "lambda")
+lambda_conservative <- phylosig(phy_tree, trait_conservative,
+                              method = "lambda")
+lambda_random <- phylosig(phy_tree, trait_random,
+                        method = "lambda")
 
 cat("\nPagel's λ分析结果：\n",
     "保守性状的λ值：", round(lambda_conservative$lambda, 3), "\n",
@@ -2603,7 +2615,8 @@ signal_comparison <- data.frame(
   Mantel_r = round(c(conservative_cor$statistic, random_cor$statistic), 3)
 )
 
-knitr::kable(signal_comparison, caption = "不同系统发育信号度量方法的比较")
+knitr::kable(signal_comparison, caption = "不同系统发育信号度量方法的比较", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 表\@ref(tab:signal-comparison-table)比较了三种常用的系统发育信号度量方法（Blomberg's K、Pagel's λ和Mantel检验）在保守性状和随机性状上的表现。**生态学意义**：系统发育信号分析在生态学中广泛应用于检验性状的系统发育保守性，理解功能性状的进化动态，以及确保生态关系的统计检验不受系统发育非独立性的影响。
@@ -2664,7 +2677,10 @@ save(phy_tree, trait_data, file = "data/trait_data.RData")
 load("data/trait_data.RData")
 # 传统相关性分析（忽略系统发育）
 cor_traditional <- cor(trait_data[, 2:4])
-knitr::kable(round(cor_traditional, 3), caption = "传统相关性分析结果（忽略系统发育）")
+knitr::kable(round(cor_traditional, 3),
+             caption = "传统相关性分析结果（忽略系统发育）",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 
 # 进行相关性检验
 cor_test_np <- cor.test(trait_data$nitrogen, trait_data$photosynthesis)
@@ -2851,8 +2867,10 @@ library(picante)
 library(ape)
 load(file = "data/phy_comm.Rdata")
 # 计算群落的系统发育结构的标准化指标
-mpd_values <- ses.mpd(comm, cophenetic(phy_tree), null.model = "taxa.labels", runs = 999)
-mntd_values <- ses.mntd(comm, cophenetic(phy_tree), null.model = "taxa.labels", runs = 999)
+mpd_values <- ses.mpd(comm, cophenetic(phy_tree),
+                    null.model = "taxa.labels", runs = 999)
+mntd_values <- ses.mntd(comm, cophenetic(phy_tree),
+                     null.model = "taxa.labels", runs = 999)
 
 # 整理输出结果
 result <- data.frame(
@@ -2905,7 +2923,8 @@ sorensen_dist <- vegdist(binary_data, method = "bray", binary = TRUE)
 
 ```{r}
 # 创建示例数量数据
-abundance_data <- matrix(c(10, 5, 0, 2, 8, 3, 15, 1, 0, 7, 4, 12), nrow = 3)
+abundance_data <- matrix(c(10, 5, 0, 2, 8, 3, 15, 1, 0, 7, 4, 12),
+                         nrow = 3)
 rownames(abundance_data) <- c("群落A", "群落B", "群落C")
 colnames(abundance_data) <- c("物种1", "物种2", "物种3", "物种4")
 
@@ -2954,7 +2973,8 @@ trait_data <- data.frame(
 
 # 计算性状间相关性矩阵
 cor_matrix <- cor(trait_data[, -1])
-knitr::kable(cor_matrix, caption = "功能性状相关性矩阵")
+knitr::kable(cor_matrix, caption = "功能性状相关性矩阵", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 
 # 可视化相关性矩阵
 library(corrplot)
@@ -2975,7 +2995,8 @@ importance_table <- data.frame(
   方差比例 = round(pca_importance[2, ], 3),
   累积方差比例 = round(pca_importance[3, ], 3)
 )
-knitr::kable(importance_table, caption = "主成分分析结果：方差解释比例")
+knitr::kable(importance_table, caption = "主成分分析结果：方差解释比例", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 
 biplot(pca_result)
 ```
@@ -2985,10 +3006,12 @@ biplot(pca_result)
 ```{r leaf-economics-scatter, fig.cap="叶片经济型谱关系散点图", echo=FALSE}
 # 检验叶片经济型谱关系
 model1 <- lm(光合速率 ~ 比叶面积, data = trait_data)
-knitr::kable(summary(model1)$coefficients, caption = "叶片经济型谱关系线性回归结果")
+knitr::kable(summary(model1)$coefficients, caption = "叶片经济型谱关系线性回归结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 
 model2 <- lm(叶片寿命 ~ 比叶面积, data = trait_data)
-knitr::kable(summary(model2)$coefficients, caption = "叶片寿命与比叶面积关系线性回归结果")
+knitr::kable(summary(model2)$coefficients, caption = "叶片寿命与比叶面积关系线性回归结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 
 # 可视化经济型谱关系
 plot(trait_data$比叶面积, trait_data$光合速率,
@@ -3080,7 +3103,8 @@ load(file="data/species_net_data.RData")
 # 计算种间关联矩阵
 library(vegan)
 association_matrix <- cor(t(species_data))
-knitr::kable((association_matrix), caption = "种间关联矩阵")
+knitr::kable((association_matrix), caption = "种间关联矩阵", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 
 # 构建生态网络
 library(igraph)
@@ -3169,7 +3193,10 @@ print(mantel_test)
 ```{r pca-analysis-table}
 # 排序分析 - PCA
 pca_result <- rda(community_data, scale = TRUE)
-knitr::kable(summary(pca_result)$cont[[1]], caption = "群落相似性PCA分析结果")
+knitr::kable(summary(pca_result)$cont[[1]],
+             caption = "群落相似性PCA分析结果",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 表\@ref(tab:pca-analysis-table)展示了群落相似性的主成分分析结果，包括各主成分的特征值、方差解释比例和累积方差解释比例，为理解群落组成的多维变异结构提供了量化指标。
@@ -3201,7 +3228,10 @@ plot(hc_result)
 ```{r beta-diversity-table}
 # Beta多样性计算
 beta_div <- betadiver(community_data, method = "w")
-knitr::kable(as.matrix(beta_div), caption = "群落相似性Beta多样性分析结果")
+knitr::kable(as.matrix(beta_div),
+             caption = "群落相似性Beta多样性分析结果",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 表\@ref(tab:beta-diversity-table)展示了群落相似性的Beta多样性分析结果，使用Whittaker方法计算群落间的相异性矩阵，为理解群落组成的空间变异模式提供了量化指标。
@@ -3235,60 +3265,26 @@ knitr::kable(as.matrix(beta_div), caption = "群落相似性Beta多样性分析�
 
 ### 练习一：森林生态系统多变量相关性分析
 
-**背景**：某生态学研究团队在温带森林中设置了40个固定样地，测量了以下变量：  
-- 树木胸径（cm）  
-- 树高（m）  
-- 林分密度（株/公顷）  
-- 土壤pH值  
-- 土壤有机质含量（%）  
-- 林下光照强度（lux）  
+**背景**：某生态学研究团队在温带森林中设置了40个固定样地，测量了树木胸径、树高、林分密度、土壤pH值、土壤有机质含量和林下光照强度等变量。
 
-**任务**：  
-1. 使用Pearson、Spearman和Kendall's τ三种方法分析树木胸径与树高的相关性，比较不同方法的结果并解释差异原因。  
-2. 进行偏相关分析，在控制林分密度的影响后，重新评估树木胸径与树高的关系。  
-3. 使用距离相关分析检验土壤pH值与土壤有机质含量之间的关系，判断是否存在非线性关系。  
-4. 构建环境因子（土壤pH、有机质、光照）与林分特征（胸径、树高、密度）的互信息网络，识别关键的环境驱动因子。  
+**任务**：本练习要求你使用Pearson、Spearman和Kendall's τ三种方法分析树木胸径与树高的相关性，比较不同方法的结果并解释差异原因。进行偏相关分析，在控制林分密度的影响后，重新评估树木胸径与树高的关系。使用距离相关分析检验土壤pH值与土壤有机质含量之间的关系，判断是否存在非线性关系。构建环境因子（土壤pH、有机质、光照）与林分特征（胸径、树高、密度）的互信息网络，识别关键的环境驱动因子。
 
-**要求**：  
-- 提供完整的R代码实现  
-- 对每种相关性方法的结果进行生态学解释  
-- 讨论不同方法在生态学应用中的优缺点  
+**要求**：提供完整的R代码实现，对每种相关性方法的结果进行生态学解释，讨论不同方法在生态学应用中的优缺点。  
 
 ### 练习二：鸟类种群时间序列与空间格局分析
 
 **背景**：某自然保护区对10种常见鸟类进行了为期15年的种群监测，同时在保护区内设置了50个固定观测点记录鸟类丰富度。
 
-**任务**：  
-1. 选择3种具有不同生态习性的鸟类，分析其种群数量的时间自相关模式（ACF和PACF）。  
-2. 检验这些鸟类种群时间序列的平稳性，如发现非平稳性，进行适当的差分处理。  
-3. 使用变异函数分析鸟类丰富度的空间分布格局，估计块金值、基台值和变程。  
-4. 进行局部空间自相关分析（LISA和Getis-Ord Gi*），识别鸟类丰富度的热点和冷点区域。  
-5. 使用克里金插值生成保护区鸟类丰富度的空间分布预测图。  
+**任务**：本练习要求你选择3种具有不同生态习性的鸟类，分析其种群数量的时间自相关模式（ACF和PACF）。检验这些鸟类种群时间序列的平稳性，如发现非平稳性，进行适当的差分处理。使用变异函数分析鸟类丰富度的空间分布格局，估计块金值、基台值和变程。进行局部空间自相关分析（LISA和Getis-Ord Gi*），识别鸟类丰富度的热点和冷点区域。使用克里金插值生成保护区鸟类丰富度的空间分布预测图。
 
-**要求**：  
-- 提供时间序列图和空间分布图  
-- 解释时间自相关和空间自相关的生态学含义  
-- 讨论空间插值结果在保护管理中的应用价值  
+**要求**：提供时间序列图和空间分布图，解释时间自相关和空间自相关的生态学含义，讨论空间插值结果在保护管理中的应用价值。  
 
 ### 练习三：植物功能性状与系统发育相关性分析
 
-**背景**：某植物生态学研究调查了30种木本植物的功能性状，并构建了这些物种的系统发育树。测量的性状包括：    
-- 比叶面积（cm²/g）  
-- 叶片氮含量（%）  
-- 光合速率（μmol/m²/s）  
-- 木材密度（g/cm³）  
-- 最大树高（m）  
+**背景**：某植物生态学研究调查了30种木本植物的功能性状，并构建了这些物种的系统发育树。测量的性状包括比叶面积、叶片氮含量、光合速率、木材密度和最大树高等。
 
-**任务**：  
-1. 计算各功能性状间的Pearson相关系数矩阵，识别显著的相关关系。  
-2. 使用Blomberg's K和Pagel's λ检验各性状的系统发育信号强度。  
-3. 对具有显著系统发育信号的性状，使用系统发育独立对比（PIC）重新分析性状间关系。  
-4. 构建功能性状的经济型谱，分析比叶面积、叶片氮含量和光合速率之间的权衡关系。  
-5. 使用主成分分析探索功能性状的多维协变模式。  
+**任务**：本练习要求你计算各功能性状间的Pearson相关系数矩阵，识别显著的相关关系。使用Blomberg's K和Pagel's λ检验各性状的系统发育信号强度。对具有显著系统发育信号的性状，使用系统发育独立对比（PIC）重新分析性状间关系。构建功能性状的经济型谱，分析比叶面积、叶片氮含量和光合速率之间的权衡关系。使用主成分分析探索功能性状的多维协变模式。
 
-**要求**：  
-- 提供系统发育树与性状分布的可视化  
-- 比较传统相关分析与PIC分析的结果差异  
-- 讨论功能性状相关性的生态适应意义  
+**要求**：提供系统发育树与性状分布的可视化，比较传统相关分析与PIC分析的结果差异，讨论功能性状相关性的生态适应意义。  
         
 

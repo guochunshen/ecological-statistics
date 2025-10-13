@@ -112,10 +112,14 @@ aic_overfit <- AIC(model_overfit)
 
 为了直观展示不同复杂度模型的拟合效果，林小雨生成了模型比较图（图\@ref(fig:model-complexity-comparison)）。该图采用2×2布局，分别展示了线性、二次、三次和10次多项式模型的拟合效果，每个子图都标注了相应的$R^2$和$\text{AIC}$值，便于读者直观比较模型复杂度与拟合优度的平衡关系。
 
-<div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/model-complexity-comparison-1.png" alt="模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较" width="80%" />
-<p class="caption">(\#fig:model-complexity-comparison)模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/model-complexity-comparison-1} 
+
+}
+
+\caption{模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较}(\#fig:model-complexity-comparison)
+\end{figure}
 
 从图\@ref(fig:model-complexity-comparison)中可以清晰地观察到不同复杂度模型的拟合特征：线性模型过于平滑，无法捕捉数据中的非线性趋势；二次模型恰当地反映了植物对养分的最适响应模式；三次模型虽然拟合度略有提升，但增加了不必要的复杂度；而10次多项式模型则明显过拟合，曲线过度适应数据中的随机波动。
 
@@ -134,30 +138,6 @@ aic_overfit <- AIC(model_overfit)
 	- $R^2$ = 0.455, $\text{AIC}$ = 740.4 
 	- 问题：过度适应随机噪声，预测能力差
 
-<!--
-
-```
-## === 模型复杂度与拟合优度平衡演示 ===
-## 
-##  线性模型 (欠拟合):
-##  - $R^2$ = 0.383 $\text{AIC}$ = 734.8 
-##  - 问题：无法捕捉最适养分范围
-## 
-##  二次模型 (最优):
-##  - $R^2$ = 0.416 $\text{AIC}$ = 731.3 
-##  - 优势：正确反映了真实生态关系
-## 
-##  三次模型 (过度参数化):
-##  - $R^2$ = 0.416 $\text{AIC}$ = 733.3 
-##  - 问题：不必要的复杂度
-## 
-##  10次多项式 (严重过拟合):
-##  - $R^2$ = 0.455 $\text{AIC}$ = 740.4 
-##  - 问题：过度适应随机噪声，预测能力差
-## 
-##  模型比较结果已生成，请查看图表和性能指标。
-```
--->
 
 通过模型复杂度与拟合优度平衡的演示，我们可以得出重要的生态学启示。在这个植物生物量与土壤养分的例子中，真实生态关系是二次的，反映了物种对养分的最适响应模式。线性模型虽然简单，但过于简化，无法捕捉这种生态学模式；而二次模型既充分捕捉了生态关系，又保持了简约性。高次多项式虽然$R^2$更高，但生态学意义不明确，$\text{AIC}$值也确认了二次模型的最优性。
 
@@ -234,39 +214,55 @@ forest_bird_model_comparison <- data.frame(
 )
 
 # 计算$\\text{AIC}$和$\\text{BIC}$差异
-forest_bird_model_comparison$delta_AIC <- forest_bird_model_comparison$AIC - min(forest_bird_model_comparison$AIC)
-forest_bird_model_comparison$delta_BIC <- forest_bird_model_comparison$BIC - min(forest_bird_model_comparison$BIC)
+forest_bird_model_comparison$delta_AIC <-
+  forest_bird_model_comparison$AIC - min(forest_bird_model_comparison$AIC)
+forest_bird_model_comparison$delta_BIC <-
+  forest_bird_model_comparison$BIC - min(forest_bird_model_comparison$BIC)
 
 # 计算$\\text{AIC}$权重
-forest_bird_model_comparison$AIC_weight <- exp(-0.5 * forest_bird_model_comparison$delta_AIC) /
+forest_bird_model_comparison$AIC_weight <-
+  exp(-0.5 * forest_bird_model_comparison$delta_AIC) /
   sum(exp(-0.5 * forest_bird_model_comparison$delta_AIC))
 
 # 排序
-forest_bird_model_comparison <- forest_bird_model_comparison[order(forest_bird_model_comparison$AIC), ]
+forest_bird_model_comparison <-
+  forest_bird_model_comparison[order(forest_bird_model_comparison$AIC), ]
 
 # 确定最优模型
 best_aic <- forest_bird_model_comparison$Model[1]
-best_bic <- forest_bird_model_comparison$Model[which.min(forest_bird_model_comparison$BIC)]
+best_bic <- forest_bird_model_comparison$Model[
+  which.min(forest_bird_model_comparison$BIC)]
 ```
 
-
-Table: (\#tab:forest-bird-model-comparison-table)信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣
-
-|Model           |    R2|     AIC|     BIC| Parameters| delta_AIC| delta_BIC| AIC_weight|
-|:---------------|-----:|-------:|-------:|----------:|---------:|---------:|----------:|
-|full_model      | 0.606| 737.998| 753.629|          5|     0.000|     0.000|       0.76|
-|overfit_model   | 0.613| 740.300| 761.141|          7|     2.302|     7.512|       0.24|
-|area_water      | 0.511| 755.660| 766.081|          3|    17.662|    12.452|       0.00|
-|area_vegetation | 0.419| 772.850| 783.270|          3|    34.852|    29.641|       0.00|
-|area_only       | 0.342| 783.379| 791.195|          2|    45.381|    37.566|       0.00|
-|vegetation_only | 0.119| 812.484| 820.300|          2|    74.486|    66.671|       0.00|
+\begin{table}[!h]
+\centering
+\caption{(\#tab:forest-bird-model-comparison-table)信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣}
+\centering
+\begin{tabular}[t]{lrrrrrrr}
+\toprule
+Model & R2 & AIC & BIC & Parameters & delta\_AIC & delta\_BIC & AIC\_weight\\
+\midrule
+full\_model & 0.606 & 737.998 & 753.629 & 5 & 0.000 & 0.000 & 0.76\\
+overfit\_model & 0.613 & 740.300 & 761.141 & 7 & 2.302 & 7.512 & 0.24\\
+area\_water & 0.511 & 755.660 & 766.081 & 3 & 17.662 & 12.452 & 0.00\\
+area\_vegetation & 0.419 & 772.850 & 783.270 & 3 & 34.852 & 29.641 & 0.00\\
+area\_only & 0.342 & 783.379 & 791.195 & 2 & 45.381 & 37.566 & 0.00\\
+\addlinespace
+vegetation\_only & 0.119 & 812.484 & 820.300 & 2 & 74.486 & 66.671 & 0.00\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 为了更直观地展示模型比较结果，林小雨创建了信息准则可视化图（图\@ref(fig:forest-bird-info-criteria-plot)）。该图采用双面板布局，左侧展示ΔAIC比较，右侧展示ΔBIC比较。图中使用颜色编码表示模型优劣：绿色表示优秀模型（ΔAIC/ΔBIC < 2），黄色表示可接受模型（2 ≤ ΔAIC/ΔBIC < 7），红色表示较差模型（ΔAIC/ΔBIC ≥ 7）。两条虚线分别标示了ΔAIC/ΔBIC为2和7的阈值，帮助读者快速识别最优模型。
 
-<div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/forest-bird-info-criteria-plot-1.png" alt="信息准则可视化：ΔAIC和ΔBIC差异比较" width="80%" />
-<p class="caption">(\#fig:forest-bird-info-criteria-plot)信息准则可视化：ΔAIC和ΔBIC差异比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/forest-bird-info-criteria-plot-1} 
+
+}
+
+\caption{信息准则可视化：ΔAIC和ΔBIC差异比较}(\#fig:forest-bird-info-criteria-plot)
+\end{figure}
 
 从图\@ref(fig:forest-bird-info-criteria-plot)中可以清晰地观察到，面积+植被模型在AIC和BIC准则下都表现最优（绿色柱状图），而过度拟合模型虽然R²较高，但由于参数过多受到了信息准则的惩罚（红色柱状图）。这种可视化方式使得模型比较结果更加直观易懂，读者可以快速识别出统计上最优且生态学意义明确的模型。
 
@@ -313,36 +309,54 @@ nursery_lrt_p_value <- nursery_lrt_result$`Pr(>Chisq)`[2]
 
 似然比检验的结果显示在表\@ref(tab:nursery-lrt-result-table)中，该表比较了简单模型（只有主效应）和复杂模型（包含交互项）的拟合差异。
 
-
-Table: (\#tab:nursery-lrt-result-table)似然比检验结果：植物生长与温度、光照的关系
-
-| #Df|    LogLik| Df|    Chisq| Pr(>Chisq)|
-|---:|---------:|--:|--------:|----------:|
-|   4| -58.86869| NA|       NA|         NA|
-|   5| -56.40071|  1| 4.935962|  0.0263034|
+\begin{table}[!h]
+\centering
+\caption{(\#tab:nursery-lrt-result-table)似然比检验结果：植物生长与温度、光照的关系}
+\centering
+\begin{tabular}[t]{rrrrr}
+\toprule
+\#Df & LogLik & Df & Chisq & Pr(>Chisq)\\
+\midrule
+4 & -58.86869 & NA & NA & NA\\
+5 & -56.40071 & 1 & 4.935962 & 0.0263034\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 为了更详细地了解两个模型的参数估计，表\@ref(tab:nursery-model-simple-table)展示了简单模型的系数估计结果，该模型只包含温度和光照的主效应。
 
-
-Table: (\#tab:nursery-model-simple-table)模型比较：简单模型 (只有主效应)
-
-|            |  Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
-|:-----------|---------:|----------:|---------:|------------------:|
-|(Intercept) | 0.9522163|  0.3475783|  2.739574|          0.0076414|
-|temp        | 0.1589956|  0.0149805| 10.613532|          0.0000000|
-|light       | 0.0037280|  0.0002189| 17.031520|          0.0000000|
+\begin{table}[!h]
+\centering
+\caption{(\#tab:nursery-model-simple-table)模型比较：简单模型 (只有主效应)}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 0.9522163 & 0.3475783 & 2.739574 & 0.0076414\\
+temp & 0.1589956 & 0.0149805 & 10.613532 & 0.0000000\\
+light & 0.0037280 & 0.0002189 & 17.031520 & 0.0000000\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 表\@ref(tab:nursery-model-complex-table)则展示了复杂模型的系数估计结果，该模型包含了温度与光照的交互项，可以检验环境因子之间的协同作用。
 
-
-Table: (\#tab:nursery-model-complex-table)模型比较：复杂模型 (包含交互项)
-
-|            |  Estimate| Std. Error|   t value| Pr(>&#124;t&#124;)|
-|:-----------|---------:|----------:|---------:|------------------:|
-|(Intercept) | 2.6217208|  0.8314621| 3.1531452|          0.0023129|
-|temp        | 0.0819161|  0.0379749| 2.1571128|          0.0341579|
-|light       | 0.0009324|  0.0012889| 0.7234173|          0.4716442|
-|temp:light  | 0.0001286|  0.0000585| 2.1992829|          0.0308988|
+\begin{table}[!h]
+\centering
+\caption{(\#tab:nursery-model-complex-table)模型比较：复杂模型 (包含交互项)}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 2.6217208 & 0.8314621 & 3.1531452 & 0.0023129\\
+temp & 0.0819161 & 0.0379749 & 2.1571128 & 0.0341579\\
+light & 0.0009324 & 0.0012889 & 0.7234173 & 0.4716442\\
+temp:light & 0.0001286 & 0.0000585 & 2.1992829 & 0.0308988\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 ``` r
@@ -370,26 +384,20 @@ nursery_r2_improvement <- nursery_r2_complex - nursery_r2_simple
 ## === 交互作用可视化 ===
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/nursery-interaction-plot-1.png" alt="林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性" width="80%" />
-<p class="caption">(\#fig:nursery-interaction-plot)林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/nursery-interaction-plot-1} 
+
+}
+
+\caption{林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性}(\#fig:nursery-interaction-plot)
+\end{figure}
 
 从图\@ref(fig:nursery-interaction-plot)中可以观察到，在不同光照强度下，温度对植物生长的影响模式存在明显差异。这种差异反映了温度与光照的交互作用：在低光照条件下，温度对生长的促进作用可能受到限制；而在高光照条件下，温度效应可能更加明显。这种可视化有助于理解环境因子之间的复杂关系，为生态学研究提供直观的证据。
 
 根据似然比检验的结果（p值 = 0.0263），我们可以得出重要的生态学解释。似然比检验显著 (p < 0.05)，表明温度与光照的交互作用对植物生长有显著影响，复杂模型显著改善了模型拟合，应该选择包含交互项的模型。
 
-
-```
-## 林小雨的苗圃实验结果表明，温度与光照的交互作用对植物生长有显著影响。
-## 生态学意义：
-## - 在低光照条件下，温度升高对植物生长的促进作用有限
-## - 在高光照条件下，温度升高显著促进植物生长
-## - 这种交互作用反映了植物对光热资源的协同利用机制
-## 
-## 林小雨的启示：在苗圃管理中，需要同时考虑温度和光照的协同效应，
-## 而不是单独优化单个环境因子。
-```
+林小雨的苗圃实验结果表明，温度与光照的交互作用对植物生长具有重要的生态学意义。当交互作用显著时，意味着在低光照条件下，温度升高对植物生长的促进作用有限，而在高光照条件下，温度升高则显著促进植物生长。这种交互作用反映了植物对光热资源的协同利用机制，提示在苗圃管理中需要同时考虑温度和光照的协同效应，而不是单独优化单个环境因子。反之，如果交互作用不显著，则表明温度和光照对植物生长的影响相对独立，单独优化温度或光照即可改善植物生长，这简化了苗圃管理策略。在这种情况下，使用更简约的模型（只有主效应）既统计可靠又便于生态学解释。
 
 ### 模型平均
 
@@ -428,18 +436,21 @@ stream_fish_models <- list()
 stream_fish_models[["temp_model"]] <- lm(log(abundance + 1) ~ temp, data = stream_fish_data)
 
 # 模型2：水质综合假说
-stream_fish_models[["water_quality"]] <- lm(log(abundance + 1) ~ temp + oxygen + ph, data = stream_fish_data)
+stream_fish_models[["water_quality"]] <-
+  lm(log(abundance + 1) ~ temp + oxygen + ph, data = stream_fish_data)
 
 # 模型3：物理环境假说
 stream_fish_models[["physical_env"]] <- lm(log(abundance + 1) ~ temp + turbidity, data = stream_fish_data)
 
 # 模型4：全模型
-stream_fish_models[["full_model"]] <- lm(log(abundance + 1) ~ temp + oxygen + ph + turbidity, data = stream_fish_data)
+stream_fish_models[["full_model"]] <-
+  lm(log(abundance + 1) ~ temp + oxygen + ph + turbidity, data = stream_fish_data)
 
 # 计算$\\text{AIC}$和权重
 stream_aic_values <- sapply(stream_fish_models, AIC)
 stream_delta_aic <- stream_aic_values - min(stream_aic_values)
-stream_aic_weights <- exp(-0.5 * stream_delta_aic) / sum(exp(-0.5 * stream_delta_aic))
+stream_aic_weights <- exp(-0.5 * stream_delta_aic) /
+  sum(exp(-0.5 * stream_delta_aic))
 
 # 创建模型比较表
 stream_model_comparison <- data.frame(
@@ -484,20 +495,26 @@ cat("\n=== 林小雨的溪流鱼类模型平均结果 ===\n")
 # 提取平均模型的系数
 stream_avg_coef <- summary(stream_avg_model)$coefmat.full
 
-knitr::kable(stream_avg_coef, caption = "林小雨的溪流鱼类模型平均结果：平均模型系数")
+knitr::kable(stream_avg_coef, caption = "林小雨的溪流鱼类模型平均结果：平均模型系数", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-
-
-Table: (\#tab:unnamed-chunk-10)林小雨的溪流鱼类模型平均结果：平均模型系数
-
-|            |   Estimate| Std. Error| Adjusted SE|    z value| Pr(>&#124;z&#124;)|
-|:-----------|----------:|----------:|-----------:|----------:|------------------:|
-|(Intercept) |  1.6226421|  0.2324172|   0.2348710|  6.9086519|          0.0000000|
-|oxygen      |  0.1702822|  0.0075580|   0.0076378| 22.2946060|          0.0000000|
-|ph          |  0.8242705|  0.0293587|   0.0296689| 27.7823265|          0.0000000|
-|temp        |  0.0531857|  0.0037299|   0.0037693| 14.1103420|          0.0000000|
-|turbidity   | -0.0001485|  0.0007176|   0.0007243|  0.2050028|          0.8375699|
+\begin{table}[!h]
+\centering
+\caption{(\#tab:unnamed-chunk-8)林小雨的溪流鱼类模型平均结果：平均模型系数}
+\centering
+\begin{tabular}[t]{lrrrrr}
+\toprule
+  & Estimate & Std. Error & Adjusted SE & z value & Pr(>|z|)\\
+\midrule
+(Intercept) & 1.6226421 & 0.2324172 & 0.2348710 & 6.9086519 & 0.0000000\\
+oxygen & 0.1702822 & 0.0075580 & 0.0076378 & 22.2946060 & 0.0000000\\
+ph & 0.8242705 & 0.0293587 & 0.0296689 & 27.7823265 & 0.0000000\\
+temp & 0.0531857 & 0.0037299 & 0.0037693 & 14.1103420 & 0.0000000\\
+turbidity & -0.0001485 & 0.0007176 & 0.0007243 & 0.2050028 & 0.8375699\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 ``` r
 # 计算变量重要性
@@ -523,10 +540,14 @@ print(stream_var_importance)
 
 可视化是理解模型平均结果的重要工具。图\@ref(fig:stream-model-averaging-plot)展示了林小雨溪流鱼类研究的模型平均结果，采用双面板布局：左侧的变量重要性图显示各环境因子的相对重要性，帮助识别影响鱼类丰度的关键驱动因子；右侧的模型权重分布图展示不同候选模型的相对支持度，反映了基于AIC权重的模型不确定性量化。
 
-<div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/stream-model-averaging-plot-1.png" alt="林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度" width="80%" />
-<p class="caption">(\#fig:stream-model-averaging-plot)林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/stream-model-averaging-plot-1} 
+
+}
+
+\caption{林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度}(\#fig:stream-model-averaging-plot)
+\end{figure}
 
 从图\@ref(fig:stream-model-averaging-plot)中可以观察到，水温、溶解氧和pH值是影响溪流鱼类丰度的关键环境因子，这与生态学理论相符。模型权重分布显示没有单一模型占据绝对优势，多个模型都获得了一定的支持度，这体现了模型平均的必要性。这种可视化方式使得复杂的模型平均结果变得直观易懂，为生态学决策提供了清晰的依据。
 
@@ -658,11 +679,11 @@ print(cv_model)
 ## 
 ## No pre-processing
 ## Resampling: Cross-Validated (10 fold) 
-## Summary of sample sizes: 136, 136, 134, 134, 135, 135, ... 
+## Summary of sample sizes: 135, 135, 135, 135, 135, 135, ... 
 ## Resampling results:
 ## 
 ##   RMSE       Rsquared   MAE      
-##   0.2164835  0.8704702  0.1757488
+##   0.2195968  0.8804295  0.1778855
 ## 
 ## Tuning parameter 'intercept' was held constant at a value of TRUE
 ```
@@ -676,43 +697,21 @@ cv_results <- cv_model$results
 ```
 ## 
 ## 交叉验证性能指标：
-## 平均$R^2$: 0.87 
-## 平均RMSE: 0.216 
-## 平均MAE: 0.176
+## 平均$R^2$: 0.88 
+## 平均RMSE: 0.22 
+## 平均MAE: 0.178
 ```
 
 交叉验证性能的可视化能够直观展示模型在不同数据子集上的稳定性。图\@ref(fig:forest-cv-rmse-plot)展示了林小雨森林鸟类模型的10折交叉验证结果，通过RMSE在不同数据子集上的变化来评估模型的泛化能力。如果RMSE在不同折之间波动很大，说明模型可能过度拟合训练数据的特定特征；而稳定的RMSE则表明模型具有良好的泛化性能。
 
+\begin{figure}
 
-``` r
-# 可视化交叉验证结果
-library(ggplot2)
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/forest-cv-rmse-plot-1} 
 
-# 创建交叉验证性能图
-cv_performance <- data.frame(
-  Fold = 1:10,
-  RMSE = cv_model$resample$RMSE,
-  Rsquared = cv_model$resample$Rsquared
-)
+}
 
-ggplot(cv_performance, aes(x = Fold, y = RMSE)) +
-  geom_point(size = 3, color = "blue") +
-  geom_line(color = "blue", alpha = 0.7) +
-  labs(
-    title = "林小雨的森林鸟类模型10折交叉验证：RMSE变化",
-    x = "折数", y = "RMSE"
-  ) +
-  theme_minimal() +
-  geom_hline(
-    yintercept = mean(cv_performance$RMSE),
-    linetype = "dashed", color = "red"
-  )
-```
-
-<div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/forest-cv-rmse-plot-1.png" alt="林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力" width="80%" />
-<p class="caption">(\#fig:forest-cv-rmse-plot)林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力</p>
-</div>
+\caption{林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力}(\#fig:forest-cv-rmse-plot)
+\end{figure}
 
 从图\@ref(fig:forest-cv-rmse-plot)中可以观察到，RMSE在10个数据子集之间相对稳定，波动范围较小，这表明林小雨的森林鸟类模型具有良好的泛化能力。图中红色虚线表示平均RMSE值，为模型性能提供了基准参考。这种可视化方式使得交叉验证结果更加直观，有助于识别潜在的过度拟合问题。
 
@@ -823,42 +822,14 @@ rmse_increase <- (test_rmse - train_rmse) / train_rmse * 100
 
 为了直观展示外部验证结果，图\@ref(fig:external-validation-plot)比较了训练集和测试集上植物物种丰富度模型的预测性能。该图采用分面布局，分别展示了训练集（原森林区域）和测试集（新森林区域）的预测值与观测值关系，通过1:1参考线（黑色虚线）直观评估模型的预测准确性。
 
+\begin{figure}
 
-``` r
-# 可视化外部验证结果
-library(ggplot2)
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/external-validation-plot-1} 
 
-# 创建预测 vs 观测图
-validation_plot_data <- rbind(
-  data.frame(
-    Type = "训练集（原森林区域）",
-    Observed = log(train_data$richness + 1),
-    Predicted = train_pred
-  ),
-  data.frame(
-    Type = "测试集（新森林区域）",
-    Observed = log(test_data$richness + 1),
-    Predicted = test_pred
-  )
-)
+}
 
-ggplot(validation_plot_data, aes(x = Observed, y = Predicted, color = Type)) +
-  geom_point(alpha = 0.7) +
-  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "black") +
-  labs(
-    title = "林小雨的森林生态系统外部验证：预测 vs 观测",
-    x = "观测值（对数丰富度）",
-    y = "预测值（对数丰富度）"
-  ) +
-  theme_minimal() +
-  scale_color_manual(values = c("训练集（原森林区域）" = "blue", "测试集（新森林区域）" = "red")) +
-  facet_wrap(~Type)
-```
-
-<div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/external-validation-plot-1.png" alt="林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域" width="80%" />
-<p class="caption">(\#fig:external-validation-plot)林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域</p>
-</div>
+\caption{林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域}(\#fig:external-validation-plot)
+\end{figure}
 
 在林小雨的植物物种丰富度研究中，训练集基于她最初调查的山地森林区域数据，测试集代表邻近但生态条件略有不同的另一个山地森林区域。外部验证检验了她的模型在不同森林生态系统中的空间普适性。如果模型在测试集上表现良好，说明其在不同森林区域的适用性较广；如果性能显著下降，可能需要考虑森林区域特异性因素，如不同的优势树种、土壤类型、地形特征或干扰历史。林小雨通过外部验证深刻理解了森林生态系统的空间异质性，这为她制定更精准的森林保护策略提供了重要启示。
 
@@ -920,10 +891,14 @@ par(mfrow = c(2, 2))
 plot(model_diagnostic)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/model-diagnostic-residuals-1.png" alt="林小雨的森林模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图。通过系统诊断，林小雨检查她的树木生长速率模型是否满足统计假设。" width="80%" />
-<p class="caption">(\#fig:model-diagnostic-residuals)林小雨的森林模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图。通过系统诊断，林小雨检查她的树木生长速率模型是否满足统计假设。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/model-diagnostic-residuals-1} 
+
+}
+
+\caption{林小雨的森林模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图。通过系统诊断，林小雨检查她的树木生长速率模型是否满足统计假设。}(\#fig:model-diagnostic-residuals)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
@@ -1061,35 +1036,14 @@ vif_values <- vif(model_diagnostic)
 
 图\@ref(fig:cooks-distance-plot)展示了林小雨的Cook's Distance影响分析结果。其中蓝色点表示各观测点的Cook's距离值，红色虚线表示影响阈值（4/(n-p)），超过此阈值的观测点（标注了观测编号）被认为对模型有显著影响。
 
-<!--
-图\@ref(fig:cooks-distance-plot)展示了林小雨的Cook's Distance影响分析结果。该代码首先加载ggplot2包，然后创建包含观测编号和Cook's距离值的数据框。使用`ggplot()`函数构建散点图，其中蓝色点表示各观测点的Cook's距离值。通过`geom_hline()`添加红色虚线表示影响阈值（4/(n-p)），超过此阈值的观测点被认为对模型有显著影响。最后使用`geom_text()`在影响点上标注观测编号，便于识别具体的异常森林样地。
--->
+\begin{figure}
 
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/cooks-distance-plot-1} 
 
-``` r
-# 可视化影响分析
-library(ggplot2)
+}
 
-# Cook's distance图
-cook_data <- data.frame(Observation = 1:n_forest_trees, CooksD = cooks_d)
-ggplot(cook_data, aes(x = Observation, y = CooksD)) +
-  geom_point(color = "blue") +
-  geom_hline(yintercept = 4 / (n_forest_trees - p), linetype = "dashed", color = "red") +
-  labs(
-    title = "Cook's Distance影响分析",
-    x = "观测编号", y = "Cook's Distance"
-  ) +
-  theme_minimal() +
-  geom_text(
-    data = cook_data[influential_points, ],
-    aes(label = Observation), vjust = -0.5, color = "red"
-  )
-```
-
-<div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/cooks-distance-plot-1.png" alt="Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点" width="80%" />
-<p class="caption">(\#fig:cooks-distance-plot)Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点</p>
-</div>
+\caption{Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点}(\#fig:cooks-distance-plot)
+\end{figure}
 
 在生态学中，异常观测往往具有重要的生态学意义。高杠杆点可能代表极端环境条件，异常残差点可能反映特殊的生态情境。通过识别这些点，我们不仅能够确保模型的统计稳健性，还能够发现值得深入研究的生态学现象。
 
@@ -1138,7 +1092,8 @@ if (length(influential_points) > 0) {
   print(round(coef(robust_model), 3))
 
   # 计算系数变化
-  coef_change <- abs((coef(robust_model) - coef(model_diagnostic)) / coef(model_diagnostic)) * 100
+  coef_change <- abs((coef(robust_model) - coef(model_diagnostic)) /
+                    coef(model_diagnostic)) * 100
 
   cat("\n系数变化百分比：\n")
   for (i in seq_along(coef_change)) {
@@ -1319,7 +1274,7 @@ bf_12 <- model2 / model1
 bf_23 <- model3 / model2
 ```
 
-贝叶斯因子比较结果显示，模型2相对于模型1的贝叶斯因子为 1.28，模型3相对于模型2的贝叶斯因子为 2.1013994\times 10^{5}。
+贝叶斯因子比较结果显示，模型2相对于模型1的贝叶斯因子为 1.28，模型3相对于模型2的贝叶斯因子为 \ensuremath{2.1013994\times 10^{5}}。
 
 根据Jeffreys标准，贝叶斯因子的解释标准为：1-3表示微弱证据，3-10表示实质性证据，10-30表示强证据，30-100表示很强证据，大于100表示决定性证据。
 
@@ -1358,11 +1313,13 @@ library(BMS)
 # 在实际应用中，对于计数数据应该使用泊松回归
 
 # 创建设计矩阵
-design_matrix <- forest_bird_data_bayes[, c("area", "vegetation", "water_distance")]
+design_matrix <- forest_bird_data_bayes[,
+  c("area", "vegetation", "water_distance")]
 response_var <- forest_bird_data_bayes$richness
 
 # 执行贝叶斯模型平均
-bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, g = "UIP")
+bma_result <- bms(cbind(response_var, design_matrix),
+  burn = 1000, iter = 5000, g = "UIP")
 ```
 
 ```
@@ -1372,7 +1329,7 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 ## vegetation     0.9444822  9.8845073 4.31007528             1   2
 ## 
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"   "0.04319715 secs" 
+##            "2.9445"                 "8"                 "0"  "0.009389877 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -1380,10 +1337,12 @@ bma_result <- bms(cbind(response_var, design_matrix), burn = 1000, iter = 5000, 
 ##     Shrinkage-Stats 
 ##         "Av=0.9877" 
 ## 
-## Time difference of 0.04319715 secs
+## Time difference of 0.009389877 secs
 ```
 
-<img src="09-model_selection_and_evaluation_files/figure-html/unnamed-chunk-38-1.png" width="80%" style="display: block; margin: auto;" />
+
+
+\begin{center}\includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/unnamed-chunk-36-1} \end{center}
 
 ``` r
 # 输出模型平均结果
@@ -1400,7 +1359,7 @@ print(summary(bma_result))
 
 ```
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"   "0.04319715 secs" 
+##            "2.9445"                 "8"                 "0"  "0.009389877 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -1451,7 +1410,8 @@ posterior_predictive <- posterior_predict(bayes_poisson)
 
 # 计算预测统计量
 pred_mean <- apply(posterior_predictive, 2, mean)
-pred_ci <- apply(posterior_predictive, 2, quantile, probs = c(0.025, 0.975))
+pred_ci <- apply(posterior_predictive, 2, quantile,
+  probs = c(0.025, 0.975))
 
 # 可视化预测不确定性
 library(ggplot2)
@@ -1474,10 +1434,14 @@ ggplot(pred_data, aes(x = Observed, y = Predicted)) +
   theme_minimal()
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/bayesian-prediction-plot-1.png" alt="贝叶斯预测：观测值与预测值的比较，包含95%预测区间" width="80%" />
-<p class="caption">(\#fig:bayesian-prediction-plot-1)贝叶斯预测：观测值与预测值的比较，包含95%预测区间</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/bayesian-prediction-plot-1} 
+
+}
+
+\caption{贝叶斯预测：观测值与预测值的比较，包含95\%预测区间}(\#fig:bayesian-prediction-plot-1)
+\end{figure}
 
 ``` r
 # 后验预测检查
@@ -1494,10 +1458,14 @@ pp_check <- pp_check(bayes_poisson)
 print(pp_check)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="09-model_selection_and_evaluation_files/figure-html/bayesian-prediction-plot-2.png" alt="贝叶斯预测：观测值与预测值的比较，包含95%预测区间" width="80%" />
-<p class="caption">(\#fig:bayesian-prediction-plot-2)贝叶斯预测：观测值与预测值的比较，包含95%预测区间</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/bayesian-prediction-plot-2} 
+
+}
+
+\caption{贝叶斯预测：观测值与预测值的比较，包含95\%预测区间}(\#fig:bayesian-prediction-plot-2)
+\end{figure}
 
 
 
@@ -1525,8 +1493,10 @@ library(monomvn)
 # 创建包含冗余变量的扩展数据集
 set.seed(6060)
 forest_bird_data_extended <- forest_bird_data_bayes
-forest_bird_data_extended$redundant1 <- rnorm(n_forest_birds, 0, 1) # 冗余变量1（林小雨测量的非相关因子）
-forest_bird_data_extended$redundant2 <- rnorm(n_forest_birds, 0, 1) # 冗余变量2（林小雨测量的非相关因子）
+forest_bird_data_extended$redundant1 <- 
+  rnorm(n_forest_birds, 0, 1) # 冗余变量1（林小雨测量的非相关因子）
+forest_bird_data_extended$redundant2 <- 
+  rnorm(n_forest_birds, 0, 1) # 冗余变量2（林小雨测量的非相关因子）
 
 # 贝叶斯LASSO变量选择
 # 使用monomvn包的blasso函数
@@ -1713,102 +1683,25 @@ posterior_inclusion <- colMeans(blasso_result$beta != 0)
 
 ### 练习一：森林生态系统模型选择与评估综合应用
 
-**背景**：假设你是一名生态学研究者，正在研究某山地森林生态系统中植物物种丰富度与环境因子的关系。你收集了150个森林样地的数据，包括以下变量：
+**背景**：假设你是一名生态学研究者，正在研究某山地森林生态系统中植物物种丰富度与环境因子的关系。你收集了150个森林样地的数据，包括物种丰富度、海拔、年降水量、土壤氮含量、林冠开度和坡度等变量。
 
-- **物种丰富度**：样地内植物物种数量  
-- **海拔**：样地海拔高度（米）  
-- **年降水量**：样地年降水量（毫米）  
-- **土壤氮含量**：土壤全氮含量（%）  
-- **林冠开度**：林冠开度百分比（%）  
-- **坡度**：样地坡度（度）  
+**任务**：本练习要求你基于生态学理论和统计准则，构建3-4个候选模型来描述植物物种丰富度与环境因子的关系，并解释每个模型背后的生态学假设。然后进行信息准则分析，计算每个模型的AIC、BIC、ΔAIC和AIC权重，根据信息准则结果确定最优模型并解释选择依据。对最优模型进行全面的模型诊断，包括残差分析（正态性、异方差性）、影响分析（高杠杆点、异常残差点、强影响点）和多重共线性诊断。使用10折交叉验证评估最优模型的泛化能力，计算训练集和测试集的RMSE，分析是否存在过度拟合。最后基于最优模型结果，解释各环境因子对植物物种丰富度的影响，并提出森林保护管理建议。
 
-**任务**：
-
-1. **模型选择**：基于生态学理论和统计准则，构建3-4个候选模型来描述植物物种丰富度与环境因子的关系。解释每个模型背后的生态学假设。
-
-2. **信息准则分析**：计算每个模型的AIC、BIC、ΔAIC和AIC权重。根据信息准则结果，确定最优模型并解释选择依据。
-
-3. **模型诊断**：对最优模型进行全面的模型诊断，包括：  
-   - 残差分析（正态性、异方差性）   
-   - 影响分析（高杠杆点、异常残差点、强影响点） 
-   - 多重共线性诊断  
-
-4. **交叉验证**：使用10折交叉验证评估最优模型的泛化能力，计算训练集和测试集的RMSE，分析是否存在过度拟合。
-
-5. **生态学解释**：基于最优模型结果，解释各环境因子对植物物种丰富度的影响，并提出森林保护管理建议。
-
-**思考题**：  
-- 如果AIC最优模型与BIC最优模型不同，你会如何选择？为什么？  
-- 在模型诊断中发现强影响点，你会如何处理？这些强影响点可能代表什么生态学现象？  
-
+**思考题**：如果AIC最优模型与BIC最优模型不同，你会如何选择？为什么？在模型诊断中发现强影响点，你会如何处理？这些强影响点可能代表什么生态学现象？
 
 ### 练习二：贝叶斯模型选择与频率学派方法比较
 
 **背景**：你正在研究溪流生态系统中鱼类丰度与环境因子的关系。数据包括80个溪流样点的鱼类丰度以及水温、溶解氧、pH值、浊度等环境因子。
 
-**任务**：
+**任务**：本练习要求你分别使用频率学派和贝叶斯方法进行分析。在频率学派分析中，使用逐步回归方法选择重要环境因子，计算AIC和BIC值确定最优模型，并进行模型诊断和交叉验证。在贝叶斯分析中，使用贝叶斯线性回归拟合模型，计算贝叶斯因子比较不同模型，执行贝叶斯模型平均计算变量后验包含概率，生成后验预测分布和95%可信区间。然后比较频率学派和贝叶斯方法在变量选择结果上的异同，分析两种方法在不确定性量化方面的差异，讨论两种方法在生态学解释上的优势和局限性。最后基于分析结果，识别影响溪流鱼类丰度的关键环境因子，提出溪流生态保护的具体建议，并讨论模型结果在溪流管理决策中的应用价值。
 
-1. **频率学派分析**：  
-   - 使用逐步回归方法选择重要环境因子  
-   - 计算AIC和BIC值，确定最优模型  
-   - 进行模型诊断和交叉验证  
-
-2. **贝叶斯分析**：  
-   - 使用贝叶斯线性回归拟合模型  
-   - 计算贝叶斯因子比较不同模型  
-   - 执行贝叶斯模型平均，计算变量后验包含概率  
-   - 生成后验预测分布和95%可信区间  
-
-3. **方法比较**：  
-   - 比较频率学派和贝叶斯方法在变量选择结果上的异同  
-   - 分析两种方法在不确定性量化方面的差异  
-   - 讨论两种方法在生态学解释上的优势和局限性  
-
-4. **生态学应用**：  
-   - 基于分析结果，识别影响溪流鱼类丰度的关键环境因子  
-   - 提出溪流生态保护的具体建议  
-   - 讨论模型结果在溪流管理决策中的应用价值  
-
-**思考题**：  
-- 在什么情况下贝叶斯方法比频率学派方法更适合生态学研究？  
-- 如何合理设置贝叶斯分析中的先验分布？先验分布的选择对结果有多大影响？  
-- 贝叶斯模型平均与频率学派的模型平均有何异同？  
-
+**思考题**：在什么情况下贝叶斯方法比频率学派方法更适合生态学研究？如何合理设置贝叶斯分析中的先验分布？先验分布的选择对结果有多大影响？贝叶斯模型平均与频率学派的模型平均有何异同？
 
 ### 练习三：模型评估在生态保护决策中的应用
 
 **背景**：某自然保护区需要制定鸟类保护策略，你负责构建鸟类丰富度预测模型来指导保护决策。你拥有该保护区过去5年的鸟类调查数据，以及详细的生境特征数据。
 
-**任务**：
+**任务**：本练习要求你构建多个候选模型预测鸟类丰富度，使用信息准则选择最优模型，并解释最优模型的生态学意义。进行内部验证，使用k折交叉验证评估模型泛化能力，分析模型在不同数据子集上的稳定性，识别潜在的过度拟合问题。进行外部验证，使用邻近保护区的独立数据验证模型，分析模型的空间普适性，识别模型的边界条件和适用范围。进行不确定性量化，计算预测置信区间，使用Bootstrap方法量化预测不确定性，分析不确定性来源（参数估计、模型选择、生态系统变异）。最后提供保护决策支持，基于模型预测识别保护优先区域，评估不同管理措施对鸟类丰富度的潜在影响，制定基于模型证据的保护策略，明确模型预测的局限性和不确定性。
 
-1. **模型构建与选择**：  
-   - 构建多个候选模型预测鸟类丰富度  
-   - 使用信息准则选择最优模型  
-   - 解释最优模型的生态学意义  
-
-2. **内部验证**：  
-   - 使用k折交叉验证评估模型泛化能力  
-   - 分析模型在不同数据子集上的稳定性  
-   - 识别潜在的过度拟合问题  
-
-3. **外部验证**：  
-   - 使用邻近保护区的独立数据验证模型  
-   - 分析模型的空间普适性  
-   - 识别模型的边界条件和适用范围  
-
-4. **不确定性量化**：  
-   - 计算预测置信区间  
-   - 使用Bootstrap方法量化预测不确定性  
-   - 分析不确定性来源（参数估计、模型选择、生态系统变异）  
-
-5. **保护决策支持**：  
-   - 基于模型预测识别保护优先区域  
-   - 评估不同管理措施对鸟类丰富度的潜在影响  
-   - 制定基于模型证据的保护策略  
-   - 明确模型预测的局限性和不确定性  
-
-**思考题**：  
-- 在向保护区管理者汇报模型结果时，你会如何平衡模型的预测精度和不确定性？  
-- 如果外部验证显示模型在新区域表现不佳，你会如何调整保护策略？  
-- 如何将模型评估结果转化为具体的、可操作的保护管理建议？  
+**思考题**：在向保护区管理者汇报模型结果时，你会如何平衡模型的预测精度和不确定性？如果外部验证显示模型在新区域表现不佳，你会如何调整保护策略？如何将模型评估结果转化为具体的、可操作的保护管理建议？  
 

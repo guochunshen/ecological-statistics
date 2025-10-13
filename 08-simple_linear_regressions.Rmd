@@ -11,6 +11,7 @@ knitr::opts_chunk$set(
   cache = TRUE
 )
 library(showtext)   # 中文字体支持
+library(dplyr)      # 数据整理和管道操作
 showtext_auto()     # 自动启用中文字体
 ```
 
@@ -183,7 +184,10 @@ load("data/forest_survey_data.rda")
 model <- lm(growth_rate ~ temperature, data = forest_survey_data)
 
 # 显示模型摘要，包含系数估计和统计显著性
-knitr::kable(summary(model)$coefficients, caption = "森林调查温度与植物生长速率的关系 - 系数估计")
+knitr::kable(summary(model)$coefficients,
+             caption = "森林调查温度与植物生长速率的关系 - 系数估计",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 为了直观展示温度与植物生长速率之间的关系，我们生成了散点图并添加了线性回归线（见\@ref(fig:forest-survey-plot)）。该图形化地呈现了林小雨森林调查数据的核心发现：随着温度从10℃升高到30℃，植物生长速率呈现明显的正相关趋势。图中深绿色的散点代表实际观测数据，红色直线为基于最小二乘法拟合的线性回归线，清晰地展示了温度对生长速率的正向影响模式。这种可视化方法不仅验证了线性关系的存在，还为理解生态系统中环境因子与生物响应之间的关系提供了直观依据。
@@ -611,7 +615,8 @@ maple_model <- lm(height ~ dbh,
 
 ```{r overall-model-coefficients, echo=FALSE}
 # 结果输出：整体模型结果
-knitr::kable(summary(overall_model)$coefficients, caption = "整体回归模型结果")
+knitr::kable(summary(overall_model)$coefficients, caption = "整体回归模型结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 ```{r, echo=FALSE}
@@ -693,7 +698,8 @@ multi_model <- lm(biomass ~ temperature + precipitation + soil_nitrogen,
 
 ```{r, echo=FALSE}
 # 结果输出：模型摘要
-knitr::kable(summary(multi_model)$coefficients, caption = "多元线性回归模型结果")
+knitr::kable(summary(multi_model)$coefficients, caption = "多元线性回归模型结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 多元线性回归模型的系数估计结果如\@ref(tab:多元线性回归模型结果)所示，在控制其他变量的情况下：
@@ -829,7 +835,8 @@ full_model <- lm(richness ~ area + vegetation + water_distance +
 ```
 
 ```{r simple-lm-full-model, echo=FALSE}
-knitr::kable(summary(full_model)$coefficients, caption = "完整模型结果")
+knitr::kable(summary(full_model)$coefficients, caption = "完整模型结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 完整模型的结果如表\@ref(tab:simple-lm-full-model)所示，包含了所有环境因子的系数估计。通过比较完整模型与逐步回归选择模型的结果，我们可以看出变量选择过程如何识别出真正重要的环境驱动因子。
@@ -840,7 +847,8 @@ step_model <- step(full_model, direction = "both", trace = 0)
 ```
 
 ```{r simple-lm-step-model, echo=FALSE}
-knitr::kable(summary(step_model)$coefficients, caption = "逐步回归模型结果")
+knitr::kable(summary(step_model)$coefficients, caption = "逐步回归模型结果", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 逐步回归选择的结果如表\@ref(tab:simple-lm-step-model)所示，该模型通过统计方法自动识别出了对鸟类丰富度影响最显著的环境因子。
@@ -973,7 +981,9 @@ save(forest_ecosystem_data, file = "data/forest_ecosystem_data.rda")
 
 ```{r, data-summary}
 # 1. 数据探索
-knitr::kable(summary(forest_ecosystem_data), caption = "数据框摘要")
+knitr::kable(summary(forest_ecosystem_data),
+             caption = "数据框摘要", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 为了直观地探索变量间的关系，我们使用`pairs()`函数生成散点图矩阵，如图\@ref(fig:pairs-plot)所示。该代码选择了物种丰富度（richness）与四个关键环境因子（栖息地面积、植被密度、距水源距离和土壤pH值）进行可视化，通过两两变量的散点图展示它们之间的潜在关系模式。
@@ -997,7 +1007,10 @@ full_model <- lm(richness ~ area + vegetation + water_distance +
                    human_disturbance,
                  data = forest_ecosystem_data)
 
-knitr::kable(summary(full_model)$coefficients, caption = "完整多元线性回归模型结果")
+knitr::kable(summary(full_model)$coefficients,
+             caption = "完整多元线性回归模型结果",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 
 ```
 
@@ -1009,7 +1022,10 @@ knitr::kable(summary(full_model)$coefficients, caption = "完整多元线性回�
 # 3. 变量选择过程
 # 3.1 逐步回归选择
 step_model <- step(full_model, direction = "both", trace = 0)
-knitr::kable(summary(step_model)$coefficients, caption = "逐步回归模型结果")
+knitr::kable(summary(step_model)$coefficients,
+             caption = "逐步回归模型结果",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 **基于AIC的模型比较**
@@ -1019,7 +1035,8 @@ knitr::kable(summary(step_model)$coefficients, caption = "逐步回归模型结�
 ```{r}
 # 3.2 基于AIC的模型比较
 # 构建几个生态学上合理的候选模型
-model_simple <- lm(richness ~ area + vegetation, data = forest_ecosystem_data)
+model_simple <- lm(richness ~ area + vegetation,
+                   data = forest_ecosystem_data)
 model_water <- lm(richness ~ area + vegetation + water_distance,
                   data = forest_ecosystem_data)
 model_soil <- lm(richness ~ area + vegetation + water_distance + soil_ph,
@@ -1059,7 +1076,10 @@ VIF > 10 的变量：", names(vif_full)[vif_full > 10], "
 ```{r, optimal-model-results}
 # 4. 选择最优模型进行后续分析
 forest_model <- step_model  # 使用逐步回归选择的最优模型
-knitr::kable(summary(forest_model)$coefficients, caption = "最优模型结果")
+knitr::kable(summary(forest_model)$coefficients,
+             caption = "最优模型结果",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
 **模型选择理由**
@@ -1287,7 +1307,8 @@ load("data/altitude_data.Rdata")
 linear_model <- lm(richness ~ altitude, data = altitude_data)
 
 # 拟合二次多项式模型（正确模型）
-poly_model <- lm(richness ~ poly(altitude, degree = 2), data = altitude_data)
+poly_model <- lm(richness ~ poly(altitude, degree = 2),
+                  data = altitude_data)
 
 # 绘制数据点和拟合曲线
 plot(richness ~ altitude, data = altitude_data,
@@ -1301,7 +1322,8 @@ abline(linear_model, col = "red", lwd = 2, lty = 2)
 
 # 添加多项式回归曲线
 altitude_seq <- seq(min(altitude), max(altitude), length.out = 200)
-pred_poly <- predict(poly_model, newdata = data.frame(altitude = altitude_seq))
+pred_poly <- predict(poly_model,
+                     newdata = data.frame(altitude = altitude_seq))
 lines(altitude_seq, pred_poly, col = "darkgreen", lwd = 2)
 
 # 添加图例
@@ -1320,7 +1342,8 @@ cat("=== 模型比较 ===\n
 多项式模型 R²:", round(summary(poly_model)$r.squared, 3), "\n")
 
 # 多项式模型摘要
-knitr::kable(summary(poly_model)$coefficients, caption = "多项式模型摘要")
+knitr::kable(summary(poly_model)$coefficients, caption = "多项式模型摘要", booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 
 
 ```
@@ -1426,8 +1449,10 @@ save(overfit_forest_data, file="data/overfit_forest_data.Rdata")
 load("data/overfit_forest_data.Rdata")
 # 拟合不同阶数的多项式
 linear_model <- lm(species ~ altitude, data = overfit_forest_data)
-quadratic_model <- lm(species ~ poly(altitude, degree = 2), data = overfit_forest_data)
-overfit_model <- lm(species ~ poly(altitude, degree = 7), data = overfit_forest_data)  # 7次多项式
+quadratic_model <- lm(species ~ poly(altitude, degree = 2),
+                       data = overfit_forest_data)
+overfit_model <- lm(species ~ poly(altitude, degree = 7),
+                    data = overfit_forest_data)  # 7次多项式
 ```
 
 ### 模型可视化与比较
@@ -1578,17 +1603,9 @@ plant_data <- data.frame(
 save(plant_data, file="data/plant_data_p1.Rdata")
 ```
 
-**任务**：  
-1. 使用简单线性回归分析温度与光合作用速率的关系  
-2. 计算并解释回归系数、R²和调整R²  
-3. 进行回归诊断，检查模型假设是否满足  
-4. 尝试使用多项式回归改进模型，并比较两种模型的优劣  
-5. 基于最佳模型，预测在25°C和30°C时的光合作用速率  
+**任务**：本练习要求你使用简单线性回归分析温度与光合作用速率的关系，计算并解释回归系数、R²和调整R²。进行回归诊断，检查模型假设是否满足。尝试使用多项式回归改进模型，并比较两种模型的优劣。基于最佳模型，预测在25°C和30°C时的光合作用速率。
 
-**思考问题**：  
-- 线性模型是否充分描述了温度与光合作用的关系？为什么？  
-- 多项式回归在什么情况下比线性回归更合适？  
-- 如何解释多项式回归中二次项的生态学意义？  
+**思考问题**：线性模型是否充分描述了温度与光合作用的关系？为什么？多项式回归在什么情况下比线性回归更合适？如何解释多项式回归中二次项的生态学意义？  
 
 ---
 
@@ -1625,17 +1642,9 @@ bird_data <- data.frame(
 save(bird_data, file="data/bird_data_p1.Rdata")
 ```
 
-**任务**：  
-1. 使用多元线性回归分析所有环境因子对鸟类丰富度的影响  
-2. 进行变量选择，使用逐步回归方法识别重要环境因子  
-3. 比较完整模型与选择模型的AIC、R²和调整R²  
-4. 进行多重共线性诊断，检查变量间的相关性  
-5. 对最终模型进行回归诊断，确保模型假设满足  
+**任务**：本练习要求你使用多元线性回归分析所有环境因子对鸟类丰富度的影响，进行变量选择，使用逐步回归方法识别重要环境因子。比较完整模型与选择模型的AIC、R²和调整R²。进行多重共线性诊断，检查变量间的相关性。对最终模型进行回归诊断，确保模型假设满足。
 
-**思考问题**：  
-- 为什么变量选择在生态学研究中很重要？  
-- 如何平衡统计显著性和生态学意义？  
-- 多重共线性对模型解释有什么影响？  
+**思考问题**：为什么变量选择在生态学研究中很重要？如何平衡统计显著性和生态学意义？多重共线性对模型解释有什么影响？  
 
 
 
@@ -1671,14 +1680,6 @@ lake_data <- data.frame(
 save(lake_data, file="data/lake_data_p1.Rdata")
 ```
 
-**任务**：  
-1. 使用简单线性回归分析营养盐浓度与浮游植物生物量的关系  
-2. 尝试使用二次多项式回归描述非线性关系  
-3. 比较线性模型和多项式模型的拟合效果  
-4. 进行模型诊断，识别可能的异方差性或非线性问题  
-5. 讨论哪种模型更适合描述这种生态关系  
+**任务**：本练习要求你使用简单线性回归分析营养盐浓度与浮游植物生物量的关系，尝试使用二次多项式回归描述非线性关系。比较线性模型和多项式模型的拟合效果。进行模型诊断，识别可能的异方差性或非线性问题。讨论哪种模型更适合描述这种生态关系。
 
-**思考问题**：  
-- 为什么生态学中经常遇到非线性关系？  
-- 如何判断线性模型是否足够描述生态关系？  
-- 在什么情况下应该考虑更复杂的非线性模型？  
+**思考问题**：为什么生态学中经常遇到非线性关系？如何判断线性模型是否足够描述生态关系？在什么情况下应该考虑更复杂的非线性模型？  
