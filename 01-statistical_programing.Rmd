@@ -1263,15 +1263,24 @@ complexity_data <- data.frame(
   )
 )
 
-# 绘制复杂度曲线图
-ggplot(complexity_data, aes(x = n, y = value, color = complexity)) +
+# 绘制复杂度曲线图 - 使用颜色和线型纹理区分
+ggplot(complexity_data, aes(x = n, y = value, color = complexity, linetype = complexity)) +
   geom_line(size = 1.2) +
   scale_y_log10() + # 使用对数坐标更好地展示差异
+  scale_linetype_manual(values = c(
+    "O(1)" = "solid",
+    "O(log n)" = "dashed",
+    "O(n)" = "dotted",
+    "O(n log n)" = "dotdash",
+    "O(n²)" = "longdash",
+    "O(2^n)" = "twodash"
+  )) +
   labs(
     title = "算法复杂度随数据规模增长的趋势",
     x = "数据规模 n",
     y = "时间/空间消耗（对数坐标）",
-    color = "复杂度等级"
+    color = "复杂度等级",
+    linetype = "复杂度等级"
   ) +
   theme_minimal() +
   theme(
