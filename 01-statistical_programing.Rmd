@@ -1238,7 +1238,7 @@ print(length(perms)) # 输出: 6 (3! = 6)
 
 下面这张图直观地展示了不同复杂度随数据量增长的趋势。**Y轴可以理解为时间或空间消耗**。
 
-```{r complexity-curve, fig.cap="算法复杂度随数据规模增长的趋势图", echo=FALSE}
+```{r complexity-curve, fig.cap="算法复杂度随数据规模增长的趋势图。不同复杂度等级使用颜色和线型组合表示：O(1)使用红色实线、O(log n)使用橙色虚线、O(n)使用黄色点线、O(n log n)使用绿色点划线、O(n²)使用蓝色长划线、O(2^n)使用紫色双划线", echo=FALSE}
 # 复杂度曲线可视化
 library(ggplot2)
 library(dplyr)
@@ -1267,6 +1267,14 @@ complexity_data <- data.frame(
 ggplot(complexity_data, aes(x = n, y = value, color = complexity, linetype = complexity)) +
   geom_line(size = 1.2) +
   scale_y_log10() + # 使用对数坐标更好地展示差异
+  scale_color_manual(values = c(
+    "O(1)" = "red",
+    "O(log n)" = "orange",
+    "O(n)" = "yellow",
+    "O(n log n)" = "green",
+    "O(n²)" = "blue",
+    "O(2^n)" = "purple"
+  )) +
   scale_linetype_manual(values = c(
     "O(1)" = "solid",
     "O(log n)" = "dashed",

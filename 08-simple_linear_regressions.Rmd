@@ -192,7 +192,7 @@ knitr::kable(summary(model)$coefficients,
 
 为了直观展示温度与植物生长速率之间的关系，我们生成了散点图并添加了线性回归线（见\@ref(fig:forest-survey-plot)）。该图形化地呈现了林小雨森林调查数据的核心发现：随着温度从10℃升高到30℃，植物生长速率呈现明显的正相关趋势。图中深绿色的散点代表实际观测数据，红色直线为基于最小二乘法拟合的线性回归线，清晰地展示了温度对生长速率的正向影响模式。这种可视化方法不仅验证了线性关系的存在，还为理解生态系统中环境因子与生物响应之间的关系提供了直观依据。
 
-```{r forest-survey-plot, fig.cap="林小雨的森林调查数据：温度与植物生长速率的关系散点图及线性回归线。图中显示温度从10℃到30℃时，植物生长速率呈现明显的正相关关系，线性回归线（红色）表明温度每升高1℃，生长速率平均增加约0.5单位。", echo=FALSE}
+```{r forest-survey-plot, fig.cap="林小雨的森林调查数据：温度与植物生长速率的关系散点图及线性回归线。图中显示温度从10℃到30℃时，植物生长速率呈现明显的正相关关系，线性回归线（红色虚线）表明温度每升高1℃，生长速率平均增加约0.5单位。", echo=FALSE}
 # 加载森林调查数据
 load("data/forest_survey_data.rda")
 
@@ -206,7 +206,7 @@ plot(growth_rate ~ temperature, data = forest_survey_data,
 
 # 添加线性回归线
 abline(model,
-       col = "red", lwd = 2)
+       col = "red", lwd = 2, lty = 2)
 ```
 
 为了量化温度与植物生长速率之间的关系，我们使用R语言的`lm()`函数构建线性回归模型。`lm()`函数（linear model）是R语言中用于拟合线性模型的核心函数，它通过**最小二乘法**寻找最佳拟合直线。具体来说，`lm()`函数会寻找一条直线，使得所有数据点到这条直线的垂直距离（即残差）的平方和最小。
@@ -293,11 +293,11 @@ for (r2 in r2_values) {
        main = paste("R² =", actual_r2),
        xlab = "环境因子",
        ylab = "生态响应",
-       pch = 16, col = "blue",
+       pch = c(16, 17, 18)[which(r2_values == r2)], col = "blue",
        ylim = c(0, 12))
 
   # 添加回归线
-  abline(model, col = "red", lwd = 2)
+  abline(model, col = "red", lwd = 2, lty = c(1, 2, 3)[which(r2_values == r2)])
 
   # 添加解释文本
   text(2, 11, paste("解释变异:", actual_r2 * 100, "%"), cex = 0.8)
@@ -372,23 +372,23 @@ for (i in 1:10) {
 
 为了直观展示R²与调整R²在变量选择中的关键差异，我们生成了对比图（见\@ref(fig:r2-adj-r2-comparison)）。该图形清晰地揭示了两种指标在模型选择中的不同行为：蓝色线条代表R²值，它随着自变量数量的增加而持续上升，即使添加的是与因变量无关的随机噪声变量；红色线条代表调整R²值，它在真实变量数量（2个）之后开始下降，有效地惩罚了模型复杂度。这种对比为生态学建模提供了重要启示：在变量选择过程中，应该优先参考调整R²而非R²，以避免过度拟合问题，确保模型具有良好的泛化能力。
 
-```{r r2-adj-r2-comparison, fig.cap="R²与调整R²随自变量数量变化的关系。蓝色线显示R²随变量增加持续上升，即使添加无关变量；红色线显示调整R²在真实变量数量（2个）后开始下降，惩罚模型复杂度，避免过度拟合。", echo=FALSE}
+```{r r2-adj-r2-comparison, fig.cap="R²与调整R²随自变量数量变化的关系。蓝色实线显示R²随变量增加持续上升，即使添加无关变量；红色虚线显示调整R²在真实变量数量（2个）后开始下降，惩罚模型复杂度，避免过度拟合。", echo=FALSE}
 # 可视化：绘制R²与调整R²随变量数量的变化
 # 绘制R²值变化曲线
 plot(1:10, r2_values, type = "b", col = "blue", lwd = 2,
      xlab = "自变量数量", ylab = "R²值",
      main = "R²与调整R²随变量数量的变化",
      ylim = c(0, max(c(r2_values, adj_r2_values))),
-     pch = 16)
+     pch = 16, lty = 1)
 
 # 添加调整R²值变化曲线
-lines(1:10, adj_r2_values, type = "b", col = "red", lwd = 2, pch = 17)
+lines(1:10, adj_r2_values, type = "b", col = "red", lwd = 2, pch = 17, lty = 2)
 
 # 添加图例
 legend("bottomright",
        legend = c("R²", "调整R²"),
        col = c("blue", "red"),
-       lwd = 2, pch = c(16, 17))
+       lwd = 2, pch = c(16, 17), lty = c(1, 2))
 
 # 标记真实变量数量
 abline(v = 2, lty = 2, col = "gray")
@@ -449,14 +449,14 @@ plot(y_sig ~ x_sig,
      main = paste("显著模型\np =", round(p_sig, 4)),
      xlab = "环境因子", ylab = "生态响应",
      pch = 16, col = "darkgreen")
-abline(model_sig, col = "red", lwd = 2)
+abline(model_sig, col = "red", lwd = 2, lty = 1)
 
 # 不显著模型
 plot(y_nonsig ~ x_nonsig,
      main = paste("不显著模型\np =", round(p_nonsig, 4)),
      xlab = "环境因子", ylab = "生态响应",
-     pch = 16, col = "gray")
-abline(model_nonsig, col = "red", lwd = 2)
+     pch = 17, col = "gray")
+abline(model_nonsig, col = "red", lwd = 2, lty = 2)
 
 par(mfrow = c(1, 1))
 ```
@@ -1299,7 +1299,7 @@ altitude_data <- data.frame(
 save(altitude_data, file="data/altitude_data.Rdata")
 ```
 
-```{r, fig.cap="物种丰富度与海拔关系的多项式回归分析。蓝色点为观测数据，红色虚线为线性回归线，绿色实线为二次多项式回归曲线。多项式模型更好地捕捉了物种丰富度随海拔变化的单峰分布模式。"}
+```{r, fig.cap="物种丰富度与海拔关系的多项式回归分析。蓝色圆点为观测数据，红色虚线为线性回归线，绿色实线为二次多项式回归曲线。多项式模型更好地捕捉了物种丰富度随海拔变化的单峰分布模式。"}
 # 多项式回归示例：物种丰富度与海拔的关系
 load("data/altitude_data.Rdata")
 
@@ -1461,7 +1461,7 @@ overfit_model <- lm(species ~ poly(altitude, degree = 7),
 
 图\@ref(fig:overfitting-demo)生动地展示了多项式回归中的过度拟合问题。该图通过比较不同复杂度模型的预测曲线，清晰地揭示了过度拟合的特征：7次多项式（紫色线）虽然完美拟合了训练数据点，但产生了不合理的波动，与真实生态关系（黑色虚线）严重偏离；相比之下，二次多项式（绿色线）和线性回归（红色线）虽然拟合程度较低，但更接近真实关系，具有更好的泛化能力。这种可视化对比强调了在生态建模中平衡模型复杂度和泛化性能的重要性。
 
-```{r, overfitting-demo, fig.cap="多项式回归的过度拟合问题演示。蓝色点为观测数据，黑色虚线为真实关系，红色线为线性回归，绿色线为二次多项式，紫色线为7次多项式。高次多项式过度拟合训练数据，产生不合理的波动，泛化能力差。", echo=FALSE}
+```{r, overfitting-demo, fig.cap="多项式回归的过度拟合问题演示。蓝色圆点为观测数据，黑色虚线为真实关系，红色实线为线性回归，绿色虚线为二次多项式，紫色点线为7次多项式。高次多项式过度拟合训练数据，产生不合理的波动，泛化能力差。", echo=FALSE}
 # 生成预测曲线
 altitude_seq <- seq(0, 10, length.out = 200)
 pred_linear <- predict(linear_model, newdata = data.frame(altitude = altitude_seq))
@@ -1480,16 +1480,16 @@ lines(altitude_seq, 2 + 0.5 * altitude_seq - 0.05 * altitude_seq^2,
       col = "black", lwd = 2, lty = 2)
 
 # 添加拟合曲线
-lines(altitude_seq, pred_linear, col = "red", lwd = 2)
-lines(altitude_seq, pred_quadratic, col = "darkgreen", lwd = 2)
-lines(altitude_seq, pred_overfit, col = "purple", lwd = 2)
+lines(altitude_seq, pred_linear, col = "red", lwd = 2, lty = 1)
+lines(altitude_seq, pred_quadratic, col = "darkgreen", lwd = 2, lty = 2)
+lines(altitude_seq, pred_overfit, col = "purple", lwd = 2, lty = 3)
 
 # 添加图例
 legend("topright",
        legend = c("观测数据", "真实关系", "线性回归", "二次多项式", "7次多项式"),
        col = c("blue", "black", "red", "darkgreen", "purple"),
        pch = c(16, NA, NA, NA, NA),
-       lty = c(NA, 2, 1, 1, 1),
+       lty = c(NA, 2, 1, 2, 3),
        lwd = c(NA, 2, 2, 2, 2))
 ```
 

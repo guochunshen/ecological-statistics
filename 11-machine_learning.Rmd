@@ -190,28 +190,43 @@ grid_data <- expand.grid(
 
 grid_data$预测类型 <- predict(forest_tree, grid_data, type = "class")
 
+# 定义颜色和填充模式组合
+# 为每个类别定义颜色和填充模式，确保在彩色显示和黑白打印时都能清晰区分
+fill_colors <- c(
+  "高山健康林" = "#8B4513",
+  "低地健康林" = "#228B22",
+  "轻度退化林" = "#FFA500",
+  "中度退化林" = "#CD853F"
+)
+
+point_colors <- c(
+  "高山健康林" = "#8B4513",
+  "低地健康林" = "#228B22",
+  "轻度退化林" = "#FFA500",
+  "中度退化林" = "#CD853F"
+)
+
 # 绘制决策边界
 ggplot() +
   geom_tile(data = grid_data, aes(x = 海拔, y = 年均温, fill = 预测类型), alpha = 0.3) +
   geom_point(data = forest_ecosystem,
-             aes(x = 海拔, y = 年均温, color = 森林健康状态),
+             aes(x = 海拔, y = 年均温, color = 森林健康状态, shape = 森林健康状态),
              size = 2) +
-  scale_fill_manual(values = c(
-    "高山健康林" = "#8B4513",
-    "低地健康林" = "#228B22",
-    "轻度退化林" = "#FFA500",
-    "中度退化林" = "#CD853F"
-  )) +
-  scale_color_manual(values = c(
-    "高山健康林" = "#8B4513",
-    "低地健康林" = "#228B22",
-    "轻度退化林" = "#FFA500",
-    "中度退化林" = "#CD853F"
+  scale_fill_manual(values = fill_colors) +
+  scale_color_manual(values = point_colors) +
+  scale_shape_manual(values = c(
+    "高山健康林" = 15,  # 正方形
+    "低地健康林" = 16,  # 圆形
+    "轻度退化林" = 17,  # 三角形
+    "中度退化林" = 18   # 菱形
   )) +
   labs(title = "决策树分类边界",
        subtitle = "基于海拔和年均温的森林健康状态分类",
        x = "海拔 (m)",
-       y = "年均温 (°C)") +
+       y = "年均温 (°C)",
+       fill = "预测类型",
+       color = "森林健康状态",
+       shape = "森林健康状态") +
   theme_minimal()
 ```
 
@@ -1272,23 +1287,41 @@ grid_data$土壤pH值 <- other_features["土壤pH值"]
 # 预测网格数据
 grid_data$预测类别 <- predict(best_svm, grid_data)
 
+# 定义颜色和形状组合
+# 为每个类别定义颜色和形状，确保在彩色显示和黑白打印时都能清晰区分
+fill_colors <- c(
+  "健康" = "#228B22",
+  "轻度退化" = "#FFA500",
+  "重度退化" = "#FF6B6B"
+)
+
+point_colors <- c(
+  "健康" = "#006400",
+  "轻度退化" = "#CD853F",
+  "重度退化" = "#8B0000"
+)
+
 # 绘制决策边界
 ggplot() +
   geom_tile(data = grid_data,
             aes(x = 海拔, y = 年均温, fill = 预测类别),
             alpha = 0.3) +
   geom_point(data = forest_health,
-             aes(x = 海拔, y = 年均温, color = 森林健康状态),
+             aes(x = 海拔, y = 年均温, color = 森林健康状态, shape = 森林健康状态),
              size = 2) +
-  scale_fill_manual(values = c("健康" = "#228B22",
-                               "轻度退化" = "#FFA500",
-                               "重度退化" = "#FF6B6B")) +
-  scale_color_manual(values = c("健康" = "#006400",
-                                "轻度退化" = "#CD853F",
-                                "重度退化" = "#8B0000")) +
+  scale_fill_manual(values = fill_colors) +
+  scale_color_manual(values = point_colors) +
+  scale_shape_manual(values = c(
+    "健康" = 16,      # 圆形
+    "轻度退化" = 17,   # 三角形
+    "重度退化" = 15    # 正方形
+  )) +
   labs(title = "支持向量机决策边界",
        subtitle = "基于海拔和年均温的森林健康状态分类",
-       x = "海拔 (m)", y = "年均温 (°C)") +
+       x = "海拔 (m)", y = "年均温 (°C)",
+       fill = "预测类别",
+       color = "森林健康状态",
+       shape = "森林健康状态") +
   theme_minimal()
 ```
 
@@ -1461,26 +1494,43 @@ if (!is.null(prob_predictions)) {
   grid_fine$概率 <- 1  # 如果没有概率信息，设为1
 }
 
+# 定义颜色和形状组合
+# 为每个类别定义颜色和形状，确保在彩色显示和黑白打印时都能清晰区分
+fill_colors <- c(
+  "健康" = "#228B22",
+  "轻度退化" = "#FFA500",
+  "重度退化" = "#FF6B6B"
+)
+
+point_colors <- c(
+  "健康" = "#006400",
+  "轻度退化" = "#CD853F",
+  "重度退化" = "#8B0000"
+)
+
 # 绘制详细的决策边界
 ggplot() +
   geom_tile(data = grid_fine,
             aes(x = 海拔, y = 年均温, fill = 预测类别, alpha = 概率),
             show.legend = FALSE) +
   geom_point(data = forest_health,
-             aes(x = 海拔, y = 年均温, color = 森林健康状态),
+             aes(x = 海拔, y = 年均温, color = 森林健康状态, shape = 森林健康状态),
              size = 2, alpha = 0.8) +
   geom_point(data = support_vectors,
              aes(x = 海拔, y = 年均温),
              color = "black", size = 3, shape = 1, stroke = 1.5) +
-  scale_fill_manual(values = c("健康" = "#228B22",
-                               "轻度退化" = "#FFA500",
-                               "重度退化" = "#FF6B6B")) +
-  scale_color_manual(values = c("健康" = "#006400",
-                                "轻度退化" = "#CD853F",
-                                "重度退化" = "#8B0000")) +
+  scale_fill_manual(values = fill_colors) +
+  scale_color_manual(values = point_colors) +
+  scale_shape_manual(values = c(
+    "健康" = 16,      # 圆形
+    "轻度退化" = 17,   # 三角形
+    "重度退化" = 15    # 正方形
+  )) +
   labs(title = "支持向量机详细决策边界",
        subtitle = "包含支持向量标记和分类置信度",
-       x = "海拔 (m)", y = "年均温 (°C)") +
+       x = "海拔 (m)", y = "年均温 (°C)",
+       color = "森林健康状态",
+       shape = "森林健康状态") +
   theme_minimal() +
   theme(legend.position = "bottom")
 ```

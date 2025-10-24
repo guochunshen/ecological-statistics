@@ -908,13 +908,14 @@ plot(anosim_result, main = "ANOSIM分析：不同河段底栖动物群落差异"
 
 图\@ref(fig:nmds-community-plot)展示了底栖动物群落组成的NMDS排序图：
 
-```{r nmds-community-plot, fig.cap="底栖动物群落组成的NMDS排序分析", message=FALSE, echo=FALSE}
+```{r nmds-community-plot, fig.cap="底栖动物群落组成的NMDS排序分析：使用不同颜色和点型的组合表示不同河段群落", message=FALSE, echo=FALSE}
 # 补充分析：群落组成排序图
 nmds_result <- metaMDS(species_matrix, distance = "bray", trace = 0)
 plot(nmds_result, type = "n", main = "底栖动物群落NMDS排序")
-points(nmds_result, col = as.numeric(groups), pch = 16, cex = 1.5)
-ordiellipse(nmds_result, groups, col = 1:3, lwd = 2)
-legend("topright", legend = levels(groups), col = 1:3, pch = 16)
+# 使用不同颜色和点型组合，确保彩色显示和黑白打印都能清晰区分
+points(nmds_result, col = as.numeric(groups), pch = c(16, 17, 18)[as.numeric(groups)], cex = 1.5)
+ordiellipse(nmds_result, groups, col = 1:3, lwd = 2, lty = c(1, 2, 3))
+legend("topright", legend = levels(groups), col = 1:3, pch = c(16, 17, 18), lty = c(1, 2, 3))
 ```
 
 **结果解释**：
@@ -1037,7 +1038,7 @@ K_envelope <- envelope(observed_pattern, Kest,
 )
 ```
 
-```{r ripley-k-envelope, fig.cap="巴西坚果树空间分布模式检验：Ripley's K函数包络分析", echo=FALSE}
+```{r ripley-k-envelope, fig.cap="巴西坚果树空间分布模式检验：Ripley's K函数包络分析。黑色实线表示观测K函数，灰色区域表示模拟包络，红色实线表示理论CSR期望值。通过颜色和线型的组合，确保在彩色显示和黑白打印时都能清晰区分不同曲线。", echo=FALSE}
 # 可视化结果
 plot(K_envelope,
   main = "巴西坚果树空间分布模式检验",
@@ -1049,7 +1050,7 @@ plot(K_envelope,
 curve(pi * x^2, from = 0, to = 25, add = TRUE, col = "red", lwd = 2)
 legend("topleft",
   legend = c("观测K函数", "模拟包络", "理论CSR"),
-  col = c("black", "grey", "red"), lwd = c(1, 1, 2), lty = c(1, 1, 1)
+  col = c("black", "grey", "red"), lwd = c(1, 1, 2), lty = c(1, 2, 1)
 )
 
 ```
@@ -1293,7 +1294,7 @@ print(moran_test)
 
 下面的代码展示了系统发育信号检验的具体实现过程（图\@ref(fig:phylogenetic-signal)）：
 
-```{r phylogenetic-signal, fig.cap="植物功能性状系统发育信号检验与可视化"}
+```{r phylogenetic-signal, fig.cap="植物功能性状系统发育信号检验与可视化：使用颜色和点型组合表示性状值梯度"
 # 系统发育信号检验的蒙特卡洛模拟
 library(ape)
 library(picante)
@@ -1335,15 +1336,17 @@ print(lambda_test)
 # 可视化系统发育信号
 # 绘制系统发育树和性状值
 plotTree(tree, type = "fan", fsize = 0.8)
+# 使用不同点型和颜色组合表示性状值梯度
 tiplabels(
-  pch = 21, bg = colorRampPalette(c("blue", "red"))(30)[rank(trait_data)],
+  pch = ifelse(trait_data < median(trait_data), 21, 22),
+  bg = colorRampPalette(c("blue", "red"))(30)[rank(trait_data)],
   cex = 1.5
 )
 
-# 添加性状值颜色图例
+# 添加性状值图例，使用颜色和点型组合
 legend("bottomleft",
   legend = c("低性状值", "高性状值"),
-  fill = c("blue", "red"), bty = "n"
+  fill = c("blue", "red"), pch = c(21, 22), bty = "n"
 )
 ```
 
@@ -1378,7 +1381,7 @@ legend("bottomleft",
 
 下面的代码展示了系统发育独立对比分析的具体实现过程（图\@ref(fig:phylogenetic-contrasts)）：
 
-```{r phylogenetic-contrasts, fig.cap="植物防御性状与生长速率关系的系统发育独立对比分析"}
+```{r phylogenetic-contrasts, fig.cap="植物防御性状与生长速率关系的系统发育独立对比分析：使用不同颜色和点型组合区分原始性状与系统发育校正后的关系"
 # 系统发育独立对比的置换检验
 library(ape)
 library(geiger)
@@ -1429,15 +1432,15 @@ plot(defense_trait, growth_rate,
   xlab = "防御物质含量", ylab = "生长速率",
   main = "原始性状相关性"
 )
-abline(lm(growth_rate ~ defense_trait), col = "red", lwd = 2)
+abline(lm(growth_rate ~ defense_trait), col = "red", lwd = 2, lty = 1)
 
 # 系统发育独立对比的相关性图
 plot(pic_defense, pic_growth,
-  pch = 16, col = "darkgreen",
+  pch = 17, col = "darkgreen",
   xlab = "防御物质PIC", ylab = "生长速率PIC",
   main = "系统发育独立对比相关性"
 )
-abline(lm(pic_growth ~ pic_defense), col = "red", lwd = 2)
+abline(lm(pic_growth ~ pic_defense), col = "red", lwd = 2, lty = 2)
 
 # 添加相关性系数
 text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
@@ -1615,7 +1618,7 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:c-score-null-dist)展示了群落组装零模型检验的C-score零分布：
 
-```{r c-score-null-dist, fig.cap="热带雨林群落组装零模型检验：C-score零分布与观测值比较", echo=FALSE}
+```{r c-score-null-dist, fig.cap="热带雨林群落组装零模型检验：C-score零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别", echo=FALSE}
 # 可视化零分布结果
 library(ggplot2)
 
@@ -1624,7 +1627,7 @@ null_dist_df <- data.frame(c_score = sim_c_scores)
 
 ggplot(null_dist_df, aes(x = c_score)) +
   geom_histogram(fill = "lightblue", alpha = 0.7, bins = 30) +
-  geom_vline(xintercept = obs_c_score, color = "red", size = 1) +
+  geom_vline(xintercept = obs_c_score, color = "red", size = 1, linetype = "dashed") +
   annotate("text",
     x = obs_c_score * 1.1, y = 50,
     label = paste("观测C-score =", round(obs_c_score, 2)), color = "red"
@@ -1639,15 +1642,16 @@ ggplot(null_dist_df, aes(x = c_score)) +
 
 图\@ref(fig:community-matrix-heatmap)展示了热带雨林群落的物种分布热图：
 
-```{r community-matrix-heatmap, fig.cap="热带雨林群落物种分布热图：基于环境梯度的物种分布模式", echo=FALSE}
+```{r community-matrix-heatmap, fig.cap="热带雨林群落物种分布热图：基于环境梯度的物种分布模式。使用颜色和透明度组合表示物种存在状态", echo=FALSE}
 # 群落矩阵热图
 library(reshape2)
 comm_melt <- melt(comm_matrix)
 colnames(comm_melt) <- c("物种", "样点", "存在")
 
-ggplot(comm_melt, aes(x = 样点, y = 物种, fill = factor(存在))) +
+ggplot(comm_melt, aes(x = 样点, y = 物种, fill = factor(存在), alpha = factor(存在))) +
   geom_tile() +
   scale_fill_manual(values = c("white", "darkgreen")) +
+  scale_alpha_manual(values = c(0, 1)) +
   labs(
     title = "热带雨林群落物种分布",
     x = "样点", y = "物种", fill = "存在"
@@ -1759,7 +1763,7 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:nestedness-null-dist)展示了传粉网络嵌套性零模型检验的零分布：
 
-```{r nestedness-null-dist, fig.cap="传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较", echo=FALSE}
+```{r nestedness-null-dist, fig.cap="传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别", echo=FALSE}
 # 可视化零分布结果
 library(ggplot2)
 
@@ -1768,7 +1772,7 @@ null_dist_df <- data.frame(nestedness = sim_nestedness)
 
 ggplot(null_dist_df, aes(x = nestedness)) +
   geom_histogram(fill = "lightblue", alpha = 0.7, bins = 30) +
-  geom_vline(xintercept = obs_nestedness, color = "red", size = 1) +
+  geom_vline(xintercept = obs_nestedness, color = "red", size = 1, linetype = "dashed") +
   annotate("text",
     x = obs_nestedness * 1.1, y = 50,
     label = paste("观测嵌套性 =", round(obs_nestedness, 2)), color = "red"
@@ -1783,7 +1787,7 @@ ggplot(null_dist_df, aes(x = nestedness)) +
 
 图\@ref(fig:pollination-network-structure)展示了传粉网络的结构图：
 
-```{r pollination-network-structure, fig.cap="传粉网络结构可视化：植物与传粉者的二分网络", echo=FALSE}
+```{r pollination-network-structure, fig.cap="传粉网络结构可视化：植物与传粉者的二分网络。使用颜色和形状组合区分不同类型节点", echo=FALSE}
 # 网络可视化
 library(igraph)
 
@@ -1815,15 +1819,16 @@ legend("bottomleft",
 
 图\@ref(fig:pollination-matrix-heatmap)展示了传粉网络相互作用的矩阵热图：
 
-```{r pollination-matrix-heatmap, fig.cap="传粉网络相互作用矩阵热图：嵌套结构的可视化", echo=FALSE}
+```{r pollination-matrix-heatmap, fig.cap="传粉网络相互作用矩阵热图：嵌套结构的可视化。使用颜色和透明度组合表示相互作用存在状态", echo=FALSE}
 # 网络矩阵热图
 library(reshape2)
 network_melt <- melt(pollination_network)
 colnames(network_melt) <- c("植物", "传粉者", "相互作用")
 
-ggplot(network_melt, aes(x = 传粉者, y = 植物, fill = factor(相互作用))) +
+ggplot(network_melt, aes(x = 传粉者, y = 植物, fill = factor(相互作用), alpha = factor(相互作用))) +
   geom_tile() +
   scale_fill_manual(values = c("white", "purple")) +
+  scale_alpha_manual(values = c(0, 1)) +
   labs(
     title = "传粉网络相互作用矩阵",
     x = "传粉者", y = "植物", fill = "相互作用"
@@ -1917,10 +1922,10 @@ plot(cooc_null)
 
 图\@ref(fig:nestedness-null-hist)展示了网络嵌套性零模型的零分布直方图：
 
-```{r nestedness-null-hist, fig.cap="网络嵌套性零模型检验：嵌套性指数零分布", echo=FALSE}
+```{r nestedness-null-hist, fig.cap="网络嵌套性零模型检验：嵌套性指数零分布。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别", echo=FALSE}
 # 可视化嵌套性零分布
-hist(null_results, main = "嵌套性零分布", xlab = "嵌套性指数")
-abline(v = obs_nestedness, col = "red", lwd = 2)
+hist(null_results, main = "嵌套性零分布", xlab = "嵌套性指数", col = "lightblue", border = "darkblue")
+abline(v = obs_nestedness, col = "red", lwd = 2, lty = "dashed")
 ```
 
 ### 生态学应用与保护意义

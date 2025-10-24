@@ -263,7 +263,7 @@ $$\bar{x} \pm t_{\alpha/2, n-1} \times \frac{s}{\sqrt{n}}$$
 
 Student‘s *t*分布（简称*t*分布）由英国统计学家威廉·戈塞特（William Gosset）在1908年应用笔名Student提出，当时他在吉尼斯啤酒厂从事质量控制工作，为了解决小样本问题而发展了这种分布。*t*分布的形状比正态分布更加扁平，尾部更厚，这反映了小样本情况下估计不确定性的增加（图\@ref(fig:t-distribution-comparison)）。随着样本量的增加，*t*分布逐渐趋近于正态分布。
 
-```{r t-distribution-comparison, fig.cap="t分布与正态分布的比较：不同自由度的t分布（红色、蓝色、绿色）与标准正态分布（黑色）的对比，展示随着自由度增加t分布逐渐趋近正态分布的趋势", echo=FALSE}
+```{r t-distribution-comparison, fig.cap="t分布与正态分布的比较：不同自由度的t分布（红色虚线、蓝色点线、绿色点划线）与标准正态分布（黑色实线）的对比，展示随着自由度增加t分布逐渐趋近正态分布的趋势", echo=FALSE}
 # 生成x轴数据
 x <- seq(-4, 4, length.out = 1000)
 
@@ -330,7 +330,7 @@ cat("自助法95%置信区间：", ci_bootstrap$percent[4:5], "\n")
 
 为了直观理解置信水平和样本量对区间估计的影响，我们通过可视化分析来展示这些关系。图\@ref(fig:different-confidence-levels)展示了两个关键概念：不同置信水平下区间估计的比较以及样本量对置信区间宽度的影响。
 
-```{r different-confidence-levels, fig.cap="不同置信水平的区间估计比较", echo=FALSE}
+```{r different-confidence-levels, fig.cap="不同置信水平的区间估计比较。左图使用浅蓝色实线、蓝色虚线和深蓝色点线分别表示90%、95%和99%置信水平的区间估计，红色圆点表示点估计值；右图显示样本量对置信区间宽度的影响", echo=FALSE}
 par(mfrow = c(1, 2))
 
 set.seed(123)
@@ -341,6 +341,7 @@ n_egret <- length(egret_counts)
 
 confidence_levels <- c(0.90, 0.95, 0.99)
 colors <- c("lightblue", "blue", "darkblue")
+line_types <- c(1, 2, 3)  # 实线、虚线、点线
 
 plot(1, type = "n", xlim = c(1100, 1300), ylim = c(0.5, 3.5),
      xlab = "白鹭数量估计", ylab = "置信水平",
@@ -350,12 +351,12 @@ for (i in seq_along(confidence_levels)) {
   z_val <- qnorm(1 - (1 - confidence_levels[i]) / 2)
   ci <- c(mean_egret - z_val * sd_egret / sqrt(n_egret),
           mean_egret + z_val * sd_egret / sqrt(n_egret))
-  segments(ci[1], i, ci[2], i, lwd = 3, col = colors[i])
+  segments(ci[1], i, ci[2], i, lwd = 3, col = colors[i], lty = line_types[i])
   points(mean_egret, i, pch = 19, col = "red")
 }
 
 legend("topright", legend = c("90%", "95%", "99%"),
-       col = colors, lwd = 3, title = "置信水平")
+       col = colors, lwd = 3, lty = line_types, title = "置信水平")
 
 sample_sizes <- c(10, 30, 50, 100)
 ci_widths <- numeric(length(sample_sizes))
@@ -746,21 +747,21 @@ cat("\n贝叶斯估计结果：\n",
 
 我们计算后验分布的均值作为参数的点估计：`b_Intercept`对应总体均值的后验分布，`sigma`对应标准差参数的后验分布。在贝叶斯框架下，这些后验均值代表了在考虑先验信息和样本数据后，对参数的最优估计。输出结果显示了我们基于贝叶斯方法估计的树木胸径总体均值和标准差。
 
-```{r bayesian-posterior-distribution, fig.cap="贝叶斯估计的后验分布"}
+```{r bayesian-posterior-distribution, fig.cap="贝叶斯估计的后验分布：左侧显示总体均值的后验分布（浅蓝色直方图，密度为10），右侧显示标准差参数的后验分布（浅绿色直方图，密度为15），红色虚线标记后验均值"}
 # 设置图形布局：1行2列
 par(mfrow = c(1, 2))
 
 # 绘制均值的后验分布直方图
 hist(posterior_samples$b_Intercept, breaks = 30,
      xlab = "均值 (cm)", ylab = "密度",
-     main = "均值的后验分布", col = "lightblue")
-abline(v = posterior_mean, col = "red", lwd = 2)  # 添加均值垂直线
+     main = "均值的后验分布", col = "lightblue", density = 10)
+abline(v = posterior_mean, col = "red", lwd = 2, lty = 2)  # 添加均值垂直线
 
 # 绘制标准差的后验分布直方图
 hist(posterior_samples$sigma, breaks = 30,
      xlab = "标准差 (cm)", ylab = "密度",
-     main = "标准差的后验分布", col = "lightgreen")
-abline(v = posterior_sd, col = "red", lwd = 2)  # 添加均值垂直线
+     main = "标准差的后验分布", col = "lightgreen", density = 15)
+abline(v = posterior_sd, col = "red", lwd = 2, lty = 2)  # 添加均值垂直线
 
 # 恢复默认图形布局
 par(mfrow = c(1, 1))
@@ -1090,7 +1091,7 @@ $$N = \frac{\sum (M_t \times C_t)}{\sum R_t}$$
 
 Schnabel方法的主要优势在于它能够利用多次捕获的信息，提高估计的精度，并且可以通过不同时间点的估计值来检验方法的稳定性（图\@ref(fig:schnabel-stability-test)）。
 
-```{r schnabel-stability-test, fig.cap="Schnabel估计的稳定性检验"}
+```{r schnabel-stability-test, fig.cap="Schnabel估计的稳定性检验：黑色实线连接圆点表示累计估计值随捕获次数的变化，红色虚线标记最终种群估计值"}
 capture_data <- data.frame(
   session = 1:5,
   M_t = c(0, 50, 120, 180, 240),  # 累计标记数
@@ -1124,11 +1125,12 @@ print(cumulative_estimates)
 # 检验Schnabel估计方法的稳定性
 plot(capture_data$session, cumulative_estimates, type = "b",
      xlab = "捕获次数", ylab = "种群估计",
-     main = "Schnabel估计的稳定性检验")
+     main = "Schnabel估计的稳定性检验",
+     pch = 19, lty = 1, lwd = 2)
 
 # 添加最终种群估计值的水平参考线
 # 红色虚线表示最终的Schnabel估计值
-abline(h = population_schnabel, col = "red", lty = 2)
+abline(h = population_schnabel, col = "red", lwd = 2, lty = 2)
 ```
 
 **Jolly-Seber模型**是标记重捕法中最复杂和最强大的方法，专门用于处理开放种群的情况。开放种群是指存在出生、死亡、迁入和迁出的种群，这在真实的生态系统中更为常见。Jolly-Seber模型不仅能够估计种群大小，还能够估计存活率、迁入率等种群动态参数。
@@ -1227,7 +1229,7 @@ $$N = \frac{100,000}{50} \times 8 = 16,000$$
 
 通过样方调查获得的植物数量分布数据可以帮助我们了解种群的分布模式（图\@ref(fig:quadrat-plant-distribution)）。
 
-```{r quadrat-plant-distribution, fig.cap="样方内植物数量分布", echo=FALSE}
+```{r quadrat-plant-distribution, fig.cap="样方内植物数量分布：浅灰色直方图（密度为15）显示植物个体数量的分布模式，红色虚线标记样本均值位置", echo=FALSE}
 
 area_total <- 100000
 
@@ -1256,10 +1258,10 @@ cat("95%置信区间：[", round(ci_lower), ",", round(ci_upper), "]\n")
 
 hist(plants_per_quadrat, breaks = 10,
      xlab = "每样方个体数", ylab = "频数",
-     main = "样方内植物数量分布")
-abline(v = mean_plants, col = "red", lwd = 2)
+     main = "样方内植物数量分布", col = "lightgray", density = 15)
+abline(v = mean_plants, col = "red", lwd = 2, lty = 2)
 legend("topright", legend = paste("均值 =", round(mean_plants, 2)),
-       col = "red", lwd = 2)
+       col = "red", lwd = 2, lty = 2)
 ```
 
 图\@ref(fig:quadrat-plant-distribution)展示了通过样方调查获得的植物数量分布情况。该直方图清晰地显示了50个样方中植物个体数量的分布模式，红色垂直线标记了样本均值的位置。从图中可以看出，植物数量大致呈现正态分布，集中在均值附近，这反映了该植物种群在草原中的相对均匀分布特征。这种分布模式为生态学家提供了关于种群空间格局的重要信息，有助于理解物种的生态位和种间竞争关系。
@@ -1310,11 +1312,11 @@ for (i in seq_along(detection_probs)) {
 }
 #cat(output_lines)
 
-plot(detection_probs, population_estimates, type = "b",
+plot(detection_probs, population_estimates, type = "b", pch = 17, lty = 2,
      xlab = "发现概率", ylab = "种群估计",
      main = "样线法估计的敏感性分析")
-points(0.7, population_corrected, col = "red", pch = 19, cex = 2)
-legend("topright", legend = "基准估计", col = "red", pch = 19)
+points(0.7, population_corrected, col = "red", pch = 15, cex = 2)
+legend("topright", legend = "基准估计", col = "red", pch = 15)
 ```
 
 图\@ref(fig:line-transect-sensitivity)展示了样线法估计对发现概率变化的敏感性分析。该图表清晰地显示了当发现概率从0.5变化到0.9时，种群估计值呈现反比关系的变化趋势。红色标记点表示基准估计值（发现概率为0.7时的种群估计）。这种敏感性分析对于生态学研究至关重要，因为它揭示了样线法估计结果对关键假设的依赖程度。在实际野外调查中，发现概率可能受到多种因素的影响，包括观察者经验、环境条件、动物行为等。通过敏感性分析，研究人员可以评估估计结果的不确定性范围，为保护决策提供更加可靠的依据。
@@ -1362,7 +1364,7 @@ $$N = \frac{100}{2 \times 0.1 \times 50} \times \frac{60}{0.7} = \frac{100}{10} 
 
 在R语言中，距离抽样法可以通过`Distance`包来实现。这个包提供了完整的距离抽样分析框架，包括发现函数的拟合、种群数量的估计以及不确定性分析。半正态发现函数是距离抽样中最常用的发现函数形式之一（图\@ref(fig:distance-sampling-halfnormal)）。
 
-```{r distance-sampling-halfnormal, fig.cap="半正态发现函数", echo=FALSE}
+```{r distance-sampling-halfnormal, fig.cap="半正态发现函数：黑色实线表示拟合的半正态发现函数，蓝色竖线标记表示实际观测到的个体距离分布", echo=FALSE}
 library(Distance)
 
 set.seed(123)
@@ -1404,7 +1406,7 @@ plot(x_vals, g_x, type = "l", lwd = 2,
      xlab = "距离（米）", ylab = "发现概率",
      main = "半正态发现函数")
 points(distance_data$distance, rep(0.5, nrow(distance_data)),
-       pch = "|", col = "blue")
+       pch = 3, col = "blue")  # 使用十字形标记替代竖线
 legend("topright", legend = paste("sigma =", round(sigma, 2)),
        lty = 1, lwd = 2)
 
@@ -1507,17 +1509,17 @@ ci_upper <- population_multiple_removal + 1.96 * standard_error_population
 cat("95%置信区间：[", round(ci_lower), ",", round(ci_upper), "]\n")
 ```
 
-```{r removal-method-analysis, fig.cap="去除法：捕获量随累积捕获量的变化", echo=FALSE}
+```{r removal-method-analysis, fig.cap="去除法：捕获量随累积捕获量的变化：黑色实心圆点连线表示观测数据，红色虚线表示线性回归拟合直线", echo=FALSE}
 # 绘制捕获量随累积捕获量变化的散点图和拟合直线
 # 展示去除法的核心关系：捕获量随累积捕获量线性递减
 plot(previous_captures, captures, type = "b", pch = 19, cex = 1.5,
      xlab = "累积捕获量", ylab = "本次捕获量",
      main = "去除法：捕获量随累积捕获量的变化")
 # 添加线性回归拟合直线
-abline(model, col = "red", lwd = 2)
+abline(model, col = "red", lwd = 2, lty = 2)
 # 添加图例说明
 legend("topright", legend = c("观测数据", "拟合直线"),
-       pch = c(19, NA), lty = c(NA, 1), col = c("black", "red"))
+       pch = c(19, NA), lty = c(1, 2), col = c("black", "red"))
 
 ```
 
@@ -1687,8 +1689,8 @@ plot(sample_effort, species_accumulated, type = "b", pch = 19,
      xlim = c(0, 50), ylim = c(0, 50),
      main = "样本积累曲线与外推")
 
-# 添加拟合曲线（红色实线）
-lines(predicted_effort, predicted_species, col = "red", lwd = 2)
+# 添加拟合曲线（红色点线）
+lines(predicted_effort, predicted_species, col = "red", lwd = 2, lty = 3)
 
 # 添加渐近线（蓝色虚线）表示总物种数估计值
 abline(h = species_max_est, col = "blue", lty = 2)
@@ -1769,17 +1771,17 @@ cat("\n内插比较（相同个体数下的期望物种数）：\n",
     "种，样地B =", round(rare_b[3], 1), "种\n")
 ```
 
-```{r rarefaction-comparison, fig.cap="物种丰富度内插比较"}
+```{r rarefaction-comparison, fig.cap="物种丰富度内插比较：蓝色实线连接实心圆点表示样地A的期望物种数变化，红色虚线连接三角形表示样地B的期望物种数变化"}
 plot(x=c(0,200), y= range(c(rare_a, rare_b)),
     xlab = "样本量", ylab = "期望物种数",
     main = "物种丰富度内插比较")
 lines(x=c(50, 100, 150), y=rare_a, type = "b",
-      col = "blue", lwd = 2, pch = 19)
+      col = "blue", lwd = 2, pch = 19, lty = 1)
 lines(x=c(50,100,150), y=rare_b, type = "b",
-      col = "red", lwd = 2, pch = 17)
+      col = "red", lwd = 2, pch = 17, lty = 2)
 
 legend("bottomright", legend = c("样地A", "样地B"),
-       col = c("blue", "red"), lwd = 2, pch = c(19, 17))
+       col = c("blue", "red"), lwd = 2, pch = c(19, 17), lty = c(1, 2))
 
 chao1_a <- estimateR(community_a)["S.chao1"]
 chao1_b <- estimateR(community_b)["S.chao1"]
@@ -1928,7 +1930,7 @@ $$\hat{S}_{boot} = 2S_{obs} - \frac{1}{B}\sum_{b=1}^B S_b^*$$
 
 Bootstrap方法的优势在于它能够提供完整的不确定性信息，且不依赖于特定的分布假设。然而，计算量较大，且在小样本情况下可能不够准确。
 
-```{r bootstrap-estimation, fig.cap="Bootstrap估计的抽样分布", echo=FALSE}
+```{r bootstrap-estimation, fig.cap="Bootstrap估计的抽样分布：红色实线标记观测值，蓝色虚线标记Bootstrap估计值", echo=FALSE}
 
 # 设置随机数种子，确保结果可重现
 set.seed(123)
@@ -1974,15 +1976,15 @@ hist(bootstrap_estimates, breaks = 20,
      xlab = "Bootstrap样本物种数", ylab = "频数",
      main = "Bootstrap估计的抽样分布")
 
-# 添加观测值的垂直线（红色）
-abline(v = S_obs, col = "red", lwd = 2)
+# 添加观测值的垂直线（红色实线）
+abline(v = S_obs, col = "red", lwd = 2, lty = 1)
 
-# 添加Bootstrap估计值的垂直线（蓝色）
-abline(v = S_boot, col = "blue", lwd = 2)
+# 添加Bootstrap估计值的垂直线（蓝色虚线）
+abline(v = S_boot, col = "blue", lwd = 2, lty = 2)
 
 # 添加图例说明
 legend("topleft", legend = c("观测值", "Bootstrap估计"),
-       col = c("red", "blue"), lwd = 2)
+       col = c("red", "blue"), lwd = 2, lty = c(1, 2))
 ```
 
 图\@ref(fig:bootstrap-estimation)展示了Bootstrap估计的抽样分布，通过重抽样技术构建物种丰富度估计的置信区间和不确定性信息。
@@ -2077,23 +2079,24 @@ par(mfrow = c(1, 2))
 # 绘制第一个图形：对数尺度下的多度分布直方图与拟合曲线
 hist(log(observed_abundances), breaks = 10, freq = FALSE,
      xlab = "log(多度)", ylab = "密度",
-     main = "观测多度分布与拟合曲线")
+     main = "观测多度分布与拟合曲线",
+     col = "lightgray", density = 15)
 
 # 在对数尺度上添加拟合的对数正态分布密度曲线
 # 注意：由于我们绘制的是log(x)的分布，需要调整密度函数
 curve(dlnorm(exp(x), meanlog = mu_est, sdlog = sigma_est) * exp(x),
-      add = TRUE, col = "red", lwd = 2)
+      add = TRUE, col = "red", lwd = 2, lty = 2)
 
 # 绘制第二个图形：累积分布函数比较
 plot(ecdf(observed_abundances), main = "累积分布函数比较")
 
 # 添加拟合的对数正态分布的累积分布函数
 curve(plnorm(x, meanlog = mu_est, sdlog = sigma_est),
-      add = TRUE, col = "red", lwd = 2)
+      add = TRUE, col = "red", lwd = 2, lty = 2)
 
 # 添加图例说明
 legend("bottomright", legend = c("经验分布", "拟合分布"),
-       col = c("black", "red"), lwd = 2)
+       col = c("black", "red"), lwd = 2, lty = c(1, 2))
 ```
 
 ```{r, echo=FALSE}
@@ -2196,7 +2199,7 @@ chao1_estimate <- estimateR(as.numeric(sampled_species[observed_species]))[
 ```
 
 
-```{r rare-species-distribution, fig.cap="稀有种对多样性估计的影响分析"}
+```{r rare-species-distribution, fig.cap="稀有种对多样性估计的影响分析：左图显示真实群落呈现典型的对数正态分布（浅灰色直方图，密度为10），包含完整的稀有种和常见种结构；右图显示观测群落由于采样限制，稀有种数量显著减少，分布呈现右偏形态（深灰色直方图，密度为15）。红色虚线标记稀有种阈值线"}
 # ===========================================================
 # 第五部分：可视化分析
 # 目的：通过图形直观展示真实群落与观测群落的差异
@@ -2210,7 +2213,8 @@ par(mfrow = c(1, 2))
 # 使用对数尺度显示，因为多度通常呈对数正态分布
 hist(log10(species_abundances), breaks = 20,
      xlab = "log10(多度)", ylab = "物种数",
-     main = "真实多度分布")
+     main = "真实多度分布",
+     col = "lightgray", density = 10)
 
 # 在真实分布图上添加稀有种阈值线（红色虚线）
 abline(v = log10(rare_threshold), col = "red", lty = 2)
@@ -2222,7 +2226,8 @@ observed_abundances <- sampled_species[observed_species]
 # 同样使用对数尺度，便于与真实分布比较
 hist(log10(observed_abundances), breaks = 20,
      xlab = "log10(多度)", ylab = "物种数",
-     main = "观测多度分布")
+     main = "观测多度分布",
+     col = "darkgray", density = 15)
 
 # 在观测分布图上添加稀有种阈值线（红色虚线）
 abline(v = log10(rare_threshold), col = "red", lty = 2)
@@ -2379,7 +2384,7 @@ par(mfrow = c(2, 2))
 
 # 第一个图形：样本量对物种丰富度估计的影响
 plot(precision_analysis$sample_size, precision_analysis$S_mean,
-     type = "b", pch = 19, ylim = c(0, S_true * 1.1),
+     type = "b", pch = 19, lty = 1, ylim = c(0, S_true * 1.1),
      xlab = "样本量", ylab = "物种丰富度估计",
      main = "样本量对物种丰富度估计的影响")
 
@@ -2395,7 +2400,7 @@ abline(h = S_true, col = "red", lty = 2)
 
 # 第二个图形：样本量对Shannon多样性估计的影响
 plot(precision_analysis$sample_size, precision_analysis$H_mean,
-     type = "b", pch = 19, ylim = c(0, H_true * 1.2),
+     type = "b", pch = 19, lty = 1, ylim = c(0, H_true * 1.2),
      xlab = "样本量", ylab = "Shannon多样性估计",
      main = "样本量对Shannon多样性估计的影响")
 
@@ -2411,31 +2416,31 @@ abline(h = H_true, col = "red", lty = 2)
 
 # 第三个图形：样本量对估计偏差的影响
 plot(precision_analysis$sample_size, precision_analysis$S_bias,
-     type = "b", pch = 19, ylim = c(-50, 10),
+     type = "b", pch = 19, lty = 1, ylim = c(-50, 10),
      xlab = "样本量", ylab = "物种丰富度偏差 (%)",
      main = "样本量对估计偏差的影响")
 
 # 添加Shannon多样性偏差曲线（蓝色三角形）
 lines(precision_analysis$sample_size, precision_analysis$H_bias,
-      type = "b", pch = 17, col = "blue")
+      type = "b", pch = 17, col = "blue", lty = 2)
 
 # 添加图例说明
 legend("bottomright", legend = c("物种丰富度", "Shannon多样性"),
-       pch = c(19, 17), col = c("black", "blue"))
+       pch = c(19, 17), col = c("black", "blue"), lty = c(1, 2))
 
 # 添加零偏差参考线（红色虚线）
 abline(h = 0, col = "red", lty = 2)
 
 # 第四个图形：样本量对估计方差的影响
 plot(precision_analysis$sample_size, precision_analysis$S_sd,
-     type = "b", pch = 19,
+     type = "b", pch = 19, lty = 1,
      ylim = c(0, max(c(precision_analysis$S_sd, precision_analysis$H_sd))),
      xlab = "样本量", ylab = "估计标准差",
      main = "样本量对估计方差的影响")
 
 # 添加Shannon多样性标准差曲线（蓝色三角形）
 lines(precision_analysis$sample_size, precision_analysis$H_sd,
-      type = "b", pch = 17, col = "blue")
+      type = "b", pch = 17, col = "blue", lty = 2)
 
 # 添加图例说明
 legend("topright", legend = c("物种丰富度", "Shannon多样性"),

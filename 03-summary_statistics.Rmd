@@ -409,7 +409,7 @@ $$g_1 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^3}{s^3}$$
 
 如图\@ref(fig:tree-skewness-plot)所示，我们模拟了一个右偏的树木胸径分布，该图通过直方图展示了分布的不对称性特征。
 
-```{r tree-skewness-plot, fig.cap="树木胸径分布的直方图，展示右偏分布特征。红色虚线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。", echo=FALSE}
+```{r tree-skewness-plot, fig.cap="树木胸径分布的直方图，展示右偏分布特征。红色实线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。", echo=FALSE}
 # 安装并加载moments包（如果未安装）
 # install.packages("moments")
 library(moments)
@@ -426,12 +426,15 @@ hist(tree_diameter,
   breaks = 20, main = "树木胸径分布（右偏）",
   xlab = "胸径（厘米）", col = "lightgreen", border = "darkgreen"
 )
-abline(v = mean(tree_diameter), col = "red", lwd = 2, lty = 2)
+abline(v = mean(tree_diameter), col = "red", lwd = 2, lty = 1)
 abline(v = median(tree_diameter), col = "blue", lwd = 2, lty = 2)
 legend("topright",
        legend = c("均值", "中位数"),
        col = c("red", "blue"),
-       lty = 2, lwd = 2)
+       lty = c(1, 2), lwd = 2,
+       pch = c(NA, NA),  # 不使用点符号
+       seg.len = 2,       # 图例线段长度
+       text.width = strwidth("均值") * 1.2)
 ```
 
 上述例子中，正偏度（通常大于0.5）表明分布向右偏斜，意味着有较多的小树和少数大树。在图形上，右偏分布的右侧尾部较长，均值大于中位数。这种模式常见于年龄结构年轻的种群。
@@ -533,7 +536,7 @@ if (kurtosis_count > 3) {
 
 如图\@ref(fig:stats-concepts-plot)所示，我们使用标准正态分布来可视化关键统计概念。该图清晰地展示了均值、标准差等统计量在概率分布上的几何意义。
 
-```{r stats-concepts-plot, fig.cap="统计概念在正态分布上的可视化。红色垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色箭头表示标准差的实际跨度。", echo=FALSE}
+```{r stats-concepts-plot, fig.cap="统计概念在正态分布上的可视化。红色实线垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色双端箭头表示标准差的实际跨度。通过不同线型和颜色组合，确保在彩色显示和黑白打印时都能清晰区分。", echo=FALSE}
 # 创建一个综合的可视化，展示所有统计概念
 library(ggplot2)
 library(gridExtra)
@@ -588,7 +591,7 @@ print(sd_plot)
 
 如图\@ref(fig:se-visualization-plot)所示，我们通过多次抽样模拟展示了标准误的统计意义。该图包含两个子图：左图显示样本均值的分布特征，右图展示标准误与样本均值的关系，帮助我们理解样本均值作为总体均值估计的精确程度。
 
-```{r se-visualization-plot, fig.cap="标准误的可视化分析。左图显示样本均值的抽样分布，右图展示标准误与样本均值的关系。红色虚线表示总体均值，橙色虚线表示平均标准误。", echo=FALSE}
+```{r se-visualization-plot, fig.cap="标准误的可视化分析。左图显示样本均值的抽样分布，右图展示标准误与样本均值的关系。红色实线表示总体均值，橙色虚线表示平均标准误。", echo=FALSE}
 # 标准误的可视化：抽样变异性
 set.seed(456)
 # 假设总体服从正态分布
@@ -614,8 +617,8 @@ hist(sample_means,
   breaks = 20, col = "lightblue", border = "darkblue",
   main = "样本均值的分布", xlab = "样本均值", ylab = "频率"
 )
-abline(v = mean(population), col = "red", lwd = 3, lty = 2)
-legend("topright", legend = "总体均值", col = "red", lwd = 3, lty = 2)
+abline(v = mean(population), col = "red", lwd = 3, lty = 1)
+legend("topright", legend = "总体均值", col = "red", lwd = 3, lty = 1)
 
 # 右图：标准误与样本均值的关系
 plot(sample_means, sample_ses,
@@ -653,7 +656,7 @@ cat("总体均值：", round(mean(population), 2), "\n",
 
 如图\@ref(fig:distribution-parameters-comparison)所示，我们系统地比较了均值、标准差、偏度和峰度四个关键统计参数对分布形状的影响。该图通过四个子图展示了不同参数值下分布特征的显著差异，帮助我们直观理解统计参数与分布形状之间的对应关系。
 
-```{r distribution-parameters-comparison, fig.cap="不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。", warning=FALSE, echo=FALSE}
+```{r distribution-parameters-comparison, fig.cap="不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。通过颜色和线型（实线、虚线、点线）的组合，确保在彩色显示和黑白打印时都能清晰区分不同参数值的曲线。", warning=FALSE, echo=FALSE}
 # 比较不同均值的分布
 x_range <- seq(-5, 10, length.out = 1000)
 df_means <- data.frame(
@@ -664,14 +667,15 @@ df_means <- data.frame(
   mean = factor(rep(c("均值=0", "均值=2", "均值=5"), each = 1000))
 )
 
-mean_comparison <- ggplot(df_means, aes(x = x, y = y, color = mean)) +
+mean_comparison <- ggplot(df_means, aes(x = x, y = y, color = mean, linetype = mean)) +
   geom_line(linewidth = 1) +
   labs(
     title = "不同均值的分布比较",
-    x = "变量值", y = "概率密度", color = "均值"
+    x = "变量值", y = "概率密度", color = "均值", linetype = "均值"
   ) +
   theme_minimal() +
-  scale_color_brewer(palette = "Set1")
+  scale_color_brewer(palette = "Set1") +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"))
 
 # 比较不同标准差的分布
 df_sds <- data.frame(
@@ -682,14 +686,15 @@ df_sds <- data.frame(
   sd = factor(rep(c("标准差=0.5", "标准差=1", "标准差=2"), each = 1000))
 )
 
-sd_comparison <- ggplot(df_sds, aes(x = x, y = y, color = sd)) +
+sd_comparison <- ggplot(df_sds, aes(x = x, y = y, color = sd, linetype = sd)) +
   geom_line(linewidth = 1) +
   labs(
     title = "不同标准差的分布比较",
-    x = "变量值", y = "概率密度", color = "标准差"
+    x = "变量值", y = "概率密度", color = "标准差", linetype = "标准差"
   ) +
   theme_minimal() +
-  scale_color_brewer(palette = "Set2")
+  scale_color_brewer(palette = "Set2") +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"))
 
 # 比较不同偏度的分布（使用偏态分布）
 library(sn)
@@ -700,14 +705,15 @@ df_skew <- data.frame(
   skewness = factor(rep(c("偏度≈0", "偏度>0(右偏)", "偏度>>0(强右偏)"), each = 1000))
 )
 
-skew_comparison <- ggplot(df_skew, aes(x = x, y = y, color = skewness)) +
+skew_comparison <- ggplot(df_skew, aes(x = x, y = y, color = skewness, linetype = skewness)) +
   geom_line(linewidth = 1) +
   labs(
     title = "不同偏度的分布比较",
-    x = "变量值", y = "概率密度", color = "偏度"
+    x = "变量值", y = "概率密度", color = "偏度", linetype = "偏度"
   ) +
   theme_minimal() +
-  scale_color_brewer(palette = "Set3")
+  scale_color_brewer(palette = "Set3") +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"))
 
 # 比较不同峰度的分布（使用t分布）
 df_kurtosis <- data.frame(
@@ -720,14 +726,15 @@ df_kurtosis <- data.frame(
 )
 
 kurtosis_comparison <- ggplot(df_kurtosis,
-                              aes(x = x, y = y, color = kurtosis)) +
+                              aes(x = x, y = y, color = kurtosis, linetype = kurtosis)) +
   geom_line(linewidth = 1) +
   labs(
     title = "不同峰度的分布比较",
-    x = "变量值", y = "概率密度", color = "峰度"
+    x = "变量值", y = "概率密度", color = "峰度", linetype = "峰度"
   ) +
   theme_minimal() +
-  scale_color_brewer(palette = "Set1")
+  scale_color_brewer(palette = "Set1") +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted"))
 
 # 显示所有比较图
 grid.arrange(mean_comparison, sd_comparison,
@@ -837,22 +844,25 @@ df_high <- data.frame(
 df_combined <- rbind(df_low, df_high)
 
 # 创建空间分布图
-p1 <- ggplot(df_combined, aes(x = position, y = nutrient, color = type)) +
+p1 <- ggplot(df_combined, aes(x = position, y = nutrient, color = type, linetype = type)) +
   geom_line(size = 1) +
   geom_point(size = 3) +
   facet_wrap(~type, ncol = 1, scales = "free_y") +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   labs(
     title = "环境异质性对比",
     x = "空间位置", y = "土壤养分值",
-    subtitle = sprintf("低异质性CV: %.1f%%, 高异质性CV: %.1f%%", cv_low, cv_high)
+    subtitle = sprintf("低异质性CV: %.1f%%, 高异质性CV: %.1f%%", cv_low, cv_high),
+    color = "环境异质性类型", linetype = "环境异质性类型"
   ) +
   theme_minimal() +
   theme(legend.position = "none")
 
 # 创建箱线图对比
-p2 <- ggplot(df_combined, aes(x = type, y = nutrient, fill = type)) +
-  geom_boxplot(alpha = 0.7) +
+p2 <- ggplot(df_combined, aes(x = type, y = nutrient, fill = type, linetype = type)) +
+  geom_boxplot(alpha = 0.7, color = "black", size = 0.5) +
   geom_jitter(width = 0.2, size = 2, alpha = 0.6) +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   labs(
     title = "土壤养分值分布对比",
     x = "环境异质性类型", y = "土壤养分值"
@@ -938,7 +948,7 @@ $$H = -\sum_{i=1}^{S} p_i \ln(p_i)$$
 
 如图\@ref(fig:heterogeneity-index-plot)所示，我们通过柱状图展示了四种生境类型的面积比例分布，并计算了相应的环境异质性指数。该图直观地呈现了基于信息熵的环境异质性度量方法在实际生态景观分析中的应用。
 
-```{r heterogeneity-index-plot, fig.cap="环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，用于计算环境异质性指数。", echo=FALSE}
+```{r heterogeneity-index-plot, fig.cap="环境异质性组成柱状图。展示四种生境类型（森林、草地、湿地、农田）的面积比例分布，使用不同颜色和填充纹理的组合来区分不同生境类型，用于计算环境异质性指数。", echo=FALSE}
 # 示例数据：4种生境类型的面积比例
 habitat_proportions <- c(0.4, 0.3, 0.2, 0.1) # 森林、草地、湿地、农田
 
@@ -954,12 +964,15 @@ habitat_data <- data.frame(
   proportion = habitat_proportions
 )
 
-ggplot(habitat_data, aes(x = type, y = proportion, fill = type)) +
-  geom_col() +
+# 使用颜色和线型组合来增强区分度
+ggplot(habitat_data, aes(x = type, y = proportion, fill = type, linetype = type)) +
+  geom_col(color = "black", size = 0.5) +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted", "dotdash")) +
   labs(
     title = "环境异质性组成",
     subtitle = paste("异质性指数 =", round(heterogeneity_index, 3)),
-    x = "生境类型", y = "面积比例"
+    x = "生境类型", y = "面积比例",
+    fill = "生境类型", linetype = "生境类型"
   ) +
   theme_minimal()
 ```
@@ -1009,8 +1022,9 @@ variance_data <- data.frame(
   value = c(spatial_variance, random_variance)
 )
 
-ggplot(variance_data, aes(x = "", y = value, fill = component)) +
-  geom_bar(stat = "identity", width = 1) +
+ggplot(variance_data, aes(x = "", y = value, fill = component, linetype = component)) +
+  geom_bar(stat = "identity", width = 1, color = "black", size = 0.5) +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   coord_polar("y", start = 0) +
   labs(
     title = "空间变异分解",
@@ -1435,9 +1449,10 @@ comparison_data <- rbind(
   data.frame(population = "B", value = population_b)
 )
 
-ggplot(comparison_data, aes(x = population, y = value, fill = population)) +
-  geom_boxplot(alpha = 0.7) +
+ggplot(comparison_data, aes(x = population, y = value, fill = population, linetype = population)) +
+  geom_boxplot(alpha = 0.7, color = "black", size = 0.5) +
   geom_jitter(width = 0.2, size = 2, alpha = 0.6) +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   labs(
     title = "不同种群的个体大小分布比较",
     subtitle = paste("Gini系数: A =", round(gini_a, 3),
@@ -1581,7 +1596,7 @@ $$H' = -\sum_{i=1}^{S} p_i \ln(p_i)$$
 
 如图\@ref(fig:shannon-diversity-plot)所示，我们通过森林群落物种组成柱状图展示了五种树种的个体数量分布，并计算了相应的Shannon-Wiener多样性指数。该图直观地呈现了群落中物种多度的分布格局，为分析群落多样性和物种均匀度提供了重要的可视化工具。
 
-```{r shannon-diversity-plot, fig.cap="森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Shannon-Wiener多样性指数。", echo=FALSE}
+```{r shannon-diversity-plot, fig.cap="森林群落物种组成柱状图。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，使用不同颜色和边框线型的组合来区分不同树种，用于计算和可视化Shannon-Wiener多样性指数。", echo=FALSE}
 # 示例数据：森林群落中不同树种的个体数量
 tree_species <- c("橡树", "松树", "枫树", "桦树", "杉树")
 
@@ -1610,12 +1625,15 @@ species_data <- data.frame(
   proportion = species_abundance / sum(species_abundance)
 )
 
-ggplot(species_data, aes(x = species, y = abundance, fill = species)) +
-  geom_col() +
+# 使用颜色和边框线型组合来增强区分度
+ggplot(species_data, aes(x = species, y = abundance, fill = species, linetype = species)) +
+  geom_col(color = "black", size = 0.8) +
+  scale_linetype_manual(values = c("solid", "dashed", "dotted", "dotdash", "longdash")) +
   labs(
     title = "森林群落物种组成",
     subtitle = paste("Shannon指数 =", round(shannon_index, 3)),
-    x = "树种", y = "个体数量"
+    x = "树种", y = "个体数量",
+    fill = "树种", linetype = "树种"
   ) +
   theme_minimal()
 ```
@@ -1718,22 +1736,24 @@ pielou_uneven <- calculate_pielou(uneven_community)
 
 如图\@ref(fig:uniformity-comparison-plot)所示，我们通过群落均匀度比较图直观地展示了均匀分布和不均匀分布两种群落的物种多度格局。该图清晰地呈现了Pielou均匀度指数在量化群落内物种分布均匀性方面的有效性，为分析群落结构特征提供了重要的可视化工具。
 
-```{r uniformity-comparison-plot, echo=FALSE, fig.cap="群落均匀度比较。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，用于计算和可视化Pielou均匀度指数。"}
+```{r uniformity-comparison-plot, echo=FALSE, fig.cap="群落均匀度比较。展示五种树种（橡树、松树、枫树、桦树、杉树）的个体数量分布，使用不同颜色和边框线型的组合来区分均匀分布和不均匀分布两种群落类型，用于计算和可视化Pielou均匀度指数。"}
 # 可视化均匀度比较
 uniformity_data <- rbind(
   data.frame(群落类型 = "均匀分布", 物种 = 1:5, 多度 = even_community),
   data.frame(群落类型 = "不均匀分布", 物种 = 1:5, 多度 = uneven_community)
 )
 
-ggplot(uniformity_data, aes(x = factor(物种), y = 多度, fill = 群落类型)) +
-  geom_col(position = "dodge") +
+ggplot(uniformity_data, aes(x = factor(物种), y = 多度, fill = 群落类型, linetype = 群落类型)) +
+  geom_col(position = "dodge", color = "black", size = 0.6) +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   labs(
     title = "群落均匀度比较",
     subtitle = paste(
       "均匀度指数: 均匀 =", round(pielou_even, 3),
       ", 不均匀 =", round(pielou_uneven, 3)
     ),
-    x = "物种", y = "个体数量"
+    x = "物种", y = "个体数量",
+    fill = "群落类型", linetype = "群落类型"
   ) +
   theme_minimal() +
   facet_wrap(~群落类型, ncol = 2)
@@ -1872,6 +1892,7 @@ set.seed(123)
 plot(net,
   layout = layout_with_fr,
   vertex.color = ifelse(V(net)$type, "lightblue", "lightgreen"),
+  vertex.shape = ifelse(V(net)$type, "circle", "square"),
   vertex.size = 8,
   vertex.label.cex = 0.8,
   edge.width = 2,
@@ -1965,6 +1986,7 @@ par(family = "WenQuanYi Micro Hei")
 plot(food_net,
   layout = layout_with_sugiyama,
   vertex.color = c("green", "yellow", "orange", "red"),
+  vertex.shape = c("circle", "square", "triangle", "diamond"),
   vertex.size = 15,
   vertex.label.cex = 1.2,
   edge.arrow.size = 0.8,
@@ -2047,7 +2069,7 @@ $$R = 1 - \frac{|X_{after} - X_{before}|}{|X_{before}|}$$
 - $X_{after}$ 为干扰后的系统状态指标
 
 
-```{r ecosystem-resistance-analysis, fig.cap="生态系统抵抗力分析图。蓝色线条表示正常条件下的生物量，红色线条表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。", echo=FALSE}
+```{r ecosystem-resistance-analysis, fig.cap="生态系统抵抗力分析图。蓝色实线表示正常条件下的生物量，红色虚线表示环境压力后的生物量。通过比较两种条件下生物量的变化程度，计算生态系统对环境干扰的抵抗能力。", echo=FALSE}
 # 示例数据：模拟森林群落生物量对环境压力的响应
 set.seed(123)
 # 正常条件下的生物量（吨/公顷）
@@ -2074,9 +2096,10 @@ resistance_data <- data.frame(
   时间点 = rep(1:10, 2)
 )
 
-ggplot(resistance_data, aes(x = 时间点, y = 生物量, color = 条件)) +
+ggplot(resistance_data, aes(x = 时间点, y = 生物量, color = 条件, linetype = 条件)) +
   geom_line(size = 1) +
   geom_point(size = 2) +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   labs(
     title = "生态系统抵抗力分析",
     subtitle = paste("抵抗力指数 =", round(resistance_index, 3)),
@@ -2213,7 +2236,7 @@ $$P = \frac{T_{stable}}{T_{total}}$$
 - $T_{total}$ 为总观测时间
 
 
-```{r ecosystem-persistence-analysis, fig.cap="生态系统持久性分析图。蓝色曲线表示湖泊营养状态（总磷浓度）的长期动态变化，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。", echo=FALSE}
+```{r ecosystem-persistence-analysis, fig.cap="生态系统持久性分析图。蓝色实线表示稳定状态，红色虚线表示不稳定状态，灰色虚线表示稳定状态的上下阈值。通过分析系统在稳定状态内维持的时间比例，量化生态系统的长期稳定性。", echo=FALSE}
 # 示例数据：模拟湖泊生态系统营养状态的长期动态
 set.seed(123)
 # 50年的营养状态监测数据（总磷浓度，mg/L）
@@ -2250,9 +2273,10 @@ persistence_data <- data.frame(
   )
 )
 
-ggplot(persistence_data, aes(x = 年份, y = 营养水平, color = 状态)) +
+ggplot(persistence_data, aes(x = 年份, y = 营养水平, color = 状态, linetype = 状态)) +
   geom_line(size = 1) +
   geom_point(size = 1.5) +
+  scale_linetype_manual(values = c("solid", "dashed")) +
   geom_hline(
     yintercept = c(stable_threshold_low, stable_threshold_high),
     linetype = "dashed", color = "gray"

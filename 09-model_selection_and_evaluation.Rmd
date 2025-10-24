@@ -134,7 +134,7 @@ aic_overfit <- AIC(model_overfit)
 
 为了直观展示不同复杂度模型的拟合效果，林小雨生成了模型比较图（图\@ref(fig:model-complexity-comparison)）。该图采用2×2布局，分别展示了线性、二次、三次和10次多项式模型的拟合效果，每个子图都标注了相应的$R^2$和$\text{AIC}$值，便于读者直观比较模型复杂度与拟合优度的平衡关系。
 
-```{r model-complexity-comparison, fig.cap="模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较", echo=FALSE}
+```{r model-complexity-comparison, fig.cap="模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较。观测数据点使用蓝色圆形表示，拟合线采用红色实线", echo=FALSE}
 # 绘制比较图
 # 设置图形布局为2行2列，便于比较四个模型
 par(mfrow = c(2, 2))
@@ -147,7 +147,7 @@ plot(plant_biomass ~ soil_nutrient,
   main = paste("线性模型\n$R^2$ =", round(r2_linear, 3),
   "$\\text{AIC}$ =", round(aic_linear, 1)),
   xlab = "土壤养分", ylab = "植物生物量",
-  pch = 16, col = "blue"  # 蓝色实心点
+  pch = 16, col = "blue"  # 蓝色实心圆点
 )
 # 添加模型拟合线
 lines(forest_soil_data$soil_nutrient, predict(model_linear), col = "red", lwd = 2)
@@ -343,17 +343,28 @@ kableExtra::kable_styling(latex_options = c("hold_position") )
 
 为了更直观地展示模型比较结果，林小雨创建了信息准则可视化图（图\@ref(fig:forest-bird-info-criteria-plot)）。该图采用双面板布局，左侧展示ΔAIC比较，右侧展示ΔBIC比较。图中使用颜色编码表示模型优劣：绿色表示优秀模型（ΔAIC/ΔBIC < 2），黄色表示可接受模型（2 ≤ ΔAIC/ΔBIC < 7），红色表示较差模型（ΔAIC/ΔBIC ≥ 7）。两条虚线分别标示了ΔAIC/ΔBIC为2和7的阈值，帮助读者快速识别最优模型。
 
-```{r forest-bird-info-criteria-plot, fig.cap="信息准则可视化：ΔAIC和ΔBIC差异比较", echo=FALSE}
+```{r forest-bird-info-criteria-plot, fig.cap="信息准则可视化：ΔAIC和ΔBIC差异比较。模型优劣使用颜色和填充模式组合表示：优秀模型（绿色/斜线）、可接受模型（黄色/交叉线）、较差模型（红色/网格线）", echo=FALSE}
 # 可视化信息准则比较：林小雨的森林鸟类丰富度模型
 par(mfrow = c(1, 2))
+
+# 定义颜色和填充模式组合
+bar_colors <- c("green", "yellow", "red")
+bar_density <- c(20, 15, 10)  # 斜线、交叉线、网格线
+bar_angle <- c(45, 45, 45)   # 角度
 
 # AIC比较
 barplot(forest_bird_model_comparison$delta_AIC,
   names.arg = forest_bird_model_comparison$Model,
   main = expression(paste("林小雨的鸟类模型", Delta, "AIC差异比较")),
   xlab = "模型", ylab = expression(paste(Delta, "AIC")),
-  col = ifelse(forest_bird_model_comparison$delta_AIC < 2, "green",
-    ifelse(forest_bird_model_comparison$delta_AIC < 7, "yellow", "red")
+  col = ifelse(forest_bird_model_comparison$delta_AIC < 2, bar_colors[1],
+    ifelse(forest_bird_model_comparison$delta_AIC < 7, bar_colors[2], bar_colors[3])
+  ),
+  density = ifelse(forest_bird_model_comparison$delta_AIC < 2, bar_density[1],
+    ifelse(forest_bird_model_comparison$delta_AIC < 7, bar_density[2], bar_density[3])
+  ),
+  angle = ifelse(forest_bird_model_comparison$delta_AIC < 2, bar_angle[1],
+    ifelse(forest_bird_model_comparison$delta_AIC < 7, bar_angle[2], bar_angle[3])
   ),
   las = 2, cex.names = 0.7
 )
@@ -365,8 +376,14 @@ barplot(forest_bird_model_comparison$delta_BIC,
   names.arg = forest_bird_model_comparison$Model,
   main = expression(paste("林小雨的鸟类模型", Delta, "BIC差异比较")),
   xlab = "模型", ylab = expression(paste(Delta, "BIC")),
-  col = ifelse(forest_bird_model_comparison$delta_BIC < 2, "green",
-    ifelse(forest_bird_model_comparison$delta_BIC < 7, "yellow", "red")
+  col = ifelse(forest_bird_model_comparison$delta_BIC < 2, bar_colors[1],
+    ifelse(forest_bird_model_comparison$delta_BIC < 7, bar_colors[2], bar_colors[3])
+  ),
+  density = ifelse(forest_bird_model_comparison$delta_BIC < 2, bar_density[1],
+    ifelse(forest_bird_model_comparison$delta_BIC < 7, bar_density[2], bar_density[3])
+  ),
+  angle = ifelse(forest_bird_model_comparison$delta_BIC < 2, bar_angle[1],
+    ifelse(forest_bird_model_comparison$delta_BIC < 7, bar_angle[2], bar_angle[3])
   ),
   las = 2, cex.names = 0.7
 )
@@ -487,7 +504,7 @@ cat("\n=== 模型改善分析 ===\n",
 
 为了直观展示温度与光照的交互作用模式，林小雨创建了交互作用可视化图（图\@ref(fig:nursery-interaction-plot)）。该图使用ggplot2绘制，展示了在低（300 lux）、中（600 lux）、高（900 lux）三种光照强度下，温度对植物生长速率的影响模式。通过比较不同光照水平下温度-生长关系的斜率变化，可以直观地理解环境因子之间的协同效应。
 
-```{r nursery-interaction-plot, fig.cap="林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性", echo=FALSE}
+```{r nursery-interaction-plot, fig.cap="林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性。不同光照强度使用颜色和线型组合表示", echo=FALSE}
 # 可视化交互作用
 cat("\n=== 交互作用可视化 ===\n")
 
@@ -502,16 +519,18 @@ nursery_pred_grid$pred_growth <- predict(nursery_model_complex, newdata = nurser
 
 # 绘制交互作用图
 library(ggplot2)
-ggplot(nursery_pred_grid, aes(x = temp, y = pred_growth, color = factor(light))) +
+ggplot(nursery_pred_grid, aes(x = temp, y = pred_growth, color = factor(light), linetype = factor(light))) +
   geom_line(size = 1) +
   labs(
     title = "林小雨的苗圃实验：温度与光照对植物生长的交互作用",
     x = "温度 (°C)",
     y = "预测生长速率",
-    color = "光照强度 (lux)"
+    color = "光照强度 (lux)",
+    linetype = "光照强度 (lux)"
   ) +
   theme_minimal() +
-  scale_color_manual(values = c("300" = "blue", "600" = "green", "900" = "red"))
+  scale_color_manual(values = c("300" = "blue", "600" = "green", "900" = "red")) +
+  scale_linetype_manual(values = c("300" = "solid", "600" = "dashed", "900" = "dotted"))
 ```
 
 从图\@ref(fig:nursery-interaction-plot)中可以观察到，在不同光照强度下，温度对植物生长的影响模式存在明显差异。这种差异反映了温度与光照的交互作用：在低光照条件下，温度对生长的促进作用可能受到限制；而在高光照条件下，温度效应可能更加明显。这种可视化有助于理解环境因子之间的复杂关系，为生态学研究提供直观的证据。
@@ -657,7 +676,7 @@ print(stream_var_importance)
 
 可视化是理解模型平均结果的重要工具。图\@ref(fig:stream-model-averaging-plot)展示了林小雨溪流鱼类研究的模型平均结果，采用双面板布局：左侧的变量重要性图显示各环境因子的相对重要性，帮助识别影响鱼类丰度的关键驱动因子；右侧的模型权重分布图展示不同候选模型的相对支持度，反映了基于AIC权重的模型不确定性量化。
 
-```{r stream-model-averaging-plot, fig.cap="林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度", echo=FALSE}
+```{r stream-model-averaging-plot, fig.cap="林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度。变量重要性使用蓝色斜线填充，模型权重使用绿色网格填充", echo=FALSE}
 # 可视化模型平均结果
 par(mfrow = c(1, 2))
 
@@ -665,7 +684,7 @@ par(mfrow = c(1, 2))
 barplot(stream_var_importance[order(stream_var_importance, decreasing = TRUE)],
   main = "林小雨的溪流鱼类研究\n变量重要性",
   xlab = "环境因子", ylab = "重要性",
-  col = "lightblue", las = 2
+  col = "lightblue", density = 20, angle = 45, las = 2
 )
 
 # 模型权重分布
@@ -673,7 +692,7 @@ barplot(stream_model_comparison$AIC_Weight,
   names.arg = stream_model_comparison$Model,
   main = "林小雨的溪流鱼类研究\n模型权重分布",
   xlab = "模型", ylab = "$\\text{AIC}$权重",
-  col = "lightgreen", las = 2
+  col = "lightgreen", density = 15, angle = 135, las = 2
 )
 
 par(mfrow = c(1, 1))
@@ -837,7 +856,7 @@ cat("\n交叉验证性能指标：\n平均$R^2$:",
 
 交叉验证性能的可视化能够直观展示模型在不同数据子集上的稳定性。图\@ref(fig:forest-cv-rmse-plot)展示了林小雨森林鸟类模型的10折交叉验证结果，通过RMSE在不同数据子集上的变化来评估模型的泛化能力。如果RMSE在不同折之间波动很大，说明模型可能过度拟合训练数据的特定特征；而稳定的RMSE则表明模型具有良好的泛化性能。
 
-```{r forest-cv-rmse-plot, fig.cap="林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力", echo=FALSE}
+```{r forest-cv-rmse-plot, fig.cap="林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力。数据点使用蓝色方形，连接线使用蓝色实线，平均线使用红色虚线", echo=FALSE}
 # 可视化交叉验证结果
 library(ggplot2)
 
@@ -849,8 +868,8 @@ cv_performance <- data.frame(
 )
 
 ggplot(cv_performance, aes(x = Fold, y = RMSE)) +
-  geom_point(size = 3, color = "blue") +
-  geom_line(color = "blue", alpha = 0.7) +
+  geom_point(size = 3, color = "blue", shape = 15) +  # 蓝色方形点
+  geom_line(color = "blue", alpha = 0.7, linetype = "solid") +
   labs(
     title = "林小雨的森林鸟类模型10折交叉验证：RMSE变化",
     x = "折数", y = "RMSE"
@@ -1030,7 +1049,7 @@ if (test_r2 > 0.6) {
 
 为了直观展示外部验证结果，图\@ref(fig:external-validation-plot)比较了训练集和测试集上植物物种丰富度模型的预测性能。该图采用分面布局，分别展示了训练集（原森林区域）和测试集（新森林区域）的预测值与观测值关系，通过1:1参考线（黑色虚线）直观评估模型的预测准确性。
 
-```{r external-validation-plot, fig.cap="林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域", echo=FALSE}
+```{r external-validation-plot, fig.cap="林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域。训练集使用蓝色圆形点，测试集使用红色三角形点", echo=FALSE}
 # 可视化外部验证结果
 library(ggplot2)
 
@@ -1048,8 +1067,8 @@ validation_plot_data <- rbind(
   )
 )
 
-ggplot(validation_plot_data, aes(x = Observed, y = Predicted, color = Type)) +
-  geom_point(alpha = 0.7) +
+ggplot(validation_plot_data, aes(x = Observed, y = Predicted, color = Type, shape = Type)) +
+  geom_point(alpha = 0.7, size = 2) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "black") +
   labs(
     title = "林小雨的森林生态系统外部验证：预测 vs 观测",
@@ -1058,6 +1077,7 @@ ggplot(validation_plot_data, aes(x = Observed, y = Predicted, color = Type)) +
   ) +
   theme_minimal() +
   scale_color_manual(values = c("训练集（原森林区域）" = "blue", "测试集（新森林区域）" = "red")) +
+  scale_shape_manual(values = c("训练集（原森林区域）" = 16, "测试集（新森林区域）" = 17)) +
   facet_wrap(~Type)
 ```
 
@@ -1269,14 +1289,14 @@ for (i in seq_along(vif_values)) {
 
 图\@ref(fig:cooks-distance-plot)展示了林小雨的Cook's Distance影响分析结果。其中蓝色点表示各观测点的Cook's距离值，红色虚线表示影响阈值（4/(n-p)），超过此阈值的观测点（标注了观测编号）被认为对模型有显著影响。
 
-```{r cooks-distance-plot, fig.cap="Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点", echo=FALSE}
+```{r cooks-distance-plot, fig.cap="Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点。数据点使用蓝色菱形，阈值线使用红色虚线", echo=FALSE}
 # 可视化影响分析
 library(ggplot2)
 
 # Cook's distance图
 cook_data <- data.frame(Observation = 1:n_forest_trees, CooksD = cooks_d)
 ggplot(cook_data, aes(x = Observation, y = CooksD)) +
-  geom_point(color = "blue") +
+  geom_point(color = "blue", shape = 18, size = 2) +  # 蓝色菱形点
   geom_hline(yintercept = 4 / (n_forest_trees - p),
     linetype = "dashed", color = "red") +
   labs(
@@ -1601,7 +1621,7 @@ if ("pip" %in% names(pip_values)) {
 
 图\@ref(fig:bayesian-prediction-plot)展示了林小雨的森林鸟类贝叶斯预测评估结果。该代码首先加载brms包进行贝叶斯建模，使用`brm()`函数拟合贝叶斯泊松回归模型，包含栖息地面积、植被密度和距水源距离三个预测变量。模型设置使用正态先验分布，运行2条马尔可夫链，迭代2000次（其中预热1000次）。通过`posterior_predict()`函数生成后验预测分布，计算每个观测点的预测均值和95%预测区间。可视化部分使用ggplot2创建散点图，蓝色点表示观测值与预测值的对应关系，误差线显示预测不确定性，红色虚线为1:1参考线。最后通过`pp_check()`进行后验预测检查，验证模型生成数据与观测数据的相似性。
 
-```{r bayesian-prediction-plot, fig.cap="贝叶斯预测：观测值与预测值的比较，包含95%预测区间", message=FALSE, warning=FALSE}
+```{r bayesian-prediction-plot, fig.cap="贝叶斯预测：观测值与预测值的比较，包含95%预测区间。数据点使用蓝色三角形，预测区间使用浅蓝色误差线，参考线使用红色虚线", message=FALSE, warning=FALSE}
 # 贝叶斯预测评估演示
 library(brms)
 
@@ -1637,8 +1657,8 @@ pred_data <- data.frame(
 )
 
 ggplot(pred_data, aes(x = Observed, y = Predicted)) +
-  geom_point(alpha = 0.7, color = "blue") +
-  geom_errorbar(aes(ymin = Lower, ymax = Upper), alpha = 0.3, width = 0) +
+  geom_point(alpha = 0.7, color = "blue", shape = 17) +  # 蓝色三角形点
+  geom_errorbar(aes(ymin = Lower, ymax = Upper), alpha = 0.3, width = 0, color = "lightblue") +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "red") +
   labs(
     title = "林小雨的森林鸟类贝叶斯预测：观测值 vs 预测值",

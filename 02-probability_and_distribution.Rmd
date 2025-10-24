@@ -304,7 +304,7 @@ $$P(A) \approx \frac{\text{事件A发生的次数}}{\text{总试验次数}}$$
 
 频率概率需要大量重复试验，但生态学调查往往样本量有限。下面的模拟实验直观展示了样本量对概率估计精度的影响：随着样本量的增加，基于频率的概率估计误差会显著减小，这体现了大数定律在实际应用中的效果。然而在生态学研究中，由于时间、经费和实际条件的限制，我们往往无法获得足够大的样本量，这正是频率概率方法在生态学应用中的主要挑战之一。
 
-```{r sample-size-effect, echo=FALSE, fig.width=8, fig.height=5, fig.cap="样本量对概率估计精度的影响：样本量越大，估计误差越小"}
+```{r sample-size-effect, echo=FALSE, fig.width=8, fig.height=5, fig.cap="样本量对概率估计精度的影响：样本量越大，估计误差越小。数据点使用蓝色圆形，连接线使用蓝色实线"}
 # 大数定律实践限制演示
 set.seed(333)
 true_prob <- 0.35
@@ -327,8 +327,8 @@ results_df <- data.frame(
 
 # 可视化样本量与估计误差的关系
 ggplot(results_df, aes(x = 样本量, y = 估计误差)) +
-  geom_line(color = "#2196F3", linewidth = 1.2) +
-  geom_point(color = "#2196F3", size = 3) +
+  geom_line(color = "#2196F3", linewidth = 1.2, linetype = "solid") +
+  geom_point(color = "#2196F3", size = 3, shape = 16) +
   labs(
     title = "样本量对概率估计精度的影响",
     x = "样本量", y = "估计误差"
@@ -413,8 +413,9 @@ $$P(\text{高营养}) = P(\text{高营养}|\text{晴天}) \times P(\text{晴天}
 
 下面的示例通过一个物种灭绝风险评估的案例，直观展示了全概率公式在生态学中的实际应用。该案例将总体灭绝概率分解为不同生态情景（正常、干旱、洪水）下的贡献，帮助我们理解各种环境条件对物种生存风险的相对重要性。
 
-```{r total-probability, echo=FALSE, fig.width=8, fig.height=5, fig.cap="全概率公式应用：各情景对总体灭绝概率的贡献分解"}
+```{r total-probability, echo=FALSE, fig.width=8, fig.height=5, fig.cap="全概率公式应用：各情景对总体灭绝概率的贡献分解。正常情景使用绿色斜线填充，干旱情景使用黄色网格填充，洪水情景使用红色交叉线填充"}
 # 全概率公式应用
+library(ggpattern)  # 图案填充支持
 set.seed(1010)
 
 # 定义不同的生态情景（划分样本空间）
@@ -436,10 +437,11 @@ contribution_df <- data.frame(
 )
 
 # 可视化各情景贡献
-ggplot(contribution_df, aes(x = 情景, y = 贡献度, fill = 情景)) +
-  geom_col(width = 0.6) +
+ggplot(contribution_df, aes(x = 情景, y = 贡献度, fill = 情景, pattern = 情景)) +
+  geom_col_pattern(width = 0.6, pattern_fill = "white", pattern_density = 0.1, pattern_spacing = 0.02) +
   geom_text(aes(label = round(贡献度, 3)), vjust = -0.5, size = 3) +
   scale_fill_manual(values = c("#4CAF50", "#FFC107", "#E91E63")) +
+  scale_pattern_manual(values = c("正常" = "stripe", "干旱" = "crosshatch", "洪水" = "circle")) +
   labs(
     title = "各情景对总体灭绝概率的贡献",
     subtitle = paste("总体灭绝概率 =", round(total_extinction_prob, 3)),
@@ -685,11 +687,12 @@ ggplot(belief_df, aes(x = 健康状态, y = 概率, fill = 类型, pattern = 类
 在数据有限的情况下，结合专家判断和有限观测来评估生态风险。上面的可视化使用颜色（绿色/蓝色）和填充纹理（条纹/网格）双重区分先验和后验信念，确保在彩色显示和黑白打印时都能清晰辨识。下面的综合演示展示了贝叶斯方法在生态风险评估和决策分析中的完整应用流程：首先基于历史数据建立初始风险评估（先验），然后结合新的气候异常证据进行贝叶斯更新得到更准确的风险概率（后验），最后基于更新后的风险概率进行成本效益分析，为保护决策提供科学依据。这种将概率更新与决策分析相结合的方法，体现了贝叶斯统计在生态管理实践中的实用价值。
 
 
-```{r risk-assessment, echo=FALSE, fig.width=8, fig.height=5, fig.cap="贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策"}
+```{r risk-assessment, echo=FALSE, fig.width=8, fig.height=5, fig.cap="贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策。先验概率使用黄色实心填充，后验概率使用红色斜线填充；预期损失使用绿色网格填充，保护成本使用蓝色点状填充"}
 # 贝叶斯风险评估与决策分析演示
 # 展示如何结合风险概率和成本效益进行生态保护决策
 library(ggplot2)    # 数据可视化
 library(showtext)   # 中文字体支持
+library(ggpattern)  # 图案填充支持
 showtext_auto()     # 启用中文字体
 
 # 定义先验风险分布：基于历史数据的初始风险评估
@@ -737,16 +740,22 @@ risk_df <- data.frame(
 )
 
 # 绘制风险评估可视化：展示贝叶斯更新过程
-p1 <- ggplot(risk_df, aes(x = 风险等级, y = 概率, fill = 类型)) +
+p1 <- ggplot(risk_df, aes(x = 风险等级, y = 概率, fill = 类型, pattern = 类型)) +
   # 使用柱状图展示概率分布，并列显示先验和后验
-  geom_col(position = "dodge", width = 0.6) +
+  geom_col_pattern(
+    position = "dodge", width = 0.6,
+    pattern_fill = "black",
+    pattern_density = 0.1,
+    pattern_spacing = 0.02
+  ) +
   # 添加概率数值标签，便于精确读取
   geom_text(aes(label = round(概率, 3)),
     position = position_dodge(width = 0.6),
     vjust = -0.5, size = 3
   ) +
-  # 设置颜色方案：先验用黄色，后验用红色
+  # 设置颜色和纹理方案：先验用黄色实心，后验用红色斜线
   scale_fill_manual(values = c("#FFC107", "#E91E63")) +
+  scale_pattern_manual(values = c("先验" = "none", "后验" = "stripe")) +
   labs(
     title = "贝叶斯风险评估更新",
     x = "风险等级", y = "概率", fill = "信念类型"
@@ -767,14 +776,20 @@ decision_df <- data.frame(
 )
 
 # 绘制决策分析柱状图
-p2 <- ggplot(decision_df, aes(x = 选项, y = 数值, fill = 选项)) +
-  geom_col(width = 0.5) +
+p2 <- ggplot(decision_df, aes(x = 选项, y = 数值, fill = 选项, pattern = 选项)) +
+  geom_col_pattern(
+    width = 0.5,
+    pattern_fill = "black",
+    pattern_density = 0.1,
+    pattern_spacing = 0.02
+  ) +
   # 添加成本数值标签，转换为千元单位便于阅读
   geom_text(aes(label = paste(round(数值 / 1000, 0), "千元")),
     vjust = -0.5, size = 3
   ) +
-  # 设置颜色方案：预期损失用绿色，保护成本用蓝色
+  # 设置颜色和纹理方案：预期损失用绿色网格，保护成本用蓝色点状
   scale_fill_manual(values = c("#4CAF50", "#2196F3")) +
+  scale_pattern_manual(values = c("预期损失" = "crosshatch", "保护成本" = "circle")) +
   labs(
     title = "决策分析",
     subtitle = paste("决策结果:", decision),
@@ -1253,9 +1268,11 @@ cat("95%置信区间: [", round(ci_lower, 3), ", ",
 
 随机变量的奇妙之处在于它的双重性：在每次具体观察之前，X的取值是完全不确定的——它可能是1、2或3中的任意一个，这种不确定性正是生态系统中生物行为的本质特征。然而，这种不确定性并非毫无规律可言。通过长期的观察和数据积累，我发现每个可能的取值都有其特定的发生概率。这种概率分布就像是你行为模式的"数学指纹"，精确地刻画了你在不同环境条件下的选择倾向。如图\@ref(fig:random-variable-demo)所示，通过随机模拟可以直观地展示这种概率分布的实际表现，其中黑麦草被选择的频率最高，三叶草相对较少，这与我们观察到的概率分布一致。随机变量的引入，使我们能够从定性描述迈向定量分析，为理解生物决策机制提供了强有力的数学框架。
 
-```{r random-variable-demo, fig.cap="随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟", echo=FALSE}
+```{r random-variable-demo, fig.cap="随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟。黑麦草使用浅绿色斜线填充，混合草甸使用浅蓝色网格填充，三叶草使用浅黄色点状填充", echo=FALSE}
 # 用R语言演示随机变量的不确定性与规律性
 # 设置随机种子确保结果可重现，便于教学演示
+library(ggplot2)
+library(ggpattern)  # 图案填充支持
 set.seed(123)
 
 # 定义随机变量X的可能取值和概率分布
@@ -1274,13 +1291,34 @@ simulated_choices <- sample(x_values,
 # 统计每次模拟的结果：计算各植物类型被选择的次数
 choice_counts <- table(simulated_choices)
 
-# 可视化模拟结果：使用柱状图展示随机变量的频率分布
-barplot(choice_counts,
-  main = "蚱蜢植物选择行为的随机模拟",
-  xlab = "植物类型 (1=黑麦草, 2=混合草甸, 3=三叶草)",
-  ylab = "选择次数",
-  col = c("lightgreen", "lightblue", "lightyellow")
+# 创建数据框用于ggplot2可视化
+choice_df <- data.frame(
+  植物类型 = c("黑麦草", "混合草甸", "三叶草"),
+  选择次数 = as.numeric(choice_counts)
 )
+
+# 可视化模拟结果：使用ggplot2和ggpattern展示随机变量的频率分布
+ggplot(choice_df, aes(x = 植物类型, y = 选择次数, fill = 植物类型, pattern = 植物类型)) +
+  geom_col_pattern(
+    width = 0.6,
+    pattern_fill = "black",
+    pattern_density = 0.1,
+    pattern_spacing = 0.02
+  ) +
+  geom_text(aes(label = 选择次数), vjust = -0.5, size = 4) +
+  scale_fill_manual(values = c("#90EE90", "#87CEEB", "#FFFACD")) +
+  scale_pattern_manual(values = c("黑麦草" = "stripe", "混合草甸" = "crosshatch", "三叶草" = "circle")) +
+  labs(
+    title = "蚱蜢植物选择行为的随机模拟",
+    x = "植物类型", y = "选择次数"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    axis.title = element_text(size = 10),
+    axis.text = element_text(size = 9),
+    legend.position = "none"
+  )
 ```
 
 ```{r, echo=FALSE}
@@ -1717,7 +1755,7 @@ $$P(X_1 = x_1, X_2 = x_2, \ldots, X_k = x_k) = \frac{n!}{x_1! x_2! \cdots x_k!} 
 
 如图\@ref(fig:multinomial-distribution)所示，多项式分布通过分面图的形式直观地展示了蚱蜢10次观察中不同植物选择组合的概率分布。该图清晰地显示了四种典型组合模式（6-3-1、5-4-1、7-2-1、4-4-2）的概率分布，其中每种组合都满足黑麦草、混合草甸、三叶草选择次数之和为10。这种可视化帮助我们理解多项式分布如何描述多类别事件的联合概率分布，以及不同组合模式对应的概率差异。
 
-```{r multinomial-distribution, echo=FALSE, fig.cap="多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布"}
+```{r multinomial-distribution, echo=FALSE, fig.cap="多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布。黑麦草使用绿色斜线填充，混合草甸使用蓝色网格填充，三叶草使用黄色点状填充"}
 # 多项式分布可视化：展示蚱蜢植物选择的多类别联合概率分布
 # 使用ggplot2、dplyr和tidyr包进行数据整理和可视化
 library(ggplot2)    # 数据可视化包，用于创建统计图形
@@ -2613,7 +2651,7 @@ theoretical_var <- scale_param^2 * (gamma(1 + 2 / shape_param) -
 
 为了直观展示威布尔分布的特性，图\@ref(fig:weibull-distribution)展示了蚱蜢生存时间分布的直方图与理论曲线的对比。图中浅蓝色直方图显示了模拟的蚱蜢生存时间数据分布，红色实线为理论威布尔分布的概率密度曲线，蓝色虚线为生存函数曲线。通过对比可以直观验证模拟数据与理论分布的拟合程度，同时生存函数曲线清晰地展示了蚱蜢种群随时间递减的生存概率，体现了威布尔分布在生存分析中的实际应用价值。
 
-```{r weibull-distribution, fig.cap="威布尔分布可视化：蚱蜢生存时间分布的直方图与理论曲线对比", echo=FALSE}
+```{r weibull-distribution, fig.cap="威布尔分布可视化：蚱蜢生存时间分布的直方图与理论曲线对比。概率密度函数使用红色实线，生存函数使用蓝色虚线", echo=FALSE}
 # 威布尔分布可视化：绘制直方图和理论曲线对比
 # 使用基础R绘图系统创建生存时间分布的直方图
 # 设置直方图参数：30个分箱，显示密度而非频数
@@ -2667,7 +2705,7 @@ knitr::kable(summary(fit_weibull)$estimate, caption="威布尔分布参数估计
 
 为了深入理解威布尔分布形状参数对分布形态和风险模式的影响，图\@ref(fig:weibull-shape-comparison)展示了四种不同形状参数下概率密度函数与风险函数的对比。图中四个子图分别对应形状参数k=0.5、1、2、3的情况，每个子图中深红色实线为概率密度曲线，蓝色虚线为风险函数曲线。通过对比可以清晰地观察到：当k<1时（如k=0.5），风险函数随时间递减，体现早期适应期的高风险特征；当k=1时，风险函数为常数，威布尔分布退化为指数分布；当k>1时（如k=2、3），风险函数随时间递增，体现老化效应。这种可视化直观地展示了威布尔分布在描述不同风险模式时的灵活性。
 
-```{r weibull-shape-comparison, fig.cap="不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比", echo=FALSE}
+```{r weibull-shape-comparison, fig.cap="不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比。概率密度函数使用深红色实线，风险函数使用蓝色虚线", echo=FALSE}
 # 比较不同形状参数的威布尔分布
 # 设置图形布局：创建2x2的多图面板，便于同时比较四种不同形状参数
 par(mfrow = c(2, 2))  # 2行2列的图形布局，总共显示4个子图
@@ -2737,7 +2775,7 @@ $$f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}, \quad x 
 
 为了直观展示伽马分布的特性，图\@ref(fig:gamma-distribution)展示了三种不同参数组合下的概率密度函数。图中清晰地呈现了伽马分布作为指数分布一般化形式的特征：Gamma(1,1)退化为指数分布，呈现右偏形态，描述第一次事件等待时间；Gamma(2,1)为中等形状分布，曲线更加对称，描述第二次事件等待时间；Gamma(3,2)为复杂形状分布，曲线更加集中，描述第三次事件等待时间。通过对比可以直观理解伽马分布形状参数α对分布形态的影响，以及伽马分布在描述累积等待时间过程中的灵活性。
 
-```{r gamma-distribution, echo=FALSE, fig.cap="伽马分布：不同参数组合下的概率密度函数"}
+```{r gamma-distribution, echo=FALSE, fig.cap="伽马分布：不同参数组合下的概率密度函数。Gamma(1,1)使用红色实线，Gamma(2,1)使用蓝色虚线，Gamma(3,2)使用绿色点线"}
 # 伽马分布可视化：展示不同参数组合下伽马分布的概率密度函数
 # 伽马分布是生态学中描述累积等待时间和生物量积累过程的重要连续分布
 # 伽马分布是泊松过程中第r次事件发生等待时间的分布，也是指数分布的一般化形式
@@ -2782,10 +2820,12 @@ for (i in 1:3) {
 
 # 创建伽马分布可视化图形：使用ggplot2展示不同参数组合的概率密度函数
 # 伽马分布曲线形状灵活，可以呈现不同的偏斜形态，参数变化影响分布位置和形状
-ggplot(gamma_data, aes(x = x, y = PDF, color = label)) +
-  # 添加概率密度曲线：使用实线显示伽马分布的概率密度函数
-  # 线条宽度设为1.2确保曲线清晰可见，不同参数组合使用不同颜色区分
+ggplot(gamma_data, aes(x = x, y = PDF, color = label, linetype = label)) +
+  # 添加概率密度曲线：使用不同线型显示伽马分布的概率密度函数
+  # 线条宽度设为1.2确保曲线清晰可见，不同参数组合使用颜色和线型双重区分
   geom_line(linewidth = 1.2) +
+  # 设置线型纹理：Gamma(1,1)实线，Gamma(2,1)虚线，Gamma(3,2)点线
+  scale_linetype_manual(values = c("solid", "dashed", "dotted")) +
   # 分面显示：将三个不同参数组合的分布分别显示在三个子图中
   # 使用facet_wrap按分布标签分组，每行显示一个分布便于比较
   facet_wrap(~label, nrow = 1) +
@@ -2835,7 +2875,7 @@ $$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha, \beta)}, \quad 0 \leq x \l
 
 为了直观展示贝塔分布的特性，图\@ref(fig:beta-distribution)展示了三种不同参数组合下的概率密度函数。图中清晰地呈现了贝塔分布在[0,1]区间内的形态多样性：Beta(0.5,0.5)为U形分布，两端概率密度高，表示极端值更可能，体现行为选择的极端倾向；Beta(2,2)为对称钟形分布，中心概率密度高，表示中间值更可能，体现行为选择的平衡模式；Beta(5,1)为右偏分布，右侧概率密度高，表示高比例值更可能，体现行为选择的偏向性。通过对比可以直观理解贝塔分布形状参数对分布形态的灵活控制能力。
 
-```{r beta-distribution, echo=FALSE, fig.cap="贝塔分布：不同参数组合下的概率密度函数"}
+```{r beta-distribution, echo=FALSE, fig.cap="贝塔分布：不同参数组合下的概率密度函数。Beta(0.5,0.5)使用红色实线，Beta(2,2)使用蓝色虚线，Beta(5,1)使用绿色点线"}
 # 贝塔分布可视化：展示不同参数组合下贝塔分布的概率密度函数
 # 贝塔分布是生态学中处理比例变量的理想选择，特别适合描述行为时间分配和资源选择偏好
 # 贝塔分布定义在区间[0,1]上，是伯努利分布和二项分布的共轭先验分布
@@ -3238,10 +3278,11 @@ $$P(Y = y) = \begin{cases}
 
 为了直观展示零膨胀分布的特征，下面的可视化对比了零膨胀泊松分布与普通泊松分布的形状差异。
 
-```{r zero-inflation-plot, fig.cap="零膨胀泊松分布与普通泊松分布的对比可视化。图中清晰地展示了零膨胀分布中零值的过度集中现象，这是生态学中许多稀有物种和低密度种群数据的典型特征。", fig.width=8, fig.height=6}
+```{r zero-inflation-plot, fig.cap="零膨胀泊松分布与普通泊松分布的对比可视化。图中清晰地展示了零膨胀分布中零值的过度集中现象，这是生态学中许多稀有物种和低密度种群数据的典型特征。零膨胀泊松分布使用橙色斜线填充，普通泊松分布使用蓝色网格填充", fig.width=8, fig.height=6}
 # 加载必要的R包
 library(ggplot2)
 library(dplyr)
+library(ggpattern)  # 图案填充支持
 
 # 设置随机数种子确保结果可重现
 set.seed(2323)
@@ -3281,9 +3322,15 @@ zip_stats <- data.frame(
 )
 
 # 绘制分布对比图
-ggplot(plot_data, aes(x = value, fill = distribution)) +
-  geom_histogram(binwidth = 1, alpha = 0.7, position = "identity") +
+ggplot(plot_data, aes(x = value, fill = distribution, pattern = distribution)) +
+  geom_histogram_pattern(
+    binwidth = 1, alpha = 0.7, position = "identity",
+    pattern_fill = "black",
+    pattern_density = 0.1,
+    pattern_spacing = 0.02
+  ) +
   scale_fill_manual(values = c("零膨胀泊松" = "#E69F00", "普通泊松" = "#56B4E9")) +
+  scale_pattern_manual(values = c("零膨胀泊松" = "stripe", "普通泊松" = "crosshatch")) +
   labs(
     title = "零膨胀分布与普通泊松分布对比",
     x = "计数值",
