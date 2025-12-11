@@ -85,6 +85,7 @@ cat("\n总体均值：", mean(forest_birds$abundance), "\n")
 ```{r random-sampling}
 random_sample <- forest_birds[sample(nrow(forest_birds), 100), ]
 
+library(dplyr)  # 加载dplyr包以使用管道操作符
 knitr::kable(table(random_sample$species),
              caption="随机抽样结果", booktabs = TRUE) %>%
   kableExtra::kable_styling(latex_options = c("hold_position"))

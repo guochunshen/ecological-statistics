@@ -118,7 +118,7 @@ aic_overfit <- AIC(model_overfit)
 
 }
 
-\caption{模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较}(\#fig:model-complexity-comparison)
+\caption{模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较。观测数据点使用蓝色圆形表示，拟合线采用红色实线}(\#fig:model-complexity-comparison)
 \end{figure}
 
 从图\@ref(fig:model-complexity-comparison)中可以清晰地观察到不同复杂度模型的拟合特征：线性模型过于平滑，无法捕捉数据中的非线性趋势；二次模型恰当地反映了植物对养分的最适响应模式；三次模型虽然拟合度略有提升，但增加了不必要的复杂度；而10次多项式模型则明显过拟合，曲线过度适应数据中的随机波动。
@@ -261,7 +261,7 @@ vegetation\_only & 0.119 & 812.484 & 820.300 & 2 & 74.486 & 66.671 & 0.00\\
 
 }
 
-\caption{信息准则可视化：ΔAIC和ΔBIC差异比较}(\#fig:forest-bird-info-criteria-plot)
+\caption{信息准则可视化：ΔAIC和ΔBIC差异比较。模型优劣使用颜色和填充模式组合表示：优秀模型（绿色/斜线）、可接受模型（黄色/交叉线）、较差模型（红色/网格线）}(\#fig:forest-bird-info-criteria-plot)
 \end{figure}
 
 从图\@ref(fig:forest-bird-info-criteria-plot)中可以清晰地观察到，面积+植被模型在AIC和BIC准则下都表现最优（绿色柱状图），而过度拟合模型虽然R²较高，但由于参数过多受到了信息准则的惩罚（红色柱状图）。这种可视化方式使得模型比较结果更加直观易懂，读者可以快速识别出统计上最优且生态学意义明确的模型。
@@ -390,7 +390,7 @@ nursery_r2_improvement <- nursery_r2_complex - nursery_r2_simple
 
 }
 
-\caption{林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性}(\#fig:nursery-interaction-plot)
+\caption{林小雨的苗圃实验：温度与光照对植物生长的交互作用。在不同光照强度下温度对植物生长速率的影响，展示了环境因子交互作用在植物生长中的重要性。不同光照强度使用颜色和线型组合表示}(\#fig:nursery-interaction-plot)
 \end{figure}
 
 从图\@ref(fig:nursery-interaction-plot)中可以观察到，在不同光照强度下，温度对植物生长的影响模式存在明显差异。这种差异反映了温度与光照的交互作用：在低光照条件下，温度对生长的促进作用可能受到限制；而在高光照条件下，温度效应可能更加明显。这种可视化有助于理解环境因子之间的复杂关系，为生态学研究提供直观的证据。
@@ -546,7 +546,7 @@ print(stream_var_importance)
 
 }
 
-\caption{林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度}(\#fig:stream-model-averaging-plot)
+\caption{林小雨的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度。变量重要性使用蓝色斜线填充，模型权重使用绿色网格填充}(\#fig:stream-model-averaging-plot)
 \end{figure}
 
 从图\@ref(fig:stream-model-averaging-plot)中可以观察到，水温、溶解氧和pH值是影响溪流鱼类丰度的关键环境因子，这与生态学理论相符。模型权重分布显示没有单一模型占据绝对优势，多个模型都获得了一定的支持度，这体现了模型平均的必要性。这种可视化方式使得复杂的模型平均结果变得直观易懂，为生态学决策提供了清晰的依据。
@@ -710,7 +710,7 @@ cv_results <- cv_model$results
 
 }
 
-\caption{林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力}(\#fig:forest-cv-rmse-plot)
+\caption{林小雨的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力。数据点使用蓝色方形，连接线使用蓝色实线，平均线使用红色虚线}(\#fig:forest-cv-rmse-plot)
 \end{figure}
 
 从图\@ref(fig:forest-cv-rmse-plot)中可以观察到，RMSE在10个数据子集之间相对稳定，波动范围较小，这表明林小雨的森林鸟类模型具有良好的泛化能力。图中红色虚线表示平均RMSE值，为模型性能提供了基准参考。这种可视化方式使得交叉验证结果更加直观，有助于识别潜在的过度拟合问题。
@@ -828,7 +828,7 @@ rmse_increase <- (test_rmse - train_rmse) / train_rmse * 100
 
 }
 
-\caption{林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域}(\#fig:external-validation-plot)
+\caption{林小雨的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域。训练集使用蓝色圆形点，测试集使用红色三角形点}(\#fig:external-validation-plot)
 \end{figure}
 
 在林小雨的植物物种丰富度研究中，训练集基于她最初调查的山地森林区域数据，测试集代表邻近但生态条件略有不同的另一个山地森林区域。外部验证检验了她的模型在不同森林生态系统中的空间普适性。如果模型在测试集上表现良好，说明其在不同森林区域的适用性较广；如果性能显著下降，可能需要考虑森林区域特异性因素，如不同的优势树种、土壤类型、地形特征或干扰历史。林小雨通过外部验证深刻理解了森林生态系统的空间异质性，这为她制定更精准的森林保护策略提供了重要启示。
@@ -1042,7 +1042,7 @@ vif_values <- vif(model_diagnostic)
 
 }
 
-\caption{Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点}(\#fig:cooks-distance-plot)
+\caption{Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点。数据点使用蓝色菱形，阈值线使用红色虚线}(\#fig:cooks-distance-plot)
 \end{figure}
 
 在生态学中，异常观测往往具有重要的生态学意义。高杠杆点可能代表极端环境条件，异常残差点可能反映特殊的生态情境。通过识别这些点，我们不仅能够确保模型的统计稳健性，还能够发现值得深入研究的生态学现象。
@@ -1329,7 +1329,7 @@ bma_result <- bms(cbind(response_var, design_matrix),
 ## vegetation     0.9444822  9.8845073 4.31007528             1   2
 ## 
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"  "0.009389877 secs" 
+##            "2.9445"                 "8"                 "0"  "0.008876085 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -1337,7 +1337,7 @@ bma_result <- bms(cbind(response_var, design_matrix),
 ##     Shrinkage-Stats 
 ##         "Av=0.9877" 
 ## 
-## Time difference of 0.009389877 secs
+## Time difference of 0.008876085 secs
 ```
 
 
@@ -1359,7 +1359,7 @@ print(summary(bma_result))
 
 ```
 ## Mean no. regressors               Draws             Burnins                Time 
-##            "2.9445"                 "8"                 "0"  "0.009389877 secs" 
+##            "2.9445"                 "8"                 "0"  "0.008876085 secs" 
 ##  No. models visited      Modelspace 2^K           % visited         % Topmodels 
 ##                 "8"                 "8"               "100"               "100" 
 ##            Corr PMP            No. Obs.         Model Prior             g-Prior 
@@ -1423,8 +1423,8 @@ pred_data <- data.frame(
 )
 
 ggplot(pred_data, aes(x = Observed, y = Predicted)) +
-  geom_point(alpha = 0.7, color = "blue") +
-  geom_errorbar(aes(ymin = Lower, ymax = Upper), alpha = 0.3, width = 0) +
+  geom_point(alpha = 0.7, color = "blue", shape = 17) +  # 蓝色三角形点
+  geom_errorbar(aes(ymin = Lower, ymax = Upper), alpha = 0.3, width = 0, color = "lightblue") +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "red") +
   labs(
     title = "林小雨的森林鸟类贝叶斯预测：观测值 vs 预测值",
@@ -1440,7 +1440,7 @@ ggplot(pred_data, aes(x = Observed, y = Predicted)) +
 
 }
 
-\caption{贝叶斯预测：观测值与预测值的比较，包含95\%预测区间}(\#fig:bayesian-prediction-plot-1)
+\caption{贝叶斯预测：观测值与预测值的比较，包含95\%预测区间。数据点使用蓝色三角形，预测区间使用浅蓝色误差线，参考线使用红色虚线}(\#fig:bayesian-prediction-plot-1)
 \end{figure}
 
 ``` r
@@ -1464,7 +1464,7 @@ print(pp_check)
 
 }
 
-\caption{贝叶斯预测：观测值与预测值的比较，包含95\%预测区间}(\#fig:bayesian-prediction-plot-2)
+\caption{贝叶斯预测：观测值与预测值的比较，包含95\%预测区间。数据点使用蓝色三角形，预测区间使用浅蓝色误差线，参考线使用红色虚线}(\#fig:bayesian-prediction-plot-2)
 \end{figure}
 
 

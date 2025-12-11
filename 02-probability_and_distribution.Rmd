@@ -583,6 +583,7 @@ results <- data.frame(
 
 ```{r, echo=FALSE}
 # 输出模型结果
+library(dplyr)  # 加载dplyr包以使用管道操作符
 knitr::kable(results, caption = "贝叶斯物种分布模型结果",
              label = "bayesian-species-distribution", booktabs = TRUE) %>%
   kableExtra::kable_styling(latex_options = c("hold_position"))

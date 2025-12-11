@@ -698,13 +698,13 @@ set.seed(123)
 haplotypes <- c(rep("FM", 12), rep("Fm", 3), rep("fM", 2), rep("fm", 8))
 n_haplotypes <- length(haplotypes)
 
-# 计算观测D'统计量
+# 计算观测D统计量
 obs_D_prime <- calc_D_prime(haplotypes)
-cat("观测D'统计量:", obs_D_prime, "\n")
+cat("观测D统计量:", obs_D_prime, "\n")
 ```
 
 ```
-## 观测D'统计量: 0.6428571
+## 观测D统计量: 0.6428571
 ```
 
 最后，我们进行置换检验来构建零分布：
@@ -727,7 +727,7 @@ for (i in 1:n_perm) {
 
 # 计算经验p值
 p_value <- mean(perm_D_prime >= obs_D_prime)
-cat("经验p值:", p_value, "\n")
+cat('经验p值:', p_value, '\n')
 ```
 
 ```
@@ -930,7 +930,7 @@ print(anosim_result)
 
 }
 
-\caption{底栖动物群落组成的NMDS排序分析}(\#fig:nmds-community-plot)
+\caption{底栖动物群落组成的NMDS排序分析：使用不同颜色和点型的组合表示不同河段群落}(\#fig:nmds-community-plot)
 \end{figure}
 
 **结果解释**：
@@ -1060,7 +1060,7 @@ K_envelope <- envelope(observed_pattern, Kest,
 
 }
 
-\caption{巴西坚果树空间分布模式检验：Ripley's K函数包络分析}(\#fig:ripley-k-envelope)
+\caption{巴西坚果树空间分布模式检验：Ripley's K函数包络分析。黑色实线表示观测K函数，灰色区域表示模拟包络，红色实线表示理论CSR期望值。通过颜色和线型的组合，确保在彩色显示和黑白打印时都能清晰区分不同曲线。}(\#fig:ripley-k-envelope)
 \end{figure}
 
 图 \@ref(fig:ripley-k-envelope) 展示了Ripley's K函数包络分析的可视化结果。图中黑色实线表示观测到的K函数曲线，灰色区域表示基于999次蒙特卡洛模拟构建的置信包络，红色实线表示完全空间随机性（CSR）的理论期望值。通过比较观测曲线与包络线的相对位置，可以判断巴西坚果树的空间分布模式是否显著偏离随机分布。
@@ -1381,19 +1381,21 @@ for (i in 1:n_sim) {
 
 # 计算经验p值
 p_value <- mean(sim_K >= as.numeric(obs_K))
-cat("观测Blomberg's K统计量:", obs_K, "\n")
+# 输出结果
+obs_K
 ```
 
 ```
-## 观测Blomberg's K统计量: 0.3065341
+##           [,1]
+## [1,] 0.3065341
 ```
 
 ``` r
-cat("经验p值:", p_value, "\n")
+p_value
 ```
 
 ```
-## 经验p值: 0.446
+## [1] 0.446
 ```
 
 ``` r
@@ -1417,15 +1419,17 @@ print(lambda_test)
 # 可视化系统发育信号
 # 绘制系统发育树和性状值
 plotTree(tree, type = "fan", fsize = 0.8)
+# 使用不同点型和颜色组合表示性状值梯度
 tiplabels(
-  pch = 21, bg = colorRampPalette(c("blue", "red"))(30)[rank(trait_data)],
+  pch = ifelse(trait_data < median(trait_data), 21, 22),
+  bg = colorRampPalette(c("blue", "red"))(30)[rank(trait_data)],
   cex = 1.5
 )
 
-# 添加性状值颜色图例
+# 添加性状值图例，使用颜色和点型组合
 legend("bottomleft",
   legend = c("低性状值", "高性状值"),
-  fill = c("blue", "red"), bty = "n"
+  fill = c("blue", "red"), pch = c(21, 22), bty = "n"
 )
 ```
 
@@ -1435,7 +1439,7 @@ legend("bottomleft",
 
 }
 
-\caption{植物功能性状系统发育信号检验与可视化}(\#fig:phylogenetic-signal)
+\caption{植物功能性状系统发育信号检验与可视化：使用颜色和点型组合表示性状值梯度}(\#fig:phylogenetic-signal)
 \end{figure}
 
 **生态学意义**：如果检验显示显著的系统发育信号（p < 0.05），表明这些功能性状在亲缘关系较近的物种间更为相似。这支持了"系统发育生态位保守性"假说——物种倾向于保留祖先的生态特性。这种信息对于理解群落组装机制、预测物种对气候变化的响应以及设计基于系统发育多样性的保护策略都具有重要价值。
@@ -1517,7 +1521,7 @@ cat("观测PIC相关性:", obs_cor, "\n")
 ```
 
 ``` r
-cat("经验p值:", p_value, "\n")
+cat('经验p值:', p_value, '\n')
 ```
 
 ```
@@ -1534,15 +1538,15 @@ plot(defense_trait, growth_rate,
   xlab = "防御物质含量", ylab = "生长速率",
   main = "原始性状相关性"
 )
-abline(lm(growth_rate ~ defense_trait), col = "red", lwd = 2)
+abline(lm(growth_rate ~ defense_trait), col = "red", lwd = 2, lty = 1)
 
 # 系统发育独立对比的相关性图
 plot(pic_defense, pic_growth,
-  pch = 16, col = "darkgreen",
+  pch = 17, col = "darkgreen",
   xlab = "防御物质PIC", ylab = "生长速率PIC",
   main = "系统发育独立对比相关性"
 )
-abline(lm(pic_growth ~ pic_defense), col = "red", lwd = 2)
+abline(lm(pic_growth ~ pic_defense), col = "red", lwd = 2, lty = 2)
 
 # 添加相关性系数
 text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
@@ -1557,7 +1561,7 @@ text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
 
 }
 
-\caption{植物防御性状与生长速率关系的系统发育独立对比分析}(\#fig:phylogenetic-contrasts)
+\caption{植物防御性状与生长速率关系的系统发育独立对比分析：使用不同颜色和点型组合区分原始性状与系统发育校正后的关系}(\#fig:phylogenetic-contrasts)
 \end{figure}
 
 **生态学意义**：通过系统发育独立对比的置换检验，我们可以更可靠地推断防御性状与生长速率之间的生态权衡关系。如果检验显示显著的正相关（p < 0.05），表明在去除系统发育影响后，防御物质含量高的物种确实具有较慢的生长速率，支持了"生长-防御权衡"假说。这种分析为理解植物生活史策略的进化提供了重要证据。
@@ -1720,7 +1724,7 @@ cat("零模型检验p值:", p_value, "\n")
 
 }
 
-\caption{热带雨林群落组装零模型检验：C-score零分布与观测值比较}(\#fig:c-score-null-dist)
+\caption{热带雨林群落组装零模型检验：C-score零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别}(\#fig:c-score-null-dist)
 \end{figure}
 
 图\@ref(fig:community-matrix-heatmap)展示了热带雨林群落的物种分布热图：
@@ -1731,7 +1735,7 @@ cat("零模型检验p值:", p_value, "\n")
 
 }
 
-\caption{热带雨林群落物种分布热图：基于环境梯度的物种分布模式}(\#fig:community-matrix-heatmap)
+\caption{热带雨林群落物种分布热图：基于环境梯度的物种分布模式。使用颜色和透明度组合表示物种存在状态}(\#fig:community-matrix-heatmap)
 \end{figure}
 
 **生态学意义**：如果零模型检验显示显著的C-score（p < 0.05），表明树种的共现模式显著偏离随机期望。较高的C-score通常表示物种间存在竞争排斥——物种倾向于避免在相同的样点中共存。这支持了"竞争排斥"假说在热带雨林群落组装中的重要性。
@@ -1829,7 +1833,7 @@ cat("零模型检验p值:", p_value, "\n")
 
 }
 
-\caption{传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较}(\#fig:nestedness-null-dist)
+\caption{传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别}(\#fig:nestedness-null-dist)
 \end{figure}
 
 图\@ref(fig:pollination-network-structure)展示了传粉网络的结构图：
@@ -1840,7 +1844,7 @@ cat("零模型检验p值:", p_value, "\n")
 
 }
 
-\caption{传粉网络结构可视化：植物与传粉者的二分网络}(\#fig:pollination-network-structure)
+\caption{传粉网络结构可视化：植物与传粉者的二分网络。使用颜色和形状组合区分不同类型节点}(\#fig:pollination-network-structure)
 \end{figure}
 
 图\@ref(fig:pollination-matrix-heatmap)展示了传粉网络相互作用的矩阵热图：
@@ -1851,7 +1855,7 @@ cat("零模型检验p值:", p_value, "\n")
 
 }
 
-\caption{传粉网络相互作用矩阵热图：嵌套结构的可视化}(\#fig:pollination-matrix-heatmap)
+\caption{传粉网络相互作用矩阵热图：嵌套结构的可视化。使用颜色和透明度组合表示相互作用存在状态}(\#fig:pollination-matrix-heatmap)
 \end{figure}
 
 **生态学意义**：如果零模型检验显示显著的嵌套性（p < 0.05），表明传粉网络的结构确实具有嵌套模式。嵌套结构通常被认为能够增强生态网络的稳定性和韧性——当某些物种消失时，嵌套结构有助于维持网络的连接性。这种结构信息对于理解传粉服务的稳定性和设计保护策略具有重要意义。
@@ -1910,10 +1914,10 @@ summary(cooc_null)
 ```
 
 ```
-## Time Stamp:  Mon Oct 13 05:55:10 2025 
+## Time Stamp:  Thu Dec 11 04:39:40 2025 
 ## Reproducible:  
 ## Number of Replications:  
-## Elapsed Time:  0.17 secs 
+## Elapsed Time:  0.18 secs 
 ## Metric:  c_score 
 ## Algorithm:  sim9 
 ## Observed Index:  13.671 
@@ -1982,7 +1986,7 @@ cat("p值:", p_value, "\n")
 
 }
 
-\caption{网络嵌套性零模型检验：嵌套性指数零分布}(\#fig:nestedness-null-hist)
+\caption{网络嵌套性零模型检验：嵌套性指数零分布。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别}(\#fig:nestedness-null-hist)
 \end{figure}
 
 ### 生态学应用与保护意义
@@ -2029,7 +2033,21 @@ cat("p值:", p_value, "\n")
 
 ## 综合练习
 
-**练习1：梅花鹿保护效果的综合评估**
+**练习1：变量间相关性检验**
+
+下面代码定义了两个变量x和y的值，请用基于模拟的统计检验方法，回答这两个变量之间是否存在显著的相关性。
+
+
+``` r
+x=c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6)
+y=c(0.2, 0.5, 0.1, 0.6, 0.7, 0.5)
+```
+
+
+
+
+
+**练习2：梅花鹿保护效果的综合评估**
 
 假设你在一个梅花鹿自然保护区工作，需要评估不同保护措施对梅花鹿种群和栖息地的影响。你收集了种群数据（在保护区内和保护区外记录的梅花鹿种群密度）、遗传数据（保护区内梅花鹿种群的微卫星位点基因型频率）、植物群落数据（不同保护年限栖息地的植物物种组成）和空间分布数据（保护区内梅花鹿个体的空间坐标）。
 
@@ -2037,7 +2055,7 @@ cat("p值:", p_value, "\n")
 
 请详细说明每种检验的零假设、检验统计量、随机化策略，并解释统计结果在梅花鹿保护实践中的生态学意义。
 
-**练习2：生态网络结构与保护优先区识别**
+**练习3：生态网络结构与保护优先区识别**
 
 你正在研究一个包含梅花鹿、其主要食物植物和传粉昆虫的生态网络。网络数据包括植物-传粉者网络（15种植物与20种传粉者的相互作用矩阵）、梅花鹿-植物网络（梅花鹿对10种主要食物植物的取食偏好）和空间分布数据（所有物种在景观中的分布位置）。
 
@@ -2045,7 +2063,7 @@ cat("p值:", p_value, "\n")
 
 请详细说明每种零模型检验的算法选择理由，并讨论统计结果对梅花鹿栖息地管理的指导意义。
 
-**练习3：气候变化对梅花鹿栖息地影响的模拟研究**
+**练习4：气候变化对梅花鹿栖息地影响的模拟研究**
 
 假设你正在评估气候变化对梅花鹿栖息地适宜性的潜在影响。你拥有历史气候数据（过去30年的温度、降水等气候变量）、梅花鹿分布数据（当前梅花鹿在保护区的分布点位）、栖息地变量（植被类型、海拔、坡度等环境因子）和未来气候情景（两种气候变化情景下的预测数据）。
 

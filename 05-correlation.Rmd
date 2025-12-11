@@ -855,7 +855,7 @@ plot(years, tree_ring_width,
 然后，我们计算PACF：
 
 ```{r pacf-example, fig.cap="森林年轮宽度的偏自相关函数"}
-load("tree_ring_width.RData")
+load("data/tree_ring_width.RData")
 # 计算偏自相关函数
 pacf_result <- pacf(tree_ring_width, lag.max = 15, plot = FALSE)
 
@@ -3111,7 +3111,7 @@ rownames(species_data) <- c("物种A", "物种B", "物种C", "物种D")
 save(species_data, file="data/species_net_data.RData")
 ```
 
-```{r, fig.cap="种间关联网络图"}
+```{r species-association-network, fig.cap="种间关联网络图"}
 
 load(file="data/species_net_data.RData")
 # 计算种间关联矩阵
@@ -3136,17 +3136,16 @@ clustering_coef <- transitivity(network, type = "global")
 print(paste("平均度:", mean(degree_dist)))
 print(paste("聚类系数:", clustering_coef))
 
-# 保存当前图形参数
-old_par <- par()
-par(family = "WenQuanYi Micro Hei")
 # 可视化网络
 plot(network,
-  vertex.size = 15, vertex.color = "lightblue",
-  edge.color = "gray", main = "种间关联网络"
+  vertex.size = 15,
+  vertex.color = "lightblue",
+  vertex.label.family = "simhei",
+  vertex.label.color = "black",
+  edge.color = "gray",
+  main = "种间关联网络",
+  main.family = "simhei"
 )
-
-# 恢复默认图形参数
-par(old_par)
 ```
 
 **结果解释与生态学意义**：种间相关性分析的结果解释需要结合相关系数的数值、显著性水平和生态学机制。对于种间关联系数$\phi$，通常认为：$|\phi| > 0.3$表示强关联，$0.2 < |\phi| \leq 0.3$表示中等关联，$|\phi| \leq 0.2$表示弱关联。正关联$\phi > 0$表示物种倾向于共同出现，可能源于互利共生或相似的环境需求；负关联$\phi < 0$表示物种相互排斥，可能源于竞争或不同的生态位需求。

@@ -561,7 +561,7 @@ p_value <- mean(sim_chisq >= obs_chisq)
 ```{r, echo=FALSE}
 # 输出蒙特卡洛模拟结果
 cat("Hardy-Weinberg平衡检验 - 蒙特卡洛模拟结果：\n")
-cat("经验p值:", p_value, "\n")
+cat('经验p值:', p_value, '\n')
 ```
 
 **生态学意义**：如果检验结果显示显著偏离Hardy-Weinberg平衡（p < 0.05），可能表明梅花鹿种群存在近亲繁殖、自然选择或种群亚结构等进化力量。这对于制定梅花鹿保护策略具有重要意义——如果检测到近亲繁殖，可能需要引入外来个体增加遗传多样性；如果检测到自然选择，可能需要关注特定基因型与栖息地适应的关系。
@@ -640,9 +640,9 @@ set.seed(123)
 haplotypes <- c(rep("FM", 12), rep("Fm", 3), rep("fM", 2), rep("fm", 8))
 n_haplotypes <- length(haplotypes)
 
-# 计算观测D'统计量
+# 计算观测D统计量
 obs_D_prime <- calc_D_prime(haplotypes)
-cat("观测D'统计量:", obs_D_prime, "\n")
+cat("观测D统计量:", obs_D_prime, "\n")
 ```
 
 最后，我们进行置换检验来构建零分布：
@@ -664,7 +664,7 @@ for (i in 1:n_perm) {
 
 # 计算经验p值
 p_value <- mean(perm_D_prime >= obs_D_prime)
-cat("经验p值:", p_value, "\n")
+cat('经验p值:', p_value, '\n')
 ```
 
 **生态学意义**：如果检验显示显著的连锁不平衡，表明抗病相关基因和食物消化相关基因可能存在功能关联，共同参与梅花鹿的栖息地适应。这种遗传关联信息对于理解梅花鹿的环境适应机制、预测种群对栖息地变化的响应以及指导保护管理都具有重要价值。
@@ -1294,7 +1294,7 @@ print(moran_test)
 
 下面的代码展示了系统发育信号检验的具体实现过程（图\@ref(fig:phylogenetic-signal)）：
 
-```{r phylogenetic-signal, fig.cap="植物功能性状系统发育信号检验与可视化：使用颜色和点型组合表示性状值梯度"
+```{r phylogenetic-signal, fig.cap="植物功能性状系统发育信号检验与可视化：使用颜色和点型组合表示性状值梯度"}
 # 系统发育信号检验的蒙特卡洛模拟
 library(ape)
 library(picante)
@@ -1323,8 +1323,9 @@ for (i in 1:n_sim) {
 
 # 计算经验p值
 p_value <- mean(sim_K >= as.numeric(obs_K))
-cat("观测Blomberg's K统计量:", obs_K, "\n")
-cat("经验p值:", p_value, "\n")
+# 输出结果
+obs_K
+p_value
 
 # 使用phytools包进行更复杂的系统发育信号检验
 library(phytools)
@@ -1381,7 +1382,7 @@ legend("bottomleft",
 
 下面的代码展示了系统发育独立对比分析的具体实现过程（图\@ref(fig:phylogenetic-contrasts)）：
 
-```{r phylogenetic-contrasts, fig.cap="植物防御性状与生长速率关系的系统发育独立对比分析：使用不同颜色和点型组合区分原始性状与系统发育校正后的关系"
+```{r phylogenetic-contrasts, fig.cap="植物防御性状与生长速率关系的系统发育独立对比分析：使用不同颜色和点型组合区分原始性状与系统发育校正后的关系"}
 # 系统发育独立对比的置换检验
 library(ape)
 library(geiger)
@@ -1421,7 +1422,7 @@ for (i in 1:n_perm) {
 # 计算p值
 p_value <- mean(abs(perm_cor) >= abs(obs_cor))
 cat("观测PIC相关性:", obs_cor, "\n")
-cat("经验p值:", p_value, "\n")
+cat('经验p值:', p_value, '\n')
 
 # 可视化结果
 par(mfrow = c(1, 2))
@@ -1805,6 +1806,7 @@ V(bipartite_graph)$label.cex <- 0.7
 plot(bipartite_graph,
   layout = layout.bipartite,
   main = "传粉网络结构",
+  main.family = "simhei",
   vertex.label = NA
 )
 
@@ -1972,7 +1974,45 @@ abline(v = obs_nestedness, col = "red", lwd = 2, lty = "dashed")
 
 ## 综合练习
 
-**练习1：梅花鹿保护效果的综合评估**
+**练习1：变量间相关性检验**
+
+下面代码定义了两个变量x和y的值，请用基于模拟的统计检验方法，回答这两个变量之间是否存在显著的相关性。
+
+```{r}
+x=c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6)
+y=c(0.2, 0.5, 0.1, 0.6, 0.7, 0.5)
+
+```
+
+```{r, echo=FALSE}
+#step 1: H0
+
+#step 2: summary statistic
+# Pearson correlation coeffecient
+
+#step 3. observed value of summary statistic
+obs_r=cor(x,y)
+
+#step 4: estimate the distribution of the summary statistic under H0
+random_r=numeric()
+
+for(i in 1:10000){
+  y_random=sample(y)
+  random_r[i]=cor(x, y_random)
+}
+
+#step 5: calcualte p-value
+p_part1=sum(random_r>obs_r)/10000
+random_mean=mean(random_r)
+mirror_obs_r=random_mean-abs(random_mean-obs_r)
+p_part2=sum(random_r<mirror_obs_r)/10000
+p_value=p_part1+p_part2
+
+```
+
+
+
+**练习2：梅花鹿保护效果的综合评估**
 
 假设你在一个梅花鹿自然保护区工作，需要评估不同保护措施对梅花鹿种群和栖息地的影响。你收集了种群数据（在保护区内和保护区外记录的梅花鹿种群密度）、遗传数据（保护区内梅花鹿种群的微卫星位点基因型频率）、植物群落数据（不同保护年限栖息地的植物物种组成）和空间分布数据（保护区内梅花鹿个体的空间坐标）。
 
@@ -1980,7 +2020,7 @@ abline(v = obs_nestedness, col = "red", lwd = 2, lty = "dashed")
 
 请详细说明每种检验的零假设、检验统计量、随机化策略，并解释统计结果在梅花鹿保护实践中的生态学意义。
 
-**练习2：生态网络结构与保护优先区识别**
+**练习3：生态网络结构与保护优先区识别**
 
 你正在研究一个包含梅花鹿、其主要食物植物和传粉昆虫的生态网络。网络数据包括植物-传粉者网络（15种植物与20种传粉者的相互作用矩阵）、梅花鹿-植物网络（梅花鹿对10种主要食物植物的取食偏好）和空间分布数据（所有物种在景观中的分布位置）。
 
@@ -1988,7 +2028,7 @@ abline(v = obs_nestedness, col = "red", lwd = 2, lty = "dashed")
 
 请详细说明每种零模型检验的算法选择理由，并讨论统计结果对梅花鹿栖息地管理的指导意义。
 
-**练习3：气候变化对梅花鹿栖息地影响的模拟研究**
+**练习4：气候变化对梅花鹿栖息地影响的模拟研究**
 
 假设你正在评估气候变化对梅花鹿栖息地适宜性的潜在影响。你拥有历史气候数据（过去30年的温度、降水等气候变量）、梅花鹿分布数据（当前梅花鹿在保护区的分布点位）、栖息地变量（植被类型、海拔、坡度等环境因子）和未来气候情景（两种气候变化情景下的预测数据）。
 

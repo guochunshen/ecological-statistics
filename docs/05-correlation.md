@@ -87,7 +87,7 @@ legend("topleft",
 
 }
 
-\caption{树木胸径与树高的关系散点图，显示线性相关关系}(\#fig:pearson-figure)
+\caption{树木胸径与树高的关系散点图，显示线性相关关系。图中蓝色实心圆点表示观测数据，红色实线表示线性回归拟合线，通过颜色和点型的组合确保在彩色显示和黑白打印时都能清晰区分数据点和趋势线}(\#fig:pearson-figure)
 \end{figure}
 
 图\@ref(fig:pearson-figure)展示了树木胸径与树高之间的线性相关关系。该散点图使用蓝色实心圆点表示每个观测样本，横轴为树木胸径（单位：厘米），纵轴为树高（单位：米）。图中添加的红色直线是基于线性回归模型`lm(height ~ dbh)`的拟合线，直观地显示了两个变量间的线性趋势。图例位于左上角，显示计算得到的Pearson相关系数数值，为读者提供了量化的相关强度指标。该可视化清晰地展示了生态学中常见的形态特征相关性，胸径较大的树木通常具有较高的树高，符合树木生长的基本规律。
@@ -155,12 +155,12 @@ spearman_test <- cor.test(water_quality, macroinvertebrate_diversity,
 ``` r
 # 可视化关系
 plot(water_quality, macroinvertebrate_diversity,
-  pch = 19, col = "darkgreen",
+  pch = 17, col = "darkgreen",
   xlab = "水质指数", ylab = "底栖动物多样性",
   main = "河流水质与底栖动物多样性的关系"
 )
 lines(lowess(water_quality, macroinvertebrate_diversity),
-      col = "red", lwd = 2)
+      col = "red", lwd = 2, lty = 2)
 legend("topleft",
   legend = paste("ρ =", round(spearman_cor, 3)),
   bty = "n"
@@ -173,7 +173,7 @@ legend("topleft",
 
 }
 
-\caption{河流水质与底栖动物多样性的关系散点图，显示单调非线性关系}(\#fig:spearman-figure)
+\caption{河流水质与底栖动物多样性的关系散点图，显示单调非线性关系。图中深绿色三角形表示观测数据，红色虚线表示局部加权回归拟合线}(\#fig:spearman-figure)
 \end{figure}
 
 图\@ref(fig:spearman-figure)展示了河流水质与底栖动物多样性之间的单调非线性关系。该散点图使用深绿色实心圆点表示各观测样本，横轴为水质指数（综合反映水体理化性质），纵轴为底栖动物多样性（反映河流生态系统健康状况）。图中添加的红色曲线是基于局部加权回归平滑（LOWESS）的非参数拟合线，能够更好地捕捉变量间的非线性趋势。图例位于左上角，显示计算得到的Spearman相关系数（ρ），该系数衡量的是变量间的单调相关强度而非线性相关强度。该可视化清晰地展示了水质改善与底栖动物多样性增加之间的正相关关系，体现了Spearman相关在处理生态学中常见非线性关系时的优势。
@@ -209,7 +209,7 @@ Kendall's $\tau$的计算公式反映了这种一致对与不一致对的净比�
 
 }
 
-\caption{鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性}(\#fig:kendall-figure)
+\caption{鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性。图中紫色圆点表示正常观测数据，红色三角形标记异常值}(\#fig:kendall-figure)
 \end{figure}
 
 图\@ref(fig:kendall-figure)展示了Kendall's τ在存在异常值情况下的稳健性。该散点图可视化春季平均温度与鸟类迁徙到达日期之间的关系，其中紫色圆点代表正常观测数据，红色三角形标记表示人为添加的异常值（异常温暖的年份）。图中清晰地显示了温度升高与鸟类提前到达之间的负相关趋势，但异常值的存在可能对其他相关性系数产生较大影响。Kendall's τ基于数据对的排序一致性进行计算，对异常值相对不敏感，因此在生态学时间序列数据分析中具有重要价值，特别是在处理气候变化对物候影响的长期观测数据时，能够提供更加稳健的相关性估计。
@@ -308,7 +308,7 @@ $$dCor(X,Y) = \frac{dCov(X,Y)}{\sqrt{dVar(X)dVar(Y)}}$$
 
 }
 
-\caption{距离相关强弱对比示意图：左图显示弱距离相关（变量间距离模式不同步），右图显示强距离相关（变量间距离模式高度同步）}(\#fig:distance-correlation-diagram)
+\caption{距离相关强弱对比示意图：左图显示弱距离相关（红色圆形散点，变量间距离模式不同步），右图显示强距离相关（蓝色方形散点+虚线趋势线，变量间距离模式高度同步）}(\#fig:distance-correlation-diagram)
 \end{figure}
 
 上图显示了弱距离相关和强距离相关的区别：
@@ -335,7 +335,7 @@ $$dCor(X,Y) = \frac{dCov(X,Y)}{\sqrt{dVar(X)dVar(Y)}}$$
 
 }
 
-\caption{植物功能性状间的非线性关系散点图，显示U型关系}(\#fig:non-linear-relationship)
+\caption{植物功能性状间的非线性关系散点图，显示U型关系。图中深绿色菱形表示观测数据，红色实线表示局部回归拟合曲线，蓝色虚线表示二次多项式拟合曲线}(\#fig:non-linear-relationship)
 \end{figure}
 
 
@@ -395,7 +395,7 @@ mi_joint <- mutinformation(cbind(temp_disc, precip_disc), species_presence)
 
 }
 
-\caption{环境因子与物种分布的关系逻辑回归曲线}(\#fig:mutinformation-figure)
+\caption{环境因子与物种分布的关系逻辑回归曲线。左图蓝色半透明三角形表示温度观测数据，右图绿色半透明方形表示降水量观测数据，两图中红色实线均表示逻辑回归拟合曲线}(\#fig:mutinformation-figure)
 \end{figure}
 
 图\@ref(fig:mutinformation-figure)展示了环境因子与物种分布之间的非线性关系，采用逻辑回归曲线可视化二元响应变量（物种出现/不出现）与连续环境因子的关系。该图采用双面板布局，左侧显示温度与物种出现的关系，右侧显示降水量与物种出现的关系。蓝色半透明圆点表示温度观测数据，绿色半透明圆点表示降水量观测数据，红色曲线为逻辑回归拟合线，表示物种出现的概率随环境因子变化的趋势。这种可视化方法能够清晰地展示环境因子对物种分布的非线性影响，特别适用于生态位模型和物种分布预测研究。逻辑回归曲线呈现典型的S型特征，反映了物种对环境因子的响应阈值，为理解物种-环境关系提供了直观的图形表示。
@@ -432,7 +432,7 @@ mi_joint <- mutinformation(cbind(temp_disc, precip_disc), species_presence)
 
 }
 
-\caption{生态学中不同强度时间自相关的实例对比：左图显示强正自相关（多年生植物种群动态），中图显示弱自相关（随机环境波动），右图显示负自相关（捕食-被捕食系统振荡）}(\#fig:time-autocorrelation-examples)
+\caption{生态学中不同强度时间自相关的实例对比：左图显示强正自相关（蓝色实线表示多年生植物种群动态），中图显示弱自相关（紫色实线表示随机环境波动），右图显示负自相关（橙色实线表示捕食者种群，红色虚线表示被捕食者种群）}(\#fig:time-autocorrelation-examples)
 \end{figure}
 
 上图说明了生态学中不同强度时间自相关的实例：
@@ -469,7 +469,7 @@ $$\rho_k = \frac{\sum_{t=k+1}^{n}(X_t - \bar{X})(X_{t-k} - \bar{X})}{\sum_{t=1}^
 
 }
 
-\caption{四种时间自相关模式的自相关函数对比：左上显示强正自相关的缓慢衰减模式，右上显示弱自相关的快速衰减模式，左下显示捕食者种群的负自相关振荡模式，右下显示被捕食者种群的负自相关振荡模式}(\#fig:acf-patterns-figure)
+\caption{四种时间自相关模式的自相关函数对比：左上蓝色柱状图显示强正自相关的缓慢衰减模式，右上紫色柱状图显示弱自相关的快速衰减模式，左下橙色柱状图显示捕食者种群的负自相关振荡模式，右下红色柱状图显示被捕食者种群的负自相关振荡模式}(\#fig:acf-patterns-figure)
 \end{figure}
 
 图\@ref(fig:acf-patterns-figure)系统展示了生态学中常见的四种时间自相关模式的自相关函数特征。该2×2组合图采用ggplot2包创建，每个子图使用不同颜色区分不同的生态过程：蓝色表示强正自相关（多年生植物种群动态），紫色表示弱自相关（随机环境波动），橙色表示捕食者种群的负自相关振荡，红色表示被捕食者种群的负自相关振荡。强正自相关模式显示ACF缓慢衰减，反映了生态系统的长期记忆效应；弱自相关模式显示ACF快速衰减至零，体现了随机环境波动的时间独立性；捕食者与被捕食者种群的负自相关模式呈现交替正负值，直观展示了捕食-被捕食系统的振荡动力学特征。这种可视化方法为生态学家识别时间序列数据的自相关结构提供了有力的工具，有助于理解不同生态过程的时间动态特征。
@@ -570,7 +570,7 @@ plot(years, tree_ring_width,
 
 
 ``` r
-load("tree_ring_width.RData")
+load("data/tree_ring_width.RData")
 # 计算偏自相关函数
 pacf_result <- pacf(tree_ring_width, lag.max = 15, plot = FALSE)
 
@@ -607,7 +607,7 @@ abline(h = 0, lty = 2)
 
 }
 
-\caption{森林年轮宽度的自相关函数与偏自相关函数对比}(\#fig:acf-pacf-comparison)
+\caption{森林年轮宽度的自相关函数与偏自相关函数对比。左图显示自相关函数，右图显示偏自相关函数}(\#fig:acf-pacf-comparison)
 \end{figure}
 
 图\@ref(fig:acf-pacf-comparison)展示了森林年轮宽度时间序列的自相关函数与偏自相关函数对比。该双面板图采用并排布局，左侧为自相关函数图，显示年轮宽度与自身滞后值之间的总相关性；右侧为偏自相关函数图，显示在控制中间滞后影响后，年轮宽度与特定滞后值之间的直接相关性。通过对比两种函数，可以识别时间序列的自回归结构：ACF的缓慢衰减模式表明时间序列具有持续性特征，而PACF的截尾模式则有助于确定自回归模型的合适阶数。在生态学应用中，这种对比分析对于理解森林生长对环境因子的响应模式、识别气候变化的滞后效应以及构建准确的时间序列预测模型具有重要意义。
@@ -668,7 +668,7 @@ print(coef(best_ar))
 
 }
 
-\caption{时间序列平稳性对比示意图：左图显示平稳时间序列（恒定统计特性），右图显示非平稳时间序列（具有趋势和季节性变化）}(\#fig:time-series-stationarity-comparison)
+\caption{时间序列平稳性对比示意图：左上蓝色线条表示平稳时间序列（恒定统计特性），右上紫色线条表示非平稳时间序列（具有趋势和季节性变化），左下蓝色柱状图显示平稳序列的自相关函数，右下紫色柱状图显示非平稳序列的自相关函数}(\#fig:time-series-stationarity-comparison)
 \end{figure}
 
 
@@ -952,7 +952,7 @@ if (length(bird_population) >= 2 * 12) { # 需要足够的数据点进行季节�
 
 }
 
-\caption{变异函数三个关键参数的技术解释：块金值（nugget）、基台值（sill）和变程（range）的直观展示}(\#fig:variogram-parameters-explanation)
+\caption{变异函数三个关键参数的技术解释：块金值（nugget）、基台值（sill）和变程（range）的直观展示。图中蓝色实线表示变异函数曲线，红色虚线标记块金值，绿色虚线标记基台值，橙色虚线标记变程}(\#fig:variogram-parameters-explanation)
 \end{figure}
 
 \begin{figure}
@@ -961,7 +961,7 @@ if (length(bird_population) >= 2 * 12) { # 需要足够的数据点进行季节�
 
 }
 
-\caption{不同变异函数参数组合的对比：展示块金值、基台值和变程对空间依赖结构的影响}(\#fig:variogram-parameters-comparison)
+\caption{不同变异函数参数组合的对比：展示块金值、基台值和变程对空间依赖结构的影响。图中使用不同颜色和线型的曲线区分四种参数组合：典型情况、高测量误差、大空间变异和小尺度依赖}(\#fig:variogram-parameters-comparison)
 \end{figure}
 
 图\@ref(fig:variogram-parameters-explanation)和\@ref(fig:variogram-parameters-comparison)通过R代码技术性地解释了变异函数的三个关键参数。这些图形清晰地展示了块金值、基台值和变程在变异函数曲线中的位置和意义，帮助我们直观理解空间依赖结构的不同方面。
@@ -992,7 +992,7 @@ $$\gamma(\mathbf{h}) = \frac{1}{2}E[(Z(\mathbf{s} + \mathbf{h}) - Z(\mathbf{s}))
 
 }
 
-\caption{土壤pH值的空间取样分布图}(\#fig:soil-ph-sampling)
+\caption{土壤pH值的空间取样分布图。图中使用从红色到蓝色的颜色渐变表示pH值大小，同时通过点的大小变化增强视觉区分}(\#fig:soil-ph-sampling)
 \end{figure}
 
 \begin{figure}
@@ -1142,7 +1142,7 @@ $$C = \frac{(n-1)}{2\sum_{i=1}^{n}\sum_{j=1}^{n}w_{ij}} \cdot \frac{\sum_{i=1}^{
 
 }
 
-\caption{森林树木的空间分布和胸径变异}(\#fig:forest-spatial-distribution)
+\caption{森林树木的空间分布和胸径变异。左图显示树木空间分布，右图使用从蓝色到红色的颜色渐变表示胸径大小，同时通过圆点和三角形的点型区分小胸径和大胸径}(\#fig:forest-spatial-distribution)
 \end{figure}
 
 从图\@ref(fig:forest-spatial-distribution)中我们可以观察到：左图显示了树木在空间中的分布模式，可以看到明显的聚集现象；右图用颜色表示胸径大小，蓝色表示小胸径，红色表示大胸径，我们可以初步观察到胸径在空间上可能存在一定的聚集模式。
@@ -1212,7 +1212,7 @@ cat("p值：", format.pval(moran_mc$p.value, digits = 3), "\n")
 
 }
 
-\caption{Moran's I的蒙特卡洛检验结果}(\#fig:moran-monte-carlo)
+\caption{Moran's I的蒙特卡洛检验结果。图中浅蓝色直方图表示随机化分布，红色垂直线标记观测到的Moran's I统计量}(\#fig:moran-monte-carlo)
 \end{figure}
 
 通过这个完整的分析流程，我们能够深入理解森林生态系统的空间结构特征及其统计意义。首先，从空间分布特征来看，模拟的森林树木呈现出明显的聚集分布模式，这种分布特征在真实的森林生态系统中十分常见，反映了种子传播、微环境适宜性等生态过程的空间异质性。树木胸径数据也显示出显著的空间变异模式，相邻树木的胸径值往往相近，这种空间依赖性暗示着可能存在某种生态机制在驱动胸径的空间分布格局。
@@ -1318,7 +1318,7 @@ lisa_results$gi_type[lisa_results$gi_star < -1.96] <- "冷点"
 
 }
 
-\caption{鸟类物种丰富度的LISA分析结果}(\#fig:lisa-analysis)
+\caption{鸟类物种丰富度的LISA分析结果。图中使用不同颜色和点型区分五种LISA类型：高-高（红色圆点）、低-低（蓝色三角形）、高-低（粉色方形）、低-高（浅蓝色菱形）和不显著（灰色空心圆点）}(\#fig:lisa-analysis)
 \end{figure}
 
 图\@ref(fig:lisa-analysis)展示了鸟类物种丰富度的局部空间自相关分析结果。该散点图采用颜色编码系统表示不同的LISA类型：红色表示"高-高"聚集区（热点区域，即物种丰富度高且周边地区也高），蓝色表示"低-低"聚集区（冷点区域，即物种丰富度低且周边地区也低），粉色表示"高-低"异常区（高值被低值包围），浅蓝色表示"低-高"异常区（低值被高值包围），灰色表示统计不显著的区域。点的大小与物种丰富度成正比，直观地显示了空间格局的异质性。这种可视化方法对于识别生物多样性保护的关键区域、理解物种分布的空间依赖性以及制定区域化的生态保护策略具有重要价值，能够揭示传统全局统计方法无法发现的局部空间关联模式。
@@ -1329,7 +1329,7 @@ lisa_results$gi_type[lisa_results$gi_star < -1.96] <- "冷点"
 
 }
 
-\caption{鸟类物种丰富度的Getis-Ord Gi*分析结果}(\#fig:gi-analysis)
+\caption{鸟类物种丰富度的Getis-Ord Gi*分析结果。图中使用不同颜色和点型区分三种类型：热点（红色圆点）、冷点（蓝色三角形）和不显著（灰色空心圆点）}(\#fig:gi-analysis)
 \end{figure}
 
 图\@ref(fig:gi-analysis)展示了鸟类物种丰富度的Getis-Ord Gi*热点分析结果。该散点图采用简化的颜色编码系统：红色表示统计显著的热点区域（高值聚集区），蓝色表示统计显著的冷点区域（低值聚集区），灰色表示统计不显著的区域。点的大小与Gi*统计量的绝对值成正比，反映了局部空间聚集的强度。与LISA分析相比，Getis-Ord Gi*分析更专注于识别高值或低值的空间聚集，而不区分"高-低"或"低-高"等异常模式。这种可视化方法在生态学保护规划中特别有用，能够快速识别生物多样性的核心保护区域（热点）和生态恢复的优先区域（冷点），为制定差异化的空间管理策略提供科学依据。
@@ -1368,7 +1368,7 @@ lisa_results$gi_type[lisa_results$gi_star < -1.96] <- "冷点"
 
 }
 
-\caption{多重比较校正前后的p值分布对比}(\#fig:multiple-comparison)
+\caption{多重比较校正前后的p值分布对比。左图使用浅蓝色斜线填充表示原始p值分布，右图使用浅绿色反斜线填充表示FDR校正后p值分布，两图中红色虚线均标记显著性阈值0.05}(\#fig:multiple-comparison)
 \end{figure}
 
 图\@ref(fig:multiple-comparison)展示了多重比较校正前后p值分布的对比。该双面板直方图采用并排布局，左侧显示原始p值分布（浅蓝色），右侧显示经过错误发现率校正后的p值分布（浅绿色）。红色垂直线标记0.05显著性水平，直观展示了FDR校正对统计显著性的影响。在局部空间自相关分析中，由于同时检验多个空间单元，多重比较问题可能导致假阳性结果增加。FDR校正通过调整p值来控制错误发现率，确保统计推断的可靠性。这种可视化方法帮助生态学家理解多重比较校正的必要性，并在空间统计分析中做出更保守但更可靠的结论。
@@ -1402,7 +1402,7 @@ Getis-Ord $G_i^*$分析进一步验证了热点和冷点的存在，其专注于
 
 }
 
-\caption{空间平稳性对比示意图：左图显示平稳空间过程（恒定统计特性），右图显示非平稳空间过程（具有趋势和空间异质性）}(\#fig:spatial-stationarity-comparison)
+\caption{空间平稳性对比示意图：左上显示平稳空间过程（恒定统计特性），右上显示非平稳空间过程（具有趋势和空间异质性），左下蓝色散点和曲线表示平稳过程的变异函数，右下紫色散点和曲线表示非平稳过程的变异函数}(\#fig:spatial-stationarity-comparison)
 \end{figure}
 
 上面的对比图（见\@ref(fig:spatial-stationarity-comparison)）清晰地展示了平稳空间过程和非平稳空间过程在统计特性上的根本差异，这对于理解空间分析的基本假设至关重要。
@@ -1578,7 +1578,7 @@ residuals_quadratic <- residuals(trend_quadratic)
 
 }
 
-\caption{去趋势后的森林生物量空间分布，趋势成分已被去除}(\#fig:detrended-spatial-plot)
+\caption{去趋势后的森林生物量空间分布，趋势成分已被去除。图中使用从蓝色到红色的颜色渐变表示残差大小，同时通过圆点和三角形的点型区分负残差和正残差}(\#fig:detrended-spatial-plot)
 \end{figure}
 
 原始空间过程的变异函数（图\@ref(fig:original-variogram)）显示持续上升的特征，这是非平稳空间过程的典型表现。
@@ -2232,7 +2232,7 @@ knitr::kable((association_matrix), caption = "种间关联矩阵", booktabs = TR
 
 \begin{table}[!h]
 \centering
-\caption{(\#tab:unnamed-chunk-54)种间关联矩阵}
+\caption{(\#tab:species-association-network)种间关联矩阵}
 \centering
 \begin{tabular}[t]{lrrrr}
 \toprule
@@ -2276,29 +2276,26 @@ print(paste("聚类系数:", clustering_coef))
 ```
 
 ``` r
-# 保存当前图形参数
-old_par <- par()
-par(family = "WenQuanYi Micro Hei")
 # 可视化网络
 plot(network,
-  vertex.size = 15, vertex.color = "lightblue",
-  edge.color = "gray", main = "种间关联网络"
+  vertex.size = 15,
+  vertex.color = "lightblue",
+  vertex.label.family = "simhei",
+  vertex.label.color = "black",
+  edge.color = "gray",
+  main = "种间关联网络",
+  main.family = "simhei"
 )
 ```
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/unnamed-chunk-54-1} 
+{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/species-association-network-1} 
 
 }
 
-\caption{种间关联网络图}(\#fig:unnamed-chunk-54)
+\caption{种间关联网络图}(\#fig:species-association-network)
 \end{figure}
-
-``` r
-# 恢复默认图形参数
-par(old_par)
-```
 
 **结果解释与生态学意义**：种间相关性分析的结果解释需要结合相关系数的数值、显著性水平和生态学机制。对于种间关联系数$\phi$，通常认为：$|\phi| > 0.3$表示强关联，$0.2 < |\phi| \leq 0.3$表示中等关联，$|\phi| \leq 0.2$表示弱关联。正关联$\phi > 0$表示物种倾向于共同出现，可能源于互利共生或相似的环境需求；负关联$\phi < 0$表示物种相互排斥，可能源于竞争或不同的生态位需求。
 

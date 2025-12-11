@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>16 添加性状值图例，使用颜色和点型组合 | 生态统计学AI+</title>
+  <meta name="description" content="生态统计学课程教材，涵盖从基础到高级的生态数据分析方法" />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="16 添加性状值图例，使用颜色和点型组合 | 生态统计学AI+" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="生态统计学课程教材，涵盖从基础到高级的生态数据分析方法" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="16 添加性状值图例，使用颜色和点型组合 | 生态统计学AI+" />
+  
+  <meta name="twitter:description" content="生态统计学课程教材，涵盖从基础到高级的生态数据分析方法" />
+  
+
+<meta name="author" content="沈国春、李勤" />
+
+
+<meta name="date" content="2025-12-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="绘制系统发育树和性状值.html"/>
+<link rel="next" href="简单生态关系的建模.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?7cbaf067c715044120ee231397e9ace3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">生态统计学AI+</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>前言</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#为什么"><i class="fa fa-check"></i><b>0.1</b> 为什么</a>
+<ul>
+<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#在不确定的自然中寻找规律"><i class="fa fa-check"></i><b>0.1.1</b> 在不确定的自然中寻找规律</a></li>
+<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#ai时代的机遇与陷阱"><i class="fa fa-check"></i><b>0.1.2</b> AI时代的机遇与陷阱</a></li>
+</ul></li>
+<li class="chapter" data-level="0.2" data-path="index.html"><a href="index.html#本书介绍"><i class="fa fa-check"></i><b>0.2</b> 本书介绍</a>
+<ul>
+<li class="chapter" data-level="0.2.1" data-path="index.html"><a href="index.html#本书特色与教学理念"><i class="fa fa-check"></i><b>0.2.1</b> 本书特色与教学理念</a></li>
+</ul></li>
+<li class="chapter" data-level="0.3" data-path="index.html"><a href="index.html#课程在线资源"><i class="fa fa-check"></i><b>0.3</b> 课程在线资源</a></li>
+<li class="chapter" data-level="0.4" data-path="index.html"><a href="index.html#学习方式"><i class="fa fa-check"></i><b>0.4</b> 学习方式</a>
+<ul>
+<li class="chapter" data-level="0.4.1" data-path="index.html"><a href="index.html#持续学习r语言的重要性"><i class="fa fa-check"></i><b>0.4.1</b> 持续学习R语言的重要性</a></li>
+<li class="chapter" data-level="0.4.2" data-path="index.html"><a href="index.html#在错误中快速成长"><i class="fa fa-check"></i><b>0.4.2</b> 在错误中快速成长</a></li>
+<li class="chapter" data-level="0.4.3" data-path="index.html"><a href="index.html#实践导向的学习策略"><i class="fa fa-check"></i><b>0.4.3</b> 实践导向的学习策略</a></li>
+<li class="chapter" data-level="0.4.4" data-path="index.html"><a href="index.html#正确的上课姿势"><i class="fa fa-check"></i><b>0.4.4</b> 正确的上课姿势</a></li>
+</ul></li>
+<li class="chapter" data-level="0.5" data-path="index.html"><a href="index.html#重复本书例子"><i class="fa fa-check"></i><b>0.5</b> 重复本书例子</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html"><i class="fa fa-check"></i><b>1</b> AI辅助编程基础</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#引言"><i class="fa fa-check"></i><b>1.1</b> 引言</a></li>
+<li class="chapter" data-level="1.2" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#生态数据分析的核心能力"><i class="fa fa-check"></i><b>1.2</b> 生态数据分析的核心能力</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#高阶思维与问题解决能力"><i class="fa fa-check"></i><b>1.2.1</b> 高阶思维与问题解决能力</a></li>
+<li class="chapter" data-level="1.2.2" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#与llm协同工作的能力"><i class="fa fa-check"></i><b>1.2.2</b> 与LLM协同工作的能力</a></li>
+<li class="chapter" data-level="1.2.3" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#传统但愈发重要的软技能"><i class="fa fa-check"></i><b>1.2.3</b> 传统但愈发重要的软技能</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#ai编程思维基础"><i class="fa fa-check"></i><b>1.3</b> AI编程思维基础</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#编程核心概念"><i class="fa fa-check"></i><b>1.3.1</b> 编程核心概念</a></li>
+<li class="chapter" data-level="1.3.2" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#算法复杂度"><i class="fa fa-check"></i><b>1.3.2</b> 算法复杂度</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#ai协同编程技能"><i class="fa fa-check"></i><b>1.4</b> AI协同编程技能</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#ai编程模块安装"><i class="fa fa-check"></i><b>1.4.1</b> AI编程模块安装</a></li>
+<li class="chapter" data-level="1.4.2" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#精准提问技巧"><i class="fa fa-check"></i><b>1.4.2</b> 精准提问技巧</a></li>
+<li class="chapter" data-level="1.4.3" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#代码审查能力"><i class="fa fa-check"></i><b>1.4.3</b> 代码审查能力</a></li>
+<li class="chapter" data-level="1.4.4" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#调试与错误处理"><i class="fa fa-check"></i><b>1.4.4</b> 调试与错误处理</a></li>
+</ul></li>
+<li class="chapter" data-level="1.5" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#总结"><i class="fa fa-check"></i><b>1.5</b> 总结</a></li>
+<li class="chapter" data-level="1.6" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#综合练习"><i class="fa fa-check"></i><b>1.6</b> 综合练习</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="ai辅助编程基础.html"><a href="ai辅助编程基础.html#练习1"><i class="fa fa-check"></i><b>1.6.1</b> 练习1</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html"><i class="fa fa-check"></i><b>2</b> 生态系统的随机性与规律</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#引言-1"><i class="fa fa-check"></i><b>2.1</b> 引言</a></li>
+<li class="chapter" data-level="2.2" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#蚂蚱午餐与概率"><i class="fa fa-check"></i><b>2.2</b> 蚂蚱午餐与概率</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#一只蚱蜢的午餐"><i class="fa fa-check"></i><b>2.2.1</b> 一只蚱蜢的午餐</a></li>
+<li class="chapter" data-level="2.2.2" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#理想的猜测古典概率"><i class="fa fa-check"></i><b>2.2.2</b> 理想的猜测——古典概率</a></li>
+<li class="chapter" data-level="2.2.3" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#数据的语言频率概率"><i class="fa fa-check"></i><b>2.2.3</b> 数据的语言——频率概率</a></li>
+<li class="chapter" data-level="2.2.4" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#动态的更新贝叶斯概率"><i class="fa fa-check"></i><b>2.2.4</b> 动态的更新——贝叶斯概率</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#随机变量与分布"><i class="fa fa-check"></i><b>2.3</b> 随机变量与分布</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#随机变量"><i class="fa fa-check"></i><b>2.3.1</b> 随机变量</a></li>
+<li class="chapter" data-level="2.3.2" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#概率分布"><i class="fa fa-check"></i><b>2.3.2</b> 概率分布</a></li>
+<li class="chapter" data-level="2.3.3" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#累积概率分布从可能性到确定性"><i class="fa fa-check"></i><b>2.3.3</b> 累积概率分布：从可能性到确定性</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#午餐菜单离散随机变量的分布家族"><i class="fa fa-check"></i><b>2.4</b> 午餐菜单：离散随机变量的分布家族</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#伯努利分布一个是或否的终极问题"><i class="fa fa-check"></i><b>2.4.1</b> 伯努利分布：一个“是”或“否”的终极问题</a></li>
+<li class="chapter" data-level="2.4.2" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#二项分布重复是非题的计数法则"><i class="fa fa-check"></i><b>2.4.2</b> 二项分布：重复“是非题”的计数法则</a></li>
+<li class="chapter" data-level="2.4.3" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#多项式分布多元选择的全景图"><i class="fa fa-check"></i><b>2.4.3</b> 多项式分布：多元选择的“全景图”</a></li>
+<li class="chapter" data-level="2.4.4" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#泊松分布罕见事件的低语者"><i class="fa fa-check"></i><b>2.4.4</b> 泊松分布：罕见事件的“低语者”</a></li>
+<li class="chapter" data-level="2.4.5" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#几何分布等待第一次成功的耐心"><i class="fa fa-check"></i><b>2.4.5</b> 几何分布：等待“第一次成功”的耐心</a></li>
+<li class="chapter" data-level="2.4.6" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#负二项分布等待最后一次成功的耐心"><i class="fa fa-check"></i><b>2.4.6</b> 负二项分布：等待“最后一次成功”的耐心</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#午餐法则连续随机变量的分布家族"><i class="fa fa-check"></i><b>2.5</b> 午餐法则：连续随机变量的分布家族</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#均匀分布纯粹的平等"><i class="fa fa-check"></i><b>2.5.1</b> 均匀分布：纯粹的平等</a></li>
+<li class="chapter" data-level="2.5.2" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#指数分布等待的艺术"><i class="fa fa-check"></i><b>2.5.2</b> 指数分布：等待的艺术</a></li>
+<li class="chapter" data-level="2.5.3" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#正态分布高斯分布自然界的钟形法则"><i class="fa fa-check"></i><b>2.5.3</b> 正态分布（高斯分布）：自然界的“钟形”法则</a></li>
+<li class="chapter" data-level="2.5.4" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#威布尔分布生存分析的时间法则"><i class="fa fa-check"></i><b>2.5.4</b> 威布尔分布：生存分析的“时间法则”</a></li>
+<li class="chapter" data-level="2.5.5" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#伽马分布更一般的等待时间模型"><i class="fa fa-check"></i><b>2.5.5</b> 伽马分布：更一般的等待时间模型</a></li>
+<li class="chapter" data-level="2.5.6" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#贝塔分布比例变量的天然选择"><i class="fa fa-check"></i><b>2.5.6</b> 贝塔分布：比例变量的天然选择</a></li>
+<li class="chapter" data-level="2.5.7" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#正态分布的魔力中心极限定理"><i class="fa fa-check"></i><b>2.5.7</b> 正态分布的魔力：中心极限定理</a></li>
+<li class="chapter" data-level="2.5.8" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#生态学应用实例"><i class="fa fa-check"></i><b>2.5.8</b> 生态学应用实例</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#生态异质性数据的混合分布"><i class="fa fa-check"></i><b>2.6</b> 生态异质性数据的混合分布</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#零膨胀分布处理零值过多的数据"><i class="fa fa-check"></i><b>2.6.1</b> 零膨胀分布：处理零值过多的数据</a></li>
+<li class="chapter" data-level="2.6.2" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#零膨胀分布的概念与生态学意义"><i class="fa fa-check"></i><b>2.6.2</b> 零膨胀分布的概念与生态学意义</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#总结-2"><i class="fa fa-check"></i><b>2.7</b> 总结</a></li>
+<li class="chapter" data-level="2.8" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#综合练习-1"><i class="fa fa-check"></i><b>2.8</b> 综合练习</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#练习1蚱蜢觅食行为的概率建模"><i class="fa fa-check"></i><b>2.8.1</b> 练习1：蚱蜢觅食行为的概率建模</a></li>
+<li class="chapter" data-level="2.8.2" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#练习2生存分析与分布拟合"><i class="fa fa-check"></i><b>2.8.2</b> 练习2：生存分析与分布拟合</a></li>
+<li class="chapter" data-level="2.8.3" data-path="生态系统的随机性与规律.html"><a href="生态系统的随机性与规律.html#练习3中心极限定理的生态学验证"><i class="fa fa-check"></i><b>2.8.3</b> 练习3：中心极限定理的生态学验证</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html"><i class="fa fa-check"></i><b>3</b> 生态特征的简单定量描述</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#引言-2"><i class="fa fa-check"></i><b>3.1</b> 引言</a></li>
+<li class="chapter" data-level="3.2" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#描述统计基础"><i class="fa fa-check"></i><b>3.2</b> 描述统计基础</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#中心趋势测量"><i class="fa fa-check"></i><b>3.2.1</b> 中心趋势测量</a></li>
+<li class="chapter" data-level="3.2.2" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#离散性测量"><i class="fa fa-check"></i><b>3.2.2</b> 离散性测量</a></li>
+<li class="chapter" data-level="3.2.3" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#分布形状与矩测量"><i class="fa fa-check"></i><b>3.2.3</b> 分布形状与矩测量</a></li>
+<li class="chapter" data-level="3.2.4" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#统计概念在概率分布图上的可视化"><i class="fa fa-check"></i><b>3.2.4</b> 统计概念在概率分布图上的可视化</a></li>
+<li class="chapter" data-level="3.2.5" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#标准误的可视化理解"><i class="fa fa-check"></i><b>3.2.5</b> 标准误的可视化理解</a></li>
+<li class="chapter" data-level="3.2.6" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#不同参数值的分布形状比较"><i class="fa fa-check"></i><b>3.2.6</b> 不同参数值的分布形状比较</a></li>
+<li class="chapter" data-level="3.2.7" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#生态学意义总结"><i class="fa fa-check"></i><b>3.2.7</b> 生态学意义总结</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#环境异质性描述"><i class="fa fa-check"></i><b>3.3</b> 环境异质性描述</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#环境异质性的概念"><i class="fa fa-check"></i><b>3.3.1</b> 环境异质性的概念</a></li>
+<li class="chapter" data-level="3.3.2" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#环境异质性的可视化理解"><i class="fa fa-check"></i><b>3.3.2</b> 环境异质性的可视化理解</a></li>
+<li class="chapter" data-level="3.3.3" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#环境异质性的量化方法"><i class="fa fa-check"></i><b>3.3.3</b> 环境异质性的量化方法</a></li>
+<li class="chapter" data-level="3.3.4" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#环境异质性的生态学意义"><i class="fa fa-check"></i><b>3.3.4</b> 环境异质性的生态学意义</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#个体特征描述"><i class="fa fa-check"></i><b>3.4</b> 个体特征描述</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#生存函数"><i class="fa fa-check"></i><b>3.4.1</b> 生存函数</a></li>
+<li class="chapter" data-level="3.4.2" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#瞬时死亡风险函数"><i class="fa fa-check"></i><b>3.4.2</b> 瞬时死亡风险函数</a></li>
+<li class="chapter" data-level="3.4.3" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#累积风险函数"><i class="fa fa-check"></i><b>3.4.3</b> 累积风险函数</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#种群特征描述"><i class="fa fa-check"></i><b>3.5</b> 种群特征描述</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#gini系数"><i class="fa fa-check"></i><b>3.5.1</b> Gini系数</a></li>
+<li class="chapter" data-level="3.5.2" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#lorenz曲线"><i class="fa fa-check"></i><b>3.5.2</b> Lorenz曲线</a></li>
+<li class="chapter" data-level="3.5.3" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#基尼系数的生态学应用"><i class="fa fa-check"></i><b>3.5.3</b> 基尼系数的生态学应用</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#群落特征描述"><i class="fa fa-check"></i><b>3.6</b> 群落特征描述</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#fishers-alpha"><i class="fa fa-check"></i><b>3.6.1</b> Fisher’s <span class="math inline">\(\alpha\)</span></a></li>
+<li class="chapter" data-level="3.6.2" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#shannon-wiener指数"><i class="fa fa-check"></i><b>3.6.2</b> Shannon-Wiener指数</a></li>
+<li class="chapter" data-level="3.6.3" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#simpson指数"><i class="fa fa-check"></i><b>3.6.3</b> Simpson指数</a></li>
+<li class="chapter" data-level="3.6.4" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#pielou均匀度指数"><i class="fa fa-check"></i><b>3.6.4</b> Pielou均匀度指数</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#生态网络特征描述"><i class="fa fa-check"></i><b>3.7</b> 生态网络特征描述</a>
+<ul>
+<li class="chapter" data-level="3.7.1" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#网络拓扑指标"><i class="fa fa-check"></i><b>3.7.1</b> 网络拓扑指标</a></li>
+<li class="chapter" data-level="3.7.2" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#食物网特征"><i class="fa fa-check"></i><b>3.7.2</b> 食物网特征</a></li>
+</ul></li>
+<li class="chapter" data-level="3.8" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#生态系统稳定性描述"><i class="fa fa-check"></i><b>3.8</b> 生态系统稳定性描述</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#抵抗力"><i class="fa fa-check"></i><b>3.8.1</b> 抵抗力</a></li>
+<li class="chapter" data-level="3.8.2" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#恢复力"><i class="fa fa-check"></i><b>3.8.2</b> 恢复力</a></li>
+<li class="chapter" data-level="3.8.3" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#持久性"><i class="fa fa-check"></i><b>3.8.3</b> 持久性</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#总结-3"><i class="fa fa-check"></i><b>3.9</b> 总结</a></li>
+<li class="chapter" data-level="3.10" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#综合练习-2"><i class="fa fa-check"></i><b>3.10</b> 综合练习</a>
+<ul>
+<li class="chapter" data-level="3.10.1" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#练习1森林群落多样性分析"><i class="fa fa-check"></i><b>3.10.1</b> 练习1：森林群落多样性分析</a></li>
+<li class="chapter" data-level="3.10.2" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#练习2生态系统稳定性评估"><i class="fa fa-check"></i><b>3.10.2</b> 练习2：生态系统稳定性评估</a></li>
+<li class="chapter" data-level="3.10.3" data-path="生态特征的简单定量描述.html"><a href="生态特征的简单定量描述.html#练习3种群资源分配与竞争分析"><i class="fa fa-check"></i><b>3.10.3</b> 练习3：种群资源分配与竞争分析</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html"><i class="fa fa-check"></i><b>4</b> 从样本到总体的生态推断</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#引言-3"><i class="fa fa-check"></i><b>4.1</b> 引言</a></li>
+<li class="chapter" data-level="4.2" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#生态调查中的样本与总体"><i class="fa fa-check"></i><b>4.2</b> 生态调查中的样本与总体</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#抽样方法及其生态学应用"><i class="fa fa-check"></i><b>4.2.1</b> 抽样方法及其生态学应用</a></li>
+<li class="chapter" data-level="4.2.2" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#r语言中的抽样实现"><i class="fa fa-check"></i><b>4.2.2</b> R语言中的抽样实现</a></li>
+<li class="chapter" data-level="4.2.3" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#抽样误差与样本量确定"><i class="fa fa-check"></i><b>4.2.3</b> 抽样误差与样本量确定</a></li>
+<li class="chapter" data-level="4.2.4" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#生态学抽样设计的实践考虑"><i class="fa fa-check"></i><b>4.2.4</b> 生态学抽样设计的实践考虑</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#生态参数的估计基础"><i class="fa fa-check"></i><b>4.3</b> 生态参数的估计基础</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#点估计"><i class="fa fa-check"></i><b>4.3.1</b> 点估计</a></li>
+<li class="chapter" data-level="4.3.2" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#区间估计"><i class="fa fa-check"></i><b>4.3.2</b> 区间估计</a></li>
+<li class="chapter" data-level="4.3.3" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#估计方法"><i class="fa fa-check"></i><b>4.3.3</b> 估计方法</a></li>
+<li class="chapter" data-level="4.3.4" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#估计量性质如何评价一个估计方法的好坏"><i class="fa fa-check"></i><b>4.3.4</b> 估计量性质：如何评价一个估计方法的好坏？</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#种群大小估计"><i class="fa fa-check"></i><b>4.4</b> 种群大小估计</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#标记重捕法"><i class="fa fa-check"></i><b>4.4.1</b> 标记重捕法</a></li>
+<li class="chapter" data-level="4.4.2" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#面积取样法"><i class="fa fa-check"></i><b>4.4.2</b> 面积取样法</a></li>
+<li class="chapter" data-level="4.4.3" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#距离抽样法"><i class="fa fa-check"></i><b>4.4.3</b> 距离抽样法</a></li>
+<li class="chapter" data-level="4.4.4" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#去除法"><i class="fa fa-check"></i><b>4.4.4</b> 去除法</a></li>
+<li class="chapter" data-level="4.4.5" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#种群大小估计方法的选择与比较"><i class="fa fa-check"></i><b>4.4.5</b> 种群大小估计方法的选择与比较</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#物种多样性估计"><i class="fa fa-check"></i><b>4.5</b> 物种多样性估计</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#外推和内插方法"><i class="fa fa-check"></i><b>4.5.1</b> 外推和内插方法</a></li>
+<li class="chapter" data-level="4.5.2" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#多样性估计的抽样偏差"><i class="fa fa-check"></i><b>4.5.2</b> 多样性估计的抽样偏差</a></li>
+<li class="chapter" data-level="4.5.3" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#多样性估计方法的选择与比较"><i class="fa fa-check"></i><b>4.5.3</b> 多样性估计方法的选择与比较</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#总结-4"><i class="fa fa-check"></i><b>4.6</b> 总结</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#参数估计的生态学意义与理论基础"><i class="fa fa-check"></i><b>4.6.1</b> 参数估计的生态学意义与理论基础</a></li>
+<li class="chapter" data-level="4.6.2" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#点估计与区间估计从单一数值到可信范围"><i class="fa fa-check"></i><b>4.6.2</b> 点估计与区间估计：从单一数值到可信范围</a></li>
+<li class="chapter" data-level="4.6.3" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#主要估计方法及其生态学应用"><i class="fa fa-check"></i><b>4.6.3</b> 主要估计方法及其生态学应用</a></li>
+<li class="chapter" data-level="4.6.4" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#种群大小估计生态学实践的核心任务"><i class="fa fa-check"></i><b>4.6.4</b> 种群大小估计：生态学实践的核心任务</a></li>
+<li class="chapter" data-level="4.6.5" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#物种多样性估计群落生态学的量化基础"><i class="fa fa-check"></i><b>4.6.5</b> 物种多样性估计：群落生态学的量化基础</a></li>
+<li class="chapter" data-level="4.6.6" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#参数估计在生态学决策中的重要性"><i class="fa fa-check"></i><b>4.6.6</b> 参数估计在生态学决策中的重要性</a></li>
+<li class="chapter" data-level="4.6.7" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#未来发展方向与挑战"><i class="fa fa-check"></i><b>4.6.7</b> 未来发展方向与挑战</a></li>
+<li class="chapter" data-level="4.6.8" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#结语"><i class="fa fa-check"></i><b>4.6.8</b> 结语</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#综合练习-3"><i class="fa fa-check"></i><b>4.7</b> 综合练习</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#练习1标记重捕法估计鱼类种群大小"><i class="fa fa-check"></i><b>4.7.1</b> 练习1：标记重捕法估计鱼类种群大小</a></li>
+<li class="chapter" data-level="4.7.2" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#练习2物种多样性估计与稀有种校正"><i class="fa fa-check"></i><b>4.7.2</b> 练习2：物种多样性估计与稀有种校正</a></li>
+<li class="chapter" data-level="4.7.3" data-path="从样本到总体的生态推断.html"><a href="从样本到总体的生态推断.html#练习3最大似然估计与贝叶斯估计比较"><i class="fa fa-check"></i><b>4.7.3</b> 练习3：最大似然估计与贝叶斯估计比较</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html"><i class="fa fa-check"></i><b>5</b> 生态变量间的关联与相似</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#引言-4"><i class="fa fa-check"></i><b>5.1</b> 引言</a></li>
+<li class="chapter" data-level="5.2" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#生态变量的线性相关性"><i class="fa fa-check"></i><b>5.2</b> 生态变量的线性相关性</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#pearson相关系数线性关系的度量"><i class="fa fa-check"></i><b>5.2.1</b> Pearson相关系数：线性关系的度量</a></li>
+<li class="chapter" data-level="5.2.2" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#spearman秩相关单调关系的度量"><i class="fa fa-check"></i><b>5.2.2</b> Spearman秩相关：单调关系的度量</a></li>
+<li class="chapter" data-level="5.2.3" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#kendalls-tau基于一致对的比例"><i class="fa fa-check"></i><b>5.2.3</b> Kendall’s <span class="math inline">\(\tau\)</span>：基于一致对的比例</a></li>
+<li class="chapter" data-level="5.2.4" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#偏相关分析"><i class="fa fa-check"></i><b>5.2.4</b> 偏相关分析</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#生态变量的非线性相关"><i class="fa fa-check"></i><b>5.3</b> 生态变量的非线性相关</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#距离相关"><i class="fa fa-check"></i><b>5.3.1</b> 距离相关</a></li>
+<li class="chapter" data-level="5.3.2" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#互信息"><i class="fa fa-check"></i><b>5.3.2</b> 互信息</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#时间序列的自相关"><i class="fa fa-check"></i><b>5.4</b> 时间序列的自相关</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#生态学中的时间自相关实例"><i class="fa fa-check"></i><b>5.4.1</b> 生态学中的时间自相关实例</a></li>
+<li class="chapter" data-level="5.4.2" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#自相关函数acf时间依赖性的量化"><i class="fa fa-check"></i><b>5.4.2</b> 自相关函数（ACF）：时间依赖性的量化</a></li>
+<li class="chapter" data-level="5.4.3" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#偏自相关函数pacf直接时间依赖的识别"><i class="fa fa-check"></i><b>5.4.3</b> 偏自相关函数（PACF）：直接时间依赖的识别</a></li>
+<li class="chapter" data-level="5.4.4" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#时间序列平稳性分析的基础假设"><i class="fa fa-check"></i><b>5.4.4</b> 时间序列平稳性：分析的基础假设</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#空间格局的自相关"><i class="fa fa-check"></i><b>5.5</b> 空间格局的自相关</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#变异函数variogram空间依赖性的量化"><i class="fa fa-check"></i><b>5.5.1</b> 变异函数（Variogram）：空间依赖性的量化</a></li>
+<li class="chapter" data-level="5.5.2" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#克里金插值基于空间自相关的预测方法"><i class="fa fa-check"></i><b>5.5.2</b> 克里金插值：基于空间自相关的预测方法</a></li>
+<li class="chapter" data-level="5.5.3" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#空间自相关指数全局空间模式的检测"><i class="fa fa-check"></i><b>5.5.3</b> 空间自相关指数：全局空间模式的检测</a></li>
+<li class="chapter" data-level="5.5.4" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#局部空间自相关空间异质性的识别"><i class="fa fa-check"></i><b>5.5.4</b> 局部空间自相关：空间异质性的识别</a></li>
+<li class="chapter" data-level="5.5.5" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#空间平稳性空间分析的基础假设"><i class="fa fa-check"></i><b>5.5.5</b> 空间平稳性：空间分析的基础假设</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#系统发育相关性"><i class="fa fa-check"></i><b>5.6</b> 系统发育相关性</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#系统发育信号进化历史的印记"><i class="fa fa-check"></i><b>5.6.1</b> 系统发育信号：进化历史的印记</a></li>
+<li class="chapter" data-level="5.6.2" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#系统发育独立对比去除系统发育影响的性状比较"><i class="fa fa-check"></i><b>5.6.2</b> 系统发育独立对比：去除系统发育影响的性状比较</a></li>
+<li class="chapter" data-level="5.6.3" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#群落系统发育结构聚集与分散"><i class="fa fa-check"></i><b>5.6.3</b> 群落系统发育结构：聚集与分散</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#生态相似性与距离度量"><i class="fa fa-check"></i><b>5.7</b> 生态相似性与距离度量</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#常用相似性系数"><i class="fa fa-check"></i><b>5.7.1</b> 常用相似性系数</a></li>
+<li class="chapter" data-level="5.7.2" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#功能性状间相关性"><i class="fa fa-check"></i><b>5.7.2</b> 功能性状间相关性</a></li>
+<li class="chapter" data-level="5.7.3" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#种内相关性"><i class="fa fa-check"></i><b>5.7.3</b> 种内相关性</a></li>
+<li class="chapter" data-level="5.7.4" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#种间相关性"><i class="fa fa-check"></i><b>5.7.4</b> 种间相关性</a></li>
+<li class="chapter" data-level="5.7.5" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#群落相似性"><i class="fa fa-check"></i><b>5.7.5</b> 群落相似性</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#总结-5"><i class="fa fa-check"></i><b>5.8</b> 总结</a></li>
+<li class="chapter" data-level="5.9" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#综合练习-4"><i class="fa fa-check"></i><b>5.9</b> 综合练习</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#练习一森林生态系统多变量相关性分析"><i class="fa fa-check"></i><b>5.9.1</b> 练习一：森林生态系统多变量相关性分析</a></li>
+<li class="chapter" data-level="5.9.2" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#练习二鸟类种群时间序列与空间格局分析"><i class="fa fa-check"></i><b>5.9.2</b> 练习二：鸟类种群时间序列与空间格局分析</a></li>
+<li class="chapter" data-level="5.9.3" data-path="生态变量间的关联与相似.html"><a href="生态变量间的关联与相似.html#练习三植物功能性状与系统发育相关性分析"><i class="fa fa-check"></i><b>5.9.3</b> 练习三：植物功能性状与系统发育相关性分析</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html"><i class="fa fa-check"></i><b>6</b> 生态假设的经典检验方法</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#引言-5"><i class="fa fa-check"></i><b>6.1</b> 引言</a></li>
+<li class="chapter" data-level="6.2" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#梅花鹿保护与假设检验"><i class="fa fa-check"></i><b>6.2</b> 梅花鹿保护与假设检验</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#假设检验的基本步骤"><i class="fa fa-check"></i><b>6.2.1</b> 假设检验的基本步骤</a></li>
+<li class="chapter" data-level="6.2.2" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#零假设与备择假设"><i class="fa fa-check"></i><b>6.2.2</b> 零假设与备择假设</a></li>
+<li class="chapter" data-level="6.2.3" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#检验统计量与p值"><i class="fa fa-check"></i><b>6.2.3</b> 检验统计量与p值</a></li>
+<li class="chapter" data-level="6.2.4" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#显著性水平"><i class="fa fa-check"></i><b>6.2.4</b> 显著性水平</a></li>
+<li class="chapter" data-level="6.2.5" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#效应大小与置信区间"><i class="fa fa-check"></i><b>6.2.5</b> 效应大小与置信区间</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#种群基准单样本检验"><i class="fa fa-check"></i><b>6.3</b> 种群基准：单样本检验</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#单样本t检验"><i class="fa fa-check"></i><b>6.3.1</b> 单样本<span class="math inline">\(t\)</span>检验</a></li>
+<li class="chapter" data-level="6.3.2" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#单样本符号检验"><i class="fa fa-check"></i><b>6.3.2</b> 单样本符号检验</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#保护前后对比双样本检验"><i class="fa fa-check"></i><b>6.4</b> 保护前后对比：双样本检验</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#独立样本t检验"><i class="fa fa-check"></i><b>6.4.1</b> 独立样本<span class="math inline">\(t\)</span>检验</a></li>
+<li class="chapter" data-level="6.4.2" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#配对样本t检验"><i class="fa fa-check"></i><b>6.4.2</b> 配对样本<span class="math inline">\(t\)</span>检验</a></li>
+<li class="chapter" data-level="6.4.3" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#mann-whitney-u检验"><i class="fa fa-check"></i><b>6.4.3</b> Mann-Whitney U检验</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#不同保护区的比较多样本检验"><i class="fa fa-check"></i><b>6.5</b> 不同保护区的比较：多样本检验</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#方差分析anova"><i class="fa fa-check"></i><b>6.5.1</b> 方差分析（ANOVA）</a></li>
+<li class="chapter" data-level="6.5.2" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#kruskal-wallis检验"><i class="fa fa-check"></i><b>6.5.2</b> Kruskal-Wallis检验</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#生态复杂数据的非参数检验"><i class="fa fa-check"></i><b>6.6</b> 生态复杂数据的非参数检验</a></li>
+<li class="chapter" data-level="6.7" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#生态多重比较的校正方法"><i class="fa fa-check"></i><b>6.7</b> 生态多重比较的校正方法</a>
+<ul>
+<li class="chapter" data-level="6.7.1" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#多重比较问题的本质"><i class="fa fa-check"></i><b>6.7.1</b> 多重比较问题的本质</a></li>
+<li class="chapter" data-level="6.7.2" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#bonferroni校正"><i class="fa fa-check"></i><b>6.7.2</b> Bonferroni校正</a></li>
+<li class="chapter" data-level="6.7.3" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#tukey-hsd检验"><i class="fa fa-check"></i><b>6.7.3</b> Tukey HSD检验</a></li>
+<li class="chapter" data-level="6.7.4" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#fdr错误发现率控制"><i class="fa fa-check"></i><b>6.7.4</b> FDR（错误发现率）控制</a></li>
+<li class="chapter" data-level="6.7.5" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#生态学实例不同保护措施对梅花鹿种群的影响"><i class="fa fa-check"></i><b>6.7.5</b> 生态学实例：不同保护措施对梅花鹿种群的影响</a></li>
+<li class="chapter" data-level="6.7.6" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#多重比较校正效果的可视化"><i class="fa fa-check"></i><b>6.7.6</b> 多重比较校正效果的可视化</a></li>
+<li class="chapter" data-level="6.7.7" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#实用建议与最佳实践"><i class="fa fa-check"></i><b>6.7.7</b> 实用建议与最佳实践</a></li>
+</ul></li>
+<li class="chapter" data-level="6.8" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#生态保护效果的功效分析"><i class="fa fa-check"></i><b>6.8</b> 生态保护效果的功效分析</a>
+<ul>
+<li class="chapter" data-level="6.8.1" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#统计功效的概念与生态学意义"><i class="fa fa-check"></i><b>6.8.1</b> 统计功效的概念与生态学意义</a></li>
+<li class="chapter" data-level="6.8.2" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#功效分析的核心要素"><i class="fa fa-check"></i><b>6.8.2</b> 功效分析的核心要素</a></li>
+<li class="chapter" data-level="6.8.3" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#功效分析在生态学研究设计中的应用"><i class="fa fa-check"></i><b>6.8.3</b> 功效分析在生态学研究设计中的应用</a></li>
+<li class="chapter" data-level="6.8.4" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#不同类型检验的功效分析"><i class="fa fa-check"></i><b>6.8.4</b> 不同类型检验的功效分析</a></li>
+</ul></li>
+<li class="chapter" data-level="6.9" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#总结-6"><i class="fa fa-check"></i><b>6.9</b> 总结</a></li>
+<li class="chapter" data-level="6.10" data-path="生态假设的经典检验方法.html"><a href="生态假设的经典检验方法.html#综合练习-5"><i class="fa fa-check"></i><b>6.10</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html"><i class="fa fa-check"></i><b>7</b> 生态假设的模拟检验方法</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#引言-6"><i class="fa fa-check"></i><b>7.1</b> 引言</a></li>
+<li class="chapter" data-level="7.2" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#生态假设检验的方法学演进"><i class="fa fa-check"></i><b>7.2</b> 生态假设检验的方法学演进</a></li>
+<li class="chapter" data-level="7.3" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#生态假设的置换检验"><i class="fa fa-check"></i><b>7.3</b> 生态假设的置换检验</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#置换检验的基本原理"><i class="fa fa-check"></i><b>7.3.1</b> 置换检验的基本原理</a></li>
+<li class="chapter" data-level="7.3.2" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#置换检验的技术实现过程"><i class="fa fa-check"></i><b>7.3.2</b> 置换检验的技术实现过程</a></li>
+<li class="chapter" data-level="7.3.3" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#r语言实现示例"><i class="fa fa-check"></i><b>7.3.3</b> R语言实现示例</a></li>
+<li class="chapter" data-level="7.3.4" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#置换检验在生态学中的应用价值与局限"><i class="fa fa-check"></i><b>7.3.4</b> 置换检验在生态学中的应用价值与局限</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#生态假设的蒙特卡洛检验"><i class="fa fa-check"></i><b>7.4</b> 生态假设的蒙特卡洛检验</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#蒙特卡洛方法的概念体系"><i class="fa fa-check"></i><b>7.4.1</b> 蒙特卡洛方法的概念体系</a></li>
+<li class="chapter" data-level="7.4.2" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#蒙特卡洛检验的基本原理"><i class="fa fa-check"></i><b>7.4.2</b> 蒙特卡洛检验的基本原理</a></li>
+<li class="chapter" data-level="7.4.3" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#蒙特卡洛检验的主要类型"><i class="fa fa-check"></i><b>7.4.3</b> 蒙特卡洛检验的主要类型</a></li>
+<li class="chapter" data-level="7.4.4" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#r语言实现示例空间分布随机性检验"><i class="fa fa-check"></i><b>7.4.4</b> R语言实现示例：空间分布随机性检验</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#生态假设的自助法检验"><i class="fa fa-check"></i><b>7.5</b> 生态假设的自助法检验</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#自助法的基本原理"><i class="fa fa-check"></i><b>7.5.1</b> 自助法的基本原理</a></li>
+<li class="chapter" data-level="7.5.2" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#自助法的实施步骤"><i class="fa fa-check"></i><b>7.5.2</b> 自助法的实施步骤</a></li>
+<li class="chapter" data-level="7.5.3" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#自助法在生态学中的应用"><i class="fa fa-check"></i><b>7.5.3</b> 自助法在生态学中的应用</a></li>
+<li class="chapter" data-level="7.5.4" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#r语言实现示例-1"><i class="fa fa-check"></i><b>7.5.4</b> R语言实现示例</a></li>
+<li class="chapter" data-level="7.5.5" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#自助法的优势与局限"><i class="fa fa-check"></i><b>7.5.5</b> 自助法的优势与局限</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#基因型频率检验"><i class="fa fa-check"></i><b>7.6</b> 基因型频率检验</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#hardy-weinberg平衡检验"><i class="fa fa-check"></i><b>7.6.1</b> Hardy-Weinberg平衡检验</a></li>
+<li class="chapter" data-level="7.6.2" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#连锁不平衡检验"><i class="fa fa-check"></i><b>7.6.2</b> 连锁不平衡检验</a></li>
+<li class="chapter" data-level="7.6.3" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#方法学比较与选择建议"><i class="fa fa-check"></i><b>7.6.3</b> 方法学比较与选择建议</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#多样性差异检验"><i class="fa fa-check"></i><b>7.7</b> 多样性差异检验</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#群落多样性比较"><i class="fa fa-check"></i><b>7.7.1</b> 群落多样性比较</a></li>
+<li class="chapter" data-level="7.7.2" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#相似性分析anosim"><i class="fa fa-check"></i><b>7.7.2</b> 相似性分析（ANOSIM）</a></li>
+<li class="chapter" data-level="7.7.3" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#方法学比较与生态学应用建议"><i class="fa fa-check"></i><b>7.7.3</b> 方法学比较与生态学应用建议</a></li>
+</ul></li>
+<li class="chapter" data-level="7.8" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#物种空间分布检验"><i class="fa fa-check"></i><b>7.8</b> 物种空间分布检验</a>
+<ul>
+<li class="chapter" data-level="7.8.1" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#空间分布模式检验"><i class="fa fa-check"></i><b>7.8.1</b> 空间分布模式检验</a></li>
+<li class="chapter" data-level="7.8.2" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#点过程模型检验"><i class="fa fa-check"></i><b>7.8.2</b> 点过程模型检验</a></li>
+<li class="chapter" data-level="7.8.3" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#空间生态学的统计挑战与解决方案"><i class="fa fa-check"></i><b>7.8.3</b> 空间生态学的统计挑战与解决方案</a></li>
+<li class="chapter" data-level="7.8.4" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#生态学应用与保护意义"><i class="fa fa-check"></i><b>7.8.4</b> 生态学应用与保护意义</a></li>
+</ul></li>
+<li class="chapter" data-level="7.9" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#系统发育信号检验"><i class="fa fa-check"></i><b>7.9</b> 系统发育信号检验</a>
+<ul>
+<li class="chapter" data-level="7.9.1" data-path="生态假设的模拟检验方法.html"><a href="生态假设的模拟检验方法.html#系统发育保守性检验"><i class="fa fa-check"></i><b>7.9.1</b> 系统发育保守性检验</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="模拟系统发育树和性状数据.html"><a href="模拟系统发育树和性状数据.html"><i class="fa fa-check"></i><b>8</b> 模拟系统发育树和性状数据</a></li>
+<li class="chapter" data-level="9" data-path="计算观测blombergs-k统计量.html"><a href="计算观测blombergs-k统计量.html"><i class="fa fa-check"></i><b>9</b> 计算观测Blomberg’s K统计量</a></li>
+<li class="chapter" data-level="10" data-path="蒙特卡洛模拟.html"><a href="蒙特卡洛模拟.html"><i class="fa fa-check"></i><b>10</b> 蒙特卡洛模拟</a></li>
+<li class="chapter" data-level="11" data-path="计算经验p值.html"><a href="计算经验p值.html"><i class="fa fa-check"></i><b>11</b> 计算经验p值</a></li>
+<li class="chapter" data-level="12" data-path="使用phytools包进行更复杂的系统发育信号检验.html"><a href="使用phytools包进行更复杂的系统发育信号检验.html"><i class="fa fa-check"></i><b>12</b> 使用phytools包进行更复杂的系统发育信号检验</a></li>
+<li class="chapter" data-level="13" data-path="pagels-lambda检验.html"><a href="pagels-lambda检验.html"><i class="fa fa-check"></i><b>13</b> Pagel’s <span class="math inline">\(\lambda\)</span>检验</a></li>
+<li class="chapter" data-level="14" data-path="可视化系统发育信号.html"><a href="可视化系统发育信号.html"><i class="fa fa-check"></i><b>14</b> 可视化系统发育信号</a></li>
+<li class="chapter" data-level="15" data-path="绘制系统发育树和性状值.html"><a href="绘制系统发育树和性状值.html"><i class="fa fa-check"></i><b>15</b> 绘制系统发育树和性状值</a></li>
+<li class="chapter" data-level="16" data-path="添加性状值图例使用颜色和点型组合.html"><a href="添加性状值图例使用颜色和点型组合.html"><i class="fa fa-check"></i><b>16</b> 添加性状值图例，使用颜色和点型组合</a>
+<ul>
+<li class="chapter" data-level="16.0.1" data-path="添加性状值图例使用颜色和点型组合.html"><a href="添加性状值图例使用颜色和点型组合.html#方法学比较与生态学应用建议-1"><i class="fa fa-check"></i><b>16.0.1</b> 方法学比较与生态学应用建议</a></li>
+<li class="chapter" data-level="16.1" data-path="添加性状值图例使用颜色和点型组合.html"><a href="添加性状值图例使用颜色和点型组合.html#生态学零模型检验"><i class="fa fa-check"></i><b>16.1</b> 生态学零模型检验</a>
+<ul>
+<li class="chapter" data-level="16.1.1" data-path="添加性状值图例使用颜色和点型组合.html"><a href="添加性状值图例使用颜色和点型组合.html#零模型的基本概念与生态学意义"><i class="fa fa-check"></i><b>16.1.1</b> 零模型的基本概念与生态学意义</a></li>
+<li class="chapter" data-level="16.1.2" data-path="添加性状值图例使用颜色和点型组合.html"><a href="添加性状值图例使用颜色和点型组合.html#群落组装零模型检验"><i class="fa fa-check"></i><b>16.1.2</b> 群落组装零模型检验</a></li>
+<li class="chapter" data-level="16.1.3" data-path="添加性状值图例使用颜色和点型组合.html"><a href="添加性状值图例使用颜色和点型组合.html#生态网络零模型检验"><i class="fa fa-check"></i><b>16.1.3</b> 生态网络零模型检验</a></li>
+<li class="chapter" data-level="16.1.4" data-path="添加性状值图例使用颜色和点型组合.html"><a href="添加性状值图例使用颜色和点型组合.html#零模型检验的方法学比较与选择"><i class="fa fa-check"></i><b>16.1.4</b> 零模型检验的方法学比较与选择</a></li>
+<li class="chapter" data-level="16.1.5" data-path="添加性状值图例使用颜色和点型组合.html"><a href="添加性状值图例使用颜色和点型组合.html#生态学应用与保护意义-1"><i class="fa fa-check"></i><b>16.1.5</b> 生态学应用与保护意义</a></li>
+</ul></li>
+<li class="chapter" data-level="16.2" data-path="添加性状值图例使用颜色和点型组合.html"><a href="添加性状值图例使用颜色和点型组合.html#总结-7"><i class="fa fa-check"></i><b>16.2</b> 总结</a></li>
+<li class="chapter" data-level="16.3" data-path="添加性状值图例使用颜色和点型组合.html"><a href="添加性状值图例使用颜色和点型组合.html#综合练习-6"><i class="fa fa-check"></i><b>16.3</b> 综合练习</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html"><i class="fa fa-check"></i><b>17</b> 简单生态关系的建模</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#引言-7"><i class="fa fa-check"></i><b>17.1</b> 引言</a>
+<ul>
+<li class="chapter" data-level="17.1.1" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#为什么需要学习统计建模与预测"><i class="fa fa-check"></i><b>17.1.1</b> 为什么需要学习统计建模与预测？</a></li>
+</ul></li>
+<li class="chapter" data-level="17.2" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#线性回归模型生态关系的数学表达"><i class="fa fa-check"></i><b>17.2</b> 线性回归模型：生态关系的数学表达</a></li>
+<li class="chapter" data-level="17.3" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#生态关系的最小二乘估计"><i class="fa fa-check"></i><b>17.3</b> 生态关系的最小二乘估计</a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#r语言中的lm函数详解"><i class="fa fa-check"></i><b>17.3.1</b> R语言中的lm()函数详解</a></li>
+<li class="chapter" data-level="17.3.2" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#lm函数的基本语法"><i class="fa fa-check"></i><b>17.3.2</b> lm()函数的基本语法</a></li>
+<li class="chapter" data-level="17.3.3" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#模型公式的详细说明"><i class="fa fa-check"></i><b>17.3.3</b> 模型公式的详细说明</a></li>
+<li class="chapter" data-level="17.3.4" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#lm函数的返回对象"><i class="fa fa-check"></i><b>17.3.4</b> lm()函数的返回对象</a></li>
+<li class="chapter" data-level="17.3.5" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#提取回归结果的常用函数"><i class="fa fa-check"></i><b>17.3.5</b> 提取回归结果的常用函数</a></li>
+<li class="chapter" data-level="17.3.6" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#理解summary函数的输出"><i class="fa fa-check"></i><b>17.3.6</b> 理解summary()函数的输出</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#回归诊断验证模型的生态学合理性"><i class="fa fa-check"></i><b>17.4</b> 回归诊断：验证模型的生态学合理性</a>
+<ul>
+<li class="chapter" data-level="17.4.1" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#回归诊断图的系统解读"><i class="fa fa-check"></i><b>17.4.1</b> 回归诊断图的系统解读</a></li>
+<li class="chapter" data-level="17.4.2" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#模型质量的综合评估"><i class="fa fa-check"></i><b>17.4.2</b> 模型质量的综合评估</a></li>
+<li class="chapter" data-level="17.4.3" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#生态学诊断问题的应对策略"><i class="fa fa-check"></i><b>17.4.3</b> 生态学诊断问题的应对策略</a></li>
+<li class="chapter" data-level="17.4.4" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#生态学应用实例-1"><i class="fa fa-check"></i><b>17.4.4</b> 生态学应用实例</a></li>
+</ul></li>
+<li class="chapter" data-level="17.5" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#生态模型中的变量选择"><i class="fa fa-check"></i><b>17.5</b> 生态模型中的变量选择</a>
+<ul>
+<li class="chapter" data-level="17.5.1" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#多元线性回归的模型公式"><i class="fa fa-check"></i><b>17.5.1</b> 多元线性回归的模型公式</a></li>
+</ul></li>
+<li class="chapter" data-level="17.6" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#生态多因子模型的变量选择"><i class="fa fa-check"></i><b>17.6</b> 生态多因子模型的变量选择</a>
+<ul>
+<li class="chapter" data-level="17.6.1" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#变量选择的重要性"><i class="fa fa-check"></i><b>17.6.1</b> 变量选择的重要性</a></li>
+<li class="chapter" data-level="17.6.2" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#变量选择的基本原则"><i class="fa fa-check"></i><b>17.6.2</b> 变量选择的基本原则</a></li>
+<li class="chapter" data-level="17.6.3" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#常用的变量选择方法"><i class="fa fa-check"></i><b>17.6.3</b> 常用的变量选择方法</a></li>
+<li class="chapter" data-level="17.6.4" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#r语言中的模型选择实现"><i class="fa fa-check"></i><b>17.6.4</b> R语言中的模型选择实现</a></li>
+<li class="chapter" data-level="17.6.5" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#生态学变量选择的实践建议"><i class="fa fa-check"></i><b>17.6.5</b> 生态学变量选择的实践建议</a></li>
+<li class="chapter" data-level="17.6.6" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#模型选择的注意事项"><i class="fa fa-check"></i><b>17.6.6</b> 模型选择的注意事项</a></li>
+<li class="chapter" data-level="17.6.7" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#完整生态学案例分析森林生态系统与环境因子的关系"><i class="fa fa-check"></i><b>17.6.7</b> 完整生态学案例分析：森林生态系统与环境因子的关系</a></li>
+<li class="chapter" data-level="17.6.8" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#完整模型拟合"><i class="fa fa-check"></i><b>17.6.8</b> 完整模型拟合</a></li>
+<li class="chapter" data-level="17.6.9" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#变量选择过程"><i class="fa fa-check"></i><b>17.6.9</b> 变量选择过程</a></li>
+<li class="chapter" data-level="17.6.10" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#最优模型选择与结果解释"><i class="fa fa-check"></i><b>17.6.10</b> 最优模型选择与结果解释</a></li>
+<li class="chapter" data-level="17.6.11" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#模型诊断与假设检验"><i class="fa fa-check"></i><b>17.6.11</b> 模型诊断与假设检验</a></li>
+<li class="chapter" data-level="17.6.12" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#模型预测与应用"><i class="fa fa-check"></i><b>17.6.12</b> 模型预测与应用</a></li>
+<li class="chapter" data-level="17.6.13" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#模型比较与评估"><i class="fa fa-check"></i><b>17.6.13</b> 模型比较与评估</a></li>
+<li class="chapter" data-level="17.6.14" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#生态学解释与模型选择价值"><i class="fa fa-check"></i><b>17.6.14</b> 生态学解释与模型选择价值</a></li>
+<li class="chapter" data-level="17.6.15" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#案例分析总结"><i class="fa fa-check"></i><b>17.6.15</b> 案例分析总结</a></li>
+</ul></li>
+<li class="chapter" data-level="17.7" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#多项式回归非线性生态关系的数学描述"><i class="fa fa-check"></i><b>17.7</b> 多项式回归：非线性生态关系的数学描述</a>
+<ul>
+<li class="chapter" data-level="17.7.1" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#多项式回归模型"><i class="fa fa-check"></i><b>17.7.1</b> 多项式回归模型</a></li>
+<li class="chapter" data-level="17.7.2" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#r语言中的多项式回归实现"><i class="fa fa-check"></i><b>17.7.2</b> R语言中的多项式回归实现</a></li>
+<li class="chapter" data-level="17.7.3" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#生态学应用实例-2"><i class="fa fa-check"></i><b>17.7.3</b> 生态学应用实例</a></li>
+<li class="chapter" data-level="17.7.4" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#多项式回归的生态学意义"><i class="fa fa-check"></i><b>17.7.4</b> 多项式回归的生态学意义</a></li>
+<li class="chapter" data-level="17.7.5" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#多项式阶数的选择"><i class="fa fa-check"></i><b>17.7.5</b> 多项式阶数的选择</a></li>
+<li class="chapter" data-level="17.7.6" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#多项式回归的注意事项"><i class="fa fa-check"></i><b>17.7.6</b> 多项式回归的注意事项</a></li>
+<li class="chapter" data-level="17.7.7" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#过度拟合问题演示"><i class="fa fa-check"></i><b>17.7.7</b> 过度拟合问题演示</a></li>
+<li class="chapter" data-level="17.7.8" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#模型可视化与比较"><i class="fa fa-check"></i><b>17.7.8</b> 模型可视化与比较</a></li>
+<li class="chapter" data-level="17.7.9" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#统计指标与交叉验证"><i class="fa fa-check"></i><b>17.7.9</b> 统计指标与交叉验证</a></li>
+<li class="chapter" data-level="17.7.10" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#生态学应用建议"><i class="fa fa-check"></i><b>17.7.10</b> 生态学应用建议</a></li>
+</ul></li>
+<li class="chapter" data-level="17.8" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#总结-8"><i class="fa fa-check"></i><b>17.8</b> 总结</a>
+<ul>
+<li class="chapter" data-level="17.8.1" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#研究成果总结"><i class="fa fa-check"></i><b>17.8.1</b> 研究成果总结</a></li>
+<li class="chapter" data-level="17.8.2" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#生态学建模的思维转变"><i class="fa fa-check"></i><b>17.8.2</b> 生态学建模的思维转变</a></li>
+<li class="chapter" data-level="17.8.3" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#实践价值与生态学意义"><i class="fa fa-check"></i><b>17.8.3</b> 实践价值与生态学意义</a></li>
+</ul></li>
+<li class="chapter" data-level="17.9" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#综合练习-7"><i class="fa fa-check"></i><b>17.9</b> 综合练习</a>
+<ul>
+<li class="chapter" data-level="17.9.1" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#练习1温度对植物光合作用速率的影响分析"><i class="fa fa-check"></i><b>17.9.1</b> 练习1：温度对植物光合作用速率的影响分析</a></li>
+<li class="chapter" data-level="17.9.2" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#练习2森林鸟类多样性的多因子分析"><i class="fa fa-check"></i><b>17.9.2</b> 练习2：森林鸟类多样性的多因子分析</a></li>
+<li class="chapter" data-level="17.9.3" data-path="简单生态关系的建模.html"><a href="简单生态关系的建模.html#练习3湖泊生态系统营养级关系的建模"><i class="fa fa-check"></i><b>17.9.3</b> 练习3：湖泊生态系统营养级关系的建模</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html"><i class="fa fa-check"></i><b>18</b> 生态模型的比较与验证</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#引言-8"><i class="fa fa-check"></i><b>18.1</b> 引言</a></li>
+<li class="chapter" data-level="18.2" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#生态模型的比较与选择"><i class="fa fa-check"></i><b>18.2</b> 生态模型的比较与选择</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#模型选择原则"><i class="fa fa-check"></i><b>18.2.1</b> 模型选择原则</a></li>
+<li class="chapter" data-level="18.2.2" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#信息准则"><i class="fa fa-check"></i><b>18.2.2</b> 信息准则</a></li>
+<li class="chapter" data-level="18.2.3" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#似然比检验"><i class="fa fa-check"></i><b>18.2.3</b> 似然比检验</a></li>
+<li class="chapter" data-level="18.2.4" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#模型平均"><i class="fa fa-check"></i><b>18.2.4</b> 模型平均</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#生态模型的验证与评估"><i class="fa fa-check"></i><b>18.3</b> 生态模型的验证与评估</a>
+<ul>
+<li class="chapter" data-level="18.3.1" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#交叉验证"><i class="fa fa-check"></i><b>18.3.1</b> 交叉验证</a></li>
+<li class="chapter" data-level="18.3.2" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#外部验证"><i class="fa fa-check"></i><b>18.3.2</b> 外部验证</a></li>
+<li class="chapter" data-level="18.3.3" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#模型诊断"><i class="fa fa-check"></i><b>18.3.3</b> 模型诊断</a></li>
+</ul></li>
+<li class="chapter" data-level="18.4" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#生态模型的贝叶斯评判方法"><i class="fa fa-check"></i><b>18.4</b> 生态模型的贝叶斯评判方法</a>
+<ul>
+<li class="chapter" data-level="18.4.1" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯与频率学派的根本差异"><i class="fa fa-check"></i><b>18.4.1</b> 贝叶斯与频率学派的根本差异</a></li>
+<li class="chapter" data-level="18.4.2" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯模型选择基本原理"><i class="fa fa-check"></i><b>18.4.2</b> 贝叶斯模型选择基本原理</a></li>
+<li class="chapter" data-level="18.4.3" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯假设检验流程"><i class="fa fa-check"></i><b>18.4.3</b> 贝叶斯假设检验流程</a></li>
+<li class="chapter" data-level="18.4.4" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯模型比较与选择"><i class="fa fa-check"></i><b>18.4.4</b> 贝叶斯模型比较与选择</a></li>
+<li class="chapter" data-level="18.4.5" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯可信区间"><i class="fa fa-check"></i><b>18.4.5</b> 贝叶斯可信区间</a></li>
+<li class="chapter" data-level="18.4.6" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯因子计算与解释"><i class="fa fa-check"></i><b>18.4.6</b> 贝叶斯因子计算与解释</a></li>
+<li class="chapter" data-level="18.4.7" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯模型平均"><i class="fa fa-check"></i><b>18.4.7</b> 贝叶斯模型平均</a></li>
+<li class="chapter" data-level="18.4.8" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯预测评估"><i class="fa fa-check"></i><b>18.4.8</b> 贝叶斯预测评估</a></li>
+<li class="chapter" data-level="18.4.9" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯变量选择"><i class="fa fa-check"></i><b>18.4.9</b> 贝叶斯变量选择</a></li>
+<li class="chapter" data-level="18.4.10" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#生态学应用价值"><i class="fa fa-check"></i><b>18.4.10</b> 生态学应用价值</a></li>
+<li class="chapter" data-level="18.4.11" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯检验的生态学应用案例"><i class="fa fa-check"></i><b>18.4.11</b> 贝叶斯检验的生态学应用案例</a></li>
+<li class="chapter" data-level="18.4.12" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯方法的局限性"><i class="fa fa-check"></i><b>18.4.12</b> 贝叶斯方法的局限性</a></li>
+</ul></li>
+<li class="chapter" data-level="18.5" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#总结-9"><i class="fa fa-check"></i><b>18.5</b> 总结</a>
+<ul>
+<li class="chapter" data-level="18.5.1" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#研究历程的回顾"><i class="fa fa-check"></i><b>18.5.1</b> 研究历程的回顾</a></li>
+<li class="chapter" data-level="18.5.2" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#模型评估的深刻理解"><i class="fa fa-check"></i><b>18.5.2</b> 模型评估的深刻理解</a></li>
+<li class="chapter" data-level="18.5.3" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#贝叶斯方法的新视角"><i class="fa fa-check"></i><b>18.5.3</b> 贝叶斯方法的新视角</a></li>
+<li class="chapter" data-level="18.5.4" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#生态学研究的方法论启示"><i class="fa fa-check"></i><b>18.5.4</b> 生态学研究的方法论启示</a></li>
+<li class="chapter" data-level="18.5.5" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#实践应用与保护价值"><i class="fa fa-check"></i><b>18.5.5</b> 实践应用与保护价值</a></li>
+<li class="chapter" data-level="18.5.6" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#研究能力的提升"><i class="fa fa-check"></i><b>18.5.6</b> 研究能力的提升</a></li>
+<li class="chapter" data-level="18.5.7" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#未来研究方向"><i class="fa fa-check"></i><b>18.5.7</b> 未来研究方向</a></li>
+<li class="chapter" data-level="18.5.8" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#给生态学本科生的建议"><i class="fa fa-check"></i><b>18.5.8</b> 给生态学本科生的建议</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#综合练习-8"><i class="fa fa-check"></i><b>18.6</b> 综合练习</a>
+<ul>
+<li class="chapter" data-level="18.6.1" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#练习一森林生态系统模型选择与评估综合应用"><i class="fa fa-check"></i><b>18.6.1</b> 练习一：森林生态系统模型选择与评估综合应用</a></li>
+<li class="chapter" data-level="18.6.2" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#练习二贝叶斯模型选择与频率学派方法比较"><i class="fa fa-check"></i><b>18.6.2</b> 练习二：贝叶斯模型选择与频率学派方法比较</a></li>
+<li class="chapter" data-level="18.6.3" data-path="生态模型的比较与验证.html"><a href="生态模型的比较与验证.html#练习三模型评估在生态保护决策中的应用"><i class="fa fa-check"></i><b>18.6.3</b> 练习三：模型评估在生态保护决策中的应用</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://gitee.com/gcshen/ecological-statistics" target="blank">Gitee</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">生态统计学AI+</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="添加性状值图例使用颜色和点型组合" class="section level1 hasAnchor" number="16">
+<h1><span class="header-section-number">16</span> 添加性状值图例，使用颜色和点型组合<a href="添加性状值图例使用颜色和点型组合.html#添加性状值图例使用颜色和点型组合" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>legend(“bottomleft”, legend = c(“低性状值”, “高性状值”), fill = c(“blue”, “red”), pch = c(21, 22), bty = “n” )</p>
+<pre><code>
+**生态学意义**：如果检验显示显著的系统发育信号（p &lt; 0.05），表明这些功能性状在亲缘关系较近的物种间更为相似。这支持了&quot;系统发育生态位保守性&quot;假说——物种倾向于保留祖先的生态特性。这种信息对于理解群落组装机制、预测物种对气候变化的响应以及设计基于系统发育多样性的保护策略都具有重要价值。
+
+### 系统发育独立对比
+
+**生态学问题背景**：在比较生物学研究中，我们需要检验不同性状间的生态关系，但由于物种间存在系统发育相关性，传统的统计方法可能产生有偏的结论。系统发育独立对比通过去除系统发育影响，为性状间的生态关系检验提供了正确的统计框架。
+
+**传统方法的挑战**：传统的相关性分析或回归分析假设观测值相互独立，但系统发育相关的物种违背了这一假设：
+- 亲缘关系较近的物种在多个性状上可能同时相似
+- 这种共有的系统发育历史可能产生虚假的相关性
+- 传统方法可能高估或低估性状间的真实生态关系
+
+**基于模拟的解决方案**：置换检验通过随机化系统发育树的结构或性状值的分布来构建零分布，特别适合处理：
+- 复杂系统发育结构的校正
+- 多种性状组合的联合检验
+- 非标准系统发育模型的验证
+
+**生态学实例：植物防御性状与生长速率的关系研究**
+
+假设我们研究热带雨林中40种树种的化学防御物质含量与生长速率的关系。由于这些树种具有系统发育相关性，我们需要使用系统发育独立对比来正确检验这种关系。
+
+**置换检验过程**：
+
+1. **计算观测相关性**：使用系统发育独立对比计算防御性状与生长速率的相关系数
+2. **随机化系统发育结构**：随机重排系统发育树的拓扑结构或分支长度
+3. **构建零分布**：重复随机化1000次，每次计算相关性统计量
+4. **计算p值**：比较观测相关性与零分布的位置
+
+**R语言实现示例**：
+
+下面的代码展示了系统发育独立对比分析的具体实现过程（图\@ref(fig:phylogenetic-contrasts)）：
+
+```{r phylogenetic-contrasts, fig.cap=&quot;植物防御性状与生长速率关系的系统发育独立对比分析：使用不同颜色和点型组合区分原始性状与系统发育校正后的关系&quot;
+# 系统发育独立对比的置换检验
+library(ape)
+library(geiger)
+
+# 模拟系统发育树和性状数据
+set.seed(123)
+tree &lt;- rtree(40) # 40个物种的系统发育树
+
+# 模拟相关性状（受系统发育影响）
+defense_trait &lt;- rTraitCont(tree, model = &quot;BM&quot;, sigma = 1)
+growth_rate &lt;- 0.6 * defense_trait +
+  0.4 * rTraitCont(tree, model = &quot;BM&quot;, sigma = 1) +
+  rnorm(40, 0, 0.5)
+
+# 计算系统发育独立对比
+pic_defense &lt;- pic(defense_trait, tree)
+pic_growth &lt;- pic(growth_rate, tree)
+
+# 计算观测相关性（去除系统发育影响后）
+obs_cor &lt;- cor(pic_defense, pic_growth)
+
+# 置换检验：随机化系统发育结构
+n_perm &lt;- 1000
+perm_cor &lt;- numeric(n_perm)
+
+for (i in 1:n_perm) {
+  # 随机重排系统发育树尖端的性状关联
+  perm_tree &lt;- tree
+  perm_tree$tip.label &lt;- sample(perm_tree$tip.label)
+
+  # 计算置换后的PIC相关性
+  perm_pic_defense &lt;- pic(defense_trait[perm_tree$tip.label], perm_tree)
+  perm_pic_growth &lt;- pic(growth_rate[perm_tree$tip.label], perm_tree)
+  perm_cor[i] &lt;- cor(perm_pic_defense, perm_pic_growth)
+}
+
+# 计算p值
+p_value &lt;- mean(abs(perm_cor) &gt;= abs(obs_cor))
+cat(&quot;观测PIC相关性:&quot;, obs_cor, &quot;\n&quot;)
+cat(&quot;经验p值:&quot;, p_value, &quot;\n&quot;)
+
+# 可视化结果
+par(mfrow = c(1, 2))
+
+# 原始性状的相关性图
+plot(defense_trait, growth_rate,
+  pch = 16, col = &quot;blue&quot;,
+  xlab = &quot;防御物质含量&quot;, ylab = &quot;生长速率&quot;,
+  main = &quot;原始性状相关性&quot;
+)
+abline(lm(growth_rate ~ defense_trait), col = &quot;red&quot;, lwd = 2, lty = 1)
+
+# 系统发育独立对比的相关性图
+plot(pic_defense, pic_growth,
+  pch = 17, col = &quot;darkgreen&quot;,
+  xlab = &quot;防御物质PIC&quot;, ylab = &quot;生长速率PIC&quot;,
+  main = &quot;系统发育独立对比相关性&quot;
+)
+abline(lm(pic_growth ~ pic_defense), col = &quot;red&quot;, lwd = 2, lty = 2)
+
+# 添加相关性系数
+text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
+  paste(&quot;r =&quot;, round(obs_cor, 3)),
+  col = &quot;red&quot;
+)</code></pre>
+<p><strong>生态学意义</strong>：通过系统发育独立对比的置换检验，我们可以更可靠地推断防御性状与生长速率之间的生态权衡关系。如果检验显示显著的正相关（p &lt; 0.05），表明在去除系统发育影响后，防御物质含量高的物种确实具有较慢的生长速率，支持了”生长-防御权衡”假说。这种分析为理解植物生活史策略的进化提供了重要证据。</p>
+<div id="方法学比较与生态学应用建议-1" class="section level3 hasAnchor" number="16.0.1">
+<h3><span class="header-section-number">16.0.1</span> 方法学比较与生态学应用建议<a href="添加性状值图例使用颜色和点型组合.html#方法学比较与生态学应用建议-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>系统发育信号检验方法的选择策略</strong>：</p>
+<ol style="list-style-type: decimal">
+<li><strong>Blomberg’s K检验</strong>：
+<ul>
+<li>适用于连续性状的系统发育信号检验</li>
+<li>基于性状在系统发育树上的方差比较</li>
+<li>K &gt; 1表示比布朗运动期望更强的系统发育信号</li>
+</ul></li>
+<li><strong>Pagel’s <span class="math inline">\(\lambda\)</span>检验</strong>：
+<ul>
+<li>通过最大似然估计检验系统发育信号</li>
+<li><span class="math inline">\(\lambda\)</span>参数衡量系统发育对性状变异的解释程度</li>
+<li>可以检验多种演化模型的拟合优度</li>
+</ul></li>
+<li><strong>置换检验方法</strong>：
+<ul>
+<li>不依赖于特定的演化模型假设</li>
+<li>适用于小样本和非标准性状分布</li>
+<li>可以灵活检验多种系统发育信号指标</li>
+</ul></li>
+</ol>
+<p><strong>生态学研究的最佳实践</strong>：</p>
+<ol style="list-style-type: decimal">
+<li><strong>多方法验证</strong>：使用多种系统发育信号检验方法相互验证</li>
+<li><strong>敏感性分析</strong>：检验结果对系统发育树不确定性的敏感性</li>
+<li><strong>生态学解释</strong>：结合生态学机制解释系统发育信号的意义</li>
+<li><strong>保护应用</strong>：在保护生物学中考虑系统发育多样性的价值</li>
+</ol>
+<p><strong>进化生态学应用</strong>：系统发育信号检验在进化生态学中具有广泛的应用价值：</p>
+<ul>
+<li><strong>适应性进化研究</strong>：检验性状是否受到自然选择的作用</li>
+<li><strong>群落生态学</strong>：理解系统发育对群落组装的约束</li>
+<li><strong>保护生物学</strong>：基于系统发育多样性设计保护优先区</li>
+<li><strong>气候变化研究</strong>：预测物种对气候变化的系统发育响应模式</li>
+</ul>
+<p>通过这些基于模拟的系统发育分析方法，生态学家能够更可靠地推断性状的进化历史，为理解生物多样性的形成机制和预测生态系统对全球变化的响应提供坚实的进化生物学基础。</p>
+<p>作为本章的最后一个主题，我们探讨基于模拟的假设检验在生态学中最具综合性的应用——生态学零模型检验。零模型检验为理解生态模式的形成机制提供了系统的统计框架，是生态学研究中不可或缺的重要工具。</p>
+</div>
+<div id="生态学零模型检验" class="section level2 hasAnchor" number="16.1">
+<h2><span class="header-section-number">16.1</span> 生态学零模型检验<a href="添加性状值图例使用颜色和点型组合.html#生态学零模型检验" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="零模型的基本概念与生态学意义" class="section level3 hasAnchor" number="16.1.1">
+<h3><span class="header-section-number">16.1.1</span> 零模型的基本概念与生态学意义<a href="添加性状值图例使用颜色和点型组合.html#零模型的基本概念与生态学意义" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>生态学问题背景</strong>：零模型（Null Model）是生态学中用于检验观测模式是否显著偏离随机期望的统计工具。在生态学研究中，我们经常观察到各种复杂的生态模式——物种在群落中的特定组合、生态网络中物种间的相互作用、空间分布中的聚集或分散模式等。这些模式是真实的生态过程（如竞争、捕食、环境过滤）的结果，还是仅仅反映了随机过程？零模型为我们提供了回答这个问题的严谨统计框架。</p>
+<p><strong>零模型的核心思想</strong>：零模型通过构建一个”随机期望”来检验观测模式。其基本逻辑是：如果观测模式与随机期望没有显著差异，那么我们可以认为观测模式可能只是随机过程的产物；如果观测模式显著偏离随机期望，那么可能存在某种生态过程在起作用。</p>
+<p><strong>生态学意义</strong>：零模型检验在生态学中具有广泛的应用价值。它帮助我们区分真实的生态规律与随机波动，为理解群落组装机制、物种共存模式、生态网络结构等基本生态学问题提供了重要的统计工具。</p>
+</div>
+<div id="群落组装零模型检验" class="section level3 hasAnchor" number="16.1.2">
+<h3><span class="header-section-number">16.1.2</span> 群落组装零模型检验<a href="添加性状值图例使用颜色和点型组合.html#群落组装零模型检验" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>生态学问题背景</strong>：群落组装是生态学的核心问题之一。我们想要理解为什么特定的物种会在特定的群落中共同出现。是环境过滤、种间竞争、扩散限制等生态过程决定了群落的物种组成，还是物种的组合只是随机过程的结果？</p>
+<p><strong>传统方法的局限性</strong>：传统的群落分析方法（如多样性指数、相似性分析）虽然能够描述群落的特征，但难以区分这些特征是生态过程的结果还是随机期望。传统的统计检验往往依赖于特定的分布假设，而这些假设在复杂的群落数据中往往不成立。</p>
+<p><strong>基于模拟的优势</strong>：群落组装零模型通过随机化群落矩阵来构建期望分布，不依赖于特定的分布假设，特别适合处理： - 复杂的物种-环境关系 - 多物种间的相互作用 - 空间和时间异质性 - 小样本群落数据</p>
+<p><strong>生态学实例：检验梅花鹿栖息地植物群落共存机制</strong></p>
+<p>假设我们研究梅花鹿栖息地中植物物种的共存机制。我们在一个1平方公里的固定监测区域中记录了所有主要植物物种，获得了物种组成数据。我们想要检验植物物种在群落中的共存是否随机，还是受到生态过程的约束。</p>
+<p><strong>零模型检验过程</strong>：</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>构建零模型</strong>：基于不同的随机化算法构建零模型</p>
+<ul>
+<li><strong>固定行和列总和</strong>：保持物种出现频率和样点物种丰富度不变</li>
+<li><strong>固定行总和</strong>：只保持物种出现频率不变</li>
+<li><strong>固定列总和</strong>：只保持样点物种丰富度不变</li>
+</ul></li>
+<li><p><strong>计算检验统计量</strong>：使用群落结构指数，如：</p>
+<ul>
+<li><strong>C-score</strong>：衡量物种共现的非随机性</li>
+<li><strong>Checkerboard score</strong>：检测竞争排斥模式</li>
+<li><strong>Nestedness</strong>：检验群落的嵌套结构</li>
+</ul></li>
+<li><p><strong>随机化模拟</strong>：重复模拟1000次，每次计算检验统计量</p></li>
+<li><p><strong>构建经验分布</strong>：基于模拟结果构建统计量的零分布</p></li>
+<li><p><strong>计算p值</strong>：比较观测统计量与零分布的位置</p></li>
+</ol>
+<p><strong>R语言实现示例</strong>：</p>
+<p>下面的代码展示了群落组装零模型检验的具体实现过程。首先我们模拟热带雨林群落数据并执行零模型分析：</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="添加性状值图例使用颜色和点型组合.html#cb438-1" tabindex="-1"></a><span class="co"># 群落组装零模型检验</span></span>
+<span id="cb438-2"><a href="添加性状值图例使用颜色和点型组合.html#cb438-2" tabindex="-1"></a><span class="fu">library</span>(vegan)</span>
+<span id="cb438-3"><a href="添加性状值图例使用颜色和点型组合.html#cb438-3" tabindex="-1"></a><span class="fu">library</span>(bipartite)</span>
+<span id="cb438-4"><a href="添加性状值图例使用颜色和点型组合.html#cb438-4" tabindex="-1"></a></span>
+<span id="cb438-5"><a href="添加性状值图例使用颜色和点型组合.html#cb438-5" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file=</span><span class="st">&quot;data/comm_matrix.RData&quot;</span>)</span>
+<span id="cb438-6"><a href="添加性状值图例使用颜色和点型组合.html#cb438-6" tabindex="-1"></a><span class="co"># 计算观测C-score（物种共现非随机性）</span></span>
+<span id="cb438-7"><a href="添加性状值图例使用颜色和点型组合.html#cb438-7" tabindex="-1"></a>calc_c_score <span class="ot">&lt;-</span> <span class="cf">function</span>(mat) {</span>
+<span id="cb438-8"><a href="添加性状值图例使用颜色和点型组合.html#cb438-8" tabindex="-1"></a>  n_spp <span class="ot">&lt;-</span> <span class="fu">nrow</span>(mat)</span>
+<span id="cb438-9"><a href="添加性状值图例使用颜色和点型组合.html#cb438-9" tabindex="-1"></a>  c_scores <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">choose</span>(n_spp, <span class="dv">2</span>))</span>
+<span id="cb438-10"><a href="添加性状值图例使用颜色和点型组合.html#cb438-10" tabindex="-1"></a>  idx <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb438-11"><a href="添加性状值图例使用颜色和点型组合.html#cb438-11" tabindex="-1"></a></span>
+<span id="cb438-12"><a href="添加性状值图例使用颜色和点型组合.html#cb438-12" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(n_spp <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb438-13"><a href="添加性状值图例使用颜色和点型组合.html#cb438-13" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> (i <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n_spp) {</span>
+<span id="cb438-14"><a href="添加性状值图例使用颜色和点型组合.html#cb438-14" tabindex="-1"></a>      <span class="co"># 计算物种i和j的共现模式</span></span>
+<span id="cb438-15"><a href="添加性状值图例使用颜色和点型组合.html#cb438-15" tabindex="-1"></a>      both_present <span class="ot">&lt;-</span> <span class="fu">sum</span>(mat[i, ] <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> mat[j, ] <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb438-16"><a href="添加性状值图例使用颜色和点型组合.html#cb438-16" tabindex="-1"></a>      only_i <span class="ot">&lt;-</span> <span class="fu">sum</span>(mat[i, ] <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> mat[j, ] <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb438-17"><a href="添加性状值图例使用颜色和点型组合.html#cb438-17" tabindex="-1"></a>      only_j <span class="ot">&lt;-</span> <span class="fu">sum</span>(mat[i, ] <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> mat[j, ] <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb438-18"><a href="添加性状值图例使用颜色和点型组合.html#cb438-18" tabindex="-1"></a></span>
+<span id="cb438-19"><a href="添加性状值图例使用颜色和点型组合.html#cb438-19" tabindex="-1"></a>      c_scores[idx] <span class="ot">&lt;-</span> only_i <span class="sc">*</span> only_j</span>
+<span id="cb438-20"><a href="添加性状值图例使用颜色和点型组合.html#cb438-20" tabindex="-1"></a>      idx <span class="ot">&lt;-</span> idx <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb438-21"><a href="添加性状值图例使用颜色和点型组合.html#cb438-21" tabindex="-1"></a>    }</span>
+<span id="cb438-22"><a href="添加性状值图例使用颜色和点型组合.html#cb438-22" tabindex="-1"></a>  }</span>
+<span id="cb438-23"><a href="添加性状值图例使用颜色和点型组合.html#cb438-23" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">mean</span>(c_scores))</span>
+<span id="cb438-24"><a href="添加性状值图例使用颜色和点型组合.html#cb438-24" tabindex="-1"></a>}</span>
+<span id="cb438-25"><a href="添加性状值图例使用颜色和点型组合.html#cb438-25" tabindex="-1"></a></span>
+<span id="cb438-26"><a href="添加性状值图例使用颜色和点型组合.html#cb438-26" tabindex="-1"></a>obs_c_score <span class="ot">&lt;-</span> <span class="fu">calc_c_score</span>(comm_matrix)</span>
+<span id="cb438-27"><a href="添加性状值图例使用颜色和点型组合.html#cb438-27" tabindex="-1"></a></span>
+<span id="cb438-28"><a href="添加性状值图例使用颜色和点型组合.html#cb438-28" tabindex="-1"></a><span class="co"># 零模型模拟：固定行和列总和</span></span>
+<span id="cb438-29"><a href="添加性状值图例使用颜色和点型组合.html#cb438-29" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb438-30"><a href="添加性状值图例使用颜色和点型组合.html#cb438-30" tabindex="-1"></a>sim_c_scores <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_sim)</span>
+<span id="cb438-31"><a href="添加性状值图例使用颜色和点型组合.html#cb438-31" tabindex="-1"></a></span>
+<span id="cb438-32"><a href="添加性状值图例使用颜色和点型组合.html#cb438-32" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_sim) {</span>
+<span id="cb438-33"><a href="添加性状值图例使用颜色和点型组合.html#cb438-33" tabindex="-1"></a>  <span class="co"># 使用swap算法随机化群落矩阵</span></span>
+<span id="cb438-34"><a href="添加性状值图例使用颜色和点型组合.html#cb438-34" tabindex="-1"></a>  sim_matrix <span class="ot">&lt;-</span> comm_matrix</span>
+<span id="cb438-35"><a href="添加性状值图例使用颜色和点型组合.html#cb438-35" tabindex="-1"></a></span>
+<span id="cb438-36"><a href="添加性状值图例使用颜色和点型组合.html#cb438-36" tabindex="-1"></a>  <span class="co"># 简单的随机化：保持行和列总和不变</span></span>
+<span id="cb438-37"><a href="添加性状值图例使用颜色和点型组合.html#cb438-37" tabindex="-1"></a>  <span class="co"># 在实际应用中可以使用更复杂的算法如swap算法</span></span>
+<span id="cb438-38"><a href="添加性状值图例使用颜色和点型组合.html#cb438-38" tabindex="-1"></a>  sim_matrix <span class="ot">&lt;-</span> <span class="fu">r2dtable</span>(<span class="dv">1</span>, <span class="fu">rowSums</span>(comm_matrix),</span>
+<span id="cb438-39"><a href="添加性状值图例使用颜色和点型组合.html#cb438-39" tabindex="-1"></a>                         <span class="fu">colSums</span>(comm_matrix))[[<span class="dv">1</span>]]</span>
+<span id="cb438-40"><a href="添加性状值图例使用颜色和点型组合.html#cb438-40" tabindex="-1"></a>  sim_matrix[sim_matrix <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb438-41"><a href="添加性状值图例使用颜色和点型组合.html#cb438-41" tabindex="-1"></a></span>
+<span id="cb438-42"><a href="添加性状值图例使用颜色和点型组合.html#cb438-42" tabindex="-1"></a>  sim_c_scores[i] <span class="ot">&lt;-</span> <span class="fu">calc_c_score</span>(sim_matrix)</span>
+<span id="cb438-43"><a href="添加性状值图例使用颜色和点型组合.html#cb438-43" tabindex="-1"></a>}</span>
+<span id="cb438-44"><a href="添加性状值图例使用颜色和点型组合.html#cb438-44" tabindex="-1"></a></span>
+<span id="cb438-45"><a href="添加性状值图例使用颜色和点型组合.html#cb438-45" tabindex="-1"></a><span class="co"># 计算p值</span></span>
+<span id="cb438-46"><a href="添加性状值图例使用颜色和点型组合.html#cb438-46" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(sim_c_scores <span class="sc">&gt;=</span> obs_c_score)</span>
+<span id="cb438-47"><a href="添加性状值图例使用颜色和点型组合.html#cb438-47" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;观测C-score:&quot;</span>, obs_c_score, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## 观测C-score: 13.67126</code></pre>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="添加性状值图例使用颜色和点型组合.html#cb440-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;零模型检验p值:&quot;</span>, p_value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## 零模型检验p值: 0</code></pre>
+<p>图<a href="添加性状值图例使用颜色和点型组合.html#fig:c-score-null-dist">16.1</a>展示了群落组装零模型检验的C-score零分布：</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:c-score-null-dist"></span>
+<img src="07-simulation_based_tests_files/figure-html/c-score-null-dist-1.png" alt="热带雨林群落组装零模型检验：C-score零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别" width="80%" />
+<p class="caption">
+图16.1: 热带雨林群落组装零模型检验：C-score零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别
+</p>
+</div>
+<p>图<a href="添加性状值图例使用颜色和点型组合.html#fig:community-matrix-heatmap">16.2</a>展示了热带雨林群落的物种分布热图：</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:community-matrix-heatmap"></span>
+<img src="07-simulation_based_tests_files/figure-html/community-matrix-heatmap-1.png" alt="热带雨林群落物种分布热图：基于环境梯度的物种分布模式。使用颜色和透明度组合表示物种存在状态" width="80%" />
+<p class="caption">
+图16.2: 热带雨林群落物种分布热图：基于环境梯度的物种分布模式。使用颜色和透明度组合表示物种存在状态
+</p>
+</div>
+<p><strong>生态学意义</strong>：如果零模型检验显示显著的C-score（p &lt; 0.05），表明树种的共现模式显著偏离随机期望。较高的C-score通常表示物种间存在竞争排斥——物种倾向于避免在相同的样点中共存。这支持了”竞争排斥”假说在热带雨林群落组装中的重要性。</p>
+</div>
+<div id="生态网络零模型检验" class="section level3 hasAnchor" number="16.1.3">
+<h3><span class="header-section-number">16.1.3</span> 生态网络零模型检验<a href="添加性状值图例使用颜色和点型组合.html#生态网络零模型检验" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>生态学问题背景</strong>：生态网络（如食物网、传粉网络、种子散布网络）是生态系统中物种间相互作用的复杂表现形式。理解生态网络的结构特征对于揭示生态系统的稳定性和功能至关重要。我们想要知道观测到的网络结构（如模块化、嵌套性、连接性）是否显著偏离随机期望。</p>
+<p><strong>传统方法的挑战</strong>：传统的网络分析方法主要描述网络的结构特征，但难以评估这些特征是否具有统计显著性。网络结构的复杂性使得理论分布难以确定，特别是对于真实生态网络中常见的非随机模式。</p>
+<p><strong>基于模拟的优势</strong>：生态网络零模型通过随机化网络结构来构建期望分布，能够： - 检验网络拓扑特征的统计显著性 - 区分不同生态过程对网络结构的影响 - 处理各种类型的生态网络（二分网络、加权网络等） - 考虑网络的生物学约束（如物种的生态位）</p>
+<p><strong>生态学实例：检验传粉网络的嵌套结构</strong></p>
+<p>假设我们研究地中海灌丛生态系统的传粉网络。我们记录了植物物种与传粉昆虫物种之间的相互作用，构建了一个传粉网络。我们想要检验这个网络是否具有显著的嵌套结构——一种常见的生态网络模式，其中特化物种倾向于与泛化物种的子集相互作用。</p>
+<p><strong>零模型检验过程</strong>：</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>构建零模型</strong>：使用不同的随机化算法</p>
+<ul>
+<li><strong>固定度分布</strong>：保持每个物种的连接数不变</li>
+<li><strong>固定连接数</strong>：只保持网络的总连接数不变</li>
+<li><strong>概率模型</strong>：基于物种特性生成随机网络</li>
+</ul></li>
+<li><p><strong>计算检验统计量</strong>：使用网络嵌套性指数，如：</p>
+<ul>
+<li><strong>NODF</strong>（Nestedness based on Overlap and Decreasing Fill）</li>
+<li><strong>温度</strong>（Matrix Temperature）</li>
+<li><strong>二分网络嵌套性</strong></li>
+</ul></li>
+<li><p><strong>随机化模拟</strong>：重复模拟1000次，每次计算嵌套性指数</p></li>
+<li><p><strong>构建经验分布</strong>：基于模拟结果构建嵌套性指数的零分布</p></li>
+<li><p><strong>计算p值</strong>：比较观测嵌套性与零分布的位置</p></li>
+</ol>
+<p><strong>R语言实现示例</strong>：</p>
+<p>下面的代码展示了传粉网络嵌套性零模型检验的具体实现过程。首先我们模拟传粉网络数据并执行零模型分析：</p>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="添加性状值图例使用颜色和点型组合.html#cb442-1" tabindex="-1"></a><span class="co"># 生态网络零模型检验：传粉网络嵌套性</span></span>
+<span id="cb442-2"><a href="添加性状值图例使用颜色和点型组合.html#cb442-2" tabindex="-1"></a><span class="fu">library</span>(bipartite)</span>
+<span id="cb442-3"><a href="添加性状值图例使用颜色和点型组合.html#cb442-3" tabindex="-1"></a><span class="fu">library</span>(igraph)</span>
+<span id="cb442-4"><a href="添加性状值图例使用颜色和点型组合.html#cb442-4" tabindex="-1"></a></span>
+<span id="cb442-5"><a href="添加性状值图例使用颜色和点型组合.html#cb442-5" tabindex="-1"></a><span class="fu">load</span>(<span class="at">file=</span><span class="st">&quot;data/pollination_network.RData&quot;</span>)</span>
+<span id="cb442-6"><a href="添加性状值图例使用颜色和点型组合.html#cb442-6" tabindex="-1"></a><span class="co"># 计算观测嵌套性（NODF）</span></span>
+<span id="cb442-7"><a href="添加性状值图例使用颜色和点型组合.html#cb442-7" tabindex="-1"></a>obs_nestedness <span class="ot">&lt;-</span> <span class="fu">nested</span>(pollination_network, <span class="at">method =</span> <span class="st">&quot;NODF2&quot;</span>)</span>
+<span id="cb442-8"><a href="添加性状值图例使用颜色和点型组合.html#cb442-8" tabindex="-1"></a></span>
+<span id="cb442-9"><a href="添加性状值图例使用颜色和点型组合.html#cb442-9" tabindex="-1"></a><span class="co"># 零模型模拟：固定行和列总和</span></span>
+<span id="cb442-10"><a href="添加性状值图例使用颜色和点型组合.html#cb442-10" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb442-11"><a href="添加性状值图例使用颜色和点型组合.html#cb442-11" tabindex="-1"></a>sim_nestedness <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_sim)</span>
+<span id="cb442-12"><a href="添加性状值图例使用颜色和点型组合.html#cb442-12" tabindex="-1"></a></span>
+<span id="cb442-13"><a href="添加性状值图例使用颜色和点型组合.html#cb442-13" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_sim) {</span>
+<span id="cb442-14"><a href="添加性状值图例使用颜色和点型组合.html#cb442-14" tabindex="-1"></a>  <span class="co"># 使用nullmodel函数生成零模型</span></span>
+<span id="cb442-15"><a href="添加性状值图例使用颜色和点型组合.html#cb442-15" tabindex="-1"></a>  sim_network <span class="ot">&lt;-</span> pollination_network</span>
+<span id="cb442-16"><a href="添加性状值图例使用颜色和点型组合.html#cb442-16" tabindex="-1"></a></span>
+<span id="cb442-17"><a href="添加性状值图例使用颜色和点型组合.html#cb442-17" tabindex="-1"></a>  <span class="co"># 保持行和列总和不变的随机化</span></span>
+<span id="cb442-18"><a href="添加性状值图例使用颜色和点型组合.html#cb442-18" tabindex="-1"></a>  sim_network <span class="ot">&lt;-</span> <span class="fu">r2dtable</span>(</span>
+<span id="cb442-19"><a href="添加性状值图例使用颜色和点型组合.html#cb442-19" tabindex="-1"></a>    <span class="dv">1</span>, <span class="fu">rowSums</span>(pollination_network),</span>
+<span id="cb442-20"><a href="添加性状值图例使用颜色和点型组合.html#cb442-20" tabindex="-1"></a>    <span class="fu">colSums</span>(pollination_network)</span>
+<span id="cb442-21"><a href="添加性状值图例使用颜色和点型组合.html#cb442-21" tabindex="-1"></a>  )[[<span class="dv">1</span>]]</span>
+<span id="cb442-22"><a href="添加性状值图例使用颜色和点型组合.html#cb442-22" tabindex="-1"></a>  sim_network[sim_network <span class="sc">&gt;</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb442-23"><a href="添加性状值图例使用颜色和点型组合.html#cb442-23" tabindex="-1"></a></span>
+<span id="cb442-24"><a href="添加性状值图例使用颜色和点型组合.html#cb442-24" tabindex="-1"></a>  sim_nestedness[i] <span class="ot">&lt;-</span> <span class="fu">nested</span>(sim_network, <span class="at">method =</span> <span class="st">&quot;NODF2&quot;</span>)</span>
+<span id="cb442-25"><a href="添加性状值图例使用颜色和点型组合.html#cb442-25" tabindex="-1"></a>}</span>
+<span id="cb442-26"><a href="添加性状值图例使用颜色和点型组合.html#cb442-26" tabindex="-1"></a></span>
+<span id="cb442-27"><a href="添加性状值图例使用颜色和点型组合.html#cb442-27" tabindex="-1"></a><span class="co"># 计算p值</span></span>
+<span id="cb442-28"><a href="添加性状值图例使用颜色和点型组合.html#cb442-28" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(sim_nestedness <span class="sc">&gt;=</span> obs_nestedness)</span>
+<span id="cb442-29"><a href="添加性状值图例使用颜色和点型组合.html#cb442-29" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;观测嵌套性(NODF):&quot;</span>, obs_nestedness, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## 观测嵌套性(NODF): 25.46973</code></pre>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="添加性状值图例使用颜色和点型组合.html#cb444-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;零模型检验p值:&quot;</span>, p_value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## 零模型检验p值: 0.014</code></pre>
+<p>图<a href="添加性状值图例使用颜色和点型组合.html#fig:nestedness-null-dist">16.3</a>展示了传粉网络嵌套性零模型检验的零分布：</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:nestedness-null-dist"></span>
+<img src="07-simulation_based_tests_files/figure-html/nestedness-null-dist-1.png" alt="传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别" width="80%" />
+<p class="caption">
+图16.3: 传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别
+</p>
+</div>
+<p>图<a href="添加性状值图例使用颜色和点型组合.html#fig:pollination-network-structure">16.4</a>展示了传粉网络的结构图：</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pollination-network-structure"></span>
+<img src="07-simulation_based_tests_files/figure-html/pollination-network-structure-1.png" alt="传粉网络结构可视化：植物与传粉者的二分网络。使用颜色和形状组合区分不同类型节点" width="80%" />
+<p class="caption">
+图16.4: 传粉网络结构可视化：植物与传粉者的二分网络。使用颜色和形状组合区分不同类型节点
+</p>
+</div>
+<p>图<a href="添加性状值图例使用颜色和点型组合.html#fig:pollination-matrix-heatmap">16.5</a>展示了传粉网络相互作用的矩阵热图：</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pollination-matrix-heatmap"></span>
+<img src="07-simulation_based_tests_files/figure-html/pollination-matrix-heatmap-1.png" alt="传粉网络相互作用矩阵热图：嵌套结构的可视化。使用颜色和透明度组合表示相互作用存在状态" width="80%" />
+<p class="caption">
+图16.5: 传粉网络相互作用矩阵热图：嵌套结构的可视化。使用颜色和透明度组合表示相互作用存在状态
+</p>
+</div>
+<p><strong>生态学意义</strong>：如果零模型检验显示显著的嵌套性（p &lt; 0.05），表明传粉网络的结构确实具有嵌套模式。嵌套结构通常被认为能够增强生态网络的稳定性和韧性——当某些物种消失时，嵌套结构有助于维持网络的连接性。这种结构信息对于理解传粉服务的稳定性和设计保护策略具有重要意义。</p>
+</div>
+<div id="零模型检验的方法学比较与选择" class="section level3 hasAnchor" number="16.1.4">
+<h3><span class="header-section-number">16.1.4</span> 零模型检验的方法学比较与选择<a href="添加性状值图例使用颜色和点型组合.html#零模型检验的方法学比较与选择" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>不同类型的零模型算法</strong>：</p>
+<ol style="list-style-type: decimal">
+<li><strong>完全随机模型</strong>：
+<ul>
+<li>算法：完全随机重排相互作用</li>
+<li>适用场景：检验网络连接性的非随机性</li>
+<li>生态学意义：最基本的零模型，检验是否存在任何非随机结构</li>
+</ul></li>
+<li><strong>固定度分布模型</strong>：
+<ul>
+<li>算法：保持每个物种的连接数不变</li>
+<li>适用场景：检验网络结构的其他特征（如嵌套性、模块化）</li>
+<li>生态学意义：考虑物种生态位宽度的约束</li>
+</ul></li>
+<li><strong>概率模型</strong>：
+<ul>
+<li>算法：基于物种特性生成随机网络</li>
+<li>适用场景：检验特定生态假说</li>
+<li>生态学意义：整合生物学知识构建更真实的零模型</li>
+</ul></li>
+</ol>
+<p><strong>生态学研究的最佳实践</strong>：</p>
+<ol style="list-style-type: decimal">
+<li><strong>多模型比较</strong>：使用多种零模型算法相互验证</li>
+<li><strong>生物学合理性</strong>：选择与生态过程相符的随机化算法</li>
+<li><strong>敏感性分析</strong>：检验结果对不同零模型算法的敏感性</li>
+<li><strong>生态学解释</strong>：结合生态学机制解释统计结果</li>
+</ol>
+<p><strong>R语言中的零模型分析工具</strong>：</p>
+<p>下面的代码展示了常用的零模型分析工具及其应用。首先我们加载相关包并执行物种共现零模型分析：</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="添加性状值图例使用颜色和点型组合.html#cb446-1" tabindex="-1"></a><span class="co"># 常用的零模型分析包</span></span>
+<span id="cb446-2"><a href="添加性状值图例使用颜色和点型组合.html#cb446-2" tabindex="-1"></a><span class="fu">library</span>(vegan) <span class="co"># 群落生态学零模型</span></span>
+<span id="cb446-3"><a href="添加性状值图例使用颜色和点型组合.html#cb446-3" tabindex="-1"></a><span class="fu">library</span>(bipartite) <span class="co"># 二分网络零模型</span></span>
+<span id="cb446-4"><a href="添加性状值图例使用颜色和点型组合.html#cb446-4" tabindex="-1"></a><span class="fu">library</span>(igraph) <span class="co"># 网络分析</span></span>
+<span id="cb446-5"><a href="添加性状值图例使用颜色和点型组合.html#cb446-5" tabindex="-1"></a><span class="fu">library</span>(EcoSimR) <span class="co"># 生态学零模型</span></span>
+<span id="cb446-6"><a href="添加性状值图例使用颜色和点型组合.html#cb446-6" tabindex="-1"></a><span class="fu">library</span>(spaa) <span class="co"># 物种关联分析</span></span>
+<span id="cb446-7"><a href="添加性状值图例使用颜色和点型组合.html#cb446-7" tabindex="-1"></a></span>
+<span id="cb446-8"><a href="添加性状值图例使用颜色和点型组合.html#cb446-8" tabindex="-1"></a><span class="co"># EcoSimR包中的零模型分析示例</span></span>
+<span id="cb446-9"><a href="添加性状值图例使用颜色和点型组合.html#cb446-9" tabindex="-1"></a><span class="fu">library</span>(EcoSimR)</span>
+<span id="cb446-10"><a href="添加性状值图例使用颜色和点型组合.html#cb446-10" tabindex="-1"></a></span>
+<span id="cb446-11"><a href="添加性状值图例使用颜色和点型组合.html#cb446-11" tabindex="-1"></a><span class="co"># 物种共现零模型</span></span>
+<span id="cb446-12"><a href="添加性状值图例使用颜色和点型组合.html#cb446-12" tabindex="-1"></a><span class="co"># 使用固定行和列总和的算法</span></span>
+<span id="cb446-13"><a href="添加性状值图例使用颜色和点型组合.html#cb446-13" tabindex="-1"></a>cooc_null <span class="ot">&lt;-</span> <span class="fu">cooc_null_model</span>(comm_matrix,</span>
+<span id="cb446-14"><a href="添加性状值图例使用颜色和点型组合.html#cb446-14" tabindex="-1"></a>  <span class="at">algo =</span> <span class="st">&quot;sim9&quot;</span>,</span>
+<span id="cb446-15"><a href="添加性状值图例使用颜色和点型组合.html#cb446-15" tabindex="-1"></a>  <span class="at">nReps =</span> <span class="dv">1000</span>,</span>
+<span id="cb446-16"><a href="添加性状值图例使用颜色和点型组合.html#cb446-16" tabindex="-1"></a>  <span class="at">suppressProg =</span> <span class="cn">TRUE</span></span>
+<span id="cb446-17"><a href="添加性状值图例使用颜色和点型组合.html#cb446-17" tabindex="-1"></a>)</span>
+<span id="cb446-18"><a href="添加性状值图例使用颜色和点型组合.html#cb446-18" tabindex="-1"></a></span>
+<span id="cb446-19"><a href="添加性状值图例使用颜色和点型组合.html#cb446-19" tabindex="-1"></a><span class="fu">summary</span>(cooc_null)</span></code></pre></div>
+<pre><code>## Time Stamp:  Thu Dec 11 04:31:04 2025 
+## Reproducible:  
+## Number of Replications:  
+## Elapsed Time:  0.55 secs 
+## Metric:  c_score 
+## Algorithm:  sim9 
+## Observed Index:  13.671 
+## Mean Of Simulated Index:  12.275 
+## Variance Of Simulated Index:  0.0081194 
+## Lower 95% (1-tail):  12.138 
+## Upper 95% (1-tail):  12.432 
+## Lower 95% (2-tail):  12.113 
+## Upper 95% (2-tail):  12.469 
+## Lower-tail P &gt;  0.999 
+## Upper-tail P &lt;  0.001 
+## Observed metric &gt; 1000 simulated metrics 
+## Observed metric &lt; 0 simulated metrics 
+## Observed metric = 0 simulated metrics 
+## Standardized Effect Size (SES):  15.494</code></pre>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="添加性状值图例使用颜色和点型组合.html#cb448-1" tabindex="-1"></a><span class="co"># 网络嵌套性零模型</span></span>
+<span id="cb448-2"><a href="添加性状值图例使用颜色和点型组合.html#cb448-2" tabindex="-1"></a><span class="co"># 使用vegan包中的permatswap函数</span></span>
+<span id="cb448-3"><a href="添加性状值图例使用颜色和点型组合.html#cb448-3" tabindex="-1"></a>net_null <span class="ot">&lt;-</span> <span class="fu">permatswap</span>(pollination_network,</span>
+<span id="cb448-4"><a href="添加性状值图例使用颜色和点型组合.html#cb448-4" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;quasiswap&quot;</span>,</span>
+<span id="cb448-5"><a href="添加性状值图例使用颜色和点型组合.html#cb448-5" tabindex="-1"></a>                       <span class="at">times =</span> <span class="dv">1000</span>)</span>
+<span id="cb448-6"><a href="添加性状值图例使用颜色和点型组合.html#cb448-6" tabindex="-1"></a></span>
+<span id="cb448-7"><a href="添加性状值图例使用颜色和点型组合.html#cb448-7" tabindex="-1"></a><span class="co"># 提取模拟结果并计算嵌套性</span></span>
+<span id="cb448-8"><a href="添加性状值图例使用颜色和点型组合.html#cb448-8" tabindex="-1"></a>null_results <span class="ot">&lt;-</span> <span class="fu">sapply</span>(net_null<span class="sc">$</span>perm, <span class="cf">function</span>(mat) {</span>
+<span id="cb448-9"><a href="添加性状值图例使用颜色和点型组合.html#cb448-9" tabindex="-1"></a>  <span class="fu">nested</span>(mat, <span class="at">method =</span> <span class="st">&quot;NODF2&quot;</span>)</span>
+<span id="cb448-10"><a href="添加性状值图例使用颜色和点型组合.html#cb448-10" tabindex="-1"></a>})</span>
+<span id="cb448-11"><a href="添加性状值图例使用颜色和点型组合.html#cb448-11" tabindex="-1"></a></span>
+<span id="cb448-12"><a href="添加性状值图例使用颜色和点型组合.html#cb448-12" tabindex="-1"></a><span class="co"># 计算观测嵌套性</span></span>
+<span id="cb448-13"><a href="添加性状值图例使用颜色和点型组合.html#cb448-13" tabindex="-1"></a>obs_nestedness <span class="ot">&lt;-</span> <span class="fu">nested</span>(pollination_network, <span class="at">method =</span> <span class="st">&quot;NODF2&quot;</span>)</span>
+<span id="cb448-14"><a href="添加性状值图例使用颜色和点型组合.html#cb448-14" tabindex="-1"></a></span>
+<span id="cb448-15"><a href="添加性状值图例使用颜色和点型组合.html#cb448-15" tabindex="-1"></a><span class="co"># 计算p值</span></span>
+<span id="cb448-16"><a href="添加性状值图例使用颜色和点型组合.html#cb448-16" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(null_results <span class="sc">&gt;=</span> obs_nestedness)</span>
+<span id="cb448-17"><a href="添加性状值图例使用颜色和点型组合.html#cb448-17" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;观测嵌套性:&quot;</span>, obs_nestedness, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## 观测嵌套性: 25.46973</code></pre>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="添加性状值图例使用颜色和点型组合.html#cb450-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;p值:&quot;</span>, p_value, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>)</span></code></pre></div>
+<pre><code>## p值: 0.628</code></pre>
+<p>图<a href="添加性状值图例使用颜色和点型组合.html#fig:cooc-null-model-plot">16.6</a>展示了EcoSimR包中物种共现零模型的检验结果：</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:cooc-null-model-plot"></span>
+<img src="07-simulation_based_tests_files/figure-html/cooc-null-model-plot-1.png" alt="物种共现零模型检验：EcoSimR包分析结果" width="80%" />
+<p class="caption">
+图16.6: 物种共现零模型检验：EcoSimR包分析结果
+</p>
+</div>
+<p>图<a href="添加性状值图例使用颜色和点型组合.html#fig:nestedness-null-hist">16.7</a>展示了网络嵌套性零模型的零分布直方图：</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:nestedness-null-hist"></span>
+<img src="07-simulation_based_tests_files/figure-html/nestedness-null-hist-1.png" alt="网络嵌套性零模型检验：嵌套性指数零分布。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别" width="80%" />
+<p class="caption">
+图16.7: 网络嵌套性零模型检验：嵌套性指数零分布。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别
+</p>
+</div>
+</div>
+<div id="生态学应用与保护意义-1" class="section level3 hasAnchor" number="16.1.5">
+<h3><span class="header-section-number">16.1.5</span> 生态学应用与保护意义<a href="添加性状值图例使用颜色和点型组合.html#生态学应用与保护意义-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>保护生物学应用</strong>：</p>
+<ul>
+<li><strong>保护区设计</strong>：基于物种共现模式优化保护区网络</li>
+<li><strong>入侵物种风险评估</strong>：检验外来物种与本地物种的相互作用模式</li>
+<li><strong>生态系统恢复</strong>：评估恢复后群落的组装过程</li>
+</ul>
+<p><strong>群落生态学应用</strong>：</p>
+<ul>
+<li><strong>群落构建机制</strong>：区分环境过滤、竞争排斥、扩散限制的相对重要性</li>
+<li><strong>生物多样性维持</strong>：理解物种共存机制</li>
+<li><strong>生态系统功能</strong>：检验网络结构与生态系统功能的关系</li>
+</ul>
+<p><strong>全球变化研究</strong>：</p>
+<ul>
+<li><strong>气候变化响应</strong>：监测群落结构对气候变化的响应</li>
+<li><strong>栖息地破碎化</strong>：检验生境破碎对物种相互作用的影响</li>
+<li><strong>物种分布变化</strong>：预测物种分布范围变化的生态后果</li>
+</ul>
+<p><strong>生态学意义</strong>：零模型检验为生态学家提供了强大的统计工具来检验生态学假说。通过构建合理的随机期望，我们能够更可靠地推断观测生态模式的形成机制，为理解生态过程、预测生态系统变化和制定有效的保护策略提供坚实的科学基础。这些方法特别适合处理生态学中常见的复杂模式和小样本问题，是现代生态学研究不可或缺的统计工具。</p>
+</div>
+</div>
+<div id="总结-7" class="section level2 hasAnchor" number="16.2">
+<h2><span class="header-section-number">16.2</span> 总结<a href="添加性状值图例使用颜色和点型组合.html#总结-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>基于模拟的假设检验方法代表了生态统计学从理论驱动向数据驱动的重要转变，为处理复杂的生态学问题提供了灵活而强大的统计工具。本章系统介绍了置换检验、蒙特卡洛检验和自助法检验这三种核心方法的基本原理、技术实现和生态学应用，展现了这些方法在梅花鹿保护研究中的独特价值。</p>
+<p>置换检验通过随机重排观测数据的标签来构建零分布，其核心思想是如果零假设为真，那么数据的标签就是可以任意交换的。这种方法特别适合检验组间差异的显著性，如保护区内外的梅花鹿种群密度差异、不同栖息地类型的植物群落组成差异等。置换检验的优势在于完全不依赖于理论分布假设，能够有效处理生态学中常见的非正态数据、小样本问题和复杂统计量。在R语言中，我们可以通过简单的循环实现置换检验，也可以使用专门的包如coin和vegan来执行更复杂的置换分析。</p>
+<p>蒙特卡洛检验则基于理论模型或假设分布生成模拟数据来构建统计量的经验分布，特别适用于那些理论分布未知或过于复杂的统计量。与置换检验不同，蒙特卡洛检验不是基于观测数据的重排，而是基于理论模型生成全新的模拟数据。这种方法在空间生态学、系统发育分析和群落生态学中具有广泛应用，如检验物种空间分布是否遵循完全空间随机过程、评估系统发育信号的显著性等。蒙特卡洛检验的实施过程包括构建理论模型、生成模拟数据集、计算统计量和构建经验分布三个关键步骤。</p>
+<p>自助法作为蒙特卡洛方法的一种特殊形式，通过对观测数据进行有放回的重抽样来估计统计量的抽样分布。自助法主要用于构建置信区间和参数估计，特别适合处理小样本问题和复杂统计量的不确定性评估。在梅花鹿保护研究中，自助法可以用于估计多样性指数的置信区间、评估生态模型参数的不确定性、进行非参数的假设检验等。自助法的基本假设是观测样本能够代表总体的分布特征，通过对观测样本进行有放回的重抽样，我们可以生成大量的自助样本，这些自助样本在统计上等价于从原始总体中抽取的新样本。</p>
+<p>这些基于模拟的方法在生态学的各个分支领域都展现出广泛的应用价值。在种群遗传学中，它们为Hardy-Weinberg平衡检验和连锁不平衡检验提供了可靠的统计框架，特别是在小样本和稀有等位基因情况下。在群落生态学中，基于模拟的方法支持多样性差异检验、相似性分析和群落组装机制研究，为理解物种共存模式提供了重要的统计工具。在空间生态学中，这些方法能够有效处理边界效应、空间自相关和多重尺度分析等复杂问题，为理解物种空间分布的形成机制提供了可靠的统计推断。在系统发育分析中，基于模拟的方法支持系统发育信号检验和系统发育独立对比分析，为理解性状的进化历史提供了严谨的统计框架。</p>
+<p>生态学零模型检验作为基于模拟方法的综合应用，为理解生态模式的形成机制提供了系统的统计框架。通过构建合理的随机期望，零模型检验帮助我们区分真实的生态规律与随机波动，为理解群落组装机制、物种共存模式、生态网络结构等基本生态学问题提供了重要的统计工具。在群落组装研究中，零模型检验可以检验物种共现的非随机性；在生态网络分析中，零模型检验可以评估网络结构特征（如嵌套性、模块化）的统计显著性。</p>
+<p>基于模拟的假设检验方法虽然具有诸多优势，但也存在一些固有的局限性。这些方法对计算资源的要求较高，通常需要进行大量的重复模拟；不同的随机化方案可能导致不同的结果，研究人员需要根据具体研究问题谨慎选择适当的随机化策略；最重要的是，统计显著性并不等同于生态重要性，基于模拟的检验结果仍需结合生态学机制进行深入解释，避免过度依赖p值而忽视生态学意义。</p>
+<p>在梅花鹿保护研究中，基于模拟的假设检验方法为处理复杂的生态问题提供了可靠的统计解决方案。从种群动态监测到栖息地适宜性分析，从遗传多样性评估到空间分布模式研究，这些方法都能够适应生态数据的复杂性特征，为保护决策提供坚实的科学基础。通过系统掌握这些方法，保护生物学家能够在面对各种非标准统计问题时做出更加可靠的统计推断，推动梅花鹿保护研究的深入发展。</p>
+<p>基于模拟的假设检验方法代表了现代生态统计学的重要发展方向，它们与经典统计方法形成互补关系而非替代关系。当参数检验的前提条件满足时，参数检验通常具有更高的统计效率；当前提条件不满足时，基于模拟的方法提供了可靠的替代方案。优秀的生态学家应该掌握多种统计工具，能够根据具体生态问题选择最合适的方法，为生态学研究和保护实践提供更可靠的统计支持。</p>
+</div>
+<div id="综合练习-6" class="section level2 hasAnchor" number="16.3">
+<h2><span class="header-section-number">16.3</span> 综合练习<a href="添加性状值图例使用颜色和点型组合.html#综合练习-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>练习1：变量间相关性检验</strong></p>
+<p>下面代码定义了两个变量x和y的值，请用基于模拟的统计检验方法，回答这两个变量之间是否存在显著的相关性。</p>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="添加性状值图例使用颜色和点型组合.html#cb452-1" tabindex="-1"></a>x<span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.6</span>)</span>
+<span id="cb452-2"><a href="添加性状值图例使用颜色和点型组合.html#cb452-2" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>, <span class="fl">0.6</span>, <span class="fl">0.7</span>, <span class="fl">0.5</span>)</span></code></pre></div>
+<p><strong>练习2：梅花鹿保护效果的综合评估</strong></p>
+<p>假设你在一个梅花鹿自然保护区工作，需要评估不同保护措施对梅花鹿种群和栖息地的影响。你收集了种群数据（在保护区内和保护区外记录的梅花鹿种群密度）、遗传数据（保护区内梅花鹿种群的微卫星位点基因型频率）、植物群落数据（不同保护年限栖息地的植物物种组成）和空间分布数据（保护区内梅花鹿个体的空间坐标）。</p>
+<p>请设计一个综合的统计分析方案，使用本章介绍的基于模拟的假设检验方法回答以下问题：保护区内外的梅花鹿种群密度是否存在显著差异？使用置换检验进行检验。保护区内梅花鹿种群是否处于Hardy-Weinberg平衡状态？使用蒙特卡洛检验进行检验。不同保护年限栖息地的植物群落组成是否存在显著差异？使用ANOSIM置换检验。梅花鹿在保护区内的空间分布是否显著偏离随机模式？使用Ripley’s K函数包络分析。</p>
+<p>请详细说明每种检验的零假设、检验统计量、随机化策略，并解释统计结果在梅花鹿保护实践中的生态学意义。</p>
+<p><strong>练习3：生态网络结构与保护优先区识别</strong></p>
+<p>你正在研究一个包含梅花鹿、其主要食物植物和传粉昆虫的生态网络。网络数据包括植物-传粉者网络（15种植物与20种传粉者的相互作用矩阵）、梅花鹿-植物网络（梅花鹿对10种主要食物植物的取食偏好）和空间分布数据（所有物种在景观中的分布位置）。</p>
+<p>请使用基于模拟的零模型检验方法：检验植物-传粉者网络是否具有显著的嵌套结构，并解释嵌套结构对网络稳定性的意义。检验梅花鹿-植物网络中是否存在显著的物种共现模式（使用C-score检验），分析竞争排斥或生态位分化的证据。结合空间分布数据，使用系统发育信号检验分析梅花鹿食物偏好的系统发育保守性。基于以上分析结果，提出保护优先区的识别标准，并说明如何利用网络结构信息优化保护策略。</p>
+<p>请详细说明每种零模型检验的算法选择理由，并讨论统计结果对梅花鹿栖息地管理的指导意义。</p>
+<p><strong>练习4：气候变化对梅花鹿栖息地影响的模拟研究</strong></p>
+<p>假设你正在评估气候变化对梅花鹿栖息地适宜性的潜在影响。你拥有历史气候数据（过去30年的温度、降水等气候变量）、梅花鹿分布数据（当前梅花鹿在保护区的分布点位）、栖息地变量（植被类型、海拔、坡度等环境因子）和未来气候情景（两种气候变化情景下的预测数据）。</p>
+<p>请设计一个基于蒙特卡洛模拟的综合分析方法：使用自助法构建当前栖息地适宜性模型的参数置信区间，评估模型的不确定性。使用置换检验检验梅花鹿分布与环境因子之间的空间关联显著性。基于未来气候情景，使用蒙特卡洛模拟预测梅花鹿适宜栖息地的变化范围和不确定性。设计一个零模型检验，评估观测到的栖息地变化是否显著偏离随机期望。</p>
+<p>请详细说明每种模拟方法的技术细节，包括模拟次数、随机化策略、统计量选择等，并讨论分析结果对梅花鹿保护气候适应策略的启示。</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="绘制系统发育树和性状值.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="简单生态关系的建模.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": false,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": null,
+    "text": null
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["ecological-statistics.pdf", "ecological-statistics.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

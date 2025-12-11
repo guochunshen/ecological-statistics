@@ -1722,14 +1722,15 @@ protection_data <- data.frame(
 # 第一步：执行方差分析
 anova_result <- aov(density ~ protection_measure, data = protection_data)
 cat("=== 方差分析结果 ===\n")
+library(dplyr)  # 加载dplyr包以使用管道操作符
 knitr::kable(summary(anova_result)[[1]],
              caption = "方差分析结果",
              booktabs = TRUE) %>%
   kableExtra::kable_styling(latex_options = c("hold_position"))
 
 # 提取F统计量和p值
-f_stat <- summary(anova_result)[[1]]["forest_type", "F value"]
-p_value <- summary(anova_result)[[1]]["forest_type", "Pr(>F)"]
+f_stat <- summary(anova_result)[[1]]["protection_measure", "F value"]
+p_value <- summary(anova_result)[[1]]["protection_measure", "Pr(>F)"]
 
 cat("\nF统计量 =", round(f_stat, 2), "，p值 =", round(p_value, 4), "\n")
 ```

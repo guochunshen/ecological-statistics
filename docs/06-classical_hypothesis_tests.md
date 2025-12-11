@@ -184,7 +184,7 @@
 
 }
 
-\caption{零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值}(\#fig:null-alternative-distribution)
+\caption{零假设与备择假设分布比较：展示在零假设（蓝色）和备择假设（橙色）下检验统计量的概率分布，以及显著性水平的临界值。通过颜色和分布形状的组合，确保在彩色显示和黑白打印时都能清晰区分不同类型的统计分布。}(\#fig:null-alternative-distribution)
 \end{figure}
 
 这个图表直观展示了在零假设（蓝色）和备择假设（橙色）下的检验统计量分布。红色虚线表示显著性水平$\alpha$=0.05的临界值，当检验统计量超过这个临界值时，我们就有足够的证据拒绝零假设。
@@ -222,7 +222,7 @@ p值的解释需要特别注意：
 
 }
 
-\caption{p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率}(\#fig:p-value-visualization)
+\caption{p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。}(\#fig:p-value-visualization)
 \end{figure}
 
 这个图表通过红色区域直观展示了p值的概念，即在零假设下观测到当前检验统计量值（红色垂直线）或更极端值的概率。p值越小，表明观测到的数据在零假设下越不可能发生，从而为我们拒绝零假设提供了更强的证据。
@@ -304,7 +304,7 @@ Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 }
 
-\caption{第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布}(\#fig:error-types-visualization)
+\caption{第一类错误与第二类错误的可视化：展示假阳性（第一类错误，红色区域）和假阴性（第二类错误，蓝色区域）在统计决策中的概率分布。通过颜色和填充纹理的组合区分不同类型的统计错误。}(\#fig:error-types-visualization)
 \end{figure}
 
 这个图表清晰地显示了第一类错误（红色区域，假阳性）和第二类错误（蓝色区域，假阴性）的概念，以及统计功效（1-$\beta$）作为正确检测真实效应的概率。在生态学研究中，我们需要在这两类错误之间进行权衡，根据研究的具体目的选择合适的显著性水平。
@@ -317,7 +317,7 @@ Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 }
 
-\caption{样本量对统计功效的影响：展示在不同效应大小下，样本量增加如何提高统计功效}(\#fig:power-sample-size-visualization)
+\caption{样本量对统计功效的影响：展示在不同效应大小（蓝色、橙色、绿色线条）下，样本量增加如何提高统计功效。通过颜色和线条类型的组合区分不同效应大小。}(\#fig:power-sample-size-visualization)
 \end{figure}
 
 这个图表展示了不同效应大小下，样本量如何影响统计功效。通常我们期望统计功效达到0.8以上（灰色虚线），这意味着我们有80%的概率正确检测到真实存在的效应。从图表可以看出，效应大小越大，达到足够统计功效所需的样本量越小。
@@ -373,7 +373,7 @@ Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 }
 
-\caption{效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围}(\#fig:effect-size-ci-visualization)
+\caption{效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围。蓝色圆形点表示统计显著的结果，红色方形点表示不显著的结果，通过颜色和形状的组合增强可辨识度。}(\#fig:effect-size-ci-visualization)
 \end{figure}
 
 这个图表展示了多个研究的效应大小估计及其置信区间。我们可以清楚地看到哪些研究的结果是统计显著的（置信区间不包含0），以及不同研究的效应大小估计。
@@ -481,7 +481,7 @@ $t$分布与正态分布形状相似，都是钟形曲线，但$t$分布的尾�
 
 }
 
-\caption{单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域}(\#fig:one-sample-t-test-visualization)
+\caption{单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。}(\#fig:one-sample-t-test-visualization)
 \end{figure}
 
 这个图表直观展示了单样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
@@ -533,7 +533,7 @@ $t$分布与正态分布形状相似，都是钟形曲线，但$t$分布的尾�
 
 }
 
-\caption{单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量}(\#fig:sign-test-visualization)
+\caption{单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。}(\#fig:sign-test-visualization)
 \end{figure}
 
 这个图表直观展示了单样本符号检验的原理。蓝色柱状图表示在零假设下（正号和负号以相等概率出现）正号数量的二项分布，红色垂直线表示我们观测到的正号数量，红色区域表示$p$值——在零假设下观测到当前或更多正号的概率。
@@ -604,7 +604,7 @@ $$s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$$
 
 }
 
-\caption{独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域}(\#fig:independent-t-test-visualization)
+\caption{独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。}(\#fig:independent-t-test-visualization)
 \end{figure}
 
 这个图表直观展示了独立样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
@@ -661,7 +661,7 @@ $$t = \frac{\bar{d}}{s_d / \sqrt{n}}$$
 
 }
 
-\caption{配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域}(\#fig:paired-t-test-visualization)
+\caption{配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。}(\#fig:paired-t-test-visualization)
 \end{figure}
 
 这个图表直观展示了配对样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布（差异为0），红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
@@ -719,7 +719,7 @@ Mann-Whitney U检验的主要优点是它对分布形态没有要求，对极端
 
 }
 
-\caption{Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域和清洁区域底栖动物生物量的分布比较}(\#fig:mann-whitney-visualization)
+\caption{Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域（橙色）和清洁区域（蓝色）底栖动物生物量的分布比较。通过颜色和填充纹理的组合区分不同区域类型。}(\#fig:mann-whitney-visualization)
 \end{figure}
 
 这个图表直观展示了Mann-Whitney U检验的原理。箱线图显示了两个样本的分布情况，点表示各个观测值。检验基于这些观测值的秩次（排序位置）而不是原始数值来进行统计推断。
@@ -1143,6 +1143,7 @@ cat("=== 方差分析结果 ===\n")
 ```
 
 ``` r
+library(dplyr)  # 加载dplyr包以使用管道操作符
 knitr::kable(summary(anova_result)[[1]],
              caption = "方差分析结果",
              booktabs = TRUE) %>%
@@ -1165,15 +1166,15 @@ Residuals & 33 & 42.46475 & 1.286811 & NA & NA\\
 
 ``` r
 # 提取F统计量和p值
-f_stat <- summary(anova_result)[[1]]["forest_type", "F value"]
-p_value <- summary(anova_result)[[1]]["forest_type", "Pr(>F)"]
+f_stat <- summary(anova_result)[[1]]["protection_measure", "F value"]
+p_value <- summary(anova_result)[[1]]["protection_measure", "Pr(>F)"]
 
 cat("\nF统计量 =", round(f_stat, 2), "，p值 =", round(p_value, 4), "\n")
 ```
 
 ```
 ## 
-## F统计量 = NA ，p值 = NA
+## F统计量 = 7.32 ，p值 = 0.0023
 ```
 
 
@@ -1309,7 +1310,7 @@ summary_stats <- protection_data %>%
 
 }
 
-\caption{多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响}(\#fig:multiple-comparison-visualization)
+\caption{多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响。通过颜色和形状的组合区分不同效应类型和校正方法。}(\#fig:multiple-comparison-visualization)
 \end{figure}
 
 图 \@ref(fig:multiple-comparison-visualization) 展示了多重比较校正效果的直观可视化。该图形模拟了20个假设检验的情景，其中15个来自零假设（无真实效应，蓝色点），5个来自备择假设（有真实效应，红色点）。图形采用三面板布局，分别显示未校正、Bonferroni校正和FDR控制三种方法处理后的p值。通过比较各面板中超过红色虚线（显著性阈值）的点数，可以直观理解不同校正方法在错误控制和发现力之间的权衡。
@@ -1713,7 +1714,7 @@ print(chisq_power)
 
 }
 
-\caption{样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效}(\#fig:power-curve-plotting)
+\caption{样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效。蓝色曲线表示功效变化，红色虚线表示功效阈值，绿色虚线表示所需样本量，通过颜色和线条类型的组合增强可辨识度。}(\#fig:power-curve-plotting)
 \end{figure}
 
 **图表解释：**
@@ -1754,7 +1755,7 @@ sensitivity_df <- data.frame(
 
 }
 
-\caption{效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量}(\#fig:sensitivity-analysis-plot)
+\caption{效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量。通过颜色和填充纹理的组合区分不同效应大小类别。}(\#fig:sensitivity-analysis-plot)
 \end{figure}
 
 图 \@ref(fig:sensitivity-analysis-plot) 展示了效应大小对样本量需求的敏感性分析结果。该柱状图直观地比较了四种不同效应大小水平（小效应d=0.2、中小效应d=0.3、中效应d=0.5、大效应d=0.8）下达到80%统计功效所需的样本量。从图中可以清晰地看到，随着效应大小的增加，所需的样本量显著减少。例如，检测小效应需要每组约394个样本，而检测大效应仅需每组约26个样本。这种敏感性分析有助于研究者在研究设计阶段根据预期的效应大小合理规划样本量。

@@ -1889,19 +1889,26 @@ nestedness <- nested(plant_pollinator_matrix, method = "NODF")
 ```{r plant-pollinator-network-plot, fig.cap="植物-传粉者相互作用网络图。绿色节点表示植物物种，蓝色节点表示传粉者物种，连线表示相互作用关系。图中展示了网络的连接度、模块性和嵌套性等拓扑特征，反映了物种间相互作用的组织规律。", message=FALSE, warning=FALSE, echo=FALSE}
 # 可视化网络
 set.seed(123)
+
 plot(net,
-  layout = layout_with_fr,
+  layout = layout_nicely,  # 或 layout_with_kk
   vertex.color = ifelse(V(net)$type, "lightblue", "lightgreen"),
   vertex.shape = ifelse(V(net)$type, "circle", "square"),
   vertex.size = 8,
   vertex.label.cex = 0.8,
+  vertex.label.family = "simhei",
+  vertex.label.dist = 1.2,
+  vertex.label.degree = runif(vcount(net), 0, 2*pi),  # 随机角度
+  vertex.label.color = "black",
   edge.width = 2,
   main = "植物-传粉者相互作用网络",
+  main.family = "simhei",
   sub = paste(
     "连接度:", round(connectance, 3),
     "模块性:", round(modularity, 3),
     "嵌套性:", round(nestedness, 3)
-  )
+  ),
+  sub.family = "simhei"
 )
 ```
 
@@ -1977,28 +1984,25 @@ connectance_complexity <- sum(food_web_matrix) / (nrow(food_web_matrix)^2)
 
 # 可视化食物网
 set.seed(123)
-# 使用par设置中文字体
-#par(family = "SimHei")  # Windows系统
-old_par <- par()
-par(family = "WenQuanYi Micro Hei")
-# 对于Mac系统可以使用：par(family = "STHeiti")
 
 plot(food_net,
   layout = layout_with_sugiyama,
   vertex.color = c("green", "yellow", "orange", "red"),
-  vertex.shape = c("circle", "square", "triangle", "diamond"),
+  vertex.shape = c("circle", "square", "circle", "square"),
   vertex.size = 15,
   vertex.label.cex = 1.2,
+  vertex.label.family = "simhei",
+  vertex.label.color = "black",
   edge.arrow.size = 0.8,
   edge.width = 2,
   main = "简化食物网结构",
+  main.family = "simhei",
   sub = paste(
     "平均链长:", round(avg_chain_length, 2),
     "连接复杂性:", round(connectance_complexity, 3)
-  )
+  ),
+  sub.family = "simhei"
 )
-# 恢复默认图形参数
-par(old_par)
 
 # 食物网特征综合分析
 food_web_analysis <- data.frame(

@@ -176,10 +176,10 @@ estimated_total <- observed_species / detection_prob
 
 }
 
-\caption{大数定律可视化：样本均值随样本量增加收敛于总体均值}(\#fig:law-of-large-numbers)
+\caption{大数定律可视化：样本均值随样本量增加收敛于总体均值（使用蓝色实线和红色虚线纹理区分）}(\#fig:law-of-large-numbers)
 \end{figure}
 
-如上图所示，通过模拟不同样本量下的概率估计过程，我们可以直观地看到大数定律的作用：随着样本量的增加，样本均值（蓝色曲线）逐渐稳定地趋近于总体真实概率（红色虚线）。这种收敛模式生动地展示了频率概率的核心思想——通过足够多的重复观察，我们能够获得对真实概率的可靠估计。
+如上图所示，通过模拟不同样本量下的概率估计过程，我们可以直观地看到大数定律的作用：随着样本量的增加，样本均值（蓝色实线）逐渐稳定地趋近于总体真实概率（红色虚线）。图中使用颜色（蓝色/红色）和线型纹理（实线/虚线）双重区分，确保在彩色显示和黑白打印时都能清晰辨识。这种收敛模式生动地展示了频率概率的核心思想——通过足够多的重复观察，我们能够获得对真实概率的可靠估计。
 
 **频率概率的现实类比**
 
@@ -249,7 +249,7 @@ $$P(A) \approx \frac{\text{事件A发生的次数}}{\text{总试验次数}}$$
 
 }
 
-\caption{样本量对概率估计精度的影响：样本量越大，估计误差越小}(\#fig:sample-size-effect)
+\caption{样本量对概率估计精度的影响：样本量越大，估计误差越小。数据点使用蓝色圆形，连接线使用蓝色实线}(\#fig:sample-size-effect)
 \end{figure}
 
 
@@ -330,7 +330,7 @@ $$P(\text{高营养}) = P(\text{高营养}|\text{晴天}) \times P(\text{晴天}
 
 }
 
-\caption{全概率公式应用：各情景对总体灭绝概率的贡献分解}(\#fig:total-probability)
+\caption{全概率公式应用：各情景对总体灭绝概率的贡献分解。正常情景使用绿色斜线填充，干旱情景使用黄色网格填充，洪水情景使用红色交叉线填充}(\#fig:total-probability)
 \end{figure}
 
 
@@ -513,13 +513,13 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 }
 
-\caption{贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变}(\#fig:bayesian-update)
+\caption{贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变（使用绿色条纹和蓝色网格纹理区分）}(\#fig:bayesian-update)
 \end{figure}
 
 
 **生态风险评估**
 
-在数据有限的情况下，结合专家判断和有限观测来评估生态风险。下面的综合演示展示了贝叶斯方法在生态风险评估和决策分析中的完整应用流程：首先基于历史数据建立初始风险评估（先验），然后结合新的气候异常证据进行贝叶斯更新得到更准确的风险概率（后验），最后基于更新后的风险概率进行成本效益分析，为保护决策提供科学依据。这种将概率更新与决策分析相结合的方法，体现了贝叶斯统计在生态管理实践中的实用价值。
+在数据有限的情况下，结合专家判断和有限观测来评估生态风险。上面的可视化使用颜色（绿色/蓝色）和填充纹理（条纹/网格）双重区分先验和后验信念，确保在彩色显示和黑白打印时都能清晰辨识。下面的综合演示展示了贝叶斯方法在生态风险评估和决策分析中的完整应用流程：首先基于历史数据建立初始风险评估（先验），然后结合新的气候异常证据进行贝叶斯更新得到更准确的风险概率（后验），最后基于更新后的风险概率进行成本效益分析，为保护决策提供科学依据。这种将概率更新与决策分析相结合的方法，体现了贝叶斯统计在生态管理实践中的实用价值。
 
 
 \begin{figure}
@@ -528,7 +528,7 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 }
 
-\caption{贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策}(\#fig:risk-assessment)
+\caption{贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策。先验概率使用黄色实心填充，后验概率使用红色斜线填充；预期损失使用绿色网格填充，保护成本使用蓝色点状填充}(\#fig:risk-assessment)
 \end{figure}
 
 
@@ -561,7 +561,7 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 }
 
-\caption{贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比}(\#fig:model-comparison)
+\caption{贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比（使用颜色和线型纹理区分）}(\#fig:model-comparison)
 \end{figure}
 
 **敏感性分析与稳健性检验**
@@ -634,7 +634,7 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 }
 
-\caption{主观偏见问题：不同群体对同一生态风险评估的差异}(\#fig:subjective-bias-demo)
+\caption{主观偏见问题：不同群体对同一生态风险评估的差异（使用颜色和填充纹理区分）}(\#fig:subjective-bias-demo)
 \end{figure}
 
 
@@ -809,7 +809,7 @@ cat("95%置信区间: [", round(ci_lower, 3), ", ",
 
 }
 
-\caption{随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟}(\#fig:random-variable-demo)
+\caption{随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟。黑麦草使用浅绿色斜线填充，混合草甸使用浅蓝色网格填充，三叶草使用浅黄色点状填充}(\#fig:random-variable-demo)
 \end{figure}
 
 
@@ -849,7 +849,7 @@ Table: (\#tab:plant-choice-probability) 蚱蜢午餐选择的概率分布
 
 }
 
-\caption{蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比}(\#fig:plant-choice-distribution)
+\caption{蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比（使用颜色和填充纹理区分）}(\#fig:plant-choice-distribution)
 \end{figure}
 
 ### 累积概率分布：从可能性到确定性
@@ -961,7 +961,7 @@ $$P(X = x) = p^x(1-p)^{1-x}, \quad x = 0,1$$
 
 }
 
-\caption{伯努利分布：不同成功概率下的二元选择概率分布}(\#fig:bernoulli-distribution)
+\caption{伯努利分布：不同成功概率下的二元选择概率分布（使用颜色和填充纹理区分）}(\#fig:bernoulli-distribution)
 \end{figure}
 
 **生态学肖像：**
@@ -1011,7 +1011,7 @@ $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, 2, \ldots, n$$
 
 }
 
-\caption{二项分布：不同成功概率下多次试验中成功次数的概率分布}(\#fig:binomial-distribution)
+\caption{二项分布：不同成功概率下多次试验中成功次数的概率分布（使用颜色和填充纹理区分）}(\#fig:binomial-distribution)
 \end{figure}
 
 **生态学肖像：**
@@ -1061,7 +1061,7 @@ $$P(X_1 = x_1, X_2 = x_2, \ldots, X_k = x_k) = \frac{n!}{x_1! x_2! \cdots x_k!} 
 
 }
 
-\caption{多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布}(\#fig:multinomial-distribution)
+\caption{多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布。黑麦草使用绿色斜线填充，混合草甸使用蓝色网格填充，三叶草使用黄色点状填充}(\#fig:multinomial-distribution)
 \end{figure}
 
 **生态学肖像：**
@@ -1109,7 +1109,7 @@ $$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots$$
 
 }
 
-\caption{泊松分布：不同平均发生率下稀有事件发生次数的概率分布}(\#fig:poisson-distribution)
+\caption{泊松分布：不同平均发生率下稀有事件发生次数的概率分布（使用颜色和填充纹理区分）}(\#fig:poisson-distribution)
 \end{figure}
 
 **生态学肖像：**
@@ -1160,7 +1160,7 @@ $$P(X = k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots$$
 
 }
 
-\caption{几何分布：不同成功概率下首次成功所需试验次数的概率分布}(\#fig:geometric-distribution)
+\caption{几何分布：不同成功概率下首次成功所需试验次数的概率分布（使用颜色和填充纹理区分）}(\#fig:geometric-distribution)
 \end{figure}
 
 **生态学肖像：**
@@ -1212,7 +1212,7 @@ $$P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots$$
 
 }
 
-\caption{负二项分布：不同参数组合下第r次成功所需试验次数的概率分布}(\#fig:negative-binomial)
+\caption{负二项分布：不同参数组合下第r次成功所需试验次数的概率分布（使用颜色和填充纹理区分）}(\#fig:negative-binomial)
 \end{figure}
 
 **生态学肖像：**
@@ -1317,7 +1317,7 @@ $$f(x) = \begin{cases}
 
 }
 
-\caption{均匀分布：不同区间参数下的概率密度函数}(\#fig:uniform-distribution)
+\caption{均匀分布：不同区间参数下的概率密度函数（使用颜色和线型纹理区分）}(\#fig:uniform-distribution)
 \end{figure}
 
 ### 指数分布：等待的艺术
@@ -1349,7 +1349,7 @@ $$f(x) = \lambda e^{-\lambda x}, \quad x \geq 0$$
 
 }
 
-\caption{指数分布：不同速率参数下等待时间的概率密度函数}(\#fig:exponential-distribution)
+\caption{指数分布：不同速率参数下等待时间的概率密度函数（使用颜色和线型纹理区分）}(\#fig:exponential-distribution)
 \end{figure}
 
 ### 正态分布（高斯分布）：自然界的“钟形"法则
@@ -1374,7 +1374,7 @@ $$f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \quad -\i
 
 正态分布在生态学研究中扮演着重要角色。在摄食行为研究中，蚱蜢每次进食的食物量服从正态分布，这种分布模式反映了其稳定的摄食行为特征和生理调节机制。通过营养摄入分析，我们可以利用正态分布来描述个体间的摄食量差异，这种差异模式有助于理解种群内部的资源分配和竞争关系。在行为生态学领域，动物的许多连续行为特征，如觅食时间、移动距离等，往往近似正态分布，这为行为模式的量化分析提供了数学基础。在种群能量学研究中，通过摄食量的正态分布特征，我们可以更准确地估计种群的能量摄入模式，为生态系统能量流动研究提供重要依据。
 
-为了直观展示正态分布的特性，图\@ref(fig:normal-distribution)展示了三种不同参数组合下的概率密度函数。图中清晰地呈现了正态分布的核心特征：经典的钟形曲线和对称性。三个分布分别展示了参数变化的影响：N(0,1)为标准正态分布，呈现理想的钟形形态；N(0,4)为标准差增大的分布，曲线更加扁平分散，体现了标准差对分布离散程度的影响；N(2,1)为均值右移的分布，曲线整体向右平移，体现了均值对分布中心位置的决定作用。通过对比可以直观理解正态分布参数的意义，以及68-95-99.7法则在分布形态中的体现。
+为了直观展示正态分布的特性，图\@ref(fig:normal-distribution)展示了三种不同参数组合下的概率密度函数。图中清晰地呈现了正态分布的核心特征：经典的钟形曲线和对称性。三个分布分别展示了参数变化的影响：N(0,1)为标准正态分布，呈现理想的钟形形态；N(0,4)为标准差增大的分布，曲线更加扁平分散，体现了标准差对分布离散程度的影响；N(2,1)为均值右移的分布，曲线整体向右平移，体现了均值对分布中心位置的决定作用。图中使用颜色（红色/蓝色/绿色）和线型纹理（实线/虚线/点线）双重区分，确保在彩色显示和黑白打印时都能清晰辨识。通过对比可以直观理解正态分布参数的意义，以及68-95-99.7法则在分布形态中的体现。
 
 \begin{figure}
 
@@ -1382,7 +1382,7 @@ $$f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \quad -\i
 
 }
 
-\caption{正态分布：不同参数组合下的概率密度函数}(\#fig:normal-distribution)
+\caption{正态分布：不同参数组合下的概率密度函数（使用颜色和线型纹理区分）}(\#fig:normal-distribution)
 \end{figure}
 
 
@@ -1420,7 +1420,7 @@ $$f(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1} e^{-(x/\lambda)^
 
 }
 
-\caption{威布尔分布可视化：蚱蜢生存时间分布的直方图与理论曲线对比}(\#fig:weibull-distribution)
+\caption{威布尔分布可视化：蚱蜢生存时间分布的直方图与理论曲线对比。概率密度函数使用红色实线，生存函数使用蓝色虚线}(\#fig:weibull-distribution)
 \end{figure}
 
 \begin{table}[!h]
@@ -1447,7 +1447,7 @@ scale & 9.885058\\
 
 }
 
-\caption{不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比}(\#fig:weibull-shape-comparison)
+\caption{不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比。概率密度函数使用深红色实线，风险函数使用蓝色虚线}(\#fig:weibull-shape-comparison)
 \end{figure}
 
 
@@ -1482,7 +1482,7 @@ $$f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}, \quad x 
 
 }
 
-\caption{伽马分布：不同参数组合下的概率密度函数}(\#fig:gamma-distribution)
+\caption{伽马分布：不同参数组合下的概率密度函数。Gamma(1,1)使用红色实线，Gamma(2,1)使用蓝色虚线，Gamma(3,2)使用绿色点线}(\#fig:gamma-distribution)
 \end{figure}
 
 ### 贝塔分布：比例变量的天然选择
@@ -1515,7 +1515,7 @@ $$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha, \beta)}, \quad 0 \leq x \l
 
 }
 
-\caption{贝塔分布：不同参数组合下的概率密度函数}(\#fig:beta-distribution)
+\caption{贝塔分布：不同参数组合下的概率密度函数。Beta(0.5,0.5)使用红色实线，Beta(2,2)使用蓝色虚线，Beta(5,1)使用绿色点线}(\#fig:beta-distribution)
 \end{figure}
 
 ### 正态分布的魔力：中心极限定理
@@ -1646,7 +1646,7 @@ SampleSize & Skewness & Kurtosis\\
 
 在生态学研究中，我们常常会遇到一种特殊的数据现象——零膨胀（Zero-Inflation）。这种现象在物种分布、种群密度、疾病传播等众多生态学场景中普遍存在。零膨胀分布模型正是为了处理这类包含过多零值的数据而发展起来的统计工具。
 
-## 零膨胀分布的概念与生态学意义
+### 零膨胀分布的概念与生态学意义
 
 零膨胀分布本质上是一种混合分布，它由两个部分组成：一部分是纯粹的零值生成过程，另一部分是标准的计数分布（如泊松分布或负二项分布）。这种混合结构能够很好地描述生态学中的两种不同状态：
 
@@ -1655,7 +1655,7 @@ SampleSize & Skewness & Kurtosis\\
 
 例如，在物种分布调查中，某个样方中未发现目标物种可能有两种原因：要么该物种确实不存在于该区域（结构性零值），要么该物种存在但恰好未被观测到（随机性零值）。零膨胀模型能够区分这两种不同的零值生成机制。
 
-### 零膨胀分布的数学表达
+**零膨胀分布的数学表达**
 
 零膨胀泊松分布（Zero-Inflated Poisson, ZIP）的概率质量函数可以表示为：
 
@@ -1673,6 +1673,7 @@ $$P(Y = y) = \begin{cases}
 # 加载必要的R包
 library(ggplot2)
 library(dplyr)
+library(ggpattern)  # 图案填充支持
 
 # 设置随机数种子确保结果可重现
 set.seed(2323)
@@ -1712,9 +1713,15 @@ zip_stats <- data.frame(
 )
 
 # 绘制分布对比图
-ggplot(plot_data, aes(x = value, fill = distribution)) +
-  geom_histogram(binwidth = 1, alpha = 0.7, position = "identity") +
+ggplot(plot_data, aes(x = value, fill = distribution, pattern = distribution)) +
+  geom_histogram_pattern(
+    binwidth = 1, alpha = 0.7, position = "identity",
+    pattern_fill = "black",
+    pattern_density = 0.1,
+    pattern_spacing = 0.02
+  ) +
   scale_fill_manual(values = c("零膨胀泊松" = "#E69F00", "普通泊松" = "#56B4E9")) +
+  scale_pattern_manual(values = c("零膨胀泊松" = "stripe", "普通泊松" = "crosshatch")) +
   labs(
     title = "零膨胀分布与普通泊松分布对比",
     x = "计数值",
@@ -1738,7 +1745,7 @@ ggplot(plot_data, aes(x = value, fill = distribution)) +
 
 }
 
-\caption{零膨胀泊松分布与普通泊松分布的对比可视化。图中清晰地展示了零膨胀分布中零值的过度集中现象，这是生态学中许多稀有物种和低密度种群数据的典型特征。}(\#fig:zero-inflation-plot)
+\caption{零膨胀泊松分布与普通泊松分布的对比可视化。图中清晰地展示了零膨胀分布中零值的过度集中现象，这是生态学中许多稀有物种和低密度种群数据的典型特征。零膨胀泊松分布使用橙色斜线填充，普通泊松分布使用蓝色网格填充}(\#fig:zero-inflation-plot)
 \end{figure}
 
 如图\@ref(fig:zero-inflation-plot)所示，零膨胀分布最显著的特征是零值的过度集中。零膨胀分布在生态学中具有重要的应用价值，专门用于处理存在大量零值的计数数据。这种分布在以下生态学场景中特别有用：
