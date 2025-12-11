@@ -90,22 +90,37 @@ knitr::kable(table(random_sample$species),
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:random-sampling)随机抽样结果}
-\centering
-\begin{tabular}[t]{lr}
-\toprule
-Var1 & Freq\\
-\midrule
-啄木鸟 & 12\\
-杜鹃 & 26\\
-画眉 & 21\\
-麻雀 & 19\\
-黄鹂 & 22\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:random-sampling)(\#tab:random-sampling)随机抽样结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Var1 </th>
+   <th style="text-align:right;"> Freq </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 啄木鸟 | </td>
+   <td style="text-align:right;"> 12| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 杜鹃   | </td>
+   <td style="text-align:right;"> 26| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 画眉   | </td>
+   <td style="text-align:right;"> 21| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 麻雀   | </td>
+   <td style="text-align:right;"> 19| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 黄鹂   | </td>
+   <td style="text-align:right;"> 22| </td>
+  </tr>
+</tbody>
+</table>
 
 ``` r
 cat("随机抽样均值估计：", mean(random_sample$abundance), "\n")
@@ -132,22 +147,61 @@ knitr::kable(table(stratified_sample$habitat, stratified_sample$species),
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:stratified-sampling)分层抽样结果}
-\centering
-\begin{tabular}[t]{lrrrrr}
-\toprule
-  & 啄木鸟 & 杜鹃 & 画眉 & 麻雀 & 黄鹂\\
-\midrule
-林内 & 0 & 0 & 20 & 0 & 0\\
-林冠 & 20 & 0 & 0 & 0 & 0\\
-林缘 & 0 & 0 & 0 & 20 & 0\\
-灌丛 & 0 & 20 & 0 & 0 & 0\\
-空地 & 0 & 0 & 0 & 0 & 20\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:stratified-sampling)(\#tab:stratified-sampling)分层抽样结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> 啄木鸟| 杜 </th>
+   <th style="text-align:right;"> | 画眉| </th>
+   <th style="text-align:right;"> 麻雀| 黄 </th>
+   <th style="text-align:right;"> | </th>
+   <th style="text-align:right;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 林内 | </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 20| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 林冠 | </td>
+   <td style="text-align:right;"> 20| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 林缘 | </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 20| </td>
+   <td style="text-align:right;"> 0| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 灌丛 | </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 20| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 空地 | </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+</tbody>
+</table>
 
 ``` r
 cat("分层抽样均值估计：", mean(stratified_sample$abundance), "\n")
@@ -171,22 +225,37 @@ knitr::kable(table(systematic_sample$species),
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:systematic-sampling)系统抽样结果}
-\centering
-\begin{tabular}[t]{lr}
-\toprule
-Var1 & Freq\\
-\midrule
-啄木鸟 & 20\\
-杜鹃 & 20\\
-画眉 & 20\\
-麻雀 & 20\\
-黄鹂 & 20\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:systematic-sampling)(\#tab:systematic-sampling)系统抽样结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Var1 </th>
+   <th style="text-align:right;"> Freq </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 啄木鸟 | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 杜鹃   | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 画眉   | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 麻雀   | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 黄鹂   | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+</tbody>
+</table>
 
 ``` r
 cat("系统抽样均值估计：", mean(systematic_sample$abundance), "\n")
@@ -378,14 +447,10 @@ $$\bar{x} \pm t_{\alpha/2, n-1} \times \frac{s}{\sqrt{n}}$$
 
 Student‘s *t*分布（简称*t*分布）由英国统计学家威廉·戈塞特（William Gosset）在1908年应用笔名Student提出，当时他在吉尼斯啤酒厂从事质量控制工作，为了解决小样本问题而发展了这种分布。*t*分布的形状比正态分布更加扁平，尾部更厚，这反映了小样本情况下估计不确定性的增加（图\@ref(fig:t-distribution-comparison)）。随着样本量的增加，*t*分布逐渐趋近于正态分布。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/t-distribution-comparison-1} 
-
-}
-
-\caption{t分布与正态分布的比较：不同自由度的t分布（红色虚线、蓝色点线、绿色点划线）与标准正态分布（黑色实线）的对比，展示随着自由度增加t分布逐渐趋近正态分布的趋势}(\#fig:t-distribution-comparison)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/t-distribution-comparison-1.png" alt="t分布与正态分布的比较：不同自由度的t分布（红色虚线、蓝色点线、绿色点划线）与标准正态分布（黑色实线）的对比，展示随着自由度增加t分布逐渐趋近正态分布的趋势" width="80%" />
+<p class="caption">(\#fig:t-distribution-comparison)t分布与正态分布的比较：不同自由度的t分布（红色虚线、蓝色点线、绿色点划线）与标准正态分布（黑色实线）的对比，展示随着自由度增加t分布逐渐趋近正态分布的趋势</p>
+</div>
 
 在生态学研究中，小样本情况非常常见。例如，在研究濒危物种时，由于种群数量稀少，我们往往只能获得有限的观测数据；在进行珍稀植物调查时，由于分布范围有限，样本量也往往较小；在开展昂贵的生态实验时，由于成本和时间的限制，样本量也可能受到限制。在这些情况下，使用*t*分布构建置信区间能够更准确地反映估计的不确定性。
 
@@ -427,14 +492,10 @@ cat("自助法95%置信区间：", ci_bootstrap$percent[4:5], "\n")
 
 为了直观理解置信水平和样本量对区间估计的影响，我们通过可视化分析来展示这些关系。图\@ref(fig:different-confidence-levels)展示了两个关键概念：不同置信水平下区间估计的比较以及样本量对置信区间宽度的影响。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/different-confidence-levels-1} 
-
-}
-
-\caption{不同置信水平的区间估计比较。左图使用浅蓝色实线、蓝色虚线和深蓝色点线分别表示90\%、95\%和99\%置信水平的区间估计，红色圆点表示点估计值；右图显示样本量对置信区间宽度的影响}(\#fig:different-confidence-levels)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/different-confidence-levels-1.png" alt="不同置信水平的区间估计比较。左图使用浅蓝色实线、蓝色虚线和深蓝色点线分别表示90%、95%和99%置信水平的区间估计，红色圆点表示点估计值；右图显示样本量对置信区间宽度的影响" width="80%" />
+<p class="caption">(\#fig:different-confidence-levels)不同置信水平的区间估计比较。左图使用浅蓝色实线、蓝色虚线和深蓝色点线分别表示90%、95%和99%置信水平的区间估计，红色圆点表示点估计值；右图显示样本量对置信区间宽度的影响</p>
+</div>
 
 图\@ref(fig:different-confidence-levels)通过两个子图直观展示了置信区间估计的两个重要方面。
 
@@ -812,18 +873,33 @@ knitr::kable(summary(fit_brm)$fixed,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:bayesian-estimation-example)贝叶斯模型拟合结果}
-\centering
-\begin{tabular}[t]{lrrrrrrr}
-\toprule
-  & Estimate & Est.Error & l-95\% CI & u-95\% CI & Rhat & Bulk\_ESS & Tail\_ESS\\
-\midrule
-Intercept & 25.00149 & 0.6695746 & 23.65401 & 26.29316 & 1.002247 & 3058.456 & 2318.366\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:bayesian-estimation-example)(\#tab:bayesian-estimation-example)贝叶斯模型拟合结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Est.Error </th>
+   <th style="text-align:right;"> l-95% CI </th>
+   <th style="text-align:right;"> u-95% CI </th>
+   <th style="text-align:right;"> Rhat </th>
+   <th style="text-align:right;"> Bulk_ESS </th>
+   <th style="text-align:right;"> Tail_ESS </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Intercept </td>
+   <td style="text-align:right;"> 25.00149 </td>
+   <td style="text-align:right;"> 0.6695746 </td>
+   <td style="text-align:right;"> 23.65401 </td>
+   <td style="text-align:right;"> 26.29316 </td>
+   <td style="text-align:right;"> 1.002247 </td>
+   <td style="text-align:right;"> 3058.456 </td>
+   <td style="text-align:right;"> 2318.366 </td>
+  </tr>
+</tbody>
+</table>
 
 这段代码展示了贝叶斯估计在生态学中的具体实现过程。首先加载`brms`包，这是一个基于Stan的贝叶斯回归建模包，专门用于拟合复杂的层次模型。代码将树木胸径数据转换为数据框格式，这是`brms`包要求的输入格式。
 
@@ -875,14 +951,10 @@ hist(posterior_samples$sigma, breaks = 30,
 abline(v = posterior_sd, col = "red", lwd = 2, lty = 2)  # 添加均值垂直线
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/bayesian-posterior-distribution-1} 
-
-}
-
-\caption{贝叶斯估计的后验分布：左侧显示总体均值的后验分布（浅蓝色直方图，密度为10），右侧显示标准差参数的后验分布（浅绿色直方图，密度为15），红色虚线标记后验均值}(\#fig:bayesian-posterior-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/bayesian-posterior-distribution-1.png" alt="贝叶斯估计的后验分布：左侧显示总体均值的后验分布（浅蓝色直方图，密度为10），右侧显示标准差参数的后验分布（浅绿色直方图，密度为15），红色虚线标记后验均值" width="80%" />
+<p class="caption">(\#fig:bayesian-posterior-distribution)贝叶斯估计的后验分布：左侧显示总体均值的后验分布（浅蓝色直方图，密度为10），右侧显示标准差参数的后验分布（浅绿色直方图，密度为15），红色虚线标记后验均值</p>
+</div>
 
 ``` r
 # 恢复默认图形布局
@@ -1310,14 +1382,10 @@ plot(capture_data$session, cumulative_estimates, type = "b",
 abline(h = population_schnabel, col = "red", lwd = 2, lty = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/schnabel-stability-test-1} 
-
-}
-
-\caption{Schnabel估计的稳定性检验：黑色实线连接圆点表示累计估计值随捕获次数的变化，红色虚线标记最终种群估计值}(\#fig:schnabel-stability-test)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/schnabel-stability-test-1.png" alt="Schnabel估计的稳定性检验：黑色实线连接圆点表示累计估计值随捕获次数的变化，红色虚线标记最终种群估计值" width="80%" />
+<p class="caption">(\#fig:schnabel-stability-test)Schnabel估计的稳定性检验：黑色实线连接圆点表示累计估计值随捕获次数的变化，红色虚线标记最终种群估计值</p>
+</div>
 
 **Jolly-Seber模型**是标记重捕法中最复杂和最强大的方法，专门用于处理开放种群的情况。开放种群是指存在出生、死亡、迁入和迁出的种群，这在真实的生态系统中更为常见。Jolly-Seber模型不仅能够估计种群大小，还能够估计存活率、迁入率等种群动态参数。
 
@@ -1444,14 +1512,10 @@ $$N = \frac{100,000}{50} \times 8 = 16,000$$
 ## 95%置信区间：[ 758905 , 861095 ]
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/quadrat-plant-distribution-1} 
-
-}
-
-\caption{样方内植物数量分布：浅灰色直方图（密度为15）显示植物个体数量的分布模式，红色虚线标记样本均值位置}(\#fig:quadrat-plant-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/quadrat-plant-distribution-1.png" alt="样方内植物数量分布：浅灰色直方图（密度为15）显示植物个体数量的分布模式，红色虚线标记样本均值位置" width="80%" />
+<p class="caption">(\#fig:quadrat-plant-distribution)样方内植物数量分布：浅灰色直方图（密度为15）显示植物个体数量的分布模式，红色虚线标记样本均值位置</p>
+</div>
 
 图\@ref(fig:quadrat-plant-distribution)展示了通过样方调查获得的植物数量分布情况。该直方图清晰地显示了50个样方中植物个体数量的分布模式，红色垂直线标记了样本均值的位置。从图中可以看出，植物数量大致呈现正态分布，集中在均值附近，这反映了该植物种群在草原中的相对均匀分布特征。这种分布模式为生态学家提供了关于种群空间格局的重要信息，有助于理解物种的生态位和种间竞争关系。
 
@@ -1471,14 +1535,10 @@ $$N = \frac{A}{2wL} \times n$$
 
 样线法的主要优势在于它能够覆盖较大的区域，调查效率较高。然而，样线法的准确性依赖于对样线宽度内个体发现概率的准确估计，这通常需要额外的校正方法。发现概率的变化对种群估计结果具有重要影响，需要进行敏感性分析（图\@ref(fig:line-transect-sensitivity)）。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/line-transect-sensitivity-1} 
-
-}
-
-\caption{样线法估计的敏感性分析}(\#fig:line-transect-sensitivity)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/line-transect-sensitivity-1.png" alt="样线法估计的敏感性分析" width="80%" />
+<p class="caption">(\#fig:line-transect-sensitivity)样线法估计的敏感性分析</p>
+</div>
 
 图\@ref(fig:line-transect-sensitivity)展示了样线法估计对发现概率变化的敏感性分析。该图表清晰地显示了当发现概率从0.5变化到0.9时，种群估计值呈现反比关系的变化趋势。红色标记点表示基准估计值（发现概率为0.7时的种群估计）。这种敏感性分析对于生态学研究至关重要，因为它揭示了样线法估计结果对关键假设的依赖程度。在实际野外调查中，发现概率可能受到多种因素的影响，包括观察者经验、环境条件、动物行为等。通过敏感性分析，研究人员可以评估估计结果的不确定性范围，为保护决策提供更加可靠的依据。
 
@@ -1525,14 +1585,10 @@ $$N = \frac{100}{2 \times 0.1 \times 50} \times \frac{60}{0.7} = \frac{100}{10} 
 
 在R语言中，距离抽样法可以通过`Distance`包来实现。这个包提供了完整的距离抽样分析框架，包括发现函数的拟合、种群数量的估计以及不确定性分析。半正态发现函数是距离抽样中最常用的发现函数形式之一（图\@ref(fig:distance-sampling-halfnormal)）。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/distance-sampling-halfnormal-1} 
-
-}
-
-\caption{半正态发现函数：黑色实线表示拟合的半正态发现函数，蓝色竖线标记表示实际观测到的个体距离分布}(\#fig:distance-sampling-halfnormal)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/distance-sampling-halfnormal-1.png" alt="半正态发现函数：黑色实线表示拟合的半正态发现函数，蓝色竖线标记表示实际观测到的个体距离分布" width="80%" />
+<p class="caption">(\#fig:distance-sampling-halfnormal)半正态发现函数：黑色实线表示拟合的半正态发现函数，蓝色竖线标记表示实际观测到的个体距离分布</p>
+</div>
 
 图\@ref(fig:distance-sampling-halfnormal)展示了距离抽样法中使用的半正态发现函数。该函数描述了发现概率随个体与样线距离增加而递减的规律，是距离抽样法的核心组成部分。图中蓝色竖线表示实际观测到的个体距离分布，黑色曲线表示拟合的半正态发现函数。参数sigma决定了函数下降的速率，较小的sigma值表示发现概率随距离快速下降，而较大的sigma值表示发现概率下降较慢。这种发现函数模型反映了生态调查中的现实情况：距离样线越近的个体越容易被发现，而距离越远的个体被发现的可能性越低。通过拟合发现函数，研究人员可以更准确地估计整个样线宽度范围内的平均发现概率，从而获得更可靠的种群数量估计。
 
@@ -1649,14 +1705,10 @@ cat("95%置信区间：[", round(ci_lower), ",", round(ci_upper), "]\n")
 ## 95%置信区间：[ 236 , 333 ]
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/removal-method-analysis-1} 
-
-}
-
-\caption{去除法：捕获量随累积捕获量的变化：黑色实心圆点连线表示观测数据，红色虚线表示线性回归拟合直线}(\#fig:removal-method-analysis)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/removal-method-analysis-1.png" alt="去除法：捕获量随累积捕获量的变化：黑色实心圆点连线表示观测数据，红色虚线表示线性回归拟合直线" width="80%" />
+<p class="caption">(\#fig:removal-method-analysis)去除法：捕获量随累积捕获量的变化：黑色实心圆点连线表示观测数据，红色虚线表示线性回归拟合直线</p>
+</div>
 
 图\@ref(fig:removal-method-analysis)展示了去除法中捕获量随累积捕获量变化的线性关系，这是去除法估计种群规模的核心理论基础。图中黑色点表示观测数据，红色直线表示通过线性回归拟合的捕获量递减趋势。这种线性递减模式反映了在封闭种群中，随着捕获的进行，剩余种群数量减少，导致单位努力捕获量（CPUE）相应下降的生态学规律。通过拟合这种关系，研究人员可以估计种群的初始规模，同时获得捕获效率系数的估计值。图中展示的敏感性分析比较了使用不同捕获次数获得的估计结果，这有助于评估估计结果的稳健性，并为生态学家在野外调查中选择合适的捕获次数提供参考依据。
 
@@ -1805,14 +1857,10 @@ predicted_species <- predict(fit_exponential,
   newdata = data.frame(sample_effort = predicted_effort))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/accumulation-curve-extrapolation-1} 
-
-}
-
-\caption{样本积累曲线与外推}(\#fig:accumulation-curve-extrapolation)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/accumulation-curve-extrapolation-1.png" alt="样本积累曲线与外推" width="80%" />
+<p class="caption">(\#fig:accumulation-curve-extrapolation)样本积累曲线与外推</p>
+</div>
 
 图\@ref(fig:accumulation-curve-extrapolation)展示了基于样本积累曲线的外推方法，通过拟合指数增长模型来估计群落的真实物种丰富度。
 
@@ -1893,14 +1941,10 @@ legend("bottomright", legend = c("样地A", "样地B"),
        col = c("blue", "red"), lwd = 2, pch = c(19, 17), lty = c(1, 2))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/rarefaction-comparison-1} 
-
-}
-
-\caption{物种丰富度内插比较：蓝色实线连接实心圆点表示样地A的期望物种数变化，红色虚线连接三角形表示样地B的期望物种数变化}(\#fig:rarefaction-comparison)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/rarefaction-comparison-1.png" alt="物种丰富度内插比较：蓝色实线连接实心圆点表示样地A的期望物种数变化，红色虚线连接三角形表示样地B的期望物种数变化" width="80%" />
+<p class="caption">(\#fig:rarefaction-comparison)物种丰富度内插比较：蓝色实线连接实心圆点表示样地A的期望物种数变化，红色虚线连接三角形表示样地B的期望物种数变化</p>
+</div>
 
 ``` r
 chao1_a <- estimateR(community_a)["S.chao1"]
@@ -2024,14 +2068,10 @@ Bootstrap方法的优势在于它能够提供完整的不确定性信息，且�
 ##  Bootstrap 95%置信区间：[ 4 , 5 ]
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/bootstrap-estimation-1} 
-
-}
-
-\caption{Bootstrap估计的抽样分布：红色实线标记观测值，蓝色虚线标记Bootstrap估计值}(\#fig:bootstrap-estimation)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/bootstrap-estimation-1.png" alt="Bootstrap估计的抽样分布：红色实线标记观测值，蓝色虚线标记Bootstrap估计值" width="80%" />
+<p class="caption">(\#fig:bootstrap-estimation)Bootstrap估计的抽样分布：红色实线标记观测值，蓝色虚线标记Bootstrap估计值</p>
+</div>
 
 图\@ref(fig:bootstrap-estimation)展示了Bootstrap估计的抽样分布，通过重抽样技术构建物种丰富度估计的置信区间和不确定性信息。
 
@@ -2085,14 +2125,10 @@ $$\hat{S} = S_{obs} + S_0 \Phi(-\frac{\log x_0 - \mu}{\sigma})$$
 ##  估计的未观测物种数： 1 种
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/abundance-distribution-fit-1} 
-
-}
-
-\caption{多度分布模型拟合结果}(\#fig:abundance-distribution-fit)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/abundance-distribution-fit-1.png" alt="多度分布模型拟合结果" width="80%" />
+<p class="caption">(\#fig:abundance-distribution-fit)多度分布模型拟合结果</p>
+</div>
 
 
 
@@ -2150,14 +2186,10 @@ hist(log10(observed_abundances), breaks = 20,
 abline(v = log10(rare_threshold), col = "red", lty = 2)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/rare-species-distribution-1} 
-
-}
-
-\caption{稀有种对多样性估计的影响分析：左图显示真实群落呈现典型的对数正态分布（浅灰色直方图，密度为10），包含完整的稀有种和常见种结构；右图显示观测群落由于采样限制，稀有种数量显著减少，分布呈现右偏形态（深灰色直方图，密度为15）。红色虚线标记稀有种阈值线}(\#fig:rare-species-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/rare-species-distribution-1.png" alt="稀有种对多样性估计的影响分析：左图显示真实群落呈现典型的对数正态分布（浅灰色直方图，密度为10），包含完整的稀有种和常见种结构；右图显示观测群落由于采样限制，稀有种数量显著减少，分布呈现右偏形态（深灰色直方图，密度为15）。红色虚线标记稀有种阈值线" width="80%" />
+<p class="caption">(\#fig:rare-species-distribution)稀有种对多样性估计的影响分析：左图显示真实群落呈现典型的对数正态分布（浅灰色直方图，密度为10），包含完整的稀有种和常见种结构；右图显示观测群落由于采样限制，稀有种数量显著减少，分布呈现右偏形态（深灰色直方图，密度为15）。红色虚线标记稀有种阈值线</p>
+</div>
 
 ``` r
 # 恢复默认的图形布局设置
@@ -2192,33 +2224,74 @@ $$\text{Var}(\hat{S}) \propto \frac{1}{n}$$
 
 表 \@ref(tab:样本量对多样性估计精度的影响分析) 展示了不同样本量下多样性估计的精度分析结果。
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:unnamed-chunk-23)样本量对多样性估计精度的影响分析}
-\centering
-\begin{tabular}[t]{ccccccc}
-\toprule
-样本量 & 物种丰富度均值 & 物种丰富度标准差 & Shannon多样性均值 & Shannon多样性标准差 & 物种丰富度偏差(\%) & Shannon多样性偏差(\%)\\
-\midrule
-50 & 11.6 & 1.24 & 2.153 & 0.108 & -22.7 & -6.2\\
-100 & 13.0 & 1.13 & 2.220 & 0.084 & -13.1 & -3.3\\
-200 & 14.0 & 0.79 & 2.253 & 0.057 & -6.4 & -1.8\\
-500 & 14.9 & 0.37 & 2.279 & 0.032 & -0.9 & -0.7\\
-1000 & 15.0 & 0.00 & 2.284 & 0.025 & 0.0 & -0.5\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:unnamed-chunk-23)(\#tab:unnamed-chunk-23)样本量对多样性估计精度的影响分析</caption>
+ <thead>
+  <tr>
+   <th style="text-align:center;"> 样本量 | 物 </th>
+   <th style="text-align:center;"> 丰富度均值 | 物种丰富度标准差 </th>
+   <th style="text-align:center;"> | Shannon多样性均值 | S </th>
+   <th style="text-align:center;"> annon多样性标准差 | 物种丰富度 </th>
+   <th style="text-align:center;"> 差(%) | Shannon多样性偏差(% </th>
+   <th style="text-align:center;"> | </th>
+   <th style="text-align:center;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;"> 50 </td>
+   <td style="text-align:center;"> 11.6 </td>
+   <td style="text-align:center;"> 1.24 </td>
+   <td style="text-align:center;"> 2.153 </td>
+   <td style="text-align:center;"> 0.108 </td>
+   <td style="text-align:center;"> -22.7 </td>
+   <td style="text-align:center;"> -6.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 100 </td>
+   <td style="text-align:center;"> 13.0 </td>
+   <td style="text-align:center;"> 1.13 </td>
+   <td style="text-align:center;"> 2.220 </td>
+   <td style="text-align:center;"> 0.084 </td>
+   <td style="text-align:center;"> -13.1 </td>
+   <td style="text-align:center;"> -3.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 14.0 </td>
+   <td style="text-align:center;"> 0.79 </td>
+   <td style="text-align:center;"> 2.253 </td>
+   <td style="text-align:center;"> 0.057 </td>
+   <td style="text-align:center;"> -6.4 </td>
+   <td style="text-align:center;"> -1.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 500 </td>
+   <td style="text-align:center;"> 14.9 </td>
+   <td style="text-align:center;"> 0.37 </td>
+   <td style="text-align:center;"> 2.279 </td>
+   <td style="text-align:center;"> 0.032 </td>
+   <td style="text-align:center;"> -0.9 </td>
+   <td style="text-align:center;"> -0.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 1000 </td>
+   <td style="text-align:center;"> 15.0 </td>
+   <td style="text-align:center;"> 0.00 </td>
+   <td style="text-align:center;"> 2.284 </td>
+   <td style="text-align:center;"> 0.025 </td>
+   <td style="text-align:center;"> 0.0 </td>
+   <td style="text-align:center;"> -0.5 </td>
+  </tr>
+</tbody>
+</table>
 
 为了更直观地展示样本量对多样性估计精度的影响，图 \@ref(fig:sample-size-precision-effect) 通过四个子图系统分析了样本量与估计精度之间的关系。该综合可视化展示了：(1) 样本量对物种丰富度估计的影响，包括估计均值及其标准差范围；(2) 样本量对Shannon多样性估计的影响；(3) 样本量对估计偏差的影响，比较了物种丰富度和Shannon多样性的偏差变化趋势；(4) 样本量对估计方差的影响，反映了估计精度的稳定性。所有图形均以红色虚线标示真实值作为参考基准，便于评估估计的准确性和可靠性。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/sample-size-precision-effect-1} 
-
-}
-
-\caption{样本量对多样性估计精度的影响}(\#fig:sample-size-precision-effect)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/sample-size-precision-effect-1.png" alt="样本量对多样性估计精度的影响" width="80%" />
+<p class="caption">(\#fig:sample-size-precision-effect)样本量对多样性估计精度的影响</p>
+</div>
 
 
 

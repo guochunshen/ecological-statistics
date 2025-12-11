@@ -162,20 +162,45 @@ knitr::kable(adonis_result, caption = "置换ANOVA分析结果", booktabs = TRUE
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:adonis-result-table)置换ANOVA分析结果}
-\centering
-\begin{tabular}[t]{lrrrrr}
-\toprule
-  & Df & SumOfSqs & R2 & F & Pr(>F)\\
-\midrule
-Model & 1 & 0.0098147 & 0.0145518 & 0.2658007 & 0.791\\
-Residual & 18 & 0.6646505 & 0.9854482 & NA & NA\\
-Total & 19 & 0.6744652 & 1.0000000 & NA & NA\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:adonis-result-table)(\#tab:adonis-result-table)置换ANOVA分析结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Df </th>
+   <th style="text-align:right;"> SumOfSqs </th>
+   <th style="text-align:right;"> R2 </th>
+   <th style="text-align:right;"> F </th>
+   <th style="text-align:right;"> Pr(&gt;F) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Model </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.0098147 </td>
+   <td style="text-align:right;"> 0.0145518 </td>
+   <td style="text-align:right;"> 0.2658007 </td>
+   <td style="text-align:right;"> 0.791 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Residual </td>
+   <td style="text-align:right;"> 18 </td>
+   <td style="text-align:right;"> 0.6646505 </td>
+   <td style="text-align:right;"> 0.9854482 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Total </td>
+   <td style="text-align:right;"> 19 </td>
+   <td style="text-align:right;"> 0.6744652 </td>
+   <td style="text-align:right;"> 1.0000000 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+</tbody>
+</table>
 
 表 \@ref(tab:adonis-result-table) 展示了置换ANOVA分析的结果，从中可以看出不同栖息地类型对植物群落组成的影响是否具有统计显著性。
 
@@ -913,25 +938,17 @@ print(anosim_result)
 
 图\@ref(fig:anosim-rank-plot)展示了ANOSIM分析的排序差异箱线图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/anosim-rank-plot-1} 
-
-}
-
-\caption{ANOSIM分析：不同河段底栖动物群落排序差异检验}(\#fig:anosim-rank-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/anosim-rank-plot-1.png" alt="ANOSIM分析：不同河段底栖动物群落排序差异检验" width="80%" />
+<p class="caption">(\#fig:anosim-rank-plot)ANOSIM分析：不同河段底栖动物群落排序差异检验</p>
+</div>
 
 图\@ref(fig:nmds-community-plot)展示了底栖动物群落组成的NMDS排序图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nmds-community-plot-1} 
-
-}
-
-\caption{底栖动物群落组成的NMDS排序分析：使用不同颜色和点型的组合表示不同河段群落}(\#fig:nmds-community-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/nmds-community-plot-1.png" alt="底栖动物群落组成的NMDS排序分析：使用不同颜色和点型的组合表示不同河段群落" width="80%" />
+<p class="caption">(\#fig:nmds-community-plot)底栖动物群落组成的NMDS排序分析：使用不同颜色和点型的组合表示不同河段群落</p>
+</div>
 
 **结果解释**：
 
@@ -1054,14 +1071,10 @@ K_envelope <- envelope(observed_pattern, Kest,
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/ripley-k-envelope-1} 
-
-}
-
-\caption{巴西坚果树空间分布模式检验：Ripley's K函数包络分析。黑色实线表示观测K函数，灰色区域表示模拟包络，红色实线表示理论CSR期望值。通过颜色和线型的组合，确保在彩色显示和黑白打印时都能清晰区分不同曲线。}(\#fig:ripley-k-envelope)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/ripley-k-envelope-1.png" alt="巴西坚果树空间分布模式检验：Ripley's K函数包络分析。黑色实线表示观测K函数，灰色区域表示模拟包络，红色实线表示理论CSR期望值。通过颜色和线型的组合，确保在彩色显示和黑白打印时都能清晰区分不同曲线。" width="80%" />
+<p class="caption">(\#fig:ripley-k-envelope)巴西坚果树空间分布模式检验：Ripley's K函数包络分析。黑色实线表示观测K函数，灰色区域表示模拟包络，红色实线表示理论CSR期望值。通过颜色和线型的组合，确保在彩色显示和黑白打印时都能清晰区分不同曲线。</p>
+</div>
 
 图 \@ref(fig:ripley-k-envelope) 展示了Ripley's K函数包络分析的可视化结果。图中黑色实线表示观测到的K函数曲线，灰色区域表示基于999次蒙特卡洛模拟构建的置信包络，红色实线表示完全空间随机性（CSR）的理论期望值。通过比较观测曲线与包络线的相对位置，可以判断巴西坚果树的空间分布模式是否显著偏离随机分布。
 
@@ -1131,41 +1144,54 @@ knitr::kable(summary(fit_model)$coefs.SE.CI,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:point-process-model-setup)非齐次泊松点过程模型拟合结果}
-\centering
-\begin{tabular}[t]{lrrrrlr}
-\toprule
-  & Estimate & S.E. & CI95.lo & CI95.hi & Ztest & Zval\\
-\midrule
-(Intercept) & -4.2767794 & 0.2117614 & -4.6918241 & -3.861735 & *** & -20.196218\\
-coral\_coverage & 0.6330506 & 0.3749223 & -0.1017836 & 1.367885 &  & 1.688485\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:point-process-model-setup)(\#tab:point-process-model-setup)非齐次泊松点过程模型拟合结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> S.E. </th>
+   <th style="text-align:right;"> CI95.lo </th>
+   <th style="text-align:right;"> CI95.hi </th>
+   <th style="text-align:left;"> Ztest </th>
+   <th style="text-align:right;"> Zval </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> -4.2767794 </td>
+   <td style="text-align:right;"> 0.2117614 </td>
+   <td style="text-align:right;"> -4.6918241 </td>
+   <td style="text-align:right;"> -3.861735 </td>
+   <td style="text-align:left;"> *** </td>
+   <td style="text-align:right;"> -20.196218 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> coral_coverage </td>
+   <td style="text-align:right;"> 0.6330506 </td>
+   <td style="text-align:right;"> 0.3749223 </td>
+   <td style="text-align:right;"> -0.1017836 </td>
+   <td style="text-align:right;"> 1.367885 </td>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:right;"> 1.688485 </td>
+  </tr>
+</tbody>
+</table>
 
 图\@ref(fig:coral-coverage-dist)展示了模拟的珊瑚覆盖率分布情况：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/coral-coverage-dist-1} 
-
-}
-
-\caption{模拟的珊瑚覆盖率空间分布}(\#fig:coral-coverage-dist)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/coral-coverage-dist-1.png" alt="模拟的珊瑚覆盖率空间分布" width="80%" />
+<p class="caption">(\#fig:coral-coverage-dist)模拟的珊瑚覆盖率空间分布</p>
+</div>
 
 图\@ref(fig:fish-distribution-coral)展示了小丑鱼在珊瑚覆盖率背景下的实际分布：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/fish-distribution-coral-1} 
-
-}
-
-\caption{小丑鱼在珊瑚覆盖率背景下的空间分布}(\#fig:fish-distribution-coral)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/fish-distribution-coral-1.png" alt="小丑鱼在珊瑚覆盖率背景下的空间分布" width="80%" />
+<p class="caption">(\#fig:fish-distribution-coral)小丑鱼在珊瑚覆盖率背景下的空间分布</p>
+</div>
 
 接下来进行拟合优度检验：
 
@@ -1213,14 +1239,10 @@ cat("拟合优度检验p值:", p_value, "\n")
 
 图\@ref(fig:predicted-fish-intensity)展示了模型预测的小丑鱼分布强度：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/predicted-fish-intensity-1} 
-
-}
-
-\caption{点过程模型预测的小丑鱼分布强度}(\#fig:predicted-fish-intensity)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/predicted-fish-intensity-1.png" alt="点过程模型预测的小丑鱼分布强度" width="80%" />
+<p class="caption">(\#fig:predicted-fish-intensity)点过程模型预测的小丑鱼分布强度</p>
+</div>
 
 **生态学意义**：如果拟合优度检验显示模型拟合良好（p值不显著），表明小丑鱼的分布主要受珊瑚覆盖率的影响。这支持了"栖息地选择"假说——小丑鱼倾向于选择珊瑚覆盖率高的区域。如果模型拟合不佳，可能表明存在其他重要因素，如：
 - 种内竞争导致的空间排斥
@@ -1433,14 +1455,10 @@ legend("bottomleft",
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/phylogenetic-signal-1} 
-
-}
-
-\caption{植物功能性状系统发育信号检验与可视化：使用颜色和点型组合表示性状值梯度}(\#fig:phylogenetic-signal)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/phylogenetic-signal-1.png" alt="植物功能性状系统发育信号检验与可视化：使用颜色和点型组合表示性状值梯度" width="80%" />
+<p class="caption">(\#fig:phylogenetic-signal)植物功能性状系统发育信号检验与可视化：使用颜色和点型组合表示性状值梯度</p>
+</div>
 
 **生态学意义**：如果检验显示显著的系统发育信号（p < 0.05），表明这些功能性状在亲缘关系较近的物种间更为相似。这支持了"系统发育生态位保守性"假说——物种倾向于保留祖先的生态特性。这种信息对于理解群落组装机制、预测物种对气候变化的响应以及设计基于系统发育多样性的保护策略都具有重要价值。
 
@@ -1555,14 +1573,10 @@ text(0.8 * max(pic_defense), 0.9 * max(pic_growth),
 )
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/phylogenetic-contrasts-1} 
-
-}
-
-\caption{植物防御性状与生长速率关系的系统发育独立对比分析：使用不同颜色和点型组合区分原始性状与系统发育校正后的关系}(\#fig:phylogenetic-contrasts)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/phylogenetic-contrasts-1.png" alt="植物防御性状与生长速率关系的系统发育独立对比分析：使用不同颜色和点型组合区分原始性状与系统发育校正后的关系" width="80%" />
+<p class="caption">(\#fig:phylogenetic-contrasts)植物防御性状与生长速率关系的系统发育独立对比分析：使用不同颜色和点型组合区分原始性状与系统发育校正后的关系</p>
+</div>
 
 **生态学意义**：通过系统发育独立对比的置换检验，我们可以更可靠地推断防御性状与生长速率之间的生态权衡关系。如果检验显示显著的正相关（p < 0.05），表明在去除系统发育影响后，防御物质含量高的物种确实具有较慢的生长速率，支持了"生长-防御权衡"假说。这种分析为理解植物生活史策略的进化提供了重要证据。
 
@@ -1718,25 +1732,17 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:c-score-null-dist)展示了群落组装零模型检验的C-score零分布：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/c-score-null-dist-1} 
-
-}
-
-\caption{热带雨林群落组装零模型检验：C-score零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别}(\#fig:c-score-null-dist)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/c-score-null-dist-1.png" alt="热带雨林群落组装零模型检验：C-score零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别" width="80%" />
+<p class="caption">(\#fig:c-score-null-dist)热带雨林群落组装零模型检验：C-score零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别</p>
+</div>
 
 图\@ref(fig:community-matrix-heatmap)展示了热带雨林群落的物种分布热图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/community-matrix-heatmap-1} 
-
-}
-
-\caption{热带雨林群落物种分布热图：基于环境梯度的物种分布模式。使用颜色和透明度组合表示物种存在状态}(\#fig:community-matrix-heatmap)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/community-matrix-heatmap-1.png" alt="热带雨林群落物种分布热图：基于环境梯度的物种分布模式。使用颜色和透明度组合表示物种存在状态" width="80%" />
+<p class="caption">(\#fig:community-matrix-heatmap)热带雨林群落物种分布热图：基于环境梯度的物种分布模式。使用颜色和透明度组合表示物种存在状态</p>
+</div>
 
 **生态学意义**：如果零模型检验显示显著的C-score（p < 0.05），表明树种的共现模式显著偏离随机期望。较高的C-score通常表示物种间存在竞争排斥——物种倾向于避免在相同的样点中共存。这支持了"竞争排斥"假说在热带雨林群落组装中的重要性。
 
@@ -1827,36 +1833,24 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:nestedness-null-dist)展示了传粉网络嵌套性零模型检验的零分布：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nestedness-null-dist-1} 
-
-}
-
-\caption{传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别}(\#fig:nestedness-null-dist)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/nestedness-null-dist-1.png" alt="传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别" width="80%" />
+<p class="caption">(\#fig:nestedness-null-dist)传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别</p>
+</div>
 
 图\@ref(fig:pollination-network-structure)展示了传粉网络的结构图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/pollination-network-structure-1} 
-
-}
-
-\caption{传粉网络结构可视化：植物与传粉者的二分网络。使用颜色和形状组合区分不同类型节点}(\#fig:pollination-network-structure)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/pollination-network-structure-1.png" alt="传粉网络结构可视化：植物与传粉者的二分网络。使用颜色和形状组合区分不同类型节点" width="80%" />
+<p class="caption">(\#fig:pollination-network-structure)传粉网络结构可视化：植物与传粉者的二分网络。使用颜色和形状组合区分不同类型节点</p>
+</div>
 
 图\@ref(fig:pollination-matrix-heatmap)展示了传粉网络相互作用的矩阵热图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/pollination-matrix-heatmap-1} 
-
-}
-
-\caption{传粉网络相互作用矩阵热图：嵌套结构的可视化。使用颜色和透明度组合表示相互作用存在状态}(\#fig:pollination-matrix-heatmap)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/pollination-matrix-heatmap-1.png" alt="传粉网络相互作用矩阵热图：嵌套结构的可视化。使用颜色和透明度组合表示相互作用存在状态" width="80%" />
+<p class="caption">(\#fig:pollination-matrix-heatmap)传粉网络相互作用矩阵热图：嵌套结构的可视化。使用颜色和透明度组合表示相互作用存在状态</p>
+</div>
 
 **生态学意义**：如果零模型检验显示显著的嵌套性（p < 0.05），表明传粉网络的结构确实具有嵌套模式。嵌套结构通常被认为能够增强生态网络的稳定性和韧性——当某些物种消失时，嵌套结构有助于维持网络的连接性。这种结构信息对于理解传粉服务的稳定性和设计保护策略具有重要意义。
 
@@ -1914,10 +1908,10 @@ summary(cooc_null)
 ```
 
 ```
-## Time Stamp:  Thu Dec 11 04:39:40 2025 
+## Time Stamp:  Thu Dec 11 04:31:04 2025 
 ## Reproducible:  
 ## Number of Replications:  
-## Elapsed Time:  0.18 secs 
+## Elapsed Time:  0.55 secs 
 ## Metric:  c_score 
 ## Algorithm:  sim9 
 ## Observed Index:  13.671 
@@ -1969,25 +1963,17 @@ cat("p值:", p_value, "\n")
 
 图\@ref(fig:cooc-null-model-plot)展示了EcoSimR包中物种共现零模型的检验结果：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/cooc-null-model-plot-1} 
-
-}
-
-\caption{物种共现零模型检验：EcoSimR包分析结果}(\#fig:cooc-null-model-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/cooc-null-model-plot-1.png" alt="物种共现零模型检验：EcoSimR包分析结果" width="80%" />
+<p class="caption">(\#fig:cooc-null-model-plot)物种共现零模型检验：EcoSimR包分析结果</p>
+</div>
 
 图\@ref(fig:nestedness-null-hist)展示了网络嵌套性零模型的零分布直方图：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nestedness-null-hist-1} 
-
-}
-
-\caption{网络嵌套性零模型检验：嵌套性指数零分布。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别}(\#fig:nestedness-null-hist)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="07-simulation_based_tests_files/figure-html/nestedness-null-hist-1.png" alt="网络嵌套性零模型检验：嵌套性指数零分布。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别" width="80%" />
+<p class="caption">(\#fig:nestedness-null-hist)网络嵌套性零模型检验：嵌套性指数零分布。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别</p>
+</div>
 
 ### 生态学应用与保护意义
 
