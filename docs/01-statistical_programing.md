@@ -145,14 +145,10 @@
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{imgs/hardware_flow} 
-
-}
-
-\caption{程序运行中的数据流动示意图}(\#fig:hardware-flow-export)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="imgs/hardware_flow.png" alt="程序运行中的数据流动示意图" width="80%" />
+<p class="caption">(\#fig:hardware-flow-export)程序运行中的数据流动示意图</p>
+</div>
 
 图\@ref(fig:hardware-flow-export) 展示了程序运行过程中数据在不同硬件组件间的流动路径。在统计分析的具体场景中，这种数据流转体现得更加明显。例如，当运行一个线性回归分析时：R解释器从硬盘读取脚本文件到内存；数据文件从硬盘加载到内存的数据框中；CPU执行lm()函数，在内存中进行矩阵运算；计算结果（系数、p值等）存储在内存中的模型对象里；最终结果被写入硬盘的报告文件。如果分析涉及大规模数据，可能会出现内存瓶颈，此时需要采用分批处理或流式处理策略，让数据在硬盘和内存间分块流动。
 
@@ -723,7 +719,7 @@ test_that("多样性计算正确", {
 ```
 
 ```
-## Test passed
+## Test passed 🎉
 ```
 
 ``` r
@@ -1240,14 +1236,10 @@ calculate_shannon_diversity <- function(species_vector) {
 
 下面这张图直观地展示了不同复杂度随数据量增长的趋势。**Y轴可以理解为时间或空间消耗**。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{01-statistical_programing_files/figure-latex/complexity-curve-1} 
-
-}
-
-\caption{算法复杂度随数据规模增长的趋势图。不同复杂度等级使用颜色和线型组合表示：O(1)使用红色实线、O(log n)使用橙色虚线、O(n)使用黄色点线、O(n log n)使用绿色点划线、O($n^2$)使用蓝色长划线、O($2^n$)使用紫色双划线}(\#fig:complexity-curve)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="01-statistical_programing_files/figure-html/complexity-curve-1.png" alt="算法复杂度随数据规模增长的趋势图。不同复杂度等级使用颜色和线型组合表示：O(1)使用红色实线、O(log n)使用橙色虚线、O(n)使用黄色点线、O(n log n)使用绿色点划线、O($n^2$)使用蓝色长划线、O($2^n$)使用紫色双划线" width="80%" />
+<p class="caption">(\#fig:complexity-curve)算法复杂度随数据规模增长的趋势图。不同复杂度等级使用颜色和线型组合表示：O(1)使用红色实线、O(log n)使用橙色虚线、O(n)使用黄色点线、O(n log n)使用绿色点划线、O($n^2$)使用蓝色长划线、O($2^n$)使用紫色双划线</p>
+</div>
 
 图\@ref(fig:complexity-curve) 直观地展示了不同复杂度等级随数据规模增长的趋势。**结论**：O(1) 和 O(log n) 是极其高效的，O(n) 和 O(n log n) 是优秀的，O($n^2$) 在 n 较小时可以接受，而 O($2^n$) 和 O(n!) 应尽量避免。
 
