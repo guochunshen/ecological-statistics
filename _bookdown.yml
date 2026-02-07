@@ -20,7 +20,6 @@ rmd_files: [
   "index.Rmd",
   "01-statistical_programing.Rmd",
   "02-probability_and_distribution.Rmd",
-  "03-summary_statistics.Rmd",
   "04-parameter_estimation.Rmd",
   "05-correlation.Rmd",
   "06-classical_hypothesis_tests.Rmd",

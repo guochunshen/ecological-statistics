@@ -178,10 +178,14 @@
 
 为了更好地理解零假设与备择假设的分布关系，让我们生成一个可视化图表：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/null-alternative-distribution-1.png" alt="零假设与备择假设分布比较：展示在零假设（蓝色）和备择假设（橙色）下检验统计量的概率分布，以及显著性水平的临界值。通过颜色和分布形状的组合，确保在彩色显示和黑白打印时都能清晰区分不同类型的统计分布。" width="80%" />
-<p class="caption">(\#fig:null-alternative-distribution)零假设与备择假设分布比较：展示在零假设（蓝色）和备择假设（橙色）下检验统计量的概率分布，以及显著性水平的临界值。通过颜色和分布形状的组合，确保在彩色显示和黑白打印时都能清晰区分不同类型的统计分布。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/null-alternative-distribution-1} 
+
+}
+
+\caption{零假设与备择假设分布比较：展示在零假设（蓝色）和备择假设（橙色）下检验统计量的概率分布，以及显著性水平的临界值。通过颜色和分布形状的组合，确保在彩色显示和黑白打印时都能清晰区分不同类型的统计分布。}(\#fig:null-alternative-distribution)
+\end{figure}
 
 这个图表直观展示了在零假设（蓝色）和备择假设（橙色）下的检验统计量分布。红色虚线表示显著性水平$\alpha$=0.05的临界值，当检验统计量超过这个临界值时，我们就有足够的证据拒绝零假设。
 
@@ -212,10 +216,14 @@ p值的解释需要特别注意：
 
 为了更直观地理解p值的概念，让我们通过R代码生成一个可视化图表：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/p-value-visualization-1.png" alt="p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。" width="80%" />
-<p class="caption">(\#fig:p-value-visualization)p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/p-value-visualization-1} 
+
+}
+
+\caption{p值的可视化解释：通过概率密度函数展示p值作为在零假设下观测到当前或更极端检验统计量的概率。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。}(\#fig:p-value-visualization)
+\end{figure}
 
 这个图表通过红色区域直观展示了p值的概念，即在零假设下观测到当前检验统计量值（红色垂直线）或更极端值的概率。p值越小，表明观测到的数据在零假设下越不可能发生，从而为我们拒绝零假设提供了更强的证据。
 
@@ -290,19 +298,27 @@ Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/error-types-visualization-1.png" alt="第一类错误与第二类错误的可视化：展示假阳性（第一类错误，红色区域）和假阴性（第二类错误，蓝色区域）在统计决策中的概率分布。通过颜色和填充纹理的组合区分不同类型的统计错误。" width="80%" />
-<p class="caption">(\#fig:error-types-visualization)第一类错误与第二类错误的可视化：展示假阳性（第一类错误，红色区域）和假阴性（第二类错误，蓝色区域）在统计决策中的概率分布。通过颜色和填充纹理的组合区分不同类型的统计错误。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/error-types-visualization-1} 
+
+}
+
+\caption{第一类错误与第二类错误的可视化：展示假阳性（第一类错误，红色区域）和假阴性（第二类错误，蓝色区域）在统计决策中的概率分布。通过颜色和填充纹理的组合区分不同类型的统计错误。}(\#fig:error-types-visualization)
+\end{figure}
 
 这个图表清晰地显示了第一类错误（红色区域，假阳性）和第二类错误（蓝色区域，假阴性）的概念，以及统计功效（1-$\beta$）作为正确检测真实效应的概率。在生态学研究中，我们需要在这两类错误之间进行权衡，根据研究的具体目的选择合适的显著性水平。
 
 统计功效受到多个因素的影响，其中样本量是一个关键因素。让我们图表来展示样本量如何影响统计功效：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/power-sample-size-visualization-1.png" alt="样本量对统计功效的影响：展示在不同效应大小（蓝色、橙色、绿色线条）下，样本量增加如何提高统计功效。通过颜色和线条类型的组合区分不同效应大小。" width="80%" />
-<p class="caption">(\#fig:power-sample-size-visualization)样本量对统计功效的影响：展示在不同效应大小（蓝色、橙色、绿色线条）下，样本量增加如何提高统计功效。通过颜色和线条类型的组合区分不同效应大小。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/power-sample-size-visualization-1} 
+
+}
+
+\caption{样本量对统计功效的影响：展示在不同效应大小（蓝色、橙色、绿色线条）下，样本量增加如何提高统计功效。通过颜色和线条类型的组合区分不同效应大小。}(\#fig:power-sample-size-visualization)
+\end{figure}
 
 这个图表展示了不同效应大小下，样本量如何影响统计功效。通常我们期望统计功效达到0.8以上（灰色虚线），这意味着我们有80%的概率正确检测到真实存在的效应。从图表可以看出，效应大小越大，达到足够统计功效所需的样本量越小。
 
@@ -351,10 +367,14 @@ Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 让我们用一个图来理解效应大小和置信区间的概念：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/effect-size-ci-visualization-1.png" alt="效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围。蓝色圆形点表示统计显著的结果，红色方形点表示不显著的结果，通过颜色和形状的组合增强可辨识度。" width="80%" />
-<p class="caption">(\#fig:effect-size-ci-visualization)效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围。蓝色圆形点表示统计显著的结果，红色方形点表示不显著的结果，通过颜色和形状的组合增强可辨识度。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/effect-size-ci-visualization-1} 
+
+}
+
+\caption{效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围。蓝色圆形点表示统计显著的结果，红色方形点表示不显著的结果，通过颜色和形状的组合增强可辨识度。}(\#fig:effect-size-ci-visualization)
+\end{figure}
 
 这个图表展示了多个研究的效应大小估计及其置信区间。我们可以清楚地看到哪些研究的结果是统计显著的（置信区间不包含0），以及不同研究的效应大小估计。
 
@@ -455,10 +475,14 @@ $t$分布与正态分布形状相似，都是钟形曲线，但$t$分布的尾�
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/one-sample-t-test-visualization-1.png" alt="单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。" width="80%" />
-<p class="caption">(\#fig:one-sample-t-test-visualization)单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/one-sample-t-test-visualization-1} 
+
+}
+
+\caption{单样本t检验的可视化解释：展示t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。}(\#fig:one-sample-t-test-visualization)
+\end{figure}
 
 这个图表直观展示了单样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
 
@@ -503,10 +527,14 @@ $t$分布与正态分布形状相似，都是钟形曲线，但$t$分布的尾�
 
 为了更好地理解单样本符号检验的原理，让我们通过一个图来理解：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/sign-test-visualization-1.png" alt="单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。" width="80%" />
-<p class="caption">(\#fig:sign-test-visualization)单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/sign-test-visualization-1} 
+
+}
+
+\caption{单样本符号检验的可视化解释：展示二项分布下正号数量的概率分布以及观测到的正号数量。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。}(\#fig:sign-test-visualization)
+\end{figure}
 
 这个图表直观展示了单样本符号检验的原理。蓝色柱状图表示在零假设下（正号和负号以相等概率出现）正号数量的二项分布，红色垂直线表示我们观测到的正号数量，红色区域表示$p$值——在零假设下观测到当前或更多正号的概率。
 
@@ -570,10 +598,14 @@ $$s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$$
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/independent-t-test-visualization-1.png" alt="独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。" width="80%" />
-<p class="caption">(\#fig:independent-t-test-visualization)独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/independent-t-test-visualization-1} 
+
+}
+
+\caption{独立样本t检验的可视化解释：展示在零假设下t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。}(\#fig:independent-t-test-visualization)
+\end{figure}
 
 这个图表直观展示了独立样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
 
@@ -623,10 +655,14 @@ $$t = \frac{\bar{d}}{s_d / \sqrt{n}}$$
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/paired-t-test-visualization-1.png" alt="配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。" width="80%" />
-<p class="caption">(\#fig:paired-t-test-visualization)配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/paired-t-test-visualization-1} 
+
+}
+
+\caption{配对样本t检验的可视化解释：展示配对差异均值的t分布、观测t统计量以及对应的p值区域。红色区域表示p值区域，通过颜色和填充纹理的组合增强可辨识度。}(\#fig:paired-t-test-visualization)
+\end{figure}
 
 这个图表直观展示了配对样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布（差异为0），红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$t$值的概率。
 
@@ -677,10 +713,14 @@ Mann-Whitney U检验的主要优点是它对分布形态没有要求，对极端
 
 为了更好地理解Mann-Whitney U检验的原理，让我们通过一个图来理解：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/mann-whitney-visualization-1.png" alt="Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域（橙色）和清洁区域（蓝色）底栖动物生物量的分布比较。通过颜色和填充纹理的组合区分不同区域类型。" width="80%" />
-<p class="caption">(\#fig:mann-whitney-visualization)Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域（橙色）和清洁区域（蓝色）底栖动物生物量的分布比较。通过颜色和填充纹理的组合区分不同区域类型。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/mann-whitney-visualization-1} 
+
+}
+
+\caption{Mann-Whitney U检验的可视化解释：通过箱线图展示污染区域（橙色）和清洁区域（蓝色）底栖动物生物量的分布比较。通过颜色和填充纹理的组合区分不同区域类型。}(\#fig:mann-whitney-visualization)
+\end{figure}
 
 这个图表直观展示了Mann-Whitney U检验的原理。箱线图显示了两个样本的分布情况，点表示各个观测值。检验基于这些观测值的秩次（排序位置）而不是原始数值来进行统计推断。
 
@@ -776,10 +816,14 @@ $$H_1: \text{至少有一对组的均值不相等}$$
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-t-test-vs-anova-1.png" alt="多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案" width="80%" />
-<p class="caption">(\#fig:multiple-t-test-vs-anova)多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/multiple-t-test-vs-anova-1} 
+
+}
+
+\caption{多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案}(\#fig:multiple-t-test-vs-anova)
+\end{figure}
 
 **图表解释**
 
@@ -848,10 +892,14 @@ $$H_1: \text{至少有一对组的均值不相等}$$
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/anova-visualization-1.png" alt="方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域" width="80%" />
-<p class="caption">(\#fig:anova-visualization)方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/anova-visualization-1} 
+
+}
+
+\caption{方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域}(\#fig:anova-visualization)
+\end{figure}
 
 这个图表直观展示了方差分析的原理。蓝色曲线表示在零假设下的$F$分布，红色垂直线表示我们观测到的$F$统计量，红色区域表示$p$值——在零假设下观测到当前或更极端$F$值的概率。
 
@@ -910,10 +958,14 @@ Kruskal-Wallis检验的主要优点是它对分布形态没有要求，对极端
 
 为了更好地理解Kruskal-Wallis检验的原理，让我们通过一个图来理解：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/kruskal-wallis-visualization-1.png" alt="Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较" width="80%" />
-<p class="caption">(\#fig:kruskal-wallis-visualization)Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/kruskal-wallis-visualization-1} 
+
+}
+
+\caption{Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较}(\#fig:kruskal-wallis-visualization)
+\end{figure}
 
 这个图表直观展示了Kruskal-Wallis检验的原理。箱线图显示了三个样本的分布情况，点表示各个观测值。检验基于这些观测值的秩次（排序位置）而不是原始数值来进行统计推断。
 
@@ -1098,37 +1150,19 @@ knitr::kable(summary(anova_result)[[1]],
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:multiple-comparison-anova)(\#tab:multiple-comparison-anova)方差分析结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Df </th>
-   <th style="text-align:right;"> Sum Sq </th>
-   <th style="text-align:right;"> Mean Sq </th>
-   <th style="text-align:right;"> F value </th>
-   <th style="text-align:right;"> Pr(&gt;F) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> protection_measure </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 18.84531 </td>
-   <td style="text-align:right;"> 9.422654 </td>
-   <td style="text-align:right;"> 7.322486 </td>
-   <td style="text-align:right;"> 0.0023345 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Residuals </td>
-   <td style="text-align:right;"> 33 </td>
-   <td style="text-align:right;"> 42.46475 </td>
-   <td style="text-align:right;"> 1.286811 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> NA </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:multiple-comparison-anova)方差分析结果}
+\centering
+\begin{tabular}[t]{lrrrrr}
+\toprule
+  & Df & Sum Sq & Mean Sq & F value & Pr(>F)\\
+\midrule
+protection\_measure & 2 & 18.84531 & 9.422654 & 7.322486 & 0.0023345\\
+Residuals & 33 & 42.46475 & 1.286811 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 ``` r
 # 提取F统计量和p值
@@ -1245,10 +1279,14 @@ summary_stats <- protection_data %>%
 
 
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-combined-plot-1.png" alt="多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化" width="80%" />
-<p class="caption">(\#fig:multiple-comparison-combined-plot)多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/multiple-comparison-combined-plot-1} 
+
+}
+
+\caption{多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化}(\#fig:multiple-comparison-combined-plot)
+\end{figure}
 
 图 \@ref(fig:multiple-comparison-combined-plot) 展示了多重比较校正的综合可视化结果。该组合图形将均值图（左侧）和箱线图（右侧）并排显示，便于直观比较三种保护措施下梅花鹿种群密度的统计特征。均值图显示各组的平均密度及其标准误，箱线图则展示了数据的分布特征和个体观测值。这种组合可视化方式有助于全面理解多重比较分析的结果。
 
@@ -1266,10 +1304,14 @@ summary_stats <- protection_data %>%
 
 让我们通过另一个可视化来理解多重比较校正如何影响p值的解释：
 
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-visualization-1.png" alt="多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响。通过颜色和形状的组合区分不同效应类型和校正方法。" width="80%" />
-<p class="caption">(\#fig:multiple-comparison-visualization)多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响。通过颜色和形状的组合区分不同效应类型和校正方法。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/multiple-comparison-visualization-1} 
+
+}
+
+\caption{多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响。通过颜色和形状的组合区分不同效应类型和校正方法。}(\#fig:multiple-comparison-visualization)
+\end{figure}
 
 图 \@ref(fig:multiple-comparison-visualization) 展示了多重比较校正效果的直观可视化。该图形模拟了20个假设检验的情景，其中15个来自零假设（无真实效应，蓝色点），5个来自备择假设（有真实效应，红色点）。图形采用三面板布局，分别显示未校正、Bonferroni校正和FDR控制三种方法处理后的p值。通过比较各面板中超过红色虚线（显著性阈值）的点数，可以直观理解不同校正方法在错误控制和发现力之间的权衡。
 
@@ -1360,361 +1402,6 @@ p.adjust(p_values, method = "BY") # Benjamini-Yekutieli
 记住，多重比较校正不是统计“魔术"，而是基于概率理论的严谨方法。理解其原理并正确应用，将使你的生态学研究更加科学和可信。
 
 在掌握了如何避免多重比较导致的假阳性问题后，我们需要关注另一个同样重要的统计问题——统计功效。即使我们使用了正确的统计检验和多重比较校正，如果研究设计本身缺乏足够的检测能力，我们仍然可能错过真实的生态效应。功效分析正是为此目的而设计的统计工具，它帮助我们在研究设计阶段就评估检测预期效应的可能性。
-
-## 生态保护效果的功效分析
-
-在生态学研究中，我们不仅关心统计显著性，更关心研究是否有足够的能力检测到真实存在的生态效应。**功效分析**正是为此目的而设计的统计工具，它帮助我们在研究设计阶段就评估检测预期效应的可能性，从而确保我们的研究既不会因为样本过小而错过真实效应，也不会因为样本过大而浪费宝贵的科研资源。
-
-### 统计功效的概念与生态学意义
-
-**统计功效**定义为正确拒绝错误零假设的概率，即1-$\beta$，其中β是第二类错误的概率。在生态学语境中，统计功效可以理解为：当某种生态效应确实存在时，我们的研究能够检测到这种效应的概率。例如，如果某种保护措施确实能够提高濒危物种的存活率，统计功效就是我们的研究能够正确发现这种保护效果的概率。
-
-统计功效的生态学意义极为重要。一个功效不足的研究就像使用分辨率不足的望远镜观察星空——我们可能错过真实存在的天体，却误以为天空空无一物。在生态保护领域，功效不足的研究可能导致我们错过有效的保护措施，让濒危物种继续面临威胁；在环境风险评估中，功效不足可能让我们低估污染物的生态毒性，导致生态系统持续受损。因此，进行充分的功效分析不仅是统计严谨性的要求，更是生态伦理的体现。
-
-### 功效分析的核心要素
-
-功效分析涉及四个相互关联的核心要素，理解这些要素之间的关系对于合理设计生态学研究至关重要。这四个要素——效应大小、样本量、显著性水平和统计功效——构成了一个紧密相连的系统，任何一个要素的变化都会影响其他要素。在生态学研究中，我们需要在这些要素之间找到最优的平衡点，既要确保研究有足够的检测能力，又要考虑实际的资源约束和伦理考量。
-
-**效应大小**是衡量生态效应实际重要性的量化指标，它反映了自变量对因变量影响的实际幅度。与统计显著性不同，效应大小关注的是生态学意义上的实际差异，而非统计概率。在生态学研究中，效应大小的概念具有多重维度：它可以是均值差异、方差解释比例、相关系数，或者是分类变量间的关联强度。
-
-效应大小的生态学解释需要结合具体的研究情境和生态学背景。一个在生理学研究中微不足道的效应可能在保护生物学中具有决定性意义。例如，某种农药导致非靶标昆虫死亡率增加3%的效应，在农业生产的经济效益评估中可能被认为是可接受的副作用，但在保护濒危传粉昆虫物种时，这个微小的死亡率增加可能意味着整个种群的崩溃。同样，在气候变化研究中，年平均温度升高0.5℃的效应在短期气象观测中可能不显著，但对于高山生态系统的物种分布和物候期却可能产生深远影响。
-
-效应大小的估计需要基于多方面的信息来源：文献回顾可以提供类似研究的效应大小范围；预实验数据可以提供初步的效应估计；专家经验可以基于生态学理论提供合理的预期；最小生态学重要差异（Minimum Ecologically Important Difference）的概念可以帮助确定具有实际生态意义的效应阈值。在缺乏可靠信息时，可以使用Cohen提出的效应大小标准作为参考：小效应（d=0.2）、中效应（d=0.5）、大效应（d=0.8），但这些标准在生态学中的应用需要谨慎，因为生态系统的复杂性和敏感性往往要求我们重新定义什么构成"重要"的效应。
-
-**样本量**是研究中最直接可控的因素，也是连接统计理论与生态实践的桥梁。样本量直接影响统计功效的核心机制在于其对抽样误差的控制——样本量越大，样本统计量对总体参数的估计越精确，抽样误差越小，从而检测真实效应的能力越强。这种关系遵循平方根法则：标准误与样本量的平方根成反比，这意味着要将标准误减半，需要将样本量增加四倍。
-
-然而，生态学研究在样本量选择上面临着独特的挑战和约束。野外调查往往受制于时间、经费和可行性的限制：在偏远地区进行生物多样性调查可能需要数周甚至数月的野外工作；保护生物学研究可能涉及数量极其有限的濒危物种个体；长期生态监测需要考虑研究的可持续性和对生态系统的干扰最小化。此外，生态系统的空间异质性和时间变异性也增加了确定合适样本量的复杂性。
-
-功效分析在样本量确定中发挥着关键作用，它帮助我们在这些约束条件下找到最优的平衡点。通过功效分析，我们可以回答一系列关键问题：在给定的效应大小和显著性水平下，达到期望统计功效需要多大的样本量？如果实际条件限制了样本量，那么在这种样本量下我们能够检测到多小的效应？这种前瞻性的分析不仅优化了资源利用，也提高了研究的科学价值。
-
-**显著性水平**（$\alpha$）是我们愿意接受的第一类错误风险，即在零假设实际上为真时错误地拒绝它的概率。在传统的统计实践中，$\alpha$通常设定为0.05，但这个选择在生态学中需要更加细致的考量，因为它涉及到第一类错误和第二类错误之间的根本权衡。
-
-在生态学研究中，显著性水平的选择应该基于对两类错误后果的深入分析。在保护生物学研究中，第二类错误的后果往往更为严重——错过一个真实的保护效应可能意味着濒危物种的继续衰退甚至灭绝。因此，在保护生物学中，我们可能愿意接受较高的$\alpha$水平（如0.10）来换取更高的统计功效，确保不会错过重要的保护机会。例如，在评估某种栖息地恢复措施对濒危鸟类的影响时，我们可能更关心不要错过真实的正向效应，即使这意味着有10%的概率错误地宣称无效的措施有效。
-
-相反，在涉及重大政策决策或资源分配的研究中，第一类错误的后果可能更为严重。错误地宣称某种污染物具有生态毒性可能导致不必要的环境管制和经济损失；错误地宣称某种外来物种具有入侵风险可能引发不必要的控制措施。在这种情况下，我们需要更严格的$\alpha$水平（如0.01）来减少假阳性的风险。例如，在评估新型农药的环境安全性时，我们可能要求更强的证据来证明其有害性。
-
-**统计功效**（1-$\beta$）是我们期望达到的检测能力，即在备择假设实际上为真时正确拒绝零假设的概率。在生态学研究中，统计功效通常设定为0.80，这个标准被认为是在统计严谨性和实际可行性之间的合理折中。
-
-统计功效为0.80意味着我们有80%的概率正确检测到真实存在的效应，同时接受20%的错过真实效应的风险。这个选择主要基于以下几个考虑：首先，从实际可行性来看，要达到更高的统计功效（如0.90或0.95）通常需要极大的样本量增加，这在生态学研究中往往难以实现。其次，从资源分配的角度看，将功效从0.80提高到0.90通常需要不成比例的资源投入。最后，统计功效为0.80在大多数研究情境下被认为是足够的检测能力。
-
-然而，在特定的高风险生态学研究中，我们可能需要更高的功效标准。在涉及濒危物种保护的研究中，错过真实保护效应的后果可能极为严重，因此可能需要0.90甚至0.95的功效水平。在重大环境风险评估中，低估污染物生态毒性的风险可能带来不可逆的生态破坏，同样需要更高的检测能力。在这些情况下，功效分析可以帮助我们理解达到更高功效所需的资源投入，为决策提供依据。
-
-### 功效分析在生态学研究设计中的应用
-
-功效分析最重要的应用是在研究设计阶段确定合适的样本量。通过功效分析，我们可以在研究开始前就回答一个关键问题："为了有80%的概率检测到预期大小的效应，我需要多大的样本量？"
-
-让我们通过一个具体的生态学实例来理解功效分析的实际应用：
-
-> **实例：设计梅花鹿保护措施效果评估的研究**
->
-> 假设我们计划研究禁猎保护对梅花鹿种群密度的影响。基于文献回顾和预实验，我们预期禁猎保护将使梅花鹿密度从保护前的平均2.5只/平方公里提高到保护后的平均4.0只/平方公里（效应大小）。我们设定显著性水平α = 0.05，期望统计功效为0.80。
->
-> 通过功效分析，我们可以计算出需要的样本量。如果计算结果显示需要监测15个保护区，那么我们就知道：在这个样本量下，如果禁猎保护确实能提高梅花鹿密度，我们有80%的概率能够检测到这种效应。
->
-> 如果实地条件限制我们只能监测10个保护区，功效分析可以告诉我们：在这个样本量下，统计功效可能只有60%。这意味着即使禁猎保护确实有效，我们也有40%的概率会错过这个效应。这种前瞻性的认识帮助我们做出更明智的决策——要么调整研究设计，要么重新评估研究的可行性。
-
-### 不同类型检验的功效分析
-
-不同的统计检验需要不同的功效分析方法。在生态学研究中，我们经常遇到的功效分析包括：
-
-**$t$检验的功效分析**适用于比较两个组均值差异的研究。例如，比较禁猎保护区域和未保护区域的梅花鹿密度，或者比较不同保护措施实施前后的种群变化。$t$检验的功效分析相对简单，主要考虑效应大小（标准化均值差异）、样本量和显著性水平。
-
-**方差分析的功效分析**适用于比较三个或更多组均值的研究。例如，比较不同保护措施（禁猎、栖息地恢复、人工投食）对梅花鹿种群密度的影响，或者评估不同管理策略的保护效果。方差分析的功效分析需要考虑组数、效应大小（如η²或f）、样本量和显著性水平。
-
-**相关分析和回归的功效分析**适用于研究变量间关系的研究。例如，分析温度与物种丰富度的关系，或者建立环境因子与生态指标的预测模型。这类功效分析需要考虑相关系数、样本量和显著性水平。
-
-**卡方检验的功效分析**适用于分类数据的研究。例如，分析物种在不同生境中的分布差异，或者检验不同处理对生物存活率的影响。卡方检验的功效分析需要考虑效应大小（如Cramér's V）、样本量和显著性水平。
-
-**功效分析的实践建议与注意事项**
-
-在进行功效分析时，生态学家需要注意以下几个关键点：
-
-**合理估计效应大小**是功效分析成功的关键。效应大小的估计可以基于：文献回顾（类似研究的效应大小）、预实验数据、专家经验，或者使用最小生态学重要差异（Minimum Ecologically Important Difference）的概念。在缺乏可靠信息时，可以使用Cohen提出的效应大小标准（小效应：d=0.2，中效应：d=0.5，大效应：d=0.8）作为参考。
-
-**考虑研究的实际约束**。生态学研究很少能在理想条件下进行，我们需要在统计理想和现实约束之间找到平衡。功效分析应该考虑：野外工作的可行性、经费限制、时间约束、伦理考量（如对濒危物种的干扰最小化）。
-
-**进行敏感性分析**。由于效应大小的估计往往存在不确定性，进行敏感性分析是明智的做法。我们可以计算不同效应大小假设下所需的样本量，从而了解研究对效应大小估计的敏感程度。
-
-**报告完整的功效分析**。在论文的方法部分，应该详细报告功效分析的过程：使用的效应大小估计及其依据、设定的显著性水平和统计功效、计算出的样本量、以及任何调整或妥协的考虑。
-
-**生态学意义与伦理责任**
-
-功效分析不仅仅是一个统计工具，它体现了生态学研究的科学严谨性和伦理责任。一个经过充分功效分析设计的研究：
-
-- **提高了研究的科学价值**：确保研究有足够的能力回答科学问题
-- **优化了资源利用**：避免样本过小导致的资源浪费，也避免样本过大造成的不必要消耗
-- **增强了结果的可信度**：统计上不显著的结果更可能是真实无效应，而非检测力不足
-- **促进了知识的积累**：为后续的元分析和综述研究提供可靠的基础
-
-在生态保护和管理决策日益依赖科学证据的今天，功效分析成为了连接生态学理论与保护实践的重要桥梁。通过严谨的功效分析，我们不仅是在进行统计学计算，更是在履行对生态系统和未来世代的责任——确保我们的研究能够为生态保护提供真正有用的知识，而不是在统计迷雾中迷失方向。
-
-**R语言实现示例**
-
-在生态学研究中，R语言提供了强大的功效分析工具包`pwr`，可以帮助我们进行各种统计检验的功效分析。下面我们将详细介绍几个关键函数的用法和参数含义，并通过具体的生态学实例演示如何进行功效分析。
-
-**1. 安装和加载pwr包**
-
-首先需要安装并加载功效分析包：
-
-
-``` r
-# 加载pwr包
-library(pwr)
-```
-
-`pwr`包提供了多种统计检验的功效分析函数，包括$t$检验、方差分析、相关分析、卡方检验等。
-
-**2. $t$检验的功效分析**
-
-`pwr.t.test()`函数用于$t$检验的功效分析，适用于比较两个组均值差异的研究。让我们通过一个具体的生态学实例来理解其用法：
-
-
-``` r
-# 实例：禁猎保护对梅花鹿种群密度影响的功效分析
-# 研究问题：比较禁猎保护区域和未保护区域的梅花鹿密度
-
-# 计算所需样本量 - 使用pwr.t.test函数进行t检验的功效分析
-t_power <- pwr.t.test(
-  d = 0.5, # 效应大小（Cohen's d）- 标准化均值差异，0.5表示中等效应
-  sig.level = 0.05, # 显著性水平 - 第一类错误风险，通常设为0.05
-  power = 0.8, # 期望统计功效 - 正确检测真实效应的概率，通常设为0.80
-  type = "two.sample", # 检验类型：独立样本t检验 - 比较两个独立组的均值
-  alternative = "two.sided" # 备择假设：双侧检验 - 检验两个方向的差异
-)
-
-# 输出功效分析结果
-cat("=== 独立样本t检验功效分析 ===\n")
-```
-
-```
-## === 独立样本t检验功效分析 ===
-```
-
-``` r
-print(t_power)
-```
-
-```
-## 
-##      Two-sample t test power calculation 
-## 
-##               n = 63.76561
-##               d = 0.5
-##       sig.level = 0.05
-##           power = 0.8
-##     alternative = two.sided
-## 
-## NOTE: n is number in *each* group
-```
-
-**参数解释：**
-- `d`：效应大小，使用Cohen's d表示标准化均值差异。在生态学中，d=0.2表示小效应，d=0.5表示中效应，d=0.8表示大效应。
-- `sig.level`：显著性水平，通常设为0.05。
-- `power`：期望的统计功效，通常设为0.80。
-- `type`：检验类型，可以是"two.sample"（独立样本）、"one.sample"（单样本）或"paired"（配对样本）。
-- `alternative`：备择假设类型，可以是"two.sided"（双侧）、"greater"（单侧，组1>组2）或"less"（单侧，组1<组2）。
-
-**结果解释：**
-输出结果会显示达到期望功效所需的每组样本量。在这个例子中，结果显示每组需要约64个样本才能以80%的概率检测到中等效应大小的差异。
-
-**3. 方差分析的功效分析**
-
-`pwr.anova.test()`函数用于方差分析的功效分析，适用于比较三个或更多组均值的研究：
-
-
-``` r
-# 实例：不同保护措施对梅花鹿种群密度影响的功效分析
-# 研究问题：比较禁猎保护、栖息地恢复、人工投食三种保护措施的梅花鹿密度
-
-# 计算所需样本量
-anova_power <- pwr.anova.test(
-  k = 3, # 组数
-  f = 0.25, # 效应大小（Cohen's f）
-  sig.level = 0.05, # 显著性水平
-  power = 0.8 # 期望统计功效
-)
-
-cat("\n=== 方差分析功效分析 ===\n")
-```
-
-```
-## 
-## === 方差分析功效分析 ===
-```
-
-``` r
-print(anova_power)
-```
-
-```
-## 
-##      Balanced one-way analysis of variance power calculation 
-## 
-##               k = 3
-##               n = 52.3966
-##               f = 0.25
-##       sig.level = 0.05
-##           power = 0.8
-## 
-## NOTE: n is number in each group
-```
-
-**参数解释：**
-- `k`：组数，即要比较的处理水平数量。
-- `f`：效应大小，使用Cohen's f表示。在方差分析中，f=0.1表示小效应，f=0.25表示中效应，f=0.4表示大效应。
-- `sig.level`和`power`的含义与$t$检验相同。
-
-**效应大小f的计算：**
-Cohen's f可以通过方差分析中的η²（eta平方）来计算：
-$$f = \sqrt{\frac{\eta^2}{1-\eta^2}}$$
-其中η²表示组间方差占总方差的比例。
-
-**4. 相关分析的功效分析**
-
-`pwr.r.test()`函数用于相关分析的功效分析，适用于研究两个连续变量之间的关系：
-
-
-``` r
-# 实例：温度与物种丰富度关系的功效分析
-# 研究问题：检验年平均温度与鸟类物种丰富度的相关性
-
-# 计算所需样本量
-cor_power <- pwr.r.test(
-  r = 0.3, # 预期相关系数
-  sig.level = 0.05, # 显著性水平
-  power = 0.8, # 期望统计功效
-  alternative = "two.sided" # 备择假设：双侧检验
-)
-
-cat("\n=== 相关分析功效分析 ===\n")
-```
-
-```
-## 
-## === 相关分析功效分析 ===
-```
-
-``` r
-print(cor_power)
-```
-
-```
-## 
-##      approximate correlation power calculation (arctangh transformation) 
-## 
-##               n = 84.07364
-##               r = 0.3
-##       sig.level = 0.05
-##           power = 0.8
-##     alternative = two.sided
-```
-
-**参数解释：**
-- `r`：预期的相关系数。在生态学中，r=0.1表示弱相关，r=0.3表示中等相关，r=0.5表示强相关。
-
-**5. 卡方检验的功效分析**
-
-`pwr.chisq.test()`函数用于卡方检验的功效分析，适用于分类数据的分析：
-
-
-``` r
-# 实例：物种在不同生境中分布差异的功效分析
-# 研究问题：检验物种在三种生境类型中的分布是否存在差异
-
-# 计算所需样本量
-chisq_power <- pwr.chisq.test(
-  w = 0.3, # 效应大小（Cohen's w）
-  N = NULL, # 总样本量（待计算）
-  df = 2, # 自由度
-  sig.level = 0.05, # 显著性水平
-  power = 0.8 # 期望统计功效
-)
-
-cat("\n=== 卡方检验功效分析 ===\n")
-```
-
-```
-## 
-## === 卡方检验功效分析 ===
-```
-
-``` r
-print(chisq_power)
-```
-
-```
-## 
-##      Chi squared power calculation 
-## 
-##               w = 0.3
-##               N = 107.0521
-##              df = 2
-##       sig.level = 0.05
-##           power = 0.8
-## 
-## NOTE: N is the number of observations
-```
-
-**参数解释：**
-- `w`：效应大小，使用Cohen's w表示。在卡方检验中，w=0.1表示小效应，w=0.3表示中效应，w=0.5表示大效应。
-- `df`：自由度，计算公式为(行数-1)×(列数-1)。
-- `N`：总样本量。
-
-**6. 功效曲线的绘制**
-
-功效曲线可以直观地展示样本量与统计功效之间的关系，帮助我们理解样本量选择的权衡：
-
-
-
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/power-curve-plotting-1.png" alt="样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效。蓝色曲线表示功效变化，红色虚线表示功效阈值，绿色虚线表示所需样本量，通过颜色和线条类型的组合增强可辨识度。" width="80%" />
-<p class="caption">(\#fig:power-curve-plotting)样本量对统计功效的影响：展示在中等效应大小下样本量增加如何提高统计功效。蓝色曲线表示功效变化，红色虚线表示功效阈值，绿色虚线表示所需样本量，通过颜色和线条类型的组合增强可辨识度。</p>
-</div>
-
-**图表解释：**
-- 蓝色曲线显示随着样本量增加，统计功效逐渐提高
-- 红色虚线表示常用的功效阈值0.80
-- 绿色虚线显示达到0.80功效所需的样本量
-- 从曲线可以看出，样本量较小时功效增长较快，样本量较大时增长趋于平缓
-
-**7. 敏感性分析**
-
-由于效应大小的估计往往存在不确定性，进行敏感性分析是明智的做法：
-
-
-``` r
-# 测试不同效应大小下的样本量需求
-effect_sizes <- c(0.2, 0.3, 0.5, 0.8) # 小、中小、中、大效应
-sample_needs <- sapply(effect_sizes, function(d) {
-  pwr.t.test(
-    d = d, sig.level = 0.05, power = 0.8,
-    type = "two.sample"
-  )$n
-})
-
-# 创建数据框
-sensitivity_df <- data.frame(
-  effect_size = effect_sizes,
-  sample_need = sample_needs,
-  effect_label = c(
-    "小效应(d=0.2)", "中小效应(d=0.3)",
-    "中效应(d=0.5)", "大效应(d=0.8)"
-  )
-)
-```
-
-<div class="figure" style="text-align: center">
-<img src="06-classical_hypothesis_tests_files/figure-html/sensitivity-analysis-plot-1.png" alt="效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量。通过颜色和填充纹理的组合区分不同效应大小类别。" width="80%" />
-<p class="caption">(\#fig:sensitivity-analysis-plot)效应大小对所需样本量的影响：展示不同效应大小水平下达到期望统计功效所需的样本量。通过颜色和填充纹理的组合区分不同效应大小类别。</p>
-</div>
-
-图 \@ref(fig:sensitivity-analysis-plot) 展示了效应大小对样本量需求的敏感性分析结果。该柱状图直观地比较了四种不同效应大小水平（小效应d=0.2、中小效应d=0.3、中效应d=0.5、大效应d=0.8）下达到80%统计功效所需的样本量。从图中可以清晰地看到，随着效应大小的增加，所需的样本量显著减少。例如，检测小效应需要每组约394个样本，而检测大效应仅需每组约26个样本。这种敏感性分析有助于研究者在研究设计阶段根据预期的效应大小合理规划样本量。
-
-**实践建议：**
-
-在实际应用中，功效分析需要综合考虑多个关键因素。首先，效应大小的合理估计至关重要，这可以基于文献回顾、预实验或专家经验来完成。其次，如果研究计划进行多个检验，需要考虑多重检验校正，采用更严格的显著性水平来控制第一类错误率。同时，研究者需要在功效分析的理想要求与实际资源约束之间找到平衡点，确保研究设计既具有足够的统计检测能力，又在实际条件下可行。最后，在论文中详细报告功效分析的过程和结果，包括效应大小估计的依据、样本量计算的参数设置以及实际达到的功效水平，这对于研究的透明度和可重复性至关重要。
-
-通过这些详细的R语言实现示例，生态学家可以在研究设计阶段就对自己的研究有清晰的预期，确保研究既具有足够的统计检测能力，又在实际资源约束下可行。
 
 
 ## 总结

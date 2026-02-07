@@ -170,10 +170,14 @@ estimated_total <- observed_species / detection_prob
 
 概率收敛理论是统计推断的数学基础，帮助我们理解样本统计量如何趋近于总体参数。如图\@ref(fig:law-of-large-numbers)所示，大数定律的可视化演示清晰地展示了样本均值如何随样本量增加而收敛于总体均值，这种收敛过程体现了频率概率的核心思想。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/law-of-large-numbers-1.png" alt="大数定律可视化：样本均值随样本量增加收敛于总体均值（使用蓝色实线和红色虚线纹理区分）" width="80%" />
-<p class="caption">(\#fig:law-of-large-numbers)大数定律可视化：样本均值随样本量增加收敛于总体均值（使用蓝色实线和红色虚线纹理区分）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/law-of-large-numbers-1} 
+
+}
+
+\caption{大数定律可视化：样本均值随样本量增加收敛于总体均值（使用蓝色实线和红色虚线纹理区分）}(\#fig:law-of-large-numbers)
+\end{figure}
 
 如上图所示，通过模拟不同样本量下的概率估计过程，我们可以直观地看到大数定律的作用：随着样本量的增加，样本均值（蓝色实线）逐渐稳定地趋近于总体真实概率（红色虚线）。图中使用颜色（蓝色/红色）和线型纹理（实线/虚线）双重区分，确保在彩色显示和黑白打印时都能清晰辨识。这种收敛模式生动地展示了频率概率的核心思想——通过足够多的重复观察，我们能够获得对真实概率的可靠估计。
 
@@ -239,10 +243,14 @@ $$P(A) \approx \frac{\text{事件A发生的次数}}{\text{总试验次数}}$$
 
 频率概率需要大量重复试验，但生态学调查往往样本量有限。下面的模拟实验直观展示了样本量对概率估计精度的影响：随着样本量的增加，基于频率的概率估计误差会显著减小，这体现了大数定律在实际应用中的效果。然而在生态学研究中，由于时间、经费和实际条件的限制，我们往往无法获得足够大的样本量，这正是频率概率方法在生态学应用中的主要挑战之一。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/sample-size-effect-1.png" alt="样本量对概率估计精度的影响：样本量越大，估计误差越小。数据点使用蓝色圆形，连接线使用蓝色实线" width="80%" />
-<p class="caption">(\#fig:sample-size-effect)样本量对概率估计精度的影响：样本量越大，估计误差越小。数据点使用蓝色圆形，连接线使用蓝色实线</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/sample-size-effect-1} 
+
+}
+
+\caption{样本量对概率估计精度的影响：样本量越大，估计误差越小。数据点使用蓝色圆形，连接线使用蓝色实线}(\#fig:sample-size-effect)
+\end{figure}
 
 
 #### 从频率概率到现代统计学
@@ -316,10 +324,14 @@ $$P(\text{高营养}) = P(\text{高营养}|\text{晴天}) \times P(\text{晴天}
 
 下面的示例通过一个物种灭绝风险评估的案例，直观展示了全概率公式在生态学中的实际应用。该案例将总体灭绝概率分解为不同生态情景（正常、干旱、洪水）下的贡献，帮助我们理解各种环境条件对物种生存风险的相对重要性。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/total-probability-1.png" alt="全概率公式应用：各情景对总体灭绝概率的贡献分解。正常情景使用绿色斜线填充，干旱情景使用黄色网格填充，洪水情景使用红色交叉线填充" width="80%" />
-<p class="caption">(\#fig:total-probability)全概率公式应用：各情景对总体灭绝概率的贡献分解。正常情景使用绿色斜线填充，干旱情景使用黄色网格填充，洪水情景使用红色交叉线填充</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/total-probability-1} 
+
+}
+
+\caption{全概率公式应用：各情景对总体灭绝概率的贡献分解。正常情景使用绿色斜线填充，干旱情景使用黄色网格填充，洪水情景使用红色交叉线填充}(\#fig:total-probability)
+\end{figure}
 
 
 **在贝叶斯定理中的应用**：
@@ -447,37 +459,20 @@ results <- data.frame(
 )
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:unnamed-chunk-7)(\#tab:bayesian-species-distribution)贝叶斯物种分布模型结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> 栖息地类型 | 专家先 </th>
-   <th style="text-align:right;"> | 观测似然| 贝 </th>
-   <th style="text-align:right;"> 斯后验| </th>
-   <th style="text-align:right;">  </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> 森林       | </td>
-   <td style="text-align:right;"> 0.6| </td>
-   <td style="text-align:right;"> 0.643| </td>
-   <td style="text-align:right;"> 0.806| </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 草地       | </td>
-   <td style="text-align:right;"> 0.3| </td>
-   <td style="text-align:right;"> 0.286| </td>
-   <td style="text-align:right;"> 0.179| </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 湿地       | </td>
-   <td style="text-align:right;"> 0.1| </td>
-   <td style="text-align:right;"> 0.071| </td>
-   <td style="text-align:right;"> 0.015| </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:bayesian-species-distribution)贝叶斯物种分布模型结果}
+\centering
+\begin{tabular}[t]{lrrr}
+\toprule
+栖息地类型 & 专家先验 & 观测似然 & 贝叶斯后验\\
+\midrule
+森林 & 0.6 & 0.643 & 0.806\\
+草地 & 0.3 & 0.286 & 0.179\\
+湿地 & 0.1 & 0.071 & 0.015\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 ``` r
@@ -512,10 +507,14 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 结合多种证据（如栖息地质量、种群趋势、威胁因素）来评估物种的保护优先级。下面的可视化演示了贝叶斯更新在森林健康评估中的应用，展示了如何基于观测到的树木死亡率证据，从初始的专家信念（先验）更新为更准确的森林健康状态评估（后验）。这种动态更新过程体现了贝叶斯方法在生态监测和评估中的核心优势——能够系统地将新证据整合到现有的知识体系中。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/bayesian-update-1.png" alt="贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变（使用绿色条纹和蓝色网格纹理区分）" width="80%" />
-<p class="caption">(\#fig:bayesian-update)贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变（使用绿色条纹和蓝色网格纹理区分）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/bayesian-update-1} 
+
+}
+
+\caption{贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变（使用绿色条纹和蓝色网格纹理区分）}(\#fig:bayesian-update)
+\end{figure}
 
 
 **生态风险评估**
@@ -523,10 +522,14 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 在数据有限的情况下，结合专家判断和有限观测来评估生态风险。上面的可视化使用颜色（绿色/蓝色）和填充纹理（条纹/网格）双重区分先验和后验信念，确保在彩色显示和黑白打印时都能清晰辨识。下面的综合演示展示了贝叶斯方法在生态风险评估和决策分析中的完整应用流程：首先基于历史数据建立初始风险评估（先验），然后结合新的气候异常证据进行贝叶斯更新得到更准确的风险概率（后验），最后基于更新后的风险概率进行成本效益分析，为保护决策提供科学依据。这种将概率更新与决策分析相结合的方法，体现了贝叶斯统计在生态管理实践中的实用价值。
 
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/risk-assessment-1.png" alt="贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策。先验概率使用黄色实心填充，后验概率使用红色斜线填充；预期损失使用绿色网格填充，保护成本使用蓝色点状填充" width="80%" />
-<p class="caption">(\#fig:risk-assessment)贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策。先验概率使用黄色实心填充，后验概率使用红色斜线填充；预期损失使用绿色网格填充，保护成本使用蓝色点状填充</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/risk-assessment-1} 
+
+}
+
+\caption{贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策。先验概率使用黄色实心填充，后验概率使用红色斜线填充；预期损失使用绿色网格填充，保护成本使用蓝色点状填充}(\#fig:risk-assessment)
+\end{figure}
 
 
 **模型选择与平均**
@@ -536,35 +539,30 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:unnamed-chunk-11)(\#tab:bayesian-model-comparison)贝叶斯模型比较结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> 模型     | </th>
-   <th style="text-align:right;"> 型证据| 贝叶斯因 </th>
-   <th style="text-align:right;"> | </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> 线性模型 | </td>
-   <td style="text-align:right;"> 0| </td>
-   <td style="text-align:right;"> 1.00| </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> 季节模型 | </td>
-   <td style="text-align:right;"> 0| </td>
-   <td style="text-align:right;"> 3980.76| </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:bayesian-model-comparison)贝叶斯模型比较结果}
+\centering
+\begin{tabular}[t]{lrr}
+\toprule
+模型 & 模型证据 & 贝叶斯因子\\
+\midrule
+线性模型 & 0 & 1.00\\
+季节模型 & 0 & 13980.76\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 表 \@ref(tab:bayesian-model-comparison) 展示了贝叶斯模型比较的结果，包括线性模型和季节模型的模型证据值以及它们之间的贝叶斯因子，为模型选择提供了定量依据。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/model-comparison-1.png" alt="贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比（使用颜色和线型纹理区分）" width="80%" />
-<p class="caption">(\#fig:model-comparison)贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比（使用颜色和线型纹理区分）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/model-comparison-1} 
+
+}
+
+\caption{贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比（使用颜色和线型纹理区分）}(\#fig:model-comparison)
+\end{figure}
 
 **敏感性分析与稳健性检验**
 
@@ -580,48 +578,24 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:unnamed-chunk-14)(\#tab:bayesian-sensitivity-analysis)贝叶斯敏感性分析结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:right;"> 先验强度| 后验 </th>
-   <th style="text-align:right;"> 值| 后验标准差| </th>
-   <th style="text-align:right;">  </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 0.1 </td>
-   <td style="text-align:right;"> 0.708 </td>
-   <td style="text-align:right;"> 0.097 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.5 </td>
-   <td style="text-align:right;"> 0.708 </td>
-   <td style="text-align:right;"> 0.097 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 1.0 </td>
-   <td style="text-align:right;"> 0.708 </td>
-   <td style="text-align:right;"> 0.097 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2.0 </td>
-   <td style="text-align:right;"> 0.708 </td>
-   <td style="text-align:right;"> 0.097 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 5.0 </td>
-   <td style="text-align:right;"> 0.706 </td>
-   <td style="text-align:right;"> 0.097 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 10.0 </td>
-   <td style="text-align:right;"> 0.702 </td>
-   <td style="text-align:right;"> 0.096 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:bayesian-sensitivity-analysis)贝叶斯敏感性分析结果}
+\centering
+\begin{tabular}[t]{rrr}
+\toprule
+先验强度 & 后验均值 & 后验标准差\\
+\midrule
+0.1 & 0.708 & 0.097\\
+0.5 & 0.708 & 0.097\\
+1.0 & 0.708 & 0.097\\
+2.0 & 0.708 & 0.097\\
+5.0 & 0.706 & 0.097\\
+\addlinespace
+10.0 & 0.702 & 0.096\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 表 \@ref(tab:bayesian-sensitivity-analysis) 展示了贝叶斯敏感性分析的结果，通过比较不同先验强度下的后验均值和标准差，揭示了先验信息对贝叶斯推断的影响程度。
 
@@ -629,37 +603,22 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:unnamed-chunk-17)(\#tab:bayesian-robustness-test)贝叶斯稳健性检验结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:right;"> 污染比例| 后验 </th>
-   <th style="text-align:right;"> 值| </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 0.00 </td>
-   <td style="text-align:right;"> 0.539 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.05 </td>
-   <td style="text-align:right;"> 0.604 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.10 </td>
-   <td style="text-align:right;"> 0.683 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.20 </td>
-   <td style="text-align:right;"> 0.804 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 0.30 </td>
-   <td style="text-align:right;"> 0.888 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:bayesian-robustness-test)贝叶斯稳健性检验结果}
+\centering
+\begin{tabular}[t]{rr}
+\toprule
+污染比例 & 后验均值\\
+\midrule
+0.00 & 0.539\\
+0.05 & 0.604\\
+0.10 & 0.683\\
+0.20 & 0.804\\
+0.30 & 0.888\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 表 \@ref(tab:bayesian-robustness-test) 展示了贝叶斯稳健性检验的结果，通过模拟不同污染比例下的后验均值变化，验证了贝叶斯方法对数据污染的鲁棒性。
 
@@ -669,10 +628,14 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 然而，贝叶斯概率方法也存在不容忽视的局限性。**主观性**是其最受争议的方面，先验概率的选择往往依赖于研究者的主观判断，不同专家可能会给出不同的先验设定。如图\@ref(fig:subjective-bias-demo)所示，不同群体（生态学家、森林管理者、当地社区）对同一生态风险评估给出了显著不同的结果，这凸显了在贝叶斯分析中谨慎处理先验信息的重要性。**计算复杂性**是实际应用中的主要障碍，复杂的贝叶斯模型需要大量的计算资源，特别是使用马尔可夫链蒙特卡洛方法时，计算时间可能相当可观。**先验敏感性**问题意味着结果可能对先验选择高度敏感，不恰当的先验设定可能导致有偏的结论。**收敛问题**是MCMC方法特有的挑战，在复杂模型中可能出现收敛困难或收敛到局部最优解的情况。此外，**解释难度**限制了贝叶斯方法的普及，后验分布的理解和解释需要研究者具备相当的统计背景，这在一定程度上阻碍了其在生态学实践中的广泛应用。这些局限性提示我们在使用贝叶斯方法时需要谨慎处理先验设定，并充分考虑计算可行性和结果解释的清晰性。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/subjective-bias-demo-1.png" alt="主观偏见问题：不同群体对同一生态风险评估的差异（使用颜色和填充纹理区分）" width="80%" />
-<p class="caption">(\#fig:subjective-bias-demo)主观偏见问题：不同群体对同一生态风险评估的差异（使用颜色和填充纹理区分）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/subjective-bias-demo-1} 
+
+}
+
+\caption{主观偏见问题：不同群体对同一生态风险评估的差异（使用颜色和填充纹理区分）}(\#fig:subjective-bias-demo)
+\end{figure}
 
 
 #### 贝叶斯统计的挑战及解决方案
@@ -840,10 +803,14 @@ cat("95%置信区间: [", round(ci_lower, 3), ", ",
 
 随机变量的奇妙之处在于它的双重性：在每次具体观察之前，X的取值是完全不确定的——它可能是1、2或3中的任意一个，这种不确定性正是生态系统中生物行为的本质特征。然而，这种不确定性并非毫无规律可言。通过长期的观察和数据积累，我发现每个可能的取值都有其特定的发生概率。这种概率分布就像是你行为模式的"数学指纹"，精确地刻画了你在不同环境条件下的选择倾向。如图\@ref(fig:random-variable-demo)所示，通过随机模拟可以直观地展示这种概率分布的实际表现，其中黑麦草被选择的频率最高，三叶草相对较少，这与我们观察到的概率分布一致。随机变量的引入，使我们能够从定性描述迈向定量分析，为理解生物决策机制提供了强有力的数学框架。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/random-variable-demo-1.png" alt="随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟。黑麦草使用浅绿色斜线填充，混合草甸使用浅蓝色网格填充，三叶草使用浅黄色点状填充" width="80%" />
-<p class="caption">(\#fig:random-variable-demo)随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟。黑麦草使用浅绿色斜线填充，混合草甸使用浅蓝色网格填充，三叶草使用浅黄色点状填充</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/random-variable-demo-1} 
+
+}
+
+\caption{随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟。黑麦草使用浅绿色斜线填充，混合草甸使用浅蓝色网格填充，三叶草使用浅黄色点状填充}(\#fig:random-variable-demo)
+\end{figure}
 
 
 ```
@@ -876,10 +843,14 @@ Table: (\#tab:plant-choice-probability) 蚱蜢午餐选择的概率分布
 
 如果我画成柱状图，就得到了一个**概率分布图**，直观地展示了这种"分布"情况。如图\@ref(fig:plant-choice-distribution)所示，通过柱状图可以更直观地看到蚱蜢对三种植物的选择偏好差异：黑麦草的选择概率最高（64%），混合草甸次之（29%），三叶草的选择概率最低（7%）。这种可视化方式让概率分布的特征一目了然，帮助我们更好地理解生物行为模式。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/plant-choice-distribution-1.png" alt="蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比（使用颜色和填充纹理区分）" width="80%" />
-<p class="caption">(\#fig:plant-choice-distribution)蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比（使用颜色和填充纹理区分）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/plant-choice-distribution-1} 
+
+}
+
+\caption{蚱蜢午餐选择的概率分布：黑麦草、混合草甸、三叶草的选择概率对比（使用颜色和填充纹理区分）}(\#fig:plant-choice-distribution)
+\end{figure}
 
 ### 累积概率分布：从可能性到确定性
 
@@ -903,10 +874,14 @@ Table: (\#tab:plant-choice-cumulative) 蚱蜢午餐选择的累积概率分布
 
 如图\@ref(fig:cumulative-distribution)所示，累积概率分布通过阶梯函数的形式直观地展示了概率的累积过程。这种图形清晰地显示了随着植物类型的增加，累积概率如何逐步上升：从黑麦草的0.64，到混合草甸的0.93，最终达到三叶草的1.00。阶梯函数的跳跃点正好对应着每个植物类型的概率值，让我们能够一目了然地看到"小于等于某个值"的概率是如何累积的。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/cumulative-distribution-1.png" alt="蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程" width="80%" />
-<p class="caption">(\#fig:cumulative-distribution)蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/cumulative-distribution-1} 
+
+}
+
+\caption{蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程}(\#fig:cumulative-distribution)
+\end{figure}
 
 累积概率分布图呈现为阶梯函数，在每个可能的取值处跳跃，跳跃的高度等于该取值的概率。这种分布特别有用，因为它：
 
@@ -980,10 +955,14 @@ $$P(X = x) = p^x(1-p)^{1-x}, \quad x = 0,1$$
 如图\@ref(fig:bernoulli-distribution)所示，伯努利分布通过分面图的形式直观地展示了不同成功概率下的二元选择概率分布。该图清晰地显示了当成功概率$p$分别为0.2、0.5、0.8时，成功与失败两种结果的概率如何变化。这种可视化帮助我们理解伯努利分布的核心特征：对于任何给定的成功概率$p$，失败的概率总是$1-p$，且两者之和始终为1。
 
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/bernoulli-distribution-1.png" alt="伯努利分布：不同成功概率下的二元选择概率分布（使用颜色和填充纹理区分）" width="80%" />
-<p class="caption">(\#fig:bernoulli-distribution)伯努利分布：不同成功概率下的二元选择概率分布（使用颜色和填充纹理区分）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/bernoulli-distribution-1} 
+
+}
+
+\caption{伯努利分布：不同成功概率下的二元选择概率分布（使用颜色和填充纹理区分）}(\#fig:bernoulli-distribution)
+\end{figure}
 
 **生态学肖像：**
 
@@ -1026,10 +1005,14 @@ $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, 2, \ldots, n$$
 
 如图\@ref(fig:binomial-distribution)所示，二项分布通过分面图的形式直观地展示了不同成功概率下多次试验中成功次数的概率分布。该图清晰地显示了当试验次数$n=10$固定时，成功概率$p$分别为0.2、0.5、0.8时的概率分布特征：当$p=0.5$时分布对称，当$p=0.2$时分布右偏（成功次数集中在较小值），当$p=0.8$时分布左偏（成功次数集中在较大值）。这种可视化帮助我们理解二项分布的形状如何随成功概率的变化而变化。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/binomial-distribution-1.png" alt="二项分布：不同成功概率下多次试验中成功次数的概率分布（使用颜色和填充纹理区分）" width="80%" />
-<p class="caption">(\#fig:binomial-distribution)二项分布：不同成功概率下多次试验中成功次数的概率分布（使用颜色和填充纹理区分）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/binomial-distribution-1} 
+
+}
+
+\caption{二项分布：不同成功概率下多次试验中成功次数的概率分布（使用颜色和填充纹理区分）}(\#fig:binomial-distribution)
+\end{figure}
 
 **生态学肖像：**
 
@@ -1039,51 +1022,6 @@ $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, 2, \ldots, n$$
 
 二项分布是伯努利分布的自然扩展，它将单次二元事件的概率模型推广到多次独立试验的计数模型。在生态学研究中，二项分布具有广泛的应用价值。例如，在种群估计中，二项分布为标记重捕法提供了理论基础，帮助精确估计种群大小；在患病率研究中，它能够量化疾病在种群中的传播程度；在物种分布分析中，二项分布可用于描述物种在特定区域的出现概率；在繁殖成功率评估中，它为衡量物种的繁殖表现提供了科学依据；在抽样设计优化中，二项分布指导合理确定生态调查的样本大小。二项分布的优势在于其数学简洁性和适用广泛性，使得复杂的生态计数问题能够通过基本的概率计算得到解决，为生态学研究提供了强有力的量化工具。
 
-### 多项式分布：多元选择的“全景图"
-
-**故事视角扩展：** 二项分布处理的是“是/否"的二元选择，但生态学中我们常常面临更复杂的多元选择。回到蚱蜢的午餐选择，现在我想知道：在10次进食观察中，它恰好有6次选择黑麦草、3次选择混合草甸、1次选择三叶草的概率是多少？这种对多个类别同时计数的需求，引导我们认识多项式分布。
-
-**数学定义：** 多项式分布是二项分布向多个类别的自然推广，描述的是在$n$次独立试验中，每个类别出现特定次数的联合概率分布。多项式试验满足以下条件：
-
-1. 每次试验有$k$个可能的结果（类别）
-2. 每个结果发生的概率分别为$p_1, p_2, \ldots, p_k$，且$\sum_{i=1}^k p_i = 1$
-3. 各次试验相互独立
-4. 试验结果互斥且完备
-
-**概率函数表达式：** 多项式分布的概率质量函数为：
-
-$$P(X_1 = x_1, X_2 = x_2, \ldots, X_k = x_k) = \frac{n!}{x_1! x_2! \cdots x_k!} p_1^{x_1} p_2^{x_2} \cdots p_k^{x_k}$$
-
-其中：
-
-- $X_i$表示第$i$个类别出现的次数
-- $x_i$是第$i$个类别的实际观察次数，且$\sum_{i=1}^k x_i = n$
-- $n$是总的试验次数
-- $p_i$是第$i$个类别发生的概率
-- $\frac{n!}{x_1! x_2! \cdots x_k!}$是多项式系数
-
-**分布特性：**
-
-- 每个类别的边际分布都是二项分布：$X_i \sim \text{Binomial}(n, p_i)$
-- 期望值：$E[X_i] = np_i$
-- 方差：$Var(X_i) = np_i(1-p_i)$
-- 协方差：$Cov(X_i, X_j) = -np_i p_j$（$i \neq j$）
-- 当$k=2$时，多项式分布退化为二项分布
-
-如图\@ref(fig:multinomial-distribution)所示，多项式分布通过分面图的形式直观地展示了蚱蜢10次观察中不同植物选择组合的概率分布。该图清晰地显示了四种典型组合模式（6-3-1、5-4-1、7-2-1、4-4-2）的概率分布，其中每种组合都满足黑麦草、混合草甸、三叶草选择次数之和为10。这种可视化帮助我们理解多项式分布如何描述多类别事件的联合概率分布，以及不同组合模式对应的概率差异。
-
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/multinomial-distribution-1.png" alt="多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布。黑麦草使用绿色斜线填充，混合草甸使用蓝色网格填充，三叶草使用黄色点状填充" width="80%" />
-<p class="caption">(\#fig:multinomial-distribution)多项式分布：蚱蜢10次观察中不同植物选择组合的概率分布。黑麦草使用绿色斜线填充，混合草甸使用蓝色网格填充，三叶草使用黄色点状填充</p>
-</div>
-
-**生态学肖像：**
-
-多项式分布在生态学中广泛应用于多类别计数数据的建模。一片森林中不同树种幼苗数量的联合分布能够描述植物群落的组成结构；一次鸟类调查中不同物种出现次数的联合概率可以分析鸟类群落的多样性模式；一个湖泊中不同浮游生物类群数量的分布有助于研究水生生态系统的营养结构；一次昆虫采集样本中不同科属昆虫数量的分布能够量化昆虫群落的分类组成；一个动物种群的年龄结构分布则可以分析种群动态的多类别特征。
-
-**生态学意义：**
-
-多项式分布是生态学中描述多变量计数数据的核心工具，它帮助我们在群落生态学中量化物种组成的联合概率分布，在多样性研究中分析多物种共存模式的概率特征，在资源分配中研究生物对不同资源的选择偏好，在种群结构中描述年龄、性别等多类别特征的分布，以及在生态监测中设计多变量生态调查的统计框架。多项式分布的美妙之处在于它能够同时捕捉多个生态类别的联合分布模式，为我们理解生态系统的复杂性和多样性提供了全面的数学框架。
 
 ### 泊松分布：罕见事件的“低语者"
 
@@ -1116,10 +1054,14 @@ $$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots$$
 
 为了直观展示泊松分布的特性，图\@ref(fig:poisson-distribution)生成了不同平均发生率$\lambda$值下的概率分布可视化。清晰地展示了随着$\lambda$增大，分布形态从右偏逐渐趋于对称的过程，直观验证了泊松分布的数学特性。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/poisson-distribution-1.png" alt="泊松分布：不同平均发生率下稀有事件发生次数的概率分布（使用颜色和填充纹理区分）" width="80%" />
-<p class="caption">(\#fig:poisson-distribution)泊松分布：不同平均发生率下稀有事件发生次数的概率分布（使用颜色和填充纹理区分）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/poisson-distribution-1} 
+
+}
+
+\caption{泊松分布：不同平均发生率下稀有事件发生次数的概率分布（使用颜色和填充纹理区分）}(\#fig:poisson-distribution)
+\end{figure}
 
 **生态学肖像：**
 
@@ -1130,53 +1072,6 @@ $$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots$$
 泊松分布是生态学中描述随机分布模式的重要工具，它帮助我们在物种分布研究中判断物种在空间上是否随机分布，通过单位面积内的个体数估计总体密度，在行为生态学中量化稀有行为的发生频率，在保护生物学中评估稀有物种的分布状况，以及在生态监测中设计合理的监测方案和样本大小。
 
 泊松分布的美妙之处在于它用一个简单的参数$\lambda$就描述了复杂生态现象的概率规律，为我们理解自然界的随机性提供了简洁而强大的数学工具。
-
-### 几何分布：等待“第一次成功"的耐心
-
-**故事视角转换：** 想象现在是清晨，蚱蜢开始了它的第一次觅食。我好奇的是：它需要尝试多少次，才能第一次成功吃到它最爱的黑麦草？ 也许第一次就成功了（X=1），也许前两次都去了别处，第三次才成功（X=3）。这种对“第一次成功"等待时间的关注，引导我们认识几何分布。
-
-**数学定义：** 几何分布描述的是在一系列独立的伯努利试验中，首次获得成功所需要的试验次数。几何分布满足以下条件：
-
-1. 试验由一系列相同的伯努利试验组成
-2. 每次试验只有两种可能的结果（成功/失败）
-3. 每次试验的成功概率$p$保持不变
-4. 各次试验相互独立
-5. 试验持续进行直到第一次成功出现
-
-**概率函数表达式：** 几何分布的概率质量函数为：
-
-$$P(X = k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots$$
-
-其中：
-
-- $X$是几何随机变量，表示首次成功所需的试验次数
-- $k$是试验次数（$k \geq 1$）
-- $p$是每次试验的成功概率
-- $(1-p)^{k-1}$表示前$k-1$次都失败的概率
-
-**分布特性：**
-
-- 期望值：$E[X] = \frac{1}{p}$
-- 方差：$Var(X) = \frac{1-p}{p^2}$
-- 无记忆性：$P(X > m+n \mid X > m) = P(X > n)$，即过去的失败不影响未来的成功概率
-- 当$p$较小时，分布右偏严重；当$p$接近1时，分布集中在较小的$k$值
-
-为了直观展示几何分布的特性，图\@ref(fig:geometric-distribution)通过R代码生成了不同成功概率$p$值下的概率分布可视化。清晰地展示了随着成功概率$p$增大，分布形态从右偏严重逐渐向左侧集中的过程，直观验证了"成功概率越高，等待时间越短"的几何分布特性。
-
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/geometric-distribution-1.png" alt="几何分布：不同成功概率下首次成功所需试验次数的概率分布（使用颜色和填充纹理区分）" width="80%" />
-<p class="caption">(\#fig:geometric-distribution)几何分布：不同成功概率下首次成功所需试验次数的概率分布（使用颜色和填充纹理区分）</p>
-</div>
-
-**生态学肖像：**
-
-几何分布在生态学中常用以描述“等待时间"和“首次成功"的过程，具有广泛的应用。一只捕食者需要巡视多少个洞穴才能首次发现猎物，这可以量化捕食效率；一只传粉昆虫需要访问多少朵花才能首次成功采集花蜜，这有助于研究传粉行为的成功率；一颗种子需要经历多少个雨季才能首次成功萌发，这能够揭示种子萌发的环境依赖性；一只候鸟需要尝试多少次才能首次找到正确的迁徙路线，这可以分析学习行为的适应性；一个植物种群需要经过多少代才能首次出现抗病突变，这为研究进化过程中的关键事件提供了数学工具。
-
-**生态学意义：**
-
-几何分布是生态学中描述“等待过程"的重要工具，它帮助我们在行为生态学中量化动物行为的效率和成功率，在种群动态中分析种群恢复和重建的时间过程，在进化生态学中研究适应性特征的进化时间尺度，在保护生物学中评估濒危物种恢复的可能性，以及在生态恢复中预测生态系统恢复所需的时间。
-
-几何分布的美妙之处在于它用一个简单的参数$p$就描述了复杂生态过程中的等待时间规律，特别是其“无记忆性"特征，使得我们可以专注于当前的生态过程而不受历史影响。
 
 ### 负二项分布：等待“最后一次成功"的耐心
 
@@ -1211,10 +1106,14 @@ $$P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots$$
 
 为了直观展示负二项分布的特性，图\@ref(fig:negative-binomial)展示了不同参数组合下的概率分布。图中清晰地呈现了四种参数组合（$r=2, p=0.3$；$r=2, p=0.6$；$r=5, p=0.3$；$r=5, p=0.6$）对应的概率分布形态。可以观察到：当成功概率$p$较低时（0.3），分布向右偏斜，需要更多试验次数才能达到第$r$次成功；当成功概率$p$较高时（0.6），分布向左集中，所需试验次数较少。同时，随着成功次数目标$r$的增加，分布向右移动且变得更加分散，直观验证了负二项分布作为几何分布推广的数学特性。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/negative-binomial-1.png" alt="负二项分布：不同参数组合下第r次成功所需试验次数的概率分布（使用颜色和填充纹理区分）" width="80%" />
-<p class="caption">(\#fig:negative-binomial)负二项分布：不同参数组合下第r次成功所需试验次数的概率分布（使用颜色和填充纹理区分）</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/negative-binomial-1} 
+
+}
+
+\caption{负二项分布：不同参数组合下第r次成功所需试验次数的概率分布（使用颜色和填充纹理区分）}(\#fig:negative-binomial)
+\end{figure}
 
 **生态学肖像：**
 
@@ -1277,10 +1176,14 @@ $$F(x) = P(X \leq x) = \int_{-\infty}^x f(t) dt$$
 
 为了直观理解概率密度函数与累积分布函数的关系，图\@ref(fig:continuous-pdf-cdf)展示了标准正态分布下PDF和CDF的对比。左侧的概率密度函数（PDF）呈现经典的钟形曲线，曲线下的面积代表概率，其中蓝色填充区域直观展示了特定区间内的概率大小。右侧的累积分布函数（CDF）呈现S形曲线，从0单调递增到1，每个点的函数值表示随机变量取值小于或等于该点的概率。通过对比这两个图形，可以清晰地看到PDF曲线下的面积如何累积形成CDF曲线，以及CDF的单调性和边界条件如何体现连续随机变量的概率特性。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/continuous-pdf-cdf-1.png" alt="连续随机变量的概率密度函数与累积分布函数对比" width="80%" />
-<p class="caption">(\#fig:continuous-pdf-cdf)连续随机变量的概率密度函数与累积分布函数对比</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/continuous-pdf-cdf-1} 
+
+}
+
+\caption{连续随机变量的概率密度函数与累积分布函数对比}(\#fig:continuous-pdf-cdf)
+\end{figure}
 
 
 在连续变量的世界里，有几个声名显赫的“家族"，它们以特定的形态描绘了不同自然现象背后的概率规律。每个分布都有其独特的数学特性和生态学意义，共同构成了我们理解连续生态变量的工具箱。
@@ -1308,38 +1211,14 @@ $$f(x) = \begin{cases}
 
 为了直观展示均匀分布的特性，图\@ref(fig:uniform-distribution)展示了三种不同区间参数下的概率密度函数。图中清晰地呈现了均匀分布的核心特征：在定义区间内概率密度为常数，区间外概率密度为零。三个分布分别展示了不同区间参数的影响：U(0,1)为标准均匀分布，概率密度为1；U(-2,2)为较宽区间，概率密度降低为0.25；U(1,3)为偏移区间，概率密度为0.5。通过对比可以直观理解均匀分布的"等可能性"特性，以及区间宽度与概率密度的反比关系。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/uniform-distribution-1.png" alt="均匀分布：不同区间参数下的概率密度函数（使用颜色和线型纹理区分）" width="80%" />
-<p class="caption">(\#fig:uniform-distribution)均匀分布：不同区间参数下的概率密度函数（使用颜色和线型纹理区分）</p>
-</div>
+\begin{figure}
 
-### 指数分布：等待的艺术
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/uniform-distribution-1} 
 
-**故事引入：** 现在让我们关注时间维度。这只蚱蜢正在草地上专心享用午餐，但它必须时刻保持警惕。下一次被天敌（如鸟类）发现需要等待多长时间？可能是几分钟，也可能是几十分钟。这种“等待被捕食"的时间间隔，正是指数分布的用武之地。在蚱蜢的午餐过程中，这种生存威胁的随机出现模式可以用指数分布来精确描述。
+}
 
-**数学定义：** 指数分布描述的是泊松过程中事件发生的时间间隔。其概率密度函数为：
-
-$$f(x) = \lambda e^{-\lambda x}, \quad x \geq 0$$
-
-其中$\lambda > 0$是速率参数，表示单位时间内事件发生的平均次数。
-
-**分布特性：**
-
-- 期望值：$E[X] = \frac{1}{\lambda}$
-- 方差：$Var(X) = \frac{1}{\lambda^2}$
-- **无记忆性**：$P(X > s + t \mid X > s) = P(X > t)$，即过去的等待不影响未来的等待时间
-- 分布呈右偏，具有长尾特征
-
-**生态学肖像：**
-
-指数分布在生态学中有着广泛的应用价值。它能够描述蚱蜢在觅食过程中被捕食者发现的等待时间，反映捕食事件的随机性特征，因而可用于捕食风险建模。指数分布的无记忆性特性尤为重要，它表明过去的等待时间不会影响未来的风险概率，这为生存策略研究提供了理论基础，有助于我们深入理解蚱蜢的警戒行为模式。在行为时间模式分析中，指数分布可以用来描述动物在危险环境中的活动间隔，捕捉它们在风险环境中的行为节律。在种群生存分析领域，特别是在高捕食压力的环境下，个体的生存时间分布通常近似于指数分布。这种特性为研究种群动态和制定保护策略提供了重要的数学工具。
-
-为了直观展示指数分布的特性，图\@ref(fig:exponential-distribution)展示了三种不同速率参数下的概率密度函数。图中清晰地呈现了指数分布的核心特征：右偏形态和指数衰减模式。三个分布分别展示了不同速率参数的影响：Exp(λ=0.5)为低速率分布，曲线下降缓慢，表示事件发生频率较低，等待时间较长；Exp(λ=1)为中等速率分布；Exp(λ=2)为高速率分布，曲线急剧下降，表示事件发生频繁，等待时间较短。通过对比可以直观理解指数分布的"无记忆性"特性，以及速率参数与等待时间期望值的反比关系。
-
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/exponential-distribution-1.png" alt="指数分布：不同速率参数下等待时间的概率密度函数（使用颜色和线型纹理区分）" width="80%" />
-<p class="caption">(\#fig:exponential-distribution)指数分布：不同速率参数下等待时间的概率密度函数（使用颜色和线型纹理区分）</p>
-</div>
+\caption{均匀分布：不同区间参数下的概率密度函数（使用颜色和线型纹理区分）}(\#fig:uniform-distribution)
+\end{figure}
 
 ### 正态分布（高斯分布）：自然界的“钟形"法则
 
@@ -1365,133 +1244,15 @@ $$f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \quad -\i
 
 为了直观展示正态分布的特性，图\@ref(fig:normal-distribution)展示了三种不同参数组合下的概率密度函数。图中清晰地呈现了正态分布的核心特征：经典的钟形曲线和对称性。三个分布分别展示了参数变化的影响：N(0,1)为标准正态分布，呈现理想的钟形形态；N(0,4)为标准差增大的分布，曲线更加扁平分散，体现了标准差对分布离散程度的影响；N(2,1)为均值右移的分布，曲线整体向右平移，体现了均值对分布中心位置的决定作用。图中使用颜色（红色/蓝色/绿色）和线型纹理（实线/虚线/点线）双重区分，确保在彩色显示和黑白打印时都能清晰辨识。通过对比可以直观理解正态分布参数的意义，以及68-95-99.7法则在分布形态中的体现。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/normal-distribution-1.png" alt="正态分布：不同参数组合下的概率密度函数（使用颜色和线型纹理区分）" width="80%" />
-<p class="caption">(\#fig:normal-distribution)正态分布：不同参数组合下的概率密度函数（使用颜色和线型纹理区分）</p>
-</div>
+\begin{figure}
 
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/normal-distribution-1} 
 
-### 威布尔分布：生存分析的“时间法则"
+}
 
-**故事引入：** 观察这只蚱蜢的生存历程，你会发现它的死亡风险并非一成不变。在生命的早期，由于适应环境的能力较弱，死亡风险相对较高；进入成年期后，风险逐渐稳定；而到了老年期，由于生理机能衰退，死亡风险又会显著上升。这种随时间变化的死亡风险模式，正是威布尔分布能够精确描述的。蚱蜢的生存时间受到多种风险因素的综合影响，最终呈现出这种“浴盆曲线"的风险特征。
+\caption{正态分布：不同参数组合下的概率密度函数（使用颜色和线型纹理区分）}(\#fig:normal-distribution)
+\end{figure}
 
-**数学定义：** 威布尔分布的概率密度函数为：
-
-$$f(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1} e^{-(x/\lambda)^k}, \quad x \geq 0$$
-
-其中$k$是形状参数（决定分布形态），$\lambda$是尺度参数（决定分布范围）。
-
-**分布特性：**
-
-- 期望值：$E[X] = \lambda \Gamma(1 + 1/k)$
-- 方差：$Var(X) = \lambda^2 [\Gamma(1 + 2/k) - \Gamma^2(1 + 1/k)]$
-- 生存函数：$S(x) = e^{-(x/\lambda)^k}$
-- 风险函数：$h(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1}$
-- 当$k=1$时退化为指数分布（恒定风险）
-- 当$k>1$时风险随时间增加（老化效应）
-- 当$k<1$时风险随时间减少（早期适应期）
-
-**生态学肖像：**
-
-威布尔分布在生态学研究中具有重要的应用价值。在生存分析研究中，蚱蜢的生存时间服从威布尔分布，这种分布能够精确反映其生命周期中风险变化的动态模式，包括早期适应期的高风险和老年期的生理衰退。通过威布尔分布，我们可以在种群动态建模中更准确地估计种群的死亡率模式和期望寿命，为种群管理提供科学依据。在保护生物学领域，濒危物种的生存时间分析有助于制定有效的保护策略，威布尔分布的风险函数能够揭示不同生命阶段的保护重点。此外，在物候学研究中，植物开花时间、动物迁徙时间等时间事件的分析也可以借助威布尔分布来描述其时间分布特征。  
-
-
-
-为了直观展示威布尔分布的特性，图\@ref(fig:weibull-distribution)展示了蚱蜢生存时间分布的直方图与理论曲线的对比。图中浅蓝色直方图显示了模拟的蚱蜢生存时间数据分布，红色实线为理论威布尔分布的概率密度曲线，蓝色虚线为生存函数曲线。通过对比可以直观验证模拟数据与理论分布的拟合程度，同时生存函数曲线清晰地展示了蚱蜢种群随时间递减的生存概率，体现了威布尔分布在生存分析中的实际应用价值。
-
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/weibull-distribution-1.png" alt="威布尔分布可视化：蚱蜢生存时间分布的直方图与理论曲线对比。概率密度函数使用红色实线，生存函数使用蓝色虚线" width="80%" />
-<p class="caption">(\#fig:weibull-distribution)威布尔分布可视化：蚱蜢生存时间分布的直方图与理论曲线对比。概率密度函数使用红色实线，生存函数使用蓝色虚线</p>
-</div>
-
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:unnamed-chunk-23)(\#tab:weibull-parameter-estimation)威布尔分布参数估计结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> x </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> shape </td>
-   <td style="text-align:right;"> 2.706697 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> scale </td>
-   <td style="text-align:right;"> 9.885058 </td>
-  </tr>
-</tbody>
-</table>
-
-表 \@ref(tab:weibull-parameter-estimation) 展示了通过最大似然估计得到的威布尔分布参数估计结果，包括形状参数和尺度参数的点估计值、标准误和置信区间。
-
-为了深入理解威布尔分布形状参数对分布形态和风险模式的影响，图\@ref(fig:weibull-shape-comparison)展示了四种不同形状参数下概率密度函数与风险函数的对比。图中四个子图分别对应形状参数k=0.5、1、2、3的情况，每个子图中深红色实线为概率密度曲线，蓝色虚线为风险函数曲线。通过对比可以清晰地观察到：当k<1时（如k=0.5），风险函数随时间递减，体现早期适应期的高风险特征；当k=1时，风险函数为常数，威布尔分布退化为指数分布；当k>1时（如k=2、3），风险函数随时间递增，体现老化效应。这种可视化直观地展示了威布尔分布在描述不同风险模式时的灵活性。
-
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/weibull-shape-comparison-1.png" alt="不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比。概率密度函数使用深红色实线，风险函数使用蓝色虚线" width="80%" />
-<p class="caption">(\#fig:weibull-shape-comparison)不同形状参数的威布尔分布比较：概率密度函数与风险函数的四种模式对比。概率密度函数使用深红色实线，风险函数使用蓝色虚线</p>
-</div>
-
-
-
-### 伽马分布：更一般的等待时间模型
-
-**故事引入：** 指数分布描述了“第一次事件发生"的等待时间，但如果我们需要描述“第r次事件发生"的等待时间呢？比如，这只蚱蜢需要等待多久才能完成第三次成功的觅食？伽马分布提供了这个问题的答案。
-
-**数学定义：** 伽马分布的概率密度函数为：
-
-$$f(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}, \quad x > 0$$
-
-其中$\alpha > 0$是形状参数，$\beta > 0$是速率参数，$\Gamma(\alpha)$是伽马函数。
-
-**分布特性：**
-
-- 期望值：$E[X] = \frac{\alpha}{\beta}$
-- 方差：$Var(X) = \frac{\alpha}{\beta^2}$
-- 当$\alpha = 1$时，伽马分布退化为指数分布
-- 当$\alpha$为整数时，伽马分布描述的是第$\alpha$次泊松事件发生的等待时间
-- 分布形状灵活，可以呈现不同的偏斜形态
-
-**生态学肖像：**
-
-伽马分布在生态学中广泛应用于描述累积过程和增长模式。在行为生态学中，伽马分布能够精确描述完成多次成功行为所需的总时间，如捕食者需要捕获多只猎物才能满足能量需求的过程。在生物量积累研究中，伽马分布适用于建模植物生长和动物体重增加的渐进过程，这些过程往往呈现累积性特征。在环境生态学中，特定时间段内的降雨量分布可以用伽马分布来描述，这种分布能够捕捉降水事件的累积效应。在种群动态研究中，伽马分布能够刻画在一定时间内种群数量的累积增长模式，为理解种群扩张过程提供数学工具。
-
-为了直观展示伽马分布的特性，图\@ref(fig:gamma-distribution)展示了三种不同参数组合下的概率密度函数。图中清晰地呈现了伽马分布作为指数分布一般化形式的特征：Gamma(1,1)退化为指数分布，呈现右偏形态，描述第一次事件等待时间；Gamma(2,1)为中等形状分布，曲线更加对称，描述第二次事件等待时间；Gamma(3,2)为复杂形状分布，曲线更加集中，描述第三次事件等待时间。通过对比可以直观理解伽马分布形状参数α对分布形态的影响，以及伽马分布在描述累积等待时间过程中的灵活性。
-
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/gamma-distribution-1.png" alt="伽马分布：不同参数组合下的概率密度函数。Gamma(1,1)使用红色实线，Gamma(2,1)使用蓝色虚线，Gamma(3,2)使用绿色点线" width="80%" />
-<p class="caption">(\#fig:gamma-distribution)伽马分布：不同参数组合下的概率密度函数。Gamma(1,1)使用红色实线，Gamma(2,1)使用蓝色虚线，Gamma(3,2)使用绿色点线</p>
-</div>
-
-### 贝塔分布：比例变量的天然选择
-
-**故事引入：** 在蚱蜢的日常生活中，时间分配是一个重要的生态学问题。这只蚱蜢在一天24小时中，用于觅食（午餐和其他进食）的时间比例是多少？可能是30%，也可能是60%，这个比例值总是在0和1之间。贝塔分布是描述这类比例变量的理想选择，它能够灵活地刻画蚱蜢在不同环境条件下时间分配模式的多样性。
-
-**数学定义：** 贝塔分布的概率密度函数为：
-
-$$f(x) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha, \beta)}, \quad 0 \leq x \leq 1$$
-
-其中$\alpha > 0$和$\beta > 0$是形状参数，$B(\alpha, \beta)$是贝塔函数。
-
-**分布特性：**
-
-- 期望值：$E[X] = \frac{\alpha}{\alpha + \beta}$
-- 方差：$Var(X) = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$
-- 分布形状极其灵活，可以呈现U形、J形、钟形等多种形态
-- 当$\alpha = \beta = 1$时，贝塔分布退化为均匀分布
-- 贝塔分布是二项分布和伯努利分布的共轭先验
-
-**生态学肖像：**
-
-贝塔分布在生态学中具有广泛的应用价值，特别适合描述比例变量的分布特征。在行为生态学中，贝塔分布能够精确刻画蚱蜢一天中用于觅食、休息、警戒等不同行为的时间比例分配模式。这种分布同样适用于建模蚱蜢对不同植物种类的资源选择偏好，通过比例值反映其选择倾向的强度。在能量预算分析方面，贝塔分布帮助研究者通过时间分配比例来深入探讨蚱蜢的能量摄入与消耗平衡机制。贝塔分布的灵活性使其特别适合描述动物在不同环境条件下的适应性行为调整，能够捕捉行为模式随环境变化的动态特征。
-
-为了直观展示贝塔分布的特性，图\@ref(fig:beta-distribution)展示了三种不同参数组合下的概率密度函数。图中清晰地呈现了贝塔分布在[0,1]区间内的形态多样性：Beta(0.5,0.5)为U形分布，两端概率密度高，表示极端值更可能，体现行为选择的极端倾向；Beta(2,2)为对称钟形分布，中心概率密度高，表示中间值更可能，体现行为选择的平衡模式；Beta(5,1)为右偏分布，右侧概率密度高，表示高比例值更可能，体现行为选择的偏向性。通过对比可以直观理解贝塔分布形状参数对分布形态的灵活控制能力。
-
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/beta-distribution-1.png" alt="贝塔分布：不同参数组合下的概率密度函数。Beta(0.5,0.5)使用红色实线，Beta(2,2)使用蓝色虚线，Beta(5,1)使用绿色点线" width="80%" />
-<p class="caption">(\#fig:beta-distribution)贝塔分布：不同参数组合下的概率密度函数。Beta(0.5,0.5)使用红色实线，Beta(2,2)使用蓝色虚线，Beta(5,1)使用绿色点线</p>
-</div>
 
 ### 正态分布的魔力：中心极限定理
 
@@ -1519,10 +1280,14 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
 
 为了直观验证中心极限定理的强大效果，图\@ref(fig:central-limit-theorem)展示了四种不同总体分布下样本均值的正态收敛过程。图中四个子图分别对应均匀分布、指数分布、伽马分布和贝塔分布四种原始总体分布，每个子图都显示了样本量为30时10000次模拟得到的样本均值分布。浅蓝色直方图表示样本均值的实际分布，红色曲线为理论正态分布。可以清晰地观察到，尽管原始分布形态各异（均匀分布为矩形、指数分布和伽马分布为右偏、贝塔分布为左偏），但它们的样本均值分布都呈现出优美的钟形正态分布形态，完美验证了中心极限定理的核心思想。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/central-limit-theorem-1.png" alt="中心极限定理演示：不同总体分布下样本均值的正态收敛过程" width="80%" />
-<p class="caption">(\#fig:central-limit-theorem)中心极限定理演示：不同总体分布下样本均值的正态收敛过程</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/central-limit-theorem-1} 
+
+}
+
+\caption{中心极限定理演示：不同总体分布下样本均值的正态收敛过程}(\#fig:central-limit-theorem)
+\end{figure}
 
 
 ```
@@ -1537,50 +1302,33 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
 
 为了深入理解样本量在中心极限定理中的作用，图\@ref(fig:clt-sample-size)展示了从指数分布（典型的非正态总体）中抽样时，不同样本量对样本均值分布的影响。图中五个子图分别对应样本量5、10、30、50、100的情况。可以清晰地观察到：当样本量较小时（如n=5），样本均值分布仍呈现明显的右偏形态，与原始指数分布相似；随着样本量增大，分布逐渐变得更加对称和集中；当样本量达到30时，分布已接近正态形态；当样本量达到100时，分布呈现出完美的钟形正态分布。这一可视化结果直观地验证了中心极限定理中"样本量足够大"的重要性，以及样本量越大、正态近似越精确的规律。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/clt-sample-size-1.png" alt="样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态" width="80%" />
-<p class="caption">(\#fig:clt-sample-size)样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/clt-sample-size-1} 
+
+}
+
+\caption{样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态}(\#fig:clt-sample-size)
+\end{figure}
 
 表 \@ref(tab:skewness-kurtosis) 展示了不同样本量下样本均值分布的偏度和峰度值，这些数值量化了分布形态随样本量增加而趋向正态分布的过程。
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:unnamed-chunk-25)(\#tab:skewness-kurtosis)偏度和峰度随样本量的变化</caption>
- <thead>
-  <tr>
-   <th style="text-align:right;"> SampleSize </th>
-   <th style="text-align:right;"> Skewness </th>
-   <th style="text-align:right;"> Kurtosis </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0.8974114 </td>
-   <td style="text-align:right;"> 4.109759 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 0.6504552 </td>
-   <td style="text-align:right;"> 3.732605 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 30 </td>
-   <td style="text-align:right;"> 0.4054190 </td>
-   <td style="text-align:right;"> 3.315501 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 50 </td>
-   <td style="text-align:right;"> 0.2691500 </td>
-   <td style="text-align:right;"> 3.072610 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 100 </td>
-   <td style="text-align:right;"> 0.2423726 </td>
-   <td style="text-align:right;"> 3.087874 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:skewness-kurtosis)偏度和峰度随样本量的变化}
+\centering
+\begin{tabular}[t]{rrr}
+\toprule
+SampleSize & Skewness & Kurtosis\\
+\midrule
+5 & 0.8974114 & 4.109759\\
+10 & 0.6504552 & 3.732605\\
+30 & 0.4054190 & 3.315501\\
+50 & 0.2691500 & 3.072610\\
+100 & 0.2423726 & 3.087874\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 #### 蚱蜢午餐中的中心极限定理
 
@@ -1620,10 +1368,14 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
 
 为了直观展示混合分布的特性，图\@ref(fig:mixture-distribution)展示了一个典型的双峰混合分布示例。图中浅蓝色直方图显示了由两个不同正态分布混合生成的数据分布，红色曲线为核密度估计。可以清晰地观察到两个明显的峰值：一个位于10附近（来自第一个正态分布N(10,2)），另一个位于20附近（来自第二个正态分布N(20,3)），混合比例为60%和40%。这种双峰形态在生态学中常见于描述来自不同亚种群或不同环境条件下的数据，体现了混合分布在处理异质性数据时的强大能力。
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/mixture-distribution-1.png" alt="混合分布：双峰数据的概率密度函数" width="80%" />
-<p class="caption">(\#fig:mixture-distribution)混合分布：双峰数据的概率密度函数</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/mixture-distribution-1} 
+
+}
+
+\caption{混合分布：双峰数据的概率密度函数}(\#fig:mixture-distribution)
+\end{figure}
 
 
 ### 零膨胀分布：处理零值过多的数据
@@ -1723,10 +1475,14 @@ ggplot(plot_data, aes(x = value, fill = distribution, pattern = distribution)) +
   facet_wrap(~distribution, ncol = 2, scales = "free_y")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="02-probability_and_distribution_files/figure-html/zero-inflation-plot-1.png" alt="零膨胀泊松分布与普通泊松分布的对比可视化。图中清晰地展示了零膨胀分布中零值的过度集中现象，这是生态学中许多稀有物种和低密度种群数据的典型特征。零膨胀泊松分布使用橙色斜线填充，普通泊松分布使用蓝色网格填充" width="80%" />
-<p class="caption">(\#fig:zero-inflation-plot)零膨胀泊松分布与普通泊松分布的对比可视化。图中清晰地展示了零膨胀分布中零值的过度集中现象，这是生态学中许多稀有物种和低密度种群数据的典型特征。零膨胀泊松分布使用橙色斜线填充，普通泊松分布使用蓝色网格填充</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/zero-inflation-plot-1} 
+
+}
+
+\caption{零膨胀泊松分布与普通泊松分布的对比可视化。图中清晰地展示了零膨胀分布中零值的过度集中现象，这是生态学中许多稀有物种和低密度种群数据的典型特征。零膨胀泊松分布使用橙色斜线填充，普通泊松分布使用蓝色网格填充}(\#fig:zero-inflation-plot)
+\end{figure}
 
 如图\@ref(fig:zero-inflation-plot)所示，零膨胀分布最显著的特征是零值的过度集中。零膨胀分布在生态学中具有重要的应用价值，专门用于处理存在大量零值的计数数据。这种分布在以下生态学场景中特别有用：
 
@@ -1737,6 +1493,209 @@ ggplot(plot_data, aes(x = value, fill = distribution, pattern = distribution)) +
 3. **间歇性生态过程记录**：某些生态过程（如动物活动、植物开花等）具有间歇性特征，在时间序列中产生大量零值观测。
 
 4. **不完全调查的观测数据**：由于调查方法限制或环境条件影响，某些生态调查可能无法完全覆盖目标区域，导致观测数据中存在系统性的零值。
+
+
+
+## 描述统计基础
+
+描述统计是生态学数据分析的基础工具，用于概括和描述数据的主要特征。主要包括中心趋势测量、离散性测量和分布形状测量三个方面。
+
+### 中心趋势测量
+
+中心趋势测量描述数据的集中位置，常用的指标包括：
+
+**均值**：数据的算术平均值，计算公式为 $\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i$，反映数据的平均水平。
+
+**中位数**：将数据排序后位于中间位置的值，对异常值不敏感，计算公式为：当$n$为奇数时取中间值，当$n$为偶数时取中间两个值的平均值。
+
+**众数**：数据中出现频率最高的值，适用于分类数据和连续数据。
+
+### 离散性测量
+
+离散性测量描述数据的分散程度，常用指标包括：
+
+**方差与标准差**：方差计算公式为 $s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2$，标准差为方差的平方根 $s = \sqrt{s^2}$，反映数据相对于均值的平均偏离程度。
+
+**变异系数**：计算公式为 $CV = \frac{s}{\bar{x}} \times 100\%$，用于比较不同量纲数据的相对变异程度。
+
+**标准误**：计算公式为 $SE = \frac{s}{\sqrt{n}}$，衡量样本统计量的抽样变异性，反映估计的精度。
+
+**四分位距**：上四分位数与下四分位数之差，描述数据中间50%的范围，对异常值不敏感。
+
+### 分布形状与矩测量
+
+分布形状测量描述了数据分布的对称性和尾部特征，帮助我们理解生态过程的潜在机制。就像识别不同树种的树冠形状一样，这些统计量揭示了生态数据背后的模式。
+
+#### 偏度
+
+**数学定义**：样本偏度定义为三阶中心矩与标准差立方的比值：
+
+$$g_1 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^3}{s^3}$$
+
+其中 $s$ 是样本标准差。偏度量化了分布的不对称性：偏度为正表示右偏，为负表示左偏，为零表示对称分布。
+
+在生态学中，许多自然现象都表现出偏斜分布。考虑研究森林中树木胸径的分布：
+
+如图\@ref(fig:tree-skewness-plot)所示，我们模拟了一个右偏的树木胸径分布，该图通过直方图展示了分布的不对称性特征。
+
+
+```
+## [1] "树木胸径分布的偏度： 0.65"
+```
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/tree-skewness-plot-1} 
+
+}
+
+\caption{树木胸径分布的直方图，展示右偏分布特征。红色实线表示均值，蓝色虚线表示中位数，均值大于中位数表明分布向右偏斜。}(\#fig:tree-skewness-plot)
+\end{figure}
+
+上述例子中，正偏度（通常大于0.5）表明分布向右偏斜，意味着有较多的小树和少数大树。在图形上，右偏分布的右侧尾部较长，均值大于中位数。这种模式常见于年龄结构年轻的种群。
+
+#### 峰度
+
+**数学定义**：样本峰度定义为四阶中心矩与标准差四次方的比值：
+
+$$g_2 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^4}{s^4} - 3$$
+
+其中减去3是为了使正态分布的峰度为0。峰度大于0表示尖峰分布，小于0表示平峰分布。
+
+峰度描述了分布的尖峰程度和尾部厚度，在研究极端生态事件时特别重要。高峰度（大于3）表明分布更加尖峰，数据集中在均值附近，尾部较厚，意味着极端值（如稀有物种）的出现概率较高。低峰度（小于3）表明分布更加平缓，数据分散，极端值较少。
+
+
+``` r
+set.seed(123)
+# 模拟两种不同的物种多度分布
+# 分布A：尖峰分布（高峰度）
+abundance_a <- c(rep(10, 8), rep(15, 2), rep(20, 25),
+                rep(25, 2), rep(30, 8))
+# 分布B：平峰分布（低峰度）
+abundance_b <- runif(45, 10, 30)
+
+# 计算峰度
+kurtosis_a <- kurtosis(abundance_a)
+kurtosis_b <- kurtosis(abundance_b)
+```
+
+
+```
+## 物种A多度分布的峰度：2.53
+## 物种B多度分布的峰度：1.81
+```
+
+```
+## 物种A相对于正态分布的峰度：-0.47
+## 物种B相对于正态分布的峰度：-1.19
+```
+
+
+### 统计概念在概率分布图上的可视化
+
+为了更好地理解这些统计概念，让我们在一个典型的概率分布图上可视化它们：
+
+如图\@ref(fig:stats-concepts-plot)所示，我们使用标准正态分布来可视化关键统计概念。该图清晰地展示了均值、标准差等统计量在概率分布上的几何意义。
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/stats-concepts-plot-1} 
+
+}
+
+\caption{统计概念在正态分布上的可视化。红色实线垂直线表示均值，橙色虚线表示±1个标准差的范围，绿色双端箭头表示标准差的实际跨度。通过不同线型和颜色组合，确保在彩色显示和黑白打印时都能清晰区分。}(\#fig:stats-concepts-plot)
+\end{figure}
+
+这个可视化展示了：
+
+- **红色垂直线**：均值（分布的中心位置）
+- **橙色虚线**：±1个标准差的范围
+- **绿色箭头**：标准差的实际跨度
+
+### 标准误的可视化理解
+
+为了理解标准误的概念，让我们通过抽样模拟来展示标准误的意义：
+
+如图\@ref(fig:se-visualization-plot)所示，我们通过多次抽样模拟展示了标准误的统计意义。该图包含两个子图：左图显示样本均值的分布特征，右图展示标准误与样本均值的关系，帮助我们理解样本均值作为总体均值估计的精确程度。
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/se-visualization-plot-1} 
+
+}
+
+\caption{标准误的可视化分析。左图显示样本均值的抽样分布，右图展示标准误与样本均值的关系。红色实线表示总体均值，橙色虚线表示平均标准误。}(\#fig:se-visualization-plot)
+\end{figure}
+
+
+```
+## 总体均值：50.16
+## 样本均值的均值：50.17
+## 样本均值的标准误：2.04
+## 95%置信区间：[ 46.17, 54.17 ]
+```
+
+这个可视化帮助我们理解：
+
+- **左图**：多次抽样的样本均值围绕总体均值波动，其分布的标准差就是标准误；
+- **右图**：标准误反映了样本均值作为总体均值估计的精确程度；
+- **置信区间**：反映了估计方法的可靠性；95%置信区间意味着，多次重复抽样后基于标准误构建的所有区间里，有95%会包含总体均值。
+
+### 不同参数值的分布形状比较
+
+现在让我们比较不同统计参数值对应的分布形状：
+
+如图\@ref(fig:distribution-parameters-comparison)所示，我们系统地比较了均值、标准差、偏度和峰度四个关键统计参数对分布形状的影响。该图通过四个子图展示了不同参数值下分布特征的显著差异，帮助我们直观理解统计参数与分布形状之间的对应关系。
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/distribution-parameters-comparison-1} 
+
+}
+
+\caption{不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。通过颜色和线型（实线、虚线、点线）的组合，确保在彩色显示和黑白打印时都能清晰区分不同参数值的曲线。}(\#fig:distribution-parameters-comparison)
+\end{figure}
+
+### 生态学意义总结
+
+通过这些可视化，我们可以清楚地看到：
+
+**均值的影响**：
+
+- **大均值**：分布整体向右移动，对应生态学中较大的个体大小、较高的生物量等
+- **小均值**：分布整体向左移动，对应较小的生态特征值
+
+**方差/标准差的影响**：
+
+- **大方差**：分布更加"矮胖"，数据分散，对应生态系统中个体间差异大、环境异质性高
+- **小方差**：分布更加"瘦高"，数据集中，对应均质的生态系统
+
+**偏度的影响**：
+
+- **大正偏度**：分布右偏，右侧尾部较长，对应生态学中少数个体具有极大值（如优势物种）
+- **大负偏度**：分布左偏，左侧尾部较长，对应多数个体具有较小值
+- **零偏度**：对称分布，个体特征相对均匀
+
+**峰度的影响**：
+
+- **高峰度**：分布尖峰厚尾，数据集中在均值附近但极端值概率较高，对应生态系统中稳定状态但偶发极端事件
+- **低峰度**：分布平峰薄尾，数据分散，极端值较少，对应生态系统状态波动较大但无极端事件
+
+**标准误的意义**：
+
+- **小标准误**：样本均值作为总体均值的估计更加精确，对应生态学中基于大样本的可靠推断
+- **大标准误**：样本均值的估计不确定性较高，对应生态学中小样本研究的局限性
+
+这些分布特征在生态学研究中具有重要的实际意义。例如：
+
+- 物种多度分布通常呈现右偏，反映了少数优势物种和多数稀有物种的格局
+- 环境因子的分布可能呈现高峰度，预示着极端气候事件的发生概率
+- 个体大小的分布偏度可以反映种内竞争强度
+- 群落多样性的分布方差可以指示生态系统的稳定性
+- 基于标准误的置信区间为生态参数的估计提供了不确定性度量
+
+通过理解这些统计概念在概率分布图上的表现，生态学家能够更准确地解读生态数据背后的模式和过程。
+
 
 ## 总结
 
