@@ -2587,6 +2587,8 @@ $$P(Y = y) = \begin{cases}
 library(ggplot2)
 library(dplyr)
 library(ggpattern)  # 图案填充支持
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
 
 # 设置随机数种子确保结果可重现
 set.seed(2323)
@@ -2710,6 +2712,8 @@ $$g_1 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^3}{s^3}$$
 # 安装并加载moments包（如果未安装）
 # install.packages("moments")
 library(moments)
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
 
 # 模拟森林中树木胸径数据（右偏分布）
 tree_diameter <- c(rep(10:20, 5), rep(21:30, 3), rep(31:40, 2), rep(41:50, 1))
@@ -2783,6 +2787,8 @@ cat("物种A相对于正态分布的峰度：", round(kurtosis_a - 3, 2), "\n",
 # 创建一个综合的可视化，展示所有统计概念
 library(ggplot2)
 library(gridExtra)
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
 
 # 生成正态分布数据
 set.seed(123)
@@ -2836,6 +2842,8 @@ print(sd_plot)
 
 ```{r se-visualization-plot, fig.cap="标准误的可视化分析。左图显示样本均值的抽样分布，右图展示标准误与样本均值的关系。红色实线表示总体均值，橙色虚线表示平均标准误。", echo=FALSE}
 # 标准误的可视化：抽样变异性
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
 set.seed(456)
 # 假设总体服从正态分布
 population <- rnorm(10000, mean = 50, sd = 10)
@@ -2901,6 +2909,10 @@ cat("总体均值：", round(mean(population), 2), "\n",
 
 ```{r distribution-parameters-comparison, fig.cap="不同统计参数值的分布形状比较。包括均值、标准差、偏度和峰度四个维度的分布特征对比，展示了统计参数对分布形状的影响。通过颜色和线型（实线、虚线、点线）的组合，确保在彩色显示和黑白打印时都能清晰区分不同参数值的曲线。", warning=FALSE, echo=FALSE}
 # 比较不同均值的分布
+library(ggplot2)    # 数据可视化
+library(gridExtra)  # 多图布局
+library(showtext)   # 中文字体支持
+showtext_auto()     # 自动启用中文字体
 x_range <- seq(-5, 10, length.out = 1000)
 df_means <- data.frame(
   x = rep(x_range, 3),

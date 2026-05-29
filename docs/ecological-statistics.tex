@@ -223,14 +223,14 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
 \hypersetup{
-  pdftitle={生态统计学AI+},
+  pdftitle={生态统计学},
   pdfauthor={沈国春、李勤},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
-\title{生态统计学AI+}
+\title{生态统计学}
 \author{沈国春、李勤}
-\date{2026-02-07}
+\date{2026-03-10}
 
 \begin{document}
 \maketitle
@@ -3965,6 +3965,8 @@ SampleSize & Skewness & Kurtosis\\
 \FunctionTok{library}\NormalTok{(ggplot2)}
 \FunctionTok{library}\NormalTok{(dplyr)}
 \FunctionTok{library}\NormalTok{(ggpattern)  }\CommentTok{\# 图案填充支持}
+\FunctionTok{library}\NormalTok{(showtext)   }\CommentTok{\# 中文字体支持}
+\FunctionTok{showtext\_auto}\NormalTok{()     }\CommentTok{\# 自动启用中文字体}
 
 \CommentTok{\# 设置随机数种子确保结果可重现}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{2323}\NormalTok{)}
