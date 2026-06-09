@@ -1,4 +1,5 @@
 /libs/
 slides/
 *.log
+/*.html
 _bookdown_files/

@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(Rscript:*)",
+      "Bash(R:*)",
+      "Bash(echo:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(wc:*)",
+      "Bash(pwd:*)",
+      "Bash(sort:*)",
+      "Bash(uniq:*)",
+      "Bash(cut:*)",
+      "Bash(kill:*)",
+      "Bash(pkill:*)",
+      "Bash(sed:*)",
+      "Bash(which:*)",
+      "Bash(grep:*)",
+      "Bash(for:*)",
+      "Bash(CLAUDE_CODE_TMPDIR=/home/gcshen/tmp grep -n \"^## \\\\|^### \" /home/gcshen/projects/ecological-statistics/02-probability_and_distribution.Rmd)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
