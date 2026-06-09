@@ -6,9 +6,8 @@
 ``` r
 library(ggplot2)
 library(showtext)
-library(sn)          # 偏正态分布
 showtext_auto()
-library(ggpattern)
+library(sn)          # 偏正态分布
 library(dplyr)
 library(patchwork)
 library(gridExtra)
@@ -472,35 +471,9 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 ## 微弱支持物种偏好森林的假设
 ```
 
-**保护优先级评估**
-
-结合多种证据（如栖息地质量、种群趋势、威胁因素）来评估物种的保护优先级。下面的可视化演示了贝叶斯更新在森林健康评估中的应用，展示了如何基于观测到的树木死亡率证据，从初始的专家信念（先验）更新为更准确的森林健康状态评估（后验）。这种动态更新过程体现了贝叶斯方法在生态监测和评估中的核心优势，能够系统地将新证据整合到现有的知识体系中。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/bayesian-update-1} 
-
-}
-
-\caption{贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变。}(\#fig:bayesian-update)
-\end{figure}
-
-```
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --  0.8
-```
-
 **生态风险评估**
 
 在数据有限的情况下，结合专家判断和有限观测来评估生态风险。上面的可视化使用颜色（绿色/蓝色）和填充纹理（条纹/网格）双重区分先验和后验信念，确保在彩色显示和黑白打印时都能清晰辨识。下面的综合演示展示了贝叶斯方法在生态风险评估和决策分析中的完整应用流程：首先基于历史数据建立初始风险评估（先验），然后结合新的气候异常证据进行贝叶斯更新得到更准确的风险概率（后验），最后基于更新后的风险概率进行成本效益分析，为保护决策提供科学依据。这种将概率更新与决策分析相结合的方法，体现了贝叶斯统计在生态管理实践中的实用价值。
-
-
-```
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --  0.8
-```
 
 \begin{figure}
 
@@ -511,92 +484,6 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 \caption{贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策}(\#fig:risk-assessment)
 \end{figure}
 
-**模型选择与平均**
-
-使用贝叶斯模型平均方法，综合考虑多个竞争模型的预测结果。下面的演示展示了贝叶斯模型比较在生态学中的实际应用：通过比较简化线性模型和复杂季节模型对种群增长数据的拟合效果，使用贝叶斯因子来量化不同模型的证据强度。这种方法不仅考虑模型的拟合优度，还考虑了模型的复杂性，避免了过度拟合问题，为生态学家提供了更可靠的模型选择依据。
-
-
-
-\begin{table}[!h]
-\centering
-\caption{(\#tab:bayesian-model-comparison)贝叶斯模型比较结果}
-\centering
-\begin{tabular}[t]{lrr}
-\toprule
-模型 & 模型证据 & 贝叶斯因子\\
-\midrule
-线性模型 & 0 & 1.00\\
-季节模型 & 0 & 13980.76\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-表 \@ref(tab:bayesian-model-comparison) 展示了贝叶斯模型比较的结果，包括线性模型和季节模型的模型证据值以及它们之间的贝叶斯因子，为模型选择提供了定量依据。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/model-comparison-1} 
-
-}
-
-\caption{贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比。}(\#fig:model-comparison)
-\end{figure}
-
-**敏感性分析与稳健性检验**
-
-贝叶斯分析的一个重要实践环节是评估结果的稳定性和可靠性。下面的表格展示了两种关键的验证结果：
-
-**敏感性分析表格**显示了不同先验强度下后验均值和标准差的变化。先验强度越大，先验对结果的影响越强。通过观察不同先验强度下的后验结果，我们可以判断分析结论是否对先验选择敏感。
-
-**稳健性检验表格**展示了数据污染比例对后验均值的影响。污染比例越高，异常值对结果的影响越大。这帮助我们评估贝叶斯分析对数据质量问题的抵抗能力。
-
-这些检验确保贝叶斯分析的结论不会过度依赖于特定的先验设定或受到数据质量问题的过度影响，为生态学研究的可靠性提供保障。
-
-
-
-
-
-\begin{table}[!h]
-\centering
-\caption{(\#tab:bayesian-sensitivity-analysis)贝叶斯敏感性分析结果}
-\centering
-\begin{tabular}[t]{rrr}
-\toprule
-先验强度 & 后验均值 & 后验标准差\\
-\midrule
-0.1 & 0.708 & 0.097\\
-0.5 & 0.708 & 0.097\\
-1.0 & 0.708 & 0.097\\
-2.0 & 0.708 & 0.097\\
-5.0 & 0.706 & 0.097\\
-\addlinespace
-10.0 & 0.702 & 0.096\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-表 \@ref(tab:bayesian-sensitivity-analysis) 展示了贝叶斯敏感性分析的结果，通过比较不同先验强度下的后验均值和标准差，揭示了先验信息对贝叶斯推断的影响程度。
-
-
-
-
-
-\begin{table}[!h]
-\centering
-\caption{(\#tab:bayesian-robustness-test)贝叶斯稳健性检验结果}
-\centering
-\begin{tabular}[t]{rr}
-\toprule
-污染比例 & 后验均值\\
-\midrule
-0.00 & 0.539\\
-0.05 & 0.604\\
-0.10 & 0.683\\
-0.20 & 0.804\\
-0.30 & 0.888\\
-\bottomrule
-\end{tabular}
-\end{table}
 
 表 \@ref(tab:bayesian-robustness-test) 展示了贝叶斯稳健性检验的结果，通过模拟不同污染比例下的后验均值变化，验证了贝叶斯方法对数据污染的鲁棒性。
 
@@ -615,12 +502,6 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 \caption{主观偏见问题：不同群体对同一生态风险评估的差异}(\#fig:subjective-bias-demo)
 \end{figure}
 
-```
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --    1
-```
-
 #### 贝叶斯统计的挑战及解决方案
 
 贝叶斯框架在概念上非常优雅，但在计算上有一个巨大的挑战：**分母 \(P(E)\) 通常极其难以计算。**
@@ -637,23 +518,7 @@ MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心�
 
 **与其直接计算后验分布，不如我们构造一个马尔可夫链，使其平稳分布恰好就是我们想要的后验分布 \(P(\theta \mid E)\)。然后，我们从这个链中生成大量的样本，用这些样本来近似（模拟）后验分布。**
 
-想象一下，你是一个盲人，想要了解一头大象的形状。这头大象就是贝叶斯统计中的**后验分布**，我们想要了解但无法直接看到的复杂概率分布。
-
-**贝叶斯的难题**：大象的形状太复杂了，你无法用数学公式精确描述它（就像无法直接计算分母P(E)一样）。
-
-**MCMC的解决方案**：你不需要知道大象的精确形状，只需要通过"触摸"来了解它：
-
-1. **马尔可夫链**：你开始在大象周围随机走动，但遵循一个聪明的规则，每次移动时，你更倾向于走向大象"更胖"的区域（高概率区域），而不是"更瘦"的区域（低概率区域）。
-
-2. **蒙特卡洛抽样**：你边走边触摸大象，记录下每个位置的感受。虽然每次触摸只能了解一小部分，但经过成千上万次触摸后，你就能在心中构建出大象的整体形状。
-
-3. **巧妙之处**：你根本不需要知道大象的确切形状！你只需要比较当前位置和下一个位置哪个"更胖"（通过概率比值），这个比值中讨厌的分母P(E)会自动抵消掉。
-
-**结果**：经过足够多的"触摸"后，你收集到的位置样本就精确地反映了大象的真实形状。你可以通过这些样本计算大象的平均高度（后验均值）、宽度（后验方差），甚至画出大象的轮廓（后验分布图）。
-
-就像盲人通过系统性的触摸来了解复杂的大象形状一样，MCMC通过系统性的随机游走来探索复杂的生态学后验分布，让我们能够在不知道精确数学解的情况下，仍然能够对生态系统的参数做出可靠的贝叶斯推断。
-
-我们来用正式的语言分解MCMC这个思想：
+MCMC的核心思想可以分解为两步：
 
 1.  **蒙特卡洛（Monte Carlo）**： 泛指通过随机抽样来解决问题的方法。基本思想是：如果你想知道一个分布的属性（比如均值），就从该分布中抽取大量样本，然后计算这些样本的均值。**问题在于**：我们无法直接从复杂的后验分布中抽样。
 
@@ -687,67 +552,39 @@ Table: (\#tab:comparison-of-bayesian-and-mcmc) 贝叶斯统计与MCMC的比较
 
 #### 简单MCMC演示
 
-马尔可夫链蒙特卡洛（MCMC）方法是贝叶斯计算的核心工具：
+马尔可夫链蒙特卡洛（MCMC）方法是贝叶斯计算的核心工具。以下演示Metropolis-Hastings算法的基本流程：
 
 
 ``` r
-# 简单MCMC采样演示
-# 实现Metropolis-Hastings算法进行贝叶斯参数估计
-simple_mcmc <- function(n_iterations, prior_mean, prior_sd,
-                        data, likelihood_sd) {
-  # 初始化：从先验均值开始构造马尔可夫链
-  current_value <- prior_mean
-  samples <- numeric(n_iterations)
-  accepts <- 0
-
-  for (i in 1:n_iterations) {
-    # 步骤1：从提议分布（以当前值为中心的正态分布）生成候选参数
-    proposal <- rnorm(1, current_value, 0.1)
-
-    # 步骤2：计算当前值与提议值的先验概率密度
-    prior_current <- dnorm(current_value, prior_mean, prior_sd)
-    prior_proposal <- dnorm(proposal, prior_mean, prior_sd)
-
-    # 步骤3：计算数据在当前值和提议值下的似然概率
-    likelihood_current <- prod(dnorm(data, current_value, likelihood_sd))
-    likelihood_proposal <- prod(dnorm(data, proposal, likelihood_sd))
-
-    # 步骤4：计算Metropolis-Hastings接受率（分母P(E)在此处抵消）
-    acceptance_ratio <- (prior_proposal * likelihood_proposal) /
-      (prior_current * likelihood_current)
-    acceptance_prob <- min(1, acceptance_ratio)
-
-    # 步骤5：基于接受概率随机决定是否移动到提议值
-    if (runif(1) < acceptance_prob) {
-      current_value <- proposal
-      accepts <- accepts + 1
-    }
-
-    samples[i] <- current_value
-  }
-
-  # 计算接受率以评估MCMC采样效率
-  acceptance_rate <- accepts / n_iterations
-  return(list(samples = samples, acceptance_rate = acceptance_rate))
-}
-
-# 模拟生态数据：真实树木平均高度15米，观测带有正态测量误差
+# MCMC演示：Metropolis-Hastings算法估计树木平均高度
+# 模拟数据：真实高度15m，20次观测含测量误差
 true_value <- 15.0
 observed_data <- rnorm(20, true_value, 1.0)
 
-# 运行MCMC：先验N(10, 5²)反映我们对树木高度的初始认知（偏低且不确定）
-mcmc_result <- simple_mcmc(5000,
-  prior_mean = 10, prior_sd = 5,
-  data = observed_data, likelihood_sd = 1.0
-)
+# 简化的MCMC采样器
+mcmc_sampler <- function(n_iter, init, proposal_sd, data) {
+  samples <- numeric(n_iter); samples[1] <- init
+  for (i in 2:n_iter) {
+    proposal <- rnorm(1, samples[i-1], proposal_sd)
+    # 接受率：先验N(10,25) × 似然 = 后验（分母P(E)被约掉）
+    log_ratio <- dnorm(proposal, 10, 5, log = TRUE) +
+                 sum(dnorm(data, proposal, 1, log = TRUE)) -
+                 dnorm(samples[i-1], 10, 5, log = TRUE) -
+                 sum(dnorm(data, samples[i-1], 1, log = TRUE))
+    samples[i] <- ifelse(log(runif(1)) < log_ratio, proposal, samples[i-1])
+  }
+  return(samples)
+}
+
+mcmc_result <- mcmc_sampler(5000, init = 10, proposal_sd = 0.5,
+  data = observed_data)
 ```
 
 
 ```
 ## MCMC采样结果:
-##  接受率: 0.848 
-##  后验均值: 14.835 
-##  后验标准差: 0.472 
+##  后验均值: 14.898 
+##  后验标准差: 0.296 
 ##  真实值: 15 
 ##  样本均值: 14.92
 ```
@@ -755,14 +592,14 @@ mcmc_result <- simple_mcmc(5000,
 
 ``` r
 # 基于后验样本的2.5%和97.5%分位数计算95%置信区间
-ci_lower <- quantile(mcmc_result$samples, 0.025)
-ci_upper <- quantile(mcmc_result$samples, 0.975)
+ci_lower <- quantile(mcmc_result, 0.025)
+ci_upper <- quantile(mcmc_result, 0.975)
 cat("95%置信区间: [", round(ci_lower, 3), ", ",
     round(ci_upper, 3), "]\n")
 ```
 
 ```
-## 95%置信区间: [ 14.345 ,  15.342 ]
+## 95%置信区间: [ 14.451 ,  15.35 ]
 ```
 
 #### 从贝叶斯概率到现代数据分析
@@ -852,12 +689,6 @@ Table: (\#tab:plant-choice-probability) 蚱蜢午餐选择的概率分布
 \caption{蚱蜢午餐选择的概率分布：三种草地的选择概率对比。}(\#fig:plant-choice-distribution)
 \end{figure}
 
-```
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --  0.7
-```
-
 ### 累积概率分布：从可能性到确定性
 
 除了了解每种植物被选择的概率，我们有时还需要回答这样的问题：“蚱蜢选择黑麦草或混合草甸的概率是多少？"或者”选择价值较低的植物（三叶草）的概率是多少？"这些问题引导我们认识**累积概率分布**。
@@ -888,37 +719,6 @@ Table: (\#tab:plant-choice-cumulative) 蚱蜢午餐选择的累积概率分布
 
 \caption{蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程}(\#fig:cumulative-distribution)
 \end{figure}
-
-```
-## <ggproto object: Class CoordCartesian, Coord, gg>
-##     aspect: function
-##     backtransform_range: function
-##     clip: on
-##     default: FALSE
-##     distance: function
-##     draw_panel: function
-##     expand: TRUE
-##     is_free: function
-##     is_linear: function
-##     labels: function
-##     limits: list
-##     modify_scales: function
-##     range: function
-##     ratio: NULL
-##     render_axis_h: function
-##     render_axis_v: function
-##     render_bg: function
-##     render_fg: function
-##     reverse: none
-##     setup_data: function
-##     setup_layout: function
-##     setup_panel_guides: function
-##     setup_panel_params: function
-##     setup_params: function
-##     train_panel_guides: function
-##     transform: function
-##     super:  <ggproto object: Class CoordCartesian, Coord, gg>
-```
 
 累积概率分布图呈现为阶梯函数，在每个可能的取值处跳跃，跳跃的高度等于该取值的概率。这种分布特别有用，因为它：
 
@@ -999,12 +799,6 @@ $$P(X = x) = p^x(1-p)^{1-x}, \quad x = 0,1$$
 \caption{伯努利分布：不同成功概率下的二元选择概率分布}(\#fig:bernoulli-distribution)
 \end{figure}
 
-```
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --    1
-```
-
 **生态学肖像：**
 
 伯努利分布在生态学中无处不在，它描述的是那些具有二元结局的自然现象。在生态系统的各个层面，我们都能观察到这种简单的二元选择模式：一颗种子是否发芽，一只雏鸟能否成功活到离巢，一次野外调查中样方里是否出现目标物种，一只昆虫是否被天敌捕食，或者一片叶子是否被昆虫取食。这些看似简单的“是"或”否"问题，实际上构成了生态学中最基本的概率单元。
@@ -1063,12 +857,6 @@ $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, 2, \ldots, n$$
 \caption{二项分布：不同成功概率下多次试验中成功次数的概率分布}(\#fig:binomial-distribution)
 \end{figure}
 
-```
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --    1
-```
-
 **生态学肖像：**
 
 二项分布在生态学中广泛应用于计数型数据的建模。当我们播种100颗同种种子时，最终成功发芽的数量$k$服从二项分布，其中$n=100$，$p$代表种子的发芽率。从一个大种群中随机捕获并标记50只动物，放回后再次随机捕获50只，其中被标记个体的数量$k$也服从二项分布，这正是标记重捕法的理论核心。在一片森林中，随机选择的100棵树中有病害的树木数量同样遵循二项分布规律。一次生态调查中，在50个样方中发现目标物种的样方数量，以及一个鸟类种群中在繁殖季节成功孵化的雏鸟数量，都可以用二项分布来精确描述。
@@ -1116,12 +904,6 @@ $$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots$$
 
 \caption{泊松分布：不同平均发生率下稀有事件发生次数的概率分布}(\#fig:poisson-distribution)
 \end{figure}
-
-```
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --    1
-```
 
 **生态学肖像：**
 
@@ -1188,12 +970,6 @@ $$P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots$$
 
 \caption{负二项分布：不同参数组合下第r次成功所需试验次数的概率分布}(\#fig:negative-binomial)
 \end{figure}
-
-```
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --    1
-```
 
 **生态学肖像：**
 
@@ -1460,7 +1236,11 @@ SampleSize & Skewness & Kurtosis\\
 
 中心极限定理是连接概率论与统计推断的桥梁，它解释了为什么正态分布在统计学中占据核心地位。在蚱蜢午餐的研究中，这个定理确保了即使面对复杂的生态数据，我们仍然能够使用基于正态分布的统计方法来获得可靠的科学结论。
 
-正如统计学家乔治·博克斯所言：“所有的模型都是错的，但有些是有用的。"中心极限定理正是这样一个“有用"的模型，它虽然不是绝对精确，但在大多数实际情况下提供了足够好的近似，为生态学的定量研究奠定了坚实的数学基础。
+正如统计学家乔治·博克斯所言：”所有的模型都是错的，但有些是有用的。”中心极限定理正是这样一个”有用”的模型，它虽然不是绝对精确，但在大多数实际情况下提供了足够好的近似，为生态学的定量研究奠定了坚实的数学基础。
+
+#### 分布的偏度与峰度
+
+CLT告诉我们样本均值趋向正态，但原始生态数据往往偏离正态。**偏度**衡量分布的不对称性：$g_1 = \frac{1}{n}\sum(x_i - \bar{x})^3 / s^3$。正偏度（右偏）常见于生物量、物种多度数据，意味着少数大树或优势种拉长了右侧尾部。**峰度**衡量分布的尾部厚度：$g_2 = \frac{1}{n}\sum(x_i - \bar{x})^4 / s^4 - 3$。高峰度意味着极端值出现概率更高，对生态风险分析至关重要。理解偏度和峰度，能帮助我们在应用CLT时判断”样本量多大才算足够”——分布越偏、尾部越厚，所需样本量越大。
 
 ## 混合分布：从生态异质性到混合专家AI模型
 
@@ -1505,9 +1285,8 @@ $$P(Y = y) = \begin{cases}
 
 
 ``` r
-# 模拟零膨胀数据：80%为结构性零值（如物种不在样方中），20%来自泊松过程（如存在但随机未观测到）
+# 模拟零膨胀数据：80%为结构性零值，20%来自泊松过程
 set.seed(2323)
-
 n_samples <- 1000
 zero_prob <- 0.8
 lambda <- 3
@@ -1529,22 +1308,17 @@ plot_data <- data.frame(
   distribution = rep(c("零膨胀泊松", "普通泊松"), each = n_samples)
 )
 
-ggplot(plot_data, aes(x = value, fill = distribution, pattern = distribution)) +
-  geom_histogram_pattern(
-    binwidth = 1, alpha = 0.7, position = "identity",
-    pattern_fill = "black",
-    pattern_density = 0.1,
-    pattern_spacing = 0.02
-  ) +
+ggplot(plot_data, aes(x = value, fill = distribution)) +
+  geom_histogram(binwidth = 1, alpha = 0.7, position = "identity") +
   scale_fill_manual(values = c("零膨胀泊松" = "#E69F00", "普通泊松" = "#56B4E9")) +
-  scale_pattern_manual(values = c("零膨胀泊松" = "stripe", "普通泊松" = "crosshatch")) +
   labs(
     title = "零膨胀分布与普通泊松分布对比",
     x = "计数值",
     y = "频数",
     fill = "分布类型"
   ) +
-  theme_eco(legend_position = "top")
+  theme_eco(legend_position = "top") +
+  facet_wrap(~distribution, ncol = 2, scales = "free_y")
 ```
 
 \begin{figure}
@@ -1556,36 +1330,6 @@ ggplot(plot_data, aes(x = value, fill = distribution, pattern = distribution)) +
 \caption{零膨胀泊松分布与普通泊松分布的对比。零膨胀分布在零值处有额外的概率质量，反映了生态学中稀有物种数据的典型特征}(\#fig:zero-inflation-plot)
 \end{figure}
 
-``` r
-  facet_wrap(~distribution, ncol = 2, scales = "free_y")
-```
-
-```
-## <ggproto object: Class FacetWrap, Facet, gg>
-##     attach_axes: function
-##     attach_strips: function
-##     compute_layout: function
-##     draw_back: function
-##     draw_front: function
-##     draw_labels: function
-##     draw_panel_content: function
-##     draw_panels: function
-##     finish_data: function
-##     format_strip_labels: function
-##     init_gtable: function
-##     init_scales: function
-##     map_data: function
-##     params: list
-##     set_panel_size: function
-##     setup_data: function
-##     setup_panel_params: function
-##     setup_params: function
-##     shrink: TRUE
-##     train_scales: function
-##     vars: function
-##     super:  <ggproto object: Class FacetWrap, Facet, gg>
-```
-
 如图\@ref(fig:zero-inflation-plot)所示，零膨胀分布最显著的特征是零值的过度集中。零膨胀分布在生态学中具有重要的应用价值，专门用于处理存在大量零值的计数数据。这种分布在以下生态学场景中特别有用：
 
 1. **稀有物种的出现数据**：在生态调查中，许多稀有物种在大多数样方中不出现，导致数据中存在大量零值。零膨胀分布能够准确描述这种零值过多的模式。
@@ -1595,202 +1339,6 @@ ggplot(plot_data, aes(x = value, fill = distribution, pattern = distribution)) +
 3. **间歇性生态过程记录**：某些生态过程（如动物活动、植物开花等）具有间歇性特征，在时间序列中产生大量零值观测。
 
 4. **不完全调查的观测数据**：由于调查方法限制或环境条件影响，某些生态调查可能无法完全覆盖目标区域，导致观测数据中存在系统性的零值。
-
-## 描述统计：在AI时代重新审视数据
-
-描述统计是生态学数据分析的基础工具，用于概括和描述数据的主要特征。主要包括中心趋势测量、离散性测量和分布形状测量三个方面。
-
-### 中心趋势测量
-
-中心趋势测量描述数据的集中位置，常用的指标包括：
-
-**均值**：数据的算术平均值，计算公式为 $\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i$，反映数据的平均水平。
-
-**中位数**：将数据排序后位于中间位置的值，对异常值不敏感，计算公式为：当$n$为奇数时取中间值，当$n$为偶数时取中间两个值的平均值。
-
-**众数**：数据中出现频率最高的值，适用于分类数据和连续数据。
-
-### 离散性测量
-
-离散性测量描述数据的分散程度，常用指标包括：
-
-**方差与标准差**：方差计算公式为 $s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2$，标准差为方差的平方根 $s = \sqrt{s^2}$，反映数据相对于均值的平均偏离程度。
-
-**变异系数**：计算公式为 $CV = \frac{s}{\bar{x}} \times 100\%$，用于比较不同量纲数据的相对变异程度。
-
-**标准误**：计算公式为 $SE = \frac{s}{\sqrt{n}}$，衡量样本统计量的抽样变异性，反映估计的精度。
-
-**四分位距**：上四分位数与下四分位数之差，描述数据中间50%的范围，对异常值不敏感。
-
-### 分布形状与矩测量
-
-分布形状测量描述了数据分布的对称性和尾部特征，帮助我们理解生态过程的潜在机制。就像识别不同树种的树冠形状一样，这些统计量揭示了生态数据背后的模式。
-
-#### 偏度
-
-**数学定义**：样本偏度定义为三阶中心矩与标准差立方的比值：
-
-$$g_1 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^3}{s^3}$$
-
-其中 $s$ 是样本标准差。偏度量化了分布的不对称性：偏度为正表示右偏，为负表示左偏，为零表示对称分布。
-
-在生态学中，许多自然现象都表现出偏斜分布。考虑研究森林中树木胸径的分布：
-
-如图\@ref(fig:tree-skewness-plot)所示，我们模拟了一个右偏的树木胸径分布，该图通过直方图展示了分布的不对称性特征。
-
-
-```
-## [1] "树木胸径分布的偏度： 0.65"
-```
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/tree-skewness-plot-1} 
-
-}
-
-\caption{树木胸径分布的直方图，展示右偏分布特征}(\#fig:tree-skewness-plot)
-\end{figure}
-
-上述例子中，正偏度（通常大于0.5）表明分布向右偏斜，意味着有较多的小树和少数大树。在图形上，右偏分布的右侧尾部较长，均值大于中位数。这种模式常见于年龄结构年轻的种群。
-
-#### 峰度
-
-**数学定义**：样本峰度定义为四阶中心矩与标准差四次方的比值：
-
-$$g_2 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^4}{s^4} - 3$$
-
-其中减去3是为了使正态分布的峰度为0。峰度大于0表示尖峰分布，小于0表示平峰分布。
-
-峰度描述了分布的尖峰程度和尾部厚度，在研究极端生态事件时特别重要。高峰度（大于3）表明分布更加尖峰，数据集中在均值附近，尾部较厚，意味着极端值（如稀有物种）的出现概率较高。低峰度（小于3）表明分布更加平缓，数据分散，极端值较少。
-
-
-``` r
-set.seed(123)
-# 构造两种对比的物种多度分布：A集中在均值附近（尖峰），B均匀分散（平峰）
-abundance_a <- c(rep(10, 8), rep(15, 2), rep(20, 25),
-                rep(25, 2), rep(30, 8))
-abundance_b <- runif(45, 10, 30)
-
-kurtosis_a <- kurtosis(abundance_a)
-kurtosis_b <- kurtosis(abundance_b)
-```
-
-
-```
-## 物种A多度分布的峰度：2.53
-## 物种B多度分布的峰度：1.81
-```
-
-```
-## 物种A相对于正态分布的峰度：-0.47
-## 物种B相对于正态分布的峰度：-1.19
-```
-
-### 统计概念在概率分布图上的可视化
-
-为了更好地理解这些统计概念，让我们在一个典型的概率分布图上可视化它们：
-
-如图\@ref(fig:stats-concepts-plot)所示，我们使用标准正态分布来可视化关键统计概念。该图清晰地展示了均值、标准差等统计量在概率分布上的几何意义。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/stats-concepts-plot-1} 
-
-}
-
-\caption{统计概念在正态分布上的可视化}(\#fig:stats-concepts-plot)
-\end{figure}
-
-这个可视化展示了：
-
-- **红色垂直线**：均值（分布的中心位置）
-- **橙色虚线**：±1个标准差的范围
-- **绿色箭头**：标准差的实际跨度
-
-### 标准误的可视化理解
-
-为了理解标准误的概念，让我们通过抽样模拟来展示标准误的意义：
-
-如图\@ref(fig:se-visualization-plot)所示，我们通过多次抽样模拟展示了标准误的统计意义。该图包含两个子图：左图显示样本均值的分布特征，右图展示标准误与样本均值的关系，帮助我们理解样本均值作为总体均值估计的精确程度。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/se-visualization-plot-1} 
-
-}
-
-\caption{标准误随样本量变化的可视化分析：横轴为样本量（n=5至n=100），纵轴为标准误，曲线展示了标准误以1/√n的速率递减的规律，灰色虚线标记了大样本（n>30）后标准误趋于稳定的阈值}(\#fig:se-visualization-plot)
-\end{figure}
-
-
-```
-## 总体均值：50.16
-## 样本均值的均值：50.17
-## 样本均值的标准误：2.04
-## 95%置信区间：[ 46.17, 54.17 ]
-```
-
-这个可视化帮助我们理解：
-
-- **左图**：多次抽样的样本均值围绕总体均值波动，其分布的标准差就是标准误；
-- **右图**：标准误反映了样本均值作为总体均值估计的精确程度；
-- **置信区间**：反映了估计方法的可靠性；95%置信区间意味着，多次重复抽样后基于标准误构建的所有区间里，有95%会包含总体均值。
-
-### 不同参数值的分布形状比较
-
-现在让我们比较不同统计参数值对应的分布形状：
-
-如图\@ref(fig:distribution-parameters-comparison)所示，我们系统地比较了均值、标准差、偏度和峰度四个关键统计参数对分布形状的影响。该图通过四个子图展示了不同参数值下分布特征的显著差异，帮助我们直观理解统计参数与分布形状之间的对应关系。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/distribution-parameters-comparison-1} 
-
-}
-
-\caption{不同均值和方差参数下分布形状的比较。通过颜色和线型区分不同参数值。}(\#fig:distribution-parameters-comparison)
-\end{figure}
-
-### 生态学意义总结
-
-通过这些可视化，我们可以清楚地看到：
-
-**均值的影响**：
-
-- **大均值**：分布整体向右移动，对应生态学中较大的个体大小、较高的生物量等
-- **小均值**：分布整体向左移动，对应较小的生态特征值
-
-**方差/标准差的影响**：
-
-- **大方差**：分布更加"矮胖"，数据分散，对应生态系统中个体间差异大、环境异质性高
-- **小方差**：分布更加"瘦高"，数据集中，对应均质的生态系统
-
-**偏度的影响**：
-
-- **大正偏度**：分布右偏，右侧尾部较长，对应生态学中少数个体具有极大值（如优势物种）
-- **大负偏度**：分布左偏，左侧尾部较长，对应多数个体具有较小值
-- **零偏度**：对称分布，个体特征相对均匀
-
-**峰度的影响**：
-
-- **高峰度**：分布尖峰厚尾，数据集中在均值附近但极端值概率较高，对应生态系统中稳定状态但偶发极端事件
-- **低峰度**：分布平峰薄尾，数据分散，极端值较少，对应生态系统状态波动较大但无极端事件
-
-**标准误的意义**：
-
-- **小标准误**：样本均值作为总体均值的估计更加精确，对应生态学中基于大样本的可靠推断
-- **大标准误**：样本均值的估计不确定性较高，对应生态学中小样本研究的局限性
-
-这些分布特征在生态学研究中具有重要的实际意义。例如：
-
-- 物种多度分布通常呈现右偏，反映了少数优势物种和多数稀有物种的格局
-- 环境因子的分布可能呈现高峰度，预示着极端气候事件的发生概率
-- 个体大小的分布偏度可以反映种内竞争强度
-- 群落多样性的分布方差可以指示生态系统的稳定性
-- 基于标准误的置信区间为生态参数的估计提供了不确定性度量
-
-通过理解这些统计概念在概率分布图上的表现，生态学家能够更准确地解读生态数据背后的模式和过程。
 
 ## 信息论：从概率到AI的桥梁
 

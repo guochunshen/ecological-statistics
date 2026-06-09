@@ -553,7 +553,7 @@ R语言的学习是一个渐进的过程，需要持续不断的实践和积累�
 \end{Shaded}
 
 \begin{verbatim}
-## - Session info --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## - Session info ---------------------------------------------------------------
 ##  setting  value
 ##  version  R version 4.3.3 (2024-02-29)
 ##  os       Ubuntu 24.04.1 LTS
@@ -563,11 +563,11 @@ R语言的学习是一个渐进的过程，需要持续不断的实践和积累�
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       Etc/UTC
-##  date     2025-12-11
+##  date     2026-06-09
 ##  pandoc   3.1.3 @ /usr/bin/ (via rmarkdown)
 ##  quarto   NA
 ## 
-## - Packages ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## - Packages -------------------------------------------------------------------
 ##  package     * version date (UTC) lib source
 ##  bookdown      0.44    2025-08-21 [1] CRAN (R 4.3.3)
 ##  cachem        1.1.0   2024-05-16 [1] CRAN (R 4.3.3)
@@ -614,7 +614,7 @@ R语言的学习是一个渐进的过程，需要持续不断的实践和积累�
 ##  [3] /usr/lib/R/site-library
 ##  [4] /usr/lib/R/library
 ## 
-## -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## ------------------------------------------------------------------------------
 \end{verbatim}
 
 \hypertarget{aiux8f85ux52a9ux7f16ux7a0bux57faux7840}{%
@@ -764,559 +764,71 @@ LLM是一个知识渊博但缺乏专业判断的助手，与它有效协作需�
 
 数据在分析过程中的流动路径为：硬盘→内存→CPU（计算）→内存→硬盘。当利用GPU加速时，数据还需通过PCIe总线在内存与GPU显存之间传输。理解这一流程的核心实用意义在于：知道何时受限于内存容量（需要分批处理）、何时受限于CPU速度（需要并行计算）、何时可以利用GPU加速（矩阵密集型任务）。这种硬件意识帮助你在技术约束下做出明智的决策。
 
-\hypertarget{ux53d8ux91cfux4e0eux5e38ux91cf}{%
-\subsubsection{变量与常量}\label{ux53d8ux91cfux4e0eux5e38ux91cf}}
+\hypertarget{ux53d8ux91cfux4e0eux6570ux636eux7c7bux578b}{%
+\subsubsection{变量与数据类型}\label{ux53d8ux91cfux4e0eux6570ux636eux7c7bux578b}}
 
-变量如同生态学研究中的测量指标：它们随条件而变化（样地温度、物种个体数），让代码适应不同数据输入。常量代表分析中不变的基础参数（π、碳转换系数），一旦设定不应修改。正确区分变量与常量可避免''魔法数字''，例如将碳转换系数定义为\texttt{CARBON\_CONVERSION\_FACTOR\ \textless{}-\ 0.5}而非在公式中直接写0.5，使代码自文档化。在AI协作环境中，明确的变量常量区分能帮助LLM更好地理解代码意图。
+变量存储可变的数据值（如样地温度），常量存储不变的参数（如\(\pi\)）。避免在代码中直接写''魔法数字''，将其定义为命名常量。R的基本数据类型决定可用的统计方法：数值型适用于温度、生物量等连续测量；整型适用于个体计数；字符型适用于物种名称；逻辑型适用于存活/死亡等二分类结果。对计数数据使用泊松回归而非线性回归，正是因为数据类型决定了模型选择。
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{score }\OtherTok{\textless{}{-}} \DecValTok{90}    \CommentTok{\# 变量：可修改}
-\NormalTok{score }\OtherTok{\textless{}{-}} \DecValTok{95}
-\NormalTok{PI }\OtherTok{\textless{}{-}} \FloatTok{3.14159}  \CommentTok{\# 常量：不应修改}
+\CommentTok{\# 变量与常量}
+\NormalTok{temperature }\OtherTok{\textless{}{-}} \FloatTok{25.5}        \CommentTok{\# 数值型变量}
+\NormalTok{species\_count }\OtherTok{\textless{}{-}} \DecValTok{100}\DataTypeTok{L}      \CommentTok{\# 整型变量}
+\NormalTok{species\_name }\OtherTok{\textless{}{-}} \StringTok{"Quercus"}  \CommentTok{\# 字符型变量}
+\NormalTok{is\_alive }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}           \CommentTok{\# 逻辑型变量}
+\NormalTok{CARBON\_FACTOR }\OtherTok{\textless{}{-}} \FloatTok{0.5}       \CommentTok{\# 常量，命名大写}
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{ux57faux672cux6570ux636eux7c7bux578b}{%
-\subsubsection{基本数据类型}\label{ux57faux672cux6570ux636eux7c7bux578b}}
+\hypertarget{ux8fd0ux7b97ux7b26ux4e0eux96c6ux5408ux6570ux636eux7c7bux578b}{%
+\subsubsection{运算符与集合数据类型}\label{ux8fd0ux7b97ux7b26ux4e0eux96c6ux5408ux6570ux636eux7c7bux578b}}
 
-数据类型的正确理解和使用是生态学数据分析的基石，它直接影响分析的准确性、效率和可解释性。在生态学研究中，不同类型的数据对应着不同的统计方法和生态学意义，混淆数据类型可能导致严重的科学错误。比如，物种名称是分类数据（字符型），应该使用频数统计和卡方检验；个体数量是计数数据（整数型），适合使用泊松回归或负二项回归；环境温度是连续数据（数值型），可以使用相关分析和回归模型；而存在/缺失数据（逻辑型）则需要使用二元响应模型。
+R的算术运算符（\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}, \texttt{\^{}}）用于生物量估算等计算；比较运算符（\texttt{\textgreater{}}, \texttt{\textless{}}, \texttt{==}）用于筛选特定条件的观测；逻辑运算符（\texttt{\&}, \texttt{\textbar{}}, \texttt{!}）用于组合多个条件。集合数据类型方面，向量存储同类型序列（连续温度读数），数据框存储表格数据（样地调查表），列表容纳异构嵌套结构。正确的数据类型选择是高效分析的基础。
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 数字类型}
-\NormalTok{temperature }\OtherTok{\textless{}{-}} \FloatTok{25.5}
-\NormalTok{count }\OtherTok{\textless{}{-}} \DecValTok{100}\DataTypeTok{L}
+\hypertarget{ux63a7ux5236ux7ed3ux6784}{%
+\subsubsection{控制结构}\label{ux63a7ux5236ux7ed3ux6784}}
 
-\CommentTok{\# 逻辑类型}
-\NormalTok{is\_raining }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
-\NormalTok{is\_sunny }\OtherTok{\textless{}{-}} \ConstantTok{FALSE}
-
-\CommentTok{\# 字符类型}
-\NormalTok{species\_name }\OtherTok{\textless{}{-}} \StringTok{"Quercus acutissima"}
-\NormalTok{habitat }\OtherTok{\textless{}{-}} \StringTok{"deciduous forest"}
-
-\CommentTok{\# 空值}
-\NormalTok{missing\_data }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
-\end{Highlighting}
-\end{Shaded}
-
-数据类型的选择决定了可用的操作和统计方法，混淆它们会导致严重错误（如对物种名称求算术平均，或对计数数据使用线性回归）。在AI协作时，明确告知LLM数据类型（``温度是连续变量，物种丰富度是计数变量''），LLM就能推荐正确的统计方法（如用泊松回归而非普通线性回归）。
-
-\hypertarget{ux8fd0ux7b97ux7b26}{%
-\subsubsection{运算符}\label{ux8fd0ux7b97ux7b26}}
-
-运算符是编程语言中执行基本操作的核心元素，它们将简单的数据值组合成复杂的计算表达式。在生态学数据分析中，运算符的正确使用直接关系到分析结果的准确性和科学性。运算符可以分为几个主要类别：算术运算符（+、-、*、/、\^{}）用于数值计算，如生物量估算、种群密度计算；比较运算符（\textgreater、\textless、==、!=）用于条件判断，如筛选特定大小的树木或特定温度范围的数据；逻辑运算符（\&、\textbar、!）用于组合多个条件，如同时满足温度和湿度要求的生态位分析。
+条件语句\texttt{if/else}根据逻辑条件选择执行路径。循环\texttt{for/while}处理重复操作，但R中向量化操作（如\texttt{mean(temperature)}）通常比显式循环更快且更简洁，因为它利用底层C/Fortran实现。
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# 先定义示例数据}
-\NormalTok{dbh }\OtherTok{\textless{}{-}} \FloatTok{25.3} \CommentTok{\# 胸径}
-\NormalTok{height }\OtherTok{\textless{}{-}} \FloatTok{18.2} \CommentTok{\# 树高}
-\NormalTok{species1 }\OtherTok{\textless{}{-}} \StringTok{"Quercus"}
-\NormalTok{species2 }\OtherTok{\textless{}{-}} \StringTok{"Pinus"}
-\NormalTok{temperature }\OtherTok{\textless{}{-}} \DecValTok{20}
-\NormalTok{rainfall }\OtherTok{\textless{}{-}} \DecValTok{1200}
-\NormalTok{abundance }\OtherTok{\textless{}{-}} \DecValTok{5}
-\NormalTok{distribution\_area }\OtherTok{\textless{}{-}} \DecValTok{80}
-\NormalTok{species\_list }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Quercus"}\NormalTok{, }\StringTok{"Pinus"}\NormalTok{, }\StringTok{"Acer"}\NormalTok{, }\StringTok{"Betula"}\NormalTok{, }\StringTok{"Fagus"}\NormalTok{)}
-
-\CommentTok{\# 算术运算符}
-\NormalTok{biomass }\OtherTok{\textless{}{-}}\NormalTok{ dbh}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ height }\SpecialCharTok{*} \FloatTok{0.6} \CommentTok{\# 幂运算和乘法}
-
-\CommentTok{\# 比较运算符}
-\NormalTok{is\_large\_tree }\OtherTok{\textless{}{-}}\NormalTok{ dbh }\SpecialCharTok{\textgreater{}} \DecValTok{30} \CommentTok{\# 大于比较}
-\NormalTok{is\_same\_species }\OtherTok{\textless{}{-}}\NormalTok{ species1 }\SpecialCharTok{==}\NormalTok{ species2 }\CommentTok{\# 相等比较}
-
-\CommentTok{\# 逻辑运算符}
-\NormalTok{suitable\_habitat }\OtherTok{\textless{}{-}}\NormalTok{ (temperature }\SpecialCharTok{\textgreater{}} \DecValTok{15}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ (rainfall }\SpecialCharTok{\textgreater{}} \DecValTok{1000}\NormalTok{) }\CommentTok{\# 与运算}
-\NormalTok{rare\_species }\OtherTok{\textless{}{-}}\NormalTok{ (abundance }\SpecialCharTok{\textless{}} \DecValTok{10}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (distribution\_area }\SpecialCharTok{\textless{}} \DecValTok{100}\NormalTok{) }\CommentTok{\# 或运算}
-
-\CommentTok{\# 赋值运算符}
-\NormalTok{species\_count }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(}\FunctionTok{unique}\NormalTok{(species\_list)) }\CommentTok{\# 常规赋值}
-\end{Highlighting}
-\end{Shaded}
-
-运算符的优先级和结合性规则决定了复杂表达式的计算顺序，理解这些规则对于编写正确的代码至关重要。比如在表达式\texttt{a\ +\ b\ *\ c}中，乘法优先级高于加法，会先计算\texttt{b\ *\ c}再与\texttt{a}相加。如果不理解优先级，可能导致计算结果错误。在生态学建模中，这种精确性尤为重要，错误的运算符使用可能导致模型偏差或生态学意义的误解。
-
-在AI协作环境中，明确的运算符使用能够显著提高与LLM的沟通效率。当向AI描述分析需求时，使用正确的运算符术语（如''使用逻辑与运算符组合温度和降水条件''）比模糊的描述（如''同时考虑温度和降水''）能生成更准确的代码。运算符还是连接数据与算法的桥梁，它们将原始生态数据转化为有意义的生态指标，是构建科学分析流程的基础构件。掌握运算符的使用不仅是一项编程技能，更是生态学研究者表达分析逻辑的重要工具。
-
-\hypertarget{ux96c6ux5408ux6570ux636eux7c7bux578b}{%
-\subsubsection{集合数据类型}\label{ux96c6ux5408ux6570ux636eux7c7bux578b}}
-
-集合数据类型的正确选择是生态学数据分析效率和质量的关键，它体现了对数据结构复杂性和分析需求的深刻理解。与基本数据类型（如数值、字符、逻辑值）处理单个数据元素不同，集合数据类型用于组织和存储多个相关数据，每种类型都有其独特的结构特性和适用场景。在生态学研究中，这种区分尤为重要：向量适合存储同类型的观测序列（如连续的温度读数），列表能够容纳复杂的嵌套结构（如包含样地信息、物种组成、环境因子的综合数据），而数据框则专门为表格型数据设计（如样地调查表）。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 向量 {-} 同类型元素的集合}
-\NormalTok{temperatures }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{23}\NormalTok{)}
-\NormalTok{species }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Oak"}\NormalTok{, }\StringTok{"Pine"}\NormalTok{, }\StringTok{"Maple"}\NormalTok{, }\StringTok{"Birch"}\NormalTok{)}
-
-\CommentTok{\# 列表 {-} 可以包含不同类型的元素}
-\NormalTok{forest\_data }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(}
-  \AttributeTok{name =} \StringTok{"Tianmu Mountain Forest"}\NormalTok{,}
-  \AttributeTok{area =} \DecValTok{428}\NormalTok{,}
-  \AttributeTok{dominant\_species =} \FunctionTok{c}\NormalTok{(}\StringTok{"Cyclobalanopsis"}\NormalTok{, }\StringTok{"Castanopsis"}\NormalTok{),}
-  \AttributeTok{elevation\_range =} \FunctionTok{c}\NormalTok{(}\DecValTok{300}\NormalTok{, }\DecValTok{1500}\NormalTok{)}
-\NormalTok{)}
-
-\CommentTok{\# 数据框 {-} 表格形式的数据}
-\NormalTok{forest\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
-  \AttributeTok{plot\_id =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,}
-  \AttributeTok{species =} \FunctionTok{c}\NormalTok{(}\StringTok{"Quercus"}\NormalTok{, }\StringTok{"Pinus"}\NormalTok{, }\StringTok{"Acer"}\NormalTok{, }\StringTok{"Betula"}\NormalTok{, }\StringTok{"Fagus"}\NormalTok{),}
-  \AttributeTok{dbh =} \FunctionTok{c}\NormalTok{(}\FloatTok{25.3}\NormalTok{, }\FloatTok{18.7}\NormalTok{, }\FloatTok{12.4}\NormalTok{, }\FloatTok{15.8}\NormalTok{, }\FloatTok{22.1}\NormalTok{),}
-  \AttributeTok{height =} \FunctionTok{c}\NormalTok{(}\FloatTok{18.2}\NormalTok{, }\FloatTok{15.6}\NormalTok{, }\FloatTok{10.3}\NormalTok{, }\FloatTok{12.7}\NormalTok{, }\FloatTok{16.9}\NormalTok{)}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-向量适合同类型序列数据，列表容纳复杂的异构嵌套结构，数据框专为表格型数据设计。在生态学中：用向量存储物种多样性序列，用列表组织不同样地的监测数据，用数据框管理样地调查表，后者则可以直接对接统计函数和机器学习算法。
-
-\hypertarget{ux5206ux652fux4e0eux5faaux73af}{%
-\subsubsection{分支与循环}\label{ux5206ux652fux4e0eux5faaux73af}}
-
-分支与循环是构建复杂生态学数据分析逻辑的核心工具，它们将静态的数据处理转化为动态的、智能的分析流程。在生态学研究中，自然系统的复杂性和不确定性要求分析程序能够根据数据特征自动调整处理策略，这正是分支结构的价值所在。比如，在分析物种分布数据时，可能需要根据数据质量（完整性、准确性）选择不同的预处理方法；在处理环境梯度数据时，需要根据变量类型（连续型、分类型）应用不同的统计模型。这种条件判断能力使得分析程序能够适应真实世界的复杂性，而不是僵化地套用固定流程。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 条件判断 {-} 根据条件选择不同路径}
-\NormalTok{classify\_tree\_size }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dbh) \{}
-  \ControlFlowTok{if}\NormalTok{ (dbh }\SpecialCharTok{\textless{}} \DecValTok{10}\NormalTok{) \{}
-    \FunctionTok{return}\NormalTok{(}\StringTok{"sapling"}\NormalTok{)}
-\NormalTok{  \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (dbh }\SpecialCharTok{\textless{}} \DecValTok{30}\NormalTok{) \{}
-    \FunctionTok{return}\NormalTok{(}\StringTok{"medium tree"}\NormalTok{)}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \FunctionTok{return}\NormalTok{(}\StringTok{"large tree"}\NormalTok{)}
-\NormalTok{  \}}
-\NormalTok{\}}
-
-\CommentTok{\# 循环 {-} 重复执行操作}
-\CommentTok{\# 计算每个样地的平均胸径}
-\NormalTok{plot\_dbh }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{15.3}\NormalTok{, }\FloatTok{22.7}\NormalTok{, }\FloatTok{18.4}\NormalTok{, }\FloatTok{25.1}\NormalTok{, }\FloatTok{12.9}\NormalTok{)}
-\NormalTok{average\_dbh }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(}\FunctionTok{length}\NormalTok{(plot\_dbh))}
-
-\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(plot\_dbh)) \{}
-\NormalTok{  average\_dbh[i] }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(plot\_dbh[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{i])}
-\NormalTok{\}}
-
-\CommentTok{\# 更R风格的方式 {-} 使用向量化操作}
-\NormalTok{average\_dbh }\OtherTok{\textless{}{-}} \FunctionTok{cumsum}\NormalTok{(plot\_dbh) }\SpecialCharTok{/} \FunctionTok{seq\_along}\NormalTok{(plot\_dbh)}
-\end{Highlighting}
-\end{Shaded}
-
-循环结构自动化处理生态学中大量的重复性操作，对数百个样地执行相同计算。在R语言中，向量化操作（如\texttt{mean(temperature)}）通常比显式循环更快且更简洁，因为它利用底层C/Fortran实现。但向量化也有局限：要求数据同构、调试困难、可能消耗大量内存。对于超大数据集，逐块循环处理反而更稳妥。理解两者的取舍，有助于在具体分析中选择正确的策略。
-
-\hypertarget{ux8868ux8fbeux5f0fux4e0eux8bedux53e5}{%
-\subsubsection{表达式与语句}\label{ux8868ux8fbeux5f0fux4e0eux8bedux53e5}}
-
-表达式与语句的区分体现了编程中的两种基本思维模式：计算思维和流程控制思维。表达式（Expression）是能够产生值的代码片段，它们关注''计算什么''，通过运算符和函数调用来完成具体的数值计算或逻辑判断。比如\texttt{dbh\^{}2\ *\ height\ *\ 0.6}是一个表达式，它计算树木的生物量；\texttt{temperature\ \textgreater{}\ 25}也是一个表达式，它产生逻辑值TRUE或FALSE。表达式可以嵌套组合，形成复杂的计算逻辑，但最终都会归结为一个具体的值。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 表达式 {-} 产生值的代码片段}
-\NormalTok{total\_trees }\OtherTok{\textless{}{-}} \DecValTok{100} \SpecialCharTok{+} \DecValTok{50} \CommentTok{\# 表达式，产生值150}
-\NormalTok{mean\_dbh }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{35}\NormalTok{)) }\CommentTok{\# 表达式，产生平均值}
-
-\CommentTok{\# 语句 {-} 执行动作的代码单元}
-\ControlFlowTok{if}\NormalTok{ (temperature }\SpecialCharTok{\textgreater{}} \DecValTok{25}\NormalTok{) \{}
-  \FunctionTok{cat}\NormalTok{(}\StringTok{"温度过高，需要调整实验条件}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{) }\CommentTok{\# 语句}
-\NormalTok{\}}
-
-\CommentTok{\# 定义示例数据和函数}
-\NormalTok{plots }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"plot1"}\NormalTok{, }\StringTok{"plot2"}\NormalTok{, }\StringTok{"plot3"}\NormalTok{)}
-\NormalTok{analyze\_plot }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(plot) \{}
-  \FunctionTok{cat}\NormalTok{(}\StringTok{"分析样地:"}\NormalTok{, plot, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{\}}
-
-\ControlFlowTok{for}\NormalTok{ (plot }\ControlFlowTok{in}\NormalTok{ plots) \{}
-  \FunctionTok{analyze\_plot}\NormalTok{(plot) }\CommentTok{\# 语句}
-\NormalTok{\}}
+\CommentTok{\# 条件判断}
+\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{mean}\NormalTok{(temperature) }\SpecialCharTok{\textgreater{}} \DecValTok{20}\NormalTok{) }\FunctionTok{cat}\NormalTok{(}\StringTok{"温暖环境}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{) }\ControlFlowTok{else} \FunctionTok{cat}\NormalTok{(}\StringTok{"凉爽环境}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## 分析样地: plot1 
-## 分析样地: plot2 
-## 分析样地: plot3
+## 温暖环境
 \end{verbatim}
-
-语句执行动作（分支、循环、赋值、函数调用），控制程序流程。在生态学中，表达式用于构建统计模型和计算生态指标（如多样性指数、回归分析），语句则控制分析流程（根据数据质量选择预处理方法，对多个样地执行相同操作）。在AI协作时，明确区分这两种需求有助于生成更精确的代码。
-
-\hypertarget{ux51fdux6570ux8fc7ux7a0b}{%
-\subsubsection{函数/过程}\label{ux51fdux6570ux8fc7ux7a0b}}
-
-函数将复杂操作封装为可重用的模块。在生态学中：一个\texttt{calculate\_diversity}函数可在多个项目中复用，修改时只需改函数定义。将分析流程分解为独立函数（数据读取、清洗、分析、可视化），使代码结构清晰且便于调试。
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# 定义计算物种多样性的函数}
-\NormalTok{calculate\_diversity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(species\_list) \{}
-\NormalTok{  species\_counts }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(species\_list)}
-\NormalTok{  proportions }\OtherTok{\textless{}{-}}\NormalTok{ species\_counts }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(species\_counts)}
-\NormalTok{  shannon }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(proportions }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(proportions))}
-  \FunctionTok{return}\NormalTok{(shannon)}
-\NormalTok{\}}
-
-\CommentTok{\# 定义数据清洗函数}
-\NormalTok{clean\_forest\_data }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(raw\_data) \{}
-\NormalTok{  cleaned }\OtherTok{\textless{}{-}}\NormalTok{ raw\_data }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(dbh) }\SpecialCharTok{\&}\NormalTok{ dbh }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
-    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{species =} \FunctionTok{str\_trim}\NormalTok{(}\FunctionTok{tolower}\NormalTok{(species)))}
-  \FunctionTok{return}\NormalTok{(cleaned)}
-\NormalTok{\}}
-
-\CommentTok{\# 创建示例数据}
-\NormalTok{raw\_forest\_data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
-  \AttributeTok{plot\_id =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,}
-  \AttributeTok{species =} \FunctionTok{c}\NormalTok{(}\StringTok{" Oak "}\NormalTok{, }\StringTok{"Pine "}\NormalTok{, }\StringTok{" Maple"}\NormalTok{, }\StringTok{"Oak"}\NormalTok{, }\StringTok{" Birch "}\NormalTok{),}
-  \AttributeTok{dbh =} \FunctionTok{c}\NormalTok{(}\FloatTok{25.3}\NormalTok{, }\FloatTok{18.7}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\FloatTok{15.8}\NormalTok{, }\FloatTok{22.1}\NormalTok{),}
-  \AttributeTok{height =} \FunctionTok{c}\NormalTok{(}\FloatTok{18.2}\NormalTok{, }\FloatTok{15.6}\NormalTok{, }\FloatTok{10.3}\NormalTok{, }\FloatTok{12.7}\NormalTok{, }\FloatTok{16.9}\NormalTok{)}
-\NormalTok{)}
-
-\CommentTok{\# 使用函数}
-\NormalTok{sample\_species }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Oak"}\NormalTok{, }\StringTok{"Pine"}\NormalTok{, }\StringTok{"Oak"}\NormalTok{, }\StringTok{"Maple"}\NormalTok{)}
-\NormalTok{diversity\_index }\OtherTok{\textless{}{-}} \FunctionTok{calculate\_diversity}\NormalTok{(sample\_species)}
-\NormalTok{cleaned\_data }\OtherTok{\textless{}{-}} \FunctionTok{clean\_forest\_data}\NormalTok{(raw\_forest\_data)}
+\CommentTok{\# 向量化操作优于循环}
+\NormalTok{heights\_cm }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{155}\NormalTok{, }\DecValTok{172}\NormalTok{, }\DecValTok{168}\NormalTok{, }\DecValTok{181}\NormalTok{, }\DecValTok{159}\NormalTok{)}
+\NormalTok{heights\_m }\OtherTok{\textless{}{-}}\NormalTok{ heights\_cm }\SpecialCharTok{/} \DecValTok{100}  \CommentTok{\# 向量化：一行完成}
 \end{Highlighting}
 \end{Shaded}
 
-统一的函数接口促进团队协作中的代码标准化。在AI协作中，函数化架构帮助LLM生成模块化代码，每个函数独立可测试，而非产出单一冗长脚本。
+\hypertarget{ux51fdux6570ux9519ux8befux5904ux7406ux4e0eux5305ux7ba1ux7406}{%
+\subsubsection{函数、错误处理与包管理}\label{ux51fdux6570ux9519ux8befux5904ux7406ux4e0eux5305ux7ba1ux7406}}
 
-\hypertarget{ux4f5cux7528ux57df}{%
-\subsubsection{作用域}\label{ux4f5cux7528ux57df}}
-
-作用域规则定义了变量的可见范围，是构建复杂、安全程序的基础机制。在生态学数据分析中，正确理解作用域具有多重重要意义：首先，作用域机制有效避免了命名冲突，不同的函数或模块可以使用相同的变量名而不会相互干扰。例如，在分析多个样地数据时，每个样地的分析函数都可以使用\texttt{species\_count}作为局部变量，而不会影响其他样地的计算结果。这种隔离性大大简化了变量命名，降低了代码复杂度。
+函数封装可复用的分析逻辑，避免代码重复。错误处理用\texttt{tryCatch()}捕获异常，确保批处理不因个别样方问题而整体失败。R的生态学包生态丰富：\texttt{vegan}处理多样性分析，\texttt{lme4}支持混合效应模型，\texttt{ggplot2}实现数据可视化。使用社区验证的包既保证准确性又节省开发时间。
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# 全局变量}
-\NormalTok{global\_species\_count }\OtherTok{\textless{}{-}} \DecValTok{0}
-
-\NormalTok{analyze\_forest }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(plot\_data) \{}
-  \CommentTok{\# 局部变量 {-} 只在函数内部可见}
-\NormalTok{  local\_species }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(plot\_data}\SpecialCharTok{$}\NormalTok{species)}
-\NormalTok{  local\_count }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(local\_species)}
-
-  \CommentTok{\# 可以访问全局变量}
-\NormalTok{  global\_species\_count }\OtherTok{\textless{}\textless{}{-}}\NormalTok{ global\_species\_count }\SpecialCharTok{+}\NormalTok{ local\_count}
-
-  \FunctionTok{return}\NormalTok{(local\_count)}
+\CommentTok{\# 函数定义与错误处理}
+\NormalTok{calc\_biomass }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dbh, height, }\AttributeTok{cf =} \FloatTok{0.5}\NormalTok{) \{}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{any}\NormalTok{(dbh }\SpecialCharTok{\textless{}=} \DecValTok{0}\NormalTok{)) }\FunctionTok{stop}\NormalTok{(}\StringTok{"胸径必须为正数"}\NormalTok{)}
+\NormalTok{  cf }\SpecialCharTok{*}\NormalTok{ dbh}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{*}\NormalTok{ height}
 \NormalTok{\}}
-
-\CommentTok{\# 在函数外部无法访问局部变量}
-\CommentTok{\# print(local\_species)  \# 会报错}
-
-\CommentTok{\# 但可以访问全局变量}
-\FunctionTok{print}\NormalTok{(global\_species\_count)}
+\NormalTok{result }\OtherTok{\textless{}{-}} \FunctionTok{tryCatch}\NormalTok{(}\FunctionTok{calc\_biomass}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{25}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{30}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{, }\DecValTok{12}\NormalTok{, }\DecValTok{18}\NormalTok{)),}
+                   \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) }\FunctionTok{cat}\NormalTok{(}\StringTok{"错误:"}\NormalTok{, e}\SpecialCharTok{$}\NormalTok{message, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0
+## 错误: 胸径必须为正数
 \end{verbatim}
-
-其次，作用域提供数据访问控制，敏感数据（如物种分布坐标）可封装在局部作用域内防意外修改。第三，局部变量在函数结束时自动释放，优化了内存管理。理解作用域有助于避免全局变量污染，在AI协作中也能引导LLM生成更安全的代码。
-
-\hypertarget{ux9519ux8befux4e0eux5f02ux5e38ux5904ux7406}{%
-\subsubsection{错误与异常处理}\label{ux9519ux8befux4e0eux5f02ux5e38ux5904ux7406}}
-
-错误与异常处理是构建健壮分析系统的关键机制，它确保程序在遇到意外情况时能够优雅地处理而不是崩溃。在生态学数据分析中，异常处理尤为重要，因为野外数据往往存在各种质量问题：文件缺失、格式错误、数据异常等。生态学研究的数据来源多样，包括野外调查记录、传感器监测、遥感影像等，这些数据在收集、传输和处理过程中容易出现各种问题。例如，野外调查可能因天气原因中断导致数据不完整，传感器可能因故障产生异常值，不同数据源可能使用不同的格式标准。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 基本的错误处理}
-\NormalTok{safe\_division }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(numerator, denominator) \{}
-  \ControlFlowTok{if}\NormalTok{ (denominator }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) \{}
-    \FunctionTok{stop}\NormalTok{(}\StringTok{"分母不能为零"}\NormalTok{)}
-\NormalTok{  \}}
-  \FunctionTok{return}\NormalTok{(numerator }\SpecialCharTok{/}\NormalTok{ denominator)}
-\NormalTok{\}}
-
-\CommentTok{\# 使用tryCatch进行异常处理}
-\NormalTok{analyze\_with\_safety }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data\_file) \{}
-\NormalTok{  result }\OtherTok{\textless{}{-}} \FunctionTok{tryCatch}\NormalTok{(}
-\NormalTok{    \{}
-      \CommentTok{\# 尝试执行可能出错的操作}
-\NormalTok{      data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(data\_file)}
-\NormalTok{      diversity }\OtherTok{\textless{}{-}} \FunctionTok{calculate\_diversity}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{species)}
-      \FunctionTok{return}\NormalTok{(diversity)}
-\NormalTok{    \},}
-    \AttributeTok{error =} \ControlFlowTok{function}\NormalTok{(e) \{}
-      \CommentTok{\# 错误处理}
-      \FunctionTok{cat}\NormalTok{(}\StringTok{"分析失败:"}\NormalTok{, e}\SpecialCharTok{$}\NormalTok{message, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-      \FunctionTok{return}\NormalTok{(}\ConstantTok{NA}\NormalTok{)}
-\NormalTok{    \},}
-    \AttributeTok{warning =} \ControlFlowTok{function}\NormalTok{(w) \{}
-      \CommentTok{\# 警告处理}
-      \FunctionTok{cat}\NormalTok{(}\StringTok{"警告:"}\NormalTok{, w}\SpecialCharTok{$}\NormalTok{message, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-      \CommentTok{\# 使用示例数据继续执行}
-\NormalTok{      sample\_data }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Oak"}\NormalTok{, }\StringTok{"Pine"}\NormalTok{, }\StringTok{"Maple"}\NormalTok{)}
-      \FunctionTok{return}\NormalTok{(}\FunctionTok{calculate\_diversity}\NormalTok{(sample\_data))}
-\NormalTok{    \}}
-\NormalTok{  )}
-
-  \FunctionTok{return}\NormalTok{(result)}
-\NormalTok{\}}
-
-\CommentTok{\# 使用示例}
-\NormalTok{try\_result }\OtherTok{\textless{}{-}} \FunctionTok{analyze\_with\_safety}\NormalTok{(}\StringTok{"missing\_file.csv"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 警告: cannot open file 'missing_file.csv': No such file or directory
-\end{verbatim}
-
-错误处理确保程序在遇到意外时优雅降级而非崩溃。在生态学中尤为重要，野外数据常有缺失、格式错误和异常值。通过\texttt{tryCatch}，可以捕获错误并继续处理其他样方，而非让整个批处理作业失败。在AI协作中，LLM生成的代码常忽略边界情况，审查时需重点关注错误处理机制的完整性。
-
-\begin{quote}
-\textbf{🤖 尝试与AI协作}
-
-让AI生成一段R代码，计算林小雨天童山样地中每个树种的平均胸径。然后：
-1. 故意修改数据（删除某个物种的所有记录、引入一个极端胸径值），看AI生成的代码如何处理这些边界情况
-2. 让AI为代码添加错误处理和输入验证
-3. 询问AI：这段代码在数据包含100万个样本时的性能瓶颈在哪里？
-
-\textbf{批判性评估}：AI是否主动考虑了生态数据的典型问题（如物种名的前后空格、NA值的不同表示方式）？检查它推荐的性能优化是否在R语言中真正有效，有时AI会推荐在其他语言中有效但在R中无效的优化策略。
-\end{quote}
-
-\hypertarget{ux6a21ux5757ux5316ux4e0eux5305ux7ba1ux7406}{%
-\subsubsection{模块化与包管理}\label{ux6a21ux5757ux5316ux4e0eux5305ux7ba1ux7406}}
-
-模块化与包管理是构建可维护、可扩展分析系统的核心实践。模块化将复杂的分析流程分解为职责单一、接口清晰的代码单元，这种分解思维在生态学数据分析中具有深远的意义。从技术层面看，模块化显著提高了代码的可读性、可测试性和可维护性。一个典型的生态数据分析项目可能包含数据收集、清洗、统计分析、可视化等多个环节，将这些环节模块化后，每个模块都可以独立开发、测试和优化。例如，数据清洗模块可以专注于处理缺失值和异常值，统计分析模块可以专注于算法实现，可视化模块可以专注于图表设计。这种职责分离使得代码结构更加清晰，便于理解和维护。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 模块化代码组织}
-\CommentTok{\# data\_processing.R {-} 数据处理模块}
-\NormalTok{clean\_data }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(raw\_data) \{}
-  \CommentTok{\# 数据清洗逻辑}
-  \FunctionTok{return}\NormalTok{(raw\_data)}
-\NormalTok{\}}
-\NormalTok{normalize\_data }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data) \{}
-  \CommentTok{\# 数据标准化逻辑}
-  \FunctionTok{return}\NormalTok{(data)}
-\NormalTok{\}}
-
-\CommentTok{\# analysis.R {-} 分析模块}
-\NormalTok{calculate\_diversity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(species) \{}
-  \CommentTok{\# 多样性计算}
-  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(species) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) \{}
-    \FunctionTok{return}\NormalTok{(}\DecValTok{0}\NormalTok{)}
-\NormalTok{  \}}
-\NormalTok{  species\_counts }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(species)}
-\NormalTok{  proportions }\OtherTok{\textless{}{-}}\NormalTok{ species\_counts }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(species\_counts)}
-\NormalTok{  shannon }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(proportions }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(proportions))}
-  \FunctionTok{return}\NormalTok{(shannon)}
-\NormalTok{\}}
-\NormalTok{perform\_stat\_test }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data) \{}
-  \CommentTok{\# 统计检验}
-  \FunctionTok{return}\NormalTok{(}\FloatTok{0.05}\NormalTok{)}
-\NormalTok{\}}
-
-\CommentTok{\# visualization.R {-} 可视化模块}
-\NormalTok{create\_plots }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(results) \{}
-  \CommentTok{\# 图表生成}
-  \FunctionTok{return}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{\}}
-
-\CommentTok{\# 主程序 {-} 协调各个模块}
-\CommentTok{\# source("data\_processing.R")  \# 在实际项目中加载模块文件}
-\CommentTok{\# source("analysis.R")}
-\CommentTok{\# source("visualization.R")}
-
-\CommentTok{\# 使用包管理}
-\CommentTok{\# (ggplot2和vegan已在章节顶部加载)}
-\end{Highlighting}
-\end{Shaded}
-
-包管理利用社区资源避免重复造轮子。生态学R包生态丰富：vegan处理多样性分析，spatstat实现空间点模式分析，lme4支持混合效应模型。使用这些经过社区验证的包既保证准确性又节省开发时间。模块化还促进分析方法的标准化，当整个领域使用相同的包时，不同研究的结果具有更好的可比性。在AI协作中，明确的模块化架构能帮助LLM生成更结构化的代码。
-
-\hypertarget{ux9762ux5411ux5bf9ux8c61ux57faux7840}{%
-\subsubsection{面向对象基础}\label{ux9762ux5411ux5bf9ux8c61ux57faux7840}}
-
-面向对象编程将数据和行为捆绑为''对象''，与生态学研究中的实体映射非常自然：样地、物种、群落都可以建模为对象。封装性让对象内部状态免受意外修改，继承性允许建立\texttt{Organism→Plant→Quercus}的分类层次来复用代码，多态性则让同一操作（如\texttt{calculate\_productivity()}）在不同生态系统类型上产生各自合理的结果。R语言通过S3、S4和R6系统支持OOP，许多生态学包（如spatstat、lme4）采用了面向对象设计。在AI协作中，用面向对象术语描述需求能帮助LLM生成更结构化的代码。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# S3系统示例：定义物种类和方法}
-\NormalTok{species }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(name, abundance, habitat) \{}
-  \FunctionTok{structure}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{name =}\NormalTok{ name, }\AttributeTok{abundance =}\NormalTok{ abundance, }\AttributeTok{habitat =}\NormalTok{ habitat),}
-            \AttributeTok{class =} \StringTok{"species"}\NormalTok{)}
-\NormalTok{\}}
-\NormalTok{print.species }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
-  \FunctionTok{cat}\NormalTok{(}\StringTok{"物种:"}\NormalTok{, x}\SpecialCharTok{$}\NormalTok{name, }\StringTok{"多度:"}\NormalTok{, x}\SpecialCharTok{$}\NormalTok{abundance, }\StringTok{"生境:"}\NormalTok{, x}\SpecialCharTok{$}\NormalTok{habitat, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{\}}
-\NormalTok{oak }\OtherTok{\textless{}{-}} \FunctionTok{species}\NormalTok{(}\StringTok{"Quercus"}\NormalTok{, }\DecValTok{150}\NormalTok{, }\StringTok{"deciduous\_forest"}\NormalTok{)}
-\FunctionTok{print}\NormalTok{(oak)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 物种: Quercus 多度: 150 生境: deciduous_forest
-\end{verbatim}
-
-\hypertarget{ux5185ux5b58ux7ba1ux7406ux57faux7840}{%
-\subsubsection{内存管理基础}\label{ux5185ux5b58ux7ba1ux7406ux57faux7840}}
-
-内存管理是处理大规模生态数据集时必须关注的关键问题。虽然R具有自动垃圾回收机制，但不合理的内存使用仍然会导致程序崩溃或性能下降。理解内存管理具有多重重要意义：首先，合理的内存使用可以显著优化程序性能。在生态数据分析中，避免不必要的数据复制和内存分配是提高效率的关键。例如，在处理大型物种分布矩阵时，使用原地修改而不是创建副本可以节省大量内存和时间。R的向量化操作虽然高效，但如果不注意内存使用，也可能导致意外的内存开销。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 监控内存使用}
-\NormalTok{memory\_usage }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
-\NormalTok{  current\_objects }\OtherTok{\textless{}{-}} \FunctionTok{ls}\NormalTok{(}\AttributeTok{envir =}\NormalTok{ .GlobalEnv)}
-\NormalTok{  memory\_size }\OtherTok{\textless{}{-}} \FunctionTok{format}\NormalTok{(}\FunctionTok{object.size}\NormalTok{(}\AttributeTok{x =}\NormalTok{ current\_objects), }\AttributeTok{units =} \StringTok{"MB"}\NormalTok{)}
-  \FunctionTok{cat}\NormalTok{(}\StringTok{"当前内存使用:"}\NormalTok{, memory\_size, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{\}}
-
-\CommentTok{\# 大数据处理策略}
-\CommentTok{\# 策略1: 分批处理}
-\NormalTok{process\_large\_data }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data\_file, }\AttributeTok{chunk\_size =} \DecValTok{10000}\NormalTok{) \{}
-\NormalTok{  con }\OtherTok{\textless{}{-}} \FunctionTok{file}\NormalTok{(data\_file, }\StringTok{"r"}\NormalTok{)}
-\NormalTok{  results }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{()}
-
-  \ControlFlowTok{while}\NormalTok{ (}\ConstantTok{TRUE}\NormalTok{) \{}
-\NormalTok{    chunk }\OtherTok{\textless{}{-}} \FunctionTok{readLines}\NormalTok{(con, }\AttributeTok{n =}\NormalTok{ chunk\_size)}
-    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(chunk) }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\ControlFlowTok{break}
-
-    \CommentTok{\# 处理当前块 {-} 这里需要实现具体的处理逻辑}
-\NormalTok{    processed\_chunk }\OtherTok{\textless{}{-}}\NormalTok{ chunk  }\CommentTok{\# 占位符，实际应用中需要替换为具体处理逻辑}
-\NormalTok{    results }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(results, }\FunctionTok{list}\NormalTok{(processed\_chunk))}
-
-    \CommentTok{\# 清理内存}
-    \FunctionTok{gc}\NormalTok{()}
-\NormalTok{  \}}
-
-  \FunctionTok{close}\NormalTok{(con)}
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{do.call}\NormalTok{(rbind, results))}
-\NormalTok{\}}
-
-\CommentTok{\# 策略2: 使用高效数据结构}
-\CommentTok{\# 避免不必要的复制}
-\NormalTok{large\_vector }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\FloatTok{1e7} \CommentTok{\# 1000万个元素}
-\CommentTok{\# 不好的做法: 创建多个副本}
-\NormalTok{copy1 }\OtherTok{\textless{}{-}}\NormalTok{ large\_vector}
-\NormalTok{copy2 }\OtherTok{\textless{}{-}}\NormalTok{ large\_vector}
-
-\CommentTok{\# 好的做法: 使用引用或原地修改}
-\NormalTok{large\_vector[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{100} \CommentTok{\# 原地修改}
-\end{Highlighting}
-\end{Shaded}
-
-其次，通过分批处理、流式处理和内存映射技术，可以突破物理内存限制处理超大规模数据（如遥感影像）。第三，在长时间运行的模拟中，预防内存泄漏，理解R的垃圾回收机制，及时释放不再使用的大对象。在AI协作中，LLM生成的代码可能未充分考虑内存效率，你需要审查内存相关的优化。
-
-\hypertarget{ux6d4bux8bd5ux57faux7840}{%
-\subsubsection{测试基础}\label{ux6d4bux8bd5ux57faux7840}}
-
-测试是确保代码质量和分析结果可靠性的关键实践。在生态学研究中，错误的分析代码可能导致严重的科学结论偏差，因此测试尤为重要。生态学数据分析往往涉及复杂的统计模型和算法，任何细微的编程错误都可能放大为显著的科学结论差异。例如，一个错误的多样性指数计算公式可能导致对生态系统健康状况的错误评估，进而影响保护决策的制定。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 单元测试示例}
-\NormalTok{test\_diversity\_calculation }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
-  \CommentTok{\# 测试用例1: 单一物种}
-\NormalTok{  test1 }\OtherTok{\textless{}{-}} \FunctionTok{calculate\_diversity}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"Oak"}\NormalTok{, }\DecValTok{10}\NormalTok{))}
-  \FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{abs}\NormalTok{(test1 }\SpecialCharTok{{-}} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\textless{}} \FloatTok{1e{-}10}\NormalTok{) }\CommentTok{\# 单一物种多样性应为0}
-
-  \CommentTok{\# 测试用例2: 两个物种各占一半}
-\NormalTok{  test2 }\OtherTok{\textless{}{-}} \FunctionTok{calculate\_diversity}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Oak"}\NormalTok{, }\StringTok{"Pine"}\NormalTok{), }\AttributeTok{each =} \DecValTok{5}\NormalTok{))}
-\NormalTok{  expected }\OtherTok{\textless{}{-}} \FunctionTok{log}\NormalTok{(}\DecValTok{2}\NormalTok{) }\CommentTok{\# 两个物种各占一半的理论值}
-  \FunctionTok{stopifnot}\NormalTok{(}\FunctionTok{abs}\NormalTok{(test2 }\SpecialCharTok{{-}}\NormalTok{ expected) }\SpecialCharTok{\textless{}} \FloatTok{1e{-}10}\NormalTok{)}
-
-  \FunctionTok{cat}\NormalTok{(}\StringTok{"所有测试通过!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{\}}
-
-\CommentTok{\# 使用testthat包进行更专业的测试}
-\FunctionTok{library}\NormalTok{(testthat)}
-
-\FunctionTok{test\_that}\NormalTok{(}\StringTok{"多样性计算正确"}\NormalTok{, \{}
-  \CommentTok{\# 测试边界情况}
-  \FunctionTok{expect\_equal}\NormalTok{(}\FunctionTok{calculate\_diversity}\NormalTok{(}\FunctionTok{character}\NormalTok{(}\DecValTok{0}\NormalTok{)), }\DecValTok{0}\NormalTok{) }\CommentTok{\# 空向量}
-  \FunctionTok{expect\_equal}\NormalTok{(}\FunctionTok{calculate\_diversity}\NormalTok{(}\StringTok{"Oak"}\NormalTok{), }\DecValTok{0}\NormalTok{) }\CommentTok{\# 单一物种}
-
-  \CommentTok{\# 测试已知结果}
-\NormalTok{  species }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{)}
-  \FunctionTok{expect\_true}\NormalTok{(}\FunctionTok{calculate\_diversity}\NormalTok{(species) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{)}
-\NormalTok{\})}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Test passed
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 数据验证函数}
-\NormalTok{validate\_forest\_data }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data) \{}
-\NormalTok{  errors }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{()}
-
-  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{any}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{dbh }\SpecialCharTok{\textless{}=} \DecValTok{0}\NormalTok{)) \{}
-\NormalTok{    errors }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(errors, }\StringTok{"存在非正胸径值"}\NormalTok{)}
-\NormalTok{  \}}
-
-  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{any}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{species))) \{}
-\NormalTok{    errors }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(errors, }\StringTok{"存在缺失的物种名称"}\NormalTok{)}
-\NormalTok{  \}}
-
-  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(errors) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
-    \FunctionTok{stop}\NormalTok{(}\FunctionTok{paste}\NormalTok{(errors, }\AttributeTok{collapse =} \StringTok{"; "}\NormalTok{))}
-\NormalTok{  \}}
-
-  \FunctionTok{return}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{)}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-测试的核心价值在于：验证功能正确性（正常、边界、异常情况），防止回归错误（修改不破坏已有功能），以及支持安全重构。在AI协作中，测试能力尤为关键，LLM生成的代码往往缺乏边界情况考虑，你需要用测试来验证其输出。在向LLM描述需求时同时要求生成测试用例，迭代时确保测试通过，这种测试驱动的协作模式能显著提高代码的可靠性。
-
-\hypertarget{ux4ee3ux7801ux98ceux683cux4e0eux89c4ux8303}{%
-\subsubsection{代码风格与规范}\label{ux4ee3ux7801ux98ceux683cux4e0eux89c4ux8303}}
-
-代码风格与规范是编程的''礼仪''，不影响功能，但直接影响可读性和协作效率。使用有意义的变量名（\texttt{species\_richness}而非\texttt{s\_rich}）、一致的缩进、规范的注释格式，让代码像一篇组织良好的论文。使用lintr等工具自动检查风格，能及早暴露潜在逻辑问题。在AI协作中，规范的代码结构降低AI的理解难度，也让人类审查者能专注于逻辑而非格式。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 良好的代码风格示例}
-
-\CommentTok{\# 变量命名 {-} 使用有意义的名称}
-\NormalTok{tree\_diameter }\OtherTok{\textless{}{-}} \FloatTok{25.3} \CommentTok{\# 好的命名}
-\NormalTok{td }\OtherTok{\textless{}{-}} \FloatTok{25.3} \CommentTok{\# 不好的命名}
-
-\CommentTok{\# 函数命名 {-} 使用动词短语}
-\NormalTok{calculate\_tree\_volume }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dbh, height) \{}
-  \CommentTok{\# 函数体}
-\NormalTok{\}}
-
-\NormalTok{get\_tree\_volume }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(dbh, height) \{ }\CommentTok{\# 也可以接受}
-  \CommentTok{\# 函数体}
-\NormalTok{\}}
-
-\CommentTok{\# 代码格式 {-} 一致的缩进和空格}
-\ControlFlowTok{if}\NormalTok{ (dbh }\SpecialCharTok{\textgreater{}} \DecValTok{30}\NormalTok{) \{}
-\NormalTok{  tree\_size }\OtherTok{\textless{}{-}} \StringTok{"large"}
-\NormalTok{\} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (dbh }\SpecialCharTok{\textgreater{}} \DecValTok{10}\NormalTok{) \{}
-\NormalTok{  tree\_size }\OtherTok{\textless{}{-}} \StringTok{"medium"}
-\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
-\NormalTok{  tree\_size }\OtherTok{\textless{}{-}} \StringTok{"small"}
-\NormalTok{\}}
-
-\CommentTok{\# 注释规范}
-\CommentTok{\# 计算Shannon{-}Wiener多样性指数}
-\CommentTok{\# 参数: species\_vector {-} 物种名称向量}
-\CommentTok{\# 返回: 多样性指数值}
-\NormalTok{calculate\_shannon\_diversity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(species\_vector) \{}
-\NormalTok{  species\_counts }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(species\_vector) }\CommentTok{\# 统计每个物种的频数}
-\NormalTok{  proportions }\OtherTok{\textless{}{-}}\NormalTok{ species\_counts }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(species\_counts) }\CommentTok{\# 计算比例}
-  \SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(proportions }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(proportions)) }\CommentTok{\# 计算Shannon指数}
-\NormalTok{\}}
-
-\CommentTok{\# 使用lintr检查代码风格}
-\CommentTok{\# install.packages("lintr")}
-\CommentTok{\# lintr::lint("your\_script.R")}
-\end{Highlighting}
-\end{Shaded}
 
 \hypertarget{ux7b97ux6cd5ux590dux6742ux5ea6}{%
 \subsection{算法复杂度}\label{ux7b97ux6cd5ux590dux6742ux5ea6}}
@@ -1491,6 +1003,11 @@ AI编程助手在生态统计学中的真正价值，远不止于''帮你写代�
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\# 定义待测试的多样性计算函数}
+\NormalTok{calculate\_diversity }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(species\_vec) \{}
+\NormalTok{  prop }\OtherTok{\textless{}{-}} \FunctionTok{table}\NormalTok{(species\_vec) }\SpecialCharTok{/} \FunctionTok{length}\NormalTok{(species\_vec)}
+  \SpecialCharTok{{-}}\FunctionTok{sum}\NormalTok{(prop }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(prop))}
+\NormalTok{\}}
 \CommentTok{\# 创建测试用例验证函数正确性}
 \NormalTok{test\_diversity\_calculation }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
   \CommentTok{\# 测试用例1：单一物种}
@@ -1631,9 +1148,8 @@ AI编程助手在生态统计学中的真正价值，远不止于''帮你写代�
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(ggplot2)}
 \FunctionTok{library}\NormalTok{(showtext)}
-\FunctionTok{library}\NormalTok{(sn)          }\CommentTok{\# 偏正态分布}
 \FunctionTok{showtext\_auto}\NormalTok{()}
-\FunctionTok{library}\NormalTok{(ggpattern)}
+\FunctionTok{library}\NormalTok{(sn)          }\CommentTok{\# 偏正态分布}
 \FunctionTok{library}\NormalTok{(dplyr)}
 \FunctionTok{library}\NormalTok{(patchwork)}
 \FunctionTok{library}\NormalTok{(gridExtra)}
@@ -2157,34 +1673,9 @@ habitat & expert\_prior & likelihood & posterior\\
 ## 微弱支持物种偏好森林的假设
 \end{verbatim}
 
-\textbf{保护优先级评估}
-
-结合多种证据（如栖息地质量、种群趋势、威胁因素）来评估物种的保护优先级。下面的可视化演示了贝叶斯更新在森林健康评估中的应用，展示了如何基于观测到的树木死亡率证据，从初始的专家信念（先验）更新为更准确的森林健康状态评估（后验）。这种动态更新过程体现了贝叶斯方法在生态监测和评估中的核心优势，能够系统地将新证据整合到现有的知识体系中。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/bayesian-update-1} 
-
-}
-
-\caption{贝叶斯更新过程：森林健康评估中先验信念到后验信念的转变。}\label{fig:bayesian-update}
-\end{figure}
-
-\begin{verbatim}
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --  0.8
-\end{verbatim}
-
 \textbf{生态风险评估}
 
 在数据有限的情况下，结合专家判断和有限观测来评估生态风险。上面的可视化使用颜色（绿色/蓝色）和填充纹理（条纹/网格）双重区分先验和后验信念，确保在彩色显示和黑白打印时都能清晰辨识。下面的综合演示展示了贝叶斯方法在生态风险评估和决策分析中的完整应用流程：首先基于历史数据建立初始风险评估（先验），然后结合新的气候异常证据进行贝叶斯更新得到更准确的风险概率（后验），最后基于更新后的风险概率进行成本效益分析，为保护决策提供科学依据。这种将概率更新与决策分析相结合的方法，体现了贝叶斯统计在生态管理实践中的实用价值。
-
-\begin{verbatim}
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --  0.8
-\end{verbatim}
 
 \begin{figure}
 
@@ -2194,83 +1685,6 @@ habitat & expert\_prior & likelihood & posterior\\
 
 \caption{贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策}\label{fig:risk-assessment}
 \end{figure}
-
-\textbf{模型选择与平均}
-
-使用贝叶斯模型平均方法，综合考虑多个竞争模型的预测结果。下面的演示展示了贝叶斯模型比较在生态学中的实际应用：通过比较简化线性模型和复杂季节模型对种群增长数据的拟合效果，使用贝叶斯因子来量化不同模型的证据强度。这种方法不仅考虑模型的拟合优度，还考虑了模型的复杂性，避免了过度拟合问题，为生态学家提供了更可靠的模型选择依据。
-
-\begin{table}[!h]
-\centering
-\caption{\label{tab:bayesian-model-comparison}贝叶斯模型比较结果}
-\centering
-\begin{tabular}[t]{lrr}
-\toprule
-模型 & 模型证据 & 贝叶斯因子\\
-\midrule
-线性模型 & 0 & 1.00\\
-季节模型 & 0 & 13980.76\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-表 \ref{tab:bayesian-model-comparison} 展示了贝叶斯模型比较的结果，包括线性模型和季节模型的模型证据值以及它们之间的贝叶斯因子，为模型选择提供了定量依据。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/model-comparison-1} 
-
-}
-
-\caption{贝叶斯模型比较：线性模型与季节模型对种群增长模式的拟合效果对比。}\label{fig:model-comparison}
-\end{figure}
-
-\textbf{敏感性分析与稳健性检验}
-
-贝叶斯分析的一个重要实践环节是评估结果的稳定性和可靠性。下面的表格展示了两种关键的验证结果：
-
-\textbf{敏感性分析表格}显示了不同先验强度下后验均值和标准差的变化。先验强度越大，先验对结果的影响越强。通过观察不同先验强度下的后验结果，我们可以判断分析结论是否对先验选择敏感。
-
-\textbf{稳健性检验表格}展示了数据污染比例对后验均值的影响。污染比例越高，异常值对结果的影响越大。这帮助我们评估贝叶斯分析对数据质量问题的抵抗能力。
-
-这些检验确保贝叶斯分析的结论不会过度依赖于特定的先验设定或受到数据质量问题的过度影响，为生态学研究的可靠性提供保障。
-
-\begin{table}[!h]
-\centering
-\caption{\label{tab:bayesian-sensitivity-analysis}贝叶斯敏感性分析结果}
-\centering
-\begin{tabular}[t]{rrr}
-\toprule
-先验强度 & 后验均值 & 后验标准差\\
-\midrule
-0.1 & 0.708 & 0.097\\
-0.5 & 0.708 & 0.097\\
-1.0 & 0.708 & 0.097\\
-2.0 & 0.708 & 0.097\\
-5.0 & 0.706 & 0.097\\
-\addlinespace
-10.0 & 0.702 & 0.096\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-表 \ref{tab:bayesian-sensitivity-analysis} 展示了贝叶斯敏感性分析的结果，通过比较不同先验强度下的后验均值和标准差，揭示了先验信息对贝叶斯推断的影响程度。
-
-\begin{table}[!h]
-\centering
-\caption{\label{tab:bayesian-robustness-test}贝叶斯稳健性检验结果}
-\centering
-\begin{tabular}[t]{rr}
-\toprule
-污染比例 & 后验均值\\
-\midrule
-0.00 & 0.539\\
-0.05 & 0.604\\
-0.10 & 0.683\\
-0.20 & 0.804\\
-0.30 & 0.888\\
-\bottomrule
-\end{tabular}
-\end{table}
 
 表 \ref{tab:bayesian-robustness-test} 展示了贝叶斯稳健性检验的结果，通过模拟不同污染比例下的后验均值变化，验证了贝叶斯方法对数据污染的鲁棒性。
 
@@ -2290,12 +1704,6 @@ habitat & expert\_prior & likelihood & posterior\\
 \caption{主观偏见问题：不同群体对同一生态风险评估的差异}\label{fig:subjective-bias-demo}
 \end{figure}
 
-\begin{verbatim}
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --    1
-\end{verbatim}
-
 \hypertarget{ux8d1dux53f6ux65afux7edfux8ba1ux7684ux6311ux6218ux53caux89e3ux51b3ux65b9ux6848}{%
 \subsubsection{贝叶斯统计的挑战及解决方案}\label{ux8d1dux53f6ux65afux7edfux8ba1ux7684ux6311ux6218ux53caux89e3ux51b3ux65b9ux6848}}
 
@@ -2313,27 +1721,7 @@ MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心�
 
 \textbf{与其直接计算后验分布，不如我们构造一个马尔可夫链，使其平稳分布恰好就是我们想要的后验分布 \(P(\theta \mid E)\)。然后，我们从这个链中生成大量的样本，用这些样本来近似（模拟）后验分布。}
 
-想象一下，你是一个盲人，想要了解一头大象的形状。这头大象就是贝叶斯统计中的\textbf{后验分布}，我们想要了解但无法直接看到的复杂概率分布。
-
-\textbf{贝叶斯的难题}：大象的形状太复杂了，你无法用数学公式精确描述它（就像无法直接计算分母P(E)一样）。
-
-\textbf{MCMC的解决方案}：你不需要知道大象的精确形状，只需要通过''触摸''来了解它：
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \textbf{马尔可夫链}：你开始在大象周围随机走动，但遵循一个聪明的规则，每次移动时，你更倾向于走向大象''更胖''的区域（高概率区域），而不是''更瘦''的区域（低概率区域）。
-\item
-  \textbf{蒙特卡洛抽样}：你边走边触摸大象，记录下每个位置的感受。虽然每次触摸只能了解一小部分，但经过成千上万次触摸后，你就能在心中构建出大象的整体形状。
-\item
-  \textbf{巧妙之处}：你根本不需要知道大象的确切形状！你只需要比较当前位置和下一个位置哪个''更胖''（通过概率比值），这个比值中讨厌的分母P(E)会自动抵消掉。
-\end{enumerate}
-
-\textbf{结果}：经过足够多的''触摸''后，你收集到的位置样本就精确地反映了大象的真实形状。你可以通过这些样本计算大象的平均高度（后验均值）、宽度（后验方差），甚至画出大象的轮廓（后验分布图）。
-
-就像盲人通过系统性的触摸来了解复杂的大象形状一样，MCMC通过系统性的随机游走来探索复杂的生态学后验分布，让我们能够在不知道精确数学解的情况下，仍然能够对生态系统的参数做出可靠的贝叶斯推断。
-
-我们来用正式的语言分解MCMC这个思想：
+MCMC的核心思想可以分解为两步：
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -2396,67 +1784,39 @@ MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心�
 \hypertarget{ux7b80ux5355mcmcux6f14ux793a}{%
 \subsubsection{简单MCMC演示}\label{ux7b80ux5355mcmcux6f14ux793a}}
 
-马尔可夫链蒙特卡洛（MCMC）方法是贝叶斯计算的核心工具：
+马尔可夫链蒙特卡洛（MCMC）方法是贝叶斯计算的核心工具。以下演示Metropolis-Hastings算法的基本流程：
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# 简单MCMC采样演示}
-\CommentTok{\# 实现Metropolis{-}Hastings算法进行贝叶斯参数估计}
-\NormalTok{simple\_mcmc }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n\_iterations, prior\_mean, prior\_sd,}
-\NormalTok{                        data, likelihood\_sd) \{}
-  \CommentTok{\# 初始化：从先验均值开始构造马尔可夫链}
-\NormalTok{  current\_value }\OtherTok{\textless{}{-}}\NormalTok{ prior\_mean}
-\NormalTok{  samples }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(n\_iterations)}
-\NormalTok{  accepts }\OtherTok{\textless{}{-}} \DecValTok{0}
-
-  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{n\_iterations) \{}
-    \CommentTok{\# 步骤1：从提议分布（以当前值为中心的正态分布）生成候选参数}
-\NormalTok{    proposal }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{1}\NormalTok{, current\_value, }\FloatTok{0.1}\NormalTok{)}
-
-    \CommentTok{\# 步骤2：计算当前值与提议值的先验概率密度}
-\NormalTok{    prior\_current }\OtherTok{\textless{}{-}} \FunctionTok{dnorm}\NormalTok{(current\_value, prior\_mean, prior\_sd)}
-\NormalTok{    prior\_proposal }\OtherTok{\textless{}{-}} \FunctionTok{dnorm}\NormalTok{(proposal, prior\_mean, prior\_sd)}
-
-    \CommentTok{\# 步骤3：计算数据在当前值和提议值下的似然概率}
-\NormalTok{    likelihood\_current }\OtherTok{\textless{}{-}} \FunctionTok{prod}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(data, current\_value, likelihood\_sd))}
-\NormalTok{    likelihood\_proposal }\OtherTok{\textless{}{-}} \FunctionTok{prod}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(data, proposal, likelihood\_sd))}
-
-    \CommentTok{\# 步骤4：计算Metropolis{-}Hastings接受率（分母P(E)在此处抵消）}
-\NormalTok{    acceptance\_ratio }\OtherTok{\textless{}{-}}\NormalTok{ (prior\_proposal }\SpecialCharTok{*}\NormalTok{ likelihood\_proposal) }\SpecialCharTok{/}
-\NormalTok{      (prior\_current }\SpecialCharTok{*}\NormalTok{ likelihood\_current)}
-\NormalTok{    acceptance\_prob }\OtherTok{\textless{}{-}} \FunctionTok{min}\NormalTok{(}\DecValTok{1}\NormalTok{, acceptance\_ratio)}
-
-    \CommentTok{\# 步骤5：基于接受概率随机决定是否移动到提议值}
-    \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\textless{}}\NormalTok{ acceptance\_prob) \{}
-\NormalTok{      current\_value }\OtherTok{\textless{}{-}}\NormalTok{ proposal}
-\NormalTok{      accepts }\OtherTok{\textless{}{-}}\NormalTok{ accepts }\SpecialCharTok{+} \DecValTok{1}
-\NormalTok{    \}}
-
-\NormalTok{    samples[i] }\OtherTok{\textless{}{-}}\NormalTok{ current\_value}
-\NormalTok{  \}}
-
-  \CommentTok{\# 计算接受率以评估MCMC采样效率}
-\NormalTok{  acceptance\_rate }\OtherTok{\textless{}{-}}\NormalTok{ accepts }\SpecialCharTok{/}\NormalTok{ n\_iterations}
-  \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{samples =}\NormalTok{ samples, }\AttributeTok{acceptance\_rate =}\NormalTok{ acceptance\_rate))}
-\NormalTok{\}}
-
-\CommentTok{\# 模拟生态数据：真实树木平均高度15米，观测带有正态测量误差}
+\CommentTok{\# MCMC演示：Metropolis{-}Hastings算法估计树木平均高度}
+\CommentTok{\# 模拟数据：真实高度15m，20次观测含测量误差}
 \NormalTok{true\_value }\OtherTok{\textless{}{-}} \FloatTok{15.0}
 \NormalTok{observed\_data }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{20}\NormalTok{, true\_value, }\FloatTok{1.0}\NormalTok{)}
 
-\CommentTok{\# 运行MCMC：先验N(10, 5²)反映我们对树木高度的初始认知（偏低且不确定）}
-\NormalTok{mcmc\_result }\OtherTok{\textless{}{-}} \FunctionTok{simple\_mcmc}\NormalTok{(}\DecValTok{5000}\NormalTok{,}
-  \AttributeTok{prior\_mean =} \DecValTok{10}\NormalTok{, }\AttributeTok{prior\_sd =} \DecValTok{5}\NormalTok{,}
-  \AttributeTok{data =}\NormalTok{ observed\_data, }\AttributeTok{likelihood\_sd =} \FloatTok{1.0}
-\NormalTok{)}
+\CommentTok{\# 简化的MCMC采样器}
+\NormalTok{mcmc\_sampler }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(n\_iter, init, proposal\_sd, data) \{}
+\NormalTok{  samples }\OtherTok{\textless{}{-}} \FunctionTok{numeric}\NormalTok{(n\_iter); samples[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ init}
+  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{n\_iter) \{}
+\NormalTok{    proposal }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{1}\NormalTok{, samples[i}\DecValTok{{-}1}\NormalTok{], proposal\_sd)}
+    \CommentTok{\# 接受率：先验N(10,25) × 似然 = 后验（分母P(E)被约掉）}
+\NormalTok{    log\_ratio }\OtherTok{\textless{}{-}} \FunctionTok{dnorm}\NormalTok{(proposal, }\DecValTok{10}\NormalTok{, }\DecValTok{5}\NormalTok{, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}
+                 \FunctionTok{sum}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(data, proposal, }\DecValTok{1}\NormalTok{, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{{-}}
+                 \FunctionTok{dnorm}\NormalTok{(samples[i}\DecValTok{{-}1}\NormalTok{], }\DecValTok{10}\NormalTok{, }\DecValTok{5}\NormalTok{, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{{-}}
+                 \FunctionTok{sum}\NormalTok{(}\FunctionTok{dnorm}\NormalTok{(data, samples[i}\DecValTok{{-}1}\NormalTok{], }\DecValTok{1}\NormalTok{, }\AttributeTok{log =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{    samples[i] }\OtherTok{\textless{}{-}} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{log}\NormalTok{(}\FunctionTok{runif}\NormalTok{(}\DecValTok{1}\NormalTok{)) }\SpecialCharTok{\textless{}}\NormalTok{ log\_ratio, proposal, samples[i}\DecValTok{{-}1}\NormalTok{])}
+\NormalTok{  \}}
+  \FunctionTok{return}\NormalTok{(samples)}
+\NormalTok{\}}
+
+\NormalTok{mcmc\_result }\OtherTok{\textless{}{-}} \FunctionTok{mcmc\_sampler}\NormalTok{(}\DecValTok{5000}\NormalTok{, }\AttributeTok{init =} \DecValTok{10}\NormalTok{, }\AttributeTok{proposal\_sd =} \FloatTok{0.5}\NormalTok{,}
+  \AttributeTok{data =}\NormalTok{ observed\_data)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## MCMC采样结果:
-##  接受率: 0.848 
-##  后验均值: 14.835 
-##  后验标准差: 0.472 
+##  后验均值: 14.898 
+##  后验标准差: 0.296 
 ##  真实值: 15 
 ##  样本均值: 14.92
 \end{verbatim}
@@ -2464,15 +1824,15 @@ MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心�
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# 基于后验样本的2.5\%和97.5\%分位数计算95\%置信区间}
-\NormalTok{ci\_lower }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(mcmc\_result}\SpecialCharTok{$}\NormalTok{samples, }\FloatTok{0.025}\NormalTok{)}
-\NormalTok{ci\_upper }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(mcmc\_result}\SpecialCharTok{$}\NormalTok{samples, }\FloatTok{0.975}\NormalTok{)}
+\NormalTok{ci\_lower }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(mcmc\_result, }\FloatTok{0.025}\NormalTok{)}
+\NormalTok{ci\_upper }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(mcmc\_result, }\FloatTok{0.975}\NormalTok{)}
 \FunctionTok{cat}\NormalTok{(}\StringTok{"95\%置信区间: ["}\NormalTok{, }\FunctionTok{round}\NormalTok{(ci\_lower, }\DecValTok{3}\NormalTok{), }\StringTok{", "}\NormalTok{,}
     \FunctionTok{round}\NormalTok{(ci\_upper, }\DecValTok{3}\NormalTok{), }\StringTok{"]}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## 95%置信区间: [ 14.345 ,  15.342 ]
+## 95%置信区间: [ 14.451 ,  15.35 ]
 \end{verbatim}
 
 \hypertarget{ux4eceux8d1dux53f6ux65afux6982ux7387ux5230ux73b0ux4ee3ux6570ux636eux5206ux6790}{%
@@ -2577,12 +1937,6 @@ MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心�
 \caption{蚱蜢午餐选择的概率分布：三种草地的选择概率对比。}\label{fig:plant-choice-distribution}
 \end{figure}
 
-\begin{verbatim}
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --  0.7
-\end{verbatim}
-
 \hypertarget{ux7d2fux79efux6982ux7387ux5206ux5e03ux4eceux53efux80fdux6027ux5230ux786eux5b9aux6027}{%
 \subsection{累积概率分布：从可能性到确定性}\label{ux7d2fux79efux6982ux7387ux5206ux5e03ux4eceux53efux80fdux6027ux5230ux786eux5b9aux6027}}
 
@@ -2629,37 +1983,6 @@ MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心�
 
 \caption{蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程}\label{fig:cumulative-distribution}
 \end{figure}
-
-\begin{verbatim}
-## <ggproto object: Class CoordCartesian, Coord, gg>
-##     aspect: function
-##     backtransform_range: function
-##     clip: on
-##     default: FALSE
-##     distance: function
-##     draw_panel: function
-##     expand: TRUE
-##     is_free: function
-##     is_linear: function
-##     labels: function
-##     limits: list
-##     modify_scales: function
-##     range: function
-##     ratio: NULL
-##     render_axis_h: function
-##     render_axis_v: function
-##     render_bg: function
-##     render_fg: function
-##     reverse: none
-##     setup_data: function
-##     setup_layout: function
-##     setup_panel_guides: function
-##     setup_panel_params: function
-##     setup_params: function
-##     train_panel_guides: function
-##     transform: function
-##     super:  <ggproto object: Class CoordCartesian, Coord, gg>
-\end{verbatim}
 
 累积概率分布图呈现为阶梯函数，在每个可能的取值处跳跃，跳跃的高度等于该取值的概率。这种分布特别有用，因为它：
 
@@ -2799,12 +2122,6 @@ p & \text{如果 } x = 1 \\
 \caption{伯努利分布：不同成功概率下的二元选择概率分布}\label{fig:bernoulli-distribution}
 \end{figure}
 
-\begin{verbatim}
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --    1
-\end{verbatim}
-
 \textbf{生态学肖像：}
 
 伯努利分布在生态学中无处不在，它描述的是那些具有二元结局的自然现象。在生态系统的各个层面，我们都能观察到这种简单的二元选择模式：一颗种子是否发芽，一只雏鸟能否成功活到离巢，一次野外调查中样方里是否出现目标物种，一只昆虫是否被天敌捕食，或者一片叶子是否被昆虫取食。这些看似简单的``是''或''否''问题，实际上构成了生态学中最基本的概率单元。
@@ -2887,12 +2204,6 @@ p & \text{如果 } x = 1 \\
 \caption{二项分布：不同成功概率下多次试验中成功次数的概率分布}\label{fig:binomial-distribution}
 \end{figure}
 
-\begin{verbatim}
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --    1
-\end{verbatim}
-
 \textbf{生态学肖像：}
 
 二项分布在生态学中广泛应用于计数型数据的建模。当我们播种100颗同种种子时，最终成功发芽的数量\(k\)服从二项分布，其中\(n=100\)，\(p\)代表种子的发芽率。从一个大种群中随机捕获并标记50只动物，放回后再次随机捕获50只，其中被标记个体的数量\(k\)也服从二项分布，这正是标记重捕法的理论核心。在一片森林中，随机选择的100棵树中有病害的树木数量同样遵循二项分布规律。一次生态调查中，在50个样方中发现目标物种的样方数量，以及一个鸟类种群中在繁殖季节成功孵化的雏鸟数量，都可以用二项分布来精确描述。
@@ -2963,12 +2274,6 @@ p & \text{如果 } x = 1 \\
 
 \caption{泊松分布：不同平均发生率下稀有事件发生次数的概率分布}\label{fig:poisson-distribution}
 \end{figure}
-
-\begin{verbatim}
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --    1
-\end{verbatim}
 
 \textbf{生态学肖像：}
 
@@ -3063,12 +2368,6 @@ p & \text{如果 } x = 1 \\
 
 \caption{负二项分布：不同参数组合下第r次成功所需试验次数的概率分布}\label{fig:negative-binomial}
 \end{figure}
-
-\begin{verbatim}
-## <ScaleContinuousPosition>
-##  Range:  
-##  Limits:    0 --    1
-\end{verbatim}
 
 \textbf{生态学肖像：}
 
@@ -3400,7 +2699,12 @@ SampleSize & Skewness & Kurtosis\\
 
 中心极限定理是连接概率论与统计推断的桥梁，它解释了为什么正态分布在统计学中占据核心地位。在蚱蜢午餐的研究中，这个定理确保了即使面对复杂的生态数据，我们仍然能够使用基于正态分布的统计方法来获得可靠的科学结论。
 
-正如统计学家乔治·博克斯所言：``所有的模型都是错的，但有些是有用的。''中心极限定理正是这样一个``有用''的模型，它虽然不是绝对精确，但在大多数实际情况下提供了足够好的近似，为生态学的定量研究奠定了坚实的数学基础。
+正如统计学家乔治·博克斯所言：''所有的模型都是错的，但有些是有用的。''中心极限定理正是这样一个''有用''的模型，它虽然不是绝对精确，但在大多数实际情况下提供了足够好的近似，为生态学的定量研究奠定了坚实的数学基础。
+
+\hypertarget{ux5206ux5e03ux7684ux504fux5ea6ux4e0eux5cf0ux5ea6}{%
+\subsubsection{分布的偏度与峰度}\label{ux5206ux5e03ux7684ux504fux5ea6ux4e0eux5cf0ux5ea6}}
+
+CLT告诉我们样本均值趋向正态，但原始生态数据往往偏离正态。\textbf{偏度}衡量分布的不对称性：\(g_1 = \frac{1}{n}\sum(x_i - \bar{x})^3 / s^3\)。正偏度（右偏）常见于生物量、物种多度数据，意味着少数大树或优势种拉长了右侧尾部。\textbf{峰度}衡量分布的尾部厚度：\(g_2 = \frac{1}{n}\sum(x_i - \bar{x})^4 / s^4 - 3\)。高峰度意味着极端值出现概率更高，对生态风险分析至关重要。理解偏度和峰度，能帮助我们在应用CLT时判断''样本量多大才算足够''------分布越偏、尾部越厚，所需样本量越大。
 
 \hypertarget{ux6df7ux5408ux5206ux5e03ux4eceux751fux6001ux5f02ux8d28ux6027ux5230ux6df7ux5408ux4e13ux5bb6aiux6a21ux578b}{%
 \section{混合分布：从生态异质性到混合专家AI模型}\label{ux6df7ux5408ux5206ux5e03ux4eceux751fux6001ux5f02ux8d28ux6027ux5230ux6df7ux5408ux4e13ux5bb6aiux6a21ux578b}}
@@ -3454,9 +2758,8 @@ SampleSize & Skewness & Kurtosis\\
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# 模拟零膨胀数据：80\%为结构性零值（如物种不在样方中），20\%来自泊松过程（如存在但随机未观测到）}
+\CommentTok{\# 模拟零膨胀数据：80\%为结构性零值，20\%来自泊松过程}
 \FunctionTok{set.seed}\NormalTok{(}\DecValTok{2323}\NormalTok{)}
-
 \NormalTok{n\_samples }\OtherTok{\textless{}{-}} \DecValTok{1000}
 \NormalTok{zero\_prob }\OtherTok{\textless{}{-}} \FloatTok{0.8}
 \NormalTok{lambda }\OtherTok{\textless{}{-}} \DecValTok{3}
@@ -3478,22 +2781,17 @@ SampleSize & Skewness & Kurtosis\\
   \AttributeTok{distribution =} \FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"零膨胀泊松"}\NormalTok{, }\StringTok{"普通泊松"}\NormalTok{), }\AttributeTok{each =}\NormalTok{ n\_samples)}
 \NormalTok{)}
 
-\FunctionTok{ggplot}\NormalTok{(plot\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ distribution, }\AttributeTok{pattern =}\NormalTok{ distribution)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_histogram\_pattern}\NormalTok{(}
-    \AttributeTok{binwidth =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{position =} \StringTok{"identity"}\NormalTok{,}
-    \AttributeTok{pattern\_fill =} \StringTok{"black"}\NormalTok{,}
-    \AttributeTok{pattern\_density =} \FloatTok{0.1}\NormalTok{,}
-    \AttributeTok{pattern\_spacing =} \FloatTok{0.02}
-\NormalTok{  ) }\SpecialCharTok{+}
+\FunctionTok{ggplot}\NormalTok{(plot\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ distribution)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \DecValTok{1}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.7}\NormalTok{, }\AttributeTok{position =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"零膨胀泊松"} \OtherTok{=} \StringTok{"\#E69F00"}\NormalTok{, }\StringTok{"普通泊松"} \OtherTok{=} \StringTok{"\#56B4E9"}\NormalTok{)) }\SpecialCharTok{+}
-  \FunctionTok{scale\_pattern\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"零膨胀泊松"} \OtherTok{=} \StringTok{"stripe"}\NormalTok{, }\StringTok{"普通泊松"} \OtherTok{=} \StringTok{"crosshatch"}\NormalTok{)) }\SpecialCharTok{+}
   \FunctionTok{labs}\NormalTok{(}
     \AttributeTok{title =} \StringTok{"零膨胀分布与普通泊松分布对比"}\NormalTok{,}
     \AttributeTok{x =} \StringTok{"计数值"}\NormalTok{,}
     \AttributeTok{y =} \StringTok{"频数"}\NormalTok{,}
     \AttributeTok{fill =} \StringTok{"分布类型"}
 \NormalTok{  ) }\SpecialCharTok{+}
-  \FunctionTok{theme\_eco}\NormalTok{(}\AttributeTok{legend\_position =} \StringTok{"top"}\NormalTok{)}
+  \FunctionTok{theme\_eco}\NormalTok{(}\AttributeTok{legend\_position =} \StringTok{"top"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{distribution, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -3505,38 +2803,6 @@ SampleSize & Skewness & Kurtosis\\
 
 \caption{零膨胀泊松分布与普通泊松分布的对比。零膨胀分布在零值处有额外的概率质量，反映了生态学中稀有物种数据的典型特征}\label{fig:zero-inflation-plot}
 \end{figure}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{distribution, }\AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }\AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## <ggproto object: Class FacetWrap, Facet, gg>
-##     attach_axes: function
-##     attach_strips: function
-##     compute_layout: function
-##     draw_back: function
-##     draw_front: function
-##     draw_labels: function
-##     draw_panel_content: function
-##     draw_panels: function
-##     finish_data: function
-##     format_strip_labels: function
-##     init_gtable: function
-##     init_scales: function
-##     map_data: function
-##     params: list
-##     set_panel_size: function
-##     setup_data: function
-##     setup_panel_params: function
-##     setup_params: function
-##     shrink: TRUE
-##     train_scales: function
-##     vars: function
-##     super:  <ggproto object: Class FacetWrap, Facet, gg>
-\end{verbatim}
 
 如图\ref{fig:zero-inflation-plot}所示，零膨胀分布最显著的特征是零值的过度集中。零膨胀分布在生态学中具有重要的应用价值，专门用于处理存在大量零值的计数数据。这种分布在以下生态学场景中特别有用：
 
@@ -3551,256 +2817,6 @@ SampleSize & Skewness & Kurtosis\\
 \item
   \textbf{不完全调查的观测数据}：由于调查方法限制或环境条件影响，某些生态调查可能无法完全覆盖目标区域，导致观测数据中存在系统性的零值。
 \end{enumerate}
-
-\hypertarget{ux63cfux8ff0ux7edfux8ba1ux5728aiux65f6ux4ee3ux91cdux65b0ux5ba1ux89c6ux6570ux636e}{%
-\section{描述统计：在AI时代重新审视数据}\label{ux63cfux8ff0ux7edfux8ba1ux5728aiux65f6ux4ee3ux91cdux65b0ux5ba1ux89c6ux6570ux636e}}
-
-描述统计是生态学数据分析的基础工具，用于概括和描述数据的主要特征。主要包括中心趋势测量、离散性测量和分布形状测量三个方面。
-
-\hypertarget{ux4e2dux5fc3ux8d8bux52bfux6d4bux91cf}{%
-\subsection{中心趋势测量}\label{ux4e2dux5fc3ux8d8bux52bfux6d4bux91cf}}
-
-中心趋势测量描述数据的集中位置，常用的指标包括：
-
-\textbf{均值}：数据的算术平均值，计算公式为 \(\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i\)，反映数据的平均水平。
-
-\textbf{中位数}：将数据排序后位于中间位置的值，对异常值不敏感，计算公式为：当\(n\)为奇数时取中间值，当\(n\)为偶数时取中间两个值的平均值。
-
-\textbf{众数}：数据中出现频率最高的值，适用于分类数据和连续数据。
-
-\hypertarget{ux79bbux6563ux6027ux6d4bux91cf}{%
-\subsection{离散性测量}\label{ux79bbux6563ux6027ux6d4bux91cf}}
-
-离散性测量描述数据的分散程度，常用指标包括：
-
-\textbf{方差与标准差}：方差计算公式为 \(s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2\)，标准差为方差的平方根 \(s = \sqrt{s^2}\)，反映数据相对于均值的平均偏离程度。
-
-\textbf{变异系数}：计算公式为 \(CV = \frac{s}{\bar{x}} \times 100\%\)，用于比较不同量纲数据的相对变异程度。
-
-\textbf{标准误}：计算公式为 \(SE = \frac{s}{\sqrt{n}}\)，衡量样本统计量的抽样变异性，反映估计的精度。
-
-\textbf{四分位距}：上四分位数与下四分位数之差，描述数据中间50\%的范围，对异常值不敏感。
-
-\hypertarget{ux5206ux5e03ux5f62ux72b6ux4e0eux77e9ux6d4bux91cf}{%
-\subsection{分布形状与矩测量}\label{ux5206ux5e03ux5f62ux72b6ux4e0eux77e9ux6d4bux91cf}}
-
-分布形状测量描述了数据分布的对称性和尾部特征，帮助我们理解生态过程的潜在机制。就像识别不同树种的树冠形状一样，这些统计量揭示了生态数据背后的模式。
-
-\hypertarget{ux504fux5ea6}{%
-\subsubsection{偏度}\label{ux504fux5ea6}}
-
-\textbf{数学定义}：样本偏度定义为三阶中心矩与标准差立方的比值：
-
-\[g_1 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^3}{s^3}\]
-
-其中 \(s\) 是样本标准差。偏度量化了分布的不对称性：偏度为正表示右偏，为负表示左偏，为零表示对称分布。
-
-在生态学中，许多自然现象都表现出偏斜分布。考虑研究森林中树木胸径的分布：
-
-如图\ref{fig:tree-skewness-plot}所示，我们模拟了一个右偏的树木胸径分布，该图通过直方图展示了分布的不对称性特征。
-
-\begin{verbatim}
-## [1] "树木胸径分布的偏度： 0.65"
-\end{verbatim}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/tree-skewness-plot-1} 
-
-}
-
-\caption{树木胸径分布的直方图，展示右偏分布特征}\label{fig:tree-skewness-plot}
-\end{figure}
-
-上述例子中，正偏度（通常大于0.5）表明分布向右偏斜，意味着有较多的小树和少数大树。在图形上，右偏分布的右侧尾部较长，均值大于中位数。这种模式常见于年龄结构年轻的种群。
-
-\hypertarget{ux5cf0ux5ea6}{%
-\subsubsection{峰度}\label{ux5cf0ux5ea6}}
-
-\textbf{数学定义}：样本峰度定义为四阶中心矩与标准差四次方的比值：
-
-\[g_2 = \frac{\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^4}{s^4} - 3\]
-
-其中减去3是为了使正态分布的峰度为0。峰度大于0表示尖峰分布，小于0表示平峰分布。
-
-峰度描述了分布的尖峰程度和尾部厚度，在研究极端生态事件时特别重要。高峰度（大于3）表明分布更加尖峰，数据集中在均值附近，尾部较厚，意味着极端值（如稀有物种）的出现概率较高。低峰度（小于3）表明分布更加平缓，数据分散，极端值较少。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{)}
-\CommentTok{\# 构造两种对比的物种多度分布：A集中在均值附近（尖峰），B均匀分散（平峰）}
-\NormalTok{abundance\_a }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{8}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{15}\NormalTok{, }\DecValTok{2}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{25}\NormalTok{),}
-                \FunctionTok{rep}\NormalTok{(}\DecValTok{25}\NormalTok{, }\DecValTok{2}\NormalTok{), }\FunctionTok{rep}\NormalTok{(}\DecValTok{30}\NormalTok{, }\DecValTok{8}\NormalTok{))}
-\NormalTok{abundance\_b }\OtherTok{\textless{}{-}} \FunctionTok{runif}\NormalTok{(}\DecValTok{45}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{30}\NormalTok{)}
-
-\NormalTok{kurtosis\_a }\OtherTok{\textless{}{-}} \FunctionTok{kurtosis}\NormalTok{(abundance\_a)}
-\NormalTok{kurtosis\_b }\OtherTok{\textless{}{-}} \FunctionTok{kurtosis}\NormalTok{(abundance\_b)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 物种A多度分布的峰度：2.53
-## 物种B多度分布的峰度：1.81
-\end{verbatim}
-
-\begin{verbatim}
-## 物种A相对于正态分布的峰度：-0.47
-## 物种B相对于正态分布的峰度：-1.19
-\end{verbatim}
-
-\hypertarget{ux7edfux8ba1ux6982ux5ff5ux5728ux6982ux7387ux5206ux5e03ux56feux4e0aux7684ux53efux89c6ux5316}{%
-\subsection{统计概念在概率分布图上的可视化}\label{ux7edfux8ba1ux6982ux5ff5ux5728ux6982ux7387ux5206ux5e03ux56feux4e0aux7684ux53efux89c6ux5316}}
-
-为了更好地理解这些统计概念，让我们在一个典型的概率分布图上可视化它们：
-
-如图\ref{fig:stats-concepts-plot}所示，我们使用标准正态分布来可视化关键统计概念。该图清晰地展示了均值、标准差等统计量在概率分布上的几何意义。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/stats-concepts-plot-1} 
-
-}
-
-\caption{统计概念在正态分布上的可视化}\label{fig:stats-concepts-plot}
-\end{figure}
-
-这个可视化展示了：
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{红色垂直线}：均值（分布的中心位置）
-\item
-  \textbf{橙色虚线}：±1个标准差的范围
-\item
-  \textbf{绿色箭头}：标准差的实际跨度
-\end{itemize}
-
-\hypertarget{ux6807ux51c6ux8befux7684ux53efux89c6ux5316ux7406ux89e3}{%
-\subsection{标准误的可视化理解}\label{ux6807ux51c6ux8befux7684ux53efux89c6ux5316ux7406ux89e3}}
-
-为了理解标准误的概念，让我们通过抽样模拟来展示标准误的意义：
-
-如图\ref{fig:se-visualization-plot}所示，我们通过多次抽样模拟展示了标准误的统计意义。该图包含两个子图：左图显示样本均值的分布特征，右图展示标准误与样本均值的关系，帮助我们理解样本均值作为总体均值估计的精确程度。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/se-visualization-plot-1} 
-
-}
-
-\caption{标准误随样本量变化的可视化分析：横轴为样本量（n=5至n=100），纵轴为标准误，曲线展示了标准误以1/√n的速率递减的规律，灰色虚线标记了大样本（n>30）后标准误趋于稳定的阈值}\label{fig:se-visualization-plot}
-\end{figure}
-
-\begin{verbatim}
-## 总体均值：50.16
-## 样本均值的均值：50.17
-## 样本均值的标准误：2.04
-## 95%置信区间：[ 46.17, 54.17 ]
-\end{verbatim}
-
-这个可视化帮助我们理解：
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{左图}：多次抽样的样本均值围绕总体均值波动，其分布的标准差就是标准误；
-\item
-  \textbf{右图}：标准误反映了样本均值作为总体均值估计的精确程度；
-\item
-  \textbf{置信区间}：反映了估计方法的可靠性；95\%置信区间意味着，多次重复抽样后基于标准误构建的所有区间里，有95\%会包含总体均值。
-\end{itemize}
-
-\hypertarget{ux4e0dux540cux53c2ux6570ux503cux7684ux5206ux5e03ux5f62ux72b6ux6bd4ux8f83}{%
-\subsection{不同参数值的分布形状比较}\label{ux4e0dux540cux53c2ux6570ux503cux7684ux5206ux5e03ux5f62ux72b6ux6bd4ux8f83}}
-
-现在让我们比较不同统计参数值对应的分布形状：
-
-如图\ref{fig:distribution-parameters-comparison}所示，我们系统地比较了均值、标准差、偏度和峰度四个关键统计参数对分布形状的影响。该图通过四个子图展示了不同参数值下分布特征的显著差异，帮助我们直观理解统计参数与分布形状之间的对应关系。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/distribution-parameters-comparison-1} 
-
-}
-
-\caption{不同均值和方差参数下分布形状的比较。通过颜色和线型区分不同参数值。}\label{fig:distribution-parameters-comparison}
-\end{figure}
-
-\hypertarget{ux751fux6001ux5b66ux610fux4e49ux603bux7ed3}{%
-\subsection{生态学意义总结}\label{ux751fux6001ux5b66ux610fux4e49ux603bux7ed3}}
-
-通过这些可视化，我们可以清楚地看到：
-
-\textbf{均值的影响}：
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{大均值}：分布整体向右移动，对应生态学中较大的个体大小、较高的生物量等
-\item
-  \textbf{小均值}：分布整体向左移动，对应较小的生态特征值
-\end{itemize}
-
-\textbf{方差/标准差的影响}：
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{大方差}：分布更加''矮胖''，数据分散，对应生态系统中个体间差异大、环境异质性高
-\item
-  \textbf{小方差}：分布更加''瘦高''，数据集中，对应均质的生态系统
-\end{itemize}
-
-\textbf{偏度的影响}：
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{大正偏度}：分布右偏，右侧尾部较长，对应生态学中少数个体具有极大值（如优势物种）
-\item
-  \textbf{大负偏度}：分布左偏，左侧尾部较长，对应多数个体具有较小值
-\item
-  \textbf{零偏度}：对称分布，个体特征相对均匀
-\end{itemize}
-
-\textbf{峰度的影响}：
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{高峰度}：分布尖峰厚尾，数据集中在均值附近但极端值概率较高，对应生态系统中稳定状态但偶发极端事件
-\item
-  \textbf{低峰度}：分布平峰薄尾，数据分散，极端值较少，对应生态系统状态波动较大但无极端事件
-\end{itemize}
-
-\textbf{标准误的意义}：
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{小标准误}：样本均值作为总体均值的估计更加精确，对应生态学中基于大样本的可靠推断
-\item
-  \textbf{大标准误}：样本均值的估计不确定性较高，对应生态学中小样本研究的局限性
-\end{itemize}
-
-这些分布特征在生态学研究中具有重要的实际意义。例如：
-
-\begin{itemize}
-\tightlist
-\item
-  物种多度分布通常呈现右偏，反映了少数优势物种和多数稀有物种的格局
-\item
-  环境因子的分布可能呈现高峰度，预示着极端气候事件的发生概率
-\item
-  个体大小的分布偏度可以反映种内竞争强度
-\item
-  群落多样性的分布方差可以指示生态系统的稳定性
-\item
-  基于标准误的置信区间为生态参数的估计提供了不确定性度量
-\end{itemize}
-
-通过理解这些统计概念在概率分布图上的表现，生态学家能够更准确地解读生态数据背后的模式和过程。
 
 \hypertarget{ux4fe1ux606fux8bbaux4eceux6982ux7387ux5230aiux7684ux6865ux6881}{%
 \section{信息论：从概率到AI的桥梁}\label{ux4fe1ux606fux8bbaux4eceux6982ux7387ux5230aiux7684ux6865ux6881}}
@@ -4027,11 +3043,11 @@ SampleSize & Skewness & Kurtosis\\
 \toprule
 Var1 & Freq\\
 \midrule
-啄木鸟 & 12\\
-杜鹃 & 26\\
-画眉 & 21\\
-麻雀 & 19\\
-黄鹂 & 22\\
+啄木鸟 & 16\\
+杜鹃 & 28\\
+画眉 & 12\\
+麻雀 & 20\\
+黄鹂 & 24\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -4043,7 +3059,7 @@ Var1 & Freq\\
 \end{Shaded}
 
 \begin{verbatim}
-## 随机抽样均值估计： 26.64
+## 随机抽样均值估计： 26.03
 \end{verbatim}
 
 表\ref{tab:random-sampling}展示了随机抽样的结果，我们可以看到不同物种在100个样本中的分布情况。
@@ -4086,7 +3102,7 @@ Var1 & Freq\\
 \end{Shaded}
 
 \begin{verbatim}
-## 分层抽样均值估计： 25.45
+## 分层抽样均值估计： 26.95
 \end{verbatim}
 
 表\ref{tab:stratified-sampling}展示了分层抽样的结果，我们可以看到不同生境类型中各个物种的分布情况。
@@ -4148,8 +3164,8 @@ Var1 & Freq\\
 \begin{verbatim}
 ## 不同抽样方法对种群数量均值的估计比较：
 ##  总体均值： 26.01 
-##  随机抽样估计： 26.64 
-##  分层抽样估计： 25.45 
+##  随机抽样估计： 26.03 
+##  分层抽样估计： 26.95 
 ##  系统抽样估计： 26.16
 \end{verbatim}
 
@@ -4171,8 +3187,8 @@ Var1 & Freq\\
 \begin{verbatim}
 ## 
 ## 估计偏差分析：
-##  随机抽样偏差： 2.422145 %
-##  分层抽样偏差： -2.153018 %
+##  随机抽样偏差： 0.0768935 %
+##  分层抽样偏差： 3.613995 %
 ##  系统抽样偏差： 0.5767013 %
 \end{verbatim}
 
@@ -4411,10 +3427,6 @@ Student`s \emph{t}分布（简称\emph{t}分布）由英国统计学家威廉·�
 
 区间估计不仅仅是统计工具，它直接影响生态学决策的质量。在生态学研究和实践中，决策往往涉及重大的生态、经济和社会后果，而区间估计为这些决策提供了关键的量化支撑。通过提供参数估计的不确定性信息，区间估计帮助决策者更全面地理解生态系统的状态和变化趋势，从而做出更加科学和负责任的决策。
 
-\textbf{保护生物学}：在制定濒危物种保护计划时，我们需要知道种群数量的可能范围。濒危物种的保护决策往往具有不可逆性，一旦决策失误，可能导致物种灭绝的严重后果。区间估计为这种高风险决策提供了重要的风险评估工具。例如，当估计某种濒危鸟类的种群数量时，点估计可能显示种群数量为500只，但如果95\%置信区间为{[}300, 700{]}，这意味着真实的种群数量有相当大的不确定性。这种不确定性信息对于制定保护策略至关重要：如果置信区间的下限接近物种存活的临界阈值，就需要采取更加积极的保护措施；如果置信区间较宽，说明需要进一步调查以获得更精确的估计。此外，在评估保护措施的效果时，区间估计能够帮助我们区分真实的种群变化和抽样误差，为保护策略的调整提供科学依据。
-
-\textbf{资源管理}：在规划渔业捕捞配额时，我们需要考虑种群估计的不确定性。渔业资源的可持续利用是生态经济学的重要课题，而捕捞配额的制定直接关系到渔业资源的长期可持续性。区间估计为渔业管理提供了风险管理的工具。例如，在估计某种经济鱼类的资源量时，如果点估计显示资源量为100万吨，95\%置信区间为{[}80, 120{]}万吨，渔业管理部门就需要考虑最坏情况下的资源量（80万吨）来制定保守的捕捞配额，以确保资源的可持续利用。这种基于区间估计的预防性原则在渔业管理中尤为重要，因为过度捕捞的后果往往是不可逆的。此外，区间估计还能够帮助评估不同管理策略的风险，为渔业政策的制定提供量化支持。
-
 \textbf{环境政策}：在制定排放标准时，我们需要了解污染物浓度的可信范围。环境政策的制定往往涉及复杂的权衡，需要在环境保护和经济发展之间找到平衡点。区间估计为这种权衡提供了科学的量化基础。例如，在制定水体污染物排放标准时，如果研究显示某种污染物的安全浓度为10mg/L，95\%置信区间为{[}8, 12{]}mg/L，政策制定者就需要考虑置信区间的范围来确定排放标准。如果采用较宽松的标准（12mg/L），可能对生态系统造成潜在风险；如果采用较严格的标准（8mg/L），可能对经济发展产生较大影响。区间估计为这种政策权衡提供了透明和可量化的依据，帮助决策者在科学的基础上做出合理的政策选择。
 
 通过科学的区间估计，我们能够更客观地评估生态学研究结果的可靠性，为生态保护和管理决策提供更加科学和可靠的依据。区间估计不仅提供了参数估计的``最佳猜测''，更重要的是提供了估计的``可信程度''，这种不确定性信息的量化是科学决策的重要基础。在生态学研究和实践中，忽视估计的不确定性可能导致决策的盲目性，而充分考虑不确定性则能够提高决策的稳健性和适应性。随着生态学研究的深入和统计方法的发展，区间估计在生态决策中的作用将越来越重要，它将继续为生态保护和可持续发展提供坚实的科学支撑。
@@ -4561,19 +3573,6 @@ Student`s \emph{t}分布（简称\emph{t}分布）由英国统计学家威廉·�
   \textbf{种群动态模型}：在种群生态学中，我们经常需要估计种群增长率、死亡率、繁殖率等关键参数。最大似然估计能够基于观测数据（如标记重捕数据、种群普查数据）给出这些参数的最优估计。例如，在濒危物种保护中，准确的种群增长率估计对于制定保护策略至关重要。
 
   以东北虎保护为例，研究人员通过红外相机监测和个体识别技术收集种群数据。最大似然估计被用于估计种群大小、存活率、繁殖率等关键参数。这些参数的准确估计直接影响到保护区的管理决策，如栖息地恢复的范围、反盗猎巡逻的强度等。最大似然估计不仅提供了点估计，还通过似然剖面或自助法提供了参数的不确定性信息，为风险评估和适应性管理提供了科学依据。
-
-  在渔业管理中，最大似然估计被广泛应用于估计鱼类种群的生物参数。基于渔获量数据和年龄组成信息，研究人员使用最大似然估计来估计自然死亡率、捕捞死亡率、生长参数等。这些估计对于制定可持续的捕捞配额、保护渔业资源的长时期生产力具有关键作用。最大似然估计的统计性质确保了这些关键管理参数的可靠性。
-\item
-  \textbf{物种分布模型}：随着气候变化和生境丧失，预测物种分布变化成为生态学的重要课题。最大似然估计在逻辑斯蒂回归、广义线性模型等物种分布模型中广泛应用，帮助我们理解环境因子如何影响物种的分布概率。
-
-  以大熊猫保护为例，研究人员使用最大似然估计来构建物种分布模型，预测气候变化背景下适宜栖息地的变化。基于大熊猫的分布记录和环境变量数据，最大似然估计能够确定各个环境因子（如温度、降水、植被类型）对物种分布的影响强度。这些模型不仅用于识别当前的保护优先区，还用于预测未来气候变化对栖息地适宜性的影响，为长期的保护规划提供科学支持。
-
-  在入侵生物学中，最大似然估计被用于预测外来物种的潜在分布范围。基于物种在原产地的分布数据和引入地的环境条件，研究人员使用最大似然估计来估计物种在新环境中的生存概率。这些预测对于早期预警、风险评估和防控策略制定具有重要意义。最大似然估计的统计框架使得研究人员能够量化预测的不确定性，为风险管理决策提供更全面的信息。
-\item
-  \textbf{群落生态学模型}：在分析物种间相互作用和群落结构时，最大似然估计能够处理复杂的多物种数据。比如在食物网分析中，估计物种间的相互作用强度；在群落构建机制研究中，检验生态位理论和中性理论的相对重要性。
-
-  以森林群落研究为例，研究人员使用最大似然估计来分析树种间的竞争关系和共存机制。基于长期的样方监测数据，最大似然估计能够估计不同树种间的竞争系数，揭示群落构建的生态位过程。同时，通过比较不同模型的似然值，研究人员可以检验中性过程在群落构建中的相对重要性。这种模型比较方法为理解生物多样性维持机制提供了有力的统计工具。
-
   在微生物生态学中，最大似然估计被用于分析微生物群落的组成和功能。基于高通量测序数据，研究人员使用最大似然估计来估计不同微生物类群的相对丰度、物种间的相互作用网络等。这些分析对于理解微生物群落在生态系统功能中的作用、开发基于微生物的生态修复技术具有重要意义。
 \item
   \textbf{生态系统模型}：在生态系统层面，最大似然估计用于估计碳循环、养分循环等关键过程参数。这些估计对于理解全球变化对生态系统的影响、评估生态系统的服务功能具有重要意义。
@@ -5027,42 +4026,6 @@ Intercept & 25.00149 & 0.6695746 & 23.65401 & 26.29316 & 1.002247 & 3058.456 & 2
   在生态风险评估中，贝叶斯估计的完整不确定性信息尤为重要。当评估某种污染物对水生生态系统的影响时，贝叶斯方法能够提供效应大小的概率分布，而不仅仅是``显著''或``不显著''的二元结论。这种概率化的风险评估使得决策者能够基于风险水平制定相应的管理措施，而不是简单地依赖统计显著性。
 \item
   \textbf{灵活处理复杂问题}：贝叶斯估计特别适合处理小样本、缺失数据、层次结构等复杂情况，这些情况在生态学研究中非常普遍。生态学数据往往具有复杂的结构特征，如空间相关性、时间自相关性、个体异质性等，贝叶斯估计通过层次模型和随机效应能够很好地处理这些复杂性。
-
-  在小样本情况下，贝叶斯估计通过先验信息的引入，能够在一定程度上补偿样本信息的不足。例如，在研究某种极度稀有的两栖动物时，研究人员可能只能获得很少的个体观测数据。通过结合专家对物种生态需求的先验知识，贝叶斯估计能够给出相对合理的参数估计，而传统方法可能由于样本量过小而无法提供可靠的推断。
-
-  在缺失数据处理方面，贝叶斯估计也具有独特优势。生态学监测数据经常存在缺失值，特别是在长期监测项目中。贝叶斯方法将缺失值视为待估计的参数，在模型拟合过程中同时估计模型参数和缺失值，这种方法比传统的缺失值处理方法更加合理和有效。
-\end{enumerate}
-
-\textbf{生态学应用场景}
-
-贝叶斯估计在生态学研究的各个领域都有广泛而深入的应用：
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \textbf{基于历史数据的种群参数估计}：贝叶斯估计特别适合处理具有时间序列特征的生态学数据。在长期生态监测项目中，研究人员积累了多年的观测数据，贝叶斯方法能够有效地整合这些历史信息。
-
-  以候鸟迁徙研究为例，研究人员使用贝叶斯状态空间模型来估计种群数量的年际变化。这种模型不仅能够估计当前的种群状态，还能够量化观测误差和过程误差，提供更加真实的种群动态描述。通过结合多年的环志数据、计数数据和栖息地变化信息，贝叶斯方法能够揭示种群对气候变化和生境丧失的响应模式。
-
-  在渔业资源评估中，贝叶斯方法被广泛应用于种群动态模型的参数估计。基于多年的渔获量数据、年龄组成数据和环境因子数据，贝叶斯估计能够提供种群生物量、捕捞死亡率等关键参数的后验分布，为渔业管理决策提供概率化的科学依据。
-\item
-  \textbf{结合专家知识的生态模型}：在许多生态学研究中，特别是在数据稀缺的情况下，专家知识成为重要的信息源。贝叶斯估计提供了一个系统化的框架来整合专家知识和观测数据。
-
-  在生态系统建模中，研究人员经常面临参数众多但数据有限的问题。通过贝叶斯方法，研究人员可以基于文献综述、专家访谈等方式构建参数的先验分布，然后基于有限的观测数据来更新这些先验认识。这种方法在森林碳循环模型、湿地水文模型等复杂生态系统模型中得到广泛应用。
-
-  在保护生物学中，贝叶斯方法被用于整合不同专家的判断。当面对数据稀缺的濒危物种时，研究人员可以通过德尔菲法等方式收集多个专家的意见，将这些意见转化为参数的先验分布，然后基于有限的野外调查数据来更新对物种状况的认识。
-\item
-  \textbf{风险评估和决策支持}：贝叶斯估计提供的完整概率分布为生态风险评估和决策支持提供了理想的工具。在生态学决策中，往往需要在不确定性条件下做出选择，贝叶斯方法能够量化各种决策后果的概率。
-
-  在入侵物种管理决策中，贝叶斯方法被用于评估不同控制策略的效果和风险。基于物种的生态特征、扩散能力和控制措施的有效性等信息，贝叶斯模型能够预测各种管理情景下入侵物种的扩散概率和生态影响，为管理决策提供风险分析基础。
-
-  在气候变化适应规划中，贝叶斯方法帮助决策者理解不同适应策略在不确定未来气候情景下的效果。通过结合气候模型输出、物种响应数据和专家判断，贝叶斯分析能够评估各种适应措施的成功概率，支持基于风险的决策制定。
-\item
-  \textbf{模型比较和选择}：通过贝叶斯因子，研究人员可以系统地比较不同生态学模型的相对证据支持程度。这种模型比较方法比传统的假设检验更加灵活和全面。
-
-  在群落生态学中，研究人员使用贝叶斯模型比较来检验不同的群落构建机制。例如，通过比较生态位模型和中性模型的贝叶斯因子，研究人员可以评估生态位过程和中性过程在特定群落中的相对重要性。这种模型比较为理解生物多样性维持机制提供了有力的统计工具。
-
-  在物种分布建模中，贝叶斯模型平均被用于整合多个竞争模型的预测结果。通过计算各个模型的后验概率，研究人员可以构建基于模型权重的综合预测，这种预测通常比单一模型的预测更加稳健和可靠。
 \end{enumerate}
 
 \textbf{贝叶斯估计的发展趋势}
@@ -5598,105 +4561,6 @@ Jolly-Seber模型的估计过程相对复杂，通常需要专门的统计软件
 
 然而，标记重捕法也有其局限性。它通常需要较多的人力物力投入，对研究对象的干扰较大，且在某些情况下（如极度稀有的物种）可能不适用。此外，标记重捕法的准确性依赖于关键假设的满足程度，当这些假设被严重违反时，估计结果可能产生较大偏差。
 
-\hypertarget{ux9762ux79efux53d6ux6837ux6cd5}{%
-\subsection{面积取样法}\label{ux9762ux79efux53d6ux6837ux6cd5}}
-
-面积取样法是生态学中另一种重要的种群大小估计方法，特别适用于植物和移动性较弱的动物种群。这种方法的基本思想是通过在代表性样地内计数个体，然后根据样地面积与总面积的比例来推断整个种群的规模。
-
-\textbf{样方法}是面积取样法中最常用的方法。研究人员在研究对象区域内设置一定数量和大小的小样方（quadrat），在每个样方内计数所有个体，然后根据样方覆盖的比例来估计整个区域的种群数量。
-
-样方估计的基本公式为：
-
-\[N = \frac{A}{a} \times \bar{n}\]
-
-其中：\\
-- \(N\)：种群大小估计值\\
-- \(A\)：研究区域的总面积\\
-- \(a\)：样方的总面积\\
-- \(\bar{n}\)：样方内个体的平均数量
-
-让我们通过一个具体的例子来理解样方法的应用。假设研究人员想要估计一片草原中某种草本植物的种群数量。草原总面积为10公顷（100,000平方米），研究人员设置了50个1平方米的样方，样方内该植物的平均数量为8株。根据样方估计公式：
-
-\[N = \frac{100,000}{50} \times 8 = 16,000\]
-
-因此，估计这片草原中该种植物的种群数量约为16,000株。
-
-样方法的关键考虑因素包括：
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  \textbf{样方大小}：样方大小应该能够包含足够数量的个体，但又不能太大以至于难以调查；
-\item
-  \textbf{样方数量}：样方数量越多，估计的精度越高，但调查成本也越高；
-\item
-  \textbf{样方布局}：样方的布局应该能够代表研究区域的异质性，常用的布局方式包括随机布局、系统布局和分层布局；
-\item
-  \textbf{边界效应}：对于分布在样方边界的个体，需要明确的计数规则。
-\end{enumerate}
-
-通过样方调查获得的植物数量分布数据可以帮助我们了解种群的分布模式（图\ref{fig:quadrat-plant-distribution}）。
-
-\begin{verbatim}
-## 样方估计的种群数量： 810000 株
-##  平均每样方个体数： 8.1 株
-\end{verbatim}
-
-\begin{verbatim}
-## 95%置信区间：[ 758905 , 861095 ]
-\end{verbatim}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/quadrat-plant-distribution-1} 
-
-}
-
-\caption{样方内植物数量分布：浅灰色直方图（密度为15）显示植物个体数量的分布模式，红色虚线标记样本均值位置}\label{fig:quadrat-plant-distribution}
-\end{figure}
-
-图\ref{fig:quadrat-plant-distribution}展示了通过样方调查获得的植物数量分布情况。该直方图清晰地显示了50个样方中植物个体数量的分布模式，红色垂直线标记了样本均值的位置。从图中可以看出，植物数量大致呈现正态分布，集中在均值附近，这反映了该植物种群在草原中的相对均匀分布特征。这种分布模式为生态学家提供了关于种群空间格局的重要信息，有助于理解物种的生态位和种间竞争关系。
-
-\textbf{样线法}是面积取样法的另一种形式，特别适用于调查移动性较强的动物或在大尺度区域进行调查。研究人员沿着预设的样线（transect）行进，记录在样线两侧一定宽度内观察到的个体数量。
-
-样线估计的基本公式为：
-
-\[N = \frac{A}{2wL} \times n\]
-
-其中：
-
-\begin{itemize}
-\tightlist
-\item
-  \(N\)：种群大小估计值
-\item
-  \(A\)：研究区域的总面积
-\item
-  \(w\)：样线单侧的宽度
-\item
-  \(L\)：样线的总长度
-\item
-  \(n\)：观察到的个体总数
-\end{itemize}
-
-样线法的主要优势在于它能够覆盖较大的区域，调查效率较高。然而，样线法的准确性依赖于对样线宽度内个体发现概率的准确估计，这通常需要额外的校正方法。发现概率的变化对种群估计结果具有重要影响，需要进行敏感性分析（图\ref{fig:line-transect-sensitivity}）。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/line-transect-sensitivity-1} 
-
-}
-
-\caption{样线法估计的敏感性分析}\label{fig:line-transect-sensitivity}
-\end{figure}
-
-图\ref{fig:line-transect-sensitivity}展示了样线法估计对发现概率变化的敏感性分析。该图表清晰地显示了当发现概率从0.5变化到0.9时，种群估计值呈现反比关系的变化趋势。红色标记点表示基准估计值（发现概率为0.7时的种群估计）。这种敏感性分析对于生态学研究至关重要，因为它揭示了样线法估计结果对关键假设的依赖程度。在实际野外调查中，发现概率可能受到多种因素的影响，包括观察者经验、环境条件、动物行为等。通过敏感性分析，研究人员可以评估估计结果的不确定性范围，为保护决策提供更加可靠的依据。
-
-\textbf{生态学意义}：面积取样法在植物生态学、无脊椎动物生态学和某些脊椎动物生态学中具有广泛的应用。它不仅是估计种群数量的重要工具，还为研究种群的空间分布、种间关系、生境偏好等生态学问题提供了数据基础。在生态监测中，面积取样法被用于长期跟踪种群的变化趋势；在保护生物学中，它被用于评估保护措施的效果；在生态恢复中，它被用于监测恢复过程的进展。
-
-面积取样法的主要局限性在于它对种群空间分布的假设。如果种群呈现强烈的聚集分布，而样方的布局未能充分捕捉这种聚集模式，估计结果可能产生较大偏差。此外，面积取样法通常假设所有个体在样方内都能被完全检测到，这在某些情况下（如隐蔽的物种、复杂的生境）可能不成立。
-
 \hypertarget{ux8dddux79bbux62bdux6837ux6cd5}{%
 \subsection{距离抽样法}\label{ux8dddux79bbux62bdux6837ux6cd5}}
 
@@ -5764,140 +4628,6 @@ Jolly-Seber模型的估计过程相对复杂，通常需要专门的统计软件
 \textbf{生态学意义}：距离抽样法在野生动物生态学和保护生物学中具有重要的应用价值。它特别适用于调查分布范围广、密度较低的动物种群，如大型哺乳动物、鸟类和海洋哺乳动物。在保护生物学中，距离抽样法被用于监测濒危物种的种群趋势；在野生动物管理中，它被用于评估种群状况和制定管理策略；在生态监测中，它被用于长期跟踪种群的变化。
 
 距离抽样法的主要优势在于它能够提供相对准确的种群估计，同时考虑了发现概率的不完全性。然而，这种方法对关键假设的依赖性较强，当这些假设被违反时，估计结果可能产生较大偏差。此外，距离抽样法通常需要专门的培训和设备，调查成本较高。
-
-\hypertarget{ux53bbux9664ux6cd5}{%
-\subsection{去除法}\label{ux53bbux9664ux6cd5}}
-
-去除法是一种基于连续捕获中捕获率变化的种群大小估计方法，特别适用于封闭的动物种群，如鱼类和昆虫种群。这种方法的基本思想是通过连续的捕获努力，观察捕获率随捕获次数的变化，从而推断种群的初始规模。
-
-去除法的核心原理是：在封闭种群中，随着捕获的进行，种群数量逐渐减少，因此单位努力捕获量（catch per unit effort, CPUE）会逐渐下降。通过拟合CPUE与累积捕获量的关系，可以估计种群的初始规模。
-
-最简单的去除法是\textbf{一次去除法}（single removal method），它基于两次连续的捕获。假设第一次捕获移除了\(C_1\)个个体，第二次捕获移除了\(C_2\)个个体，那么种群大小的估计值为：
-
-\[N = \frac{C_1^2}{C_1 - C_2}\]
-
-更一般化的去除法是\textbf{多次去除法}（multiple removal method），它基于多次连续的捕获。通过拟合捕获率与累积捕获量的线性关系，可以估计种群的初始规模。
-
-让我们通过一个具体的例子来理解去除法的应用。假设研究人员想要估计一个池塘中某种鱼类的种群数量。他们进行了三次连续的捕捞，每次使用相同的努力（如相同的渔网、相同的捕捞时间），捕获量分别为：第一次80条，第二次60条，第三次40条。
-
-如果使用一次去除法，基于第一次和第二次捕获：
-
-\[N = \frac{80^2}{80 - 60} = \frac{6400}{20} = 320\]
-
-如果使用多次去除法，可以通过线性回归来估计种群规模。设\(C_i\)为第i次捕获量，\(K_i\)为前i-1次累积捕获量，那么有：
-
-\[C_i = q(N - K_i)\]
-
-其中\(q\)是捕获效率系数。通过线性回归\(C_i\)对\(K_i\)，截距为\(qN\)，斜率为\(-q\)，因此\(N = -\frac{\text{截距}}{\text{斜率}}\)。
-
-去除法的关键假设包括：
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \textbf{种群封闭性}：在捕获期间没有出生、死亡、迁入或迁出。这个假设要求在整个捕获过程中，种群数量保持稳定，不受任何人口统计学过程的影响。在实际生态学应用中，这意味着去除法通常只适用于短期的封闭环境，如池塘中的鱼类、围栏中的哺乳动物或温室中的昆虫。如果种群是开放的，比如在自然环境中存在个体迁移、繁殖或死亡，那么基于捕获率递减的估计就会产生系统性偏差。例如，在河流鱼类调查中，如果调查期间有鱼类从上游游入或向下游迁出，就会违反封闭性假设，导致种群估计不准确。
-\item
-  \textbf{捕获效率恒定}：每次捕获的努力和效率相同。这个假设强调在整个捕获序列中，每次捕获的技术条件、设备性能、操作人员技能和环境因素都应该保持一致。任何捕获效率的变化都会导致捕获率递减模式的扭曲，从而影响种群估计的准确性。在实际操作中，这意味着需要使用相同的渔具、相同的捕捞时间、相同的操作人员，并且在相似的环境条件下进行每次捕获。例如，在鱼类去除法中，如果第一次使用大网目渔网，第二次使用小网目渔网，捕获效率就会发生变化，违反这一关键假设。
-\item
-  \textbf{个体同质性}：所有个体被捕获的概率相等。这个统计假设要求种群中每个个体具有相同的被捕获可能性，不受年龄、性别、体型、行为差异等因素的影响。在真实的生态系统中，个体异质性普遍存在，幼体可能比成体更容易被捕获，某些个体可能具有更强的逃避行为，或者不同性别可能表现出不同的活动模式。这些差异都会导致捕获概率的不均等，从而影响去除法的估计准确性。例如，在昆虫去除法中，如果某些个体对诱捕器更敏感，而其他个体具有回避行为，就会违反同质性假设。
-\item
-  \textbf{捕获的彻底性}：每次捕获能够移除观察到的所有个体。这个假设要求每次捕获操作都能够完全移除目标区域内的所有可捕获个体，没有遗漏或逃避。在实际生态调查中，这个假设往往难以完全满足，特别是在复杂生境或对隐蔽性强的物种进行调查时。个体可能隐藏在难以到达的区域，或者具有逃避捕获的行为策略。例如，在森林地面无脊椎动物调查中，某些个体可能隐藏在落叶层深处或土壤缝隙中，无法被完全捕获。捕获的不彻底性会导致种群数量的系统性低估，因为未被捕获的个体不会被计入后续的捕获率递减分析中。
-\end{enumerate}
-
-在实际生态学研究中，这些假设往往难以完全满足。特别是捕获效率恒定和个体同质性的假设，在真实的生态系统中经常被违反。因此，去除法通常只适用于人工环境或高度控制的自然环境。通过分析捕获量随累积捕获量的变化关系，可以估计种群的初始规模（图\ref{fig:removal-method-analysis}）。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 模拟池塘鱼类种群的连续捕获过程}
-\NormalTok{captures }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{, }\DecValTok{60}\NormalTok{, }\DecValTok{40}\NormalTok{)}
-
-\CommentTok{\# 一次去除法：N = C1² / (C1 {-} C2)，假设捕获效率恒定且种群封闭}
-\NormalTok{population\_single\_removal }\OtherTok{\textless{}{-}}\NormalTok{ captures[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/}\NormalTok{ (captures[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{{-}}\NormalTok{ captures[}\DecValTok{2}\NormalTok{])}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"一次去除法估计的种群数量："}\NormalTok{, }\FunctionTok{round}\NormalTok{(population\_single\_removal), }\StringTok{"条}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 一次去除法估计的种群数量： 320 条
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 多次去除法：通过线性回归 C\_i \textasciitilde{} K\_i 拟合，其中K\_i为前i{-}1次累积捕获量}
-\CommentTok{\# 理论关系 C\_i = q(N {-} K\_i) =\textgreater{} 截距 = qN, 斜率 = {-}q}
-\NormalTok{cumulative\_captures }\OtherTok{\textless{}{-}} \FunctionTok{cumsum}\NormalTok{(captures)}
-\NormalTok{previous\_captures }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, cumulative\_captures[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{2}\NormalTok{])}
-
-\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(captures }\SpecialCharTok{\textasciitilde{}}\NormalTok{ previous\_captures)}
-\NormalTok{capture\_efficiency }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\FunctionTok{coef}\NormalTok{(model)[}\DecValTok{2}\NormalTok{]}
-\NormalTok{population\_multiple\_removal }\OtherTok{\textless{}{-}} \FunctionTok{coef}\NormalTok{(model)[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ capture\_efficiency}
-
-\FunctionTok{cat}\NormalTok{(}\StringTok{"多次去除法估计的种群数量："}\NormalTok{, }\FunctionTok{round}\NormalTok{(population\_multiple\_removal), }\StringTok{"条}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{,}
-  \StringTok{"捕获效率系数："}\NormalTok{, }\FunctionTok{round}\NormalTok{(capture\_efficiency, }\DecValTok{4}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 多次去除法估计的种群数量： 285 条
-##  捕获效率系数： 0.2838
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 使用误差传播公式计算种群估计的标准误和置信区间}
-\NormalTok{summary\_model }\OtherTok{\textless{}{-}} \FunctionTok{summary}\NormalTok{(model)}
-\NormalTok{se\_intercept }\OtherTok{\textless{}{-}}\NormalTok{ summary\_model}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{]}
-\NormalTok{se\_slope }\OtherTok{\textless{}{-}}\NormalTok{ summary\_model}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{]}
-
-\CommentTok{\# Var(N) = (1/q²)Var(截距) + (截距²/q⁴)Var(q)}
-\NormalTok{variance\_population }\OtherTok{\textless{}{-}}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{/}\NormalTok{ capture\_efficiency}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ se\_intercept}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}
-\NormalTok{  (}\FunctionTok{coef}\NormalTok{(model)[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/}\NormalTok{ capture\_efficiency}\SpecialCharTok{\^{}}\DecValTok{4}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ se\_slope}\SpecialCharTok{\^{}}\DecValTok{2}
-\NormalTok{standard\_error\_population }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(variance\_population)}
-
-\NormalTok{ci\_lower }\OtherTok{\textless{}{-}}\NormalTok{ population\_multiple\_removal }\SpecialCharTok{{-}} \FloatTok{1.96} \SpecialCharTok{*}\NormalTok{ standard\_error\_population}
-\NormalTok{ci\_upper }\OtherTok{\textless{}{-}}\NormalTok{ population\_multiple\_removal }\SpecialCharTok{+} \FloatTok{1.96} \SpecialCharTok{*}\NormalTok{ standard\_error\_population}
-
-\FunctionTok{cat}\NormalTok{(}\StringTok{"95\%置信区间：["}\NormalTok{, }\FunctionTok{round}\NormalTok{(ci\_lower), }\StringTok{","}\NormalTok{, }\FunctionTok{round}\NormalTok{(ci\_upper), }\StringTok{"]}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 95%置信区间：[ 236 , 333 ]
-\end{verbatim}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/removal-method-analysis-1} 
-
-}
-
-\caption{去除法：捕获量随累积捕获量的变化：黑色实心圆点连线表示观测数据，红色虚线表示线性回归拟合直线}\label{fig:removal-method-analysis}
-\end{figure}
-
-图\ref{fig:removal-method-analysis}展示了去除法中捕获量随累积捕获量变化的线性关系，这是去除法估计种群规模的核心理论基础。图中黑色点表示观测数据，红色直线表示通过线性回归拟合的捕获量递减趋势。这种线性递减模式反映了在封闭种群中，随着捕获的进行，剩余种群数量减少，导致单位努力捕获量（CPUE）相应下降的生态学规律。通过拟合这种关系，研究人员可以估计种群的初始规模，同时获得捕获效率系数的估计值。图中展示的敏感性分析比较了使用不同捕获次数获得的估计结果，这有助于评估估计结果的稳健性，并为生态学家在野外调查中选择合适的捕获次数提供参考依据。
-
-\begin{verbatim}
-## 
-## 敏感性分析：不同捕获次数的估计
-\end{verbatim}
-
-\begin{verbatim}
-## 使用前2次捕获（一次去除法）：320 条
-## 使用前3次捕获（多次去除法）：285 条
-\end{verbatim}
-
-\textbf{生态学意义}：去除法在渔业管理、害虫控制和某些野生动物管理中具有重要的应用价值。它特别适用于估计封闭或半封闭环境中的动物种群数量，如池塘中的鱼类、围栏中的哺乳动物、温室中的昆虫等。在渔业管理中，去除法被用于评估养殖池塘的鱼类数量；在害虫控制中，它被用于估计害虫种群的规模；在野生动物管理中，它被用于评估特定区域的动物承载量。
-
-去除法的主要优势在于它的操作相对简单，不需要标记个体，适用于某些难以标记的物种。然而，这种方法对关键假设的依赖性较强，当这些假设被违反时，估计结果可能产生较大偏差。此外，去除法通常会对种群造成较大的干扰，在某些保护敏感的场合可能不适用。
-
-\hypertarget{ux7269ux79cdux591aux6837ux6027ux4f30ux8ba1}{%
-\section{物种多样性估计}\label{ux7269ux79cdux591aux6837ux6027ux4f30ux8ba1}}
-
-物种多样性估计是生态学研究的核心内容之一，它量化了生物群落的物种组成和分布特征。在生态学实践中，由于时间、经费和可行性的限制，我们往往无法对群落进行全面的普查。物种多样性估计方法正是为了解决这一困境而发展起来的统计工具，它允许我们通过有限的样本数据来推断整个群落的多样性特征。
-
-物种多样性估计的重要性体现在多个方面。首先，准确的多样性信息是评估生态系统健康状况的基础。无论是监测生物多样性变化、评估保护措施效果，还是预测生态系统对干扰的响应，都需要基于可靠的多样性估计。其次，多样性估计为生态保护提供了科学依据。在自然保护区规划、濒危物种保护和生态修复工程中，多样性数据是决策的重要支撑。最后，多样性估计有助于我们理解生态系统的结构和功能。物种多样性是生态系统稳定性和功能多样性的重要决定因素，也是生态学理论检验的基础。
-
-在生态学研究中，不同的多样性估计方法适用于不同的研究目标和数据特征。选择合适的方法需要考虑群落的特征（如物种丰富度、多度分布）、研究的目的（如精确估计、趋势监测）、可用的资源（如样本量、数据质量）以及估计的尺度（如α多样性、β多样性）。在接下来的内容中，我们将详细介绍几种主要的物种多样性估计方法，包括它们的原理、适用条件、优缺点以及在生态学中的具体应用。
 
 \hypertarget{ux5916ux63a8ux548cux5185ux63d2ux65b9ux6cd5}{%
 \subsection{外推和内插方法}\label{ux5916ux63a8ux548cux5185ux63d2ux65b9ux6cd5}}
@@ -6381,7 +5111,7 @@ Bootstrap方法的优势在于它能够提供完整的不确定性信息，且�
 
 \begin{table}[!h]
 \centering
-\caption{\label{tab:unnamed-chunk-23}样本量对多样性估计精度的影响分析}
+\caption{\label{tab:unnamed-chunk-21}样本量对多样性估计精度的影响分析}
 \centering
 \begin{tabular}[t]{ccccccc}
 \toprule
@@ -6716,59 +5446,7 @@ Bootstrap方法的优势在于它能够提供完整的不确定性信息，且�
   讨论标记重捕法在森林树种调查中的假设条件，天目木兰的''标记''（挂牌）是否会脱落？个体在两次调查之间是否有死亡或新生？这些因素如何影响估计结果？
 \end{enumerate}
 
-\hypertarget{ux7ec3ux4e602ux5929ux7ae5ux5c71ux7269ux79cdux4e30ux5bccux5ea6ux4f30ux8ba1ux4e0eux7a00ux6709ux79cdux6821ux6b63}{%
-\subsection{练习2：天童山物种丰富度估计与稀有种校正}\label{ux7ec3ux4e602ux5929ux7ae5ux5c71ux7269ux79cdux4e30ux5bccux5ea6ux4f30ux8ba1ux4e0eux7a00ux6709ux79cdux6821ux6b63}}
-
-林小雨在天童山样地中完成了一次全面的物种清查，记录了每个树种的个体数（多度）。获得以下物种多度数据：
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{species\_abundances }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{40}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{15}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  计算观测到的物种丰富度（直接计数）
-\item
-  使用Chao1估计器校正稀有种（singleton和doubleton）的影响，估计天童山样地中''真实的''物种总数
-\item
-  使用Jackknife方法进行物种丰富度估计，比较两种校正方法的结果差异
-\item
-  基于这19个树种的丰度分布，绘制物种积累曲线，判断20公顷样地是否足够捕获大多数树种
-\item
-  讨论：如果林小雨将样地面积扩大一倍，Chao1估计会如何变化？在保护实践中，如何为''足够大的样地''设定标准？
-\end{enumerate}
-
-\hypertarget{ux7ec3ux4e603ux5929ux7ae5ux5c71ux6811ux6728ux80f8ux5f84ux7684ux53c2ux6570ux4f30ux8ba1mleux4e0eux8d1dux53f6ux65afux6bd4ux8f83}{%
-\subsection{练习3：天童山树木胸径的参数估计------MLE与贝叶斯比较}\label{ux7ec3ux4e603ux5929ux7ae5ux5c71ux6811ux6728ux80f8ux5f84ux7684ux53c2ux6570ux4f30ux8ba1mleux4e0eux8d1dux53f6ux65afux6bd4ux8f83}}
-
-林小雨在天童山样地中测量了20棵优势树种（木荷，\emph{Schima superba}）的胸径数据（单位：cm）：
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{dbh\_data }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{, }\DecValTok{18}\NormalTok{, }\DecValTok{22}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{28}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{32}\NormalTok{, }\DecValTok{35}\NormalTok{, }\DecValTok{38}\NormalTok{, }\DecValTok{40}\NormalTok{,}
-              \DecValTok{42}\NormalTok{, }\DecValTok{45}\NormalTok{, }\DecValTok{48}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{52}\NormalTok{, }\DecValTok{55}\NormalTok{, }\DecValTok{58}\NormalTok{, }\DecValTok{60}\NormalTok{, }\DecValTok{62}\NormalTok{, }\DecValTok{65}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-假设木荷的胸径服从正态分布，其概率密度函数为：
-\[f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\]
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  使用最大似然估计（MLE）同时估计正态分布的参数\(\mu\)（均值）和\(\sigma\)（标准差）
-\item
-  假设\(\mu\)的先验分布为Normal(40, 20)，\(\sigma\)的先验分布为Half-Cauchy(0, 10)，使用贝叶斯方法估计两个参数。比较MLE和贝叶斯估计的点估计值和区间估计的差异
-\item
-  讨论：在天童山有往年胸径调查先验信息（如5年前的调查显示平均胸径为35 cm）时，贝叶斯方法如何优于MLE？
-\item
-  联系正文的AI融入内容，解释为什么训练一个预测胸径的神经网络本质上等价于在做MLE
-\end{enumerate}
+更多练习见在线资源：\url{https://guochunshen.github.io/ecological-statistics}
 
 \hypertarget{ch05}{%
 \chapter{生态变量的关联：从相关系数到AI注意力}\label{ch05}}
@@ -6949,7 +5627,7 @@ Spearman相关系数的取值范围在-1到1之间。正值表示正单调关系
 
 图\ref{fig:spearman-figure}展示了河流水质与底栖动物多样性之间的单调非线性关系。该散点图使用深绿色实心圆点表示各观测样本，横轴为水质指数（综合反映水体理化性质），纵轴为底栖动物多样性（反映河流生态系统健康状况）。图中添加的红色曲线是基于局部加权回归平滑（LOWESS）的非参数拟合线，能够更好地捕捉变量间的非线性趋势。图例位于左上角，显示计算得到的Spearman相关系数（ρ），该系数衡量的是变量间的单调相关强度而非线性相关强度。该可视化清晰地展示了水质改善与底栖动物多样性增加之间的正相关关系，体现了Spearman相关在处理生态学中常见非线性关系时的优势。
 
-在生态学研究中，这种特性使得Spearman相关特别适用于分析等级数据、存在异常值的数据、或者分布未知的数据。例如，在分析环境梯度对物种分布的影响时，许多生态响应关系本质上是单调但非线性的，如物种丰富度随海拔或纬度的变化、生物量随养分浓度的变化等。此外，Spearman相关对数据的分布形式没有严格要求，不要求变量满足正态分布假设，这使其在处理生态学中常见的偏态分布数据时具有明显优势。然而，生态学家需要注意，Spearman相关只能检测单调关系，对于非单调的复杂关系（如U型关系、周期性关系）仍然无法有效识别。
+Spearman相关对数据分布无严格要求且对异常值稳健，特别适合生态学中常见的偏态分布数据和单调非线性关系（如物种丰富度沿海拔梯度的变化）。但它只能检测单调关系，对U型关系等非单调模式无效。
 
 \hypertarget{kendalls-tauux57faux4e8eux4e00ux81f4ux5bf9ux7684ux6bd4ux4f8b}{%
 \subsection{\texorpdfstring{Kendall's \(\tau\)：基于一致对的比例}{Kendall's \textbackslash tau：基于一致对的比例}}\label{kendalls-tauux57faux4e8eux4e00ux81f4ux5bf9ux7684ux6bd4ux4f8b}}
@@ -6960,7 +5638,7 @@ Kendall's \(\tau\)（tau）是另一种基于秩次的非参数相关性度量�
 
 \textbf{数学定义}：对于两个变量\(X\)和\(Y\)，Kendall's \(\tau\)定义为：
 
-\[\tau = \frac{(一致对的数量) - (不一致对的数量)}{\frac{1}{2}n(n-1)}\]
+\[\tau = \frac{(\text{一致对的数量}) - (\text{不一致对的数量})}{\frac{1}{2}n(n-1)}\]
 
 其中一致对是指当\(X_i < X_j\)时\(Y_i < Y_j\)，或者当\(X_i > X_j\)时\(Y_i > Y_j\)的数据对。
 
@@ -6990,7 +5668,7 @@ Kendall's \(\tau\)的计算公式反映了这种一致对与不一致对的净�
 ## Kendall's τ：-0.54
 \end{verbatim}
 
-Kendall's \(\tau\)的一个重要特点是其对异常值的极端稳健性。由于它只关注数据对的相对排序而不关心具体的数值大小，单个异常值对整体估计的影响非常有限。这种特性使得Kendall's \(\tau\)特别适用于生态学中常见的小样本研究、存在测量误差的数据、或者包含极端观测值的情况。例如，在气候变化对物候影响的研究中，个别异常温暖的年份可能会显著影响Pearson相关系数的估计，但对Kendall's \(\tau\)的影响相对较小。另一个重要优势是Kendall's \(\tau\)具有更直观的概率解释：当Kendall's \(\tau\)等于0.6时，可以理解为任意随机选择的一对观测值，它们在这两个变量上具有一致排序的概率比不一致排序的概率高60\%。这种概率解释在生态学应用中往往比相关系数本身更容易理解和传达。此外，Kendall's \(\tau\)的抽样分布在小样本情况下更加稳定，其标准误的计算也比Spearman相关更为精确。然而，Kendall's \(\tau\)的计算复杂度较高，对于大样本数据计算时间较长，这是其在实际应用中的一个局限。在生态学研究中，Kendall's \(\tau\)特别适用于时间序列分析、物种对环境梯度的响应研究、以及需要处理等级数据或存在大量结（ties，即数据中大量出现相同的观测值）的情况。
+Kendall's \(\tau\)对异常值极端稳健，且具有直观的概率解释（\(\tau=0.6\)意味着随机选一对观测值，排序一致的概率比不一致高60\%）。特别适合小样本、含异常值或等级数据的生态学研究，但大样本时计算开销较大。
 
 \hypertarget{ux504fux76f8ux5173ux5206ux6790}{%
 \subsection{偏相关分析}\label{ux504fux76f8ux5173ux5206ux6790}}
@@ -7138,7 +5816,7 @@ productivity & 0.389 & 0.666 & 1.000\\
 
 距离相关系数的取值范围在0到1之间，其中0表示变量间完全独立，1表示变量间存在确定的函数关系。值得注意的是，距离相关具有一个非常重要的性质：当且仅当两个变量相互独立时，距离相关系数等于0。这一性质使得距离相关成为检验变量独立性的有力工具。
 
-在生态学研究中，这种特性具有重要的应用价值。许多生态关系本质上是非线性的，如物种-面积关系、功能性状权衡、种群动态模型等，传统的线性相关方法往往无法充分描述这些复杂模式。距离相关能够有效捕捉这些非线性关系，为生态学家提供了更全面的分析工具。例如，在分析植物功能性状间的关系时，我们可能发现叶面积与比叶重之间存在U型关系，中等大小的叶片具有最高的比叶重，而过大或过小的叶片比叶重较低。这种复杂的非线性关系用Pearson或Spearman相关可能无法有效检测，但距离相关能够给出显著的非零值。此外，距离相关对变量的分布形式没有要求，适用于连续变量、离散变量甚至混合类型的数据，这使其在处理生态学中常见的复杂数据类型时具有明显优势。然而，生态学家需要注意，距离相关的计算复杂度较高，对于大样本数据可能需要较长的计算时间，且其统计性质在小样本情况下的表现仍需谨慎评估。
+距离相关能检测任意形式的依赖关系（包括U型、周期型），对变量分布无要求，特别适合探索生态学中未知形态的非线性关联（如功能性状间的复杂权衡关系）。大样本时计算开销较高。
 
 \begin{verbatim}
 ## 距离相关系数： 0.454
@@ -7616,9 +6294,7 @@ PC4 & PC4 & 0.015 & 0.000 & 1.000\\
 
 这些关联模式的生态学意义在于它们反映了物种间相互作用的性质和强度。正相关可能指示物种间的协同进化或生态位重叠，负相关则暗示强烈的竞争或生态位分化。在恢复生态学中，种间关联分析有助于设计合理的物种配置方案；在保护生物学中，它有助于识别关键物种和功能群。
 
-\textbf{生态网络构建}：基于种间相关性可以构建生态网络，从而可视化物种间相互作用的复杂结构。网络构建通常基于相关性矩阵，通过设定阈值将显著的相关关系转化为网络边。网络拓扑特征分析包括度分布、聚类系数、模块性等指标的计算。度分布描述了物种连接数的分布规律，数学上可以用幂律分布\(P(k) \sim k^{-\gamma}\)来拟合。聚类系数衡量了网络中三角形的比例，反映了物种间相互作用的局部聚集性。模块性则量化了网络被划分为相对独立模块的程度。
-
-这些网络特征的生态学意义在于它们揭示了物种间相互作用的结构特性。高度模块化的网络可能反映了生态系统的功能分区，而高聚类系数则暗示了物种间的功能互补。在网络生态学中，这些分析有助于理解生态系统的稳定性和恢复力，预测物种灭绝的级联效应。
+\textbf{生态网络构建}：基于种间相关性可以构建生态网络，通过设定阈值将显著的相关关系转化为网络边，从而可视化物种间相互作用的复杂结构。
 
 在R语言中，种间相关性分析和生态网络构建可以通过以下方法实现：
 
@@ -7707,7 +6383,7 @@ PC4 & PC4 & 0.015 & 0.000 & 1.000\\
 
 \textbf{结果解释与生态学意义}：种间相关性分析的结果解释需要结合相关系数的数值、显著性水平和生态学机制。对于种间关联系数\(\phi\)，通常认为：\(|\phi| > 0.3\)表示强关联，\(0.2 < |\phi| \leq 0.3\)表示中等关联，\(|\phi| \leq 0.2\)表示弱关联。正关联\(\phi > 0\)表示物种倾向于共同出现，可能源于互利共生或相似的环境需求；负关联\(\phi < 0\)表示物种相互排斥，可能源于竞争或不同的生态位需求。
 
-在网络分析中，度分布的特征反映了物种在群落中的连接性，幂律分布\(\gamma > 2\)的网络通常具有较好的稳定性。聚类系数\(C > 0.5\)表示网络中三角形结构丰富，可能反映了功能互补的物种组合。模块性\(Q > 0.3\)通常被认为是显著的模块结构，反映了生态系统的功能分区。这些网络特征有助于理解生态系统的稳定性和功能组织，为保护关键物种和维持生态系统功能提供科学依据。这些分析方法为生态学家提供了研究种间相互作用的定量工具，支持群落生态学和生态系统管理研究。
+网络分析有助于理解生态系统的稳定性和功能组织，为保护关键物种和维持生态系统功能提供科学依据。
 
 \hypertarget{ux7fa4ux843dux76f8ux4f3cux6027}{%
 \subsection{群落相似性}\label{ux7fa4ux843dux76f8ux4f3cux6027}}
@@ -7743,11 +6419,11 @@ PC4 & PC4 & 0.015 & 0.000 & 1.000\\
 ## mantel(xdis = comm_dist, ydis = env_dist) 
 ## 
 ## Mantel statistic r: 0.4779 
-##       Significance: 0.013 
+##       Significance: 0.01 
 ## 
 ## Upper quantiles of permutations (null model):
 ##   90%   95% 97.5%   99% 
-## 0.278 0.358 0.408 0.513 
+## 0.261 0.349 0.420 0.467 
 ## Permutation: free
 ## Number of permutations: 999
 \end{verbatim}
@@ -7964,27 +6640,7 @@ LiNGAM（线性非高斯无环模型）则利用了非高斯性这一关键信�
 
 \textbf{数据文件}：\texttt{data/exercise1\_forest\_data.RData}，包含40个森林样地的多变量数据。
 
-\hypertarget{ux7ec3ux4e60ux4e8cux5929ux7ae5ux5c71ux9e1fux7c7bux79cdux7fa4ux65f6ux95f4ux5e8fux5217ux4e0eux7a7aux95f4ux683cux5c40ux5206ux6790}{%
-\subsection{练习二：天童山鸟类种群时间序列与空间格局分析}\label{ux7ec3ux4e60ux4e8cux5929ux7ae5ux5c71ux9e1fux7c7bux79cdux7fa4ux65f6ux95f4ux5e8fux5217ux4e0eux7a7aux95f4ux683cux5c40ux5206ux6790}}
-
-\textbf{背景}：作为天童山森林生态系统综合监测的一部分，林小雨的团队还对保护区内10种常见鸟类进行了为期15年的种群监测，并在保护区内设置了50个固定观测点记录鸟类丰富度。她想知道：长期保护措施下鸟类种群是在增长还是衰退？鸟类丰富度在空间上是如何分布的？
-
-\textbf{任务}：本练习要求你选择3种具有不同生态习性的鸟类，分析其种群数量的时间自相关模式（ACF和PACF）。检验这些鸟类种群时间序列的平稳性，如发现非平稳性，进行适当的差分处理。使用变异函数分析鸟类丰富度的空间分布格局，估计块金值、基台值和变程。进行局部空间自相关分析（LISA和Getis-Ord Gi*），识别鸟类丰富度的热点和冷点区域。使用克里金插值生成保护区鸟类丰富度的空间分布预测图。
-
-\textbf{要求}：提供时间序列图和空间分布图，解释时间自相关和空间自相关的生态学含义，讨论空间插值结果如何为天童山保护区的功能区划提供科学依据。
-
-\textbf{数据文件}：\texttt{data/exercise2\_bird\_data.RData}，包含10种鸟类15年的种群时间序列数据和50个观测点的空间数据。
-
-\hypertarget{ux7ec3ux4e60ux4e09ux5929ux7ae5ux5c71ux690dux7269ux529fux80fdux6027ux72b6ux4e0eux7cfbux7edfux53d1ux80b2ux76f8ux5173ux6027ux5206ux6790}{%
-\subsection{练习三：天童山植物功能性状与系统发育相关性分析}\label{ux7ec3ux4e60ux4e09ux5929ux7ae5ux5c71ux690dux7269ux529fux80fdux6027ux72b6ux4e0eux7cfbux7edfux53d1ux80b2ux76f8ux5173ux6027ux5206ux6790}}
-
-\textbf{背景}：林小雨想深入理解天童山森林中物种共存的功能机制。她调查了样地中30种木本植物的功能性状，并构建了这些物种的系统发育树。测量的性状包括比叶面积、叶片氮含量、光合速率、木材密度和最大树高等。
-
-\textbf{任务}：本练习要求你计算各功能性状间的Pearson相关系数矩阵，识别显著的相关关系，例如，是否存在经典的''叶片经济型谱''（比叶面积高\(\leftrightarrow\)叶片氮含量高\(\leftrightarrow\)光合速率高）？使用Blomberg's K和Pagel's \(\lambda\)检验各性状的系统发育信号强度。对具有显著系统发育信号的性状，使用系统发育独立对比（PIC）重新分析性状间关系。构建功能性状的经济型谱，分析比叶面积、叶片氮含量和光合速率之间的权衡关系。使用主成分分析探索功能性状的多维协变模式。
-
-\textbf{要求}：提供系统发育树与性状分布的可视化，比较传统相关分析与PIC分析的结果差异，近缘种的相似性是由共同进化历史还是由相似环境筛选造成的？讨论功能性状相关性的生态适应意义，以及这对天童山群落构建机制的启示。
-
-\textbf{数据文件}：\texttt{data/exercise3\_plant\_data.RData}，包含30种木本植物的功能性状数据和系统发育树。
+更多练习见在线资源：\url{https://guochunshen.github.io/ecological-statistics}
 
 \hypertarget{ch06}{%
 \chapter{生态假设检验：从经典方法到AI时代推断}\label{ch06}}
@@ -8019,133 +6675,10 @@ LiNGAM（线性非高斯无环模型）则利用了非高斯性这一关键信�
 
 通过本章的学习，我们将跟随林小雨的台风研究，逐步掌握假设检验的核心方法：从配对t检验到独立样本t检验，从单因素ANOVA到多重比较校正，从参数方法到非参数替代方案，最后延伸到功效分析和AI时代的推断新范式。每一种方法都将通过天童山和梅花鹿保护区的具体生态学问题来锚定。
 
-为了帮助读者更好地理解各种假设检验方法在实际生态研究中的应用，本章将围绕一个贯穿始终的生态学案例，梅花鹿保护研究，系统介绍从单样本检验到多样本检验的各种统计方法。这个案例将为我们提供一个统一的框架，帮助我们理解不同检验方法如何解决具体的生态学问题。
-
-\hypertarget{ux6885ux82b1ux9e7fux4fddux62a4ux4e0eux5047ux8bbeux68c0ux9a8c}{%
-\section{梅花鹿保护与假设检验}\label{ux6885ux82b1ux9e7fux4fddux62a4ux4e0eux5047ux8bbeux68c0ux9a8c}}
-
-让我们通过一个贯穿本章的生态学案例，梅花鹿保护研究，来深入理解假设检验在生态学中的应用。这个案例将帮助我们直观地理解各种假设检验方法如何解决具体的生态学问题。
-
-\textbf{梅花鹿保护研究的背景}：某自然保护区为了恢复梅花鹿种群，实施了严格的禁猎保护措施。经过5年的保护，研究人员观察到梅花鹿种群数量从保护前的平均每平方公里2.5只增加到保护后的平均每平方公里4.8只。但这是保护措施的真实效果，还是种群自然波动的结果？这个看似简单的问题，实际上包含了多个需要检验的统计假设。
-
-\textbf{单样本检验的应用}：首先，我们需要检验当前梅花鹿种群密度是否达到了保护目标。假设保护目标是每平方公里4只梅花鹿，我们可以使用单样本\(t\)检验来检验观测均值（4.8只/平方公里）是否显著高于目标值（4只/平方公里）。零假设\(H_0\)：当前种群密度等于目标值；备择假设\(H_1\)：当前种群密度高于目标值。如果p值小于0.05，我们有证据表明种群确实达到了保护目标。
-
-\textbf{双样本检验的应用}：更重要的是，我们需要检验保护措施是否真的有效。由于我们有保护前和保护后的数据，可以使用配对样本\(t\)检验来比较两个时间点的种群密度。零假设\(H_0\)：保护前后种群密度无差异；备择假设\(H_1\)：保护后种群密度更高。这种检验考虑了同一区域在不同时间的相关性，比独立样本检验更敏感。
-
-\textbf{多样本检验的应用}：如果保护区实施了多种保护措施（如禁猎、栖息地恢复、人工投食），我们需要比较不同措施的效果。这时可以使用方差分析（ANOVA）来检验不同处理组的梅花鹿种群密度是否存在显著差异。如果ANOVA显示总体差异显著，我们还需要进行多重比较（如Tukey HSD检验）来确定具体哪些措施更有效。
-
-\textbf{非参数检验的应用}：生态数据常常不满足正态分布假设。如果梅花鹿种群分布呈现明显的偏态（如少数区域密度极高，多数区域密度较低），我们可以使用非参数检验方法，如Wilcoxon符号秩检验（配对数据）或Kruskal-Wallis检验（多组比较）。这些方法不依赖于严格的正态分布假设，为生态数据提供了更稳健的统计工具。
-
-\textbf{多重比较校正的必要性}：当我们同时比较多种保护措施时，直接进行多个\(t\)检验会增加假阳性风险。例如，比较3种措施需要进行3次两两比较，第一类错误率会从5\%膨胀到14\%。多重比较校正方法（如Bonferroni校正、Tukey HSD检验）帮助我们控制这种风险，确保统计结论的可靠性。
-
-\textbf{功效分析的重要性}：在研究设计阶段，我们需要确定足够的样本量来检测预期的效应。如果保护措施预期能将梅花鹿密度从2.5只提高到4只，通过功效分析我们可以计算出需要监测多少个样区才能有80\%的概率检测到这个差异。这避免了样本过小导致无法发现真实效应，也避免了样本过大造成资源浪费。
-
-\textbf{生态学意义与统计显著性}：即使统计检验显示保护措施显著提高了梅花鹿密度，我们还需要考虑生态学意义。效应大小告诉我们保护措施带来的实际改善程度，置信区间提供了效应估计的不确定性范围。这些信息与统计显著性一起，构成了完整的科学证据。
-
-这个梅花鹿保护案例将贯穿本章的各个部分，帮助我们理解不同假设检验方法如何应用于具体的生态学问题。通过这个连贯的案例，我们将看到统计方法如何从不同角度回答同一个生态学问题，以及如何整合多种证据得出全面的科学结论。
-
 \hypertarget{ux5047ux8bbeux68c0ux9a8cux7684ux57faux672cux6b65ux9aa4}{%
 \subsection{假设检验的基本步骤}\label{ux5047ux8bbeux68c0ux9a8cux7684ux57faux672cux6b65ux9aa4}}
 
-假设检验虽然在不同情境下使用不同的统计方法，但都遵循一个通用的基本流程。理解这个通用流程有助于我们从更宏观的角度把握假设检验的本质，无论面对何种统计检验方法，都能保持清晰的思路。
-
-\textbf{假设检验的通用流程}：
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \textbf{明确研究问题与假设设定}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    将生态学问题转化为统计问题（例如：梅花鹿保护措施是否有效？）
-  \item
-    设定零假设（\(H_0\)）和备择假设（\(H_1\)）（详见下文零假设与备择假设小节）
-  \item
-    确定检验类型（单侧或双侧）（详见下文零假设与备择假设小节）
-  \end{itemize}
-\item
-  \textbf{选择适当的统计检验方法}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \textbf{经典参数检验}：基于理论分布（如\(t\)检验、\emph{F}检验、\(\chi^2\)检验）（详见下文单样本检验、双样本检验、多样本检验小节）
-  \item
-    \textbf{非参数检验}：不依赖分布假设（如符号检验、秩和检验）（详见下文非参数检验方法小节）
-  \item
-    \textbf{模拟方法}：基于随机化或重抽样（如置换检验、蒙特卡洛检验）（详见下文蒙特卡洛检验小节）
-  \end{itemize}
-
-  例如，在梅花鹿保护研究中，由于我们有保护前和保护后的配对数据，应该选择配对样本\(t\)检验。
-\item
-  \textbf{设定显著性水平（\(\alpha\)）}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    通常设定为0.05，表示愿意接受5\%的第一类错误风险（详见下文显著性水平小节）
-  \item
-    在某些高风险研究中可能使用更严格的水平（如0.01）
-  \end{itemize}
-
-  在梅花鹿保护研究中，我们设定\(\alpha\)=0.05，表示愿意接受5\%的错误宣称保护措施有效的风险。
-\item
-  \textbf{收集数据并计算检验统计量}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    确保数据质量（独立性、代表性等）
-  \item
-    计算适当的检验统计量（详见下文检验统计量与p值小节）
-  \end{itemize}
-
-  在梅花鹿研究中，我们收集保护前和保护后的种群密度数据，计算配对差异的均值和标准差，进而计算\(t\)统计量。
-\item
-  \textbf{确定p值或临界值}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    \textbf{经典方法}：基于理论分布计算p值（详见下文检验统计量与p值小节）
-  \item
-    \textbf{模拟方法}：通过随机化构建零分布，计算经验p值（详见下文蒙特卡洛检验小节）
-  \end{itemize}
-
-  在梅花鹿研究中，我们基于\(t\)分布计算p值，评估在零假设下观测到当前种群增长的概率。
-\item
-  \textbf{做出统计决策}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    如果p值 \textless{} \(\alpha\)，拒绝零假设
-  \item
-    如果p值 ≥ \(\alpha\)，不拒绝零假设
-  \end{itemize}
-
-  例如，如果梅花鹿研究的p值小于0.05，我们拒绝零假设，有统计证据表明保护措施确实有效。
-\item
-  \textbf{解释结果并考虑生态学意义}
-
-  \begin{itemize}
-  \tightlist
-  \item
-    统计显著性 \(\neq\) 生态学重要性
-  \item
-    结合效应大小、置信区间和专业知识（详见下文效应大小与置信区间小节）
-  \item
-    考虑研究的局限性和潜在偏差
-  \end{itemize}
-
-  在梅花鹿研究中，即使统计上显著，我们还需要评估种群增长的生态学意义：这种增长是否足以维持种群的长期生存？是否达到了保护目标？
-\end{enumerate}
-
-\textbf{模拟方法在假设检验中的特殊步骤}：
-
-对于基于模拟的检验方法（如置换检验、蒙特卡洛检验），第5步需要特别处理：
+假设检验遵循统一的逻辑框架：(1) 将生态学问题转化为零假设和备择假设；(2) 根据实验设计和数据类型选择检验方法（参数检验、非参数检验或模拟方法）；(3) 设定显著性水平\(\alpha\)（通常0.05）；(4) 收集数据并计算检验统计量；(5) 基于理论分布或模拟构建的零分布计算p值；(6) 比较p值与\(\alpha\)做出统计决策；(7) 结合效应大小和生态学知识解释结果。基于模拟的方法在第5步中需要特别注意：
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -9557,86 +8090,12 @@ Residuals & 33 & 42.46475 & 1.286811 & NA & NA\\
 
 图 \ref{fig:multiple-comparison-combined-plot} 通过均值图（左侧）和箱线图（右侧）并排展示了三种保护措施下梅花鹿种群密度的统计特征。在分析流程上，首先使用方差分析检验总体差异，若显著再使用Tukey HSD（所有组对比较）、Bonferroni校正（最保守）或FDR控制（平衡发现力与错误控制）进行事后多重比较。
 
-\hypertarget{ux591aux91cdux6bd4ux8f83ux6821ux6b63ux6548ux679cux7684ux53efux89c6ux5316}{%
-\subsection{多重比较校正效果的可视化}\label{ux591aux91cdux6bd4ux8f83ux6821ux6b63ux6548ux679cux7684ux53efux89c6ux5316}}
-
-让我们通过另一个可视化来理解多重比较校正如何影响p值的解释：
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/multiple-comparison-visualization-1} 
-
-}
-
-\caption{多重比较校正效果的可视化：比较未校正、Bonferroni校正和FDR控制三种方法对p值的影响。通过颜色和形状的组合区分不同效应类型和校正方法。}\label{fig:multiple-comparison-visualization}
-\end{figure}
-
-图 \ref{fig:multiple-comparison-visualization} 展示了多重比较校正效果的直观可视化。该图模拟了20个假设检验的情景（15个无真实效应，5个有真实效应），采用三面板布局分别显示未校正、Bonferroni校正和FDR控制三种方法处理后的p值。可直观看到：未校正时假阳性较多，Bonferroni最保守但可能错过真实效应，FDR控制在两者间取得平衡。
-
-\hypertarget{ux5b9eux7528ux5efaux8baeux4e0eux6700ux4f73ux5b9eux8df5}{%
-\subsection{实用建议与最佳实践}\label{ux5b9eux7528ux5efaux8baeux4e0eux6700ux4f73ux5b9eux8df5}}
-
-\textbf{1. 选择合适的校正方法}
-
-\begin{longtable}[]{@{}lll@{}}
-\caption{\label{tab:multiple-comparison-recommendation} 多重比较校正方法的推荐}\tabularnewline
-\toprule\noalign{}
-研究情境 & 推荐方法 & 理由 \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-研究情境 & 推荐方法 & 理由 \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-预先计划的少量比较 & Bonferroni & 简单保守，严格控制第一类错误 \\
-方差分析后的事后比较 & Tukey HSD & 专门设计，考虑所有组对比较 \\
-大规模探索性研究 & FDR控制 & 平衡发现力和错误控制 \\
-生态风险评估 & Bonferroni & 保守性有助于避免假阳性 \\
-生态基因组学 & FDR控制 & 处理大量基因表达数据 \\
-\end{longtable}
-
-\textbf{2. 分析流程要点}：先进行方差分析检验总体差异，只有在总体差异显著时才进行事后多重比较；根据研究是验证性还是探索性选择校正方法；在论文中明确报告校正方法和调整后的p值。
-
-\textbf{3. R语言实现}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 常用的多重比较校正函数}
-\FunctionTok{TukeyHSD}\NormalTok{(aov\_result)                                    }\CommentTok{\# Tukey HSD检验}
-\FunctionTok{pairwise.t.test}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{response, data}\SpecialCharTok{$}\NormalTok{group, }\AttributeTok{p.adjust.method =}\NormalTok{ “bonferroni”)  }\CommentTok{\# Bonferroni校正}
-\FunctionTok{pairwise.t.test}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{response, data}\SpecialCharTok{$}\NormalTok{group, }\AttributeTok{p.adjust.method =}\NormalTok{ “BH”)          }\CommentTok{\# FDR控制}
-\FunctionTok{p.adjust}\NormalTok{(p\_values, }\AttributeTok{method =}\NormalTok{ “holm”)                      }\CommentTok{\# Holm校正}
-\FunctionTok{p.adjust}\NormalTok{(p\_values, }\AttributeTok{method =}\NormalTok{ “fdr”)                       }\CommentTok{\# FDR控制}
-\FunctionTok{p.adjust}\NormalTok{(p\_values, }\AttributeTok{method =}\NormalTok{ “BY”)                        }\CommentTok{\# Benjamini{-}Yekutieli}
-\end{Highlighting}
-\end{Shaded}
-
-多重比较校正不是统计''魔术''，而是基于概率理论的严谨方法。理解其原理并正确应用，将使你的生态学研究更加科学和可信。
-
-在掌握了如何避免多重比较导致的假阳性问题后，我们需要关注另一个同样重要的统计问题，统计功效。即使我们使用了正确的统计检验和多重比较校正，如果研究设计本身缺乏足够的检测能力，我们仍然可能错过真实的生态效应。功效分析正是为此目的而设计的统计工具，它帮助我们在研究设计阶段就评估检测预期效应的可能性。
-
 \hypertarget{ch06-conformal-prediction}{%
 \subsection{Conformal Prediction：AI时代的无分布不确定性量化}\label{ch06-conformal-prediction}}
 
-在我们掌握了经典假设检验和多重比较校正的完整框架之后，一个更深层的问题值得我们反思：这些方法共同依赖着一个隐含的前提，我们对数据的分布形式有所假设，或者至少对检验统计量的抽样分布有所了解。\(t\)检验假设正态性，\(F\)检验假设方差齐性，甚至非参数检验也隐含着对秩次分布的认识。然而，当我们面对真正的生态数据，偏态分布的物种丰度、零膨胀的计数数据、空间自相关的群落组成、非线性交互的生态过程，这些优雅的理论框架常常显得勉强。我们就像试图用一套精密的几何工具去测量一片不断变换形状的云。
+传统置信区间面临三重困境：依赖分布假设、要求模型正确指定、需要大样本渐近保证。生态数据（偏态、零膨胀、空间自相关）常常违反这些条件。Conformal Prediction（共形预测）提供了一种分布无关、模型无关的预测区间构造方法，在极弱的可交换性假设下具有有限样本有效性保证。
 
-这正是Conformal Prediction（共形预测）作为一种革命性方法进入我们视野的背景。它的核心承诺极其简单，却又极具力量：在几乎不依赖任何分布假设的情况下，为任意模型的每个预测提供具有有限样本保证的预测区间。
-
-\textbf{传统置信区间的三重困境}
-
-要理解Conformal Prediction的突破性，我们必须先理解传统置信区间所面临的困境。第一重困境是分布假设的束缚：经典置信区间的构造依赖于检验统计量的理论分布，均值的置信区间需要正态分布的假设（或大样本的中心极限定理保证），回归系数的置信区间需要残差正态性的假设，方差比的置信区间则依赖于\(F\)分布。当这些假设与生态数据的真实特征相悖时，置信区间就失去了其名义覆盖率的数学保证。第二重困境是模型依赖的脆弱性：即使在最简单的线性回归中，置信区间的有效性也依赖于模型被正确指定，如果真实的生态关系是非线性的，而我们的模型是线性的，那么所有基于模型的标准误和置信区间都将偏离真实的不确定性。第三重困境是渐近性质的局限：许多置信区间方法仅在大样本下具有理论保证，而生态学研究中宝贵的实地数据往往来之不易，有限样本下的实际表现可能远逊于理论承诺。
-
-这三重困境在生态学中不是特例，而是常态。设想我们在预测不同森林斑块中的碳储量：数据来自不同年份、不同调查方法、不同空间尺度，碳储量呈现出右偏分布（少数斑块碳储量极高），并且邻近斑块之间存在空间自相关。在这样的数据面前，基于正态线性回归的置信区间还能提供多少实质性的信息？
-
-\textbf{Conformal Prediction的核心思想}
-
-Conformal Prediction的优雅之处在于，它绕过了所有这些理论障碍，直接从数据本身构建不确定性度量。其工作原理可以用一个简洁的逻辑链条来描述。
-
-第一步，\textbf{保留校准集}。我们将已有的观测数据分为两部分：训练集用来拟合预测模型，校准集则被''保留''起来，专门用于评估预测误差。这种分割不是随意的，校准集在模型训练过程中从未被使用，因此它为我们提供了一个无偏的误差评估窗口。
-
-第二步，\textbf{计算校准残差}。我们在校准集上运行已经训练好的模型，得到每个校准样本的预测值和预测误差。这些误差的集合，而非任何理论分布，将成为我们量化预测不确定性的基础。值得注意的是，这一步对模型本身没有任何限制：它可以是线性回归、随机森林、梯度提升机，甚至是深度学习模型。Conformal Prediction是模型无关的。
+其核心思想简洁而强大：保留一个校准集，计算模型在其中的残差分布，用残差分位数构造预测区间，无需任何理论分布假设。该方法对模型类型无限制，适用于线性回归、随机森林或深度学习。
 
 第三步，\textbf{用残差分位数构造预测区间}。对于每一个新的预测，我们将校准残差的经验分位数''附加''到点预测上。具体而言，如果要构造一个\(1-\alpha\)置信水平的预测区间，我们找到校准残差绝对值的第\(\lceil (n_{cal}+1)(1-\alpha) \rceil / n_{cal}\)分位数，记为\(q\)，则预测区间为\([\hat{y}_{new} - q, \hat{y}_{new} + q]\)。这个区间不需要任何关于正态性、方差齐性或模型正确性的假设。
 
@@ -9899,19 +8358,7 @@ Conformal Prediction并非万能。它的覆盖保证依赖于数据可交换性
 
 \textbf{最终}，基于模拟的方法为现代AI方法提供了直接的思想源头。Bootstrap的重采样思想直接催生了Bagging和Random Forest，随机森林并非从天而降的''黑箱魔法''，而是统计重采样思想在模型层面的自然延伸。我们在梅花鹿保护案例中也将看到，同样的模拟推断逻辑可以应用于物种分布模式、群落构建机制等更复杂的生态学问题。林小雨从经典检验走向模拟方法的旅程，也正是统计思维从理论驱动走向数据驱动的缩影。
 
-为了更具体地理解这种方法的实际价值，让我们继续第6章中梅花鹿保护的故事。假设我们在梅花鹿自然保护区内设置了多个固定监测样线，并精确记录了梅花鹿个体的空间坐标。观察发现，梅花鹿在某些区域呈现出明显的聚集分布特征，而另一些区域则相对分散。
-
-为了客观量化这种分布模式，我们采用Ripley's K函数作为统计指标。然而，这个函数的理论分布极其复杂，特别是在考虑边界效应和生境异质性的情况下。
-
-此时，基于模拟的方法展现出其独特优势：我们可以在计算机上模拟成千上万次完全空间随机过程，每次都在相同的保护区范围内随机分布相同数量的梅花鹿个体，然后计算每次模拟的Ripley's K函数值。通过这种方式，我们构建了该统计量在零假设（梅花鹿分布完全随机）下的经验分布。
-
-将实际观测的Ripley's K函数值与这个经验分布进行比较，如果观测值落在分布的极端区域（如前5\%或后5\%），我们就可以得出梅花鹿分布模式显著偏离随机期望的结论。这种分析方法为理解梅花鹿空间分布的形成机制提供了有力的统计支持。
-
-基于模拟的统计推断方法在梅花鹿保护的多个研究领域都展现出强大的应用潜力。在种群遗传学研究中，这种方法帮助检验梅花鹿基因型频率是否偏离Hardy-Weinberg平衡；保护效果评估中，生态学家利用它比较不同保护措施下的种群动态差异；栖息地适宜性分析中，研究人员则借助它分析环境因子与梅花鹿分布的非随机关联。面对这些多样化的研究问题，基于模拟的方法提供了灵活而可靠的统计解决方案。
-
-从方法学角度看，基于模拟的假设检验主要分为两大类型：置换检验和蒙特卡洛方法。置换检验通过随机重排观测数据的标签来构建零分布，属于非参数检验范畴，不依赖于特定的分布假设。蒙特卡洛方法则是一个更广泛的概念，涵盖了所有基于随机模拟的统计推断技术。
-
-在梅花鹿保护实践中，蒙特卡洛方法主要包含两种形式：参数化蒙特卡洛检验基于理论模型生成模拟数据来构建零分布；非参数化蒙特卡洛方法则通过观测数据的重抽样来实现统计推断，其中最具代表性的就是\textbf{自助法（bootstrap）}。自助法检验通过有放回的重抽样来估计统计量的抽样分布，既可以构建置信区间，也能进行假设检验，从概念上可以视为蒙特卡洛方法的一种特殊形式。
+以梅花鹿保护为例：为检验梅花鹿空间分布是否显著偏离随机，我们可以用计算机模拟数千次完全空间随机过程，构建Ripley's K函数在零假设下的经验分布，然后将观测值与这个分布比较。基于模拟的假设检验主要分两类：置换检验（随机重排标签构造零分布）和蒙特卡洛方法（含参数化模拟和自助法bootstrap）。这两种方法在梅花鹿保护的种群遗传学、栖息地评估和保护效果分析中均有广泛应用。
 
 这些方法在梅花鹿保护研究中日益重要的原因在于它们能够有效处理生态数据的复杂性特征。梅花鹿保护数据通常具有空间自相关性、时间序列依赖性、异方差性等特点，这些特性往往使得传统参数检验的前提条件难以满足。相比之下，基于模拟的方法更加灵活，不依赖于严格的前提假设，让数据本身揭示其内在规律。
 
@@ -10849,7 +9296,7 @@ Bagging和Random Forest的方差分解分析还为我们理解模型选择提供
 \end{Shaded}
 
 \begin{verbatim}
-## Time Stamp:  Mon Jun  8 19:35:34 2026 
+## Time Stamp:  Tue Jun  9 06:04:39 2026 
 ## Reproducible:  
 ## Number of Replications:  
 ## Elapsed Time:  0.21 secs 
@@ -11417,151 +9864,6 @@ temperature & 0.4966745 & 0.0224552 & 22.118467 & 0.0e+00\\
 \end{Highlighting}
 \end{Shaded}
 
-为了直观展示R²与调整R²在变量选择中的关键差异，我们生成了对比图（见\ref{fig:r2-adj-r2-comparison}）。该图形清晰地揭示了两种指标在模型选择中的不同行为：蓝色线条代表R²值，它随着自变量数量的增加而持续上升，即使添加的是与因变量无关的随机噪声变量；红色线条代表调整R²值，它在真实变量数量（2个）之后开始下降，有效地惩罚了模型复杂度。这种对比为生态学建模提供了重要启示：在变量选择过程中，应该优先参考调整R²而非R²，以避免过度拟合问题，确保模型具有良好的泛化能力。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/r2-adj-r2-comparison-1} 
-
-}
-
-\caption{R²与调整R²随自变量数量变化的对比：调整R²对无关变量施加惩罚，防止过度拟合。}\label{fig:r2-adj-r2-comparison}
-\end{figure}
-
-\begin{verbatim}
-## === R²与调整R²差异演示 ===
-## 
-## 当添加无关变量时：
-## - R²持续增加（蓝色线），即使添加的是随机噪声
-## - 调整R²先增加后减少（红色线），惩罚模型复杂度
-## - 最优模型在自变量数量=2时（真实关系）
-## 
-## 生态学启示：使用调整R²选择模型，避免过度拟合
-\end{verbatim}
-
-\textbf{整体模型显著性 (F-statistic and p-value)}
-
-\begin{itemize}
-\tightlist
-\item
-  基于F统计量，检验所有自变量联合是否对因变量有显著影响
-\item
-  原假设：所有自变量的系数都为0（模型无意义）
-\item
-  备择假设：至少有一个自变量的系数不为0
-\item
-  生态学意义：p \textless{} 0.05表示模型整体显著，即所考虑的环境因子组合确实对生态响应有显著影响
-\end{itemize}
-
-为了直观理解整体模型显著性的概念，我们生成了对比图（见\ref{fig:model-significance-comparison}）。该图形通过并排展示显著模型与不显著模型的差异，帮助读者直观把握F检验的实际含义：左图显示显著模型（p \textless{} 0.05），其中深绿色散点清晰地围绕红色回归线分布，表明环境因子对生态响应存在真实的系统性影响；右图显示不显著模型（p \textgreater{} 0.05），灰色散点呈现随机分布模式，回归线缺乏实际解释力。这种视觉对比为生态学研究者提供了判断模型有效性的直观依据，强调了统计显著性在生态关系验证中的重要性。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/model-significance-comparison-1} 
-
-}
-
-\caption{整体模型显著性比较：显著模型（左）与不显著模型（右）的对比。}\label{fig:model-significance-comparison}
-\end{figure}
-
-\begin{verbatim}
-## === 整体模型显著性解释 ===
-## 
-## 显著模型 (左图):
-## - p = 0 < 0.05
-## - 拒绝原假设：环境因子对生态响应有显著影响
-## - 生态学意义：所研究的生态关系确实存在
-## 
-## 
-## 不显著模型 (右图):
-## - p = 0.5368 > 0.05
-## - 不能拒绝原假设：没有证据表明环境因子有显著影响
-## - 生态学意义：可能需要考虑其他环境因子或更大的样本量
-\end{verbatim}
-
-在生态学研究中，我们需要特别关注：
-- 系数的生态学意义（方向和大小）
-- 系数的统计显著性（p值）
-- 模型的解释力（R²和调整R²）
-- 残差是否符合模型假设
-
-\hypertarget{ux7ebfux6027ux56deux5f52ux4e0eux795eux7ecfux7f51ux7edcux4eceux7edfux8ba1ux89c6ux89d2ux770bux6df1ux5ea6ux5b66ux4e60}{%
-\section{线性回归与神经网络：从统计视角看深度学习}\label{ux7ebfux6027ux56deux5f52ux4e0eux795eux7ecfux7f51ux7edcux4eceux7edfux8ba1ux89c6ux89d2ux770bux6df1ux5ea6ux5b66ux4e60}}
-
-\hypertarget{ux7ebfux6027ux56deux5f52-ux5355ux5c42ux5355ux795eux7ecfux5143ux795eux7ecfux7f51ux7edc}{%
-\subsection{线性回归 = 单层单神经元神经网络}\label{ux7ebfux6027ux56deux5f52-ux5355ux5c42ux5355ux795eux7ecfux5143ux795eux7ecfux7f51ux7edc}}
-
-当我们理解了线性回归的基本原理后，一个令人惊讶的数学事实值得深思：最简单的线性回归与最复杂的深度学习之间，实际上共享同一个数学起点。将这两端连接起来，不仅帮助我们理解深度学习的统计基础，也让我们从一个新的视角重新审视线性回归这个''老朋友''。
-
-\textbf{数学上的完全等价}。考虑一个最简单的神经网络，只有一个输入层和一个输出层，没有隐藏层，没有激活函数。这个网络的数学表达式是什么？正是我们熟悉的线性回归公式：
-
-\[y = wx + b\]
-
-其中\(w\)是权重，\(b\)是偏置，\(x\)是输入特征，\(y\)是预测输出。这和我们之前反复使用的线性回归模型\(y = \beta_0 + \beta_1 x\)在数学上是完全相同的，只是符号不同：\(\beta_1\)变成了\(w\)，\(\beta_0\)变成了\(b\)。如果将这个单神经元扩展为接收多个输入（对应多元线性回归），则有：
-
-\[y = \sum_{i=1}^{p} w_i x_i + b = \mathbf{w}^T \mathbf{x} + b\]
-
-这恰好对应于多元线性回归\(y = \beta_0 + \beta_1 x_1 + \cdots + \beta_p x_p\)。在神经网络框架中，这就是一个没有任何激活函数的全连接层（Fully Connected Layer）。两边使用完全相同的数学结构，只是用来解释这个结构的''语言''不同，统计学家说''回归系数''，机器学习工程师说''权重矩阵''；统计学家说''最小二乘估计''，机器学习工程师说''均方误差损失函数下的经验风险最小化''。
-
-\textbf{解析解与梯度下降：殊途同归}。线性回归之所以在统计学中享有特殊地位，很大程度上是因为它拥有解析解。通过正态方程（Normal Equation）：
-
-\[\hat{\boldsymbol{\beta}} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}\]
-
-我们可以一次性、精确地求出最优参数。当样本量\(n\)和特征数\(p\)都较小时，这是最直接、最优雅的求解方式。然而，矩阵求逆的计算复杂度为\(O(p^3)\)，当\(p\)增大时，计算代价急剧增长。在深度学习的典型场景中，\(p\)可能达到数百万甚至数十亿，直接求解正态方程在计算上完全不可行。
-
-梯度下降（Gradient Descent）提供了一条不同的路径。通过反复迭代更新参数：
-
-\[\boldsymbol{\beta}^{(t+1)} = \boldsymbol{\beta}^{(t)} - \eta \nabla_{\boldsymbol{\beta}} \mathcal{L}(\boldsymbol{\beta}^{(t)})\]
-
-其中\(\eta\)是学习率，\(\mathcal{L}\)是损失函数（在线性回归中通常为均方误差\(\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2\)），我们逐步逼近最优解。梯度下降的每次迭代只需要\(O(np)\)的计算量，虽然需要多次迭代，但避免了矩阵求逆的\(O(p^3)\)瓶颈。值得注意的是，当损失函数是凸函数时（均方误差损失恰好满足这一条件），梯度下降保证收敛到全局最优解，也就是说，它最终会找到和解析解相同的结果。
-
-重要的是认识到：解析解和梯度下降求解的是\textbf{同一个优化问题}，只是解法不同。这就像我们既可以用求根公式解一元二次方程，也可以用牛顿迭代法逐步逼近，两种方法给出相同的答案（在数值精度范围内），但适用的场景截然不同。
-
-\textbf{核心启示：一个连续谱系而非二元选择}。线性回归是深度学习的特例，具体来说，是单层、无激活函数、使用均方误差损失的特例。深度学习则是线性回归的非线性推广，通过堆叠多层、引入非线性激活函数（如ReLU、sigmoid、tanh）、使用任意损失函数，将线性模型扩展为能够逼近任意复杂函数的强大工具。
-
-从这个角度看，线性回归和深度神经网络不是非此即彼的两个选项，而是模型复杂度连续谱系上的不同位置。在这两端之间，还有广义线性模型（变化连接函数和误差分布）、广义可加模型（变化基函数形式）、单隐藏层神经网络（变化基函数的学习方式）等无数中间状态。当你为某个生态学问题选择使用线性回归还是神经网络时，本质上是在这个谱系上选择一个合适的复杂度水平，这种选择应该由数据特征（样本量、变量数、关系复杂度）、研究目标（推断还是预测）和可解释性需求共同决定，而非由对某种方法的教条式偏好所驱使。
-
-\begin{quote}
-\textbf{尝试与AI协作}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  请AI用Python（PyTorch或TensorFlow）实现一个单层线性神经网络（无激活函数，使用MSELoss），并在你熟悉的生态数据集上训练。比较其参数估计结果与R语言\texttt{lm()}函数的输出是否一致（在数值精度范围内）。
-\item
-  向AI提问：当特征数\(p\)很大时（例如\(p=10000\)），正态方程和梯度下降的计算代价分别是多少？在什么条件下，梯度下降会收敛到与解析解完全相同的结果？
-\end{enumerate}
-
-\textbf{批判性评估}：AI可能声称''线性回归和神经网络完全等价''，这是对数学结构的描述，但两者的推断框架不同：线性回归附带完整的假设检验体系（\(t\)检验、\(F\)检验、置信区间、预测区间），而直接使用神经网络框架时通常只关注预测精度。在生态学研究中，如果我们关心的不仅是预测还有统计推断（例如：某个环境因子是否显著影响物种分布？该效应的95\%置信区间是多少？），线性回归的经典推断框架可能比纯预测导向的神经网络更直接适用。两种视角各有其价值，不互相替代。
-\end{quote}
-
-\hypertarget{ux56deux5f52ux8bcaux65adux9a8cux8bc1ux6a21ux578bux7684ux751fux6001ux5b66ux5408ux7406ux6027}{%
-\section{回归诊断：验证模型的生态学合理性}\label{ux56deux5f52ux8bcaux65adux9a8cux8bc1ux6a21ux578bux7684ux751fux6001ux5b66ux5408ux7406ux6027}}
-
-在生态学研究中，仅仅建立回归模型是不够的，我们还需要通过回归诊断来验证模型是否满足统计假设。回归诊断是确保研究结论可靠性的关键步骤，它帮助我们检查模型的基本假设是否合理。线性回归模型基于四个核心假设：线性性、独立性、正态性和同方差性。
-
-线性性假设要求自变量和因变量之间的关系确实是线性的。然而在生态学实践中，许多生态关系并非简单的直线关系。例如，经典的物种-面积关系通常呈现指数形式，而捕食者-猎物关系可能表现为非线性动态。当真实关系为非线性时，强行使用线性模型会导致系统性的预测偏差。
-
-独立性假设要求观测值之间相互独立。在生态学调查中，这一假设常常受到挑战。当采样点空间距离过近时，可能存在空间自相关；当观测时间间隔较短时，可能存在时间自相关。这种依赖性会低估标准误，导致错误的统计推断。
-
-正态性假设要求残差服从正态分布。这意味着模型的随机误差应该是随机的，没有系统性偏差。生态学数据经常不满足这一假设，特别是计数数据（如物种数量）和比例数据（如覆盖率）。严重的非正态性会影响参数估计的效率和假设检验的有效性。
-
-同方差性假设要求残差的方差在所有自变量水平上保持恒定。在生态学中，异方差性现象十分普遍。例如，在资源丰富的环境中，物种丰富度的变异通常较小；而在资源贫瘠的环境中，由于环境压力的随机性，变异往往更大。这种方差的不一致性会影响参数估计的精度。
-
-\hypertarget{ux56deux5f52ux8bcaux65adux56feux7684ux7cfbux7edfux89e3ux8bfb}{%
-\subsection{回归诊断图的系统解读}\label{ux56deux5f52ux8bcaux65adux56feux7684ux7cfbux7edfux89e3ux8bfb}}
-
-R语言中的\texttt{plot(model)}命令会生成四个重要的诊断图，这些图形提供了直观的视觉工具来评估模型的适用性。每个诊断图都有其特定的诊断目的和解读方法，共同构成了完整的模型评估体系。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 模型准备：使用之前生成的温度与生长速率模型}
-\CommentTok{\# 重新拟合模型用于诊断分析}
-\NormalTok{model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(growth\_rate }\SpecialCharTok{\textasciitilde{}}\NormalTok{ temperature, }\AttributeTok{data =}\NormalTok{ forest\_survey\_data)}
-\end{Highlighting}
-\end{Shaded}
-
 我们使用R语言的\texttt{plot(model,\ which\ =\ 1)}命令生成残差 vs 拟合值图（见\ref{fig:residual-vs-fitted-plot}），这是线性回归诊断中最重要的图形之一。该命令通过\texttt{which\ =\ 1}参数指定生成第一个诊断图，其中横轴显示模型的拟合值（预测值），纵轴显示对应的残差（观测值与预测值之差）。在生态学建模中，这个图形帮助我们验证两个关键假设：线性关系假设（残差应随机分布在0附近）和同方差性假设（残差的变异程度应保持恒定）。通过观察残差的分布模式，我们可以判断模型是否充分捕捉了生态变量之间的真实关系。
 
 \begin{Shaded}
@@ -11798,7 +10100,7 @@ dbh & 0.3733529 & 0.0174277 & 21.422995 & 0.0000000\\
 
 \begin{table}[!h]
 \centering
-\caption{\label{tab:unnamed-chunk-16}多元线性回归模型结果}
+\caption{\label{tab:unnamed-chunk-13}多元线性回归模型结果}
 \centering
 \begin{tabular}[t]{lrrrr}
 \toprule
@@ -11905,172 +10207,6 @@ p值表示在原假设（系数为0）成立的情况下，观察到当前或更
 
 \textbf{基于信息准则的选择}
 使用AIC（赤池信息准则）或BIC（贝叶斯信息准则）来比较不同模型的相对优劣。信息准则平衡了模型拟合优度和复杂度，值越小表示模型越好。
-
-\hypertarget{rux8bedux8a00ux4e2dux7684ux6a21ux578bux9009ux62e9ux5b9eux73b0}{%
-\subsection{R语言中的模型选择实现}\label{rux8bedux8a00ux4e2dux7684ux6a21ux578bux9009ux62e9ux5b9eux73b0}}
-
-让我们通过一个具体的生态学案例来展示变量选择的过程：
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 1. 完整模型}
-\NormalTok{full\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(richness }\SpecialCharTok{\textasciitilde{}}\NormalTok{ area }\SpecialCharTok{+}\NormalTok{ vegetation }\SpecialCharTok{+}\NormalTok{ water\_distance }\SpecialCharTok{+}
-\NormalTok{                   soil\_ph }\SpecialCharTok{+}\NormalTok{ elevation }\SpecialCharTok{+}\NormalTok{ human\_disturbance,}
-                 \AttributeTok{data =}\NormalTok{ bird\_data\_full)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{table}[!h]
-\centering
-\caption{\label{tab:simple-lm-full-model}完整模型结果}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 5.4050454 & 12.9706398 & 0.4167139 & 0.6778480\\
-area & 0.2709460 & 0.0573412 & 4.7251516 & 0.0000081\\
-vegetation & 21.2671960 & 6.7996785 & 3.1276767 & 0.0023525\\
-water\_distance & -4.5177805 & 1.0699676 & -4.2223528 & 0.0000563\\
-soil\_ph & -0.9887673 & 1.4002666 & -0.7061279 & 0.4818738\\
-\addlinespace
-elevation & 0.0004004 & 0.0067570 & 0.0592501 & 0.9528800\\
-human\_disturbance & 8.5849872 & 5.9294367 & 1.4478588 & 0.1510194\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-完整模型的结果如表\ref{tab:simple-lm-full-model}所示，包含了所有环境因子的系数估计。通过比较完整模型与逐步回归选择模型的结果，我们可以看出变量选择过程如何识别出真正重要的环境驱动因子。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 2. 逐步回归选择}
-\NormalTok{step\_model }\OtherTok{\textless{}{-}} \FunctionTok{step}\NormalTok{(full\_model, }\AttributeTok{direction =} \StringTok{"both"}\NormalTok{, }\AttributeTok{trace =} \DecValTok{0}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{table}[!h]
-\centering
-\caption{\label{tab:simple-lm-step-model}逐步回归模型结果}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 4.6443806 & 5.2548668 & 0.8838246 & 0.3789990\\
-area & 0.2614311 & 0.0560943 & 4.6605677 & 0.0000102\\
-vegetation & 19.4402062 & 6.4829201 & 2.9986805 & 0.0034529\\
-water\_distance & -4.4616331 & 1.0642605 & -4.1922379 & 0.0000615\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-逐步回归选择的结果如表\ref{tab:simple-lm-step-model}所示，该模型通过统计方法自动识别出了对鸟类丰富度影响最显著的环境因子。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 3. 基于AIC的模型比较}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{=== 基于AIC的模型比较 ===}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## === 基于AIC的模型比较 ===
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 构建几个候选模型}
-\NormalTok{model1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(richness }\SpecialCharTok{\textasciitilde{}}\NormalTok{ area }\SpecialCharTok{+}\NormalTok{ vegetation, }\AttributeTok{data =}\NormalTok{ bird\_data\_full)}
-\NormalTok{model2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(richness }\SpecialCharTok{\textasciitilde{}}\NormalTok{ area }\SpecialCharTok{+}\NormalTok{ vegetation }\SpecialCharTok{+}\NormalTok{ water\_distance,}
-             \AttributeTok{data =}\NormalTok{ bird\_data\_full)}
-\NormalTok{model3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(richness }\SpecialCharTok{\textasciitilde{}}\NormalTok{ area }\SpecialCharTok{+}\NormalTok{ vegetation }\SpecialCharTok{+}\NormalTok{ water\_distance }\SpecialCharTok{+}\NormalTok{ soil\_ph,}
-             \AttributeTok{data =}\NormalTok{ bird\_data\_full)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 模型1 (面积+植被) AIC: 858.2375 
-## 模型2 (面积+植被+水源) AIC: 843.4262 
-## 模型3 (面积+植被+水源+pH) AIC: 845.1161 
-## 逐步回归模型 AIC: 843.4262
-\end{verbatim}
-
-为了更深入地理解各环境因子对鸟类丰富度的相对贡献，我们使用LMG（Lindeman, Merenda and Gold）方法进行变量重要性分析。LMG方法通过分解R²来计算每个预测变量对模型解释力的独立贡献，能够准确评估变量在多元回归中的相对重要性。变量重要性分析的结果如图\ref{fig:variable-importance-plot}所示，该柱状图直观地展示了各环境因子在解释鸟类丰富度变异中的相对权重。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/variable-importance-plot-1} 
-
-}
-
-\caption{变量相对重要性柱状图：使用LMG方法计算的各预测变量对模型解释的相对贡献度}\label{fig:variable-importance-plot}
-\end{figure}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 5. 多重共线性诊断}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{=== 多重共线性诊断 ===}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## === 多重共线性诊断 ===
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{vif\_values }\OtherTok{\textless{}{-}} \FunctionTok{vif}\NormalTok{(full\_model)}
-\FunctionTok{print}\NormalTok{(vif\_values)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##              area        vegetation    water_distance           soil_ph 
-##          1.041265          1.111093          1.019863          1.044075 
-##         elevation human_disturbance 
-##          1.056749          1.102172
-\end{verbatim}
-
-多重共线性诊断的VIF值解释标准如下：当VIF值小于5时，多重共线性程度在可接受范围内；当VIF值在5到10之间时，存在中等程度的多重共线性问题；当VIF值大于10时，表明存在严重的多重共线性，需要采取相应措施进行处理。
-
-\hypertarget{ux751fux6001ux5b66ux53d8ux91cfux9009ux62e9ux7684ux5b9eux8df5ux5efaux8bae}{%
-\subsection{生态学变量选择的实践建议}\label{ux751fux6001ux5b66ux53d8ux91cfux9009ux62e9ux7684ux5b9eux8df5ux5efaux8bae}}
-
-在生态学研究中，变量选择应该结合统计方法和生态学知识：
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  \textbf{优先考虑生态学意义}：即使统计上不显著，具有重要生态学意义的变量也应考虑保留
-\item
-  \textbf{注意变量间的生态学关系}：避免将高度相关的生态因子同时纳入模型
-\item
-  \textbf{考虑变量的测量尺度}：确保变量的测量尺度与研究问题相匹配
-\item
-  \textbf{验证模型的生态学合理性}：最终模型应该能够提供有意义的生态学解释
-\end{enumerate}
-
-\hypertarget{ux6a21ux578bux9009ux62e9ux7684ux6ce8ux610fux4e8bux9879}{%
-\subsection{模型选择的注意事项}\label{ux6a21ux578bux9009ux62e9ux7684ux6ce8ux610fux4e8bux9879}}
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  \textbf{样本量要求}：变量选择需要足够的样本量，一般建议每个变量至少10-15个观测
-\item
-  \textbf{多重比较问题}：逐步回归可能增加第一类错误的风险
-\item
-  \textbf{稳定性检验}：建议使用交叉验证来检验所选模型的稳定性
-\item
-  \textbf{生态学验证}：统计上最优的模型未必是生态学上最有意义的模型
-\end{enumerate}
-
-通过系统的变量选择，我们能够构建既统计可靠又生态学合理的回归模型，为生态学研究和保护决策提供更有价值的科学依据。
 
 \hypertarget{ux5b8cux6574ux751fux6001ux5b66ux6848ux4f8bux5206ux6790ux68eeux6797ux751fux6001ux7cfbux7edfux4e0eux73afux5883ux56e0ux5b50ux7684ux5173ux7cfb}{%
 \subsection{完整生态学案例分析：森林生态系统与环境因子的关系}\label{ux5b8cux6574ux751fux6001ux5b66ux6848ux4f8bux5206ux6790ux68eeux6797ux751fux6001ux7cfbux7edfux4e0eux73afux5883ux56e0ux5b50ux7684ux5173ux7cfb}}
@@ -12637,11 +10773,11 @@ water\_distance & -2.8868698 & 0.4092891 & -7.053375 & 0.0000000\\
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-36-1} 
+{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/unnamed-chunk-27-1} 
 
 }
 
-\caption{物种丰富度与海拔关系的多项式回归：线性与二次多项式的拟合对比。}\label{fig:unnamed-chunk-36}
+\caption{物种丰富度与海拔关系的多项式回归：线性与二次多项式的拟合对比。}\label{fig:unnamed-chunk-27}
 \end{figure}
 
 \begin{verbatim}
@@ -12653,7 +10789,7 @@ water\_distance & -2.8868698 & 0.4092891 & -7.053375 & 0.0000000\\
 
 \begin{table}[!h]
 \centering
-\caption{\label{tab:unnamed-chunk-37}多项式模型摘要}
+\caption{\label{tab:unnamed-chunk-28}多项式模型摘要}
 \centering
 \begin{tabular}[t]{lrrrr}
 \toprule
@@ -12728,129 +10864,6 @@ poly(altitude, degree = 2)2 & -123.18639 & 4.5713852 & -26.94728 & 0\\
 \begin{verbatim}
 ## 二次多项式最优，表明存在单峰或U形关系
 \end{verbatim}
-
-\hypertarget{ux591aux9879ux5f0fux56deux5f52ux7684ux6ce8ux610fux4e8bux9879}{%
-\subsection{多项式回归的注意事项}\label{ux591aux9879ux5f0fux56deux5f52ux7684ux6ce8ux610fux4e8bux9879}}
-
-在使用多项式回归时，我们需要特别注意几个关键问题，这些问题直接影响模型的可靠性和生态学解释的合理性。
-
-\textbf{多重共线性问题}
-
-多项式回归面临的一个核心挑战是多重共线性。当我们在模型中添加自变量的高次项时，这些项之间往往存在高度的相关性。例如，\(x\)与\(x^2\)、\(x^3\)之间通常具有强烈的线性关系。这种多重共线性会导致：
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{参数估计不稳定}：系数的标准误增大，使得统计显著性检验不可靠
-\item
-  \textbf{系数解释困难}：单个系数的生态学意义难以独立解释
-\item
-  \textbf{模型预测精度下降}：虽然拟合优度可能很高，但预测新数据的能力降低
-\end{itemize}
-
-在R语言中，我们可以通过使用\texttt{poly()}函数生成正交多项式来缓解这个问题。正交多项式通过数学变换消除了项之间的相关性，使得每个多项式项都与其他项正交（不相关）。
-
-\textbf{过度拟合风险}
-
-过度拟合是多项式回归中最严重的问题之一。当多项式的阶数过高时，模型会过度适应训练数据中的随机噪声，而不是捕捉真正的生态学关系。让我们通过一个具体的例子来展示过度拟合的严重性：
-
-\hypertarget{ux8fc7ux5ea6ux62dfux5408ux95eeux9898ux6f14ux793a}{%
-\subsection{过度拟合问题演示}\label{ux8fc7ux5ea6ux62dfux5408ux95eeux9898ux6f14ux793a}}
-
-林小雨在尝试多项式回归时，遇到了一个重要的教训：过度拟合。
-
-\textbf{模型评估要点}：过度拟合是生态统计建模中最常见的问题之一。当模型过于复杂时，它会过度适应训练数据中的随机噪声，导致泛化能力下降。通过比较不同复杂度的模型，我们可以直观地理解过度拟合的本质及其对生态学预测的影响。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 拟合不同阶数的多项式}
-\NormalTok{linear\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(species }\SpecialCharTok{\textasciitilde{}}\NormalTok{ altitude, }\AttributeTok{data =}\NormalTok{ overfit\_forest\_data)}
-\NormalTok{quadratic\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(species }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(altitude, }\AttributeTok{degree =} \DecValTok{2}\NormalTok{),}
-                       \AttributeTok{data =}\NormalTok{ overfit\_forest\_data)}
-\NormalTok{overfit\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(species }\SpecialCharTok{\textasciitilde{}} \FunctionTok{poly}\NormalTok{(altitude, }\AttributeTok{degree =} \DecValTok{7}\NormalTok{),}
-                    \AttributeTok{data =}\NormalTok{ overfit\_forest\_data)  }\CommentTok{\# 7次多项式}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{ux6a21ux578bux53efux89c6ux5316ux4e0eux6bd4ux8f83}{%
-\subsection{模型可视化与比较}\label{ux6a21ux578bux53efux89c6ux5316ux4e0eux6bd4ux8f83}}
-
-\textbf{模型评估要点}：可视化是理解模型行为的重要工具。通过绘制不同模型的预测曲线，我们可以直观地看到过度拟合的表现形式。在生态学中，过度拟合的模型往往会产生不合理的预测，这在实际应用中可能导致错误的生态学结论。
-
-图\ref{fig:overfitting-demo}生动地展示了多项式回归中的过度拟合问题。该图通过比较不同复杂度模型的预测曲线，清晰地揭示了过度拟合的特征：7次多项式（紫色线）虽然完美拟合了训练数据点，但产生了不合理的波动，与真实生态关系（黑色虚线）严重偏离；相比之下，二次多项式（绿色线）和线性回归（红色线）虽然拟合程度较低，但更接近真实关系，具有更好的泛化能力。这种可视化对比强调了在生态建模中平衡模型复杂度和泛化性能的重要性。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/overfitting-demo-1} 
-
-}
-
-\caption{多项式回归的过度拟合演示：低次与高次多项式的泛化能力对比。}\label{fig:overfitting-demo}
-\end{figure}
-
-\hypertarget{ux7edfux8ba1ux6307ux6807ux4e0eux4ea4ux53c9ux9a8cux8bc1}{%
-\subsection{统计指标与交叉验证}\label{ux7edfux8ba1ux6307ux6807ux4e0eux4ea4ux53c9ux9a8cux8bc1}}
-
-\textbf{模型评估要点}：R²等拟合优度指标可能误导模型选择，因为它们总是随着模型复杂度增加而提高。交叉验证提供了更可靠的泛化能力评估，它通过模拟模型在新数据上的表现来识别过度拟合问题。
-
-\begin{verbatim}
-## === 模型拟合优度比较 ===
-## 
-## 线性模型 R²: 0.2891 
-## 二次多项式 R²: 0.5268 
-## 7次多项式 R²: 0.9307
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## === 过度拟合的数学解释 ===
-## 
-## 对于n个数据点，n-1次多项式可以完美通过所有点：
-## 数据点数量: 10 
-## 多项式阶数: 7 
-## 自由度: 2 （负值表明过度参数化）
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 计算训练误差和泛化误差（通过留一法交叉验证）}
-\CommentTok{\# 由于数据量小，使用留一法交叉验证}
-
-\CommentTok{\# 二次多项式的留一法交叉验证误差}
-\NormalTok{cv\_quadratic }\OtherTok{\textless{}{-}} \FunctionTok{cv.glm}\NormalTok{(overfit\_forest\_data, quadratic\_model)}\SpecialCharTok{$}\NormalTok{delta[}\DecValTok{1}\NormalTok{]}
-\CommentTok{\# 7次多项式的留一法交叉验证误差}
-\NormalTok{cv\_overfit }\OtherTok{\textless{}{-}} \FunctionTok{cv.glm}\NormalTok{(overfit\_forest\_data, overfit\_model)}\SpecialCharTok{$}\NormalTok{delta[}\DecValTok{1}\NormalTok{]}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## === 留一法交叉验证误差比较 ===
-## 
-## 二次多项式 CV误差: NaN 
-## 7次多项式 CV误差: NaN
-\end{verbatim}
-
-\begin{verbatim}
-## ⚠ 7次多项式可能过度拟合训练数据
-\end{verbatim}
-
-这个例子清楚地展示了过度拟合的本质：7次多项式（紫色曲线）几乎完美地通过了所有10个数据点，R²接近1，但它的预测行为在数据点之间变得极其不稳定，产生了不合理的波动。相比之下，二次多项式（绿色曲线）虽然R²较低，但更接近真实的生态关系（黑色虚线），具有更好的泛化能力。
-
-\textbf{外推风险}
-
-多项式回归在外推预测时存在严重的风险。由于高次项的影响，多项式曲线在训练数据范围之外可能表现出完全不合理的极端行为，包括指数级增长或衰减、不现实的预测值（如负的物种丰富度或无限大的生物量）以及生态学不可解释性，因为外推结果往往缺乏生态学理论基础。在生态学研究中，我们应尽量避免使用多项式模型进行外推预测，特别是在环境条件超出观测范围时。
-
-\textbf{生态学解释挑战}
-
-多项式回归的系数解释在生态学中面临特殊挑战。高阶项如\(x^3\)、\(x^4\)等缺乏直观的生态学含义，系数间的相互依赖由于多重共线性使得单个系数的解释可能误导，而高次多项式的拐点和极值点可能没有明确的生态学对应。因此，在生态学应用中，我们更应关注多项式模型的整体预测能力和曲线形状的生态学合理性，而不是过度解读单个系数的统计显著性。
-
-\hypertarget{ux751fux6001ux5b66ux5e94ux7528ux5efaux8bae}{%
-\subsection{生态学应用建议}\label{ux751fux6001ux5b66ux5e94ux7528ux5efaux8bae}}
-
-林小雨从这次过度拟合的教训中总结出，在生态学研究中应用多项式回归时需要特别注意理论指导、简约原则、谨慎解释、诊断验证和替代方案。具体而言，应优先使用正交多项式减少共线性问题确保模型稳定性，基于生态学理论和AIC准则选择多项式阶数避免过度复杂化，谨慎解释高次项的生态学意义关注整体曲线形状而非单个系数，结合残差分析验证模型假设确保统计可靠性，对于复杂的非线性关系考虑使用更灵活的广义可加模型作为替代。
-
-通过多项式回归，林小雨能够更准确地描述生态系统中复杂的非线性关系，为生态学研究和保护决策提供更可靠的科学依据。她意识到，统计建模如同在森林中寻找路径，既需要技术工具，也需要生态学直觉和经验判断。
 
 \hypertarget{ux591aux9879ux5f0fux56deux5f52ux4e0eux901aux7528ux51fdux6570ux903cux8fd1ux57faux51fdux6570ux7684ux4e24ux6761ux8defux5f84}{%
 \section{多项式回归与通用函数逼近：基函数的两条路径}\label{ux591aux9879ux5f0fux56deux5f52ux4e0eux901aux7528ux51fdux6570ux903cux8fd1ux57faux51fdux6570ux7684ux4e24ux6761ux8defux5f84}}
@@ -12975,27 +10988,7 @@ poly(altitude, degree = 2)2 & -123.18639 & 4.5713852 & -26.94728 & 0\\
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
-\hypertarget{ux7ec3ux4e602ux5929ux7ae5ux5c71ux6811ux6728ux751fux957fux91cfux7684ux591aux56e0ux5b50ux9a71ux52a8ux5206ux6790}{%
-\subsection{练习2：天童山树木生长量的多因子驱动分析}\label{ux7ec3ux4e602ux5929ux7ae5ux5c71ux6811ux6728ux751fux957fux91cfux7684ux591aux56e0ux5b50ux9a71ux52a8ux5206ux6790}}
-
-\textbf{背景}：林小雨意识到光照只是影响树木生长的众多因子之一。她收集了天童山样地中100棵树木的数据，包括年生长量（cm/年）、光照强度、土壤氮含量（g/kg）、土壤含水量（\%）以及邻体竞争指数（基于邻近树木的胸径和距离计算）。她希望识别哪些因子是生长的关键驱动力。
-
-\textbf{数据文件}：\texttt{data/bird\_data\_p1.Rdata}
-
-\textbf{任务}：使用多元线性回归分析所有环境因子对树木生长量的综合影响。使用逐步回归进行变量选择，识别最重要的驱动因子。比较完整模型与简化模型的AIC、R²和调整R²。进行多重共线性诊断，光照和土壤含水量可能高度相关（林冠开阔处光照强但土壤易干燥），计算VIF。对最终模型进行回归诊断，特别注意生长量最大的几棵''超级树''是否是高杠杆或异常值。
-
-\textbf{思考问题}：当光照和土壤含水量高度相关时，回归系数的解释会受什么影响？为什么单因子分析中显著的变量在多因子分析中可能变得不显著？如何根据回归结果向保护区管理者解释哪些环境因素真正在驱动森林生产力？
-
-\hypertarget{ux7ec3ux4e603ux6811ux6728ux80f8ux5f84ux4e0eux6811ux9ad8ux7684ux975eux7ebfux6027ux5173ux7cfbux5efaux6a21}{%
-\subsection{练习3：树木胸径与树高的非线性关系建模}\label{ux7ec3ux4e603ux6811ux6728ux80f8ux5f84ux4e0eux6811ux9ad8ux7684ux975eux7ebfux6027ux5173ux7cfbux5efaux6a21}}
-
-\textbf{背景}：森林碳储量的估算通常依赖树木的胸径-树高关系。林小雨在天童山样地中测量了80棵不同树种树木的胸径（cm）和树高（m）。林业经验告诉她，树高随胸径增长的速度会逐渐减缓，大树的高度增长比幼树慢得多。
-
-\textbf{数据文件}：\texttt{data/lake\_data\_p1.Rdata}
-
-\textbf{任务}：使用简单线性回归分析胸径与树高的关系，绘制散点图及回归线。尝试对数变换（log-log模型）和二次多项式回归来描述胸径-树高的非线性关系。比较三种模型（线性、log-log、二次多项式）的拟合效果和残差分布。基于最佳模型，预测胸径为50 cm的树木的树高，并与胸径10 cm的树木比较生长速率差异。
-
-\textbf{思考问题}：为什么胸径-树高关系在生态学中几乎总是非线性的？log变换的生态学解释是什么（异速生长方程）？当使用log变换后的模型做预测时，如何正确地将预测值转回原始尺度（注意反变换的偏差校正）？
+更多练习见在线资源：\url{https://guochunshen.github.io/ecological-statistics}
 
 \hypertarget{ch09}{%
 \chapter{模型选择与验证：从信息准则到AI评估}\label{ch09}}
@@ -13325,9 +11318,7 @@ vegetation\_only & 0.119 & 812.484 & 820.300 & 2 & 74.486 & 66.671 & 0.00\\
 
 \textbf{核心思想的永恒：复杂度惩罚的多重面孔}。尽管AIC/BIC的具体公式在深度学习场景下失效，但它们所体现的核心思想，用复杂度惩罚来平衡拟合与泛化，不仅没有过时，反而是现代AI中正则化技术的思想先驱。
 
-现代深度学习中的正则化技术，本质上都是不同形式的''隐式复杂度惩罚''。权重衰减（Weight Decay）直接对参数向量的\(\ell_2\)范数施加惩罚\(\lambda \|\mathbf{w}\|^2\)，等价于贝叶斯框架下的高斯先验，其数学形式与岭回归的惩罚项完全一致，这是AIC复杂度惩罚思想最直接的延伸。早停（Early Stopping）在验证误差开始上升时停止训练，以优化轨迹截断的方式隐式地限制了模型的''有效复杂度''，训练步数越少，模型探索的参数空间越小，等价于一种隐式的复杂度约束。Dropout在训练时随机''关闭''部分神经元，迫使网络学习冗余且鲁棒的特征表示，这可以理解为对模型结构的随机扰动约束，防止任意单一神经元对预测产生决定性影响。
-
-这些技术实现的是与AIC相同的哲学目标，防止过拟合、提升泛化能力，但它们以数据驱动的方式（通过验证集上的表现来动态调节）而非渐近理论推导的方式来实现这一目标。可以说，现代AI实践用交叉验证和早停取代了AIC/BIC的数学惩罚项，但完整保留了''平衡拟合与复杂度''这一核心直觉。这种思想在不同时代以不同形式出现的现象，正是统计智慧的深层延续。
+现代深度学习中的正则化技术（权重衰减、早停、Dropout）本质上都是不同形式的''隐式复杂度惩罚''，与AIC的惩罚项共享同一哲学目标：防止过拟合、提升泛化能力。关于正则化与贝叶斯先验的数学等价性，详见第4章贝叶斯推断部分。
 
 \textbf{实用指南：不同场景下的工具选择}。对于生态学研究者来说，理解这些边界意味着在不同场景下选择恰当的工具。对于传统统计模型，线性回归、GLM、GAM、线性混合模型等，AIC和BIC仍然是有效且高效的选择工具。这些模型满足信息准则的推导假设，且数十年的使用历史已经验证了它们的可靠性。
 
@@ -14011,289 +12002,7 @@ caret包为林小雨提供了统一的接口来执行各种机器学习算法和
 \hypertarget{ux6a21ux578bux8bcaux65ad}{%
 \subsection{模型诊断}\label{ux6a21ux578bux8bcaux65ad}}
 
-林小雨在完成了模型选择和验证后，她的导师提醒她还有一个关键步骤：模型诊断。这是确保统计模型可靠性的基础工作，它通过系统检查模型的残差、影响点和假设条件来识别潜在问题。在她的森林生态系统研究中，模型诊断不仅具有统计意义，更重要的是能够揭示数据中可能存在的生态学异常和特殊模式。
-
-\textbf{残差分析}是林小雨学习的模型诊断核心内容。残差是观测值与模型预测值之间的差异，理想的残差应该随机分布，没有明显的模式。通过残差分析，她可以检验模型是否充分捕捉了森林生态系统中的生态关系，是否存在未被解释的系统性变异。
-
-在林小雨的森林研究中，残差分析帮助她发现了重要的生态现象。例如，如果残差显示出明显的空间聚集模式，可能意味着存在未被考虑的空间自相关效应；如果残差与某个环境因子（如地形或微气候）相关，可能意味着该因子对物种分布的影响被低估或高估。
-
-\textbf{影响分析}关注个别森林样地对模型结果的过度影响。在林小雨的生态数据中，某些异常观测可能对模型参数估计产生不成比例的影响。这些异常观测可能代表特殊的森林生态情境，如罕见的生境类型、极端的气候事件或特殊的干扰历史（如火烧迹地、人工林等）。通过识别这些影响点，林小雨不仅能够确保模型的统计稳健性，还能够发现值得深入研究的生态学现象。
-
-模型诊断的生态学意义在于它连接了统计技术与生态学理解。林小雨意识到，一个统计上完美的模型如果无法通过生态学合理性检验，其价值就会大打折扣。例如，她的物种分布模型如果残差显示出明显的海拔梯度模式，可能意味着模型忽略了重要的环境驱动因子。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 加载林小雨的森林模型诊断数据}
-\FunctionTok{load}\NormalTok{(}\StringTok{"data/forest\_diagnostic\_data.rds"}\NormalTok{)}
-
-\CommentTok{\# 林小雨构建树木生长速率的线性回归模型}
-\NormalTok{model\_diagnostic }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(growth\_rate }\SpecialCharTok{\textasciitilde{}}\NormalTok{ canopy\_openness }\SpecialCharTok{+}\NormalTok{ soil\_moisture }\SpecialCharTok{+}
-\NormalTok{                         soil\_nitrogen }\SpecialCharTok{+}\NormalTok{ slope,}
-  \AttributeTok{data =}\NormalTok{ forest\_diagnostic\_data}
-\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-为了系统评估模型假设的满足情况，图\ref{fig:model-diagnostic-residuals}展示了林小雨的森林模型残差诊断图：残差vs拟合值图检验线性关系和方差齐性，Q-Q图检验残差正态性，尺度-位置图检验方差稳定性，残差vs杠杆图识别影响点。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 绘制残差诊断图}
-\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
-\FunctionTok{plot}\NormalTok{(model\_diagnostic)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/model-diagnostic-residuals-1} 
-
-}
-
-\caption{林小雨的森林模型残差诊断图：残差vs拟合值、Q-Q图、尺度-位置图和残差vs杠杆图。通过系统诊断，林小雨检查她的树木生长速率模型是否满足统计假设。}\label{fig:model-diagnostic-residuals}
-\end{figure}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 计算残差统计量}
-\NormalTok{residuals }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(model\_diagnostic)}
-\NormalTok{fitted }\OtherTok{\textless{}{-}} \FunctionTok{fitted}\NormalTok{(model\_diagnostic)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 林小雨的残差统计量：
-##  均值: 0 (理想值: 0)
-##  标准差: 2.119 
-##  偏度: -2.672 (理想值: 0)
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 检验残差正态性}
-\NormalTok{shapiro\_test }\OtherTok{\textless{}{-}} \FunctionTok{shapiro.test}\NormalTok{(residuals)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Shapiro-Wilk正态性检验p值: 0
-\end{verbatim}
-
-\begin{verbatim}
-## 林小雨的发现：残差可能不服从正态分布，需要考虑数据变换
-\end{verbatim}
-
-影响分析关注个别观测对模型结果的过度影响。在生态数据中，某些异常观测可能对模型参数估计产生不成比例的影响。这些异常观测可能代表特殊的生态情境，如罕见的生境类型、极端的气候事件或特殊的物种行为。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 2. 影响分析}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{2. 影响分析}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## 2. 影响分析
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 计算影响统计量}
-\NormalTok{influence\_measures }\OtherTok{\textless{}{-}} \FunctionTok{influence.measures}\NormalTok{(model\_diagnostic)}
-
-\CommentTok{\# 识别高杠杆点（hat values \textgreater{} 2p/n）}
-\NormalTok{hat\_values }\OtherTok{\textless{}{-}} \FunctionTok{hatvalues}\NormalTok{(model\_diagnostic)}
-\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(}\FunctionTok{coef}\NormalTok{(model\_diagnostic))}
-\NormalTok{high\_leverage }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(hat\_values }\SpecialCharTok{\textgreater{}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ p }\SpecialCharTok{/}\NormalTok{ n\_forest\_trees)}
-\end{Highlighting}
-\end{Shaded}
-
-\texttt{\{r,\ echo=FALSE\}\textasciigrave{}\ cat("高杠杆点（可能对模型有过度影响）：\textbackslash{}n")\ if\ (length(high\_leverage)\ \textgreater{}\ 0)\ \{\ \ \ cat("观测编号:",\ high\_leverage,\ "\textbackslash{}n",\ \ \ \ \ "对应的hat值:",\ round(hat\_values{[}high\_leverage{]},\ 3),\ "\textbackslash{}n")\ \}\ else\ \{\ \ \ cat("未发现高杠杆点\textbackslash{}n")\ \}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 识别异常残差（标准化残差 \textgreater{} 2）}
-\NormalTok{std\_residuals }\OtherTok{\textless{}{-}} \FunctionTok{rstandard}\NormalTok{(model\_diagnostic)}
-\NormalTok{outlier\_residuals }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{abs}\NormalTok{(std\_residuals) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## 异常残差点（|标准化残差| > 2）：
-\end{verbatim}
-
-\begin{verbatim}
-## 观测编号: 25 60 63 
-##  对应的标准化残差: 3.133 -7.086 2.377
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 识别强影响点（Cook\textquotesingle{}s distance \textgreater{} 4/(n{-}p)）}
-\NormalTok{cooks\_d }\OtherTok{\textless{}{-}} \FunctionTok{cooks.distance}\NormalTok{(model\_diagnostic)}
-\NormalTok{influential\_points }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(cooks\_d }\SpecialCharTok{\textgreater{}} \DecValTok{4} \SpecialCharTok{/}\NormalTok{ (n\_forest\_trees }\SpecialCharTok{{-}}\NormalTok{ p))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## 强影响点（Cook's distance较大）：
-\end{verbatim}
-
-\begin{verbatim}
-## 观测编号: 25 29 60 63 
-##  对应的Cook's distance: 0.113 0.036 0.328 0.046
-\end{verbatim}
-
-多重共线性会影响参数估计的稳定性。当解释变量之间存在高度相关性时，单个变量的独立效应难以准确估计。方差膨胀因子(VIF)是诊断多重共线性的常用指标。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 3. 多重共线性诊断}
-\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{3. 多重共线性诊断}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## 3. 多重共线性诊断
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{vif\_values }\OtherTok{\textless{}{-}} \FunctionTok{vif}\NormalTok{(model\_diagnostic)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 方差膨胀因子(VIF)：
-\end{verbatim}
-
-\begin{verbatim}
-## canopy_openness : 1.01
-## soil_moisture : 1.03
-## soil_nitrogen : 1.02
-## slope : 1.03
-\end{verbatim}
-
-可视化是理解影响分析结果的重要工具。Cook's distance图能够直观展示各观测点对模型的影响程度，帮助我们识别需要特别关注的异常观测。
-
-图\ref{fig:cooks-distance-plot}展示了林小雨的Cook's Distance影响分析结果。其中蓝色点表示各观测点的Cook's距离值，红色虚线表示影响阈值（4/(n-p)），超过此阈值的观测点（标注了观测编号）被认为对模型有显著影响。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/cooks-distance-plot-1} 
-
-}
-
-\caption{Cook's Distance影响分析：识别对模型参数估计有过度影响的观测点。数据点使用蓝色菱形，阈值线使用红色虚线}\label{fig:cooks-distance-plot}
-\end{figure}
-
-在生态学中，异常观测往往具有重要的生态学意义。高杠杆点可能代表极端环境条件，异常残差点可能反映特殊的生态情境。通过识别这些点，我们不仅能够确保模型的统计稳健性，还能够发现值得深入研究的生态学现象。
-
-在林小雨的森林树木生长研究中：
-
-\begin{itemize}
-\tightlist
-\item
-  高杠杆点可能代表极端环境条件（如全光照但贫瘠土壤）
-
-  \begin{itemize}
-  \tightlist
-  \item
-    这些观测对模型参数估计有不成比例的影响
-  \end{itemize}
-\item
-  异常残差点可能代表特殊的生态情境
-
-  \begin{itemize}
-  \tightlist
-  \item
-    例如，异常高生长速率可能出现在人工林或施肥样地
-  \item
-    异常低生长速率可能出现在火烧迹地或病虫害样地
-  \end{itemize}
-\item
-  强影响点可能显著改变模型的生态学结论
-
-  \begin{itemize}
-  \tightlist
-  \item
-    需要仔细检查这些观测的生态学合理性
-  \end{itemize}
-\end{itemize}
-
-稳健性检查通过比较移除异常观测前后的模型结果，评估模型对异常观测的敏感性。如果系数变化显著，说明模型对特定观测过度依赖，需要谨慎解释结果。
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# 稳健性检查：移除强影响点后的模型}
-\ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(influential\_points) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
-  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{=== 稳健性检查 ===}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-
-\NormalTok{  robust\_data }\OtherTok{\textless{}{-}}\NormalTok{ forest\_diagnostic\_data[}\SpecialCharTok{{-}}\NormalTok{influential\_points, ]}
-\NormalTok{  robust\_model }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(growth\_rate }\SpecialCharTok{\textasciitilde{}}\NormalTok{ canopy\_openness }\SpecialCharTok{+}\NormalTok{ soil\_moisture }\SpecialCharTok{+}
-\NormalTok{    soil\_nitrogen }\SpecialCharTok{+}\NormalTok{ slope, }\AttributeTok{data =}\NormalTok{ robust\_data}
-\NormalTok{  )}
-
-  \FunctionTok{cat}\NormalTok{(}\StringTok{"原始模型系数：}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-  \FunctionTok{print}\NormalTok{(}\FunctionTok{round}\NormalTok{(}\FunctionTok{coef}\NormalTok{(model\_diagnostic), }\DecValTok{3}\NormalTok{))}
-
-  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{稳健模型系数（移除强影响点）：}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-  \FunctionTok{print}\NormalTok{(}\FunctionTok{round}\NormalTok{(}\FunctionTok{coef}\NormalTok{(robust\_model), }\DecValTok{3}\NormalTok{))}
-
-  \CommentTok{\# 计算系数变化}
-\NormalTok{  coef\_change }\OtherTok{\textless{}{-}} \FunctionTok{abs}\NormalTok{((}\FunctionTok{coef}\NormalTok{(robust\_model) }\SpecialCharTok{{-}} \FunctionTok{coef}\NormalTok{(model\_diagnostic)) }\SpecialCharTok{/}
-                    \FunctionTok{coef}\NormalTok{(model\_diagnostic)) }\SpecialCharTok{*} \DecValTok{100}
-
-  \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{系数变化百分比：}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-  \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(coef\_change)) \{}
-    \FunctionTok{cat}\NormalTok{(}\FunctionTok{names}\NormalTok{(coef\_change)[i], }\StringTok{":"}\NormalTok{, }\FunctionTok{round}\NormalTok{(coef\_change[i], }\DecValTok{1}\NormalTok{), }\StringTok{"\%}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{  \}}
-
-  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{any}\NormalTok{(coef\_change }\SpecialCharTok{\textgreater{}} \DecValTok{20}\NormalTok{)) \{}
-    \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{警告：某些系数变化超过20\%，模型对异常观测敏感}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
-    \FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{模型对异常观测相对稳健}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
-\NormalTok{  \}}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## 
-## === 稳健性检查 ===
-## 原始模型系数：
-##     (Intercept) canopy_openness   soil_moisture   soil_nitrogen           slope 
-##           4.223           0.065           0.167           1.445          -0.034 
-## 
-## 稳健模型系数（移除强影响点）：
-##     (Intercept) canopy_openness   soil_moisture   soil_nitrogen           slope 
-##           3.982           0.078           0.163           1.368          -0.035 
-## 
-## 系数变化百分比：
-## (Intercept) : 5.7 %
-## canopy_openness : 20.5 %
-## soil_moisture : 2.6 %
-## soil_nitrogen : 5.4 %
-## slope : 2.5 %
-## 
-## 警告：某些系数变化超过20%，模型对异常观测敏感
-\end{verbatim}
-
-模型诊断的最终目的是确保研究结论的可靠性。通过系统的诊断分析，我们能够识别潜在问题，采取适当措施，并在生态学解释中考虑模型的局限性。
-
-模型诊断建议：检查异常观测的生态学合理性，考虑是否需要变换变量或使用稳健回归方法，确保模型假设得到满足，并在生态学解释中考虑模型的局限性。
-
-模型诊断连接了统计技术与生态学理解。一个统计上完美的模型如果无法通过生态学合理性检验，其价值就会大打折扣。通过系统的模型诊断，我们能够构建既统计可靠又生态学有意义的模型。
+模型诊断是确保统计模型可靠性的基础工作，包括残差分析、影响点识别（Cook's距离）和多重共线性检验（VIF）。这些方法的详细介绍见第8章回归诊断部分，此处不再重复。本章仅强调模型选择特有的诊断考量：当选定的''最优''模型包含多个相关预测变量时，需特别关注VIF是否超过阈值（5-10）；当个别样方对模型选择结果有不成比例的影响时（如删除该样方后AIC最优模型发生改变），应检查其生态学合理性而非机械剔除。
 
 \hypertarget{automlux4e0eux6a21ux578bux9009ux62e9ux9886ux57dfux77e5ux8bc6ux7684ux4e0dux53efux66ffux4ee3ux6027}{%
 \section{AutoML与模型选择：领域知识的不可替代性}\label{automlux4e0eux6a21ux578bux9009ux62e9ux9886ux57dfux77e5ux8bc6ux7684ux4e0dux53efux66ffux4ee3ux6027}}
@@ -14348,105 +12057,9 @@ caret包为林小雨提供了统一的接口来执行各种机器学习算法和
 \hypertarget{ux603bux7ed3-8}{%
 \section{总结}\label{ux603bux7ed3-8}}
 
-林小雨站在保护区管理站的办公室里，整理着这几个月来的研究成果。电脑屏幕上显示着一系列森林生态系统模型的分析结果，每个模型都代表着她对森林生态系统的一次深入理解。从最初简单的温度与树木生长关系，到现在能够综合考虑多个环境因子的复杂模型，她的研究历程见证了模型选择与评估在生态学研究中的核心价值。
+本章系统介绍了生态统计建模中模型选择与评估的核心方法。信息准则（AIC、BIC）在拟合优度与模型复杂度之间寻求平衡，为嵌套和非嵌套模型的比较提供了量化标准。交叉验证是评估泛化能力最可靠的工具之一，对具有空间自相关的生态数据，空间交叉验证远比随机CV更能反映真实预测能力。模型诊断（残差分析、影响点识别、多重共线性检验）确保最终选定的模型在统计上是稳健的。模型平均（AIC加权或贝叶斯方法）降低了''赢者通吃''的风险，在多个合理候选模型之间取得更稳健的推断。
 
-\hypertarget{ux7814ux7a76ux5386ux7a0bux7684ux56deux987e}{%
-\subsection{研究历程的回顾}\label{ux7814ux7a76ux5386ux7a0bux7684ux56deux987e}}
-
-林小雨的模型选择与评估之旅始于一个关键认识：在众多候选模型中，如何选择最可靠的那一个？她首先学习了模型选择的基本原则，理解了模型复杂度与拟合优度之间的权衡。在分析森林土壤养分与植物生物量关系时，她运用奥卡姆剃刀原则，在简约性和解释力之间找到了最佳平衡点。二次多项式模型成功捕捉了植物对养分的最适响应模式，而过高次数的多项式则导致了过度拟合。
-
-信息准则成为林小雨模型比较的重要工具。在研究森林鸟类丰富度与环境因子关系时，她使用AIC和BIC系统地比较了多个候选模型。通过\(\Delta\text{AIC}\)差异，她识别出栖息地面积、植被密度和距水源距离是影响鸟类丰富度的关键因子，而土壤pH值等其他因子的贡献相对有限。信息准则帮助她在统计显著性和生态学意义之间找到了平衡。
-
-似然比检验让林小雨能够系统地评估模型复杂度的必要性。在苗圃实验中研究温度与光照对植物生长的影响时，似然比检验帮助她判断是否需要考虑温度-光照交互作用。统计显著的交互项揭示了环境因子的协同效应，为苗圃管理提供了科学指导。
-
-模型平均方法让林小雨学会了如何处理模型选择的不确定性。在溪流鱼类丰度研究中，面对多个看似合理的候选模型，她没有采用''赢者通吃''的策略，而是通过AIC权重对不同模型的预测进行加权平均。这种方法不仅提供了更稳健的预测，还量化了不同生态假说的相对支持程度。变量重要性分析揭示了水温、溶解氧和pH值是影响鱼类丰度的关键因子，为溪流保护提供了明确的管理目标。
-
-\hypertarget{ux6a21ux578bux8bc4ux4f30ux7684ux6df1ux523bux7406ux89e3}{%
-\subsection{模型评估的深刻理解}\label{ux6a21ux578bux8bc4ux4f30ux7684ux6df1ux523bux7406ux89e3}}
-
-模型评估让林小雨认识到，选择模型只是第一步，验证模型的可靠性同样重要。交叉验证成为她评估模型泛化能力的标准工具。在分析森林鸟类丰富度模型时，10折交叉验证显示模型在不同数据子集上表现稳定，RMSE的一致性证明了模型没有过度拟合训练数据的特定特征。
-
-外部验证让林小雨理解了模型空间普适性的重要性。当她将在某个山地森林区域构建的植物物种丰富度模型应用到邻近但生态条件略有不同的另一个森林区域时，模型性能的适度下降提醒她注意森林生态系统的空间异质性。这种对模型局限性的清醒认识，使她在向保护区管理者汇报结果时能够明确说明模型的适用范围和不确定性。
-
-模型诊断培养了林小雨对统计假设的敏感性。在树木生长速率模型中，残差分析帮助她识别出异常观测点，这些点代表了特殊的森林生态情境，火烧迹地、人工林或病虫害样地。通过Cook's距离等影响分析工具，她不仅确保了模型的统计稳健性，还发现了值得深入研究的生态学现象。多重共线性诊断则提醒她注意环境因子间的相关性，避免了参数估计的不稳定。
-
-\hypertarget{ux8d1dux53f6ux65afux65b9ux6cd5ux7684ux65b0ux89c6ux89d2}{%
-\subsection{贝叶斯方法的新视角}\label{ux8d1dux53f6ux65afux65b9ux6cd5ux7684ux65b0ux89c6ux89d2}}
-
-贝叶斯模型选择为林小雨打开了一扇新的窗户。与频率学派方法相比，贝叶斯方法通过后验概率提供了更直观的模型比较标准。在森林鸟类丰富度研究中，贝叶斯因子量化了不同模型的相对证据强度，后验模型概率则直接回答了``模型正确的概率是多少''这个生态学家最关心的问题。
-
-贝叶斯模型平均让林小雨学会了如何整合先验知识和观测数据。通过合理设置先验分布，她能够将森林生态学的已有研究成果融入统计分析，使模型结果更加可靠。后验预测分布提供了完整的预测不确定性量化，这对于风险评估和保护决策至关重要。
-
-贝叶斯变量选择通过稀疏先验自动识别重要环境因子，后验包含概率直接反映了每个变量的重要性。这种方法避免了逐步回归可能带来的多重比较问题，为林小雨提供了更可靠的变量选择结果。
-
-\hypertarget{ux751fux6001ux5b66ux7814ux7a76ux7684ux65b9ux6cd5ux8bbaux542fux793a}{%
-\subsection{生态学研究的方法论启示}\label{ux751fux6001ux5b66ux7814ux7a76ux7684ux65b9ux6cd5ux8bbaux542fux793a}}
-
-通过系统学习模型选择与评估方法，林小雨深刻理解了几个重要的方法论原则：
-
-\textbf{统计方法与生态学知识的结合}：模型选择不应仅依赖统计准则，更要结合生态学理论。AIC最小的模型未必是生态学上最合理的模型。在某些情况下，保留统计上不显著但生态学意义明确的变量可能更加合理。
-
-\textbf{简约性原则的价值}：奥卡姆剃刀在生态建模中具有深刻意义。简约模型不仅计算效率高，更重要的是具有更好的泛化能力和生态学解释性。过度复杂的模型虽然能够完美拟合训练数据，但往往捕捉了随机噪声而非真实的生态机制。
-
-\textbf{不确定性的诚实评估}：模型评估的核心目的是识别模型的局限性。通过交叉验证、外部验证和模型诊断，林小雨学会了诚实评估模型的不确定性。在向保护区管理者汇报时，她不仅呈现预测结果，还明确说明预测的置信区间和模型的适用条件。
-
-\textbf{多方法验证的重要性}：单一的模型选择方法可能存在偏差。林小雨学会了同时使用AIC、BIC、交叉验证等多种方法来评估模型，只有在多种方法一致指向某个模型时，她才会确信这个模型的可靠性。
-
-\hypertarget{ux5b9eux8df5ux5e94ux7528ux4e0eux4fddux62a4ux4ef7ux503c}{%
-\subsection{实践应用与保护价值}\label{ux5b9eux8df5ux5e94ux7528ux4e0eux4fddux62a4ux4ef7ux503c}}
-
-林小雨的模型选择与评估研究为保护区管理提供了坚实的科学依据：
-
-\textbf{保护优先区识别}：通过预测物种丰富度模型，她识别出保护价值最高的森林区域。模型显示栖息地面积大、植被密度高、距水源近的区域具有最高的鸟类丰富度，这些区域应该成为保护规划的优先目标。
-
-\textbf{管理措施评估}：交叉验证确保的模型泛化能力让她能够可靠地预测不同管理措施的生态效果。例如，模型预测扩大保护区面积10公顷将平均增加2-3种鸟类，这为保护区扩展计划提供了定量支持。
-
-\textbf{气候变化影响预测}：虽然模型的外推需要谨慎，但在合理范围内，林小雨的模型能够预测温度升高对森林生态系统的影响。模型诊断确保的统计可靠性使这些预测能够为适应性管理提供参考。
-
-\textbf{监测方案优化}：变量重要性分析帮助她优化了生态监测方案。既然栖息地面积、植被密度和距水源距离是最重要的预测变量，那么监测工作就应该优先关注这些因子的变化趋势。
-
-\hypertarget{ux7814ux7a76ux80fdux529bux7684ux63d0ux5347}{%
-\subsection{研究能力的提升}\label{ux7814ux7a76ux80fdux529bux7684ux63d0ux5347}}
-
-通过这次模型选择与评估的系统学习，林小雨的研究能力获得了全面提升：
-
-\textbf{批判性思维}：她学会了批判性评估模型结果，不再盲目相信统计显著性。残差分析培养了她识别异常值的能力，模型诊断让她能够判断模型假设是否满足。
-
-\textbf{定量分析技能}：从信息准则计算到交叉验证实施，从贝叶斯因子解释到后验概率推断，她掌握了现代生态统计的核心方法。这些技能不仅适用于当前研究，更是她未来科研工作的基础。
-
-\textbf{科学沟通能力}：模型评估强化了她的科学沟通能力。在向非统计背景的保护区管理者解释模型结果时，她学会了用生态学语言阐述统计概念，用置信区间传达不确定性，用可视化工具展示预测结果。
-
-\textbf{研究设计能力}：外部验证的经验让她理解了研究设计的重要性。在未来的研究中，她会在数据收集阶段就考虑模型验证的需求，确保有足够的独立数据用于外部验证。
-
-\hypertarget{ux672aux6765ux7814ux7a76ux65b9ux5411}{%
-\subsection{未来研究方向}\label{ux672aux6765ux7814ux7a76ux65b9ux5411}}
-
-站在研究的新起点，林小雨规划了未来的研究方向：
-
-\textbf{模型的时空扩展}：当前模型主要是空间模型，未来她希望纳入时间维度，构建时空模型来预测森林生态系统的动态变化。这需要长期监测数据和更复杂的统计方法。
-
-\textbf{机制模型与统计模型的整合}：纯统计模型虽然预测能力强，但生态学解释性有限。她希望将生态学机制模型与统计模型整合，既保持预测精度，又增强生态学可解释性。
-
-\textbf{多物种模型}：当前研究主要关注物种丰富度，未来她希望构建多物种分布模型，同时预测多个物种的分布和丰度，揭示物种间的相互作用。
-
-\textbf{贝叶斯层次模型}：贝叶斯方法的强大让她意识到层次模型的潜力。通过构建贝叶斯层次模型，她可以同时考虑样地层面、景观层面和区域层面的变异，更全面地理解森林生态系统的结构。
-
-\hypertarget{ux7ed9ux751fux6001ux5b66ux672cux79d1ux751fux7684ux5efaux8bae}{%
-\subsection{给生态学本科生的建议}\label{ux7ed9ux751fux6001ux5b66ux672cux79d1ux751fux7684ux5efaux8bae}}
-
-基于自己的研究经历，林小雨总结了几点建议，希望与正在学习生态统计的我们分享：
-
-\textbf{扎实的统计基础}：模型选择与评估需要扎实的统计学基础。不要只满足于会用R代码，要真正理解AIC、交叉验证、贝叶斯推断等方法的数学原理和适用条件。
-
-\textbf{生态学直觉的培养}：统计方法是工具，生态学直觉是灵魂。在模型选择时，始终问自己：这个模型在生态学上合理吗？参数估计值符合生态学常识吗？预测结果可以用生态学理论解释吗？
-
-\textbf{批判性思维的重要性}：不要盲目相信模型结果。每个模型都有假设和局限性，通过系统的模型诊断和验证来识别这些局限性。在科学报告中诚实地讨论模型的不确定性。
-
-\textbf{动手实践的必要性}：统计建模是实践性很强的技能。多做练习，从简单的线性回归开始，逐步尝试更复杂的模型。在实践中理解过度拟合、多重共线性等常见问题。
-
-\textbf{持续学习的态度}：生态统计方法快速发展，机器学习、深度学习等新方法不断涌现。保持开放的学习态度，关注领域内的方法学进展，但同时也要清醒地认识到，经典的模型选择与评估方法仍然是生态学研究的基石。
-
-夕阳透过窗户洒在林小雨的研究笔记上，她合上笔记本，脸上露出满足的微笑。通过系统学习模型选择与评估方法，她不仅完成了保护区的研究任务，更重要的是建立了科学的思维方式和严谨的研究态度。这些能力将伴随她的整个科研生涯，帮助她在生态学研究的道路上不断前行。她知道，这只是开始，前方还有更多的生态学谜题等待她去探索，更多的统计方法等待她去掌握。但她已经准备好了，带着数学的望远镜和生态学的心，继续她的森林探索之旅。
+在AI时代，模型选择面临新的挑战和机遇。AIC的渐近假设在深度学习的过参数化条件下失效，但信息准则的核心思想------用复杂度惩罚平衡拟合与泛化------仍然是现代机器学习的基石（如权重衰减、早停、dropout）。AutoML可以自动扫描模型空间，但搜索空间的设定和''最优''模型的生态学判断仍然依赖领域知识。归根结底，模型选择不是自动化的技术流程，而是需要统计素养和生态学直觉共同参与的决策过程。
 
 \hypertarget{ux672cux7ae0ux8981ux70b9ux56deux987e-7}{%
 \section{本章要点回顾}\label{ux672cux7ae0ux8981ux70b9ux56deux987e-7}}
@@ -14469,23 +12082,7 @@ caret包为林小雨提供了统一的接口来执行各种机器学习算法和
 
 \textbf{思考题}：如果AIC最优模型与BIC最优模型不同，你会如何选择？为什么？在模型诊断中发现强影响点，例如一个海拔极低的火烧迹地样方，你会如何处理？这些异常点在生态学上可能代表什么？
 
-\hypertarget{ux7ec3ux4e60ux4e8cux8d1dux53f6ux65afux6a21ux578bux9009ux62e9ux4e0eux9891ux7387ux5b66ux6d3eux65b9ux6cd5ux6bd4ux8f83ux5929ux7ae5ux5c71ux6c34ux751fux751fux6001ux5bf9ux6bd4}{%
-\subsection{练习二：贝叶斯模型选择与频率学派方法比较------天童山水生生态对比}\label{ux7ec3ux4e60ux4e8cux8d1dux53f6ux65afux6a21ux578bux9009ux62e9ux4e0eux9891ux7387ux5b66ux6d3eux65b9ux6cd5ux6bd4ux8f83ux5929ux7ae5ux5c71ux6c34ux751fux751fux6001ux5bf9ux6bd4}}
-
-\textbf{背景}：除了森林样地研究外，林小雨还参与了一个对比研究，天童山溪流生态系统中鱼类丰度与环境因子的关系。数据包括80个溪流样点的鱼类丰度以及水温、溶解氧、pH值、浊度等环境因子。这个水生系统与森林系统形成有趣的对比：溪流中环境因子之间的关系更为线性，而森林系统中非线性关系更加普遍。
-
-\textbf{任务}：本练习要求你分别使用频率学派和贝叶斯方法进行分析。在频率学派分析中，使用逐步回归方法选择重要环境因子，计算AIC和BIC值确定最优模型，并进行模型诊断和交叉验证。在贝叶斯分析中，使用贝叶斯线性回归拟合模型，计算贝叶斯因子比较不同模型，执行贝叶斯模型平均计算变量后验包含概率，生成后验预测分布和95\%可信区间。然后比较频率学派和贝叶斯方法在变量选择结果上的异同，分析两种方法在不确定性量化方面的差异，讨论两种方法在生态学解释上的优势和局限性。最后基于分析结果，识别影响天童山溪流鱼类丰度的关键环境因子，联系森林-溪流耦合的生态过程提出综合保护建议。
-
-\textbf{思考题}：在什么情况下贝叶斯方法比频率学派方法更适合生态学研究？如何合理设置贝叶斯分析中的先验分布，如果天童山有5年前的水质-鱼类关系研究，如何将已有知识编码为先验？
-
-\hypertarget{ux7ec3ux4e60ux4e09ux5929ux7ae5ux5c71ux9e1fux7c7bux4fddux62a4ux7684ux6a21ux578bux8bc4ux4f30ux4e0eux51b3ux7b56ux652fux6301}{%
-\subsection{练习三：天童山鸟类保护的模型评估与决策支持}\label{ux7ec3ux4e60ux4e09ux5929ux7ae5ux5c71ux9e1fux7c7bux4fddux62a4ux7684ux6a21ux578bux8bc4ux4f30ux4e0eux51b3ux7b56ux652fux6301}}
-
-\textbf{背景}：林小雨的最终任务是为天童山自然保护区制定鸟类保护策略。她拥有保护区过去5年的鸟类调查数据以及详细的生境特征数据（林冠结构、林下植被盖度、枯立木密度、距水源距离等）。她需要构建鸟类丰富度的预测模型，以此指导保护区的功能区划和管理决策。
-
-\textbf{任务}：本练习要求你帮助林小雨完成她的研究。构建多个候选模型预测鸟类丰富度，使用信息准则选择最优模型，并解释最优模型的生态学意义，哪些生境特征对天童山鸟类多样性最为关键？进行内部验证，使用k折交叉验证评估模型泛化能力，特别注意天童山样地的空间结构，是否应该使用空间分块CV而非随机CV？分析模型在不同数据子集上的稳定性。进行外部验证，使用天童山邻近区域的独立调查数据验证模型，分析模型在不同生境类型中的预测表现。进行不确定性量化，计算预测置信区间，使用Bootstrap方法量化预测不确定性，分析不确定性来源。最后提供保护决策支持，基于模型预测识别天童山鸟类保护优先区域，评估不同管理措施（如保留枯立木、控制林冠开度）对鸟类丰富度的潜在影响，向保护区管理者呈报一份同时包含''最佳估计''和''最坏情况''的管理建议。
-
-\textbf{思考题}：在向保护区管理者汇报模型结果时，林小雨如何平衡模型的预测精度与诚实的不确定性陈述？如果外部验证显示模型在河谷生境中预测良好但在山脊生境中表现差，这是模型的失败还是值得研究的生态学信号？
+更多练习见在线资源：\url{https://guochunshen.github.io/ecological-statistics}
 
   \bibliography{book.bib,packages.bib}
 
