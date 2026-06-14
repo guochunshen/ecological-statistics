@@ -1,6 +1,6 @@
 # 生态假设检验：从经典方法到AI时代推断 {#ch06}
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 # 初始化设置
 knitr::opts_chunk$set(
   dev = "cairo_pdf",
@@ -1415,7 +1415,7 @@ cat("校准残差分位数 q_hat:", round(q_hat, 3), "\n")
 cat("预测区间的平均宽度:", round(mean(ci_upper - ci_lower), 3), "\n")
 ```
 
-```{r conformal-prediction-plot, echo=FALSE, fig.cap="Conformal Prediction预测区间演示：训练数据、校准数据、模型预测线和95%预测区间。区间宽度仅依赖于校准残差的分位数，与模型形式无关。"}
+```{r conformal-prediction-plot, echo=FALSE, fig.cap="共形预测（Conformal Prediction）预测区间演示：训练数据、校准数据、模型预测线和95%预测区间。区间宽度仅依赖于校准残差的分位数，与模型形式无关。"}
 # 绘制Conformal Prediction结果
 plot_data <- data.frame(x = x, y = y,
                         type = rep(c("训练", "校准"), c(n_train, n_cal)))
@@ -1431,9 +1431,9 @@ ggplot() +
              size = 2.5) +
   scale_color_manual(values = c("训练" = "#1f77b4", "校准" = "#ff7f0e")) +
   scale_shape_manual(values = c("训练" = 16, "校准" = 17)) +
-  labs(title = "Conformal Prediction: 模型无关的预测区间",
-       x = "x", y = "y",
-       subtitle = paste0("灰色区域: 95% Conformal预测区间 (宽度 = ",
+  labs(title = "共形预测：模型无关的预测区间",
+       x = "预测变量", y = "响应变量",
+       subtitle = paste0("灰色区域：95%共形预测区间 (宽度 = ",
                          round(mean(ci_upper - ci_lower), 2), ")")) +
   theme_eco()
 ```

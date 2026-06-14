@@ -2,6 +2,11 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git Conventions
+
+- Commit messages should be written in Chinese.
+- Do NOT include `Co-Authored-By: Claude ... <noreply@anthropic.com>` in commit messages.
+
 ## Project Overview
 
 This is an ecological statistics course repository containing a comprehensive textbook on statistical methods for ecological data analysis. The project uses R Markdown with bookdown to generate multiple output formats including HTML, PDF, and EPUB.

@@ -3,7 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  twoside]{book}
+  twoside,12pt]{book}
 \usepackage{amsmath,amssymb}
 \usepackage{setspace}
 \usepackage{iftex}
@@ -105,30 +105,36 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{5}
 % 中文支持 - 使用 ctex 包提供更好的中文排版
-\usepackage{ctex}
+\usepackage[fontset=none]{ctex}
 
-% 中文字体设置 - 使用 ctex 默认字体，不进行额外设置
-% ctex 包会自动选择合适的中文字体
+% 中文字体设置
+% 正文：思源宋体 (Noto Serif CJK SC) — Google与Adobe联合开发，专为中文印刷排版设计
+\setCJKmainfont{Noto Serif CJK SC}[
+  BoldFont = Noto Serif CJK SC Bold,
+]
+% 标题/无衬线：思源黑体 (Noto Sans CJK SC)
+\setCJKsansfont{Noto Sans CJK SC}[
+  BoldFont = Noto Sans CJK SC Bold,
+]
+% 代码/等宽：思源等宽 (Noto Sans Mono CJK SC)
+\setCJKmonofont{Noto Sans Mono CJK SC}
 
-
-% 英文字体设置
-%\usepackage{fontspec}
-%\setmainfont{DejaVu Serif}
-%\setsansfont{DejaVu Sans}
-%\setmonofont{DejaVu Sans Mono}
-
-% 正文字体大小设置 - ctex 已处理中英文字体大小匹配
+% 英文字体：正文/无衬线由CJK字体内置拉丁字符处理，确保中英文混排视觉大小一致
+% 等宽字体需单独设置，否则代码块中拉丁字符回退到默认字体，与CJK等宽不一致
+\setmonofont{Noto Sans Mono}[
+  BoldFont = Noto Sans Mono Bold,
+  Scale = MatchLowercase,
+]
 
 % 页面设置
 \usepackage[top=2cm, bottom=2cm, left=2.5cm, right=2.5cm]{geometry}
 
-% 行间距设置
-\usepackage{setspace}
-\setstretch{1}  % 0.9倍行间距
+% 行间距由 index.Rmd 的 linestretch 控制，不在此重复设置
 
-% 段落缩进设置
+% 段落格式：中文标准 — 仅段首缩进，段间不加额外间距
 \usepackage{indentfirst}
-\setlength{\parindent}{2em}  % 每段开头空两格
+\setlength{\parindent}{2em}   % 段首缩进两格（中文标准）
+\setlength{\parskip}{0pt}     % 取消段间额外间距（覆盖pandoc模板的6pt）
 
 % 数学支持
 \usepackage{amsmath,amssymb,amsthm}
@@ -142,16 +148,6 @@
 }
 \makeatother
 
-
-% 章节标题样式 - ctex 已提供优化的中文标题样式
-% 如果需要自定义，可以取消注释以下设置：
-% \usepackage{titlesec}
-% \titleformat{\chapter}[display]
-%   {\normalfont\Huge\bfseries\filcenter}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}{\thesection}{1em}{}
-% \titleformat{\subsection}
-%   {\normalfont\large\bfseries}{\thesubsection}{1em}{}
 
 % 图表标题 - ctex 已优化中文标题
 \usepackage{caption}
@@ -194,25 +190,18 @@
   lineskip=-1pt
 }
 
-% 调整R代码块(Shaded/Highlighting环境)的行间距
+% 调整R代码块(Shaded/Highlighting/verbatim)的行间距
 \usepackage{etoolbox}
 \makeatletter
-% 设置Verbatim环境(R代码块使用)的行间距
 \AtBeginEnvironment{Shaded}{%
-  \setstretch{0.9}%  % 代码块内行间距为0.8倍
+  \setstretch{1.0}%  % R代码块行间距，与正文一致
 }
-% 设置代码块内空行的行高
 \AtBeginEnvironment{Highlighting}{%
-  \setlength{\baselineskip}{0.8\baselineskip}%  % 空行高度为0.8倍
+  \setlength{\baselineskip}{1.0\baselineskip}%
 }
-% 设置verbatim环境(R代码输出)的行间距
 \AtBeginEnvironment{verbatim}{%
-  \setstretch{0.8}%  % verbatim环境行间距为0.8倍
-  \setlength{\baselineskip}{0.8\baselineskip}%  % 空行高度为0.8倍
+  \setstretch{1.0}%  % R代码输出行间距，与正文一致
 }
-% 或者使用更精细的控制
-%\preto\Shaded{\par\vspace{-0.5\baselineskip}}  % 代码块前减少空白
-%\appto\endShaded{\par\vspace{-0.5\baselineskip}}  % 代码块后减少空白
 \makeatother
 
 % AI协作面板 - 重定义quote环境，添加左侧蓝色边框
@@ -5005,100 +4994,6 @@ SBI的局限与警惕。尽管SBI为复杂生态模型的参数推断打开了�
 \hypertarget{ch05}{%
 \chapter{生态变量的关联：从相关系数到AI注意力}\label{ch05}}
 
-\begin{verbatim}
-## Loading required package: sysfonts
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: showtextdb
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'dplyr'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: MASS
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'MASS'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:dplyr':
-## 
-##     select
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'patchwork'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:MASS':
-## 
-##     area
-\end{verbatim}
-
-\begin{verbatim}
-## corrplot 0.95 loaded
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: permute
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'igraph'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:vegan':
-## 
-##     diversity
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:permute':
-## 
-##     permute
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:dplyr':
-## 
-##     as_data_frame, groups, union
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     decompose, spectrum
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:base':
-## 
-##     union
-\end{verbatim}
-
 \hypertarget{ux672cux7ae0ux5b66ux4e60ux76eeux6807-3}{%
 \section{本章学习目标}\label{ux672cux7ae0ux5b66ux4e60ux76eeux6807-3}}
 
@@ -6132,87 +6027,6 @@ LiNGAM（线性非高斯无环模型）则利用了非高斯性这一关键信�
 
 \hypertarget{ch06}{%
 \chapter{生态假设检验：从经典方法到AI时代推断}\label{ch06}}
-
-\begin{verbatim}
-## Loading required package: sysfonts
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: showtextdb
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'dplyr'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'kableExtra'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:dplyr':
-## 
-##     group_rows
-\end{verbatim}
 
 \hypertarget{ux672cux7ae0ux5b66ux4e60ux76eeux6807-4}{%
 \section{本章学习目标}\label{ux672cux7ae0ux5b66ux4e60ux76eeux6807-4}}
@@ -7461,7 +7275,7 @@ Conformal Prediction恰好填补了这一空白。通过保留一部分已知碳
 
 }
 
-\caption{Conformal Prediction预测区间演示：训练数据、校准数据、模型预测线和95\%预测区间。区间宽度仅依赖于校准残差的分位数，与模型形式无关。}\label{fig:conformal-prediction-plot}
+\caption{共形预测（Conformal Prediction）预测区间演示：训练数据、校准数据、模型预测线和95\%预测区间。区间宽度仅依赖于校准残差的分位数，与模型形式无关。}\label{fig:conformal-prediction-plot}
 \end{figure}
 
 图\ref{fig:conformal-prediction-plot} 展示了Conformal Prediction的预测区间。灰色带代表95\%置信水平的预测区间，其宽度完全由校准集上的残差分布决定，不依赖于任何关于数据分布或模型形式的假设。值得注意的是，区间宽度在校准集的覆盖范围内保持恒定，这是''同方差''Conformal方法的一个特征；在实际应用中，也可以使用更复杂的''自适应''方法来获得随\(x\)变化的区间宽度。
@@ -7617,218 +7431,6 @@ Conformal Prediction并非万能。它的覆盖保证依赖于数据可交换性
 
 \hypertarget{ch07}{%
 \chapter{从统计模拟到生成式AI：生态推断的新范式}\label{ch07}}
-
-\begin{verbatim}
-## Loading required package: sysfonts
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: showtextdb
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'dplyr'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: permute
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: spData
-\end{verbatim}
-
-\begin{verbatim}
-## To access larger datasets in this package, install the spDataLarge
-## package with: `install.packages('spDataLarge',
-## repos='https://nowosad.github.io/drat/', type='source')`
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: sf
-\end{verbatim}
-
-\begin{verbatim}
-## Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: survival
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'boot'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:survival':
-## 
-##     aml
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: sna
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: statnet.common
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'statnet.common'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     attr, order, replace
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: network
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## 'network' 1.19.0 (2024-12-08), part of the Statnet Project
-## * 'news(package="network")' for changes since last version
-## * 'citation("network")' for citation information
-## * 'https://statnet.org' for help, support, and other information
-\end{verbatim}
-
-\begin{verbatim}
-## sna: Tools for Social Network Analysis
-## Version 2.8 created on 2024-09-07.
-## copyright (c) 2005, Carter T. Butts, University of California-Irvine
-##  For citation information, type citation("sna").
-##  Type help(package="sna") to get started.
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'sna'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:coin':
-## 
-##     rperm
-\end{verbatim}
-
-\begin{verbatim}
-##  This is bipartite 2.22.
-##  For latest changes see versionlog in ?"bipartite-package". For citation see: citation("bipartite").
-##  Have a nice time plotting and analysing two-mode networks.
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'bipartite'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:vegan':
-## 
-##     nullmodel
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'igraph'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:bipartite':
-## 
-##     strength
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:sna':
-## 
-##     betweenness, bonpow, closeness, components, degree, dyad.census,
-##     evcent, hierarchy, is.connected, neighborhood, triad.census
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:network':
-## 
-##     %c%, %s%, add.edges, add.vertices, delete.edges, delete.vertices,
-##     get.edge.attribute, get.edges, get.vertex.attribute, is.bipartite,
-##     is.directed, list.edge.attributes, list.vertex.attributes,
-##     set.edge.attribute, set.vertex.attribute
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:vegan':
-## 
-##     diversity
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:permute':
-## 
-##     permute
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:dplyr':
-## 
-##     as_data_frame, groups, union
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     decompose, spectrum
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:base':
-## 
-##     union
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: MASS
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'MASS'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:dplyr':
-## 
-##     select
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'spaa'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:sna':
-## 
-##     geodist
-\end{verbatim}
 
 \hypertarget{ux672cux7ae0ux5b66ux4e60ux76eeux6807-5}{%
 \section{本章学习目标}\label{ux672cux7ae0ux5b66ux4e60ux76eeux6807-5}}
@@ -8952,125 +8554,6 @@ R语言中的零模型分析工具：
 \hypertarget{ch08}{%
 \chapter{回归建模：从线性模型到通用函数逼近}\label{ch08}}
 
-\begin{verbatim}
-## Loading required package: sysfonts
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: showtextdb
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'dplyr'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: MASS
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'MASS'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:dplyr':
-## 
-##     select
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: boot
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: survey
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: grid
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: Matrix
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: survival
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'survival'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:boot':
-## 
-##     aml
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'survey'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:graphics':
-## 
-##     dotchart
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: mitools
-\end{verbatim}
-
-\begin{verbatim}
-## This is the global version of package relaimpo.
-\end{verbatim}
-
-\begin{verbatim}
-## If you are a non-US user, a version with the interesting additional metric pmvd is available
-\end{verbatim}
-
-\begin{verbatim}
-## from Ulrike Groempings web site at prof.beuth-hochschule.de/groemping.
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: carData
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'car'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:boot':
-## 
-##     logit
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:dplyr':
-## 
-##     recode
-\end{verbatim}
-
 \hypertarget{ux672cux7ae0ux5b66ux4e60ux76eeux6807-6}{%
 \section{本章学习目标}\label{ux672cux7ae0ux5b66ux4e60ux76eeux6807-6}}
 
@@ -9385,7 +8868,7 @@ temperature & 0.4966745 & 0.0224552 & 22.118467 & 0.0e+00\\
 \begin{Highlighting}[]
 \CommentTok{\# 诊断图1：残差 vs 拟合值图}
 \CommentTok{\# 这个图主要用于检查线性性和同方差性假设}
-\FunctionTok{plot}\NormalTok{(model, }\AttributeTok{which =} \DecValTok{1}\NormalTok{, }\AttributeTok{main =} \StringTok{"残差 vs 拟合值图"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(model, }\AttributeTok{which =} \DecValTok{1}\NormalTok{, }\AttributeTok{main =} \StringTok{"残差与拟合值图"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -9448,7 +8931,7 @@ temperature & 0.4966745 & 0.0224552 & 22.118467 & 0.0e+00\\
 \begin{Highlighting}[]
 \CommentTok{\# 诊断图4：残差 vs 杠杆图}
 \CommentTok{\# 这个图用于识别异常值和有影响的观测点}
-\FunctionTok{plot}\NormalTok{(model, }\AttributeTok{which =} \DecValTok{5}\NormalTok{, }\AttributeTok{main =} \StringTok{"残差 vs 杠杆图"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(model, }\AttributeTok{which =} \DecValTok{5}\NormalTok{, }\AttributeTok{main =} \StringTok{"残差与杠杆图"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -10396,82 +9879,6 @@ poly(altitude, degree = 2)2 & -123.18639 & 4.5713852 & -26.94728 & 0\\
 
 \hypertarget{ch09}{%
 \chapter{模型选择与验证：从信息准则到AI评估}\label{ch09}}
-
-\begin{verbatim}
-## Loading required package: sysfonts
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: showtextdb
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'dplyr'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: zoo
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'zoo'
-\end{verbatim}
-
-\begin{verbatim}
-## The following objects are masked from 'package:base':
-## 
-##     as.Date, as.Date.numeric
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: lattice
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'lattice'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:boot':
-## 
-##     melanoma
-\end{verbatim}
-
-\begin{verbatim}
-## Loading required package: carData
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'car'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:boot':
-## 
-##     logit
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:dplyr':
-## 
-##     recode
-\end{verbatim}
 
 \hypertarget{ux672cux7ae0ux5b66ux4e60ux76eeux6807-7}{%
 \section{本章学习目标}\label{ux672cux7ae0ux5b66ux4e60ux76eeux6807-7}}

@@ -1,6 +1,6 @@
 # 从统计模拟到生成式AI：生态推断的新范式 {#ch07}
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 # 初始化设置
 knitr::opts_chunk$set(
   dev = "cairo_pdf",

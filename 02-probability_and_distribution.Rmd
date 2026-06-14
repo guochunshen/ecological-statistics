@@ -1,6 +1,6 @@
 # 概率与分布：从生态随机性到AI的数学语言 {#ch02}
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 # 初始化设置
 knitr::opts_chunk$set(
   dev = "cairo_pdf",

@@ -1,28 +1,34 @@
 % 中文支持 - 使用 ctex 包提供更好的中文排版
-\usepackage{ctex}
+\usepackage[fontset=none]{ctex}
 
-% 中文字体设置 - 使用 ctex 默认字体，不进行额外设置
-% ctex 包会自动选择合适的中文字体
+% 中文字体设置
+% 正文：思源宋体 (Noto Serif CJK SC) — Google与Adobe联合开发，专为中文印刷排版设计
+\setCJKmainfont{Noto Serif CJK SC}[
+  BoldFont = Noto Serif CJK SC Bold,
+]
+% 标题/无衬线：思源黑体 (Noto Sans CJK SC)
+\setCJKsansfont{Noto Sans CJK SC}[
+  BoldFont = Noto Sans CJK SC Bold,
+]
+% 代码/等宽：思源等宽 (Noto Sans Mono CJK SC)
+\setCJKmonofont{Noto Sans Mono CJK SC}
 
-
-% 英文字体设置
-%\usepackage{fontspec}
-%\setmainfont{DejaVu Serif}
-%\setsansfont{DejaVu Sans}
-%\setmonofont{DejaVu Sans Mono}
-
-% 正文字体大小设置 - ctex 已处理中英文字体大小匹配
+% 英文字体：正文/无衬线由CJK字体内置拉丁字符处理，确保中英文混排视觉大小一致
+% 等宽字体需单独设置，否则代码块中拉丁字符回退到默认字体，与CJK等宽不一致
+\setmonofont{Noto Sans Mono}[
+  BoldFont = Noto Sans Mono Bold,
+  Scale = MatchLowercase,
+]
 
 % 页面设置
 \usepackage[top=2cm, bottom=2cm, left=2.5cm, right=2.5cm]{geometry}
 
-% 行间距设置
-\usepackage{setspace}
-\setstretch{1}  % 0.9倍行间距
+% 行间距由 index.Rmd 的 linestretch 控制，不在此重复设置
 
-% 段落缩进设置
+% 段落格式：中文标准 — 仅段首缩进，段间不加额外间距
 \usepackage{indentfirst}
-\setlength{\parindent}{2em}  % 每段开头空两格
+\setlength{\parindent}{2em}   % 段首缩进两格（中文标准）
+\setlength{\parskip}{0pt}     % 取消段间额外间距（覆盖pandoc模板的6pt）
 
 % 数学支持
 \usepackage{amsmath,amssymb,amsthm}
@@ -36,16 +42,6 @@
 }
 \makeatother
 
-
-% 章节标题样式 - ctex 已提供优化的中文标题样式
-% 如果需要自定义，可以取消注释以下设置：
-% \usepackage{titlesec}
-% \titleformat{\chapter}[display]
-%   {\normalfont\Huge\bfseries\filcenter}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-% \titleformat{\section}
-%   {\normalfont\Large\bfseries}{\thesection}{1em}{}
-% \titleformat{\subsection}
-%   {\normalfont\large\bfseries}{\thesubsection}{1em}{}
 
 % 图表标题 - ctex 已优化中文标题
 \usepackage{caption}
@@ -88,25 +84,18 @@
   lineskip=-1pt
 }
 
-% 调整R代码块(Shaded/Highlighting环境)的行间距
+% 调整R代码块(Shaded/Highlighting/verbatim)的行间距
 \usepackage{etoolbox}
 \makeatletter
-% 设置Verbatim环境(R代码块使用)的行间距
 \AtBeginEnvironment{Shaded}{%
-  \setstretch{0.9}%  % 代码块内行间距为0.8倍
+  \setstretch{1.0}%  % R代码块行间距，与正文一致
 }
-% 设置代码块内空行的行高
 \AtBeginEnvironment{Highlighting}{%
-  \setlength{\baselineskip}{0.8\baselineskip}%  % 空行高度为0.8倍
+  \setlength{\baselineskip}{1.0\baselineskip}%
 }
-% 设置verbatim环境(R代码输出)的行间距
 \AtBeginEnvironment{verbatim}{%
-  \setstretch{0.8}%  % verbatim环境行间距为0.8倍
-  \setlength{\baselineskip}{0.8\baselineskip}%  % 空行高度为0.8倍
+  \setstretch{1.0}%  % R代码输出行间距，与正文一致
 }
-% 或者使用更精细的控制
-%\preto\Shaded{\par\vspace{-0.5\baselineskip}}  % 代码块前减少空白
-%\appto\endShaded{\par\vspace{-0.5\baselineskip}}  % 代码块后减少空白
 \makeatother
 
 % AI协作面板 - 重定义quote环境，添加左侧蓝色边框

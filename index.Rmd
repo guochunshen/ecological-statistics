@@ -8,7 +8,7 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 description: "生态统计学课程教材，涵盖从基础到高级的生态数据分析方法"
-classoption: twoside
+classoption: twoside,12pt
 linestretch: 1.5
 toc-depth: 1
 lof: False

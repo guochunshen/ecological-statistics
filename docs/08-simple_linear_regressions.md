@@ -1,124 +1,6 @@
 # 回归建模：从线性模型到通用函数逼近 {#ch08}
 
 
-```
-## Loading required package: sysfonts
-```
-
-```
-## Loading required package: showtextdb
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```
-## Loading required package: MASS
-```
-
-```
-## 
-## Attaching package: 'MASS'
-```
-
-```
-## The following object is masked from 'package:dplyr':
-## 
-##     select
-```
-
-```
-## Loading required package: boot
-```
-
-```
-## Loading required package: survey
-```
-
-```
-## Loading required package: grid
-```
-
-```
-## Loading required package: Matrix
-```
-
-```
-## Loading required package: survival
-```
-
-```
-## 
-## Attaching package: 'survival'
-```
-
-```
-## The following object is masked from 'package:boot':
-## 
-##     aml
-```
-
-```
-## 
-## Attaching package: 'survey'
-```
-
-```
-## The following object is masked from 'package:graphics':
-## 
-##     dotchart
-```
-
-```
-## Loading required package: mitools
-```
-
-```
-## This is the global version of package relaimpo.
-```
-
-```
-## If you are a non-US user, a version with the interesting additional metric pmvd is available
-```
-
-```
-## from Ulrike Groempings web site at prof.beuth-hochschule.de/groemping.
-```
-
-```
-## Loading required package: carData
-```
-
-```
-## 
-## Attaching package: 'car'
-```
-
-```
-## The following object is masked from 'package:boot':
-## 
-##     logit
-```
-
-```
-## The following object is masked from 'package:dplyr':
-## 
-##     recode
-```
 
 ## 本章学习目标
 
@@ -394,7 +276,7 @@ knitr::kable(comparison,
 ``` r
 # 诊断图1：残差 vs 拟合值图
 # 这个图主要用于检查线性性和同方差性假设
-plot(model, which = 1, main = "残差 vs 拟合值图")
+plot(model, which = 1, main = "残差与拟合值图")
 ```
 
 \begin{figure}
@@ -454,7 +336,7 @@ plot(model, which = 3, main = "尺度-位置图")
 ``` r
 # 诊断图4：残差 vs 杠杆图
 # 这个图用于识别异常值和有影响的观测点
-plot(model, which = 5, main = "残差 vs 杠杆图")
+plot(model, which = 5, main = "残差与杠杆图")
 ```
 
 \begin{figure}

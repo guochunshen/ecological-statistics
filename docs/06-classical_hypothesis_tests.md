@@ -1,86 +1,6 @@
 # 生态假设检验：从经典方法到AI时代推断 {#ch06}
 
 
-```
-## Loading required package: sysfonts
-```
-
-```
-## Loading required package: showtextdb
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-```
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-## Warning: 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## 
-## Attaching package: 'kableExtra'
-```
-
-```
-## The following object is masked from 'package:dplyr':
-## 
-##     group_rows
-```
 
 ## 本章学习目标
 
@@ -1145,7 +1065,7 @@ cat("预测区间的平均宽度:", round(mean(ci_upper - ci_lower), 3), "\n")
 
 }
 
-\caption{Conformal Prediction预测区间演示：训练数据、校准数据、模型预测线和95\%预测区间。区间宽度仅依赖于校准残差的分位数，与模型形式无关。}(\#fig:conformal-prediction-plot)
+\caption{共形预测（Conformal Prediction）预测区间演示：训练数据、校准数据、模型预测线和95\%预测区间。区间宽度仅依赖于校准残差的分位数，与模型形式无关。}(\#fig:conformal-prediction-plot)
 \end{figure}
 
 图\@ref(fig:conformal-prediction-plot) 展示了Conformal Prediction的预测区间。灰色带代表95%置信水平的预测区间，其宽度完全由校准集上的残差分布决定，不依赖于任何关于数据分布或模型形式的假设。值得注意的是，区间宽度在校准集的覆盖范围内保持恒定，这是"同方差"Conformal方法的一个特征；在实际应用中，也可以使用更复杂的"自适应"方法来获得随$x$变化的区间宽度。

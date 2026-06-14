@@ -262,7 +262,7 @@ pdf_t_30 <- dt(x, df = 30)
 pdf_norm <- dnorm(x)
 
 plot(x, pdf_norm, type = "l", lwd = 2, col = "black",
-     xlab = "x", ylab = "密度",
+     xlab = "变量值", ylab = "密度",
      main = "t分布与正态分布比较",
      ylim = c(0, 0.4))
 
