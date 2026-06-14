@@ -147,41 +147,30 @@ knitr::kable(summary(model)$coefficients,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:forest-survey-coefficients)(\#tab:forest-survey-coefficients)森林调查温度与植物生长速率的关系 - 系数估计</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Estimate </th>
-   <th style="text-align:right;"> Std. Error </th>
-   <th style="text-align:right;"> t value </th>
-   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 2.1009145 </td>
-   <td style="text-align:right;"> 0.4681754 </td>
-   <td style="text-align:right;"> 4.487452 </td>
-   <td style="text-align:right;"> 4.5e-05 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> temperature </td>
-   <td style="text-align:right;"> 0.4966745 </td>
-   <td style="text-align:right;"> 0.0224552 </td>
-   <td style="text-align:right;"> 22.118467 </td>
-   <td style="text-align:right;"> 0.0e+00 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:forest-survey-coefficients)森林调查温度与植物生长速率的关系 - 系数估计}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 2.1009145 & 0.4681754 & 4.487452 & 4.5e-05\\
+temperature & 0.4966745 & 0.0224552 & 22.118467 & 0.0e+00\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 为了直观展示温度与植物生长速率之间的关系，我们生成了散点图并添加了线性回归线（见\@ref(fig:forest-survey-plot)）。该图直观呈现了常林森林调查数据的核心发现：随着温度从10℃升高到30℃，植物生长速率呈现明显的正相关趋势。图中深绿色的散点代表实际观测数据，红色直线为基于最小二乘法拟合的线性回归线，清晰地展示了温度对生长速率的正向影响模式。这种可视化方法不仅验证了线性关系的存在，还为理解生态系统中环境因子与生物响应之间的关系提供了直观依据。
 
-<div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/forest-survey-plot-1.png" alt="温度与植物生长速率的散点图及线性回归拟合线。" width="80%" />
-<p class="caption">(\#fig:forest-survey-plot)温度与植物生长速率的散点图及线性回归拟合线。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/forest-survey-plot-1} 
+
+}
+
+\caption{温度与植物生长速率的散点图及线性回归拟合线。}(\#fig:forest-survey-plot)
+\end{figure}
 
 通过上述回归分析，我们得以从四个维度量化温度与植物生长速率之间的生态关系：
 
@@ -204,10 +193,14 @@ knitr::kable(summary(model)$coefficients,
 
 
 
-<div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/r2-comparison-plot-1.png" alt="不同R²值的拟合效果对比：左(R²=0.1)弱、中(R²=0.5)中等、右(R²=0.9)强。" width="80%" />
-<p class="caption">(\#fig:r2-comparison-plot)不同R²值的拟合效果对比：左(R²=0.1)弱、中(R²=0.5)中等、右(R²=0.9)强。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/r2-comparison-plot-1} 
+
+}
+
+\caption{不同R²值的拟合效果对比：左(R²=0.1)弱、中(R²=0.5)中等、右(R²=0.9)强。}(\#fig:r2-comparison-plot)
+\end{figure}
 
 
 ```
@@ -259,68 +252,28 @@ knitr::kable(comparison,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:r2-adjr2-comparison)(\#tab:r2-adjr2-comparison)R²与调整R²随变量数量增加的变化对比</caption>
- <thead>
-  <tr>
-   <th style="text-align:right;"> 变量数| R </th>
-   <th style="text-align:right;"> 方| 调整R </th>
-   <th style="text-align:right;"> 方| </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.577 </td>
-   <td style="text-align:right;"> 0.568 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 0.605 </td>
-   <td style="text-align:right;"> 0.588 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 0.615 </td>
-   <td style="text-align:right;"> 0.590 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> 0.615 </td>
-   <td style="text-align:right;"> 0.581 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0.620 </td>
-   <td style="text-align:right;"> 0.577 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 0.620 </td>
-   <td style="text-align:right;"> 0.567 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 0.621 </td>
-   <td style="text-align:right;"> 0.558 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 8 </td>
-   <td style="text-align:right;"> 0.632 </td>
-   <td style="text-align:right;"> 0.561 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 0.658 </td>
-   <td style="text-align:right;"> 0.581 </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 10 </td>
-   <td style="text-align:right;"> 0.659 </td>
-   <td style="text-align:right;"> 0.571 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:r2-adjr2-comparison)R²与调整R²随变量数量增加的变化对比}
+\centering
+\begin{tabular}[t]{rrr}
+\toprule
+变量数 & R平方 & 调整R平方\\
+\midrule
+1 & 0.577 & 0.568\\
+2 & 0.605 & 0.588\\
+3 & 0.615 & 0.590\\
+4 & 0.615 & 0.581\\
+5 & 0.620 & 0.577\\
+\addlinespace
+6 & 0.620 & 0.567\\
+7 & 0.621 & 0.558\\
+8 & 0.632 & 0.561\\
+9 & 0.658 & 0.581\\
+10 & 0.659 & 0.571\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 我们使用R语言的`plot(model, which = 1)`命令生成残差 vs 拟合值图（见\@ref(fig:residual-vs-fitted-plot)），这是线性回归诊断中最重要的图形之一。该命令通过`which = 1`参数指定生成第一个诊断图，其中横轴显示模型的拟合值（预测值），纵轴显示对应的残差（观测值与预测值之差）。在生态学建模中，这个图形帮助我们验证两个关键假设：线性关系假设（残差应随机分布在0附近）和同方差性假设（残差的变异程度应保持恒定）。通过观察残差的分布模式，我们可以判断模型是否充分捕捉了生态变量之间的真实关系。
 
@@ -331,10 +284,14 @@ knitr::kable(comparison,
 plot(model, which = 1, main = "残差 vs 拟合值图")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/residual-vs-fitted-plot-1.png" alt="残差 vs 拟合值图：用于检查线性性和同方差性假设。" width="80%" />
-<p class="caption">(\#fig:residual-vs-fitted-plot)残差 vs 拟合值图：用于检查线性性和同方差性假设。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/residual-vs-fitted-plot-1} 
+
+}
+
+\caption{残差 vs 拟合值图：用于检查线性性和同方差性假设。}(\#fig:residual-vs-fitted-plot)
+\end{figure}
 
 **残差 vs 拟合值图**主要用于检查线性性和同方差性两个重要假设。在理想情况下，残差应该随机分布在水平线y=0周围，没有任何明显的模式。如果残差呈现U形或倒U形分布，这往往暗示着非线性关系的存在。例如，在研究植物生长与温度的关系时，如果存在最适温度范围，残差就可能呈现U形模式。另一方面，如果残差随着拟合值的增大而扩散，形成所谓的"喇叭形"模式，这表明存在异方差性问题。在生态学中，这种异方差性现象十分常见，比如物种丰富度在资源丰富的地区变异较小，而在资源贫瘠的地区变异较大。
 
@@ -347,10 +304,14 @@ plot(model, which = 1, main = "残差 vs 拟合值图")
 plot(model, which = 2, main = "正态Q-Q图")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/qq-plot-1.png" alt="正态Q-Q图：用于检查残差的正态性假设。" width="80%" />
-<p class="caption">(\#fig:qq-plot)正态Q-Q图：用于检查残差的正态性假设。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/qq-plot-1} 
+
+}
+
+\caption{正态Q-Q图：用于检查残差的正态性假设。}(\#fig:qq-plot)
+\end{figure}
 
 **正态Q-Q图**专门用于评估残差的正态性。理想情况下，标准化残差应该大致沿着45度对角线分布。轻微的尾部偏离通常是可以接受的，但如果出现系统性偏离，特别是S形或弯曲模式，就表明残差不服从正态分布。生态学数据经常面临正态性挑战，特别是计数数据（如个体数量）和比例数据（如覆盖率）。当发现严重的非正态性时，我们需要考虑数据变换或使用更适合的统计模型。
 
@@ -363,10 +324,14 @@ plot(model, which = 2, main = "正态Q-Q图")
 plot(model, which = 3, main = "尺度-位置图")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/scale-location-plot-1.png" alt="尺度-位置图：用于检查同方差性假设。" width="80%" />
-<p class="caption">(\#fig:scale-location-plot)尺度-位置图：用于检查同方差性假设。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/scale-location-plot-1} 
+
+}
+
+\caption{尺度-位置图：用于检查同方差性假设。}(\#fig:scale-location-plot)
+\end{figure}
 
 **尺度-位置图**提供了另一种检查同方差性的视角。理想情况下，点应该围绕水平线随机分布。如果出现明显的上升或下降趋势，就表明存在异方差性。在生态学研究中，这种异方差性往往与环境条件的极端性相关。例如，在干旱胁迫严重的地区，植物生长速率的变异可能显著增大；而在适宜的环境中，变异相对较小。
 
@@ -379,10 +344,14 @@ plot(model, which = 3, main = "尺度-位置图")
 plot(model, which = 5, main = "残差 vs 杠杆图")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/residual-leverage-plot-1.png" alt="残差 vs 杠杆图：用于识别异常值和有影响的观测点。" width="80%" />
-<p class="caption">(\#fig:residual-leverage-plot)残差 vs 杠杆图：用于识别异常值和有影响的观测点。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/residual-leverage-plot-1} 
+
+}
+
+\caption{残差 vs 杠杆图：用于识别异常值和有影响的观测点。}(\#fig:residual-leverage-plot)
+\end{figure}
 
 **残差 vs 杠杆图**帮助我们识别异常值和有影响的观测点。在这个图中，我们需要特别关注那些同时具有高杠杆和大残差的点。高杠杆点是指在自变量空间中位置异常的观测，它们对回归线的位置有较大影响；大残差点则是模型预测效果很差的观测。在生态调查中，这些有影响的点可能代表着特殊的生境类型或异常的环境条件，需要仔细检查其生态学合理性。
 
@@ -453,34 +422,19 @@ maple_model <- lm(height ~ dbh,
 
 我们首先拟合了整体回归模型，该模型忽略树种差异，假设所有树木共享同一条胸径-树高关系曲线。但生态学常识告诉我们：不同树种的生长策略和形态结构截然不同——橡树粗壮矮胖，松树挺拔高耸，枫树居中。如果强行用一条回归线代表所有树种，我们可能会遗漏重要的生态信息。因此，除了整体模型外，我们还需要分树种拟合，比较不同树种的斜率（树高随胸径的增速）是否存在差异。表\@ref(tab:overall-model-coefficients)首先展示了整体模型的系数估计结果。
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:overall-model-coefficients)(\#tab:overall-model-coefficients)整体回归模型结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Estimate </th>
-   <th style="text-align:right;"> Std. Error </th>
-   <th style="text-align:right;"> t value </th>
-   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 1.4358832 </td>
-   <td style="text-align:right;"> 0.6029381 </td>
-   <td style="text-align:right;"> 2.381477 </td>
-   <td style="text-align:right;"> 0.0193989 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> dbh </td>
-   <td style="text-align:right;"> 0.3733529 </td>
-   <td style="text-align:right;"> 0.0174277 </td>
-   <td style="text-align:right;"> 21.422995 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:overall-model-coefficients)整体回归模型结果}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 1.4358832 & 0.6029381 & 2.381477 & 0.0193989\\
+dbh & 0.3733529 & 0.0174277 & 21.422995 & 0.0000000\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 ```
@@ -530,48 +484,21 @@ multi_model <- lm(biomass ~ temperature + precipitation + soil_nitrogen,
                   data = forest_multi_data)
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:multi-regression-results)(\#tab:multi-regression-results)多元线性回归模型结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Estimate </th>
-   <th style="text-align:right;"> Std. Error </th>
-   <th style="text-align:right;"> t value </th>
-   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 7.3208544 </td>
-   <td style="text-align:right;"> 1.4611221 </td>
-   <td style="text-align:right;"> 5.010433 </td>
-   <td style="text-align:right;"> 0.0000025 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> temperature </td>
-   <td style="text-align:right;"> 0.5690084 </td>
-   <td style="text-align:right;"> 0.0504506 </td>
-   <td style="text-align:right;"> 11.278528 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> precipitation </td>
-   <td style="text-align:right;"> 0.0022242 </td>
-   <td style="text-align:right;"> 0.0007307 </td>
-   <td style="text-align:right;"> 3.043824 </td>
-   <td style="text-align:right;"> 0.0030139 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> soil_nitrogen </td>
-   <td style="text-align:right;"> 0.3226185 </td>
-   <td style="text-align:right;"> 0.0177608 </td>
-   <td style="text-align:right;"> 18.164683 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:multi-regression-results)多元线性回归模型结果}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 7.3208544 & 1.4611221 & 5.010433 & 0.0000025\\
+temperature & 0.5690084 & 0.0504506 & 11.278528 & 0.0000000\\
+precipitation & 0.0022242 & 0.0007307 & 3.043824 & 0.0030139\\
+soil\_nitrogen & 0.3226185 & 0.0177608 & 18.164683 & 0.0000000\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 多元线性回归模型的系数估计结果如表\@ref(tab:multi-regression-results)所示，在控制其他变量的情况下：
 
@@ -678,97 +605,24 @@ knitr::kable(summary(forest_ecosystem_data),
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:data-summary)(\#tab:data-summary)数据框摘要</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:left;"> richness </th>
-   <th style="text-align:left;"> area </th>
-   <th style="text-align:left;"> vegetation </th>
-   <th style="text-align:left;"> water_distance </th>
-   <th style="text-align:left;"> soil_ph </th>
-   <th style="text-align:left;"> elevation </th>
-   <th style="text-align:left;"> precipitation </th>
-   <th style="text-align:left;"> canopy_cover </th>
-   <th style="text-align:left;"> human_disturbance </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> Min.   : 1.00 </td>
-   <td style="text-align:left;"> Min.   : 1.052 </td>
-   <td style="text-align:left;"> Min.   :0.1107 </td>
-   <td style="text-align:left;"> Min.   :0.1431 </td>
-   <td style="text-align:left;"> Min.   :4.506 </td>
-   <td style="text-align:left;"> Min.   :123.1 </td>
-   <td style="text-align:left;"> Min.   : 503.1 </td>
-   <td style="text-align:left;"> Min.   :0.2039 </td>
-   <td style="text-align:left;"> Min.   :0.00419 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> 1st Qu.: 6.00 </td>
-   <td style="text-align:left;"> 1st Qu.:29.358 </td>
-   <td style="text-align:left;"> 1st Qu.:0.2462 </td>
-   <td style="text-align:left;"> 1st Qu.:0.8951 </td>
-   <td style="text-align:left;"> 1st Qu.:5.233 </td>
-   <td style="text-align:left;"> 1st Qu.:420.1 </td>
-   <td style="text-align:left;"> 1st Qu.: 798.9 </td>
-   <td style="text-align:left;"> 1st Qu.:0.4133 </td>
-   <td style="text-align:left;"> 1st Qu.:0.34514 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> Median :10.00 </td>
-   <td style="text-align:left;"> Median :46.215 </td>
-   <td style="text-align:left;"> Median :0.4880 </td>
-   <td style="text-align:left;"> Median :2.4927 </td>
-   <td style="text-align:left;"> Median :6.172 </td>
-   <td style="text-align:left;"> Median :678.0 </td>
-   <td style="text-align:left;"> Median :1032.9 </td>
-   <td style="text-align:left;"> Median :0.5919 </td>
-   <td style="text-align:left;"> Median :0.59159 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> Mean   :12.47 </td>
-   <td style="text-align:left;"> Mean   :49.982 </td>
-   <td style="text-align:left;"> Mean   :0.4783 </td>
-   <td style="text-align:left;"> Mean   :2.5488 </td>
-   <td style="text-align:left;"> Mean   :6.348 </td>
-   <td style="text-align:left;"> Mean   :628.0 </td>
-   <td style="text-align:left;"> Mean   :1033.5 </td>
-   <td style="text-align:left;"> Mean   :0.5752 </td>
-   <td style="text-align:left;"> Mean   :0.55623 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> 3rd Qu.:17.00 </td>
-   <td style="text-align:left;"> 3rd Qu.:71.325 </td>
-   <td style="text-align:left;"> 3rd Qu.:0.6927 </td>
-   <td style="text-align:left;"> 3rd Qu.:4.0514 </td>
-   <td style="text-align:left;"> 3rd Qu.:7.350 </td>
-   <td style="text-align:left;"> 3rd Qu.:845.7 </td>
-   <td style="text-align:left;"> 3rd Qu.:1252.1 </td>
-   <td style="text-align:left;"> 3rd Qu.:0.7574 </td>
-   <td style="text-align:left;"> 3rd Qu.:0.78908 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> Max.   :47.00 </td>
-   <td style="text-align:left;"> Max.   :97.365 </td>
-   <td style="text-align:left;"> Max.   :0.8962 </td>
-   <td style="text-align:left;"> Max.   :4.9714 </td>
-   <td style="text-align:left;"> Max.   :8.471 </td>
-   <td style="text-align:left;"> Max.   :990.3 </td>
-   <td style="text-align:left;"> Max.   :1492.8 </td>
-   <td style="text-align:left;"> Max.   :0.8795 </td>
-   <td style="text-align:left;"> Max.   :0.99831 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:data-summary)数据框摘要}
+\centering
+\begin{tabular}[t]{llllllllll}
+\toprule
+  &    richness &      area &   vegetation & water\_distance &    soil\_ph &   elevation & precipitation &  canopy\_cover & human\_disturbance\\
+\midrule
+ & Min.   : 1.00 & Min.   : 1.052 & Min.   :0.1107 & Min.   :0.1431 & Min.   :4.506 & Min.   :123.1 & Min.   : 503.1 & Min.   :0.2039 & Min.   :0.00419\\
+ & 1st Qu.: 6.00 & 1st Qu.:29.358 & 1st Qu.:0.2462 & 1st Qu.:0.8951 & 1st Qu.:5.233 & 1st Qu.:420.1 & 1st Qu.: 798.9 & 1st Qu.:0.4133 & 1st Qu.:0.34514\\
+ & Median :10.00 & Median :46.215 & Median :0.4880 & Median :2.4927 & Median :6.172 & Median :678.0 & Median :1032.9 & Median :0.5919 & Median :0.59159\\
+ & Mean   :12.47 & Mean   :49.982 & Mean   :0.4783 & Mean   :2.5488 & Mean   :6.348 & Mean   :628.0 & Mean   :1033.5 & Mean   :0.5752 & Mean   :0.55623\\
+ & 3rd Qu.:17.00 & 3rd Qu.:71.325 & 3rd Qu.:0.6927 & 3rd Qu.:4.0514 & 3rd Qu.:7.350 & 3rd Qu.:845.7 & 3rd Qu.:1252.1 & 3rd Qu.:0.7574 & 3rd Qu.:0.78908\\
+\addlinespace
+ & Max.   :47.00 & Max.   :97.365 & Max.   :0.8962 & Max.   :4.9714 & Max.   :8.471 & Max.   :990.3 & Max.   :1492.8 & Max.   :0.8795 & Max.   :0.99831\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 为了直观地探索变量间的关系，我们使用`pairs()`函数生成散点图矩阵，如图\@ref(fig:pairs-plot)所示。该代码选择了物种丰富度（richness）与四个关键环境因子（栖息地面积、植被密度、距水源距离和土壤pH值）进行可视化，通过两两变量的散点图展示它们之间的潜在关系模式。
 
@@ -782,10 +636,14 @@ pairs(forest_ecosystem_data[, c("richness", "area", "vegetation",
       main = "常林的森林调查：物种丰富度与主要环境因子的关系")
 ```
 
-<div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/pairs-plot-1.png" alt="物种丰富度与主要环境因子的散点图矩阵，展示各变量间的两两关系，用于初步探索相关性和分布特征。" width="80%" />
-<p class="caption">(\#fig:pairs-plot)物种丰富度与主要环境因子的散点图矩阵，展示各变量间的两两关系，用于初步探索相关性和分布特征。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/pairs-plot-1} 
+
+}
+
+\caption{物种丰富度与主要环境因子的散点图矩阵，展示各变量间的两两关系，用于初步探索相关性和分布特征。}(\#fig:pairs-plot)
+\end{figure}
 
 #### 完整模型拟合
 
@@ -805,83 +663,27 @@ knitr::kable(summary(full_model)$coefficients,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:full-model-results)(\#tab:full-model-results)完整多元线性回归模型结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Estimate </th>
-   <th style="text-align:right;"> Std. Error </th>
-   <th style="text-align:right;"> t value </th>
-   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 1.0703826 </td>
-   <td style="text-align:right;"> 5.9121852 </td>
-   <td style="text-align:right;"> 0.1810469 </td>
-   <td style="text-align:right;"> 0.8568466 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> area </td>
-   <td style="text-align:right;"> 0.2159594 </td>
-   <td style="text-align:right;"> 0.0239462 </td>
-   <td style="text-align:right;"> 9.0185272 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> vegetation </td>
-   <td style="text-align:right;"> 11.6581168 </td>
-   <td style="text-align:right;"> 2.7555428 </td>
-   <td style="text-align:right;"> 4.2307877 </td>
-   <td style="text-align:right;"> 0.0000685 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> water_distance </td>
-   <td style="text-align:right;"> -2.8333733 </td>
-   <td style="text-align:right;"> 0.4217195 </td>
-   <td style="text-align:right;"> -6.7186213 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> soil_ph </td>
-   <td style="text-align:right;"> 0.3317705 </td>
-   <td style="text-align:right;"> 0.5335264 </td>
-   <td style="text-align:right;"> 0.6218446 </td>
-   <td style="text-align:right;"> 0.5360358 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> elevation </td>
-   <td style="text-align:right;"> -0.0014548 </td>
-   <td style="text-align:right;"> 0.0025624 </td>
-   <td style="text-align:right;"> -0.5677731 </td>
-   <td style="text-align:right;"> 0.5719801 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> precipitation </td>
-   <td style="text-align:right;"> 0.0003581 </td>
-   <td style="text-align:right;"> 0.0024916 </td>
-   <td style="text-align:right;"> 0.1437284 </td>
-   <td style="text-align:right;"> 0.8861221 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> canopy_cover </td>
-   <td style="text-align:right;"> -1.7460966 </td>
-   <td style="text-align:right;"> 3.3155084 </td>
-   <td style="text-align:right;"> -0.5266452 </td>
-   <td style="text-align:right;"> 0.6000815 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> human_disturbance </td>
-   <td style="text-align:right;"> 3.0531542 </td>
-   <td style="text-align:right;"> 2.3336352 </td>
-   <td style="text-align:right;"> 1.3083254 </td>
-   <td style="text-align:right;"> 0.1949827 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:full-model-results)完整多元线性回归模型结果}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 1.0703826 & 5.9121852 & 0.1810469 & 0.8568466\\
+area & 0.2159594 & 0.0239462 & 9.0185272 & 0.0000000\\
+vegetation & 11.6581168 & 2.7555428 & 4.2307877 & 0.0000685\\
+water\_distance & -2.8333733 & 0.4217195 & -6.7186213 & 0.0000000\\
+soil\_ph & 0.3317705 & 0.5335264 & 0.6218446 & 0.5360358\\
+\addlinespace
+elevation & -0.0014548 & 0.0025624 & -0.5677731 & 0.5719801\\
+precipitation & 0.0003581 & 0.0024916 & 0.1437284 & 0.8861221\\
+canopy\_cover & -1.7460966 & 3.3155084 & -0.5266452 & 0.6000815\\
+human\_disturbance & 3.0531542 & 2.3336352 & 1.3083254 & 0.1949827\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 #### 变量选择过程
 
@@ -898,48 +700,21 @@ knitr::kable(summary(step_model)$coefficients,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:stepwise-model-results)(\#tab:stepwise-model-results)逐步回归模型结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Estimate </th>
-   <th style="text-align:right;"> Std. Error </th>
-   <th style="text-align:right;"> t value </th>
-   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 3.2826905 </td>
-   <td style="text-align:right;"> 1.9994067 </td>
-   <td style="text-align:right;"> 1.641832 </td>
-   <td style="text-align:right;"> 0.1047567 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> area </td>
-   <td style="text-align:right;"> 0.2140697 </td>
-   <td style="text-align:right;"> 0.0226151 </td>
-   <td style="text-align:right;"> 9.465779 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> vegetation </td>
-   <td style="text-align:right;"> 12.2330984 </td>
-   <td style="text-align:right;"> 2.6069842 </td>
-   <td style="text-align:right;"> 4.692433 </td>
-   <td style="text-align:right;"> 0.0000117 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> water_distance </td>
-   <td style="text-align:right;"> -2.8868698 </td>
-   <td style="text-align:right;"> 0.4092891 </td>
-   <td style="text-align:right;"> -7.053375 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:stepwise-model-results)逐步回归模型结果}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 3.2826905 & 1.9994067 & 1.641832 & 0.1047567\\
+area & 0.2140697 & 0.0226151 & 9.465779 & 0.0000000\\
+vegetation & 12.2330984 & 2.6069842 & 4.692433 & 0.0000117\\
+water\_distance & -2.8868698 & 0.4092891 & -7.053375 & 0.0000000\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 **基于AIC的模型比较**
 
@@ -1006,48 +781,21 @@ knitr::kable(summary(forest_model)$coefficients,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:optimal-model-results)(\#tab:optimal-model-results)最优模型结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Estimate </th>
-   <th style="text-align:right;"> Std. Error </th>
-   <th style="text-align:right;"> t value </th>
-   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 3.2826905 </td>
-   <td style="text-align:right;"> 1.9994067 </td>
-   <td style="text-align:right;"> 1.641832 </td>
-   <td style="text-align:right;"> 0.1047567 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> area </td>
-   <td style="text-align:right;"> 0.2140697 </td>
-   <td style="text-align:right;"> 0.0226151 </td>
-   <td style="text-align:right;"> 9.465779 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> vegetation </td>
-   <td style="text-align:right;"> 12.2330984 </td>
-   <td style="text-align:right;"> 2.6069842 </td>
-   <td style="text-align:right;"> 4.692433 </td>
-   <td style="text-align:right;"> 0.0000117 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> water_distance </td>
-   <td style="text-align:right;"> -2.8868698 </td>
-   <td style="text-align:right;"> 0.4092891 </td>
-   <td style="text-align:right;"> -7.053375 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:optimal-model-results)最优模型结果}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 3.2826905 & 1.9994067 & 1.641832 & 0.1047567\\
+area & 0.2140697 & 0.0226151 & 9.465779 & 0.0000000\\
+vegetation & 12.2330984 & 2.6069842 & 4.692433 & 0.0000117\\
+water\_distance & -2.8868698 & 0.4092891 & -7.053375 & 0.0000000\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 **模型选择理由**
 
@@ -1092,10 +840,14 @@ par(mfrow = c(2, 2))
 plot(forest_model)
 ```
 
-<div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/forest-model-diagnostics-1.png" alt="森林生态系统模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。" width="80%" />
-<p class="caption">(\#fig:forest-model-diagnostics)森林生态系统模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/forest-model-diagnostics-1} 
+
+}
+
+\caption{森林生态系统模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。}(\#fig:forest-model-diagnostics)
+\end{figure}
 
 ``` r
 par(mfrow = c(1, 1))
@@ -1294,10 +1046,14 @@ model3 <- lm(y ~ poly(x, degree = 3, raw = TRUE), data = eco_data)
 
 
 
-<div class="figure" style="text-align: center">
-<img src="08-simple_linear_regressions_files/figure-html/poly-regression-comparison-1.png" alt="物种丰富度与海拔关系的多项式回归：线性与二次多项式的拟合对比。" width="80%" />
-<p class="caption">(\#fig:poly-regression-comparison)物种丰富度与海拔关系的多项式回归：线性与二次多项式的拟合对比。</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/poly-regression-comparison-1} 
+
+}
+
+\caption{物种丰富度与海拔关系的多项式回归：线性与二次多项式的拟合对比。}(\#fig:poly-regression-comparison)
+\end{figure}
 
 
 ```
@@ -1307,41 +1063,20 @@ model3 <- lm(y ~ poly(x, degree = 3, raw = TRUE), data = eco_data)
 ##  多项式模型 R²: 0.924
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:poly-model-summary)(\#tab:poly-model-summary)多项式模型摘要</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Estimate </th>
-   <th style="text-align:right;"> Std. Error </th>
-   <th style="text-align:right;"> t value </th>
-   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 65.60220 </td>
-   <td style="text-align:right;"> 0.4571385 </td>
-   <td style="text-align:right;"> 143.50617 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> poly(altitude, degree = 2)1 </td>
-   <td style="text-align:right;"> -97.84435 </td>
-   <td style="text-align:right;"> 4.5713852 </td>
-   <td style="text-align:right;"> -21.40366 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> poly(altitude, degree = 2)2 </td>
-   <td style="text-align:right;"> -123.18639 </td>
-   <td style="text-align:right;"> 4.5713852 </td>
-   <td style="text-align:right;"> -26.94728 </td>
-   <td style="text-align:right;"> 0 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:poly-model-summary)多项式模型摘要}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 65.60220 & 0.4571385 & 143.50617 & 0\\
+poly(altitude, degree = 2)1 & -97.84435 & 4.5713852 & -21.40366 & 0\\
+poly(altitude, degree = 2)2 & -123.18639 & 4.5713852 & -26.94728 & 0\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 如表\@ref(tab:poly-model-summary)所示，二次多项式模型显著改善了拟合效果，表明物种丰富度与海拔之间存在非线性关系。**注意**：由于此处使用了正交多项式（`poly()`的默认设置），表中的系数并非直接对应"海拔"和"海拔²"的效应——正交化后每一项的系数独立于其他项。如果你需要直接解读各次项（例如得到二次项系数以判断曲线的开口方向），应使用`poly(altitude, degree = 2, raw = TRUE)`来获取原始尺度上的系数。这种单峰分布模式在生态学中很常见，反映了物种对海拔梯度的最适响应。
 
