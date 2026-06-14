@@ -1,7 +1,7 @@
 ---
 title: "生态统计学：AI时代的生态数据分析"
 author: "沈国春、李勤"
-date: "2026-06-10"
+date: "2026-06-14"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
