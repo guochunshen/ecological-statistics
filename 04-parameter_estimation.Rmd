@@ -2,6 +2,7 @@
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(
+  dev = "cairo_pdf",
   echo = TRUE,
   warning = FALSE,
   message = FALSE,

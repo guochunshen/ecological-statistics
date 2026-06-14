@@ -813,10 +813,10 @@ summary(cooc_null)
 ```
 
 ```
-## Time Stamp:  Tue Jun  9 06:04:39 2026 
+## Time Stamp:  Sun Jun 14 07:38:55 2026 
 ## Reproducible:  
 ## Number of Replications:  
-## Elapsed Time:  0.21 secs 
+## Elapsed Time:  0.49 secs 
 ## Metric:  c_score 
 ## Algorithm:  sim9 
 ## Observed Index:  13.671 

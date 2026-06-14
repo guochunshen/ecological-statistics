@@ -3136,8 +3136,8 @@ Var1 & Freq\\
 \begin{verbatim}
 ## 不同抽样方法对种群数量均值的估计比较：
 ##  总体均值： 26.01 
-##  随机抽样估计： 26.03 
-##  分层抽样估计： 26.95 
+##  随机抽样估计： 26.56 
+##  分层抽样估计： 25.65 
 ##  系统抽样估计： 26.16
 \end{verbatim}
 
@@ -3159,8 +3159,8 @@ Var1 & Freq\\
 \begin{verbatim}
 ## 
 ## 估计偏差分析：
-##  随机抽样偏差： 0.0768935 %
-##  分层抽样偏差： 3.613995 %
+##  随机抽样偏差： 2.114571 %
+##  分层抽样偏差： -1.384083 %
 ##  系统抽样偏差： 0.5767013 %
 \end{verbatim}
 
@@ -5450,16 +5450,16 @@ Kendall's \(\tau\)对异常值极为稳健，且具有直观的概率解释：\(
 \toprule
   & precipitation & temperature & productivity\\
 \midrule
-precipitation & 1.000 & -0.223 & 0.389\\
-temperature & -0.223 & 1.000 & 0.666\\
-productivity & 0.389 & 0.666 & 1.000\\
+precipitation & 1.000 & 0.151 & 0.265\\
+temperature & 0.151 & 1.000 & 0.672\\
+productivity & 0.265 & 0.672 & 1.000\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{verbatim}
 ## 
-## 控制温度后，降水量与生产力的偏相关系数： 0.389
+## 控制温度后，降水量与生产力的偏相关系数： 0.265
 \end{verbatim}
 
 表\ref{tab:partial-cor-table}展示了控制温度影响后的偏相关系数矩阵，在生态学应用中，偏相关分析具有极其重要的价值。例如，在研究森林生产力与降水量的关系时，温度可能同时影响这两个变量，温度较高时通常降水量也较多，同时温度本身也直接影响植物的光合作用效率。如果不控制温度的影响，我们可能会高估降水量对生产力的直接作用。偏相关分析能够帮助我们识别这种''伪相关''或''间接相关''，从而更准确地理解生态系统的内在机制。此外，偏相关分析在生态网络构建、物种相互作用分析、环境因子筛选等复杂生态学问题中都有广泛应用。然而，我们需要注意，偏相关分析仍然基于线性关系的假设，且要求控制变量与目标变量之间的关系大致满足线性模型的前提条件。在高度非线性的生态系统中，偏相关分析的结果需要谨慎解释。
@@ -8835,10 +8835,10 @@ Bagging和Random Forest的方差分解分析还为我们理解模型选择提供
 \end{Shaded}
 
 \begin{verbatim}
-## Time Stamp:  Tue Jun  9 06:04:39 2026 
+## Time Stamp:  Sun Jun 14 07:38:55 2026 
 ## Reproducible:  
 ## Number of Replications:  
-## Elapsed Time:  0.21 secs 
+## Elapsed Time:  0.49 secs 
 ## Metric:  c_score 
 ## Algorithm:  sim9 
 ## Observed Index:  13.671 

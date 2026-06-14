@@ -3,6 +3,7 @@
 ```{r include=FALSE}
 # 初始化设置
 knitr::opts_chunk$set(
+  dev = "cairo_pdf",
   echo = TRUE,
   warning = FALSE,
   message = FALSE,
