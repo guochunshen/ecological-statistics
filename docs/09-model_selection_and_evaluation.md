@@ -24,7 +24,7 @@
 
 ### 模型选择原则
 
-常林开始整理她的森林土壤调查数据，准备研究土壤养分如何影响植物生物量。她面临着一个关键问题：应该选择什么样的模型来描述这种生态关系？是简单的线性模型，还是更复杂的多项式模型？这个问题的答案引出了模型选择的核心原则，在模型复杂度和拟合优度之间寻找最优平衡点。
+常林开始整理她的森林土壤调查数据，准备研究土壤养分如何影响植物生物量。她面临着一个关键问题：应该选择什么样的模型来描述这种生态关系？是简单的线性模型，还是更复杂的多项式模型？这个问题的答案引出了模型选择的核心原则：在模型复杂度和拟合优度之间寻找最优平衡点。
 
 **平衡模型复杂度和拟合优度**是常林面临的第一个挑战。模型复杂度通常用参数数量来衡量，而拟合优度则通过模型对数据的解释能力来评估。在生态学中，我们面临着两难选择：过于简单的模型可能无法充分捕捉生态关系的复杂性，导致欠拟合；而过于复杂的模型则可能过度适应训练数据的随机噪声，导致过拟合。
 
@@ -40,8 +40,8 @@
 
 常林的模型选择过程本身就是对森林生态机制的深入探索。通过系统比较不同复杂度的模型，她能够识别哪些生态过程是必要的，哪些是冗余的。这种识别过程帮助她更深入地理解土壤养分如何影响森林生态系统的生产力。
 
-常林开始实施她的模型复杂度平衡研究。她首先需要生成模拟数据来演示不同复杂度模型的拟合效果。这些数据模拟了她在森林调查中观察到的植物生物量与土壤养分的关系，其中真实生态关系是二次的，反映了物种对养分的最适响应模式。
-数据导入后，常林开始拟合不同复杂度的模型。她构建了四个模型：线性模型、二次模型、三次模型和10次多项式模型，每个模型代表了对植物生物量与土壤养分关系的不同假设。
+常林开始实施她的模型复杂度平衡研究。她使用一组模拟数据来演示不同复杂度模型的拟合效果。这些数据模拟了她在森林调查中观察到的植物生物量与土壤养分的关系，其中预设的生态关系是二次的，反映了物种对养分的最适响应模式。
+数据准备就绪后，常林开始拟合不同复杂度的模型。她构建了四个模型：线性模型、二次模型、三次模型和10次多项式模型，每个模型代表了对植物生物量与土壤养分关系的不同假设。
 
 
 
@@ -88,18 +88,14 @@ aic_overfit <- AIC(model_overfit)
 
 为了直观展示不同复杂度模型的拟合效果，常林生成了模型比较图（图\@ref(fig:model-complexity-comparison)）。该图采用2×2布局，分别展示了线性、二次、三次和10次多项式模型的拟合效果，每个子图都标注了相应的$R^2$和$\text{AIC}$值，便于读者直观比较模型复杂度与拟合优度的平衡关系。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/model-complexity-comparison-1} 
-
-}
-
-\caption{模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较}(\#fig:model-complexity-comparison)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/model-complexity-comparison-1.png" alt="模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较" width="80%" />
+<p class="caption">(\#fig:model-complexity-comparison)模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较</p>
+</div>
 
 从图\@ref(fig:model-complexity-comparison)中可以清晰地观察到不同复杂度模型的拟合特征：线性模型过于平滑，无法捕捉数据中的非线性趋势；二次模型恰当地反映了植物对养分的最适响应模式；三次模型虽然拟合度略有提升，但增加了不必要的复杂度；而10次多项式模型则明显过拟合，曲线过度适应数据中的随机波动。
 
-通过模型复杂度与拟合优度平衡的演示，我们可以得出重要的生态学启示。在这个植物生物量与土壤养分的例子中，真实生态关系是二次的，反映了物种对养分的最适响应模式。线性模型虽然简单，但过于简化，无法捕捉这种生态学模式；而二次模型既充分捕捉了生态关系，又保持了简约性。高次多项式虽然$R^2$更高，但生态学意义不明确，$\text{AIC}$值也确认了二次模型的最优性。
+通过模型复杂度与拟合优度平衡的演示，我们可以得出重要的生态学启示。在这个植物生物量与土壤养分的例子中，预设的生态关系是二次的，反映了物种对养分的最适响应模式（这是一组模拟数据，我们事先知道"真相"）。线性模型虽然简单，但过于简化，无法捕捉这种生态学模式；而二次模型既充分捕捉了生态关系，又保持了简约性。高次多项式虽然$R^2$更高，但生态学意义不明确，$\text{AIC}$值也确认了二次模型的最优性。
 
 ### 信息准则
 
@@ -111,24 +107,26 @@ aic_overfit <- AIC(model_overfit)
 
 $$\text{AIC} = -2 \ln(L) + 2k$$
 
-其中$L$是模型的最大似然值，$k$是模型参数的数量。这个公式体现了信息准则的基本哲学：第一项惩罚模型对数据的拟合不足，第二项惩罚模型的复杂度。
+其中$L$是模型的最大似然值，$k$是模型参数的数量。这个公式体现了信息准则的基本哲学：第一项$-2\ln(L)$衡量模型对数据的拟合不足程度（拟合越差，该项越大），第二项$2k$惩罚模型的复杂度。两项之和最小化的模型，在拟合与简约之间取得了最优平衡。
 
 $\text{AIC}$的生态学意义在于它量化了模型的信息损失。当我们用模型来描述生态数据时，总会丢失一些信息。$\text{AIC}$估计了这种信息损失的大小，$\text{AIC}$值越小的模型，信息损失越小，模型质量越高。在生态学应用中，$\text{AIC}$特别适合用于比较非嵌套模型，即那些具有不同变量组合或不同函数形式的模型。
 
-$\text{AIC}$的一个关键特性是它的相对性。$\text{AIC}$值本身没有绝对意义，只有不同模型之间的$\text{AIC}$差异$\Delta\text{AIC}$才有意义。通常认为，$\Delta\text{AIC} < 2$的模型在统计上难以区分，$2 \leq \Delta\text{AIC} \leq 7$的模型有实质性差异，$\Delta\text{AIC} > 10$的模型则明显优劣分明。这种相对比较的特性使得$\text{AIC}$特别适合生态学研究，因为生态学中很少存在"完美"的模型。
+$\text{AIC}$的一个关键特性是它的相对性。$\text{AIC}$值本身没有绝对意义，只有不同模型之间的$\text{AIC}$差异$\Delta\text{AIC}$才有意义。通常认为，$\Delta\text{AIC} < 2$的模型在统计上难以区分，$2 \leq \Delta\text{AIC} \leq 7$的模型有实质性差异，$\Delta\text{AIC} > 10$的模型则明显优劣分明（$7 < \Delta\text{AIC} \leq 10$的区域为过渡地带，模型支持度随差异增大而递减）。这种相对比较的特性使得$\text{AIC}$特别适合生态学研究，因为生态学中很少存在"完美"的模型。
 
-**BIC（贝叶斯信息准则）**是AIC的改进版本，由Gideon Schwarz在1978年提出。BIC的计算公式为：
+**BIC（贝叶斯信息准则）**由Gideon Schwarz在1978年提出，从贝叶斯框架出发推导而来，与AIC虽然形式相似但哲学基础不同。BIC的计算公式为：
 $$\text{BIC} = -2 \ln(L) + k \ln(n)$$
 
 其中$n$是样本量。与AIC相比，BIC对模型复杂度的惩罚更强，特别是当样本量较大时。
 
-$\text{BIC}$的数学基础是贝叶斯因子，它估计了模型的后验概率。在生态学研究中，$\text{BIC}$特别适合用于比较具有明确理论基础的模型，因为它倾向于选择那些在贝叶斯框架下更有可能的模型。$\text{BIC}$的另一个优势是它的一致性特性：当样本量趋于无穷大时，$\text{BIC}$会选择真实的模型（如果真实模型在候选模型中）。
+$\text{BIC}$可以从贝叶斯框架下的拉普拉斯近似推导出来：BIC是对模型边际似然（marginal likelihood）的近似，两个模型BIC之差近似于$-2$倍的对数贝叶斯因子。因此，$\text{BIC}$倾向于选择在贝叶斯框架下后验概率更高的模型。在生态学研究中，$\text{BIC}$特别适合用于比较具有明确理论基础的模型，因为它倾向于选择更简约且与数据一致的模型。$\text{BIC}$的另一个优势是它的一致性特性：当样本量趋于无穷大时，$\text{BIC}$会选择真实的模型（如果真实模型在候选模型中）。
 
-在生态学实践中，$\text{AIC}$和$\text{BIC}$的选择取决于研究目标。如果研究目标是预测，$\text{AIC}$通常更合适，因为它倾向于选择预测能力更强的模型。如果研究目标是机制探索和模型识别，$\text{BIC}$可能更合适，因为它倾向于选择更简约的模型。对于小样本情况，推荐使用$\text{AIC}$的修正版本$\text{AIC}_c$。
+在生态学实践中，$\text{AIC}$和$\text{BIC}$的选择取决于研究目标。如果研究目标是预测，$\text{AIC}$通常更合适，因为它倾向于选择预测能力更强的模型。如果研究目标是机制探索和模型识别，$\text{BIC}$可能更合适，因为它倾向于选择更简约的模型。对于小样本情况，推荐使用$\text{AIC}$的修正版本$\text{AIC}_c$：
+$$\text{AIC}_c = \text{AIC} + \frac{2k(k+1)}{n-k-1}$$
+其中$n$为样本量，$k$为参数个数。当$n$远大于$k$时，修正项趋近于零，$\text{AIC}_c$退化为$\text{AIC}$；当$n/k < 40$时，修正项不可忽略，应优先使用$\text{AIC}_c$。
 
 信息准则在生态学中的应用需要谨慎。首先，信息准则只能比较基于相同数据的模型。其次，信息准则假设候选模型已经包含了真实模型，这在生态学中往往不成立。第三，信息准则对样本量敏感，小样本情况下可能需要使用修正版本如$\text{AIC}_c$。
 
-为了演示信息准则在生态学中的应用，常林创建了一个森林鸟类丰富度研究的案例。她模拟了100个森林样地的调查数据，包括栖息地面积、植被密度、距水源距离和土壤pH值等环境因子，其中只有部分因子真正影响鸟类丰富度。
+为了演示信息准则在生态学中的应用，常林创建了一个森林鸟类丰富度研究的案例。她使用了一组包含100个森林样地的模拟调查数据，变量包括栖息地面积、植被密度、距水源距离和土壤pH值等环境因子，其中只有部分因子真正影响鸟类丰富度。
 
 
 
@@ -194,41 +192,96 @@ best_bic <- forest_bird_model_comparison$Model[
   which.min(forest_bird_model_comparison$BIC)]
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:forest-bird-model-comparison-table)信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣}
-\centering
-\begin{tabular}[t]{lrrrrrrr}
-\toprule
-Model & R2 & AIC & BIC & Parameters & delta\_AIC & delta\_BIC & AIC\_weight\\
-\midrule
-full\_model & 0.606 & 737.998 & 753.629 & 5 & 0.000 & 0.000 & 0.76\\
-overfit\_model & 0.613 & 740.300 & 761.141 & 7 & 2.302 & 7.512 & 0.24\\
-area\_water & 0.511 & 755.660 & 766.081 & 3 & 17.662 & 12.452 & 0.00\\
-area\_vegetation & 0.419 & 772.850 & 783.270 & 3 & 34.852 & 29.641 & 0.00\\
-area\_only & 0.342 & 783.379 & 791.195 & 2 & 45.381 & 37.566 & 0.00\\
-\addlinespace
-vegetation\_only & 0.119 & 812.484 & 820.300 & 2 & 74.486 & 66.671 & 0.00\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:forest-bird-model-comparison-table)(\#tab:forest-bird-model-comparison-table)信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Model </th>
+   <th style="text-align:right;"> R2 </th>
+   <th style="text-align:right;"> AIC </th>
+   <th style="text-align:right;"> BIC </th>
+   <th style="text-align:right;"> Parameters </th>
+   <th style="text-align:right;"> delta_AIC </th>
+   <th style="text-align:right;"> delta_BIC </th>
+   <th style="text-align:right;"> AIC_weight </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> full_model </td>
+   <td style="text-align:right;"> 0.606 </td>
+   <td style="text-align:right;"> 737.998 </td>
+   <td style="text-align:right;"> 753.629 </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0.000 </td>
+   <td style="text-align:right;"> 0.000 </td>
+   <td style="text-align:right;"> 0.76 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> overfit_model </td>
+   <td style="text-align:right;"> 0.613 </td>
+   <td style="text-align:right;"> 740.300 </td>
+   <td style="text-align:right;"> 761.141 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 2.302 </td>
+   <td style="text-align:right;"> 7.512 </td>
+   <td style="text-align:right;"> 0.24 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> area_water </td>
+   <td style="text-align:right;"> 0.511 </td>
+   <td style="text-align:right;"> 755.660 </td>
+   <td style="text-align:right;"> 766.081 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 17.662 </td>
+   <td style="text-align:right;"> 12.452 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> area_vegetation </td>
+   <td style="text-align:right;"> 0.419 </td>
+   <td style="text-align:right;"> 772.850 </td>
+   <td style="text-align:right;"> 783.270 </td>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 34.852 </td>
+   <td style="text-align:right;"> 29.641 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> area_only </td>
+   <td style="text-align:right;"> 0.342 </td>
+   <td style="text-align:right;"> 783.379 </td>
+   <td style="text-align:right;"> 791.195 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 45.381 </td>
+   <td style="text-align:right;"> 37.566 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> vegetation_only </td>
+   <td style="text-align:right;"> 0.119 </td>
+   <td style="text-align:right;"> 812.484 </td>
+   <td style="text-align:right;"> 820.300 </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 74.486 </td>
+   <td style="text-align:right;"> 66.671 </td>
+   <td style="text-align:right;"> 0.00 </td>
+  </tr>
+</tbody>
+</table>
 
-为了更直观地展示模型比较结果，常林创建了信息准则可视化图（图\@ref(fig:forest-bird-info-criteria-plot)）。该图采用双面板布局，左侧展示ΔAIC比较，右侧展示ΔBIC比较。图中使用颜色编码表示模型优劣：绿色表示优秀模型（ΔAIC/ΔBIC < 2），黄色表示可接受模型（2 ≤ ΔAIC/ΔBIC < 7），红色表示较差模型（ΔAIC/ΔBIC ≥ 7）。两条虚线分别标示了ΔAIC/ΔBIC为2和7的阈值，帮助读者快速识别最优模型。
+为了更直观地展示模型比较结果，常林创建了信息准则可视化图（图\@ref(fig:forest-bird-info-criteria-plot)）。该图采用双面板布局，左侧展示ΔAIC比较，右侧展示ΔBIC比较。图中使用三色编码辅助判断：绿色表示强支持模型（ΔAIC/ΔBIC < 2），黄色表示有实质性差异的模型（2 ≤ ΔAIC/ΔBIC < 7），红色表示支持度较弱的模型（ΔAIC/ΔBIC ≥ 7，其中7-10为过渡地带，>10时基本无支持）。两条虚线分别标示了ΔAIC/ΔBIC为2和7的阈值。注意三色分类是简化的视觉辅助，精确解读时应参考上文给出的完整阈值区间。
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/forest-bird-info-criteria-plot-1.png" alt="信息准则可视化：ΔAIC和ΔBIC差异比较，展示不同模型的相对优劣" width="80%" />
+<p class="caption">(\#fig:forest-bird-info-criteria-plot)信息准则可视化：ΔAIC和ΔBIC差异比较，展示不同模型的相对优劣</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/forest-bird-info-criteria-plot-1} 
+从图\@ref(fig:forest-bird-info-criteria-plot)中可以清晰地观察到，full_model模型在AIC和BIC准则下都表现最优（绿色柱状图），而过度拟合模型虽然R²较高，但由于参数过多受到了信息准则的惩罚（红色柱状图）。这种可视化方式使得模型比较结果更加直观易懂，读者可以快速识别出统计上最优且生态学意义明确的模型。
 
-}
+根据信息准则的分析结果，常林得出了重要的模型选择启示。在AIC准则下，最优模型为**full_model**（AIC权重 = 0.76），表明在候选模型中，该模型的相对证据强度最高；在BIC准则下，最优模型为**full_model**，因为BIC对参数个数的惩罚更重，倾向于选择更简约的模型。值得注意的是，AIC和BIC在此例中指向同一个最优模型，这增强了我们对该模型选择的信心。 过度拟合模型虽然R²更高，但信息准则对其过高的复杂度施加了严厉惩罚——这是信息准则保护我们免于选择过拟合模型的机制所在。
 
-\caption{信息准则可视化：ΔAIC和ΔBIC差异比较，展示不同模型的相对优劣}(\#fig:forest-bird-info-criteria-plot)
-\end{figure}
-
-从图\@ref(fig:forest-bird-info-criteria-plot)中可以清晰地观察到，面积+植被模型在AIC和BIC准则下都表现最优（绿色柱状图），而过度拟合模型虽然R²较高，但由于参数过多受到了信息准则的惩罚（红色柱状图）。这种可视化方式使得模型比较结果更加直观易懂，读者可以快速识别出统计上最优且生态学意义明确的模型。
-
-根据信息准则的分析结果，常林得出了重要的模型选择启示。根据$\text{AIC}$准则，最优模型是full_model，其$\text{AIC}$权重为0.76，表明这个模型在候选模型中最有可能。根据$\text{BIC}$准则，最优模型是full_model，$\text{BIC}$倾向于选择更简约的模型。模型选择启示表明，full_model模型在$\text{AIC}$和$\text{BIC}$下都表现良好，这个模型包含了真实关系中的关键变量，而过度拟合模型虽然R²更高，但信息准则惩罚了其复杂度。
-
-在常林的森林鸟类丰富度研究中，栖息地面积和植被密度是影响鸟类丰富度的关键因子，信息准则帮助她识别了这些关键因子，避免了过度拟合。最优模型既统计可靠又具有明确的生态学意义，为她的森林保护研究提供了科学依据。
+在常林的森林鸟类丰富度研究中，信息准则帮助她识别了影响鸟类丰富度的关键因子（本案例中最优模型包含栖息地面积和植被密度），避免了将所有变量一股脑纳入模型的过度拟合倾向。选定的模型既统计可靠又具有明确的生态学意义，为她的森林保护研究提供了科学依据。
 
 ## 信息准则与AI：统计推断的边界与永恒
 
@@ -297,54 +350,117 @@ nursery_lrt_p_value <- nursery_lrt_result$`Pr(>Chisq)`[2]
 
 似然比检验的结果显示在表\@ref(tab:nursery-lrt-result-table)中，该表比较了简单模型（只有主效应）和复杂模型（包含交互项）的拟合差异。
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:nursery-lrt-result-table)似然比检验结果：植物生长与温度、光照的关系}
-\centering
-\begin{tabular}[t]{rrrrr}
-\toprule
-\#Df & LogLik & Df & Chisq & Pr(>Chisq)\\
-\midrule
-4 & -58.86869 & NA & NA & NA\\
-5 & -56.40071 & 1 & 4.935962 & 0.0263034\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:nursery-lrt-result-table)(\#tab:nursery-lrt-result-table)似然比检验结果：植物生长与温度、光照的关系</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> #Df </th>
+   <th style="text-align:right;"> LogLik </th>
+   <th style="text-align:right;"> Df </th>
+   <th style="text-align:right;"> Chisq </th>
+   <th style="text-align:right;"> Pr(&gt;Chisq) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> -58.86869 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> -56.40071 </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 4.935962 </td>
+   <td style="text-align:right;"> 0.0263034 </td>
+  </tr>
+</tbody>
+</table>
 
 为了更详细地了解两个模型的参数估计，表\@ref(tab:nursery-model-simple-table)展示了简单模型的系数估计结果，该模型只包含温度和光照的主效应。
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:nursery-model-simple-table)模型比较：简单模型 (只有主效应)}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 0.9522163 & 0.3475783 & 2.739574 & 0.0076414\\
-temp & 0.1589956 & 0.0149805 & 10.613532 & 0.0000000\\
-light & 0.0037280 & 0.0002189 & 17.031520 & 0.0000000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:nursery-model-simple-table)(\#tab:nursery-model-simple-table)模型比较：简单模型 (只有主效应)</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 0.9522163 </td>
+   <td style="text-align:right;"> 0.3475783 </td>
+   <td style="text-align:right;"> 2.739574 </td>
+   <td style="text-align:right;"> 0.0076414 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> temp </td>
+   <td style="text-align:right;"> 0.1589956 </td>
+   <td style="text-align:right;"> 0.0149805 </td>
+   <td style="text-align:right;"> 10.613532 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> light </td>
+   <td style="text-align:right;"> 0.0037280 </td>
+   <td style="text-align:right;"> 0.0002189 </td>
+   <td style="text-align:right;"> 17.031520 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+</tbody>
+</table>
 
 表\@ref(tab:nursery-model-complex-table)则展示了复杂模型的系数估计结果，该模型包含了温度与光照的交互项，可以检验环境因子之间的协同作用。
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:nursery-model-complex-table)模型比较：复杂模型 (包含交互项)}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 2.6217208 & 0.8314621 & 3.1531452 & 0.0023129\\
-temp & 0.0819161 & 0.0379749 & 2.1571128 & 0.0341579\\
-light & 0.0009324 & 0.0012889 & 0.7234173 & 0.4716442\\
-temp:light & 0.0001286 & 0.0000585 & 2.1992829 & 0.0308988\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:nursery-model-complex-table)(\#tab:nursery-model-complex-table)模型比较：复杂模型 (包含交互项)</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 2.6217208 </td>
+   <td style="text-align:right;"> 0.8314621 </td>
+   <td style="text-align:right;"> 3.1531452 </td>
+   <td style="text-align:right;"> 0.0023129 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> temp </td>
+   <td style="text-align:right;"> 0.0819161 </td>
+   <td style="text-align:right;"> 0.0379749 </td>
+   <td style="text-align:right;"> 2.1571128 </td>
+   <td style="text-align:right;"> 0.0341579 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> light </td>
+   <td style="text-align:right;"> 0.0009324 </td>
+   <td style="text-align:right;"> 0.0012889 </td>
+   <td style="text-align:right;"> 0.7234173 </td>
+   <td style="text-align:right;"> 0.4716442 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> temp:light </td>
+   <td style="text-align:right;"> 0.0001286 </td>
+   <td style="text-align:right;"> 0.0000585 </td>
+   <td style="text-align:right;"> 2.1992829 </td>
+   <td style="text-align:right;"> 0.0308988 </td>
+  </tr>
+</tbody>
+</table>
 
 
 ``` r
@@ -371,20 +487,16 @@ nursery_r2_improvement <- nursery_r2_complex - nursery_r2_simple
 ## === 交互作用可视化 ===
 ```
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/nursery-interaction-plot-1.png" alt="常林的苗圃实验：温度与光照对植物生长速率的交互作用，展示了环境因子交互作用在植物生长中的重要性" width="80%" />
+<p class="caption">(\#fig:nursery-interaction-plot)常林的苗圃实验：温度与光照对植物生长速率的交互作用，展示了环境因子交互作用在植物生长中的重要性</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/nursery-interaction-plot-1} 
-
-}
-
-\caption{常林的苗圃实验：温度与光照对植物生长速率的交互作用，展示了环境因子交互作用在植物生长中的重要性}(\#fig:nursery-interaction-plot)
-\end{figure}
-
-从图\@ref(fig:nursery-interaction-plot)中可以观察到，在不同光照强度下，温度对植物生长的影响模式存在明显差异。这种差异反映了温度与光照的交互作用：在低光照条件下，温度对生长的促进作用可能受到限制；而在高光照条件下，温度效应可能更加明显。这种可视化有助于理解环境因子之间的复杂关系，为生态学研究提供直观的证据。
+从图\@ref(fig:nursery-interaction-plot)中可以观察到，在不同光照强度下，温度对植物生长的影响模式存在明显差异。具体而言，三条预测线的斜率不同，反映了温度与光照的交互作用：在低光照（300 lux）条件下，温度-生长曲线的斜率较平缓，升温对生长的促进有限；在高光照（900 lux）条件下，温度-生长曲线斜率更大，升温的促进效应更为显著。这种可视化有助于理解环境因子之间的复杂关系，为生态学研究提供直观的证据。
 
 根据似然比检验的结果（p值 = 0.0263），我们可以得出重要的生态学解释。似然比检验显著 (p < 0.05)，表明温度与光照的交互作用对植物生长有显著影响，复杂模型显著改善了模型拟合，应该选择包含交互项的模型。
 
-常林的苗圃实验结果表明，温度与光照的交互作用对植物生长具有重要的生态学意义。当交互作用显著时，意味着在低光照条件下，温度升高对植物生长的促进作用有限，而在高光照条件下，温度升高则显著促进植物生长。这种交互作用反映了植物对光热资源的协同利用机制，提示在苗圃管理中需要同时考虑温度和光照的协同效应，而不是单独优化单个环境因子。反之，如果交互作用不显著，则表明温度和光照对植物生长的影响相对独立，单独优化温度或光照即可改善植物生长，这简化了苗圃管理策略。在这种情况下，使用更简约的模型（只有主效应）既统计可靠又便于生态学解释。
+常林的苗圃实验结果揭示了温度与光照关系的两种可能模式，取决于交互作用是否显著。当交互作用显著时，意味着在低光照条件下，温度升高对植物生长的促进作用有限，而在高光照条件下，温度升高则显著促进植物生长。这种交互作用反映了植物对光热资源的协同利用机制，提示在苗圃管理中需要同时考虑温度和光照的协同效应，而不是单独优化单个环境因子。反之，如果交互作用不显著，则表明温度和光照对植物生长的影响相对独立，单独优化温度或光照即可改善植物生长，这简化了苗圃管理策略。在这种情况下，使用更简约的模型（只有主效应）既统计可靠又便于生态学解释。
 
 ### 模型平均
 
@@ -397,7 +509,7 @@ nursery_r2_improvement <- nursery_r2_complex - nursery_r2_simple
 **$\text{AIC}$权重**是最常用的模型权重计算方法。对于每个模型$i$，其$\text{AIC}$权重为：
 $$w_i = \frac{\exp(-0.5 \Delta\text{AIC}_i)}{\sum_j \exp(-0.5 \Delta\text{AIC}_j)}$$
 
-其中$\Delta\text{AIC}_i$是模型$i$与最优模型的$\text{AIC}$差异。$\text{AIC}$权重可以解释为模型$i$是真实模型的相对概率。
+其中$\Delta\text{AIC}_i$是模型$i$与最优模型的$\text{AIC}$差异。$\text{AIC}$权重可以解释为：在所有候选模型中，模型$i$是Kullback-Leibler意义上"最优近似模型"的概率（注意，这不是模型为"真实模型"的概率——后者在生态学中几乎不可能从有限候选模型集中选出）。
 
 **模型平均的类型**：模型平均主要分为两种类型。参数平均是对不同模型的参数估计进行加权平均，适用于模型具有相同参数结构的情况。预测平均是对不同模型的预测值进行加权平均，适用于模型结构不同的情况。在生态学中，预测平均更为常用，因为它可以处理具有不同变量组合的模型。
 
@@ -449,7 +561,7 @@ stream_model_comparison <- data.frame(
 stream_model_comparison <- stream_model_comparison[order(stream_model_comparison$AIC), ]
 ```
 
-MuMIn包提供了自动化的模型平均工具。`dredge`函数生成所有可能的模型组合，`model.avg`函数执行模型平均，`sw`函数计算变量重要性。这些工具大大简化了模型平均的实施过程。
+MuMIn包提供了自动化的模型平均工具。`dredge`函数生成所有可能的模型组合，`model.avg`函数执行模型平均，`sw`函数计算变量重要性。这些工具大大简化了模型平均的实施过程。需要注意的是，`dredge`会枚举所有预测变量的子集组合（$p$个预测变量产生$2^p$个候选模型），当预测变量超过10个时，计算量将急剧增长；此时建议使用`dredge`的`m.lim`参数限制每个模型的最大变量数，或基于生态学知识手动构建有限的候选模型集。
 
 
 ``` r
@@ -483,22 +595,61 @@ knitr::kable(stream_avg_coef, caption = "常林的溪流鱼类模型平均结果
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:stream-model-avg-table)常林的溪流鱼类模型平均结果：平均模型系数}
-\centering
-\begin{tabular}[t]{lrrrrr}
-\toprule
-  & Estimate & Std. Error & Adjusted SE & z value & Pr(>|z|)\\
-\midrule
-(Intercept) & 1.6226421 & 0.2324172 & 0.2348710 & 6.9086519 & 0.0000000\\
-oxygen & 0.1702822 & 0.0075580 & 0.0076378 & 22.2946060 & 0.0000000\\
-ph & 0.8242705 & 0.0293587 & 0.0296689 & 27.7823265 & 0.0000000\\
-temp & 0.0531857 & 0.0037299 & 0.0037693 & 14.1103420 & 0.0000000\\
-turbidity & -0.0001485 & 0.0007176 & 0.0007243 & 0.2050028 & 0.8375699\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:stream-model-avg-table)(\#tab:stream-model-avg-table)常林的溪流鱼类模型平均结果：平均模型系数</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> Adjusted SE </th>
+   <th style="text-align:right;"> z value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;z&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 1.6226421 </td>
+   <td style="text-align:right;"> 0.2324172 </td>
+   <td style="text-align:right;"> 0.2348710 </td>
+   <td style="text-align:right;"> 6.9086519 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> oxygen </td>
+   <td style="text-align:right;"> 0.1702822 </td>
+   <td style="text-align:right;"> 0.0075580 </td>
+   <td style="text-align:right;"> 0.0076378 </td>
+   <td style="text-align:right;"> 22.2946060 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> ph </td>
+   <td style="text-align:right;"> 0.8242705 </td>
+   <td style="text-align:right;"> 0.0293587 </td>
+   <td style="text-align:right;"> 0.0296689 </td>
+   <td style="text-align:right;"> 27.7823265 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> temp </td>
+   <td style="text-align:right;"> 0.0531857 </td>
+   <td style="text-align:right;"> 0.0037299 </td>
+   <td style="text-align:right;"> 0.0037693 </td>
+   <td style="text-align:right;"> 14.1103420 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> turbidity </td>
+   <td style="text-align:right;"> -0.0001485 </td>
+   <td style="text-align:right;"> 0.0007176 </td>
+   <td style="text-align:right;"> 0.0007243 </td>
+   <td style="text-align:right;"> 0.2050028 </td>
+   <td style="text-align:right;"> 0.8375699 </td>
+  </tr>
+</tbody>
+</table>
 
 ``` r
 # 计算变量重要性
@@ -524,16 +675,12 @@ print(stream_var_importance)
 
 模型平均系数结果如表\@ref(tab:stream-model-avg-table)所示。可视化是理解模型平均结果的重要工具，图\@ref(fig:stream-model-averaging-plot)展示了常林溪流鱼类研究的模型平均结果，采用双面板布局：左侧的变量重要性图显示各环境因子的相对重要性，帮助识别影响鱼类丰度的关键驱动因子；右侧的模型权重分布图展示不同候选模型的相对支持度，反映了基于AIC权重的模型不确定性量化。
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/stream-model-averaging-plot-1.png" alt="常林的溪流鱼类模型平均结果：变量重要性排序和模型权重分布。左图显示各环境因子的相对重要性，右图展示不同候选模型的相对支持度" width="80%" />
+<p class="caption">(\#fig:stream-model-averaging-plot)常林的溪流鱼类模型平均结果：变量重要性排序和模型权重分布。左图显示各环境因子的相对重要性，右图展示不同候选模型的相对支持度</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/stream-model-averaging-plot-1} 
-
-}
-
-\caption{常林的溪流鱼类模型平均结果：变量重要性和模型权重分布。左图显示水温、溶解氧和pH值是影响鱼类丰度的关键因子，右图展示不同候选模型的相对支持度}(\#fig:stream-model-averaging-plot)
-\end{figure}
-
-从图\@ref(fig:stream-model-averaging-plot)中可以观察到，水温、溶解氧和pH值是影响溪流鱼类丰度的关键环境因子，这与生态学理论相符。模型权重分布显示没有单一模型占据绝对优势，多个模型都获得了一定的支持度，这体现了模型平均的必要性。这种可视化方式使得复杂的模型平均结果变得直观易懂，为生态学决策提供了清晰的依据。
+从图\@ref(fig:stream-model-averaging-plot)左图中可以观察到各环境因子的变量重要性排序：oxygen、ph、temp的重要性最高，表明它们是影响溪流鱼类丰度的关键驱动因子，这与生态学理论中水温、溶解氧和pH对水生生物分布的决定性作用相符。右图的模型权重分布显示没有单一模型占据绝对优势，多个模型都获得了一定的支持度，这体现了模型平均的必要性——如果仅选"最优"模型，我们将丢失其他合理模型所包含的信息。这种可视化方式使得复杂的模型平均结果变得直观易懂，为生态学决策提供了清晰的依据。
 
 模型平均预测通常比单一模型预测更稳健。通过比较单一模型与模型平均的预测结果，我们可以评估模型平均在减少预测不确定性方面的价值。
 
@@ -568,7 +715,7 @@ stream_avg_pred <- predict(stream_avg_model, newdata = stream_test_data)
 ## 模型平均预测: 17688.7 条鱼
 ```
 
-Bootstrap方法能够量化预测的不确定性，包括参数估计误差、模型选择不确定性和生态系统的自然变异性。
+Bootstrap方法能够量化预测的不确定性，主要捕获参数估计的不确定性和数据的自然变异性（每次重抽样拟合出的回归系数略有不同，预测值也随之波动）。若需同时涵盖模型选择的不确定性，需在每次迭代中纳入模型选择步骤。
 
 
 ``` r
@@ -598,7 +745,7 @@ stream_ci <- boot.ci(stream_boot_results, type = "perc")
 ## 常林的溪流鱼类Bootstrap 95% 预测区间: [ 17104.5 ,  18267.4 ] 条鱼
 ```
 
-Bootstrap预测区间反映了模型预测中的多种不确定性来源：参数估计的不确定性、模型选择的不确定性以及生态系统的自然变异性。这种全面的不确定性量化使得模型预测更加可靠，为生态决策提供了更科学的依据。
+Bootstrap预测区间主要反映了参数估计的不确定性和数据的自然变异性——每次重抽样得到不同的样本，拟合出的回归系数略有差异，预测值也随之波动。但需注意，上面演示的Bootstrap使用了固定的模型结构（温度+溶解氧+pH），并未涵盖模型选择的不确定性（即"选哪个模型"本身的不确定性）。若要完整量化包含模型选择在内的总不确定性，可在每次Bootstrap迭代中同时执行模型选择（如基于AIC选择最优子集），但计算成本将大幅增加。即便有这一局限，Bootstrap提供的预测区间已比单一的点预测包含了丰富得多的信息，为生态决策提供了更为审慎的依据。
 
 模型平均在生态学中具有重要的应用价值。它减少了模型选择的不确定性，提供了更稳健的参数估计，量化了不同生态学假说的相对支持程度，并通过变量重要性分析揭示了关键环境因子。
 
@@ -616,7 +763,7 @@ k折交叉验证在常林的森林研究中具有重要的应用价值。在研�
 
 **留一交叉验证**是k折交叉验证的特殊情况，其中k等于样本量。每次只留一个森林样地作为测试集，其余所有样地作为训练集。这种方法特别适合小样本森林生态学研究，但计算成本较高。
 
-交叉验证的生态学意义在于它帮助常林理解模型在不同森林条件下的表现。例如，一个预测森林碳储量的模型可能在湿润阔叶林中表现良好，但在干旱针叶林中表现较差。通过交叉验证，她可以识别模型的适用范围和局限性，为森林管理决策提供更可靠的科学依据。
+交叉验证的生态学意义在于它评估模型在"同一采样体系内的新数据"上的表现——即如果常林在她已调查的森林区域内补充采集新样方，模型的预测会有多准。需要注意的是，标准k折CV并不能检验模型在生态条件不同的新区域（如从阔叶林外推到针叶林）的表现——那属于外部验证的范畴（见下一节）。通过交叉验证，常林可以识别模型的过拟合程度，判断其是否值得信赖。
 
 
 
@@ -682,18 +829,14 @@ cv_results <- cv_model$results
 ## 平均MAE: 0.178
 ```
 
-交叉验证性能的可视化能够直观展示模型在不同数据子集上的稳定性。图\@ref(fig:forest-cv-rmse-plot)展示了常林森林鸟类模型的10折交叉验证结果，通过RMSE在不同数据子集上的变化来评估模型的泛化能力。如果RMSE在不同折之间波动很大，说明模型可能过度拟合训练数据的特定特征；而稳定的RMSE则表明模型具有良好的泛化性能。
+交叉验证性能的可视化能够直观展示模型在不同数据子集上的稳定性。图\@ref(fig:forest-cv-rmse-plot)展示了常林森林鸟类模型的10折交叉验证结果，通过RMSE在各折之间的波动程度来评估模型的泛化能力。判断原则是：如果RMSE在不同折之间波动很大，说明模型对特定数据子集过度敏感，泛化能力可能不足；如果各折RMSE差异较小（如此例），模型在不同数据子集上表现相对一致。
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/forest-cv-rmse-plot-1.png" alt="常林的森林鸟类模型10折交叉验证：各折RMSE的变化，红色虚线为平均RMSE。通过各折之间的波动程度评估模型的稳定性" width="80%" />
+<p class="caption">(\#fig:forest-cv-rmse-plot)常林的森林鸟类模型10折交叉验证：各折RMSE的变化，红色虚线为平均RMSE。通过各折之间的波动程度评估模型的稳定性</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/forest-cv-rmse-plot-1} 
-
-}
-
-\caption{常林的森林鸟类模型10折交叉验证：RMSE在不同数据子集上的变化。图中显示RMSE在不同折之间相对稳定，表明模型具有良好的泛化能力}(\#fig:forest-cv-rmse-plot)
-\end{figure}
-
-从图\@ref(fig:forest-cv-rmse-plot)中可以观察到，RMSE在10个数据子集之间相对稳定，波动范围较小，这表明常林的森林鸟类模型具有良好的泛化能力。图中红色虚线表示平均RMSE值，为模型性能提供了基准参考。这种可视化方式使得交叉验证结果更加直观，有助于识别潜在的过度拟合问题。
+从图\@ref(fig:forest-cv-rmse-plot)中可以观察RMSE在各折之间的波动情况。如果各折RMSE差异较大，说明模型对特定数据子集过度敏感，泛化能力可能不足；如果波动较小（如此例所示），则表明模型在不同数据子集上表现一致。图中红色虚线表示平均RMSE值，为模型性能提供了基准参考。这种可视化方式使得交叉验证结果更加直观，有助于识别潜在的过度拟合问题。
 
 训练集和测试集性能的比较是检测过度拟合的直接方法。如果测试集性能明显差于训练集，说明模型可能过度适应训练数据的噪声。
 
@@ -728,7 +871,7 @@ test_rmse <- sqrt(mean((log(test_data$richness + 1) - test_pred)^2))
 ## 模型在训练集和测试集上表现一致，泛化能力良好
 ```
 
-交叉验证在生态学中的价值在于它能够评估模型在不同时空条件下的表现。稳定的交叉验证结果增强了模型在实际生态应用中的可靠性，为生态保护决策提供了更可信的科学依据。
+交叉验证在生态学中的核心价值在于：它提供了比训练集$R^2$更诚实的性能评估，防止我们被过拟合模型的表面优异所欺骗。稳定的交叉验证结果增强了模型在相同采样体系内应用于新数据的信心。若需评估模型在不同时空条件下的迁移能力，则需要借助下一节讨论的外部验证。
 
 ## 交叉验证与AI：通用语言与数据泄露警示
 
@@ -758,6 +901,9 @@ test_rmse <- sqrt(mean((log(test_data$richness + 1) - test_pred)^2))
 load("data/spatial_cv_demo.rda")
 d <- spatial_cv_demo
 
+# 设置随机种子确保结果可复现
+set.seed(2024)
+
 # 普通5折随机CV
 fold_r <- sample(rep(1:5, length.out=nrow(d)))
 rmse_r <- mean(sapply(1:5, function(k){
@@ -775,7 +921,7 @@ cat("随机CV平均RMSE:", round(rmse_r,3),
 ```
 
 ```
-## 随机CV平均RMSE: 2.175 
+## 随机CV平均RMSE: 2.168 
 ## 空间块CV平均RMSE: 2.16
 ```
 
@@ -785,7 +931,7 @@ cat("随机CV平均RMSE:", round(rmse_r,3),
 
 在生态数据预处理阶段，数据泄露尤其容易发生且难以察觉。一个典型的错误流程是：在进行交叉验证之前，就使用全数据集进行缺失值插值（如用所有样方的均值填充缺失值）、标准化（如用全数据集的均值和标准差进行$z$-score标准化）或特征选择（如基于全数据集的相关系数筛选变量）。这些操作看似无害，但实际上已将验证集的信息提前"编码"进了训练过程，无论后续的分组多么严格，验证都不再是真正"独立"的了。
 
-正确的做法是：交叉验证的分组必须在数据预处理的"上游"进行。具体而言，标准化的均值和标准差应该只用训练集计算，然后应用于验证集；缺失值插值模型应只基于训练集拟合；特征选择必须在每一折的训练集上独立进行，而不能"先筛选、再验证"。这些细节看似繁琐，但忽略其中任何一点都可能导致验证结果与真实泛化表现之间出现系统性偏差。在AI时代的数据分析竞赛中，这种偏差常常被忽视，因为"标准库的默认行为"（如scikit-learn的`StandardScaler`如果在CV分割之前fit）恰好会导致泄露，结果是论文报告的"优秀性能"无法在实际应用中复现。
+正确的做法是：交叉验证的数据分割必须发生在任何数据预处理步骤**之前**。先划分训练集和验证集，再对训练集单独进行预处理，最后将相同的预处理参数应用于验证集。具体而言，标准化的均值和标准差应该只用训练集计算，然后应用于验证集；缺失值插值模型应只基于训练集拟合；特征选择必须在每一折的训练集上独立进行，而不能"先筛选、再验证"。这些细节看似繁琐，但忽略其中任何一点都可能导致验证结果与真实泛化表现之间出现系统性偏差。在AI时代的数据分析竞赛中，这种偏差常常被忽视，因为"标准库的默认行为"（如scikit-learn的`StandardScaler`如果在CV分割之前fit）恰好会导致泄露，结果是论文报告的"优秀性能"无法在实际应用中复现。
 
 对于我们来说，这意味着我们不能仅仅满足于"做了交叉验证"，而要追问更根本的问题：交叉验证是如何实施的？分组策略是否考虑了数据的空间、时间或系统发育结构？预处理步骤是否防止了数据泄露？这些不是可有可无的技术细节，而是研究可重复性和结论可靠性的根基所在。一个设计不当的交叉验证比不做验证更危险，因为它会给你一种虚假的安全感。
 
@@ -867,14 +1013,10 @@ rmse_increase <- (test_rmse - train_rmse) / train_rmse * 100
 
 为了直观展示外部验证结果，图\@ref(fig:external-validation-plot)比较了训练集和测试集上植物物种丰富度模型的预测性能。该图采用分面布局，分别展示了训练集（原森林区域）和测试集（新森林区域）的预测值与观测值关系，通过1:1参考线（黑色虚线）直观评估模型的预测准确性。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/external-validation-plot-1} 
-
-}
-
-\caption{常林的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域}(\#fig:external-validation-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="09-model_selection_and_evaluation_files/figure-html/external-validation-plot-1.png" alt="常林的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域" width="80%" />
+<p class="caption">(\#fig:external-validation-plot)常林的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域</p>
+</div>
 
 在常林的植物物种丰富度研究中，训练集基于她最初调查的山地森林区域数据，测试集代表邻近但生态条件略有不同的另一个山地森林区域。外部验证检验了她的模型在不同森林生态系统中的空间普适性。如果模型在测试集上表现良好，说明其在不同森林区域的适用性较广；如果性能显著下降，可能需要考虑森林区域特异性因素，如不同的优势树种、土壤类型、地形特征或干扰历史。常林通过外部验证深刻理解了森林生态系统的空间异质性，这为她制定更精准的森林保护策略提供了重要启示。
 
@@ -901,7 +1043,15 @@ bias_test <- mean(test_pred - log(test_data$richness + 1))
 
 ### 模型诊断
 
-模型诊断是确保统计模型可靠性的基础工作，包括残差分析、影响点识别（Cook's距离）和多重共线性检验（VIF）。这些方法的详细介绍见第8章回归诊断部分，此处不再重复。本章仅强调模型选择特有的诊断考量：当选定的"最优"模型包含多个相关预测变量时，需特别关注VIF是否超过阈值（5-10）；当个别样方对模型选择结果有不成比例的影响时（如删除该样方后AIC最优模型发生改变），应检查其生态学合理性而非机械剔除。
+模型诊断是确保统计模型可靠性的基础工作，也是模型选择完成后不可逾越的一环——即使AIC和交叉验证都指向某个模型，也不意味着该模型的统计假设已被满足。诊断主要包括三个方面：
+
+**残差分析**检验模型的误差结构是否合理。理想的残差应满足零均值、等方差（同方差性）和正态性三个条件。生态数据中常见的问题是异方差性（如生物量越大，预测误差越大）和空间自相关（邻近样方的残差相似）。前者可通过残差-拟合值散点图诊断（理想情况为随机散布、无喇叭形），后者可通过残差的Moran's I检验或半变异函数图识别。第8章已详细介绍了这些方法的具体实施步骤。
+
+**多重共线性诊断**检验预测变量之间是否存在过强的线性相关。当两个或多个预测变量高度相关时，回归系数的估计变得极不稳定（符号和大小在样本间剧烈波动），模型的可解释性大打折扣。常用的诊断指标是方差膨胀因子（variance inflation factor, VIF）：$\text{VIF}_j = 1 / (1 - R_j^2)$，其中$R_j^2$是以第$j$个预测变量为响应变量、其余预测变量为解释变量的回归模型的$R^2$。经验规则是：$\text{VIF} > 5$需引起关注，$\text{VIF} > 10$表明严重的共线性问题。
+
+**影响点识别**找出对模型结果有不成比例影响的个别观测点。常用的诊断统计量包括：杠杆值（hat value，衡量预测变量空间的极端程度）、学生化残差（衡量响应变量方向的异常程度）和Cook's距离（综合衡量一个观测点对全体回归系数的影响）。经验规则是：Cook's距离 $> 4/n$（$n$为样本量）的点值得仔细检查。
+
+模型选择对诊断提出了特殊的考量：当选定的"最优"模型包含多个相关预测变量时，需特别关注VIF是否超过阈值（5-10）；当个别样方对模型选择结果有不成比例的影响时（如删除该样方后AIC最优模型发生改变），应检查其生态学合理性而非机械剔除——这些"异常点"可能恰恰反映了值得深入研究的特殊生态过程。
 
 ## AutoML与模型选择：领域知识的不可替代性
 
@@ -913,7 +1063,7 @@ bias_test <- mean(test_pred - log(test_data$richness + 1))
 
 **AutoML不能替代的三种知识**。首先，搜索空间的设定需要领域知识。AutoML只能在你给定的范围内搜索，如果你告诉它只考虑线性模型，它就不会发现非线性关系；如果你不包含交互项，它就无法发现因子间的协同效应；如果你选择的算法族不适合你的数据分布（例如用线性模型去拟合计数数据），它也无能为力。什么算法类型对你的生态数据是合理的？什么变量组合在生态学机制上是站得住脚的？这些决策在AutoML启动之前就已经做出了，而做出这些决策需要我们多年的经验积累。
 
-其次，评估标准的选择体现了研究目标。AutoML默认优化的是预测精度（如最小化RMSE或最大化$R^2$），但生态学研究的目标往往不仅仅是预测。我们可能更关心模型的生态可解释性，能否从模型中读出"温度每升高1度，生长速率增加多少"？我们可能需要在预测精度和模型简洁性之间做出有意识的权衡，一个稍低的$R^2$但有清晰生态机制解释的模型，可能比一个"黑箱"但$R^2$略高的模型更有科学价值。这些价值判断不能也不应该委托给自动化流程。
+其次，评估标准的选择体现了研究目标。AutoML默认优化的是预测精度（如最小化RMSE或最大化$R^2$），但生态学研究的目标往往不仅仅是预测。我们可能更关心模型的生态可解释性，能否从模型中读出"温度每升高1°C，生长速率增加多少"？我们可能需要在预测精度和模型简洁性之间做出有意识的权衡，一个稍低的$R^2$但有清晰生态机制解释的模型，可能比一个"黑箱"但$R^2$略高的模型更有科学价值。这些价值判断不能也不应该委托给自动化流程。
 
 第三，也是最重要的，AutoML可能找到在测试集上表现完美但在生态学上荒谬的模型。一个真实的警示：AutoML可能发现"年降水量$\times$坡度的三次方"是预测物种丰富度的最佳变量组合。这个交互项在统计学上可能确实解释了数据中相当比例的变异，但从生态学机制上看，降水和坡度为什么会有三次方交互？有没有生理学或种群生态学的理论支持？很可能没有。它只是数据中的偶然模式，换一组数据或换一个区域就会消失。
 
@@ -962,7 +1112,14 @@ bias_test <- mean(test_pred - log(test_data$richness + 1))
 
 **背景**：常林在天童山20公顷样地中，收集了150个样方的数据，包括树木年生长量（响应变量）和海拔、年降水量、土壤氮含量、林冠开度、坡度等环境因子（预测变量）。她已构建了4个候选模型，从仅含海拔的单变量模型到包含全部5个预测变量的完整模型，每个模型代表了关于"哪些环境因素驱动树木生长"的不同生态学假设。
 
-**任务**：本练习要求你基于天童山的生态学背景，评估常林的4个候选模型中哪个最合理，解释每个模型背后的生态学假设。然后进行信息准则分析，计算每个模型的AIC、BIC、$\Delta$AIC和AIC权重，根据信息准则结果确定最优模型并解释选择依据。对最优模型进行全面的模型诊断，包括残差分析（正态性、异方差性）、影响分析（高杠杆点、异常残差点、强影响点）和多重共线性诊断。使用10折交叉验证评估最优模型的泛化能力，计算训练集和测试集的RMSE，分析是否存在过度拟合，天童山的数据有空间自相关，普通随机CV是否会低估预测误差？最后基于最优模型结果，解释各环境因子对树木生长的影响，并为天童山保护区的适应性管理提出建议。
+**任务**：本练习要求你基于天童山的生态学背景，完成以下步骤：
+
+1. **生态学假设评估**：评估常林的4个候选模型中哪个最合理，解释每个模型背后的生态学假设。
+2. **信息准则分析**：计算每个模型的AIC、BIC、$\Delta$AIC和AIC权重，确定最优模型并解释选择依据。
+3. **模型诊断**：对最优模型进行全面的模型诊断，包括残差分析（正态性、异方差性）、影响分析（高杠杆点、异常残差点、强影响点）和多重共线性诊断。
+4. **交叉验证**：使用10折交叉验证评估最优模型的泛化能力，计算训练集和测试集的RMSE，分析是否存在过度拟合。
+5. **空间自相关思考**：天童山样地数据具有空间自相关，试分析：普通随机CV在此情况下是否会低估预测误差？为什么？
+6. **生态学解释**：基于最优模型结果，解释各环境因子对树木生长的影响，并为天童山保护区的适应性管理提出建议。
 
 **思考题**：如果AIC最优模型与BIC最优模型不同，你会如何选择？为什么？在模型诊断中发现强影响点，例如一个海拔极低的火烧迹地样方，你会如何处理？这些异常点在生态学上可能代表什么？
 

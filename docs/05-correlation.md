@@ -8,15 +8,15 @@
 
 **技能目标**：你能独立用R计算并比较多种相关系数，用距离相关和互信息检测变量间的非线性依赖关系，并能构建和解读相似性矩阵以进行群落聚类与排序分析。
 
-**AI素养目标**：你能理解Pearson相关系数与Transformer自注意力机制之间的数学同构，两者在本质上是向量归一化内积的两种形式。你能认识到互信息如何成为对比学习（SimCLR）的核心优化目标，InfoNCE损失本质上是在最大化不同视图之间互信息的下界。你将学会批判性地评估AI在"相关与因果"问题上的论述，理解从相关分析走向因果推断所需的方法论跨越。
+**AI素养目标**：你能理解Pearson相关系数与Transformer自注意力机制之间的数学同构，两者在本质上是向量归一化内积的两种形式。你能认识到互信息如何成为对比学习（SimCLR）的核心优化目标——最小化InfoNCE损失本质上等价于最大化不同视图之间互信息的下界。你将学会批判性地评估AI在"相关与因果"问题上的论述，理解从相关分析走向因果推断所需的方法论跨越。
 
 ## 引言
 
 天童山的雨季刚过，常林在样地里一边测量树木胸径一边思考：为什么有些树长得快，有些长得慢？她开始猜测，是不是光照多的树长得更快？是不是土壤养分丰富的样方中树木更粗壮？相邻树木之间的竞争会不会抑制生长？这些问题都指向同一个统计核心：**变量之间的关联**。
 
-**首先**，相关性分析是生态学从"描述单个变量"走向"理解变量间关系"的第一步。在前几章，常林学会了描述天童山树木胸径的分布特征（概率与分布），以及利用样本估计整个森林的物种总数和生物量（参数估计）。但这些描述和估计尚未回答一个更深刻的问题：天童山的生态系统中，什么因素在驱动着树木的生长、死亡和更新？要回答这个问题，她需要量化变量之间的关系，这正是相关性分析的领域。
+**首先**，相关性分析是生态学从"描述单个变量"走向"理解变量间关系"的第一步。在前几章，常林学会了描述天童山树木胸径的分布特征（第2章"概率与分布"），以及利用样本估计整个森林的物种总数和生物量（第4章"参数估计"）。但这些描述和估计尚未回答一个更深刻的问题：天童山的生态系统中，什么因素在驱动着树木的生长、死亡和更新？要回答这个问题，她需要量化变量之间的关系，这正是相关性分析的领域。
 
-**进而**，相关性分析的方法论光谱远比"计算一个Pearson r"广阔得多。当树木胸径与树高呈线性关系时，Pearson相关系数足够；当光照与生长的关系单调但非线性时，Spearman秩相关更为稳健；当多个环境因子混杂影响生长时，偏相关分析可以剥离混淆效应；当关系本身呈U型或更复杂的形态时，距离相关和互信息则能捕捉到线性方法完全错过的依赖模式。更重要的是，Pearson相关系数的数学本质，两个向量的归一化内积，与Transformer自注意力机制中的QK^T矩阵计算是同构的：两者都在量化"相似度"，差异仅在于前者是静态的、全局的，后者是动态的、上下文相关的。
+**进而**，相关性分析的方法论光谱远比"计算一个Pearson r"广阔得多。当树木胸径与树高呈线性关系时，Pearson相关系数足够；当光照与生长的关系单调但非线性时，Spearman秩相关更为稳健；当多个环境因子混杂影响生长时，偏相关分析可以剥离混杂效应；当关系本身呈U型或更复杂的形态时，距离相关和互信息则能捕捉到线性方法完全错过的依赖模式。更重要的是，Pearson相关系数的数学本质——两个向量的归一化内积——与Transformer自注意力机制中的$QK^T$矩阵计算是同构的：两者都在量化"相似度"，差异仅在于前者是静态的、全局的，后者是动态的、上下文相关的。
 
 **最终**，相关性分析的终点是因果推断的起点。"相关不等于因果"是统计学中最经典的警示，在AI时代，这个警示变得更加紧迫。一个深度学习模型可以从天童山的数据中学到"树高与生长速度高度相关"，但它无法告诉我们：是长得高的树因为获得了更多光照而生长更快（因果关系），还是生长快的树自然长得更高（反向因果），还是两者都由某个未测量的因素（如土壤深度）共同驱动（混淆）。常林将在本章中学习的，不仅是量化关联的工具，更是一种关系思维，在充满相互作用的生态网络中，辨识真正的驱动力量。
 
@@ -36,9 +36,9 @@ $$r = \frac{\sum_{i=1}^{n}(X_i - \bar{X})(Y_i - \bar{Y})}{\sqrt{\sum_{i=1}^{n}(X
 
 其中$n$是样本量，$\bar{X}$和$\bar{Y}$分别是$X$和$Y$的样本均值。
 
-Pearson相关系数的取值范围在-1到1之间。正值表示正相关关系，即当一个变量增加时另一个变量也倾向于增加；负值表示负相关关系，即当一个变量增加时另一个变量倾向于减少；0值则表示两个变量之间不存在线性相关关系。
+Pearson相关系数的取值范围在-1到1之间。正值表示正相关关系，即当一个变量增加时另一个变量也倾向于增加；负值表示负相关关系，即当一个变量增加时另一个变量倾向于减少；接近0的值则表示两个变量之间不存在线性相关关系。
 
-值得注意的是，Pearson相关系数只能检测线性关系，对于非线性关系可能会给出接近0的值，即使变量间存在强烈的非线性关联。这种方法对异常值比较敏感，且要求数据大致满足正态分布假设。
+值得注意的是，Pearson相关系数只能检测线性关系，对于非线性关系可能会给出接近0的值，即使变量间存在强烈的非线性关联。此外，Pearson相关对异常值比较敏感，少数极端值就可能大幅改变相关系数。在进行显著性检验（如计算p值和置信区间）时，Pearson相关的t检验要求数据服从二元正态分布，但仅计算相关系数值本身并不依赖这一假设。
 
 **R代码实现**：
 
@@ -61,14 +61,10 @@ cat("Pearson相关系数：", round(pearson_cor, 3), "\n")
 ## Pearson相关系数： 0.59
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/pearson-figure-1} 
-
-}
-
-\caption{树木胸径与树高的关系散点图，显示线性相关关系。图中蓝色实心圆点表示观测数据，红色实线表示线性回归拟合线，通过颜色和点型的组合确保在彩色显示和黑白打印时都能清晰区分数据点和趋势线}(\#fig:pearson-figure)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/pearson-figure-1.png" alt="树木胸径与树高的关系散点图，显示线性相关关系。图中蓝色实心圆点表示观测数据，红色实线表示线性回归拟合线，通过颜色和点型的组合确保在彩色显示和黑白打印时都能清晰区分数据点和趋势线" width="80%" />
+<p class="caption">(\#fig:pearson-figure)树木胸径与树高的关系散点图，显示线性相关关系。图中蓝色实心圆点表示观测数据，红色实线表示线性回归拟合线，通过颜色和点型的组合确保在彩色显示和黑白打印时都能清晰区分数据点和趋势线</p>
+</div>
 
 图\@ref(fig:pearson-figure)展示了树木胸径与树高之间的线性相关关系。该散点图使用蓝色实心圆点表示每个观测样本，横轴为树木胸径（单位：厘米），纵轴为树高（单位：米）。图中添加的红色直线是基于线性回归模型`lm(height ~ dbh)`的拟合线，直观地显示了两个变量间的线性趋势。图例位于左上角，显示计算得到的Pearson相关系数数值，为读者提供了量化的相关强度指标。该可视化清晰地展示了生态学中常见的形态特征相关性，胸径较大的树木通常具有较高的树高，符合树木生长的基本规律。
 
@@ -102,7 +98,7 @@ $$\rho = 1 - \frac{6\sum_{i=1}^{n}d_i^2}{n(n^2-1)}$$
 
 其中$d_i$是第$i$个观测在$X$和$Y$上的秩次差，$n$是样本量。
 
-Spearman相关系数的取值范围在-1到1之间。正值表示正单调关系，负值表示负单调关系，0值表示没有单调关系。值得注意的是，Spearman相关系数度量的是变量间关系的单调性强度，而不是线性强度。这意味着即使两个变量之间存在强烈的非线性单调关系，Spearman相关也能给出接近1或-1的值，而Pearson相关在这种情况下可能给出接近0的值。
+Spearman相关系数的取值范围在-1到1之间。正值表示正单调关系，负值表示负单调关系，接近0的值表示没有单调关系。值得注意的是，Spearman相关系数度量的是变量间关系的单调性强度，而不是线性强度。这意味着即使两个变量之间存在强烈的非线性单调关系，Spearman相关也能给出接近1或-1的值，而Pearson相关在这种情况下可能给出接近0的值。
 
 **R代码实现**：
 
@@ -130,16 +126,12 @@ spearman_test <- cor.test(water_quality, macroinvertebrate_diversity,
 ## Spearman检验p值： <2e-16
 ```
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/spearman-figure-1.png" alt="河流水质与底栖动物多样性的关系散点图，显示单调非线性关系。图中深绿色三角形表示观测数据，红色虚线表示局部加权回归拟合线" width="80%" />
+<p class="caption">(\#fig:spearman-figure)河流水质与底栖动物多样性的关系散点图，显示单调非线性关系。图中深绿色三角形表示观测数据，红色虚线表示局部加权回归拟合线</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/spearman-figure-1} 
-
-}
-
-\caption{河流水质与底栖动物多样性的关系散点图，显示单调非线性关系。图中深绿色三角形表示观测数据，红色虚线表示局部加权回归拟合线}(\#fig:spearman-figure)
-\end{figure}
-
-图\@ref(fig:spearman-figure)展示了河流水质与底栖动物多样性之间的单调非线性关系。该散点图使用深绿色实心圆点表示各观测样本，横轴为水质指数（综合反映水体理化性质），纵轴为底栖动物多样性（反映河流生态系统健康状况）。图中添加的红色曲线是基于局部加权回归平滑（LOWESS）的非参数拟合线，能够更好地捕捉变量间的非线性趋势。图例位于左上角，显示计算得到的Spearman相关系数（ρ），该系数衡量的是变量间的单调相关强度而非线性相关强度。该可视化清晰地展示了水质改善与底栖动物多样性增加之间的正相关关系，体现了Spearman相关在处理生态学中常见非线性关系时的优势。
+图\@ref(fig:spearman-figure)展示了河流水质与底栖动物多样性之间的单调非线性关系。该散点图使用深绿色三角形表示各观测样本，横轴为水质指数（综合反映水体理化性质），纵轴为底栖动物多样性（反映河流生态系统健康状况）。图中添加的红色曲线是基于局部加权回归平滑（LOWESS）的非参数拟合线，能够更好地捕捉变量间的非线性趋势。图例位于左上角，显示计算得到的Spearman相关系数（ρ），该系数衡量的是变量间的单调相关强度而非线性相关强度。该可视化清晰地展示了水质改善与底栖动物多样性增加之间的正相关关系，体现了Spearman相关在处理生态学中常见非线性关系时的优势。
 
 Spearman相关对数据分布无严格要求且对异常值稳健，特别适合生态学中常见的偏态分布数据和单调非线性关系（如物种丰富度沿海拔梯度的变化）。但它只能检测单调关系，对U型关系等非单调模式无效。
 
@@ -147,7 +139,7 @@ Spearman相关对数据分布无严格要求且对异常值稳健，特别适合
 
 在研究鸟类迁徙时间与气温变化的关系时，我们想要一个对异常值不敏感的相关性度量，因为个别极端天气事件可能影响整体趋势的判断。
 
-Kendall's $\tau$（tau）是另一种基于秩次的非参数相关性度量方法，由英国统计学家莫里斯·肯德尔于1938年提出。与Spearman相关类似，Kendall's $\tau$也用于度量变量间的单调关系，但其计算原理和统计性质有所不同。Kendall's $\tau$的核心思想是基于数据对的一致性来评估变量间的关系强度。具体而言，它考察所有可能的数据对（共$\frac{1}{2}n(n-1)$对），统计其中一致对和不一致对的数量。一致对是指两个变量在排序上保持一致，不一致对则是指排序相反的数据对。
+Kendall's $\tau$ 是另一种基于秩次的非参数相关性度量方法，由英国统计学家莫里斯·肯德尔于1938年提出。与Spearman相关类似，Kendall's $\tau$也用于度量变量间的单调关系，但其计算原理和统计性质有所不同。Kendall's $\tau$的核心思想是基于数据对的一致性来评估变量间的关系强度。具体而言，它考察所有可能的数据对（共$\frac{1}{2}n(n-1)$对），统计其中一致对和不一致对的数量。一致对是指两个变量在排序上保持一致，不一致对则是指排序相反的数据对。
 
 **数学定义**：对于两个变量$X$和$Y$，Kendall's $\tau$定义为：
 
@@ -164,16 +156,12 @@ Kendall's $\tau$的计算公式反映了这种一致对与不一致对的净比�
 ## Kendall's τ： -0.54
 ```
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/kendall-figure-1.png" alt="鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性。图中紫色圆点表示正常观测数据，红色三角形标记异常值" width="80%" />
+<p class="caption">(\#fig:kendall-figure)鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性。图中紫色圆点表示正常观测数据，红色三角形标记异常值</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/kendall-figure-1} 
-
-}
-
-\caption{鸟类迁徙时间与气温变化的关系散点图，显示对异常值的稳健性。图中紫色圆点表示正常观测数据，红色三角形标记异常值}(\#fig:kendall-figure)
-\end{figure}
-
-图\@ref(fig:kendall-figure)展示了Kendall's τ在存在异常值情况下的稳健性。该散点图可视化春季平均温度与鸟类迁徙到达日期之间的关系，其中紫色圆点代表正常观测数据，红色三角形标记表示人为添加的异常值（异常温暖的年份）。图中清晰地显示了温度升高与鸟类提前到达之间的负相关趋势，但异常值的存在可能对其他相关性系数产生较大影响。Kendall's τ基于数据对的排序一致性进行计算，对异常值相对不敏感，因此在生态学时间序列数据分析中具有重要价值，特别是在处理气候变化对物候影响的长期观测数据时，能够提供更加稳健的相关性估计。
+图\@ref(fig:kendall-figure)展示了Kendall's τ在存在异常值情况下的稳健性。该散点图可视化春季平均温度与鸟类迁徙到达日期之间的关系，其中紫色圆点代表正常观测数据，红色三角形标记表示人为添加的异常值（异常温暖的年份）。图中清晰地显示了温度升高与鸟类提前到达之间的负相关趋势，但异常值的存在可能对Pearson和Spearman等其他相关系数产生较大影响。Kendall's τ基于数据对的排序一致性进行计算，对异常值相对不敏感，因此在生态学时间序列数据分析中具有重要价值，特别是在处理气候变化对物候影响的长期观测数据时，能够提供更加稳健的相关性估计。
 
 
 ```
@@ -183,15 +171,15 @@ Kendall's $\tau$的计算公式反映了这种一致对与不一致对的净比�
 ## Kendall's τ：-0.54
 ```
 
-Kendall's $\tau$对异常值极端稳健，且具有直观的概率解释（$\tau=0.6$意味着随机选一对观测值，排序一致的概率比不一致高60%）。特别适合小样本、含异常值或等级数据的生态学研究，但大样本时计算开销较大。
+Kendall's $\tau$对异常值极为稳健，且具有直观的概率解释：$\tau=0.6$意味着随机选一对观测值，排序一致的概率与排序不一致的概率之差为60个百分点（忽略平局时，一致概率约为80%，不一致概率约为20%）。它特别适合小样本、含异常值或等级数据的生态学研究，但大样本时计算开销较大。
 
 ### 偏相关分析
 
-常林在天童山发现，降水量高的样方森林生产力也高。但这个关系是真的吗？温度也随海拔变化，而温度本身就能促进生长——降水量与生产力的相关，可能只是温度升高的"影子"。偏相关分析正是在这种场景下发挥作用的：它在数学上"剥离"温度的影响，让我们看到降水量对生产力的净效应——即排除了共同驱动因子后的直接关系。
+常林在天童山发现，降水量高的样方森林生产力也高。但这个关系是真的吗？温度较高的样方通常降水也较多，而温度本身就能促进植物生长——降水量与生产力的相关，可能只是温度的"影子"。偏相关分析正是在这种场景下发挥作用的：它在数学上"剥离"温度的影响，让我们看到降水量对生产力的净效应——即排除了共同驱动因子后的直接关系。
 
 这种方法的理论基础可以追溯到20世纪初，但直到多元统计方法的发展才在生态学中得到广泛应用。偏相关分析的核心思想是：如果两个变量$X$和$Y$都与第三个变量$Z$相关，那么$X$和$Y$之间的简单相关可能部分或完全由它们与$Z$的共同关系所驱动。通过控制$Z$的影响，我们可以得到$X$和$Y$之间的"纯净"相关，即排除了$Z$的混淆效应后的直接关系。
 
-偏相关系数的计算基于残差分析的思想。具体而言，我们首先通过线性回归分别从$X$和$Y$中去除$Z$的影响，得到两个残差序列，然后计算这两个残差序列之间的相关系数。这个相关系数就是$X$和$Y$在控制$Z$后的偏相关系数。不过目前我们还为涉及回归的知识，因此我们来介绍一种计算上更加简单的方式。
+偏相关系数的计算基于残差分析的思想。具体而言，我们首先通过线性回归分别从$X$和$Y$中去除$Z$的影响，得到两个残差序列，然后计算这两个残差序列之间的相关系数。这个相关系数就是$X$和$Y$在控制$Z$后的偏相关系数。不过目前我们还未涉及回归的知识，因此我们来介绍一种计算上更加简单的方式。
 
 **数学定义**：对于变量$X$、$Y$和控制变量$Z$，$X$和$Y$在控制$Z$后的偏相关系数为：
 
@@ -199,29 +187,46 @@ $$r_{XY.Z} = \frac{r_{XY} - r_{XZ}r_{YZ}}{\sqrt{(1-r_{XZ}^2)(1-r_{YZ}^2)}}$$
 
 其中$r_{XY}$、$r_{XZ}$、$r_{YZ}$分别是相应的Pearson相关系数。
 
-从数学上看，偏相关系数可以理解为在保持$Z$不变的情况下，$X$和$Y$之间的条件相关。有兴趣的同学可以自行证明一下，该定义与上述提到的残差定义方法，其实是等价的。
+从数学上看，偏相关系数可以理解为在保持$Z$不变的情况下，$X$和$Y$之间的条件相关。有兴趣的同学可以自行证明：该定义与上述提到的残差定义方法在数学上是等价的。
 
 **R代码实现**：
 
 
 ```
-## 降水量与生产力的简单相关系数： 0.33
+## 降水量与生产力的简单相关系数： 0.501
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:partial-cor-table)偏相关系数矩阵}
-\centering
-\begin{tabular}[t]{lrrr}
-\toprule
-  & precipitation & temperature & productivity\\
-\midrule
-precipitation & 1.000 & -0.223 & 0.389\\
-temperature & -0.223 & 1.000 & 0.666\\
-productivity & 0.389 & 0.666 & 1.000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:partial-cor-table)(\#tab:partial-cor-table)偏相关系数矩阵</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> precipitation </th>
+   <th style="text-align:right;"> temperature </th>
+   <th style="text-align:right;"> productivity </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> precipitation </td>
+   <td style="text-align:right;"> 1.000 </td>
+   <td style="text-align:right;"> -0.223 </td>
+   <td style="text-align:right;"> 0.389 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> temperature </td>
+   <td style="text-align:right;"> -0.223 </td>
+   <td style="text-align:right;"> 1.000 </td>
+   <td style="text-align:right;"> 0.666 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> productivity </td>
+   <td style="text-align:right;"> 0.389 </td>
+   <td style="text-align:right;"> 0.666 </td>
+   <td style="text-align:right;"> 1.000 </td>
+  </tr>
+</tbody>
+</table>
 
 ```
 ## 
@@ -232,7 +237,7 @@ productivity & 0.389 & 0.666 & 1.000\\
 
 ### 从Pearson相关系数到Transformer的注意力
 
-当我们掌握了Pearson相关系数，这个诞生于1895年的经典统计量，之后，不妨将目光投向2017年之后最炙手可热的深度学习架构：Transformer。两者之间看似隔着两个世纪的统计学发展和一个AI革命，但在数学的层面上，它们之间存在着令人惊叹的同构关系。
+当我们掌握了Pearson相关系数这个诞生于1895年的经典统计量之后，不妨将目光投向2017年以来最炙手可热的深度学习架构：Transformer。两者之间看似隔着两个世纪的统计学发展和一个AI革命，但在数学的层面上，它们之间存在着令人惊叹的同构关系。
 
 **数学同构：相关即注意，注意即相关**。回忆Pearson相关系数的数学定义：
 
@@ -293,38 +298,38 @@ $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)
 
 $$dCor(X,Y) = \frac{dCov(X,Y)}{\sqrt{dVar(X)dVar(Y)}}$$
 
-其中$dCov$是距离协方差，$dVar$是距离方差。距离协方差就是量化这种"距离同步性"的程度。如果两个变量的距离模式高度同步，距离协方差就大；如果它们的距离模式没有关系，距离协方差就接近0。距离方差则衡量单个变量内部的"距离变异"程度。如果一个变量的所有值都很接近，距离方差就小；如果值之间差异很大，距离方差就大。
+其中$dCov$是距离协方差，$dVar$是距离方差。距离协方差量化的是两个变量在"距离模式"上的同步程度；如果两个变量的距离模式高度同步（即X上接近的点在Y上也接近），距离协方差就大；如果它们的距离模式没有关系，距离协方差就接近0。距离方差则衡量单个变量内部的"距离变异"程度；如果一个变量的所有观测值都很接近，距离方差就小；如果值之间差异很大，距离方差就大。
 
 距离相关的核心思想很简单：**通过比较所有数据点之间的距离模式来检测变量间的依赖关系**。想象你有两个变量，比如植物的叶面积和光合速率。如果这两个变量相关，那么当两个植物的叶面积很接近时，它们的光合速率也应该很接近；当两个植物的叶面积差异很大时，它们的光合速率差异也应该很大。为了更直观地理解距离相关的概念，我们可以通过下面的示意图来展示弱距离相关和强距离相关的区别：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/distance-correlation-diagram-1} 
-
-}
-
-\caption{距离相关强弱对比示意图：左图显示弱距离相关，右图显示强距离相关}(\#fig:distance-correlation-diagram)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/distance-correlation-diagram-1.png" alt="距离相关强弱对比示意图：左图显示弱距离相关，右图显示强距离相关" width="80%" />
+<p class="caption">(\#fig:distance-correlation-diagram)距离相关强弱对比示意图：左图显示弱距离相关，右图显示强距离相关</p>
+</div>
 
 图\@ref(fig:distance-correlation-diagram)通过两个对比场景展示了距离相关的核心思想。左图是弱距离相关的例子：X和Y之间没有明显的依赖关系，数据点在X轴上接近时Y值却可能相差很大，这种距离模式的不同步使距离相关系数接近0。右图则是强距离相关：X和Y之间存在明显的非线性依赖，数据点在X轴上接近时Y值也接近，距离模式的同步性使距离相关系数接近1。距离相关的核心思想正是通过比较所有数据点之间的距离模式来检测变量间的依赖关系。如果两个变量的距离模式高度同步（强相关），那么距离协方差就大；如果它们的距离模式没有关系（弱相关），距离协方差就接近0。
 
 距离相关系数的取值范围在0到1之间，其中0表示变量间完全独立，1表示变量间存在确定的函数关系。值得注意的是，距离相关具有一个非常重要的性质：当且仅当两个变量相互独立时，距离相关系数等于0。这一性质使得距离相关成为检验变量独立性的有力工具。
 
-距离相关能检测任意形式的依赖关系（包括U型、周期型），对变量分布无要求，特别适合探索生态学中未知形态的非线性关联（如功能性状间的复杂权衡关系）。大样本时计算开销较高。
+距离相关能检测任意形式的依赖关系（包括U型、周期型），对变量分布无要求，特别适合探索生态学中未知形态的非线性关联（如功能性状间的复杂权衡关系）。但需注意，距离相关在大样本时计算开销较高，对于超大规模数据可考虑先抽样或使用近似算法。
 
 
 ```
 ## 距离相关系数： 0.454
 ```
 
-\begin{figure}
+```
+## Pearson相关系数： 0.133
+```
 
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/non-linear-relationship-1} 
+```
+## Spearman相关系数： 0.04
+```
 
-}
-
-\caption{植物功能性状间的非线性关系散点图，显示U型关系。图中深绿色菱形表示观测数据，红色实线表示局部回归拟合曲线，蓝色虚线表示二次多项式拟合曲线}(\#fig:non-linear-relationship)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/non-linear-relationship-1.png" alt="植物功能性状间的非线性关系散点图，显示U型关系。图中深绿色菱形表示观测数据，红色实线表示局部回归拟合曲线，蓝色虚线表示二次多项式拟合曲线" width="80%" />
+<p class="caption">(\#fig:non-linear-relationship)植物功能性状间的非线性关系散点图，显示U型关系。图中深绿色菱形表示观测数据，红色实线表示局部回归拟合曲线，蓝色虚线表示二次多项式拟合曲线</p>
+</div>
 
 图\@ref(fig:non-linear-relationship)展示了叶面积与比叶重之间的U型非线性关系，传统Pearson相关和Spearman相关均无法有效捕捉这种非单调依赖模式，而距离相关能正确识别变量间的真实关联。
 
@@ -340,7 +345,7 @@ $$dCor(X,Y) = \frac{dCov(X,Y)}{\sqrt{dVar(X)dVar(Y)}}$$
 
 $$I(X;Y) = \sum_{x\in X}\sum_{y\in Y} p(x,y) \log\left(\frac{p(x,y)}{p(x)p(y)}\right)$$
 
-对于连续变量，需要使用积分形式。其中，$p(x,y)$表示变量$X$和$Y$联合概率质量函数，$p(x)$和$p(y)$分别表示变量$X$和$Y$的边缘概率质量函数。
+其中，$p(x,y)$是$X$和$Y$的联合概率分布，$p(x)$和$p(y)$分别是$X$和$Y$的边缘概率分布。对于离散变量，上式为求和形式；对于连续变量，需用积分替换求和，并使用概率密度函数。
 
 互信息的一个重要特性是它对变量间关系的类型没有限制，能够检测线性和非线性关系、单调和非单调关系，甚至是复杂的多模态关系。这种普适性使得互信息在生态学研究中具有独特的优势，因为许多生态关系本质上是非线性和复杂的。例如，在研究环境因子对物种分布的影响时，物种对环境梯度的响应往往不是简单的线性关系，而是存在阈值效应、饱和效应或最优区间等复杂模式。互信息能够有效捕捉这些复杂的依赖关系，而传统的线性相关方法可能会遗漏重要的生态信息。
 
@@ -358,6 +363,8 @@ $$I(X;Y) = \sum_{x\in X}\sum_{y\in Y} p(x,y) \log\left(\frac{p(x,y)}{p(x)p(y)}\r
 
 load("data/mutinformation.RData")
 # 离散化连续变量（互信息计算需要离散数据）
+# 注意：离散化方法（equalfreq/equalwidth）和箱数(nbins)
+# 会显著影响互信息估计值，实际研究中建议尝试多种设置并比较
 temp_disc <- discretize(temperature, disc = "equalfreq", nbins = 5)
 precip_disc <- discretize(precipitation, disc = "equalfreq", nbins = 5)
 
@@ -375,16 +382,12 @@ mi_joint <- mutinformation(cbind(temp_disc, precip_disc), species_presence)
 ## 温度与降水量联合与物种出现的互信息：0.089
 ```
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/mutinformation-figure-1.png" alt="环境因子与物种分布的关系逻辑回归曲线。左图蓝色半透明三角形表示温度观测数据，右图绿色半透明方形表示降水量观测数据，两图中红色实线均表示逻辑回归拟合曲线" width="80%" />
+<p class="caption">(\#fig:mutinformation-figure)环境因子与物种分布的关系逻辑回归曲线。左图蓝色半透明三角形表示温度观测数据，右图绿色半透明方形表示降水量观测数据，两图中红色实线均表示逻辑回归拟合曲线</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/mutinformation-figure-1} 
-
-}
-
-\caption{环境因子与物种分布的关系逻辑回归曲线。左图蓝色半透明三角形表示温度观测数据，右图绿色半透明方形表示降水量观测数据，两图中红色实线均表示逻辑回归拟合曲线}(\#fig:mutinformation-figure)
-\end{figure}
-
-图\@ref(fig:mutinformation-figure)展示了环境因子与物种分布之间的非线性关系，采用逻辑回归曲线可视化二元响应变量（物种出现/不出现）与连续环境因子的关系。该图采用双面板布局，左侧显示温度与物种出现的关系，右侧显示降水量与物种出现的关系。蓝色半透明圆点表示温度观测数据，绿色半透明圆点表示降水量观测数据，红色曲线为逻辑回归拟合线，表示物种出现的概率随环境因子变化的趋势。这种可视化方法能够清晰地展示环境因子对物种分布的非线性影响，特别适用于生态位模型和物种分布预测研究。逻辑回归曲线呈现典型的S型特征，反映了物种对环境因子的响应阈值，为理解物种-环境关系提供了直观的图形表示。
+图\@ref(fig:mutinformation-figure)展示了环境因子与物种分布之间的非线性关系，采用逻辑回归曲线可视化二元响应变量（物种出现/不出现）与连续环境因子的关系。该图采用双面板布局，左侧显示温度与物种出现的关系，右侧显示降水量与物种出现的关系。蓝色半透明三角形表示温度观测数据，绿色半透明方形表示降水量观测数据，红色曲线为逻辑回归拟合线，表示物种出现的概率随环境因子变化的趋势。这种可视化方法能够清晰地展示环境因子对物种分布的非线性影响，特别适用于生态位模型和物种分布预测研究。逻辑回归曲线呈现典型的S型特征，反映了物种对环境因子的响应阈值，为理解物种-环境关系提供了直观的图形表示。
 
 
 
@@ -398,7 +401,7 @@ $$I(X; Y) = H(X) + H(Y) - H(X, Y) = \sum_{x \in X} \sum_{y \in Y} p(x, y) \log \
 
 其中 $H(X)$ 是变量 $X$ 的熵（不确定性），$H(X,Y)$ 是联合熵。互信息衡量的是"知道 $X$ 能减少多少 $Y$ 的不确定性"，或者说，两个变量共享了多少信息。这一度量不依赖于任何线性假设或参数模型。当 $X$ 与 $Y$ 相互独立时，$p(x,y) = p(x)p(y)$，互信息精确为零；当 $Y$ 可以完全由 $X$ 确定（如 $Y = X^2$）时，互信息取最大值。
 
-一个经典的反例可以揭示互信息相对于Pearson相关不可替代的优势。设 $X \sim N(0, 1)$，$Y = X^2$。Pearson相关系数为零（因为协方差 $E[XY] - E[X]E[Y] = 0 - 0 = 0$），但互信息不为零，知道 $X$ 的值确实能大幅减少 $Y$ 的不确定性（虽然符号信息丢失了，但绝对值信息保留了）。在生态学中，类似的关系比比皆是：物种多样性与干扰频率的驼峰型关系、光合速率与温度的钟形响应曲线、竞争强度与资源梯度的单峰模式。这些生态关系中，Pearson相关可能给出接近零的系数，但互信息能正确识别出变量之间存在真实的依赖。
+一个经典的反例可以揭示互信息相对于Pearson相关不可替代的优势。设 $X \sim N(0, 1)$，$Y = X^2$。Pearson相关系数为零（因为协方差 $E[XY] - E[X]E[Y] = E[X^3] - 0 \cdot E[X^2] = 0$），但互信息不为零，知道 $X$ 的值确实能大幅减少 $Y$ 的不确定性（虽然符号信息丢失了，但绝对值信息保留了）。在生态学中，类似的关系比比皆是：物种多样性与干扰频率的驼峰型关系、光合速率与温度的钟形响应曲线、竞争强度与资源梯度的单峰模式。这些生态关系中，Pearson相关可能给出接近零的系数，但互信息能正确识别出变量之间存在真实的依赖。
 
 下面的R代码（图\@ref(fig:mi-pearson-compare)）演示了这一关键差异，在同一数据集上计算Pearson相关矩阵和互信息矩阵，直观对比两者对非线性关系的敏感度差异。
 
@@ -431,17 +434,13 @@ $$I(X; Y) = H(X) + H(Y) - H(X, Y) = \sum_{x \in X} \sum_{y \in Y} p(x, y) \log \
 ```
 ## 
 ## 注意：温度与光合速率的非线性关系
-##  导致Pearson相关接近零，但互信息显著非零。
+##  导致Pearson相关接近零，但互信息不为零。
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/mi-pearson-compare-1} 
-
-}
-
-\caption{Pearson相关矩阵与互信息矩阵的可视化对比}(\#fig:mi-pearson-compare)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/mi-pearson-compare-1.png" alt="Pearson相关矩阵与互信息矩阵的可视化对比" width="80%" />
+<p class="caption">(\#fig:mi-pearson-compare)Pearson相关矩阵与互信息矩阵的可视化对比</p>
+</div>
 
 图\@ref(fig:mi-pearson-compare)直观地展示了两类矩阵的结构差异：对于一个存在显著非线性依赖的变量对（温度与光合速率），Pearson相关可能给出接近零的值，而互信息能有效捕捉到这种依赖关系。这一差异在生态学数据分析中至关重要，忽略非线性依赖可能导致我们错失重要的生态机制。
 
@@ -475,7 +474,7 @@ $$I(\mathbf{z}_i; \mathbf{z}_i^+) \geq \log(N) - L_{\text{InfoNCE}}$$
 
 ## 生态相似性与距离度量
 
-在前面的小节中，我们主要讨论了变量间的数值相关性，无论是线性相关、非线性相关，还是时间或空间上的自相关。这些分析关注的是变量间关系的强度和方向。现在，我们将转向一个相关但不同的概念：**相似性与距离**。
+在前面的小节中，我们主要讨论了变量间的数值相关性，涵盖线性相关（Pearson、Spearman、Kendall's $\tau$）和非线性相关（距离相关、互信息）。这些分析关注的是变量间关系的强度和方向。现在，我们将转向一个相关但不同的概念：**相似性与距离**。
 
 相似性分析的核心是量化不同样本、群落或个体之间的相似程度或差异大小。与相关性分析不同，相似性分析更关注分类、比较和排序，而非变量间的函数关系。在生态学中，相似性分析广泛应用于群落分类、物种分布格局研究、功能性状比较以及生态区划等场景。
 
@@ -493,7 +492,7 @@ $$I(\mathbf{z}_i; \mathbf{z}_i^+) \geq \log(N) - L_{\text{InfoNCE}}$$
 
 **距离度量**：除了专门的生态学相似性系数，传统的统计距离度量在多元生态数据分析中也发挥重要作用。欧氏距离是最基础的几何距离，计算样本在多维空间中的直线距离，适用于环境因子数据的比较分析。Mahalanobis距离则考虑了变量间的协方差结构，能更准确地反映多元数据的真实差异，在生态位分析和环境梯度研究中特别有用。这些距离度量为我们提供了量化样本间差异的数学工具，支持各种多元统计分析方法如聚类分析、排序分析和判别分析的实施。
 
-在R语言中，这些相似性系数的计算非常便捷。对于二元数据，可以使用`vegan`包中的`vegdist`函数计算Jaccard和Sørensen系数：
+在R语言中，这些相似性系数及其对应的距离度量计算非常便捷。对于二元数据，可以使用`vegan`包中的`vegdist`函数计算Jaccard距离和Sørensen距离（1减去对应的相似性系数即得距离）：
 
 
 ``` r
@@ -503,9 +502,11 @@ binary_data <- matrix(c(1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1), nrow = 3)
 rownames(binary_data) <- c("样地A", "样地B", "样地C")
 colnames(binary_data) <- c("物种1", "物种2", "物种3", "物种4")
 
-# 计算Jaccard相似性
+# 计算Jaccard距离（= 1 - Jaccard相似性系数）
+# 注意：vegdist()返回的是距离/相异性，而非相似性
 jaccard_dist <- vegdist(binary_data, method = "jaccard", binary = TRUE)
-# 计算Sørensen相似性
+# 计算Sørensen距离（= 1 - Sørensen相似性系数）
+# method="bray"配合binary=TRUE等价于Sørensen距离
 sorensen_dist <- vegdist(binary_data, method = "bray", binary = TRUE)
 ```
 
@@ -535,7 +536,7 @@ cov_matrix <- cov(abundance_data)
 # Mahalanobis距离计算较为复杂，通常用于多元统计分析
 ```
 
-**结果解释与生态学意义**：理解相似性系数的数值含义对于正确解释生态学结果至关重要。对于相似性系数（如Jaccard、Sørensen），数值范围在0到1之间，数值越大表示群落间相似性越高。通常认为：$J > 0.75$表示高度相似，$0.5 < J \leq 0.75$表示中等相似，$J \leq 0.5$表示低度相似。对于距离系数（如Bray-Curtis、欧氏距离），数值范围也在0到1之间（Bray-Curtis）或0到无穷大（欧氏距离），但数值越大表示差异越大。Bray-Curtis距离$BC < 0.3$通常表示群落结构相似，$0.3 \leq BC < 0.6$表示中等差异，$BC \geq 0.6$表示显著差异。
+**结果解释与生态学意义**：理解相似性系数的数值含义对于正确解释生态学结果至关重要。对于相似性系数（如Jaccard、Sørensen），数值范围在0到1之间，数值越大表示群落间相似性越高。作为经验参考，$J > 0.75$通常表示高度相似，$0.5 < J \leq 0.75$表示中等相似，$J \leq 0.5$表示低度相似，但这些阈值并非绝对标准，具体解释需结合研究系统和数据特征。对于距离系数（如Bray-Curtis、欧氏距离），数值范围在0到1之间（Bray-Curtis）或0到无穷大（欧氏距离），但数值越大表示差异越大。Bray-Curtis距离$BC < 0.3$通常表示群落结构相似，$0.3 \leq BC < 0.6$表示中等差异，$BC \geq 0.6$表示显著差异，同样地，这些分界值仅供参考而非硬性规则。
 
 在实际生态学研究中，相似性系数的解释需要考虑研究背景和生态学预期。例如，在环境梯度研究中，沿着梯度方向相似性系数的规律性变化可能反映了环境过滤的作用；在岛屿生物地理学中，距离主岛越远的岛屿与主岛的相似性越低，可能反映了扩散限制的影响。这些相似性系数和距离度量为我们提供了强大的工具来量化群落间的相似性和差异性，支持后续的聚类分析、排序分析等多元统计方法。
 
@@ -543,7 +544,7 @@ cov_matrix <- cov(abundance_data)
 
 功能性状相关性分析是功能生态学的核心内容，旨在揭示植物和其他生物在进化过程中形成的性状组合模式。这些相关模式反映了生物对环境适应的策略性选择，是理解生态位分化、群落构建和生态系统功能的关键。
 
-**功能性状相关性**：功能性状间的相关性分析主要关注两个重要方面：性状间的权衡关系和协变模式。性状权衡是指生物在资源有限条件下，对多个功能性状进行权衡取舍的进化策略。例如，植物在叶片构建上需要在光合速率和防御能力之间进行权衡，快速生长的物种通常具有较低的防御投资。这种权衡关系可以用负相关关系来表示，其数学表达即为Peason相关系数：$r_{xy} = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}$，其中$x_i$和$y_i$分别表示第$i$个个体在两个性状上的测量值。
+**功能性状相关性**：功能性状间的相关性分析主要关注两个重要方面：性状间的权衡关系和协变模式。性状权衡是指生物在资源有限条件下，对多个功能性状进行权衡取舍的进化策略。例如，植物在叶片构建上需要在光合速率和防御能力之间进行权衡，快速生长的物种通常具有较低的防御投资。这种权衡关系可以用负相关关系来表示，其数学表达即为Pearson相关系数：$r_{xy} = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}$，其中$x_i$和$y_i$分别表示第$i$个个体在两个性状上的测量值。
 
 功能性状的协变模式则描述了多个性状如何协同变化，形成特定的功能综合征。例如，在干旱环境中，植物往往同时表现出深根系、厚角质层和小叶面积等性状组合。这些协变模式可以通过主成分分析或多变量回归等方法进行量化。生态学上，这些相关性反映了生物对不同环境压力的适应机制，如资源获取策略、胁迫耐受策略和竞争策略等。在群落生态学中，功能性状相关性分析有助于理解物种共存机制和生态系统稳定性。
 
@@ -555,102 +556,174 @@ cov_matrix <- cov(abundance_data)
 
 
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:trait-correlation-table)功能性状相关性矩阵}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & 比叶面积 & 叶片氮含量 & 光合速率 & 叶片寿命\\
-\midrule
-比叶面积 & 1.0000000 & 0.9964051 & 0.9906672 & -0.9740756\\
-叶片氮含量 & 0.9964051 & 1.0000000 & 0.9821403 & -0.9647267\\
-光合速率 & 0.9906672 & 0.9821403 & 1.0000000 & -0.9951811\\
-叶片寿命 & -0.9740756 & -0.9647267 & -0.9951811 & 1.0000000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:trait-correlation-table)(\#tab:trait-correlation-table)功能性状相关性矩阵</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> 比叶面积| 叶片 </th>
+   <th style="text-align:right;"> 含量|   光合速率| </th>
+   <th style="text-align:right;"> 叶片寿命| </th>
+   <th style="text-align:right;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 比叶面积   |  1 </td>
+   <td style="text-align:right;"> 0000000|  0 </td>
+   <td style="text-align:right;"> 9964051|  0 </td>
+   <td style="text-align:right;"> 9906672| -0 </td>
+   <td style="text-align:right;"> 9740756| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 叶片氮含量 |  0. </td>
+   <td style="text-align:right;"> 964051|  1. </td>
+   <td style="text-align:right;"> 000000|  0. </td>
+   <td style="text-align:right;"> 821403| -0. </td>
+   <td style="text-align:right;"> 647267| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 光合速率   |  0 </td>
+   <td style="text-align:right;"> 9906672|  0 </td>
+   <td style="text-align:right;"> 9821403|  1 </td>
+   <td style="text-align:right;"> 0000000| -0 </td>
+   <td style="text-align:right;"> 9951811| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 叶片寿命   | -0 </td>
+   <td style="text-align:right;"> 9740756| -0 </td>
+   <td style="text-align:right;"> 9647267| -0 </td>
+   <td style="text-align:right;"> 9951811|  1 </td>
+   <td style="text-align:right;"> 0000000| </td>
+  </tr>
+</tbody>
+</table>
 
 表\@ref(tab:trait-correlation-table)展示了功能性状间的Pearson相关性矩阵，图\@ref(fig:trait-correlation-plot)以可视化方式展示了相关性矩阵，主成分分析（表\@ref(tab:importance-table)和图\@ref(fig:trait-biplot)）进一步揭示了性状协变的多维模式：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/trait-correlation-plot-1} 
-
-}
-
-\caption{功能性状Pearson相关性矩阵的可视化：圆圈大小和颜色深度表示相关系数的强度，蓝色表示正相关，红色表示负相关}(\#fig:trait-correlation-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/trait-correlation-plot-1.png" alt="功能性状Pearson相关性矩阵的可视化：圆圈大小和颜色深度表示相关系数的强度，蓝色表示正相关，红色表示负相关" width="80%" />
+<p class="caption">(\#fig:trait-correlation-plot)功能性状Pearson相关性矩阵的可视化：圆圈大小和颜色深度表示相关系数的强度，蓝色表示正相关，红色表示负相关</p>
+</div>
 
 
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:importance-table)主成分分析结果：方差解释比例}
-\centering
-\begin{tabular}[t]{llrrr}
-\toprule
-  & 主成分 & 标准差 & 方差比例 & 累积方差比例\\
-\midrule
-PC1 & PC1 & 1.988 & 0.988 & 0.988\\
-PC2 & PC2 & 0.211 & 0.011 & 0.999\\
-PC3 & PC3 & 0.059 & 0.001 & 1.000\\
-PC4 & PC4 & 0.015 & 0.000 & 1.000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:importance-table)(\#tab:importance-table)主成分分析结果：方差解释比例</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:left;"> 主成分 | 标 </th>
+   <th style="text-align:right;"> 差| 方差比例 </th>
+   <th style="text-align:right;"> 累积方差比例| </th>
+   <th style="text-align:right;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> PC1 </td>
+   <td style="text-align:left;"> PC1 </td>
+   <td style="text-align:right;"> 1.988 </td>
+   <td style="text-align:right;"> 0.988 </td>
+   <td style="text-align:right;"> 0.988 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PC2 </td>
+   <td style="text-align:left;"> PC2 </td>
+   <td style="text-align:right;"> 0.211 </td>
+   <td style="text-align:right;"> 0.011 </td>
+   <td style="text-align:right;"> 0.999 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PC3 </td>
+   <td style="text-align:left;"> PC3 </td>
+   <td style="text-align:right;"> 0.059 </td>
+   <td style="text-align:right;"> 0.001 </td>
+   <td style="text-align:right;"> 1.000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> PC4 </td>
+   <td style="text-align:left;"> PC4 </td>
+   <td style="text-align:right;"> 0.015 </td>
+   <td style="text-align:right;"> 0.000 </td>
+   <td style="text-align:right;"> 1.000 </td>
+  </tr>
+</tbody>
+</table>
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/trait-biplot-1} 
-
-}
-
-\caption{功能性状主成分分析的双标图：箭头表示各功能性状在前两个主成分上的载荷方向和大小，点表示物种在排序空间中的位置，物种间距离反映了功能性状的相似程度}(\#fig:trait-biplot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/trait-biplot-1.png" alt="功能性状主成分分析的双标图：箭头表示各功能性状在前两个主成分上的载荷方向和大小，点表示物种在排序空间中的位置，物种间距离反映了功能性状的相似程度" width="80%" />
+<p class="caption">(\#fig:trait-biplot)功能性状主成分分析的双标图：箭头表示各功能性状在前两个主成分上的载荷方向和大小，点表示物种在排序空间中的位置，物种间距离反映了功能性状的相似程度</p>
+</div>
 
 对于经济型谱分析，可以使用线性模型来检验性状间的权衡关系。表\@ref(tab:leaf-economics-regression-table)和表\@ref(tab:leaf-lifespan-sla-regression-table)分别给出了比叶面积与光合速率、比叶面积与叶片寿命的线性回归结果，图\@ref(fig:leaf-economics-scatter)展示了叶片经济型谱关系的散点图：
 
 
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:leaf-economics-regression-table)叶片经济型谱关系线性回归结果}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 3.6704042 & 0.6898330 & 5.320714 & 0.0129693\\
-比叶面积 & 0.5367956 & 0.0426408 & 12.588774 & 0.0010808\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:leaf-economics-regression-table)(\#tab:leaf-economics-regression-table)叶片经济型谱关系线性回归结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 3.6704042 </td>
+   <td style="text-align:right;"> 0.6898330 </td>
+   <td style="text-align:right;"> 5.320714 </td>
+   <td style="text-align:right;"> 0.0129693 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 比叶面积    | 0. </td>
+   <td style="text-align:right;"> 367956|  0 </td>
+   <td style="text-align:right;"> 0426408| 12 </td>
+   <td style="text-align:right;"> 588774| </td>
+   <td style="text-align:right;"> 0.0010808| </td>
+  </tr>
+</tbody>
+</table>
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:leaf-lifespan-sla-regression-table)叶片寿命与比叶面积关系线性回归结果}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 20.9853325 & 1.6234494 & 12.926385 & 0.0009994\\
-比叶面积 & -0.7484065 & 0.1003507 & -7.457912 & 0.0049911\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:leaf-lifespan-sla-regression-table)(\#tab:leaf-lifespan-sla-regression-table)叶片寿命与比叶面积关系线性回归结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 20.9853325 </td>
+   <td style="text-align:right;"> 1.6234494 </td>
+   <td style="text-align:right;"> 12.926385 </td>
+   <td style="text-align:right;"> 0.0009994 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 比叶面积    | -0 </td>
+   <td style="text-align:right;"> 7484065|  0 </td>
+   <td style="text-align:right;"> 1003507| -7 </td>
+   <td style="text-align:right;"> 457912| </td>
+   <td style="text-align:right;"> 0.0049911| </td>
+  </tr>
+</tbody>
+</table>
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/leaf-economics-scatter-1.png" alt="叶片经济型谱关系散点图" width="80%" />
+<p class="caption">(\#fig:leaf-economics-scatter)叶片经济型谱关系散点图</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/leaf-economics-scatter-1} 
-
-}
-
-\caption{叶片经济型谱关系散点图}(\#fig:leaf-economics-scatter)
-\end{figure}
-
-**结果解释与生态学意义**：功能性状相关性分析的结果解释需要结合相关系数的数值大小、显著性水平和生态学背景。相关系数$r$的绝对值大小反映了性状间关系的强度：$|r| > 0.7$表示强相关，$0.5 < |r| \leq 0.7$表示中等相关，$0.3 < |r| \leq 0.5$表示弱相关，$|r| \leq 0.3$表示无实质性相关。相关系数的正负号指示了关系的方向：正相关表示性状间协同变化，负相关表示性状间存在权衡关系。
+**结果解释与生态学意义**：功能性状相关性分析的结果解释需要结合相关系数的数值大小、显著性水平和生态学背景。作为一般参考，$|r| > 0.7$可视为强相关，$0.5 < |r| \leq 0.7$为中等相关，$0.3 < |r| \leq 0.5$为弱相关，$|r| \leq 0.3$通常认为相关性很弱或不具有实质意义，但这些界限并非普适标准，实际解释时还需结合样本量和研究领域的具体预期。相关系数的正负号指示了关系的方向：正相关表示性状间协同变化，负相关表示性状间存在权衡关系。
 
 在生态学解释中，显著的正相关可能反映了功能综合征的存在，如快速生长策略相关的性状组合；显著的负相关则可能指示资源分配上的权衡，如在防御和生长之间的投资权衡。主成分分析中，前几个主成分的方差贡献率反映了数据的主要变异方向，通常认为累计方差贡献率超过70%的主成分能够较好地代表原始数据的变异结构。这些分析方法为我们提供了强大的工具来量化功能性状间的相关模式，揭示生物适应策略的普遍规律。
 
@@ -662,7 +735,7 @@ PC4 & PC4 & 0.015 & 0.000 & 1.000\\
 
 这些分布模式的生态学意义在于它们反映了种内相互作用和环境异质性的综合影响。聚集分布常见于依赖母树扩散的植物物种或具有社会行为的动物种群；随机分布通常出现在环境均质且个体间无相互作用的条件下；均匀分布则多见于资源竞争激烈的环境中。
 
-**聚集指数**：为了量化空间分布模式，统计学提供了多种聚集指数。方差均值比是最基础的聚集度检验方法，其定义为：$I = \frac{s^2}{\bar{x}}$，其中$s^2$为样本方差，$\bar{x}$为样本均值。当$I > 1$时表示聚集分布，$I = 1$时表示随机分布，$I < 1$时表示均匀分布。Morisita指数是另一种常用的空间聚集度量，其定义为：$I_\delta = n \frac{\sum x_i(x_i-1)}{N(N-1)}$，其中$n$为样方数，$x_i$为第$i$个样方中的个体数，$N$为总个体数。Morisita指数对样本大小不敏感，在生态学调查中应用广泛。
+**聚集指数**：为了量化空间分布模式，统计学提供了多种聚集指数。方差均值比是最基础的聚集度检验方法，其定义为：$I = \frac{s^2}{\bar{x}}$，其中$s^2$为样本方差，$\bar{x}$为样本均值。理论上，$I > 1$时表示聚集分布，$I = 1$时表示随机分布，$I < 1$时表示均匀分布。但在实际应用中，由于抽样误差的存在，通常采用一个缓冲区间（如0.8到1.2之间视为随机分布），而非严格的单点阈值。Morisita指数是另一种常用的空间聚集度量，其定义为：$I_\delta = n \frac{\sum x_i(x_i-1)}{N(N-1)}$，其中$n$为样方数，$x_i$为第$i$个样方中的个体数，$N$为总个体数。Morisita指数对样本大小不敏感，在生态学调查中应用广泛。
 
 这些聚集指数的生态学意义在于它们能够量化种内空间分布模式，为理解种群动态、资源利用策略和种内竞争提供定量依据。在保护生物学中，聚集指数有助于评估物种的生存状况和制定有效的保护策略。
 
@@ -721,7 +794,7 @@ if (variance_mean_ratio > 1.2) {
 
 种间相关性分析是群落生态学的核心内容，旨在揭示不同物种在空间分布、资源利用和生态功能上的相互关系。这些关系反映了物种间的竞争、互利、捕食等生态过程，是理解群落构建机制和生态系统稳定性的关键。
 
-**种间关联**：种间关联主要分为三种类型：正相关、负相关和不相关。正相关表现为两个物种在空间上倾向于共同出现，这可能源于互利共生关系、相似的环境需求或共同的扩散限制。数学上可以用相关系数或关联指数来量化：$\phi = \frac{ad-bc}{\sqrt{(a+b)(c+d)(a+c)(b+d)}}$，其中$a,b,c,d$为2×2列联表中的频数。负相关则表现为两个物种在空间上相互排斥，通常由竞争排斥、化感作用或不同的生态位需求导致。不相关则表示两个物种的分布相互独立，没有显著的生态联系。
+**种间关联**：种间关联主要分为三种类型：正相关、负相关和不相关。正相关表现为两个物种在空间上倾向于共同出现，这可能源于互利共生关系、相似的环境需求或共同的扩散限制。数学上可以用$\phi$系数来量化：$\phi = \frac{ad-bc}{\sqrt{(a+b)(c+d)(a+c)(b+d)}}$，其中$a$为两个物种共同出现的样方数，$b$和$c$分别为仅一个物种出现的样方数，$d$为两个物种均未出现的样方数——即2×2列联表中的四个频数。负相关则表现为两个物种在空间上相互排斥，通常由竞争排斥、化感作用或不同的生态位需求导致。不相关则表示两个物种的分布相互独立，没有显著的生态联系。
 
 这些关联模式的生态学意义在于它们反映了物种间相互作用的性质和强度。正相关可能指示物种间的协同进化或生态位重叠，负相关则暗示强烈的竞争或生态位分化。在恢复生态学中，种间关联分析有助于设计合理的物种配置方案；在保护生物学中，它有助于识别关键物种和功能群。
 
@@ -731,21 +804,48 @@ if (variance_mean_ratio > 1.2) {
 
 
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:species-association-matrix-table)种间关联矩阵}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & 物种A & 物种B & 物种C & 物种D\\
-\midrule
-物种A & 1.0000000 & -0.4082483 & -0.6666667 & 0.6123724\\
-物种B & -0.4082483 & 1.0000000 & -0.4082483 & -0.2500000\\
-物种C & -0.6666667 & -0.4082483 & 1.0000000 & -0.4082483\\
-物种D & 0.6123724 & -0.2500000 & -0.4082483 & 1.0000000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:species-association-matrix-table)(\#tab:species-association-matrix-table)种间关联矩阵</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> 物种A| </th>
+   <th style="text-align:right;"> 物种B| </th>
+   <th style="text-align:right;"> 物种C| </th>
+   <th style="text-align:right;"> 物种D| </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 物种A | </td>
+   <td style="text-align:right;"> 1.0000000| </td>
+   <td style="text-align:right;"> 0.4082483| </td>
+   <td style="text-align:right;"> 0.6666667| </td>
+   <td style="text-align:right;"> 0.6123724| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 物种B | </td>
+   <td style="text-align:right;"> 0.4082483| </td>
+   <td style="text-align:right;"> 1.0000000| </td>
+   <td style="text-align:right;"> 0.4082483| </td>
+   <td style="text-align:right;"> 0.2500000| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 物种C | </td>
+   <td style="text-align:right;"> 0.6666667| </td>
+   <td style="text-align:right;"> 0.4082483| </td>
+   <td style="text-align:right;"> 1.0000000| </td>
+   <td style="text-align:right;"> 0.4082483| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 物种D | </td>
+   <td style="text-align:right;"> 0.6123724| </td>
+   <td style="text-align:right;"> 0.2500000| </td>
+   <td style="text-align:right;"> 0.4082483| </td>
+   <td style="text-align:right;"> 1.0000000| </td>
+  </tr>
+</tbody>
+</table>
 
 表\@ref(tab:species-association-matrix-table)展示了物种间的关联矩阵，基于该矩阵可以构建生态网络图\@ref(fig:species-association-network)以直观揭示种间相互作用的复杂结构。
 
@@ -758,16 +858,12 @@ if (variance_mean_ratio > 1.2) {
 ## [1] "聚类系数: 0.75"
 ```
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/species-association-network-1.png" alt="种间关联网络图：节点表示物种，连线粗细表示种间关联强度，蓝色连线为正关联，红色连线为负关联，节点大小反映物种在群落中的相对多度" width="80%" />
+<p class="caption">(\#fig:species-association-network)种间关联网络图：节点表示物种，连线粗细表示种间关联强度，蓝色连线为正关联，红色连线为负关联，节点大小反映物种在群落中的相对多度</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/species-association-network-1} 
-
-}
-
-\caption{种间关联网络图：节点表示物种，连线粗细表示种间关联强度，蓝色连线为正关联，红色连线为负关联，节点大小反映物种在群落中的相对多度}(\#fig:species-association-network)
-\end{figure}
-
-**结果解释与生态学意义**：种间相关性分析的结果解释需要结合相关系数的数值、显著性水平和生态学机制。对于种间关联系数$\phi$，通常认为：$|\phi| > 0.3$表示强关联，$0.2 < |\phi| \leq 0.3$表示中等关联，$|\phi| \leq 0.2$表示弱关联。正关联$\phi > 0$表示物种倾向于共同出现，可能源于互利共生或相似的环境需求；负关联$\phi < 0$表示物种相互排斥，可能源于竞争或不同的生态位需求。
+**结果解释与生态学意义**：种间相关性分析的结果解释需要结合关联系数的数值、显著性水平和生态学机制。对于种间关联系数$\phi$，一般可参考：$|\phi| > 0.3$表示强关联，$0.2 < |\phi| \leq 0.3$表示中等关联，$|\phi| \leq 0.2$表示弱关联。正关联$\phi > 0$表示物种倾向于共同出现，可能源于互利共生或相似的环境需求；负关联$\phi < 0$表示物种相互排斥，可能源于竞争或不同的生态位需求。需要注意的是，这些数值界限仅是经验性参考，具体判断应结合统计显著性和生态学背景。
 
 网络分析有助于理解生态系统的稳定性和功能组织，为保护关键物种和维持生态系统功能提供科学依据。
 
@@ -792,7 +888,8 @@ if (variance_mean_ratio > 1.2) {
 load(file="data/community_net_data.RData")
 # Mantel检验
 comm_dist <- vegdist(community_data, method = "bray")
-env_dist <- dist(env_data)
+# 环境变量需先标准化再计算距离，避免量纲差异影响
+env_dist <- dist(scale(env_data))
 mantel_test <- mantel(comm_dist, env_dist)
 print(mantel_test)
 ```
@@ -804,12 +901,12 @@ print(mantel_test)
 ## Call:
 ## mantel(xdis = comm_dist, ydis = env_dist) 
 ## 
-## Mantel statistic r: 0.4779 
-##       Significance: 0.01 
+## Mantel statistic r: 0.4756 
+##       Significance: 0.013 
 ## 
 ## Upper quantiles of permutations (null model):
 ##   90%   95% 97.5%   99% 
-## 0.261 0.349 0.420 0.467 
+## 0.258 0.345 0.409 0.498 
 ## Permutation: free
 ## Number of permutations: 999
 ```
@@ -824,92 +921,192 @@ knitr::kable(summary(pca_result)$cont[[1]],
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:pca-analysis-table)群落相似性PCA分析结果}
-\centering
-\begin{tabular}[t]{lrrrrr}
-\toprule
-  & PC1 & PC2 & PC3 & PC4 & PC5\\
-\midrule
-Eigenvalue & 2.8024582 & 1.7268720 & 0.3559326 & 0.0857154 & 0.0290218\\
-Proportion Explained & 0.5604916 & 0.3453744 & 0.0711865 & 0.0171431 & 0.0058044\\
-Cumulative Proportion & 0.5604916 & 0.9058660 & 0.9770526 & 0.9941956 & 1.0000000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:pca-analysis-table)(\#tab:pca-analysis-table)群落相似性PCA分析结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> PC1 </th>
+   <th style="text-align:right;"> PC2 </th>
+   <th style="text-align:right;"> PC3 </th>
+   <th style="text-align:right;"> PC4 </th>
+   <th style="text-align:right;"> PC5 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Eigenvalue </td>
+   <td style="text-align:right;"> 2.8024582 </td>
+   <td style="text-align:right;"> 1.7268720 </td>
+   <td style="text-align:right;"> 0.3559326 </td>
+   <td style="text-align:right;"> 0.0857154 </td>
+   <td style="text-align:right;"> 0.0290218 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Proportion Explained </td>
+   <td style="text-align:right;"> 0.5604916 </td>
+   <td style="text-align:right;"> 0.3453744 </td>
+   <td style="text-align:right;"> 0.0711865 </td>
+   <td style="text-align:right;"> 0.0171431 </td>
+   <td style="text-align:right;"> 0.0058044 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Cumulative Proportion </td>
+   <td style="text-align:right;"> 0.5604916 </td>
+   <td style="text-align:right;"> 0.9058660 </td>
+   <td style="text-align:right;"> 0.9770526 </td>
+   <td style="text-align:right;"> 0.9941956 </td>
+   <td style="text-align:right;"> 1.0000000 </td>
+  </tr>
+</tbody>
+</table>
 
 表\@ref(tab:pca-analysis-table)展示了群落相似性的主成分分析结果，包括各主成分的特征值、方差解释比例和累积方差解释比例，为理解群落组成的多维变异结构提供了量化指标。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/pca-plot-figure-1} 
-
-}
-
-\caption{群落样方在主成分分析排序空间中的分布：横轴为第一主成分（PC1），纵轴为第二主成分（PC2），每个点代表一个样方，样方间的距离反映了群落物种组成的相似性}(\#fig:pca-plot-figure)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/pca-plot-figure-1.png" alt="群落样方在主成分分析排序空间中的分布：横轴为第一主成分（PC1），纵轴为第二主成分（PC2），每个点代表一个样方，样方间的距离反映了群落物种组成的相似性" width="80%" />
+<p class="caption">(\#fig:pca-plot-figure)群落样方在主成分分析排序空间中的分布：横轴为第一主成分（PC1），纵轴为第二主成分（PC2），每个点代表一个样方，样方间的距离反映了群落物种组成的相似性</p>
+</div>
 
 这段代码生成图\@ref(fig:pca-plot-figure)，使用`plot()`函数可视化PCA分析结果，`display = "sites"`参数指定只显示样方在排序空间中的位置。该散点图展示了不同群落样方在主成分1和主成分2构成的二维空间中的分布，样方间的距离反映了群落组成的相似性，距离越近表示群落组成越相似。这种可视化方法能够直观地展示群落结构的梯度变化、识别群落类型以及发现环境梯度对群落组成的影响模式。
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/nmds-plot-figure-1.png" alt="群落样方的非度量多维尺度分析（NMDS）排序图：横轴为NMDS第一轴，纵轴为NMDS第二轴，样方标签表示各群落样方在排序空间中的位置，样方间距离基于Bray-Curtis相异性指数" width="80%" />
+<p class="caption">(\#fig:nmds-plot-figure)群落样方的非度量多维尺度分析（NMDS）排序图：横轴为NMDS第一轴，纵轴为NMDS第二轴，样方标签表示各群落样方在排序空间中的位置，样方间距离基于Bray-Curtis相异性指数</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/nmds-plot-figure-1} 
+这段代码执行非度量多维尺度分析并生成图\@ref(fig:nmds-plot-figure)。`vegdist()`函数使用Bray-Curtis距离计算群落相似性矩阵，`monoMDS()`函数执行NMDS排序，`plot()`函数可视化结果，`type = "t"`参数指定显示样方标签。NMDS是一种非参数排序方法，不依赖线性假设，特别适用于生态学中常见的非线性关系数据。该散点图展示了样方在NMDS排序空间中的分布，样方间距离反映了群落组成的Bray-Curtis相异性（距离越近表示群落越相似），能够更好地处理物种多度数据的非线性关系和零值问题。
 
-}
-
-\caption{群落样方的非度量多维尺度分析（NMDS）排序图：横轴为NMDS第一轴，纵轴为NMDS第二轴，样方标签表示各群落样方在排序空间中的位置，样方间距离基于Bray-Curtis相异性指数}(\#fig:nmds-plot-figure)
-\end{figure}
-
-这段代码执行非度量多维尺度分析并生成图\@ref(fig:nmds-plot-figure)。`vegdist()`函数使用Bray-Curtis距离计算群落相似性矩阵，`monoMDS()`函数执行NMDS排序，`plot()`函数可视化结果，`type = "t"`参数指定显示样方标签。NMDS是一种非参数排序方法，不依赖线性假设，特别适用于生态学中常见的非线性关系数据。该散点图展示了样方在NMDS排序空间中的分布，样方间距离反映了群落组成的Bray-Curtis相似性，能够更好地处理物种多度数据的非线性关系和零值问题。
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/hclust-figure-1} 
-
-}
-
-\caption{群落样方的层次聚类树状图（UPGMA方法）：纵轴为Bray-Curtis相异性距离，横轴为样方标签，分支高度表示样方间或样方组间的相异性程度，较晚分叉的样方具有更高的群落组成相似性}(\#fig:hclust-figure)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="05-correlation_files/figure-html/hclust-figure-1.png" alt="群落样方的层次聚类树状图（UPGMA方法）：纵轴为Bray-Curtis相异性距离，横轴为样方标签，分支高度表示样方间或样方组间的相异性程度，较晚分叉的样方具有更高的群落组成相似性" width="80%" />
+<p class="caption">(\#fig:hclust-figure)群落样方的层次聚类树状图（UPGMA方法）：纵轴为Bray-Curtis相异性距离，横轴为样方标签，分支高度表示样方间或样方组间的相异性程度，较晚分叉的样方具有更高的群落组成相似性</p>
+</div>
 
 这段代码执行层次聚类分析并生成图\@ref(fig:hclust-figure)。`hclust()`函数基于群落Bray-Curtis距离矩阵执行层次聚类，`method = "average"`参数指定使用平均连接法（UPGMA），`plot()`函数可视化聚类树状图。层次聚类通过逐步合并最相似的群落样方，构建嵌套的群落分类结构，树状图的高度表示群落间的相异性程度。这种可视化方法能够清晰地展示群落的分类关系、识别群落类型以及确定合适的分类等级，为群落生态学的分类和分区研究提供直观依据。
 
 
 ``` r
-# Beta多样性计算
+# Beta多样性计算（Whittaker方法，反映群落总相异性）
+# 注：文字部分介绍的周转-嵌套分解需使用betapart包等专门工具
 beta_div <- betadiver(community_data, method = "w")
 knitr::kable(as.matrix(beta_div),
-             caption = "群落相似性Beta多样性分析结果",
+             caption = "群落相似性Beta多样性分析结果（Whittaker方法）",
              booktabs = TRUE) %>%
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:beta-diversity-table)群落相似性Beta多样性分析结果}
-\centering
-\begin{tabular}[t]{lrrrrrrrr}
-\toprule
-  & 样地1 & 样地2 & 样地3 & 样地4 & 样地5 & 样地6 & 样地7 & 样地8\\
-\midrule
-样地1 & 0.0000000 & 0.1111111 & 0.1111111 & 0.1111111 & 0.1111111 & 0.1111111 & 0.1111111 & 0.1111111\\
-样地2 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
-样地3 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
-样地4 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
-样地5 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
-\addlinespace
-样地6 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
-样地7 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
-样地8 & 0.1111111 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000 & 0.0000000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:beta-diversity-table)(\#tab:beta-diversity-table)群落相似性Beta多样性分析结果（Whittaker方法）</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> 样地1| </th>
+   <th style="text-align:right;"> 样地2| </th>
+   <th style="text-align:right;"> 样地3| </th>
+   <th style="text-align:right;"> 地4|     样地 </th>
+   <th style="text-align:right;"> |     样地6| </th>
+   <th style="text-align:right;"> 样地7| </th>
+   <th style="text-align:right;"> 样地8| </th>
+   <th style="text-align:right;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 样地1 | </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .1111111| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 样地2 | </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 样地3 | </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 样地4 | </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 样地5 | </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 样地6 | </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 样地7 | </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 样地8 | </td>
+   <td style="text-align:right;"> .1111111| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+   <td style="text-align:right;"> .0000000| </td>
+  </tr>
+</tbody>
+</table>
 
 表\@ref(tab:beta-diversity-table)展示了群落相似性的Beta多样性分析结果，使用Whittaker方法计算群落间的相异性矩阵，为理解群落组成的空间变异模式提供了量化指标。
 
-**结果解释与生态学意义**：群落相似性分析的结果解释需要结合统计显著性、效应大小和生态学背景。对于Mantel检验，通常认为$p < 0.05$表示环境距离与群落距离存在显著相关性，而Mantel统计量$r_M$的大小反映了相关性的强度：$|r_M| > 0.3$表示强相关，$0.2 < |r_M| \leq 0.3$表示中等相关，$|r_M| \leq 0.2$表示弱相关。
+**结果解释与生态学意义**：群落相似性分析的结果解释需要结合统计显著性、效应大小和生态学背景。对于Mantel检验，$p < 0.05$通常被认为环境距离与群落距离存在显著相关性，但需注意Mantel检验的统计功效受样本量和距离矩阵结构影响较大，建议同时报告Mantel统计量$r_M$的效应大小作为补充参考。
 
-在排序分析中，前两个排序轴通常能够解释数据的主要变异，累计解释率超过50%通常被认为是可接受的。排序图中样本点的聚集程度反映了群落的相似性，而环境向量的长度和方向指示了环境因子对群落变异的影响强度。在聚类分析中，树状图的切割高度决定了聚类的粒度，通常选择在树状图分支较长的位置进行切割。Beta多样性的解释需要考虑其组分：高周转率$\beta_{turnover}$表示物种替换是群落差异的主要机制，而高嵌套性$\beta_{nestedness}$表示物种丢失是主要机制。
+在排序分析中，前两个排序轴能够展示数据的主要变异方向，累计解释率超过50%通常被认为是可接受的，但具体标准取决于数据的固有结构和变量数量。排序图中样本点的聚集程度反映了群落的相似性，而环境向量的长度和方向指示了环境因子对群落变异的影响强度。在聚类分析中，树状图的切割高度决定了聚类的粒度，通常选择在树状图分支较长的位置进行切割，也可结合生态学先验知识确定分类数量。Beta多样性的解释需要考虑其组分：高周转率$\beta_{turnover}$表示物种替换是群落差异的主要机制，而高嵌套性$\beta_{nestedness}$表示物种丢失是主要机制。
 
 这些分析结果的生态学解释需要结合具体的研究问题。例如，显著的环境-群落相关性可能支持环境过滤假说；高度的Beta多样性可能反映了强烈的生态位分化或扩散限制。这些分析方法为我们提供了全面的工具集来研究群落相似性和多样性格局，支持群落生态学和生物地理学研究。
 
@@ -929,17 +1126,15 @@ knitr::kable(as.matrix(beta_div),
 
 本章系统介绍了生态学中相关性与相似性分析的理论基础、方法体系及其在生态学研究中的广泛应用。相关性与相似性分析作为生态统计学的核心内容，为理解生物与环境、物种间以及群落间的复杂关系提供了定量化的工具。
 
-在相关性统计基础部分，我们详细讨论了多种相关性度量方法。Pearson相关系数适用于线性关系的量化，Spearman秩相关和Kendall's τ则能够处理单调但非线性的关系。偏相关分析通过控制混杂变量的影响，揭示了变量间的直接关系。距离相关和互信息进一步扩展了相关性分析的能力，能够检测复杂的非线性关系和依赖模式。这些方法的选择需要根据数据的分布特征、关系类型以及研究问题的性质来决定。
+在相关性统计基础部分，我们详细讨论了多种相关性度量方法。Pearson相关系数适用于线性关系的量化，Spearman秩相关和Kendall's $\tau$则能够处理单调但非线性的关系。偏相关分析通过控制混杂变量的影响，揭示了变量间的直接关系。距离相关和互信息进一步扩展了相关性分析的能力，能够检测复杂的非线性关系和依赖模式。这些方法的选择需要根据数据的分布特征、关系类型以及研究问题的性质来决定。
 
-自相关分析关注数据在时间和空间维度上的依赖性。时间自相关通过自相关函数（ACF）和偏自相关函数（PACF）揭示了时间序列中的周期性、趋势和记忆效应，而平稳性检验则为时间序列分析提供了基础假设验证。空间自相关分析则通过变异函数、全局空间自相关指数（如Moran's *I*和Geary's *C*）以及局部空间自相关（LISA分析）来量化空间格局，识别空间聚集、离散或随机分布模式。这些分析对于理解种群动态、物种分布和环境梯度的空间结构具有重要意义。
-
-系统发育相关性分析将进化历史纳入生态关系的考量。系统发育信号分析（如Blomberg's K和Pagel's λ）评估了性状在系统发育树上的保守性程度，系统发育独立对比（PIC）和系统发育广义最小二乘法（PGLS）则能够去除系统发育非独立性对性状间关系分析的影响，而通过分析系统发育聚集与分散则有助于推断群落形成的主导机制。这些方法为理解生物的进化历史和生态功能提供了进化生态学的视角。
+此外，我们深入探讨了经典统计与深度学习之间的理论联系：Pearson相关系数与Transformer自注意力机制在数学上同构（都是向量的归一化内积），互信息与对比学习的InfoNCE损失在信息论上统一（都是在最大化变量间的共享信息）。这些联系不仅揭示了经典方法与现代AI之间的深层对话，也为生态学数据分析提供了新的方法论视角。
 
 相似性与距离分析构成了群落生态学和功能生态学的核心方法体系。常用相似性系数根据数据类型分为二元数据相似性（Jaccard、Sørensen系数）和数量数据相似性（Bray-Curtis距离、Morisita-Horn指数），而传统距离度量（欧氏距离、Mahalanobis距离）则在多元数据分析中发挥重要作用。功能性状相关性分析揭示了生物在资源分配和生态策略上的权衡关系，经济型谱理论则提供了理解植物功能策略普遍模式的框架。
 
 种内相关性分析通过空间分布模式和聚集指数量化了同一物种个体在空间上的分布特征，反映了种内相互作用和环境异质性的综合影响。种间相关性分析则通过种间关联和生态网络构建揭示了物种间竞争、互利等相互作用的结构特性。群落相似性分析整合了Mantel检验、排序分析、聚类分析和Beta多样性等多种方法，为理解群落构建机制、环境梯度影响以及生物地理格局提供了全面的分析工具。
 
-在结果解释方面，本章为各种统计量提供了明确的数值标准和生态学解释框架。相似性系数的数值范围、相关系数的强度分级、聚集指数的判断标准以及网络拓扑特征的阈值都为我们提供了实用的参考依据。这些标准的应用需要结合具体的研究背景和生态学预期，避免机械地套用数值标准而忽视生态学机制的理解。
+在结果解释方面，本章为各种统计量提供了经验性的数值参考和生态学解释框架。相似性系数的取值范围、相关系数的强度分级、聚集指数的判断标准以及网络拓扑特征的阈值都为我们提供了实用的参考依据。需要注意的是，这些参考值并非放之四海而皆准的硬性法则，其应用需要结合具体的研究背景和生态学预期，避免机械地套用数值标准而忽视生态学机制的理解。
 
 总之，相关性与相似性分析构成了生态统计学的重要支柱，它们不仅提供了量化生态关系的数学工具，更重要的是为理解生态系统的结构、功能和动态提供了理论框架。随着生态学研究的深入和计算技术的发展，这些方法将继续在生态学理论构建、生态系统管理和生物多样性保护中发挥关键作用。掌握这些分析方法并正确理解其生态学含义，对于开展严谨的生态学研究具有重要意义。
 
@@ -949,7 +1144,7 @@ knitr::kable(as.matrix(beta_div),
 
 **传统警示的新紧迫性**。深度学习模型拥有数以百万计的参数和从海量数据中自动发现模式的能力，这使它们在发现相关性方面远远超越了传统统计方法。传统生态学分析中，我们需要研究者主动选择分析哪些变量对之间的关系，这本身就是一种基于领域知识的筛选机制。而深度学习模型可以在没有人为干预的情况下，从成千上万个输入变量中自动学习复杂的非线性关联。这一能力是一把双刃剑：它能够揭示人类直觉可能忽略的真实关联，但同时也大大增加了将虚假相关误认为因果模式的风险。
 
-当一个模型从气象数据、遥感影像、土壤数据和物种分布数据中同时学习时，它可能会"发现"一些统计上显著但在生态学上荒谬的关联，例如，某个区域道路密度的增加与某种鸟类种群下降之间的相关性。这种相关性在数据中是真实存在的（可能二者都受城市化进程驱动），但模型，如果不具备因果推理能力，可能会将道路密度内化为预测鸟类种群的关键特征，并在面对没有道路但城市化水平不同的新区域时做出错误的推广。
+当一个模型从气象数据、遥感影像、土壤数据和物种分布数据中同时学习时，它可能会"发现"一些统计上显著但在生态学上荒谬的关联，例如，某个区域道路密度的增加与某种鸟类种群下降之间的相关性。这种相关性在数据中是真实存在的（可能二者都受城市化进程驱动），但模型如果不具备因果推理能力，可能会将道路密度内化为预测鸟类种群的关键特征，并在面对没有道路但城市化水平不同的新区域时做出错误的推广。
 
 **因果发现算法：从纯观测数据中推断因果结构**。面对这一挑战，因果发现（causal discovery）算法应运而生，试图从纯观测数据中推断出变量之间的因果关系结构，而不仅仅是相关性。PC算法（以Peter Spirtes和Clark Glymour命名）是其中最经典的方法之一，其核心策略是：通过一系列条件独立性检验，逐步剔除变量之间的直接边，最终得到一个表示潜在因果关系的骨架图。具体而言，如果两个变量 $X$ 和 $Y$ 在给定某个变量集合 $Z$ 的条件下变得独立（即 $X \perp\!\!\!\perp Y \mid Z$），那么 $X$ 和 $Y$ 之间不存在直接因果边，它们的相关是由 $Z$ 中的变量所中介或混淆的。
 
@@ -975,7 +1170,7 @@ LiNGAM（线性非高斯无环模型）则利用了非高斯性这一关键信�
 
 ## 本章要点回顾
 
-**常林学到了什么**：在天童山20公顷森林样地中，常林用Pearson相关确认了树木胸径与树高之间的正线性关系，用Spearman相关捕捉了土壤养分与物种丰富度之间的非线性单调趋势，用偏相关分析在控制温度的影响后重新评估了降水量对森林生产力的直接贡献。她还用距离相关发现了叶面积与比叶重之间的U型关系，这种非线性模式用传统方法根本检测不到。通过群落相似性分析，她量化了不同海拔带森林样方的组成差异，Mantel检验和NMDS排序共同揭示出环境过滤对群落构建的主导作用。
+**常林学到了什么**：在天童山20公顷森林样地中，常林用Pearson相关确认了树木胸径与树高之间的正线性关系，用Spearman相关捕捉了水质指数与底栖动物多样性之间的非线性单调趋势，用偏相关分析在控制温度的影响后重新评估了降水量对森林生产力的直接贡献。她还用距离相关发现了叶面积与比叶重之间的U型关系，这种非线性模式用传统方法根本检测不到。通过群落相似性分析，她量化了不同群落样方的物种组成差异，Mantel检验和NMDS排序共同揭示出环境过滤对群落构建的主导作用。
 
 **统计-AI桥梁**：常林认识到，她在天童山计算的Pearson相关矩阵，与大语言模型中Transformer的自注意力权重矩阵在数学上是同类运算，都是向量内积的归一化。两者之间的核心差异不在于"算什么"，而在于"为谁算"：相关矩阵是固定的，对所有人一视同仁；注意力权重是动态的，随上下文而变。她还理解了互信息为什么能驱动对比学习：就像她用互信息来度量"温度知道多少关于物种分布的信息"，SimCLR用InfoNCE损失最大化同一图像不同增强视图之间的互信息，从而迫使模型学到不随裁剪旋转而改变的深层特征。
 

@@ -1405,6 +1405,7 @@ p1 <- ggplot(summary_stats, aes(
   ) +
   theme_eco() +
   scale_fill_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
+print(p1)
 ```
 
 ```{r multiple-comparison-boxplot, echo=FALSE, fig.cap="不同保护措施的梅花鹿种群密度箱线图：展示三种保护措施的梅花鹿密度分布情况"}
@@ -1420,6 +1421,7 @@ p2 <- ggplot(protection_data, aes(
   ) +
   theme_eco() +
   scale_fill_manual(values = c("#1f77b4", "#ff7f0e", "#2ca02c"))
+print(p2)
 ```
 
 ```{r multiple-comparison-combined-plot, echo=FALSE, fig.cap="多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化"}

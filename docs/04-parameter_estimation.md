@@ -6,7 +6,7 @@
 
 **知识目标**：学完本章后，你能回答：如何从有限的样方数据推断整个森林的物种总数？最大似然估计和贝叶斯估计各在什么情况下更适用？置信区间的真正含义是什么（不是"参数有95%的概率落在区间内"）？
 
-**技能目标**：你能独立用R实现点估计和区间估计，用MCMC方法进行简单的贝叶斯参数估计，用Chao1和iNEXT方法估计物种丰富度并解释外推结果。
+**技能目标**：你能独立用R实现点估计和区间估计，用MCMC方法进行简单的贝叶斯参数估计，用Chao1和稀化曲线（rarefaction）方法估计物种丰富度并解释外推结果。
 
 **AI素养目标**：你能理解为什么训练神经网络等价于做最大似然估计，为什么L2正则化等价于高斯先验，以及在什么情况下应该使用基于模拟的推断（SBI）替代传统参数估计方法。你将能够向AI清晰描述你的数据生成机制，并批判性评估AI建议的估计方法。
 
@@ -30,7 +30,9 @@
 
 抽样方法是常林进入天童山的第一道技术选择。她可以在森林里随意走动挑选”看起来典型”的位置——这种方便抽样省时但充满偏差。统计学为她提供了更严谨的替代方案：
 
-分层抽样方法则针对生态系统的异质性特点而发展。面对森林不同林层、湖泊不同水深区域、山地不同海拔梯度等空间异质性明显的生境，分层抽样首先将总体划分为相对同质的层（strata），然后在各层内分别进行随机抽样。这种方法显著提高了抽样效率，确保样本能够充分代表总体的不同组成部分。以山地植物多样性调查为例，按海拔梯度分层并在不同海拔带设置样方，既能保证样本代表性，又能揭示物种多样性随海拔变化的规律。
+**简单随机抽样**是最基本的概率抽样方法，它保证总体中每个个体都有相同的概率被选入样本。操作上，可以对所有潜在抽样单元编号后随机抽取。在R中，这可以通过`sample()`函数轻松实现。简单随机抽样是其他更复杂抽样方法的基础，其理论性质也最为清晰。
+
+**分层抽样方法**则针对生态系统的异质性特点而发展。面对森林不同林层、湖泊不同水深区域、山地不同海拔梯度等空间异质性明显的生境，分层抽样首先将总体划分为相对同质的层（strata），然后在各层内分别进行随机抽样。这种方法显著提高了抽样效率，确保样本能够充分代表总体的不同组成部分。以山地植物多样性调查为例，按海拔梯度分层并在不同海拔带设置样方，既能保证样本代表性，又能揭示物种多样性随海拔变化的规律。
 
 系统抽样按照固定的空间或时间间隔进行抽样，在生态学调查中应用广泛。其优势在于操作简便、覆盖均匀，特别适合大尺度生态调查。鸟类迁徙路线调查中的固定时间间隔观测、森林资源调查中的规则网格样方设置，都是系统抽样的典型应用。然而，这种方法需要注意避免与生态系统的周期性模式重合，以防产生样本偏差。
 
@@ -40,7 +42,7 @@
 
 在R语言中，我们可以方便地实现各种抽样方法。以下代码展示了不同抽样方法的具体实现：
 
-首先创建模拟的森林鸟类种群数据，为后续抽样方法演示提供基础数据集：
+首先加载预先模拟好的森林鸟类种群数据（该数据集模拟了不同生境类型中多个物种的个体数量），为后续抽样方法演示提供基础数据集：
 
 
 
@@ -77,6 +79,7 @@ cat("\n总体均值：", mean(forest_birds$abundance), "\n")
 
 
 ``` r
+set.seed(123)
 random_sample <- forest_birds[sample(nrow(forest_birds), 100), ]
 
 knitr::kable(table(random_sample$species),
@@ -84,29 +87,44 @@ knitr::kable(table(random_sample$species),
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:random-sampling)随机抽样结果}
-\centering
-\begin{tabular}[t]{lr}
-\toprule
-Var1 & Freq\\
-\midrule
-啄木鸟 & 16\\
-杜鹃 & 28\\
-画眉 & 12\\
-麻雀 & 20\\
-黄鹂 & 24\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:random-sampling)(\#tab:random-sampling)随机抽样结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Var1 </th>
+   <th style="text-align:right;"> Freq </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 啄木鸟 | </td>
+   <td style="text-align:right;"> 21| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 杜鹃   | </td>
+   <td style="text-align:right;"> 15| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 画眉   | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 麻雀   | </td>
+   <td style="text-align:right;"> 22| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 黄鹂   | </td>
+   <td style="text-align:right;"> 22| </td>
+  </tr>
+</tbody>
+</table>
 
 ``` r
 cat("随机抽样均值估计：", mean(random_sample$abundance), "\n")
 ```
 
 ```
-## 随机抽样均值估计： 26.03
+## 随机抽样均值估计： 26.56
 ```
 
 表\@ref(tab:random-sampling)展示了随机抽样的结果，我们可以看到不同物种在100个样本中的分布情况。
@@ -117,36 +135,75 @@ cat("随机抽样均值估计：", mean(random_sample$abundance), "\n")
 ``` r
 stratified_sample <- forest_birds %>%
   group_by(habitat) %>%
-  sample_n(size = 20)
+  slice_sample(n = 20)
 
 knitr::kable(table(stratified_sample$habitat, stratified_sample$species),
   caption = "分层抽样结果", booktabs = TRUE) %>%
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:stratified-sampling)分层抽样结果}
-\centering
-\begin{tabular}[t]{lrrrrr}
-\toprule
-  & 啄木鸟 & 杜鹃 & 画眉 & 麻雀 & 黄鹂\\
-\midrule
-林内 & 0 & 0 & 20 & 0 & 0\\
-林冠 & 20 & 0 & 0 & 0 & 0\\
-林缘 & 0 & 0 & 0 & 20 & 0\\
-灌丛 & 0 & 20 & 0 & 0 & 0\\
-空地 & 0 & 0 & 0 & 0 & 20\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:stratified-sampling)(\#tab:stratified-sampling)分层抽样结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> 啄木鸟| 杜 </th>
+   <th style="text-align:right;"> | 画眉| </th>
+   <th style="text-align:right;"> 麻雀| 黄 </th>
+   <th style="text-align:right;"> | </th>
+   <th style="text-align:right;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 林内 | </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 20| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 林冠 | </td>
+   <td style="text-align:right;"> 20| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 林缘 | </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 20| </td>
+   <td style="text-align:right;"> 0| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 灌丛 | </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 20| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 空地 | </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 0| </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+</tbody>
+</table>
 
 ``` r
 cat("分层抽样均值估计：", mean(stratified_sample$abundance), "\n")
 ```
 
 ```
-## 分层抽样均值估计： 26.95
+## 分层抽样均值估计： 25.65
 ```
 
 表\@ref(tab:stratified-sampling)展示了分层抽样的结果，我们可以看到不同生境类型中各个物种的分布情况。
@@ -163,22 +220,37 @@ knitr::kable(table(systematic_sample$species),
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:systematic-sampling)系统抽样结果}
-\centering
-\begin{tabular}[t]{lr}
-\toprule
-Var1 & Freq\\
-\midrule
-啄木鸟 & 20\\
-杜鹃 & 20\\
-画眉 & 20\\
-麻雀 & 20\\
-黄鹂 & 20\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:systematic-sampling)(\#tab:systematic-sampling)系统抽样结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Var1 </th>
+   <th style="text-align:right;"> Freq </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 啄木鸟 | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 杜鹃   | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 画眉   | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 麻雀   | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 黄鹂   | </td>
+   <td style="text-align:right;"> 20| </td>
+  </tr>
+</tbody>
+</table>
 
 ``` r
 cat("系统抽样均值估计：", mean(systematic_sample$abundance), "\n")
@@ -204,8 +276,8 @@ cat("不同抽样方法对种群数量均值的估计比较：\n",
 ```
 ## 不同抽样方法对种群数量均值的估计比较：
 ##  总体均值： 26.01 
-##  随机抽样估计： 26.03 
-##  分层抽样估计： 26.95 
+##  随机抽样估计： 26.41 
+##  分层抽样估计： 26.53 
 ##  系统抽样估计： 26.16
 ```
 
@@ -225,8 +297,8 @@ cat("\n估计偏差分析：\n",
 ```
 ## 
 ## 估计偏差分析：
-##  随机抽样偏差： 0.0768935 %
-##  分层抽样偏差： 3.613995 %
+##  随机抽样偏差： 1.53787 %
+##  分层抽样偏差： 1.999231 %
 ##  系统抽样偏差： 0.5767013 %
 ```
 
@@ -236,8 +308,9 @@ cat("\n估计偏差分析：\n",
 
 
 ``` r
-population_sd <- 15
-desired_margin <- 2
+# 以鸟类种群调查为例：已知总体标准差约为15只，期望估计误差不超过±2只
+population_sd <- 15   # 总体标准差（只），基于历史调查数据
+desired_margin <- 2   # 可接受的最大误差范围（只）
 confidence_level <- 0.95
 
 z_value <- qnorm(1 - (1 - confidence_level) / 2)
@@ -280,7 +353,7 @@ cat("基于统计功效的所需样本量：", ceiling(sample_size_t), "\n")
 
 让我们通过一个例子来理解点估计的概念。假设我们想要估计一片湿地中某种两栖动物的平均体重。这片湿地面积广阔，生活着成千上万只这种两栖动物，我们不可能将每一只都捕捉并称重。于是，我们采用科学的抽样方法，随机捕捉了100只个体，测量它们的体重。基于这100个样本数据，我们希望能够给出整个湿地种群平均体重的最佳估计。这个估计过程就是点估计的核心思想，用样本统计量来估计总体参数。
 
-从数学的角度来看，点估计具有严格的定义。设总体参数为$\theta$（例如总体均值$\mu$），我们通过样本数据构造一个估计量$\hat{\theta}$。估计量是一个随机变量，它的具体取值称为估计值。在生态学中，最常用的点估计量包括样本均值、样本方差和样本比例。样本均值$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$用于估计总体均值$\mu$，样本方差$s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2$用于估计总体方差$\sigma^2$，样本比例$\hat{p} = \frac{k}{n}$用于估计总体比例$\pi$。
+从数学的角度来看，点估计具有严格的定义。设总体参数为$\theta$（例如总体均值$\mu$），我们通过样本数据构造一个估计量$\hat{\theta}$。估计量是一个随机变量，它的具体取值称为估计值。在生态学中，最常用的点估计量包括样本均值、样本方差和样本比例。样本均值$\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i$用于估计总体均值$\mu$，样本方差$s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2$用于估计总体方差$\sigma^2$，样本比例$\hat{p} = \frac{k}{n}$（其中$k$为样本中具有某特征的个体数）用于估计总体比例$\pi$。
 
 点估计的理论基础建立在估计量的良好性质之上。理解这些性质对于正确应用点估计方法至关重要。其中最重要的性质包括无偏性、有效性和一致性，有关这些性质的详细介绍，请见下面相关小节。
 
@@ -290,7 +363,7 @@ cat("基于统计功效的所需样本量：", ceiling(sample_size_t), "\n")
 
 ### 区间估计
 
-区间估计是统计学中通过样本数据来估计总体参数可能取值范围的重要方法。如果说点估计是告诉我们“森林里大概有500只鸟"，那么区间估计就是告诉我们”森林里的鸟数量有95%的可能性在450到550只之间"。这个“可信范围"的概念，让我们的生态学研究变得更加科学和可靠。
+区间估计是统计学中通过样本数据来估计总体参数可能取值范围的重要方法。如果说点估计是告诉我们”森林里大概有500只鸟”，那么区间估计就是告诉我们”基于这次调查数据，森林里的鸟数量大概在450到550只之间”。这个”带上误差棒”的估计方式，让我们对估计的不确定性有了量化的认识，也使生态学研究变得更加科学和可靠。
 
 #### 置信区间的生态学意义
 
@@ -300,7 +373,7 @@ cat("基于统计功效的所需样本量：", ceiling(sample_size_t), "\n")
 
 **案例1：湿地鸟类种群调查**
 
-假设你在研究一片湿地中的白鹭种群。通过标记重捕法，你估计白鹭数量为1200只，95%置信区间为[1100, 1300]。这个区间估计提供了比单纯点估计更丰富的信息。首先，我们有95%的把握认为这片湿地的白鹭真实数量在1100到1300只之间，这反映了估计的不确定性程度。其次，从生态管理实践的角度看，湿地管理部门在制定保护措施时，可以基于这个范围来规划资源分配和干预强度，而不是仅仅依赖单一的1200只这个数值。最后，在生态监测和趋势分析中，当我们将这个结果与其他年份的数据进行比较时，置信区间能够帮助我们更准确地判断种群是真实增长还是下降，避免了由于抽样误差导致的误判。这种区间估计方法为生态决策提供了更加科学和可靠的基础。
+假设你在研究一片湿地中的白鹭种群。通过标记重捕法，你估计白鹭数量为1200只，95%置信区间为[1100, 1300]。这个区间估计提供了比单纯点估计更丰富的信息。首先，这个区间告诉我们，如果对这片湿地重复进行100次相同的调查，大约有95次得到的置信区间会包含白鹭的真实数量，这反映了估计的不确定性程度。其次，从生态管理实践的角度看，湿地管理部门在制定保护措施时，可以基于这个范围来规划资源分配和干预强度，而不是仅仅依赖单一的1200只这个数值。最后，在生态监测和趋势分析中，当我们将这个结果与其他年份的数据进行比较时，置信区间能够帮助我们更准确地判断种群是真实增长还是下降，避免了由于抽样误差导致的误判。这种区间估计方法为生态决策提供了更加科学和可靠的基础。
 
 **案例2：森林碳储量估算**
 
@@ -312,7 +385,7 @@ cat("基于统计功效的所需样本量：", ceiling(sample_size_t), "\n")
 
 **基于正态分布的置信区间**
 
-当样本量较大（通常n > 30）且总体分布近似正态时，我们可以使用正态分布来构建置信区间。对于总体均值$\mu$的置信区间为：
+当样本量较大（通常 $n > 30$）时，根据中心极限定理，无论原始总体服从何种分布，样本均值的抽样分布都近似正态，此时可以使用正态分布来构建置信区间。对于总体均值$\mu$的置信区间为：
 
 $$\bar{x} \pm z_{\alpha/2} \times \frac{\sigma}{\sqrt{n}}$$
 
@@ -363,16 +436,12 @@ $$\bar{x} \pm t_{\alpha/2, n-1} \times \frac{s}{\sqrt{n}}$$
 
 其中$t_{\alpha/2, n-1}$是自由度为n-1的*t*分布分位数。
 
-Student‘s *t*分布（简称*t*分布）由英国统计学家威廉·戈塞特（William Gosset）在1908年应用笔名Student提出，当时他在吉尼斯啤酒厂从事质量控制工作，为了解决小样本问题而发展了这种分布。*t*分布的形状比正态分布更加扁平，尾部更厚，这反映了小样本情况下估计不确定性的增加（图\@ref(fig:t-distribution-comparison)）。随着样本量的增加，*t*分布逐渐趋近于正态分布。
+*t*分布（Student's *t*-distribution）由英国统计学家威廉·戈塞特（William Gosset）在1908年以笔名"Student"发表，当时他在吉尼斯啤酒厂从事质量控制工作，为了解决小样本问题而发展了这种分布。*t*分布的形状比正态分布更加扁平，尾部更厚，这反映了小样本情况下估计不确定性的增加（图\@ref(fig:t-distribution-comparison)）。随着样本量的增加，*t*分布逐渐趋近于正态分布。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/t-distribution-comparison-1} 
-
-}
-
-\caption{t分布与正态分布的比较：随自由度增加，t分布趋近标准正态分布。}(\#fig:t-distribution-comparison)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/t-distribution-comparison-1.png" alt="t分布与正态分布的比较：随自由度增加，t分布趋近标准正态分布。" width="80%" />
+<p class="caption">(\#fig:t-distribution-comparison)t分布与正态分布的比较：随自由度增加，t分布趋近标准正态分布。</p>
+</div>
 
 在生态学研究中，小样本情况非常常见。例如，在研究濒危物种时，由于种群数量稀少，我们往往只能获得有限的观测数据；在进行珍稀植物调查时，由于分布范围有限，样本量也往往较小；在开展昂贵的生态实验时，由于成本和时间的限制，样本量也可能受到限制。在这些情况下，使用*t*分布构建置信区间能够更准确地反映估计的不确定性。
 
@@ -411,18 +480,14 @@ cat("自助法95%置信区间：", ci_bootstrap$percent[4:5], "\n")
 
 为了直观理解置信水平和样本量对区间估计的影响，我们通过可视化分析来展示这些关系。图\@ref(fig:different-confidence-levels)展示了两个关键概念：不同置信水平下区间估计的比较以及样本量对置信区间宽度的影响。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/different-confidence-levels-1} 
-
-}
-
-\caption{不同置信水平的区间估计比较（左）及样本量对区间宽度的影响（右）。}(\#fig:different-confidence-levels)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/different-confidence-levels-1.png" alt="不同置信水平的区间估计比较（左）及样本量对区间宽度的影响（右）。" width="80%" />
+<p class="caption">(\#fig:different-confidence-levels)不同置信水平的区间估计比较（左）及样本量对区间宽度的影响（右）。</p>
+</div>
 
 图\@ref(fig:different-confidence-levels)通过两个子图直观展示了置信区间估计的两个重要方面。
 
-左图展示了不同置信水平的区间估计比较，呈现了90%、95%和99%三种置信水平下的白鹭种群数量估计区间。图中红色圆点表示点估计值（样本均值），水平线段表示置信区间。从图中可以明显看出，置信水平越高（如99%），置信区间越宽，这反映了更高的可靠性要求；而置信水平越低（如90%），置信区间越窄，但估计的不确定性也相应增加。
+左图展示了不同置信水平的区间估计比较，呈现了90%、95%和99%三种置信水平下的白鹭种群数量估计区间。图中红色圆点表示点估计值（样本均值），水平线段表示置信区间。从图中可以明显看出，置信水平越高（如99%），置信区间越宽，这意味着更高的可靠性要求需要付出更宽的区间作为代价；而置信水平越低（如90%），置信区间越窄，但遗漏真实参数的风险也相应增大。
 
 右图展示了样本量对置信区间宽度的影响，呈现了随着样本量从10增加到100，置信区间宽度的变化趋势。结果显示样本量越大，置信区间越窄，估计精度越高，这种关系遵循统计理论中置信区间宽度与样本量的平方根成反比的规律。
 
@@ -519,10 +584,11 @@ log_likelihood <- function(params, data) {
 }
 
 # 使用L-BFGS-B算法最大化对数似然（fnscale=-1表示最大化）
+# 均值参数(mu)理论上可取任意实数，此处用较大的有限界替代-Inf/+Inf
 initial_params <- c(mean(tree_diameter), sd(tree_diameter))
 result <- optim(initial_params, log_likelihood, data = tree_diameter,
                 control = list(fnscale = -1), method = "L-BFGS-B",
-                lower = c(-Inf, 0.001), upper = c(Inf, Inf))
+                lower = c(-1000, 0.001), upper = c(1000, 200))
 
 cat("\n使用优化算法的最大似然估计结果：\n",
   "总体均值估计：", result$par[1], "cm\n",
@@ -550,7 +616,7 @@ cat("\n使用优化算法的最大似然估计结果：\n",
 
    再比如，在研究气候变化对鸟类迁徙时间的影响时，研究人员需要基于多年的观测数据估计迁徙时间的趋势。最大似然估计的渐进无偏性确保了随着观测年份的增加，趋势估计会越来越接近真实的气候变化影响。这种性质对于制定基于科学证据的气候变化适应策略至关重要。
 
-2. **有效性**：在所有无偏估计中，最大似然估计的方差最小。这个性质在生态学中尤为重要，因为生态数据往往存在较大的自然变异。生态系统是复杂的动态系统，受到多种生物和非生物因素的影响，观测数据中包含了大量的随机变异。最大似然估计的高效性意味着它能够在这种自然变异中给出最精确的估计。
+2. **有效性**：在大样本下，最大似然估计在所有无偏估计中达到最小的渐近方差（即达到Cramér-Rao下界）。这个性质在生态学中尤为重要，因为生态数据往往存在较大的自然变异。生态系统是复杂的动态系统，受到多种生物和非生物因素的影响，观测数据中包含了大量的随机变异。最大似然估计的高效性意味着它能够在这种自然变异中给出最精确的估计。
 
    考虑一个具体的例子：在评估湿地恢复工程对水鸟种群的影响时，研究人员需要检测种群数量的微小变化。由于水鸟种群受到天气、食物供应、捕食压力等多种因素的影响，观测数据中存在显著的年度波动。最大似然估计的有效性使得研究人员能够区分真实的恢复效果和随机波动。如果使用方差较大的估计方法，可能会错过重要的生态恢复信号，或者将随机波动误认为生态变化。
 
@@ -593,7 +659,7 @@ cat("\n使用优化算法的最大似然估计结果：\n",
 
 $$L_{\text{MSE}} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$
 
-现在，考虑我们假设观测值服从正态分布：$y_i \sim N(\mu = \hat{y}_i, \sigma^2 = 1)$。该正态分布的概率密度函数为：
+现在，考虑我们假设观测值服从正态分布（为简化推导，不妨设 $\sigma^2 = 1$；对任意固定的 $\sigma^2$，等价性同样成立）：$y_i \sim N(\mu = \hat{y}_i, \sigma^2 = 1)$。该正态分布的概率密度函数为：
 
 $$f(y_i | \hat{y}_i) = \frac{1}{\sqrt{2\pi}} \exp\left(-\frac{(y_i - \hat{y}_i)^2}{2}\right)$$
 
@@ -679,10 +745,12 @@ $$-\log L = -\sum_{i=1}^{n} \sum_{k=1}^{K} y_{ik} \log(\hat{p}_{ik}) = L_{\text{
    \hat{\sigma}^2_{MM} &= m_2 - m_1^2 = \frac{1}{n}\sum_{i=1}^{n} x_i^2 - \left(\frac{1}{n}\sum_{i=1}^{n} x_i\right)^2
    \end{align*}
 
-因此，对于正态分布$N(\mu, \sigma^2)$
+因此，对于正态分布$N(\mu, \sigma^2)$：
 
-- 一阶样本矩（样本均值）用于估计总体均值$\mu$
-- 二阶样本矩用于估计总体方差$\sigma^2$
+- 一阶样本矩（样本均值）$m_1$ 用于估计总体均值 $\mu$
+- 二阶样本中心矩 $m_2 - m_1^2$（即 $\frac{1}{n}\sum(x_i - \bar{x})^2$）用于估计总体方差 $\sigma^2$
+
+注意这里的方差估计使用的是二阶**中心**矩（除数 $n$），而非无偏样本方差（除数 $n-1$）。矩估计不必是无偏的，这一差异在小样本时尤为明显。
 
 
 ``` r
@@ -690,8 +758,9 @@ set.seed(123)
 tree_diameter <- rnorm(50, mean = 25, sd = 5)  # 真实均值25cm，标准差5cm
 
 # 矩估计：用样本一阶矩估计总体均值，样本二阶中心矩估计总体方差
+# 注意：矩估计方差使用除数n（而非var()的n-1）
 mu_hat_moment <- mean(tree_diameter)
-sigma2_hat_moment <- var(tree_diameter)
+sigma2_hat_moment <- mean((tree_diameter - mu_hat_moment)^2)
 
 cat("矩估计结果：\n",
     "总体均值估计：", mu_hat_moment, "cm\n",
@@ -701,7 +770,7 @@ cat("矩估计结果：\n",
 ```
 ## 矩估计结果：
 ##  总体均值估计： 25.17202 cm
-##  总体方差估计： 21.43088 cm²
+##  总体方差估计： 21.00226 cm²
 ```
 
 ``` r
@@ -803,7 +872,10 @@ bayes_data <- data.frame(diameter = tree_diameter)
 
 # 基于已有生态学知识设定先验分布
 # 总体均值先验：N(22, 3)，基于过去对该树种胸径的研究
-# 标准差先验：student_t(3, 0, 5)，使用重尾分布提高对异常值的稳健性
+# 标准差先验：student_t(3, 0, 5)
+#   注意：brms对sigma参数自动在0处截断，形成半t分布
+#   df=3提供重尾特性，对异常值比正态先验更稳健
+#   位置参数0与尺度参数5共同定义了半t分布的形状
 priors <- c(
   prior(normal(22, 3), class = Intercept),
   prior(student_t(3, 0, 5), class = sigma)
@@ -831,18 +903,33 @@ knitr::kable(summary(fit_brm)$fixed,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:bayesian-estimation-example)贝叶斯模型拟合结果}
-\centering
-\begin{tabular}[t]{lrrrrrrr}
-\toprule
-  & Estimate & Est.Error & l-95\% CI & u-95\% CI & Rhat & Bulk\_ESS & Tail\_ESS\\
-\midrule
-Intercept & 25.00149 & 0.6695746 & 23.65401 & 26.29316 & 1.002247 & 3058.456 & 2318.366\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:bayesian-estimation-example)(\#tab:bayesian-estimation-example)贝叶斯模型拟合结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Est.Error </th>
+   <th style="text-align:right;"> l-95% CI </th>
+   <th style="text-align:right;"> u-95% CI </th>
+   <th style="text-align:right;"> Rhat </th>
+   <th style="text-align:right;"> Bulk_ESS </th>
+   <th style="text-align:right;"> Tail_ESS </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Intercept </td>
+   <td style="text-align:right;"> 25.00149 </td>
+   <td style="text-align:right;"> 0.6695746 </td>
+   <td style="text-align:right;"> 23.65401 </td>
+   <td style="text-align:right;"> 26.29316 </td>
+   <td style="text-align:right;"> 1.002247 </td>
+   <td style="text-align:right;"> 3058.456 </td>
+   <td style="text-align:right;"> 2318.366 </td>
+  </tr>
+</tbody>
+</table>
 
 这段代码展示了贝叶斯估计在生态学中的具体实现过程。首先加载`brms`包，这是一个基于Stan的贝叶斯回归建模包，专门用于拟合复杂的层次模型。代码将树木胸径数据转换为数据框格式，这是`brms`包要求的输入格式。
 
@@ -874,14 +961,10 @@ cat("\n贝叶斯估计结果：\n",
 
 我们计算后验分布的均值作为参数的点估计：`b_Intercept`对应总体均值的后验分布，`sigma`对应标准差参数的后验分布。在贝叶斯框架下，这些后验均值代表了在考虑先验信息和样本数据后，对参数的最优估计。输出结果显示了我们基于贝叶斯方法估计的树木胸径总体均值和标准差。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/bayesian-posterior-distribution-1} 
-
-}
-
-\caption{贝叶斯估计的后验分布：左侧显示总体均值的后验分布直方图，右侧显示标准差参数的后验分布直方图，虚线标记后验均值}(\#fig:bayesian-posterior-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/bayesian-posterior-distribution-1.png" alt="贝叶斯估计的后验分布：左侧显示总体均值的后验分布直方图，右侧显示标准差参数的后验分布直方图，虚线标记后验均值" width="80%" />
+<p class="caption">(\#fig:bayesian-posterior-distribution)贝叶斯估计的后验分布：左侧显示总体均值的后验分布直方图，右侧显示标准差参数的后验分布直方图，虚线标记后验均值</p>
+</div>
 
 ```
 ## 
@@ -917,6 +1000,8 @@ cat("\n贝叶斯估计结果：\n",
    在生态风险评估中，贝叶斯估计的完整不确定性信息尤为重要。当评估某种污染物对水生生态系统的影响时，贝叶斯方法能够提供效应大小的概率分布，而不仅仅是“显著"或“不显著"的二元结论。这种概率化的风险评估使得决策者能够基于风险水平制定相应的管理措施，而不是简单地依赖统计显著性。
 
 3. **灵活处理复杂问题**：贝叶斯估计特别适合处理小样本、缺失数据、层次结构等复杂情况，这些情况在生态学研究中非常普遍。生态学数据往往具有复杂的结构特征，如空间相关性、时间自相关性、个体异质性等，贝叶斯估计通过层次模型和随机效应能够很好地处理这些复杂性。
+
+   以多层次物种分布模型为例，研究人员经常需要整合来自不同区域、不同调查方法的数据。不同调查可能使用不同的样方大小、不同的检测方法，甚至不同季节。传统方法难以在一个统一的框架中处理这种异质性，而贝叶斯层次模型能够为每个子研究指定不同的观测模型，同时通过共享的先验分布将不同来源的信息整合起来，对物种的生态需求做出更稳健的推断。这种灵活性使贝叶斯方法成为处理真实生态学数据复杂性的首选工具。
 
 
 **贝叶斯估计的发展趋势**
@@ -1001,7 +1086,9 @@ $$\text{ELBO} = \mathbb{E}_{q(w)}[\log p(D|w)] - \text{KL}(q(w) \parallel p(w))$
 
 常林面临一个实际问题：为什么样本均值是好的估计量，而直接用最大值或最小值就不行？统计学家用四个标准来评判估计量的优劣。**无偏性**要求估计量在长期重复中不产生系统性偏差——如果常林反复抽取不同的样方子集并计算均值，这些均值的平均数会收敛到真实的总体均值。这就是为什么$s^2$除以$n-1$而非$n$：除以$n$会系统性地低估方差。**有效性**要求估计量的方差尽可能小——在所有无偏估计量中，我们偏爱波动最小的那个。**一致性**要求样本量越大估计越准——当$n \to \infty$时估计量收敛到真值。**充分性**要求估计量充分利用了数据中关于参数的所有信息。在实际选择中，这四个性质常常需要权衡：一个有偏但方差极小的估计量，可能比一个无偏但方差很大的估计量给出更接近真值的单次估计。
 
-然而，需要注意的是，样本方差 $s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2$ 虽然是总体方差 $\sigma^2$ 的无偏估计，但它不是有效估计。根据Cramér-Rao下界，对于正态分布，$\sigma^2$ 的任何无偏估计量的方差不能小于 $\frac{2\sigma^4}{n}$，而样本方差的方差为 $\frac{2\sigma^4}{n-1}$，当 $n > 1$ 时，$\frac{2\sigma^4}{n-1} > \frac{2\sigma^4}{n}$，因此样本方差不是有效估计。
+#### 无偏性与有效性的权衡
+
+样本方差 $s^2 = \frac{1}{n-1}\sum_{i=1}^{n} (x_i - \bar{x})^2$ 虽然是总体方差 $\sigma^2$ 的无偏估计，但它不是有效估计。根据Cramér-Rao下界，对于正态分布，$\sigma^2$ 的任何无偏估计量的方差不能小于 $\frac{2\sigma^4}{n}$，而样本方差的方差为 $\frac{2\sigma^4}{n-1}$，当 $n > 1$ 时，$\frac{2\sigma^4}{n-1} > \frac{2\sigma^4}{n}$，因此样本方差不是有效估计。
 
 让我们通过R代码来验证这一点：
 
@@ -1029,10 +1116,10 @@ simulation_variance <- function(n_sim = 10000, n_sample = 10,
 
   cat("有效性分析结果（样本量n =", n_sample, "）：\n",
       "无偏样本方差的方差：", var_s2, "\n",
-      "最大似然估计的方差：", var_mle, "\n",
-      "Cramér-Rao下界：", cr_lower_bound, "\n",
+      "最大似然估计（有偏）的方差：", var_mle, "\n",
+      "Cramér-Rao下界（仅适用于无偏估计量）：", cr_lower_bound, "\n",
       "无偏样本方差是否达到Cramér-Rao下界：", var_s2 >= cr_lower_bound, "\n",
-      "最大似然估计是否达到Cramér-Rao下界：", var_mle >= cr_lower_bound, "\n",
+      "注：MLE方差估计是有偏的，不宜直接与CR下界比较\n",
       "最大似然估计相对于无偏样本方差的效率：", relative_efficiency, "\n")
 }
 
@@ -1042,14 +1129,14 @@ simulation_variance(n_sim = 1000, n_sample = 10)
 ```
 ## 有效性分析结果（样本量n = 10 ）：
 ##  无偏样本方差的方差： 139.1433 
-##  最大似然估计的方差： 112.7061 
-##  Cramér-Rao下界： 125 
+##  最大似然估计（有偏）的方差： 112.7061 
+##  Cramér-Rao下界（仅适用于无偏估计量）： 125 
 ##  无偏样本方差是否达到Cramér-Rao下界： TRUE 
-##  最大似然估计是否达到Cramér-Rao下界： FALSE 
+##  注：MLE方差估计是有偏的，不宜直接与CR下界比较
 ##  最大似然估计相对于无偏样本方差的效率： 0.81
 ```
 
-这个模拟研究代码在最大似然估计部分具有重要的教学意义。虽然我们刚刚学习了最大似然估计的理论和方法，但理解估计量的实际表现需要通过模拟来验证。模拟研究在参数估计教学中具有不可替代的价值。通过计算机模拟，我们能够直观地验证理论性质，例如观察样本均值的无偏性和最大似然方差估计的有偏性在实际抽样中的表现。更重要的是，模拟揭示了统计学中经典的偏差-方差权衡问题：最大似然方差估计虽然存在偏差，但其方差通常小于无偏估计，这为实际应用中的方法选择提供了重要启示。这种从理论到实践的桥梁作用，特别适用于生态学研究中的小样本场景，帮助学生理解不同估计方法的性质差异，为他们在真实生态调查中做出明智的统计方法选择奠定基础。这个模拟显示，虽然最大似然估计量是有偏的，但它的方差可能更小，这体现了估计量性质之间的权衡。
+这个模拟直接验证了上文提到的无偏性与有效性的权衡关系。通过计算机模拟，我们能够直观地观察：虽然MLE方差估计（除以$n$）是有偏的，但其方差通常小于无偏样本方差（除以$n-1$）。这揭示了统计学中经典的偏差-方差权衡：放弃无偏性有时能换来更小的方差，从而在单次估计中给出更接近真值的结果。这种权衡在生态学的小样本场景中尤为重要——当样本量只有10时，一个有偏但方差更小的估计量可能比一个无偏但波动剧烈的估计量更有实用价值。
 
 有效性提高了估计精度，让我们的估计更加稳定可靠。在生态监测和资源管理中，高精度的估计能够帮助研究人员检测微小的生态变化，为早期预警和适应性管理提供可靠依据。在气候变化对物候影响的研究中，研究人员需要检测物种开花或迁徙时间的微小变化。如果使用的估计方法方差较大，可能无法检测到气候变暖导致的物候提前。有效的估计方法能够提高检测这种微弱但持续变化的统计功效。
 
@@ -1211,29 +1298,25 @@ Schnabel方法的主要优势在于它能够利用多次捕获的信息，提高
 ```
 
 ```
-## 各次捕获后的累计估计值：
+## 各次捕获后的累计估计值（第1次无估计）：
 ```
 
 ```
-## [1]   0.0000 300.0000 325.7143 330.0000 330.0000
+## [1] 300.0000 325.7143 330.0000 330.0000
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/schnabel-stability-test-1} 
-
-}
-
-\caption{Schnabel估计的稳定性检验：累计估计值随捕获次数的收敛趋势。}(\#fig:schnabel-stability-test)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/schnabel-stability-test-1.png" alt="Schnabel估计的稳定性检验：累计估计值随捕获次数的收敛趋势。" width="80%" />
+<p class="caption">(\#fig:schnabel-stability-test)Schnabel估计的稳定性检验：累计估计值随捕获次数的收敛趋势。</p>
+</div>
 
 **Jolly-Seber模型**是标记重捕法中最复杂和最强大的方法，专门用于处理开放种群的情况。开放种群是指存在出生、死亡、迁入和迁出的种群，这在真实的生态系统中更为常见。Jolly-Seber模型不仅能够估计种群大小，还能够估计存活率、迁入率等种群动态参数。
 
-Jolly-Seber模型的基本思想是通过多次标记重捕数据，构建一个描述种群动态的状态空间模型。模型假设：  
-1. 每次捕获时，所有个体被捕获的概率相等  
-2. 标记不会影响个体的行为或存活率  
-3. 标记不会丢失  
-4. 迁入和迁出是随机的  
+Jolly-Seber模型的基本思想是通过多次标记重捕数据，构建一个描述种群动态的状态空间模型。模型假设：
+1. 每次捕获时，所有个体（已标记和未标记）被捕获的概率相等
+2. 所有已标记个体具有相同的存活概率
+3. 标记不会丢失且能被准确识别
+4. 每次捕获是瞬时的（相对于两次调查间隔可以忽略）
 
 Jolly-Seber模型的估计过程相对复杂，通常需要专门的统计软件来实现。在R语言中，可以使用`RMark`、`marked`等包来拟合Jolly-Seber模型。
 
@@ -1330,14 +1413,10 @@ $$N = \frac{100}{2 \times 0.1 \times 50} \times \frac{60}{0.7} = \frac{100}{10} 
 
 在R语言中，距离抽样法可以通过`Distance`包来实现。这个包提供了完整的距离抽样分析框架，包括发现函数的拟合、种群数量的估计以及不确定性分析。半正态发现函数是距离抽样中最常用的发现函数形式之一（图\@ref(fig:distance-sampling-halfnormal)）。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/distance-sampling-halfnormal-1} 
-
-}
-
-\caption{半正态发现函数：黑色实线表示拟合的半正态发现函数，蓝色竖线标记表示实际观测到的个体距离分布}(\#fig:distance-sampling-halfnormal)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/distance-sampling-halfnormal-1.png" alt="半正态发现函数：黑色实线表示拟合的半正态发现函数，蓝色竖线标记表示实际观测到的个体距离分布" width="80%" />
+<p class="caption">(\#fig:distance-sampling-halfnormal)半正态发现函数：黑色实线表示拟合的半正态发现函数，蓝色竖线标记表示实际观测到的个体距离分布</p>
+</div>
 
 图\@ref(fig:distance-sampling-halfnormal)展示了距离抽样法中使用的半正态发现函数。该函数描述了发现概率随个体与样线距离增加而递减的规律，是距离抽样法的核心组成部分。图中蓝色竖线表示实际观测到的个体距离分布，黑色曲线表示拟合的半正态发现函数。参数sigma决定了函数下降的速率，较小的sigma值表示发现概率随距离快速下降，而较大的sigma值表示发现概率下降较慢。这种发现函数模型反映了生态调查中的现实情况：距离样线越近的个体越容易被发现，而距离越远的个体被发现的可能性越低。通过拟合发现函数，研究人员可以更准确地估计整个样线宽度范围内的平均发现概率，从而获得更可靠的种群数量估计。
 
@@ -1351,7 +1430,7 @@ $$N = \frac{100}{2 \times 0.1 \times 50} \times \frac{60}{0.7} = \frac{100}{10} 
 
 **基于样本积累曲线的外推**是一种常用的多样性估计方法。样本积累曲线描述了随着样本量的增加，新发现物种数量的变化趋势。通过拟合积累曲线的渐近线，我们可以估计群落的真实物种丰富度。
 
-样本积累曲线的数学表达通常采用负指数函数或逻辑斯蒂函数：
+样本积累曲线的数学表达通常采用负指数饱和模型（随着样本量增大，物种数趋近于渐近线 $S_{max}$）：
 
 $$S(n) = S_{max} \times (1 - e^{-kn})$$
 
@@ -1390,7 +1469,7 @@ Table: (\#tab:bird-species-accumulation) 森林鸟类多样性调查的物种积
 sample_effort <- c(5, 10, 15, 20, 25)
 species_accumulated <- c(15, 25, 32, 37, 41)
 
-# 拟合指数增长模型 S(n) = S_max * (1 - exp(-k * n))
+# 拟合负指数饱和模型 S(n) = S_max * (1 - exp(-k * n))
 # S_max为渐近线，群落总物种数的估计值
 fit_exponential <- nls(
   species_accumulated ~ species_max *
@@ -1417,14 +1496,10 @@ predicted_species <- predict(fit_exponential,
   newdata = data.frame(sample_effort = predicted_effort))
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/accumulation-curve-extrapolation-1} 
-
-}
-
-\caption{物种积累曲线与外推：横轴为抽样样方数，纵轴为累计物种数，实线为观测曲线，虚线为基于Chao1方法的外推曲线，阴影区域为95\%置信区间}(\#fig:accumulation-curve-extrapolation)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/accumulation-curve-extrapolation-1.png" alt="物种积累曲线与外推：横轴为抽样样方数，纵轴为累计物种数，实线为观测曲线，虚线为指数增长模型外推曲线，蓝色虚线为估计的渐近线" width="80%" />
+<p class="caption">(\#fig:accumulation-curve-extrapolation)物种积累曲线与外推：横轴为抽样样方数，纵轴为累计物种数，实线为观测曲线，虚线为指数增长模型外推曲线，蓝色虚线为估计的渐近线</p>
+</div>
 
 图\@ref(fig:accumulation-curve-extrapolation)展示了基于样本积累曲线的外推方法，通过拟合指数增长模型来估计群落的真实物种丰富度。
 
@@ -1480,14 +1555,10 @@ rare_b <- rarefy(community_b, sample = c(50, 100, 150))
 ##  样本量150个体：样地A = 15.5 种，样地B = 9.2 种
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/rarefaction-comparison-1} 
-
-}
-
-\caption{物种丰富度内插比较：蓝色实线连接实心圆点表示样地A的期望物种数变化，红色虚线连接三角形表示样地B的期望物种数变化}(\#fig:rarefaction-comparison)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/rarefaction-comparison-1.png" alt="物种丰富度内插比较：蓝色实线连接实心圆点表示样地A的期望物种数变化，红色虚线连接三角形表示样地B的期望物种数变化" width="80%" />
+<p class="caption">(\#fig:rarefaction-comparison)物种丰富度内插比较：蓝色实线连接实心圆点表示样地A的期望物种数变化，红色虚线连接三角形表示样地B的期望物种数变化</p>
+</div>
 
 
 ```
@@ -1531,6 +1602,9 @@ $$\hat{S}_{Chao1} = S_{obs} + \frac{f_1^2}{2f_2}$$
 - $f_2$：在样本中出现2次的物种数（双例种）
 
 这个公式的生态学直觉是：单例种的数量反映了稀有种的丰富程度，而双例种的数量则提供了关于这些稀有种出现概率的信息。如果单例种很多而双例种很少，说明还有很多稀有种未被发现，因此需要较大的校正。
+
+需要注意的是，当双例种数量 $f_2 = 0$ 时上述公式无法直接使用（除数不能为零）。此时应采用修正公式：
+$$\hat{S}_{Chao1} = S_{obs} + \frac{f_1(f_1-1)}{2}$$
 
 Chao估计器的优势在于其计算简单、对数据要求低，且具有较好的统计性质。然而，它也有局限性：当样本量较小时，估计可能不稳定；当群落中稀有种比例很高时，可能仍然低估真实物种数。
 
@@ -1606,14 +1680,10 @@ Bootstrap方法的优势在于它能够提供完整的不确定性信息，且�
 ##  Bootstrap 95%置信区间：[ 4 , 5 ]
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/bootstrap-estimation-1} 
-
-}
-
-\caption{Bootstrap估计的抽样分布：红色实线标记观测值，蓝色虚线标记Bootstrap估计值}(\#fig:bootstrap-estimation)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/bootstrap-estimation-1.png" alt="Bootstrap估计的抽样分布：红色实线标记观测值，蓝色虚线标记Bootstrap估计值" width="80%" />
+<p class="caption">(\#fig:bootstrap-estimation)Bootstrap估计的抽样分布：红色实线标记观测值，蓝色虚线标记Bootstrap估计值</p>
+</div>
 
 图\@ref(fig:bootstrap-estimation)展示了Bootstrap估计的抽样分布，通过重抽样技术构建物种丰富度估计的置信区间和不确定性信息。
 
@@ -1627,9 +1697,9 @@ Bootstrap方法的优势在于它能够提供完整的不确定性信息，且�
 2. 估计分布参数（均值$\mu$和方差$\sigma^2$）
 3. 基于拟合的分布预测未观测物种的数量
 
-对数正态分布模型的估计公式为：
+对数正态分布模型的估计思路是：先通过对观测多度数据拟合对数正态分布，估计参数 $\mu$ 和 $\sigma$，再根据截断分布原理推算真实物种总数。具体公式为：
 
-$$\hat{S} = S_{obs} + S_0 \Phi(-\frac{\log x_0 - \mu}{\sigma})$$
+$$\hat{S} = \frac{S_{obs}}{P(X > x_0)} = \frac{S_{obs}}{1 - \Phi\left(\frac{\log x_0 - \mu}{\sigma}\right)}$$
 
 其中各变量的生态学意义如下：
 
@@ -1637,21 +1707,19 @@ $$\hat{S} = S_{obs} + S_0 \Phi(-\frac{\log x_0 - \mu}{\sigma})$$
 
 - **$S_{obs}$**：**观测到的物种数**，即在实际采样中发现的物种数量
 
-- **$S_0$**：**估计的稀有种总数**，基于对数正态分布模型预测的未观测稀有种数量。这个值通过拟合观测物种的多度分布来估计
-
 - **$x_0$**：**观测阈值**，表示能够被检测到的最小个体数。在生态学中，这通常取值为1，表示只要有一个个体就能被观测到。对于某些特殊研究，可能需要调整这个阈值
 
 - **$\mu$** 和 **$\sigma$**：**对数正态分布的参数**，通过对观测物种的多度数据进行对数转换后拟合得到：
   - $\mu$：对数多度的均值，反映群落的平均多度水平
   - $\sigma$：对数多度的标准差，反映群落多度的变异程度
 
-- **$\Phi$**：**标准正态分布函数**，用于计算在给定阈值下未观测物种的累积概率
+- **$\Phi$**：**标准正态累积分布函数**
 
 - **$\frac{\log x_0 - \mu}{\sigma}$**：**标准化值**，表示观测阈值在对数正态分布中的位置
 
-- **$\Phi(-\frac{\log x_0 - \mu}{\sigma})$**：**未观测物种的比例**，表示在对数正态分布中，多度低于观测阈值的物种所占的比例
+- **$1 - \Phi\left(\frac{\log x_0 - \mu}{\sigma}\right)$**：**可观测概率**，即物种多度高于检测阈值 $x_0$ 的概率。对于 $\log x_0 = 0$（即 $x_0 = 1$），若 $\mu = 2$、$\sigma = 1.2$，此概率约为 0.95
 
-这个公式的核心思想是：通过对观测物种的多度分布进行拟合，推断出整个群落的物种多度分布模式，然后基于这个分布模型预测那些由于个体数太少而未被观测到的物种数量。
+这个公式的核心思想是：观测到的 $S_{obs}$ 个物种只是整个对数正态分布中"可见"的那部分（高于检测阈值），因此用观测物种数除以可观测概率，即可反推真实的物种总数。在下面的R代码中，这一计算通过 `plnorm(..., lower.tail = FALSE)` 实现。
 
 多度分布模型方法的优势在于它能够充分利用物种多度信息，提供更精细的校正。然而，它对分布假设的依赖性较强，当真实分布与假设分布不符时，估计可能产生偏差。
 
@@ -1667,14 +1735,10 @@ $$\hat{S} = S_{obs} + S_0 \Phi(-\frac{\log x_0 - \mu}{\sigma})$$
 ##  估计的未观测物种数： 1 种
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/abundance-distribution-fit-1} 
-
-}
-
-\caption{多度分布模型拟合结果：直方图为观测物种多度分布，红色曲线为对数正态分布拟合，蓝色曲线为对数级数分布拟合，虚线标记了稀有物种（singleton）的阈值}(\#fig:abundance-distribution-fit)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/abundance-distribution-fit-1.png" alt="多度分布模型拟合结果：直方图为观测物种多度分布，红色曲线为对数正态分布拟合，虚线标记了稀有物种（singleton）的阈值" width="80%" />
+<p class="caption">(\#fig:abundance-distribution-fit)多度分布模型拟合结果：直方图为观测物种多度分布，红色曲线为对数正态分布拟合，虚线标记了稀有物种（singleton）的阈值</p>
+</div>
 
 
 
@@ -1695,15 +1759,20 @@ $$\hat{S} = S_{obs} + S_0 \Phi(-\frac{\log x_0 - \mu}{\sigma})$$
 下面我们就用一个综合的例子来展示稀有种对多样性估计的影响。
 
 
+```
+## ========== 综合示例结果 ==========
+##  真实物种数： 100 种
+##  观测物种数： 40 种（遗漏 60 种）
+##  稀有种（多度≤5）：共 19 种，观测到 1 种
+##  常见种（多度>5）：共 81 种，观测到 39 种
+##  Chao1校正估计： 61 种
+##  ===================================
+```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/rare-species-distribution-1} 
-
-}
-
-\caption{稀有种对多样性估计的影响：真实群落（左）与观测群落（右）的分布对比。}(\#fig:rare-species-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/rare-species-distribution-1.png" alt="稀有种对多样性估计的影响：真实群落（左）与观测群落（右）的分布对比。" width="80%" />
+<p class="caption">(\#fig:rare-species-distribution)稀有种对多样性估计的影响：真实群落（左）与观测群落（右）的分布对比。</p>
+</div>
 
 图\@ref(fig:rare-species-distribution)通过对比真实群落与观测群落的分布差异，直观展示了稀有种对多样性估计的影响。左图显示真实群落呈现典型的对数正态分布，包含完整的稀有种和常见种结构；右图显示观测群落由于采样限制，稀有种数量显著减少，分布呈现右偏形态。
 
@@ -1733,33 +1802,74 @@ $$\text{Var}(\hat{S}) \propto \frac{1}{n}$$
 
 表 \@ref(tab:样本量对多样性估计精度的影响分析) 展示了不同样本量下多样性估计的精度分析结果。
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:unnamed-chunk-21)样本量对多样性估计精度的影响分析}
-\centering
-\begin{tabular}[t]{ccccccc}
-\toprule
-样本量 & 物种丰富度均值 & 物种丰富度标准差 & Shannon多样性均值 & Shannon多样性标准差 & 物种丰富度偏差(\%) & Shannon多样性偏差(\%)\\
-\midrule
-50 & 11.6 & 1.24 & 2.153 & 0.108 & -22.7 & -6.2\\
-100 & 13.0 & 1.13 & 2.220 & 0.084 & -13.1 & -3.3\\
-200 & 14.0 & 0.79 & 2.253 & 0.057 & -6.4 & -1.8\\
-500 & 14.9 & 0.37 & 2.279 & 0.032 & -0.9 & -0.7\\
-1000 & 15.0 & 0.00 & 2.284 & 0.025 & 0.0 & -0.5\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:unnamed-chunk-21)(\#tab:unnamed-chunk-21)样本量对多样性估计精度的影响分析</caption>
+ <thead>
+  <tr>
+   <th style="text-align:center;"> 样本量 | 物 </th>
+   <th style="text-align:center;"> 丰富度均值 | 物种丰富度标准差 </th>
+   <th style="text-align:center;"> | Shannon多样性均值 | S </th>
+   <th style="text-align:center;"> annon多样性标准差 | 物种丰富度 </th>
+   <th style="text-align:center;"> 差(%) | Shannon多样性偏差(% </th>
+   <th style="text-align:center;"> | </th>
+   <th style="text-align:center;">  </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:center;"> 50 </td>
+   <td style="text-align:center;"> 11.6 </td>
+   <td style="text-align:center;"> 1.24 </td>
+   <td style="text-align:center;"> 2.153 </td>
+   <td style="text-align:center;"> 0.108 </td>
+   <td style="text-align:center;"> -22.7 </td>
+   <td style="text-align:center;"> -6.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 100 </td>
+   <td style="text-align:center;"> 13.0 </td>
+   <td style="text-align:center;"> 1.13 </td>
+   <td style="text-align:center;"> 2.220 </td>
+   <td style="text-align:center;"> 0.084 </td>
+   <td style="text-align:center;"> -13.1 </td>
+   <td style="text-align:center;"> -3.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 200 </td>
+   <td style="text-align:center;"> 14.0 </td>
+   <td style="text-align:center;"> 0.79 </td>
+   <td style="text-align:center;"> 2.253 </td>
+   <td style="text-align:center;"> 0.057 </td>
+   <td style="text-align:center;"> -6.4 </td>
+   <td style="text-align:center;"> -1.8 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 500 </td>
+   <td style="text-align:center;"> 14.9 </td>
+   <td style="text-align:center;"> 0.37 </td>
+   <td style="text-align:center;"> 2.279 </td>
+   <td style="text-align:center;"> 0.032 </td>
+   <td style="text-align:center;"> -0.9 </td>
+   <td style="text-align:center;"> -0.7 </td>
+  </tr>
+  <tr>
+   <td style="text-align:center;"> 1000 </td>
+   <td style="text-align:center;"> 15.0 </td>
+   <td style="text-align:center;"> 0.00 </td>
+   <td style="text-align:center;"> 2.284 </td>
+   <td style="text-align:center;"> 0.025 </td>
+   <td style="text-align:center;"> 0.0 </td>
+   <td style="text-align:center;"> -0.5 </td>
+  </tr>
+</tbody>
+</table>
 
 为了更直观地展示样本量对多样性估计精度的影响，图 \@ref(fig:sample-size-precision-effect) 通过四个子图系统分析了样本量与估计精度之间的关系。该综合可视化展示了：(1) 样本量对物种丰富度估计的影响，包括估计均值及其标准差范围；(2) 样本量对Shannon多样性估计的影响；(3) 样本量对估计偏差的影响，比较了物种丰富度和Shannon多样性的偏差变化趋势；(4) 样本量对估计方差的影响，反映了估计精度的稳定性。所有图形均以红色虚线标示真实值作为参考基准，便于评估估计的准确性和可靠性。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{04-parameter_estimation_files/figure-latex/sample-size-precision-effect-1} 
-
-}
-
-\caption{样本量对多样性估计精度的影响}(\#fig:sample-size-precision-effect)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="04-parameter_estimation_files/figure-html/sample-size-precision-effect-1.png" alt="样本量对多样性估计精度的影响" width="80%" />
+<p class="caption">(\#fig:sample-size-precision-effect)样本量对多样性估计精度的影响</p>
+</div>
 
 
 ```
@@ -1834,7 +1944,7 @@ Table: (\#tab:species-diversity-methods) 物种多样性估计方法比较
 
 4. **长期监测**：对于重要的生态监测项目，应该建立标准化的调查方法，确保数据的可比性。长期生态监测是理解生态系统动态、评估保护措施效果、预测环境变化影响的重要手段。为了确保长期监测数据的科学价值，需要建立标准化的调查协议，包括固定的样地设置、统一的调查方法、规范的记录格式等。标准化不仅包括野外调查方法的标准化，也包括数据分析方法的标准化。在多样性估计方面，应该确定统一的估计方法和报告格式，确保不同时期、不同地点的数据具有可比性。同时，应该建立完善的数据管理和质量控制体系，确保数据的完整性和可靠性。
 
-5. **适应性管理**：根据监测结果和新的认识，适时调整估计方法和调查策略。生态系统是动态变化的，生态学研究方法和认识也在不断发展。适应性管理要求研究人员根据新的监测结果、技术进步和认识深化，不断优化研究方法和调查策略。例如，如果在长期监测中发现某种估计方法 consistently 低估或高估多样性，可能需要考虑调整估计方法；如果新的统计方法被证明更加准确和稳健，可以考虑将其纳入标准分析流程。适应性管理还包括根据前期调查结果优化后续的抽样设计，如调整样地数量、改变调查频率、优化样方大小等，以提高调查效率和估计精度。
+5. **适应性管理**：根据监测结果和新的认识，适时调整估计方法和调查策略。生态系统是动态变化的，生态学研究方法和认识也在不断发展。适应性管理要求研究人员根据新的监测结果、技术进步和认识深化，不断优化研究方法和调查策略。例如，如果在长期监测中发现某种估计方法持续低估或高估多样性，可能需要考虑调整估计方法；如果新的统计方法被证明更加准确和稳健，可以考虑将其纳入标准分析流程。适应性管理还包括根据前期调查结果优化后续的抽样设计，如调整样地数量、改变调查频率、优化样方大小等，以提高调查效率和估计精度。
 
 **总结**：物种多样性估计是生态学研究的基础工作，为理解生态系统、制定保护策略和管理生物资源提供了重要的量化信息。不同的估计方法各有特点和适用条件，研究人员应该根据具体的研究目标和条件选择合适的方法，并谨慎解释估计结果。随着统计方法和技术的发展，物种多样性估计的精度和效率正在不断提高，为生态学研究和实践提供了更加有力的工具。
 
@@ -1885,7 +1995,7 @@ Table: (\#tab:species-diversity-methods) 物种多样性估计方法比较
 
 **错误3：用MSE损失处理所有数据。** 许多生态数据是计数（物种个体数）或比例（存活率），使用默认的MSE损失（隐含正态假设）相当于用错误尺子量东西。计数数据用泊松损失，比例数据用贝塔损失，生存时间用指数或Weibull损失。AI工具不会自动为你选择正确的输出分布，这需要你的统计判断。
 
-**错误4：将Chao1或iNEXT的点估计当作精确值。** 物种丰富度外推估计的不确定性可能非常大，特别是在样本覆盖度低时。始终报告置信区间，并诚实说明外推的限度，外推2倍是合理的，外推10倍是危险的。
+**错误4：将Chao1或稀化外推的点估计当作精确值。** 物种丰富度外推估计的不确定性可能非常大，特别是在样本覆盖度低时。始终报告置信区间，并诚实说明外推的限度，外推2倍是合理的，外推10倍是危险的。
 
 **错误5：不理解MCMC诊断就使用贝叶斯方法。** MCMC链可能未收敛，可能陷入局部后验模式。在使用贝叶斯估计结果前，检查trace plot（是否有漂移？）、R-hat统计量（应<1.01）、有效样本量（应足够大）。AI可以帮助解释这些诊断图，但判断收敛与否的最终责任在你。
 
@@ -1917,11 +2027,7 @@ Table: (\#tab:species-diversity-methods) 物种多样性估计方法比较
 
 ### 种群大小估计：生态学实践的核心任务
 
-种群大小估计是生态学研究中的基础工作，不同的估计方法适用于不同的研究对象和研究条件。标记重捕法特别适用于移动性较强的动物种群，通过标记部分个体和重捕样本中的标记比例来估计种群规模。Lincoln-Petersen估计是最简单的标记重捕方法，而Schnabel多重标记估计和Jolly-Seber模型则提供了更复杂的开放种群估计框架。
-
-面积取样法适用于植物和移动性较弱的动物种群，通过代表性样地内的个体计数来推断整个种群的规模。样方法和样线法是面积取样法的两种主要形式，分别适用于不同的空间尺度和研究对象。距离抽样法则基于概率模型，通过记录个体与样线的距离和构建发现函数来估计种群规模，特别适用于大型动物和鸟类种群。
-
-去除法基于连续捕获中捕获率的变化来估计种群规模，适用于封闭的动物种群。虽然去除法对关键假设的依赖性较强，但其操作简单的特点使其在渔业管理、害虫控制等特定场景中具有应用价值。
+种群大小估计是生态学研究中的基础工作，不同的估计方法适用于不同的研究对象和研究条件。标记重捕法特别适用于移动性较强的动物种群，通过标记部分个体和重捕样本中的标记比例来估计种群规模。Lincoln-Petersen估计是最简单的标记重捕方法，而Schnabel多重标记估计和Jolly-Seber模型则提供了更复杂的开放种群估计框架。距离抽样法则基于概率模型，通过记录个体与样线的距离和构建发现函数来估计种群规模，特别适用于大型动物和鸟类种群。
 
 ### 物种多样性估计：群落生态学的量化基础
 

@@ -16,7 +16,7 @@
 
 **首先**，这个问题的统计本质是**假设检验**。常林需要判断：观测到的死亡率升高，是台风造成的真实生态效应，还是自然年际波动的偶然表现？在统计学的语言中，零假设（H₀）是"台风前后死亡率无差异"，备择假设（H₁）是"台风后死亡率显著升高"。假设检验提供了一整套严谨的数学框架，帮助我们在充满变异性的自然系统中区分信号与噪声。
 
-**进而**，我们将看到，假设检验的应用远比"计算p值、判断是否小于0.05"复杂得多。不同的实验设计对应不同的检验方法，常林比较台风前后配对样方时使用配对t检验，比较不同海拔带的死亡率差异时使用ANOVA，而当她在六个物种组之间同时做比较时，多重比较校正成为防止假阳性泛滥的必要防线。我们还将以梅花鹿保护区的案例作为对比，展示同样的统计方法如何在不同的生态系统中发挥作用。
+**进而**，我们将看到，假设检验的应用远比"计算p值、判断是否小于0.05"复杂得多。不同的实验设计对应不同的检验方法：常林比较台风前后配对样方时使用配对t检验，比较不同海拔带的死亡率差异时使用ANOVA，当ANOVA发现海拔带间存在总体差异后，她还需要通过多重比较校正（Tukey HSD）来确定具体哪些海拔带之间差异显著——这正是防止假阳性泛滥的必要防线。我们还将以梅花鹿保护区的案例作为对比，展示同样的统计方法如何在不同的生态系统中发挥作用。
 
 **最终**，假设检验教会我们一种科学的谦逊：在充满变异的世界里，科学结论永远携带不确定性。p<0.05不是魔法，它只是一个约定俗成的证据强度门槛，而非真理的判决书。理解这一点，是区分训练有素的统计思维与机械数据操作的关键。常林的台风分析将陪伴我们走完这一章，让我们看她如何用统计推断回答那个紧迫的生态学问题。
 
@@ -32,12 +32,12 @@
 
 ### 假设检验的基本步骤
 
-假设检验遵循统一的逻辑框架：(1) 将生态学问题转化为零假设和备择假设；(2) 根据实验设计和数据类型选择检验方法（参数检验、非参数检验或模拟方法）；(3) 设定显著性水平$\alpha$（通常0.05）；(4) 收集数据并计算检验统计量；(5) 基于理论分布或模拟构建的零分布计算p值；(6) 比较p值与$\alpha$做出统计决策；(7) 结合效应大小和生态学知识解释结果。基于模拟的方法在第5步中需要特别注意：
+假设检验遵循统一的逻辑框架：(1) 将生态学问题转化为零假设和备择假设；(2) 根据实验设计和数据类型选择检验方法（参数检验、非参数检验或模拟方法）；(3) 设定显著性水平$\alpha$（通常0.05）；(4) 收集数据并计算检验统计量；(5) 基于理论分布或模拟构建的零分布计算p值；(6) 比较p值与$\alpha$做出统计决策；(7) 结合效应大小和生态学知识解释结果。其中，当采用基于模拟的方法时，第(5)步"计算p值"需要额外完成以下工作：
 
-1. **构建零模型**：根据零假设生成随机数据或重排观测值
-2. **重复模拟**：多次重复模拟过程（通常1000-10000次）
-3. **构建经验分布**：基于模拟结果构建检验统计量的零分布
-4. **计算经验p值**：比较观测统计量与经验分布的位置
+- **构建零模型**：根据零假设生成随机数据或重排观测值
+- **重复模拟**：多次重复模拟过程（通常1000-10000次）
+- **构建经验分布**：基于模拟结果构建检验统计量的零分布
+- **计算经验p值**：比较观测统计量与经验分布的位置
 
 **生态学意义**：这个通用流程体现了科学研究的严谨性。它帮助我们在复杂的自然系统中做出基于证据的判断，避免将随机波动误认为生态规律，也避免错过真实的生态效应。无论使用经典检验方法还是模拟方法，这个基本框架都适用，确保我们的统计推断既严谨又具有生态学意义。例如，在梅花鹿保护研究中，这个流程帮助我们科学地评估保护措施的真实效果，避免将种群的自然波动误认为保护成效。
 
@@ -85,14 +85,10 @@
 
 为了更好地理解零假设与备择假设的分布关系，让我们生成一个可视化图表：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/null-alternative-distribution-1} 
-
-}
-
-\caption{零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值。}(\#fig:null-alternative-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/null-alternative-distribution-1.png" alt="零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值。" width="80%" />
+<p class="caption">(\#fig:null-alternative-distribution)零假设与备择假设分布比较：展示在零假设和备择假设下检验统计量的概率分布，以及显著性水平的临界值。</p>
+</div>
 
 图\@ref(fig:null-alternative-distribution)直观展示了在零假设（蓝色）和备择假设（橙色）下的检验统计量分布。红色虚线表示显著性水平$\alpha$=0.05的临界值，当检验统计量超过这个临界值时，我们就有足够的证据拒绝零假设。
 
@@ -117,24 +113,20 @@ p值的解释需要特别注意：
 
 为了更直观地理解p值的概念，让我们通过R代码生成一个可视化图表：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/p-value-visualization-1} 
-
-}
-
-\caption{p值的可视化解释：零假设下观测到当前或更极端检验统计量的概率。红色区域表示p值区域。}(\#fig:p-value-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/p-value-visualization-1.png" alt="p值的可视化解释：零假设下观测到当前或更极端检验统计量的概率。红色区域表示p值区域。" width="80%" />
+<p class="caption">(\#fig:p-value-visualization)p值的可视化解释：零假设下观测到当前或更极端检验统计量的概率。红色区域表示p值区域。</p>
+</div>
 
 图\@ref(fig:p-value-visualization)通过红色区域直观展示了p值的概念，即在零假设下观测到当前检验统计量值（红色垂直线）或更极端值的概率。p值越小，表明观测到的数据在零假设下越不可能发生，从而为我们拒绝零假设提供了更强的证据。
 
 ### 显著性水平
 
-**显著性水平（$alpha$）**是我们在检验开始前设定的阈值，用于决定何时拒绝零假设。常用的显著性水平是$alpha$ = 0.05，这意味着我们愿意接受5%的错误拒绝零假设的风险。在某些更严格的研究中，也可能使用$alpha$ = 0.01或更小的值。
+**显著性水平（$\alpha$）**是我们在检验开始前设定的阈值，用于决定何时拒绝零假设。常用的显著性水平是$\alpha$ = 0.05，这意味着我们愿意接受5%的错误拒绝零假设的风险。在某些更严格的研究中，也可能使用$\alpha$ = 0.01或更小的值。
 
 显著性水平的选择涉及**第一类错误**和**第二类错误**的权衡，这是假设检验中最容易混淆但至关重要的概念。
 
-**第一类错误**，也称为假阳性错误，即零假设实际上为真时我们却错误地拒绝了它。这相当于“冤枉好人"的情况，我们错误地宣称存在某种效应或差异，而实际上这种效应或差异并不存在。第一类错误的概率由显著性水平$alpha$直接控制。当我们设定$alpha$ = 0.05时，意味着即使零假设为真，我们也有5%的概率会错误地拒绝它。
+**第一类错误**，也称为假阳性错误，即零假设实际上为真时我们却错误地拒绝了它。这相当于“冤枉好人"的情况，我们错误地宣称存在某种效应或差异，而实际上这种效应或差异并不存在。第一类错误的概率由显著性水平$\alpha$直接控制。当我们设定$\alpha$ = 0.05时，意味着即使零假设为真，我们也有5%的概率会错误地拒绝它。
 
 在梅花鹿保护研究中，第一类错误意味着：实际上保护措施没有效果，但我们错误地宣称它有效。这可能导致我们继续投入资源实施无效的保护措施，浪费有限的保护资金。
 
@@ -148,7 +140,7 @@ p值的解释需要特别注意：
 
 在保护生物学研究中，第二类错误的后果往往比第一类错误更为严重。错过一个真实的保护效应意味着濒危物种可能继续面临威胁，生态系统可能持续退化。因此，在保护生物学中，我们可能愿意接受更高的$\alpha$水平（如0.10）来降低第二类错误的风险，确保不会错过重要的保护机会。
 
-相反，在涉及重大政策决策或资源分配的研究中，第一类错误的后果可能更为严重。例如，在评估某种新型农药的环境安全性时，错误地宣称其安全（第二类错误）可能导致广泛的生态破坏，而错误地宣称其有害（第一类错误）可能只是造成一些经济损失。在这种情况下，我们可能选择更严格的$\alpha$水平（如0.01）来减少假阳性的风险。
+相反，在环境风险评估中，两类错误的相对严重性高度依赖于具体情境，不能一概而论。例如，在评估某种新型农药的环境安全性时，若零假设为"农药安全"：错误地宣称其安全（第二类错误，漏报）可能导致广泛的生态破坏——农药流入水体、非靶标生物大量死亡；而错误地宣称其有害（第一类错误，虚报）可能造成经济损失——农民被迫使用更昂贵但未必更安全的替代品。在这种情境下，生态学家往往倾向于更警惕第二类错误，因为生态破坏常常是不可逆的。但若农药本身极其昂贵、替代方案成本高到影响粮食安全，政策制定者则可能要求更严格的证据才认定有害（即降低第一类错误）。这个例子说明：两类错误的权衡不是纯统计学问题，而是需要生态学家、经济学家和政策制定者共同参与的决策过程。在具体研究中，我们应根据错误的实际代价来选择适当的$\alpha$水平，并在结果报告中明确说明这一选择的理由。
 
 让我们通过决策矩阵来系统理解这两类错误：
 
@@ -163,33 +155,25 @@ Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 通过具体生态学案例可以更直观地理解这两类错误的权衡：在入侵物种风险评估中，第二类错误（忽视真正的生态威胁）的后果通常比第一类错误更为严重；在梅花鹿保护研究中同样如此，错过一个有效的保护机会可能导致物种持续衰退。因此，在保护生物学中我们往往更警惕第二类错误。理解这一区别至关重要：当看到”p < 0.05”时，我们需意识到这个结论约有5%的概率是假阳性；当看到”p > 0.05”时，不能简单认为”没有效应”，而应考虑第二类错误的可能性。
 
-第一类错误水平$\alpha = 0.05$的传统可追溯到费舍尔的工作，5%提供了一个合理的平衡，既不过于宽松也不过于严格。第二类错误水平$\beta$通常设定在0.20左右（对应功效0.80），主要因为达到更高功效往往需要极大的、在生态学中难以实现的样本量。功效从0.80提高到0.90可能需要样本量增加50%以上，投入产出比往往不合理。但在高风险研究（如濒危物种保护）中，可能需要更高功效。避免两类错误的最佳策略包括充分的功效分析、适当的统计方法和多重比较校正。
+第一类错误水平$\alpha = 0.05$的传统可追溯到费希尔的工作，5%提供了一个合理的平衡，既不过于宽松也不过于严格。第二类错误水平$\beta$通常设定在0.20左右（对应功效0.80），主要因为达到更高功效往往需要极大的、在生态学中难以实现的样本量。功效从0.80提高到0.90可能需要样本量增加50%以上，投入产出比往往不合理。但在高风险研究（如濒危物种保护）中，可能需要更高功效。避免两类错误的最佳策略包括充分的功效分析、适当的统计方法和多重比较校正。
 
 为了更好地理解第一类错误和第二类错误的概念，让我们生成一个可视化图表：
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/error-types-visualization-1} 
-
-}
-
-\caption{第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布。}(\#fig:error-types-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/error-types-visualization-1.png" alt="第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布。" width="80%" />
+<p class="caption">(\#fig:error-types-visualization)第一类错误与第二类错误的可视化：展示假阳性（第一类错误）和假阴性（第二类错误）在统计决策中的概率分布。</p>
+</div>
 
 图\@ref(fig:error-types-visualization)清晰地显示了第一类错误（红色区域，假阳性）和第二类错误（蓝色区域，假阴性）的概念，以及统计功效（1-$\beta$）作为正确检测真实效应的概率。在生态学研究中，我们需要在这两类错误之间进行权衡，根据研究的具体目的选择合适的显著性水平。
 
-统计功效受到多个因素的影响，其中样本量是一个关键因素。让我们图表来展示样本量如何影响统计功效：
+统计功效受到多个因素的影响，其中样本量是一个关键因素。让我们通过图表来展示样本量如何影响统计功效：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/power-sample-size-visualization-1} 
-
-}
-
-\caption{样本量对统计功效的影响：展示在不同效应大小（蓝色、橙色、绿色线条）下，样本量增加如何提高统计功效。通过颜色和线条类型的组合区分不同效应大小。}(\#fig:power-sample-size-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/power-sample-size-visualization-1.png" alt="样本量对统计功效的影响：展示在不同效应大小（蓝色、橙色、绿色线条）下，样本量增加如何提高统计功效。通过颜色和线条类型的组合区分不同效应大小。" width="80%" />
+<p class="caption">(\#fig:power-sample-size-visualization)样本量对统计功效的影响：展示在不同效应大小（蓝色、橙色、绿色线条）下，样本量增加如何提高统计功效。通过颜色和线条类型的组合区分不同效应大小。</p>
+</div>
 
 图\@ref(fig:power-sample-size-visualization)展示了不同效应大小下，样本量如何影响统计功效。通常我们期望统计功效达到0.8以上（灰色虚线），这意味着我们有80%的概率正确检测到真实存在的效应。从图表可以看出，效应大小越大，达到足够统计功效所需的样本量越小。
 
@@ -236,14 +220,10 @@ Table: (\#tab:decision-matrix) 决策矩阵与两类统计错误
 
 让我们用一个图来理解效应大小和置信区间的概念：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/effect-size-ci-visualization-1} 
-
-}
-
-\caption{效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围。}(\#fig:effect-size-ci-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/effect-size-ci-visualization-1.png" alt="效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围。" width="80%" />
+<p class="caption">(\#fig:effect-size-ci-visualization)效应大小与置信区间的可视化：通过森林图展示多个研究的效应大小估计及其不确定性范围。</p>
+</div>
 
 图\@ref(fig:effect-size-ci-visualization)展示了多个研究的效应大小估计及其置信区间。我们可以清楚地看到哪些研究的结果是统计显著的（置信区间不包含0），以及不同研究的效应大小估计。
 
@@ -330,14 +310,10 @@ $$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/one-sample-t-test-visualization-1} 
-
-}
-
-\caption{单样本t检验的可视化解释：t分布、观测t统计量及对应的p值区域。}(\#fig:one-sample-t-test-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/one-sample-t-test-visualization-1.png" alt="单样本t检验的可视化解释：t分布、观测t统计量及对应的p值区域。" width="80%" />
+<p class="caption">(\#fig:one-sample-t-test-visualization)单样本t检验的可视化解释：t分布、观测t统计量及对应的p值区域。</p>
+</div>
 
 图\@ref(fig:one-sample-t-test-visualization)直观展示了单样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值，在零假设下观测到当前或更极端$t$值的概率。
 
@@ -382,14 +358,10 @@ $$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
 
 为了更好地理解单样本符号检验的原理，让我们通过一个图来理解：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/sign-test-visualization-1} 
-
-}
-
-\caption{单样本符号检验的可视化解释：二项分布下正号数量的概率分布及p值区域。}(\#fig:sign-test-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/sign-test-visualization-1.png" alt="单样本符号检验的可视化解释：二项分布下正号数量的概率分布及p值区域。" width="80%" />
+<p class="caption">(\#fig:sign-test-visualization)单样本符号检验的可视化解释：二项分布下正号数量的概率分布及p值区域。</p>
+</div>
 
 图\@ref(fig:sign-test-visualization)直观展示了单样本符号检验的原理。蓝色柱状图表示在零假设下（正号和负号以相等概率出现）正号数量的二项分布，红色垂直线表示我们观测到的正号数量，红色区域表示$p$值，在零假设下观测到当前或更多正号的概率。
 
@@ -438,12 +410,12 @@ $$s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$$
 
 > **实例：比较不同保护措施对梅花鹿种群的影响**
 >
-> 假设我们研究两种不同保护措施（禁猎保护 vs 栖息地恢复）对梅花鹿种群的影响。我们随机选择20个区域，其中10个实施禁猎保护，10个实施栖息地恢复。经过一年保护，我们测量每个区域的梅花鹿密度。
+> 假设我们研究两种不同保护措施（禁猎保护 vs 栖息地恢复）对梅花鹿种群的影响。我们从已经实施这两种保护措施的区域中各选择10个具有代表性的样点（两组样点独立、不存在配对关系），测量各自的梅花鹿密度。
 >
 > - **零假设（$H_0$)**：两种保护措施的平均梅花鹿密度没有差异
 > - **备择假设（$H_1$)**：两种保护措施的平均梅花鹿密度存在差异
 >
-> 如果检验结果显示p < 0.05，我们有统计证据表明两种保护措施对梅花鹿种群产生了不同的影响。
+> 注意这里的关键是"独立"——禁猎区的样点和栖息地恢复区的样点互不关联，这是独立样本设计的根本特征。如果检验结果显示p < 0.05，我们有统计证据表明两种保护措施对梅花鹿种群产生了不同的影响。
 
 独立样本$t$检验的使用需要满足一些前提条件：数据应该近似正态分布，两个样本的方差应该相等（方差齐性），观测值之间相互独立。如果这些条件不满足，我们可能需要考虑使用非参数检验方法。
 
@@ -451,14 +423,10 @@ $$s_p = \sqrt{\frac{(n_1 - 1)s_1^2 + (n_2 - 1)s_2^2}{n_1 + n_2 - 2}}$$
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/independent-t-test-visualization-1} 
-
-}
-
-\caption{独立样本t检验的可视化解释：零假设下t分布、观测t统计量及p值区域。}(\#fig:independent-t-test-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/independent-t-test-visualization-1.png" alt="独立样本t检验的可视化解释：零假设下t分布、观测t统计量及p值区域。" width="80%" />
+<p class="caption">(\#fig:independent-t-test-visualization)独立样本t检验的可视化解释：零假设下t分布、观测t统计量及p值区域。</p>
+</div>
 
 图\@ref(fig:independent-t-test-visualization)直观展示了独立样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布，红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值，在零假设下观测到当前或更极端$t$值的概率。
 
@@ -506,14 +474,10 @@ $$t = \frac{\bar{d}}{s_d / \sqrt{n}}$$
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/paired-t-test-visualization-1} 
-
-}
-
-\caption{配对样本t检验的可视化解释：配对差异均值的t分布、观测t统计量及p值区域。}(\#fig:paired-t-test-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/paired-t-test-visualization-1.png" alt="配对样本t检验的可视化解释：配对差异均值的t分布、观测t统计量及p值区域。" width="80%" />
+<p class="caption">(\#fig:paired-t-test-visualization)配对样本t检验的可视化解释：配对差异均值的t分布、观测t统计量及p值区域。</p>
+</div>
 
 图\@ref(fig:paired-t-test-visualization)直观展示了配对样本$t$检验的原理。蓝色曲线表示在零假设下的$t$分布（差异为0），红色垂直线表示我们观测到的$t$统计量，红色区域表示$p$值，在零假设下观测到当前或更极端$t$值的概率。
 
@@ -523,8 +487,8 @@ $$t = \frac{\bar{d}}{s_d / \sqrt{n}}$$
 
 Mann-Whitney U检验的基本思想是将两个样本的所有观测值合并排序，然后基于秩次来检验两个样本是否来自相同的分布。其零假设和备择假设通常设定为：
 
-- **零假设（$H_0$）**：两个样本来自相同的分布
-- **备择假设（$H_1$）**：两个样本来自不同的分布，或者一个样本倾向于产生更大的值
+- **零假设（$H_0$）**：两个样本来自相同的分布（更精确地说，随机从两组各取一个观测值，第一组的观测值大于第二组的概率等于0.5，即$P(X > Y) = 0.5$）
+- **备择假设（$H_1$）**：两个样本来自不同的分布，或者一个样本倾向于产生更大的值（$P(X > Y) \neq 0.5$）
 
 检验统计量$U$的计算基于秩次：
 
@@ -564,14 +528,10 @@ Mann-Whitney U检验的主要优点是它对分布形态没有要求，对极端
 
 为了更好地理解Mann-Whitney U检验的原理，让我们通过一个图来理解：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/mann-whitney-visualization-1} 
-
-}
-
-\caption{Mann-Whitney U检验的可视化解释：污染区域与清洁区域底栖动物生物量的分布比较。}(\#fig:mann-whitney-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/mann-whitney-visualization-1.png" alt="Mann-Whitney U检验的可视化解释：污染区域与清洁区域底栖动物生物量的分布比较。" width="80%" />
+<p class="caption">(\#fig:mann-whitney-visualization)Mann-Whitney U检验的可视化解释：污染区域与清洁区域底栖动物生物量的分布比较。</p>
+</div>
 
 图\@ref(fig:mann-whitney-visualization)直观展示了Mann-Whitney U检验的原理。箱线图显示了两个样本的分布情况，点表示各个观测值。检验基于这些观测值的秩次（排序位置）而不是原始数值来进行统计推断。
 
@@ -625,7 +585,7 @@ $$m = \frac{k(k-1)}{2}$$
 
 让我们计算不同组数下的累积第一类错误率：
 
-Table: (\#tab:comparsion-of-multiple-test-erros) 不同组数下的累积第一类错误率
+Table: (\#tab:comparison-of-multiple-test-errors) 不同组数下的累积第一类错误率
 
 | 组数 ($k$) | 比较次数 ($m$) | 累积第一类错误率 |
 |-----------|---------------|------------------|
@@ -637,7 +597,7 @@ Table: (\#tab:comparsion-of-multiple-test-erros) 不同组数下的累积第一�
 | 7 | 21 | 65.9% |
 | 8 | 28 | 76.2% |
 
-从表中可以看出，当组数增加到5个时，累积第一类错误率已经达到40.1%，这意味着即使所有组实际上没有差异，我们也有40.1%的概率至少得到一个"显著"的假阳性结果。
+从表中可以看出，当组数增加到5个时，累积第一类错误率已经达到40.1%，这意味着即使所有组实际上没有差异，我们也有40.1%的概率至少得到一个"显著"的假阳性结果。需要指出的是，这个公式假设各次比较之间是相互独立的，在实际ANOVA的事后两两比较中，因为比较共享相同的组均值，各次检验并非完全独立，因此公式给出的结果是一个**保守上界**——真实的累积错误率略低于此值，但仍然远高于名义的5%。
 
 **方差分析的解决方案**
 
@@ -663,21 +623,17 @@ $$H_1: \text{至少有一对组的均值不相等}$$
 
 
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-t-test-vs-anova-1.png" alt="多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案" width="80%" />
+<p class="caption">(\#fig:multiple-t-test-vs-anova)多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/multiple-t-test-vs-anova-1} 
-
-}
-
-\caption{多个t检验与方差分析的比较：展示多重比较导致的第一类错误率膨胀问题以及方差分析的解决方案}(\#fig:multiple-t-test-vs-anova)
-\end{figure}
-
-图 \@ref(fig:multiple-t-test-vs-anova) 展示了两个关键信息：左图中红色点为假阳性的"显著"结果，即使所有组来自相同分布，多重比较仍可能产生虚假显著结果；右图显示当组数达到8组时，累积第一类错误率高达76.2%。在生态学实践中，当比较三个或更多组时应首选方差分析而非多个$t$检验；若方差分析显著，再使用Tukey HSD或Bonferroni校正进行事后比较；在论文中应完整报告分析流程和校正方法。
+图\@ref(fig:multiple-t-test-vs-anova) 展示了两个关键信息：左图中红色点为假阳性的"显著"结果，即使所有组来自相同分布，多重比较仍可能产生虚假显著结果；右图显示当组数达到8组时，累积第一类错误率高达76.2%。在生态学实践中，当比较三个或更多组时应首选方差分析而非多个$t$检验；若方差分析显著，再使用Tukey HSD或Bonferroni校正进行事后比较；在论文中应完整报告分析流程和校正方法。
 
 **单因素方差分析与多因素方差分析**
 
-- **单因素方差分析**：只有一个分类自变量，用于比较不同处理、不同生境或不同群体的效应
-- **多因素方差分析**：有多个分类自变量，可以同时检验主效应和交互效应
+- **单因素方差分析**：只有一个分类自变量，用于比较不同处理、不同生境或不同群体的效应。本章的讨论限于此。
+- **多因素方差分析**：有多个分类自变量，可以同时检验**主效应**（每个因素的独立影响）和**交互效应**（两个因素联合作用产生的额外影响）。例如，在梅花鹿保护研究中，可以同时分析"保护措施类型"和"海拔带"两个因素对种群密度的影响，以及"保护措施的效果是否因海拔不同而异"（交互效应）。多因素方差分析涉及更复杂的模型设定和结果解释，将在后续回归分析章节中进一步展开。
 
 **生态学意义**：方差分析在生态学中有广泛的应用。例如，我们可以检验：
 
@@ -706,14 +662,10 @@ $$H_1: \text{至少有一对组的均值不相等}$$
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/anova-visualization-1} 
-
-}
-
-\caption{方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域}(\#fig:anova-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/anova-visualization-1.png" alt="方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域" width="80%" />
+<p class="caption">(\#fig:anova-visualization)方差分析的可视化解释：展示F分布、观测F统计量以及对应的p值区域</p>
+</div>
 
 图\@ref(fig:anova-visualization)直观展示了方差分析的原理。蓝色曲线表示在零假设下的$F$分布，红色垂直线表示我们观测到的$F$统计量，红色区域表示$p$值，在零假设下观测到当前或更极端$F$值的概率。
 
@@ -723,8 +675,8 @@ $$H_1: \text{至少有一对组的均值不相等}$$
 
 Kruskal-Wallis检验的基本思想是将所有样本的观测值合并排序，然后基于秩次来检验多个样本是否来自相同的分布。其零假设和备择假设通常设定为：
 
-- **零假设（$H_0$）**：所有样本来自相同的分布
-- **备择假设（$H_1$）**：至少有一个样本来自不同的分布
+- **零假设（$H_0$）**：所有样本来自相同的分布（即各组的中位数或分布位置没有系统性差异）
+- **备择假设（$H_1$）**：至少有一个样本来自不同的分布（至少有一组的中位数或分布位置与其他组不同）
 
 检验统计量$H$的计算基于秩次：
 
@@ -737,7 +689,7 @@ $$H = \frac{12}{N(N+1)} \sum_{i=1}^k \frac{R_i^2}{n_i} - 3(N+1)$$
 - $R_i$是第$i$组的秩和
 - $N$是总样本量
 
-在大样本情况下，$H$统计量近似服从自由度为$k-1$的卡方分布。
+在大样本情况下（通常要求每组样本量至少5，且总样本量$N \geq 15$），$H$统计量近似服从自由度为$k-1$的卡方分布。当样本量过小时，应使用精确检验或查阅Kruskal-Wallis检验的精确临界值表。
 
 **为什么使用秩次而不是原始值？**
 
@@ -758,41 +710,28 @@ Kruskal-Wallis检验的主要优点是它对分布形态没有要求，对极端
 
 为了更好地理解Kruskal-Wallis检验的原理，让我们通过一个图来理解：
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/kruskal-wallis-visualization-1} 
-
-}
-
-\caption{Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较}(\#fig:kruskal-wallis-visualization)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/kruskal-wallis-visualization-1.png" alt="Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较" width="80%" />
+<p class="caption">(\#fig:kruskal-wallis-visualization)Kruskal-Wallis检验的可视化解释：通过箱线图展示不同污染程度区域底栖动物生物量的分布比较</p>
+</div>
 
 图\@ref(fig:kruskal-wallis-visualization)直观展示了Kruskal-Wallis检验的原理。箱线图显示了三个样本的分布情况，点表示各个观测值。检验基于这些观测值的秩次（排序位置）而不是原始数值来进行统计推断。
 
 在实际的生态学研究中，选择使用方差分析还是Kruskal-Wallis检验应该基于数据的特性、研究设计和研究问题的性质。如果数据满足正态分布和方差齐性假设，方差分析通常更有效。如果数据严重偏离正态分布或存在极端值，Kruskal-Wallis检验提供了更稳健的替代方法。
 
-多样本检验方法为我们提供了比较多个处理或生境生态效应的工具。然而，生态数据常常呈现出复杂的分布特征，如偏态分布、极端值、序数尺度等，这些情况使得传统的参数检验方法不再适用。为了应对这些复杂情况，我们需要掌握非参数检验方法，它们不依赖于严格的正态分布假设，为处理复杂生态数据提供了稳健的统计工具。
+多样本检验方法为我们提供了比较多个处理或生境生态效应的工具。在掌握了参数方法的完整谱系之后，接下来让我们系统地回顾和补充非参数检验方法，它们不依赖于严格的正态分布假设，为处理复杂生态数据提供了稳健的统计工具。
 
 ## 生态复杂数据的非参数检验
 
 生态数据常常呈现出复杂的分布特征，如偏态分布、极端值、序数尺度等，这些情况使得传统的参数检验方法不再适用。例如，梅花鹿种群的空间分布可能呈现明显的聚集模式，或者污染物浓度数据可能存在检测限问题。非参数检验方法为处理这类复杂生态数据提供了稳健的统计工具，它们不依赖于严格的正态分布假设，而是基于数据的排序或符号信息进行统计推断。
 
-**符号检验**：
+**符号检验**：我们在本章第6.2.2节已详细介绍过单样本符号检验。它只关注差异的方向（正或负），不关心差异的大小，适合序数数据或严重偏态的连续数据。其优势在于极端的稳健性，代价是统计功效低于参数方法。
 
-- 基于符号的非参数检验
-- 生态学意义：适用于序数数据
+**Wilcoxon符号秩检验**：这是配对样本$t$检验的非参数替代方法。它同时利用了差异的符号和差异大小的秩次信息——先将配对差异取绝对值并排序，再对秩次赋予差异的原始符号，最后检验带符号秩和是否显著偏离零。相比仅使用符号方向的符号检验，Wilcoxon符号秩检验利用了更多的数据信息，因此统计功效更高，是对配对设计中非正态数据的首选替代方案。例如，比较保护措施实施前后同一批样方的梅花鹿密度，如果差值分布偏态或存在极端值，Wilcoxon符号秩检验比配对$t$检验更可靠。
 
-**Wilcoxon符号秩检验**：
+**卡方检验**：用于分类数据的假设检验，主要包括两种形式：(1) **拟合优度检验**——检验观测频数分布是否符合某一理论分布（如检验某种鸟类的巢址选择是否随机分布于不同生境类型中）；(2) **独立性检验**——检验两个分类变量之间是否存在关联（如检验森林类型与某种动物是否存在关联）。卡方检验基于观测频数与期望频数的差异构建$\chi^2$统计量，适用于分析物种分布格局、生境偏好、表型分离比等生态学中的分类数据问题。
 
-- 考虑排序的非参数检验
-- 生态学意义：比符号检验更有效
-
-**卡方检验**：
-
-- 检验分类变量的关联性
-- 拟合优度检验：检验观测分布与理论分布的拟合
-- 独立性检验：检验两个分类变量的独立性
-- 生态学意义：分析物种分布、生境偏好等
+回顾本章，我们实际上已经覆盖了从参数检验到非参数检验的完整对应谱系，形成了清晰的对照：单样本$t$检验对应符号检验；配对$t$检验对应Wilcoxon符号秩检验；独立样本$t$检验对应Mann-Whitney U检验；方差分析对应Kruskal-Wallis检验；对于分类数据则有卡方检验。在实际研究中，选择参数还是非参数方法取决于数据是否满足正态性和方差齐性假设，建议通过图示（Q-Q图、残差图）和检验（Shapiro-Wilk检验、Levene检验）进行判断。
 
 **方法学发展脉络说明**：本章介绍的非参数检验方法虽然不依赖于严格的正态分布假设，但它们仍然是基于经典统计理论的传统方法。这些方法为我们提供了处理非正态数据的重要工具。然而，随着生态学研究的深入和复杂化，我们越来越多地遇到这样的情况：我们感兴趣的统计量根本没有现成的理论分布可以参照，或者数据的复杂性超出了传统方法的处理能力。在这种情况下，我们需要转向更灵活的现代统计方法，基于模拟的假设检验。这些方法将在下一章中详细介绍，它们通过计算机模拟来构建统计量的经验分布，为处理复杂的生态学问题提供了全新的解决方案。从经典的非参数检验到现代的基于模拟方法，体现了统计方法学从理论驱动到数据驱动的演进，为我们应对日益复杂的生态问题提供了更强大的工具包。
 
@@ -812,17 +751,17 @@ Kruskal-Wallis检验的主要优点是它对分布形态没有要求，对极端
 
 $$m = \frac{k(k-1)}{2}$$
 
-如果每次检验的显著性水平设为$\alpha = 0.05$，那么累积的第一类错误率为：
+如果每次检验的显著性水平设为$\alpha = 0.05$，那么累积的第一类错误率的上界为：
 
-$$\alpha_{family} = 1 - (1 - \alpha)^m$$
+$$\alpha_{family} \leq 1 - (1 - \alpha)^m$$
 
-这意味着即使所有组实际上没有差异，我们也有很高的概率至少得到一个"显著"的假阳性结果。多重比较校正的目的就是控制这个**族错误率**，确保我们的统计结论更加可靠。
+当各次比较相互独立时等号成立（这是Šidák校正的基础）；在ANOVA的事后两两比较中，由于比较共享组均值因而并非完全独立，真实累积错误率略低于此上界。但即便保守地取此上界，当$m$较大时，获得至少一个假阳性结果的概率仍然非常高。多重比较校正的目的就是控制这个**族错误率**，确保我们的统计结论更加可靠。
 
 **生态学意义**：在生态保护和管理决策中，错误的统计结论可能导致资源浪费或错失保护机会。多重比较校正帮助我们避免将随机波动误认为真实的生态效应，为科学决策提供更可靠的依据。
 
 让我们通过文字描述来理解完整的分析流程：
 
-多重比较分析遵循一个清晰的逻辑流程，确保统计结论的可靠性。首先，我们执行方差分析（ANOVA）来检验多个组间的总体差异。如果方差分析结果显示总体差异不显著，我们停止分析，因为这意味着各组之间没有系统性的差异，继续进行多重比较只会增加第一类错误的风险。
+多重比较分析遵循一个清晰的逻辑流程，确保统计结论的可靠性。首先，我们执行方差分析（ANOVA）来检验多个组间的总体差异。如果方差分析结果显示总体差异不显著，我们停止分析——注意，这不等于"证明各组完全相等"，而是手头数据没有提供足够的证据来拒绝总体相等的零假设。在这种情况下继续进行两两比较，即使发现了某些"显著"的对，也很可能是对随机噪声的事后挖掘，其假阳性风险已经因为多重检验而显著膨胀。因此，停止分析的策略本身是为了控制族错误率，而非为零假设成立提供证明。
 
 只有当方差分析显示总体差异显著时，我们才进入多重比较校正阶段。在这一步，我们需要根据研究目的选择适当的校正方法。常用的方法包括Tukey HSD（适用于所有组对比较）、Bonferroni校正（适用于预先指定的比较）和FDR控制（适用于探索性分析）。选择合适的方法后，我们进行多重比较校正，最终解释具体的组间差异，识别哪些组对存在统计上显著的差异。
 
@@ -947,19 +886,37 @@ knitr::kable(summary(anova_result)[[1]],
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:multiple-comparison-anova)方差分析结果}
-\centering
-\begin{tabular}[t]{lrrrrr}
-\toprule
-  & Df & Sum Sq & Mean Sq & F value & Pr(>F)\\
-\midrule
-protection\_measure & 2 & 18.84531 & 9.422654 & 7.322486 & 0.0023345\\
-Residuals & 33 & 42.46475 & 1.286811 & NA & NA\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:multiple-comparison-anova)(\#tab:multiple-comparison-anova)方差分析结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Df </th>
+   <th style="text-align:right;"> Sum Sq </th>
+   <th style="text-align:right;"> Mean Sq </th>
+   <th style="text-align:right;"> F value </th>
+   <th style="text-align:right;"> Pr(&gt;F) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> protection_measure </td>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 18.84531 </td>
+   <td style="text-align:right;"> 9.422654 </td>
+   <td style="text-align:right;"> 7.322486 </td>
+   <td style="text-align:right;"> 0.0023345 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Residuals </td>
+   <td style="text-align:right;"> 33 </td>
+   <td style="text-align:right;"> 42.46475 </td>
+   <td style="text-align:right;"> 1.286811 </td>
+   <td style="text-align:right;"> NA </td>
+   <td style="text-align:right;"> NA </td>
+  </tr>
+</tbody>
+</table>
 
 ``` r
 f_stat <- summary(anova_result)[[1]]["protection_measure", "F value"]
@@ -1061,26 +1018,32 @@ summary_stats <- protection_data %>%
   )
 ```
 
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-mean-plot-1.png" alt="不同保护措施的梅花鹿种群密度均值图：展示三种保护措施的平均梅花鹿密度及其标准误" width="80%" />
+<p class="caption">(\#fig:multiple-comparison-mean-plot)不同保护措施的梅花鹿种群密度均值图：展示三种保护措施的平均梅花鹿密度及其标准误</p>
+</div>
 
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-boxplot-1.png" alt="不同保护措施的梅花鹿种群密度箱线图：展示三种保护措施的梅花鹿密度分布情况" width="80%" />
+<p class="caption">(\#fig:multiple-comparison-boxplot)不同保护措施的梅花鹿种群密度箱线图：展示三种保护措施的梅花鹿密度分布情况</p>
+</div>
 
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/multiple-comparison-combined-plot-1.png" alt="多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化" width="80%" />
+<p class="caption">(\#fig:multiple-comparison-combined-plot)多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化</p>
+</div>
 
-
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/multiple-comparison-combined-plot-1} 
-
-}
-
-\caption{多重比较校正实例分析：展示不同保护措施梅花鹿种群密度的多重比较结果及其可视化}(\#fig:multiple-comparison-combined-plot)
-\end{figure}
-
-表 \@ref(tab:multiple-comparison-anova) 汇总了方差分析结果；图 \@ref(fig:multiple-comparison-combined-plot) 将均值图（图\@ref(fig:multiple-comparison-mean-plot)）和箱线图（图\@ref(fig:multiple-comparison-boxplot)）并排展示，呈现了三种保护措施下梅花鹿种群密度的统计特征。在分析流程上，首先使用方差分析检验总体差异，若显著再使用Tukey HSD（所有组对比较）、Bonferroni校正（最保守）或FDR控制（平衡发现力与错误控制）进行事后多重比较。
+表\@ref(tab:multiple-comparison-anova) 汇总了方差分析结果；图\@ref(fig:multiple-comparison-combined-plot) 将均值图（图\@ref(fig:multiple-comparison-mean-plot)）和箱线图（图\@ref(fig:multiple-comparison-boxplot)）并排展示，呈现了三种保护措施下梅花鹿种群密度的统计特征。在分析流程上，首先使用方差分析检验总体差异，若显著再使用Tukey HSD（所有组对比较）、Bonferroni校正（最保守）或FDR控制（平衡发现力与错误控制）进行事后多重比较。
 
 ### Conformal Prediction：AI时代的无分布不确定性量化 {#ch06-conformal-prediction}
 
 传统置信区间面临三重困境：依赖分布假设、要求模型正确指定、需要大样本渐近保证。生态数据（偏态、零膨胀、空间自相关）常常违反这些条件。Conformal Prediction（共形预测）提供了一种分布无关、模型无关的预测区间构造方法，在极弱的可交换性假设下具有有限样本有效性保证。
 
-其核心思想简洁而强大：保留一个校准集，计算模型在其中的残差分布，用残差分位数构造预测区间，无需任何理论分布假设。该方法对模型类型无限制，适用于线性回归、随机森林或深度学习。
+其核心思想简洁而强大，用三个步骤即可实现，且不限制模型类型——无论是线性回归、随机森林还是深度学习，都可以使用。
+
+第一步，**保留一个校准集**。将手头有标签的数据随机划分为训练集和校准集。训练集用于拟合预测模型，校准集则被"扣留"下来，专门用于评估模型的预测误差大小。
+
+第二步，**在校准集上计算残差分布**。用训练好的模型对校准集中的每个样本做预测，计算预测值与真实值之间的残差（通常取绝对值）。这些残差构成了模型预测误差的经验分布。
 
 第三步，**用残差分位数构造预测区间**。对于每一个新的预测，我们将校准残差的经验分位数"附加"到点预测上。具体而言，如果要构造一个$1-\alpha$置信水平的预测区间，我们找到校准残差绝对值的第$\lceil (n_{cal}+1)(1-\alpha) \rceil / n_{cal}$分位数，记为$q$，则预测区间为$[\hat{y}_{new} - q, \hat{y}_{new} + q]$。这个区间不需要任何关于正态性、方差齐性或模型正确性的假设。
 
@@ -1102,7 +1065,7 @@ $$P(Y_{new} \in [\hat{Y}_{new} - q, \hat{Y}_{new} + q]) \geq 1 - \alpha$$
 
 Conformal Prediction恰好填补了这一空白。通过保留一部分已知碳储量的样点作为校准集，我们可以在随机森林的每个预测周围构建一个具有统计保证的不确定性区间。管理者因而可以区分"我们有高度把握的高碳储区域"与"预测不确定性较大的区域"，从而优化保护资源的空间配置。
 
-下面的R代码演示了Conformal Prediction的基本实现逻辑。这段代码不是为了提供生产级别的实现，而是帮助读者理解其核心工作机制，在验证集上计算残差，用残差分位数给新预测构造区间。
+下面的R代码演示了Conformal Prediction的基本实现逻辑。这段代码不是为了提供生产级别的实现，而是帮助读者理解其核心工作机制——在校准集上计算残差，用残差分位数给新预测构造区间。
 
 
 ``` r
@@ -1157,16 +1120,12 @@ cat("预测区间的平均宽度:", round(mean(ci_upper - ci_lower), 3), "\n")
 ## 预测区间的平均宽度: NA
 ```
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="06-classical_hypothesis_tests_files/figure-html/conformal-prediction-plot-1.png" alt="Conformal Prediction预测区间演示：训练数据、校准数据、模型预测线和95%预测区间。区间宽度仅依赖于校准残差的分位数，与模型形式无关。" width="80%" />
+<p class="caption">(\#fig:conformal-prediction-plot)Conformal Prediction预测区间演示：训练数据、校准数据、模型预测线和95%预测区间。区间宽度仅依赖于校准残差的分位数，与模型形式无关。</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{06-classical_hypothesis_tests_files/figure-latex/conformal-prediction-plot-1} 
-
-}
-
-\caption{Conformal Prediction预测区间演示：训练数据、校准数据、模型预测线和95\%预测区间。区间宽度仅依赖于校准残差的分位数，与模型形式无关。}(\#fig:conformal-prediction-plot)
-\end{figure}
-
-图 \@ref(fig:conformal-prediction-plot) 展示了Conformal Prediction的预测区间。灰色带代表95%置信水平的预测区间，其宽度完全由校准集上的残差分布决定，不依赖于任何关于数据分布或模型形式的假设。值得注意的是，区间宽度在校准集的覆盖范围内保持恒定，这是"同方差"Conformal方法的一个特征；在实际应用中，也可以使用更复杂的"自适应"方法来获得随$x$变化的区间宽度。
+图\@ref(fig:conformal-prediction-plot) 展示了Conformal Prediction的预测区间。灰色带代表95%置信水平的预测区间，其宽度完全由校准集上的残差分布决定，不依赖于任何关于数据分布或模型形式的假设。值得注意的是，区间宽度在校准集的覆盖范围内保持恒定，这是"同方差"Conformal方法的一个特征；在实际应用中，也可以使用更复杂的"自适应"方法来获得随$x$变化的区间宽度。
 
 **局限与前景**
 
@@ -1230,7 +1189,7 @@ Conformal Prediction并非万能。它的覆盖保证依赖于数据可交换性
 
 ## 总结
 
-本章通过贯穿始终的梅花鹿保护案例，系统介绍了经典假设检验在生态学中的应用。假设检验的核心是将生态学问题转化为统计问题，通过零假设与备择假设的设定、检验统计量的选择和p值的计算，在证据与不确定性之间建立科学的判断标准。
+本章通过天童山台风生态效应和梅花鹿保护两个贯穿案例，系统介绍了经典假设检验在生态学中的应用。假设检验的核心是将生态学问题转化为统计问题，通过零假设与备择假设的设定、检验统计量的选择和p值的计算，在证据与不确定性之间建立科学的判断标准。
 
 从方法层面，我们依渐进难度覆盖了：单样本$t$检验与符号检验（生态基准验证），独立样本$t$检验、配对$t$检验与Mann-Whitney U检验（双样本比较），方差分析与Kruskal-Wallis检验（多样本比较），以及Bonferroni校正、Tukey HSD和FDR控制（多重比较校正）。功效分析帮助在研究设计阶段确保足够的检测能力。
 
@@ -1242,7 +1201,7 @@ Conformal Prediction并非万能。它的覆盖保证依赖于数据可交换性
 
 **常林学到了什么**：台风过后，天童山的森林一片狼藉。常林需要判断这场台风是否真的提高了树木的死亡率。她将台风前和台风后相同样方的死亡率数据输入配对t检验，结果表明台风后死亡率显著升高（p<0.001）。但她没有被p值迷惑：她计算了Cohen's d（效应量0.82），说明台风确实带来了大幅度的实际影响。当比较三个不同海拔带的死亡率差异时，她使用了ANOVA加Tukey HSD事后比较，避免了分别做三个t检验带来的多重比较陷阱。在发现柳杉的死亡率数据严重右偏后，她改用Kruskal-Wallis检验，非参数方法给出了比参数ANOVA更可靠的结论。
 
-**统计-AI桥梁**：常林意识到，假设检验中"给定零假设为真的条件下观察到当前数据（或更极端数据）的概率"与机器学习中"给定训练数据后模型的预测能力"处于两种对称的推理方向，前者是从假设到数据的逆向概率推断，后者是从数据到预测的正向泛化。她还理解了conformal prediction的思想渊源：就像多重比较中的FDR控制试图在最恶劣的噪声条件下保证错误发现率不超过阈值，conformal prediction也在最不利的分布条件下保证预测集合的覆盖概率，两者共同分享着"在最不利情形下保底"的统计哲学。
+**统计-AI桥梁**：常林意识到，假设检验中"给定零假设为真的条件下观察到当前数据（或更极端数据）的概率"与机器学习中"给定训练数据后模型的预测能力"代表了两种不同的推理方向：前者是从假设到数据的逆向概率推断（给定假设，评估数据出现的可能性），后者是从数据到预测的正向泛化（给定训练数据，评估模型在新数据上的表现）。两者互为补充而非对立，各自回答不同层次的科学问题。她还理解了conformal prediction的思想渊源：就像多重比较中的FDR控制试图在最恶劣的噪声条件下保证错误发现率不超过阈值，conformal prediction也在最不利的分布条件下保证预测集合的覆盖概率，两者共同分享着"在最不利情形下保底"的统计哲学。
 
 **生态学意义**：假设检验教会常林，在充满自然变异的世界里，科学的结论永远携带不确定性。一个负责任的研究者不是狂热地追求"证明"某个效应存在，而是诚实地估算证据的强度、效应的幅度，以及结论的不确定范围。正是这种对不确定性的清醒认知，而非对某个阈值的机械依赖，定义了我们的统计素养。
 
@@ -1281,6 +1240,6 @@ Conformal Prediction并非万能。它的覆盖保证依赖于数据可交换性
 
 **问题：**
 (1) 计算Cohen's d效应大小。
-(2) 如果设定α = 0.05，期望功效为0.80，使用独立样本$t$检验，需要多大的样本量？
+(2) 如果设定$\alpha$ = 0.05，期望功效为0.80，使用独立样本$t$检验，需要多大的样本量？
 (3) 如果天童山样地条件限制只能调查20个样方（每组10个），实际的统计功效是多少？
-(4) 在保护生物学研究中，为什么有时需要接受较高的α水平（如0.10）？在天童山这样的长期监测样地中，犯第I类错误（假阳性）和第II类错误（假阴性）的代价分别是什么？
+(4) 在保护生物学研究中，为什么有时需要接受较高的$\alpha$水平（如0.10）？在天童山这样的长期监测样地中，犯第I类错误（假阳性）和第II类错误（假阴性）的代价分别是什么？

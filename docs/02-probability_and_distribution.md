@@ -7,7 +7,6 @@
 library(ggplot2)
 library(showtext)
 showtext_auto()
-library(sn)          # 偏正态分布
 library(dplyr)
 library(patchwork)
 library(gridExtra)
@@ -20,7 +19,7 @@ library(moments)
 
 **技能目标**：你能独立用R生成各分布的随机样本，用Q-Q图判断数据是否符合正态分布，用贝叶斯定理更新先验信念，用MCMC方法估计简单模型的后验分布。
 
-**AI素养目标**：你能理解Softmax输出是多项分布的参数化，MSE损失是正态分布下的负对数似然，交叉熵损失是多项分布下的负对数似然。你将能够解释为什么不同数据类型需要不同的神经网络输出层，以及注意力机制与相关性分析之间的数学同构。
+**AI素养目标**：你能理解Softmax输出是多项分布的参数化，MSE损失是正态分布下的负对数似然，交叉熵损失是多项分布下的负对数似然。你将能够解释为什么不同数据类型需要不同的神经网络输出层。
 
 ## 引言
 
@@ -52,13 +51,13 @@ library(moments)
 
 在缺乏观察数据的迷雾中，我们基于“公平原则”进行理想化的猜测。想象蚱蜢活动区域内黑麦草、混合草甸和三叶草的面积相等，如同命运天平上的三个等重砝码，那么选择任何一种植物的可能性应该完全相同。
 
-**这就是古典概率（先验概率）**，其核心是“等可能性”的优雅假设。在这个理想化的数学花园中，三种可能结果如同三朵同样鲜艳的花朵，绽放的可能性完全相同。**计算公式为：** $$P(\text{蚱蜢选择黑麦草}) = \frac{\text{有利于该事件的结果数}}{\text{所有可能的结果数}} = \frac{1}{3}$$ 这种概率源于逻辑推理的纯粹之美而非实际数据的复杂现实，简洁优美但现实世界往往不如此“公平”。蚱蜢可能对某种植物有特殊偏好，如同每个人心中都有自己偏爱的风景。
+**这就是古典概率**，其核心是”等可能性”的优雅假设。在这个理想化的数学花园中，三种可能结果如同三朵同样鲜艳的花朵，绽放的可能性完全相同。**计算公式为：** $$P(\text{蚱蜢选择黑麦草}) = \frac{\text{有利于该事件的结果数}}{\text{所有可能的结果数}} = \frac{1}{3}$$ 这种概率源于逻辑推理的纯粹之美而非实际数据的复杂现实，简洁优美但现实世界往往不如此“公平”。蚱蜢可能对某种植物有特殊偏好，如同每个人心中都有自己偏爱的风景。
 
 #### 核心思想：等可能性
 
 考虑一个完全公平的掷骰子游戏，骰子质地均匀、形状完美。在掷出之前，掷出“1点”的可能性是多少？直觉告诉我们：六分之一。
 
-支撑这个直觉的是古典概率（先验概率）的思维方式。这是概率论中最古老、最直观的定义，源于对机会游戏的研究。古典概率的历史可追溯到17世纪，法国数学家布莱兹·帕斯卡和皮埃尔·德·费马通过书信往来解决了赌博概率问题，为现代概率论奠定了基础。
+支撑这个直觉的是古典概率的思维方式。这是概率论中最古老、最直观的定义，源于对机会游戏的研究。古典概率的历史可追溯到17世纪，法国数学家布莱兹·帕斯卡和皮埃尔·德·费马通过书信往来解决了赌博概率问题，为现代概率论奠定了基础。
 
 古典概率的核心前提是“等可能性”，随机试验的所有可能结果发生的可能性完全相同。这个假设看似简单，却蕴含深刻的数学哲学思想。等可能性建立在对称性原则之上：当我们说骰子六个面"等可能"时，实际上指骰子在几何形状、质量分布等方面具有完美对称性，确保每个面朝上的物理条件完全相同。
 
@@ -101,7 +100,7 @@ $$P(\Omega) = 1$$
 对于任意两个互斥事件A和B（即A和B不能同时发生）：
 $$P(A \cup B) = P(A) + P(B)$$
 
-这个公理可以推广到有限个或可数无限个互斥事件。在生态学中，这意味着如果两个生态事件不可能同时发生（如"蚱蜢同时选择黑麦草和混合草甸"），那么它们中至少有一个发生的概率等于各自概率之和。
+这个公理可以推广到有限个或可数无限个互斥事件。在生态学中，这意味着如果两个生态事件不可能同时发生（如"一棵树在同一时刻既是存活又是死亡"），那么它们中至少有一个发生的概率等于各自概率之和。
 
 这三个公理共同构成了概率论的数学基础，确保了概率计算的逻辑一致性。从这些基本公理出发，我们可以推导出概率的所有其他性质，如：
 
@@ -121,29 +120,28 @@ $$P(A \cup B) = P(A) + P(B)$$
 
 #### 古典概率的局限性
 
-尽管古典概率模型非常优美，但它的“理想化”也恰恰是它在现实应用中的主要局限。古典概率的第一个显著局限在于**“等可能性”假设过于苛刻**。现实世界中，很多情况不满足等可能性假设，生态系统的复杂性使得这种假设往往过于简化。回到蚱蜢的例子，我们很难断言蚱蜢选择黑麦草、混合草甸和三叶草的可能性完全相等。植物的营养价值、口感、防御性化学物质、空间分布、季节变化等因素都存在差异，这些都会破坏“等可能性”假设。同样，一枚实际硬币可能因工艺瑕疵导致正面和反面出现的概率并非精确的50%，研究表明大多数硬币实际上有51%-49%的轻微偏差。一只青蛙选择池塘时，池塘的大小、水深、水质、是否有天敌、食物丰富度等因素必然会影响其选择，使得“等可能性”的假设难以成立。
+尽管古典概率模型非常优美，但它的“理想化”也恰恰是它在现实应用中的主要局限。古典概率的第一个显著局限在于**“等可能性”假设过于苛刻**。现实世界中，很多情况不满足等可能性假设，生态系统的复杂性使得这种假设往往过于简化。回到蚱蜢的例子，我们很难断言蚱蜢选择黑麦草、混合草甸和三叶草的可能性完全相等。植物的营养价值、口感、防御性化学物质、空间分布、季节变化等因素都存在差异，这些都会破坏“等可能性”假设。同样，一枚实际硬币可能因工艺瑕疵导致正面和反面出现的概率并非精确的50%（例如，Diaconis等人的研究表明硬币有约51%的概率落在起始时朝上的那一面）。一只青蛙选择池塘时，池塘的大小、水深、水质、是否有天敌、食物丰富度等因素必然会影响其选择，使得“等可能性”的假设难以成立。
 
 古典概率的第二个局限是**样本空间必须是有限集合**。古典概率要求可能的结果是有限可数的，对于连续性问题（如蚱蜢的精确跳跃距离是1.253米），因为结果有无限多个，古典概率便无能为力。生态学中的许多测量值都是连续变量，如温度、湿度、生物量等，这些都需要连续概率分布来描述。古典概率还要求明确知道总体大小，但生态学中总体往往无限或未知。
 
-下面的R代码通过一个具体的生态学案例来展示这一局限性：假设我们试图估计一片森林中某种濒危物种的真实数量。在现实中，我们无法直接计数所有个体，只能通过抽样调查来推断。这段代码模拟了这样的场景：实际有15只濒危物种，但我们的调查只发现了8只。通过计算检测概率并据此估计总体数量，我们可以看到古典概率方法在总体大小未知时会产生显著的估计误差。
+下面的R代码通过一个具体的生态学案例来展示这一局限性：假设我们试图估计一片森林中某种濒危物种的真实数量。在现实中，我们无法直接计数所有个体，只能通过抽样调查来推断。这段代码模拟了这样的场景：实际有15只濒危物种，但我们的调查只发现了8只。若依据前期标定研究已知检测概率约为0.5（每次调查约有一半个体可被检测到），据此估计总体数量，并与真实值对比展示估计误差。
 
 
 ``` r
 set.seed(222)
-true_rare_species <- 15  # 实际濒危物种数量（研究中未知）
-observed_species <- 8    # 调查发现的数量
-survey_effort <- 50      # 调查样方数
-detection_prob <- observed_species / survey_effort
-estimated_total <- observed_species / detection_prob
+true_rare_species <- 15     # 实际濒危物种数量（研究中未知）
+observed_species <- 8       # 调查发现的数量
+detection_prob <- 0.5       # 前期标定研究已知的检测概率
+estimated_total <- observed_species / detection_prob  # 基于检测概率推算总体
 ```
 
 
 ```
 ## 实际濒危物种数量: 15 
 ##  观测到的物种数量: 8 
-##  检测概率: 0.16 
-##  估计的物种总数: 50 
-##  估计误差: 35
+##  已知检测概率: 0.5 
+##  估计的物种总数: 16 
+##  估计误差: 1
 ```
 
 古典概率的第三个局限是**无法处理主观概率**。古典概率是客观的，基于计数，但它无法处理如“我认为明天会下雨的可能性是70%”这种基于个人知识、经验和信念的主观判断。在生态学预测中，专家意见和经验判断往往很重要，但这些主观因素无法用古典概率来量化。
@@ -172,16 +170,12 @@ estimated_total <- observed_species / detection_prob
 
 在生态学中，频率概率意味着我们通过系统的观察来了解生物行为的真实模式。每一次观察都是对"真实概率"的一次逼近，随着观察次数的增加，我们的估计会越来越准确。
 
-概率收敛理论是统计推断的数学基础，帮助我们理解样本统计量如何趋近于总体参数。如图\@ref(fig:law-of-large-numbers)所示，大数定律的可视化演示清晰地展示了样本均值如何随样本量增加而收敛于总体均值，这种收敛过程体现了频率概率的核心思想。
+大数定律和中心极限定理是统计推断的数学基础，它们共同保证了样本统计量在适当条件下能够可靠地趋近于总体参数。如图\@ref(fig:law-of-large-numbers)所示，大数定律的可视化演示清晰地展示了样本均值如何随样本量增加而收敛于总体均值，这种收敛过程体现了频率概率的核心思想。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/law-of-large-numbers-1} 
-
-}
-
-\caption{大数定律可视化：样本均值随样本量增加收敛于总体均值。}(\#fig:law-of-large-numbers)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/law-of-large-numbers-1.png" alt="大数定律可视化：样本均值随样本量增加收敛于总体均值。" width="80%" />
+<p class="caption">(\#fig:law-of-large-numbers)大数定律可视化：样本均值随样本量增加收敛于总体均值。</p>
+</div>
 
 如上图所示，通过模拟不同样本量下的概率估计过程，我们可以直观地看到大数定律的作用：随着样本量的增加，样本均值（蓝色实线）逐渐稳定地趋近于总体真实概率（红色虚线）。图中使用颜色（蓝色/红色）和线型纹理（实线/虚线）双重区分，确保在彩色显示和黑白打印时都能清晰辨识。这种收敛模式生动地展示了频率概率的核心思想，通过足够多的重复观察，我们能够获得对真实概率的可靠估计。
 
@@ -247,14 +241,10 @@ $$P(A) \approx \frac{\text{事件A发生的次数}}{\text{总试验次数}}$$
 
 频率概率需要大量重复试验，但生态学调查往往样本量有限。下面的模拟实验（图\@ref(fig:sample-size-effect)）直观展示了样本量对概率估计精度的影响：随着样本量的增加，基于频率的概率估计误差会显著减小，这体现了大数定律在实际应用中的效果。然而在生态学研究中，由于时间、经费和实际条件的限制，我们往往无法获得足够大的样本量，这正是频率概率方法在生态学应用中的主要挑战之一。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/sample-size-effect-1} 
-
-}
-
-\caption{样本量对概率估计精度的影响：样本量越大，估计误差越小。}(\#fig:sample-size-effect)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/sample-size-effect-1.png" alt="样本量对概率估计精度的影响：样本量越大，估计误差越小。" width="80%" />
+<p class="caption">(\#fig:sample-size-effect)样本量对概率估计精度的影响：样本量越大，估计误差越小。</p>
+</div>
 
 #### 从频率概率到现代统计学
 
@@ -272,9 +262,7 @@ $$P(A) \approx \frac{\text{事件A发生的次数}}{\text{总试验次数}}$$
 
 贝叶斯概率（也称为主观概率）的核心思想源于认识论哲学，概率是对不确定性的主观度量。与频率概率的"客观"统计不同，贝叶斯概率是"主观"的，它反映了在给定证据条件下对某个假设的置信程度。
 
-**贝叶斯定理的数学基础**
-
-贝叶斯定理是贝叶斯概率的理论核心。要深入理解贝叶斯定理，我们需要先了解两个关键概念：条件概率和事件独立性。
+要深入理解贝叶斯定理，我们需要先了解两个关键概念：条件概率和事件独立性。
 
 #### 条件概率：事件之间的依赖关系
 
@@ -327,14 +315,10 @@ $$P(\text{高营养}) = P(\text{高营养}|\text{晴天}) \times P(\text{晴天}
 
 下面的示例（图\@ref(fig:total-probability)）通过一个物种灭绝风险评估的案例，直观展示了全概率公式在生态学中的实际应用。该案例将总体灭绝概率分解为不同生态情景（正常、干旱、洪水）下的贡献，帮助我们理解各种环境条件对物种生存风险的相对重要性。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/total-probability-1} 
-
-}
-
-\caption{全概率公式应用：各情景对总体灭绝概率的贡献分解}(\#fig:total-probability)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/total-probability-1.png" alt="全概率公式应用：各情景对总体灭绝概率的贡献分解" width="80%" />
+<p class="caption">(\#fig:total-probability)全概率公式应用：各情景对总体灭绝概率的贡献分解</p>
+</div>
 
 **在贝叶斯定理中的应用**：
 在贝叶斯定理中，$P(E)$可以通过全概率公式计算：
@@ -383,7 +367,6 @@ $$P(H|E) = \frac{P(E|H) \times P(H)}{P(E|H) \times P(H) + P(E|\neg H) \times P(\
 
 ``` r
 # 贝叶斯定理基础演示：以疾病检测为例展示贝叶斯定理的应用
-set.seed(1111)
 
 # 定义先验概率：基于流行病学知识的初始信念
 prior_prob <- 0.05  # 疾病在种群中的患病率（5%）
@@ -425,23 +408,41 @@ posterior_prob <- (sensitivity * prior_prob) / marginal_positive
 
 ``` r
 # 贝叶斯物种分布模型：结合专家先验与观测数据更新栖息地偏好
+# 加载预先计算好的模型结果（含results表格、posterior后验概率、expert_prior先验概率）
 load("data/ch02_bayes_species_model.rda")
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:bayesian-species-distribution)贝叶斯物种分布模型结果}
-\centering
-\begin{tabular}[t]{lrrr}
-\toprule
-habitat & expert\_prior & likelihood & posterior\\
-\midrule
-森林 & 0.6 & 0.643 & 0.806\\
-草地 & 0.3 & 0.286 & 0.179\\
-湿地 & 0.1 & 0.071 & 0.015\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:unnamed-chunk-7)(\#tab:bayesian-species-distribution)贝叶斯物种分布模型结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> habitat </th>
+   <th style="text-align:right;"> expert_prior </th>
+   <th style="text-align:right;"> likelihood </th>
+   <th style="text-align:right;"> posterior </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 森林    | </td>
+   <td style="text-align:right;"> 0.6| </td>
+   <td style="text-align:right;"> 0.643| </td>
+   <td style="text-align:right;"> 0.806| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 草地    | </td>
+   <td style="text-align:right;"> 0.3| </td>
+   <td style="text-align:right;"> 0.286| </td>
+   <td style="text-align:right;"> 0.179| </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 湿地    | </td>
+   <td style="text-align:right;"> 0.1| </td>
+   <td style="text-align:right;"> 0.071| </td>
+   <td style="text-align:right;"> 0.015| </td>
+  </tr>
+</tbody>
+</table>
 
 
 ``` r
@@ -473,19 +474,12 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 **生态风险评估**
 
-在数据有限的情况下，结合专家判断和有限观测来评估生态风险。上面的可视化使用颜色（绿色/蓝色）和填充纹理（条纹/网格）双重区分先验和后验信念，确保在彩色显示和黑白打印时都能清晰辨识。下面的综合演示（图\@ref(fig:risk-assessment)）展示了贝叶斯方法在生态风险评估和决策分析中的完整应用流程：首先基于历史数据建立初始风险评估（先验），然后结合新的气候异常证据进行贝叶斯更新得到更准确的风险概率（后验），最后基于更新后的风险概率进行成本效益分析，为保护决策提供科学依据。这种将概率更新与决策分析相结合的方法，体现了贝叶斯统计在生态管理实践中的实用价值。
+在数据有限的情况下，结合专家判断和有限观测来评估生态风险。下面的综合演示（图\@ref(fig:risk-assessment)）展示了贝叶斯方法在生态风险评估和决策分析中的完整应用流程：首先基于历史数据建立初始风险评估（先验），然后结合新的气候异常证据进行贝叶斯更新得到更准确的风险概率（后验），最后基于更新后的风险概率进行成本效益分析，为保护决策提供科学依据。这种将概率更新与决策分析相结合的方法，体现了贝叶斯统计在生态管理实践中的实用价值。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/risk-assessment-1} 
-
-}
-
-\caption{贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策}(\#fig:risk-assessment)
-\end{figure}
-
-
-贝叶斯稳健性检验通过模拟不同污染比例下的后验均值变化，可以验证贝叶斯方法对数据污染的鲁棒性——即使在部分数据受到污染的情况下，后验估计仍能保持相对稳定。
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/risk-assessment-1.png" alt="贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策" width="80%" />
+<p class="caption">(\#fig:risk-assessment)贝叶斯风险评估与决策分析：基于新证据的风险概率更新和成本效益决策</p>
+</div>
 
 #### 贝叶斯概率的优势与局限性
 
@@ -493,14 +487,10 @@ bayes_factor <- (posterior[1] / (1 - posterior[1])) /
 
 然而，贝叶斯概率方法也存在不容忽视的局限性。**主观性**是其最受争议的方面，先验概率的选择往往依赖于研究者的主观判断，不同专家可能会给出不同的先验设定。如图\@ref(fig:subjective-bias-demo)所示，不同群体（生态学家、森林管理者、当地社区）对同一生态风险评估给出了显著不同的结果，这凸显了在贝叶斯分析中谨慎处理先验信息的重要性。**计算复杂性**是实际应用中的主要障碍，复杂的贝叶斯模型需要大量的计算资源，特别是使用马尔可夫链蒙特卡洛方法时，计算时间可能相当可观。**先验敏感性**问题意味着结果可能对先验选择高度敏感，不恰当的先验设定可能导致有偏的结论。**收敛问题**是MCMC方法特有的挑战，在复杂模型中可能出现收敛困难或收敛到局部最优解的情况。此外，**解释难度**限制了贝叶斯方法的普及，后验分布的理解和解释需要研究者具备相当的统计背景，这在一定程度上阻碍了其在生态学实践中的广泛应用。这些局限性提示我们在使用贝叶斯方法时需要谨慎处理先验设定，并充分考虑计算可行性和结果解释的清晰性。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/subjective-bias-demo-1} 
-
-}
-
-\caption{主观偏见问题：不同群体对同一生态风险评估的差异}(\#fig:subjective-bias-demo)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/subjective-bias-demo-1.png" alt="主观偏见问题：不同群体对同一生态风险评估的差异" width="80%" />
+<p class="caption">(\#fig:subjective-bias-demo)主观偏见问题：不同群体对同一生态风险评估的差异</p>
+</div>
 
 #### 贝叶斯统计的挑战及解决方案
 
@@ -518,7 +508,7 @@ MCMC是一类算法的总称，它巧妙地解决了上述挑战。它的核心�
 
 **与其直接计算后验分布，不如我们构造一个马尔可夫链，使其平稳分布恰好就是我们想要的后验分布 \(P(\theta \mid E)\)。然后，我们从这个链中生成大量的样本，用这些样本来近似（模拟）后验分布。**
 
-MCMC的核心思想可以分解为两步：
+MCMC的核心思想可以从三个层面来理解：
 
 1.  **蒙特卡洛（Monte Carlo）**： 泛指通过随机抽样来解决问题的方法。基本思想是：如果你想知道一个分布的属性（比如均值），就从该分布中抽取大量样本，然后计算这些样本的均值。**问题在于**：我们无法直接从复杂的后验分布中抽样。
 
@@ -640,14 +630,10 @@ cat("95%置信区间: [", round(ci_lower, 3), ", ",
 
 随机变量的奇妙之处在于它的双重性：在每次具体观察之前，X的取值是完全不确定的，它可能是1、2或3中的任意一个，这种不确定性正是生态系统中生物行为的本质特征。然而，这种不确定性并非毫无规律可言。通过长期的观察和数据积累，我发现每个可能的取值都有其特定的发生概率。这种概率分布就像是你行为模式的"数学指纹"，精确地刻画了你在不同环境条件下的选择倾向。如图\@ref(fig:random-variable-demo)所示，通过随机模拟可以直观地展示这种概率分布的实际表现，其中黑麦草被选择的频率最高，三叶草相对较少，这与我们观察到的概率分布一致。随机变量的引入，使我们能够从定性描述迈向定量分析，为理解生物决策机制提供了强有力的数学框架。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/random-variable-demo-1} 
-
-}
-
-\caption{随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟}(\#fig:random-variable-demo)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/random-variable-demo-1.png" alt="随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟" width="80%" />
+<p class="caption">(\#fig:random-variable-demo)随机变量演示：蚱蜢植物选择行为的概率分布与随机模拟</p>
+</div>
 
 
 ```
@@ -680,14 +666,10 @@ Table: (\#tab:plant-choice-probability) 蚱蜢午餐选择的概率分布
 
 如果我画成柱状图，就得到了一个**概率分布图**，直观地展示了这种"分布"情况。如图\@ref(fig:plant-choice-distribution)所示，通过柱状图可以更直观地看到蚱蜢对三种植物的选择偏好差异：黑麦草的选择概率最高（64%），混合草甸次之（29%），三叶草的选择概率最低（7%）。这种可视化方式让概率分布的特征一目了然，帮助我们更好地理解生物行为模式。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/plant-choice-distribution-1} 
-
-}
-
-\caption{蚱蜢午餐选择的概率分布：三种草地的选择概率对比。}(\#fig:plant-choice-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/plant-choice-distribution-1.png" alt="蚱蜢午餐选择的概率分布：三种草地的选择概率对比。" width="80%" />
+<p class="caption">(\#fig:plant-choice-distribution)蚱蜢午餐选择的概率分布：三种草地的选择概率对比。</p>
+</div>
 
 ### 累积概率分布：从可能性到确定性
 
@@ -711,14 +693,10 @@ Table: (\#tab:plant-choice-cumulative) 蚱蜢午餐选择的累积概率分布
 
 如图\@ref(fig:cumulative-distribution)所示，累积概率分布通过阶梯函数的形式直观地展示了概率的累积过程。这种图形清晰地显示了随着植物类型的增加，累积概率如何逐步上升：从黑麦草的0.64，到混合草甸的0.93，最终达到三叶草的1.00。阶梯函数的跳跃点正好对应着每个植物类型的概率值，让我们能够一目了然地看到"小于等于某个值"的概率是如何累积的。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/cumulative-distribution-1} 
-
-}
-
-\caption{蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程}(\#fig:cumulative-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/cumulative-distribution-1.png" alt="蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程" width="80%" />
+<p class="caption">(\#fig:cumulative-distribution)蚱蜢午餐选择的累积概率分布：阶梯函数展示概率的累积过程</p>
+</div>
 
 累积概率分布图呈现为阶梯函数，在每个可能的取值处跳跃，跳跃的高度等于该取值的概率。这种分布特别有用，因为它：
 
@@ -746,7 +724,7 @@ R为各种概率分布提供了完整的函数家族，每个分布都包含四�
 
 这种统一的命名约定使得在R中学习和使用各种分布变得非常直观。我们可以轻松地进行概率计算、统计推断和随机模拟。
 
-Table: (\#tab:plant-choice-distribution) 蚱蜢午餐选择的概率分布函数家族
+Table: (\#tab:r-distribution-functions) R概率分布函数家族及其生态学应用
 
 | 分布类型 | 生态学应用场景 | R函数前缀 | 主要参数 |
 | :--- | :--- | :--- | :--- |
@@ -790,14 +768,10 @@ $$P(X = x) = p^x(1-p)^{1-x}, \quad x = 0,1$$
 
 如图\@ref(fig:bernoulli-distribution)所示，伯努利分布通过分面图的形式直观地展示了不同成功概率下的二元选择概率分布。该图清晰地显示了当成功概率$p$分别为0.2、0.5、0.8时，成功与失败两种结果的概率如何变化。这种可视化帮助我们理解伯努利分布的核心特征：对于任何给定的成功概率$p$，失败的概率总是$1-p$，且两者之和始终为1。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/bernoulli-distribution-1} 
-
-}
-
-\caption{伯努利分布：不同成功概率下的二元选择概率分布}(\#fig:bernoulli-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/bernoulli-distribution-1.png" alt="伯努利分布：不同成功概率下的二元选择概率分布" width="80%" />
+<p class="caption">(\#fig:bernoulli-distribution)伯努利分布：不同成功概率下的二元选择概率分布</p>
+</div>
 
 **生态学肖像：**
 
@@ -848,14 +822,10 @@ $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, 2, \ldots, n$$
 
 如图\@ref(fig:binomial-distribution)所示，二项分布通过分面图的形式直观地展示了不同成功概率下多次试验中成功次数的概率分布。该图清晰地显示了当试验次数$n=10$固定时，成功概率$p$分别为0.2、0.5、0.8时的概率分布特征：当$p=0.5$时分布对称，当$p=0.2$时分布右偏（成功次数集中在较小值），当$p=0.8$时分布左偏（成功次数集中在较大值）。这种可视化帮助我们理解二项分布的形状如何随成功概率的变化而变化。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/binomial-distribution-1} 
-
-}
-
-\caption{二项分布：不同成功概率下多次试验中成功次数的概率分布}(\#fig:binomial-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/binomial-distribution-1.png" alt="二项分布：不同成功概率下多次试验中成功次数的概率分布" width="80%" />
+<p class="caption">(\#fig:binomial-distribution)二项分布：不同成功概率下多次试验中成功次数的概率分布</p>
+</div>
 
 **生态学肖像：**
 
@@ -896,14 +866,10 @@ $$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots$$
 
 为了直观展示泊松分布的特性，图\@ref(fig:poisson-distribution)生成了不同平均发生率$\lambda$值下的概率分布可视化。清晰地展示了随着$\lambda$增大，分布形态从右偏逐渐趋于对称的过程，直观验证了泊松分布的数学特性。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/poisson-distribution-1} 
-
-}
-
-\caption{泊松分布：不同平均发生率下稀有事件发生次数的概率分布}(\#fig:poisson-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/poisson-distribution-1.png" alt="泊松分布：不同平均发生率下稀有事件发生次数的概率分布" width="80%" />
+<p class="caption">(\#fig:poisson-distribution)泊松分布：不同平均发生率下稀有事件发生次数的概率分布</p>
+</div>
 
 **生态学肖像：**
 
@@ -962,14 +928,10 @@ $$P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots$$
 
 为了直观展示负二项分布的特性，图\@ref(fig:negative-binomial)展示了不同参数组合下的概率分布。图中清晰地呈现了四种参数组合（$r=2, p=0.3$；$r=2, p=0.6$；$r=5, p=0.3$；$r=5, p=0.6$）对应的概率分布形态。可以观察到：当成功概率$p$较低时（0.3），分布向右偏斜，需要更多试验次数才能达到第$r$次成功；当成功概率$p$较高时（0.6），分布向左集中，所需试验次数较少。同时，随着成功次数目标$r$的增加，分布向右移动且变得更加分散，直观验证了负二项分布作为几何分布推广的数学特性。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/negative-binomial-1} 
-
-}
-
-\caption{负二项分布：不同参数组合下第r次成功所需试验次数的概率分布}(\#fig:negative-binomial)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/negative-binomial-1.png" alt="负二项分布：不同参数组合下第r次成功所需试验次数的概率分布" width="80%" />
+<p class="caption">(\#fig:negative-binomial)负二项分布：不同参数组合下第r次成功所需试验次数的概率分布</p>
+</div>
 
 **生态学肖像：**
 
@@ -986,6 +948,8 @@ $$P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots$$
 5. **风险评估**：评估生态系统达到临界状态所需的干扰次数
 
 负二项分布的美妙之处在于它能够描述生态系统中"累积成功"的复杂模式，为我们理解生态过程的渐进性和累积性提供了有力的数学工具。
+
+> **生态学备注：负二项分布的两种面孔。** 上文介绍的"等待第r次成功"是负二项分布的经典形式，但在现代生态学数据分析中，负二项分布还有一种更为常见的参数化：作为**泊松-伽马混合分布**，用于处理计数数据的过度离散（overdispersion）。当物种个体数的方差显著大于均值时（生态学中极为常见——物种分布往往呈聚集型），泊松分布无法胜任，而负二项分布的额外离散参数$r$（或$\theta = 1/r$）可以灵活地建模方差：$Var(X) = \lambda + \lambda^2/r$（当$r \to \infty$时退化为泊松分布$Var = \lambda$）。在R中，`MASS::glm.nb()`使用这一参数化；在深度学习中，这一形式也对应着计数型输出的负二项损失函数。两种参数化在数学上等价，但服务于不同的建模场景：等待时间形式解释随机过程的发生机制，过度离散形式回答"数据变异为何大于随机预期"这一生态学核心问题。（参见本章泊松分布AI视角框中的相关讨论。）
 
 ## 连续分布家族：从正态到深度生成的噪声之源
 
@@ -1028,16 +992,12 @@ $$F(x) = P(X \leq x) = \int_{-\infty}^x f(t) dt$$
 - $P(a < X \leq b) = F(b) - F(a)$
 - $P(X > x) = 1 - F(x)$
 
-为了直观理解概率密度函数与累积分布函数的关系，图\@ref(fig:continuous-pdf-cdf)展示了标准正态分布下PDF和CDF的对比。左侧的概率密度函数（PDF）呈现经典的钟形曲线，曲线下的面积代表概率，其中蓝色填充区域直观展示了特定区间内的概率大小。右侧的累积分布函数（CDF）呈现S形曲线，从0单调递增到1，每个点的函数值表示随机变量取值小于或等于该点的概率。通过对比这两个图形，可以清晰地看到PDF曲线下的面积如何累积形成CDF曲线，以及CDF的单调性和边界条件如何体现连续随机变量的概率特性。
+为了直观理解概率密度函数与累积分布函数的关系，图\@ref(fig:continuous-pdf-cdf)展示了标准正态分布下PDF和CDF的对比。左侧的概率密度函数（PDF）呈现经典的钟形曲线，曲线下的总面积等于1，其中蓝色区域直观展示了PDF曲线下的积分面积，即累积概率。右侧的累积分布函数（CDF）呈现S形曲线，从0单调递增到1，每个点的函数值表示随机变量取值小于或等于该点的概率。通过对比这两个图形，可以清晰地看到PDF曲线下的面积如何累积形成CDF曲线，以及CDF的单调性和边界条件如何体现连续随机变量的概率特性。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/continuous-pdf-cdf-1} 
-
-}
-
-\caption{连续随机变量的概率密度函数与累积分布函数对比}(\#fig:continuous-pdf-cdf)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/continuous-pdf-cdf-1.png" alt="连续随机变量的概率密度函数与累积分布函数对比" width="80%" />
+<p class="caption">(\#fig:continuous-pdf-cdf)连续随机变量的概率密度函数与累积分布函数对比</p>
+</div>
 
 在连续变量的世界里，有几个声名显赫的“家族"，它们以特定的形态描绘了不同自然现象背后的概率规律。每个分布都有其独特的数学特性和生态学意义，共同构成了我们理解连续生态变量的工具箱。
 
@@ -1064,14 +1024,10 @@ $$f(x) = \begin{cases}
 
 为了直观展示均匀分布的特性，图\@ref(fig:uniform-distribution)展示了三种不同区间参数下的概率密度函数。图中清晰地呈现了均匀分布的核心特征：在定义区间内概率密度为常数，区间外概率密度为零。三个分布分别展示了不同区间参数的影响：U(0,1)为标准均匀分布，概率密度为1；U(-2,2)为较宽区间，概率密度降低为0.25；U(1,3)为偏移区间，概率密度为0.5。通过对比可以直观理解均匀分布的"等可能性"特性，以及区间宽度与概率密度的反比关系。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/uniform-distribution-1} 
-
-}
-
-\caption{均匀分布：不同区间参数下的概率密度函数}(\#fig:uniform-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/uniform-distribution-1.png" alt="均匀分布：不同区间参数下的概率密度函数" width="80%" />
+<p class="caption">(\#fig:uniform-distribution)均匀分布：不同区间参数下的概率密度函数</p>
+</div>
 
 ### 正态分布（高斯分布）：自然界的“钟形"法则
 
@@ -1097,14 +1053,10 @@ $$f(x) = \frac{1}{\sqrt{2\pi}\sigma} e^{-\frac{(x-\mu)^2}{2\sigma^2}}, \quad -\i
 
 为了直观展示正态分布的特性，图\@ref(fig:normal-distribution)展示了三种不同参数组合下的概率密度函数。图中清晰地呈现了正态分布的核心特征：经典的钟形曲线和对称性。三个分布分别展示了参数变化的影响：N(0,1)为标准正态分布，呈现理想的钟形形态；N(0,4)为标准差增大的分布，曲线更加扁平分散，体现了标准差对分布离散程度的影响；N(2,1)为均值右移的分布，曲线整体向右平移，体现了均值对分布中心位置的决定作用。图中使用颜色（红色/蓝色/绿色）和线型纹理（实线/虚线/点线）双重区分，确保在彩色显示和黑白打印时都能清晰辨识。通过对比可以直观理解正态分布参数的意义，以及68-95-99.7法则在分布形态中的体现。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/normal-distribution-1} 
-
-}
-
-\caption{正态分布：不同参数组合下的概率密度函数}(\#fig:normal-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/normal-distribution-1.png" alt="正态分布：不同参数组合下的概率密度函数" width="80%" />
+<p class="caption">(\#fig:normal-distribution)正态分布：不同参数组合下的概率密度函数</p>
+</div>
 
 #### AI视角：MSE损失与回归的深层联系
 
@@ -1142,14 +1094,10 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
 
 为了直观验证中心极限定理的强大效果，图\@ref(fig:central-limit-theorem)展示了四种不同总体分布下样本均值的正态收敛过程。图中四个子图分别对应均匀分布、指数分布、伽马分布和贝塔分布四种原始总体分布，每个子图都显示了样本量为30时10000次模拟得到的样本均值分布。浅蓝色直方图表示样本均值的实际分布，红色曲线为理论正态分布。可以清晰地观察到，尽管原始分布形态各异（均匀分布为矩形、指数分布和伽马分布为右偏、贝塔分布为左偏），但它们的样本均值分布都呈现出优美的钟形正态分布形态，完美验证了中心极限定理的核心思想。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/central-limit-theorem-1} 
-
-}
-
-\caption{中心极限定理演示：不同总体分布下样本均值的正态收敛过程}(\#fig:central-limit-theorem)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/central-limit-theorem-1.png" alt="中心极限定理演示：不同总体分布下样本均值的正态收敛过程" width="80%" />
+<p class="caption">(\#fig:central-limit-theorem)中心极限定理演示：不同总体分布下样本均值的正态收敛过程</p>
+</div>
 
 
 ```
@@ -1164,38 +1112,54 @@ $$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0, 1)$$
 
 为了深入理解样本量在中心极限定理中的作用，图\@ref(fig:clt-sample-size)展示了从指数分布（典型的非正态总体）中抽样时，不同样本量对样本均值分布的影响。图中五个子图分别对应样本量5、10、30、50、100的情况。可以清晰地观察到：当样本量较小时（如n=5），样本均值分布仍呈现明显的右偏形态，与原始指数分布相似；随着样本量增大，分布逐渐变得更加对称和集中；当样本量达到30时，分布已接近正态形态；当样本量达到100时，分布呈现出完美的钟形正态分布。这一可视化结果直观地验证了中心极限定理中"样本量足够大"的重要性，以及样本量越大、正态近似越精确的规律。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/clt-sample-size-1} 
-
-}
-
-\caption{样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态}(\#fig:clt-sample-size)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/clt-sample-size-1.png" alt="样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态" width="80%" />
+<p class="caption">(\#fig:clt-sample-size)样本量对中心极限定理的影响：样本量越大，样本均值分布越接近正态</p>
+</div>
 
 表 \@ref(tab:skewness-kurtosis) 展示了不同样本量下样本均值分布的偏度和峰度值，这些数值量化了分布形态随样本量增加而趋向正态分布的过程。
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:skewness-kurtosis)偏度和峰度随样本量的变化}
-\centering
-\begin{tabular}[t]{rrr}
-\toprule
-SampleSize & Skewness & Kurtosis\\
-\midrule
-5 & 0.8974114 & 4.109759\\
-10 & 0.6504552 & 3.732605\\
-30 & 0.4054190 & 3.315501\\
-50 & 0.2691500 & 3.072610\\
-100 & 0.2423726 & 3.087874\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:unnamed-chunk-15)(\#tab:skewness-kurtosis)偏度和峰度随样本量的变化</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> SampleSize </th>
+   <th style="text-align:right;"> Skewness </th>
+   <th style="text-align:right;"> Kurtosis </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0.8974114 </td>
+   <td style="text-align:right;"> 4.109759 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 0.6504552 </td>
+   <td style="text-align:right;"> 3.732605 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 30 </td>
+   <td style="text-align:right;"> 0.4054190 </td>
+   <td style="text-align:right;"> 3.315501 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 50 </td>
+   <td style="text-align:right;"> 0.2691500 </td>
+   <td style="text-align:right;"> 3.072610 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 100 </td>
+   <td style="text-align:right;"> 0.2423726 </td>
+   <td style="text-align:right;"> 3.087874 </td>
+  </tr>
+</tbody>
+</table>
 
 #### 蚱蜢午餐中的中心极限定理
 
-在蚱蜢的生态研究中，中心极限定理展现出其强大的应用价值。虽然单个蚱蜢的摄食量可能呈现偏斜分布，但当我们随机抽取30只蚱蜢并计算其平均摄食量，多次重复这一抽样过程后，样本均值的分布将呈现完美的钟形曲线。同样，蚱蜢的觅食时间虽受多种因素影响而分布不规则，但通过中心极限定理，我们能够基于样本均值可靠地估计整个种群的
-  平均觅食时间。即使蚱蜢对植物的选择偏好本身不是正态分布，当我们研究多个样本的平均偏好时，结果也会趋于正态分布。这些生态学场景生动地展示了中心极限定理如何将复杂的个体变异转化为可预测的统计规律，为生态学研究提供了坚实的理论基础。
+在蚱蜢的生态研究中，中心极限定理展现出其强大的应用价值。虽然单个蚱蜢的摄食量可能呈现偏斜分布，但当我们随机抽取30只蚱蜢并计算其平均摄食量，多次重复这一抽样过程后，样本均值的分布将呈现完美的钟形曲线。同样，蚱蜢的觅食时间虽受多种因素影响而分布不规则，但通过中心极限定理，我们能够基于样本均值可靠地估计整个种群的平均觅食时间。
 
 #### 中心极限定理的生态学意义
 
@@ -1221,7 +1185,7 @@ SampleSize & Skewness & Kurtosis\\
 >
 > **批判性评估**：AI建议的替代分布是否在生态学上合理？例如，对于树木胸径数据建议"对数正态分布"通常是合理的（胸径为正且右偏），但建议"泊松分布"就可能混淆了计数数据与连续测量数据。
 
-### 生态学应用实例
+#### 生态学应用实例
 
 **种群密度估计**：
 通过在不同样方中计数物种个体数，即使个体分布本身是聚集的（如负二项分布），样本均值的分布仍近似正态，这使得我们能够可靠地估计总体密度。
@@ -1248,14 +1212,10 @@ CLT告诉我们样本均值趋向正态，但原始生态数据往往偏离正�
 
 为了直观展示混合分布的特性，图\@ref(fig:mixture-distribution)展示了一个典型的双峰混合分布示例。图中浅蓝色直方图显示了由两个不同正态分布混合生成的数据分布，红色曲线为核密度估计。可以清晰地观察到两个明显的峰值：一个位于10附近（来自第一个正态分布N(10,2)），另一个位于20附近（来自第二个正态分布N(20,3)），混合比例为60%和40%。这种双峰形态在生态学中常见于描述来自不同亚种群或不同环境条件下的数据，体现了混合分布在处理异质性数据时的强大能力。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/mixture-distribution-1} 
-
-}
-
-\caption{混合分布：双峰数据的概率密度函数}(\#fig:mixture-distribution)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/mixture-distribution-1.png" alt="混合分布：双峰数据的概率密度函数" width="80%" />
+<p class="caption">(\#fig:mixture-distribution)混合分布：双峰数据的概率密度函数</p>
+</div>
 
 ### 零膨胀分布：处理零值过多的数据
 
@@ -1283,14 +1243,10 @@ $$P(Y = y) = \begin{cases}
 
 为了直观展示零膨胀分布的特征，下面的可视化对比了零膨胀泊松分布与普通泊松分布的形状差异。
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{02-probability_and_distribution_files/figure-latex/zero-inflation-plot-1} 
-
-}
-
-\caption{零膨胀泊松分布与普通泊松分布的对比。零膨胀分布在零值处有额外的概率质量，反映了生态学中稀有物种数据的典型特征}(\#fig:zero-inflation-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="02-probability_and_distribution_files/figure-html/zero-inflation-plot-1.png" alt="零膨胀泊松分布与普通泊松分布的对比。零膨胀分布在零值处有额外的概率质量，反映了生态学中稀有物种数据的典型特征" width="80%" />
+<p class="caption">(\#fig:zero-inflation-plot)零膨胀泊松分布与普通泊松分布的对比。零膨胀分布在零值处有额外的概率质量，反映了生态学中稀有物种数据的典型特征</p>
+</div>
 
 如图\@ref(fig:zero-inflation-plot)所示，零膨胀分布最显著的特征是零值的过度集中。零膨胀分布在生态学中具有重要的应用价值，专门用于处理存在大量零值的计数数据。这种分布在以下生态学场景中特别有用：
 
@@ -1330,7 +1286,7 @@ $$P(Y = y) = \begin{cases}
 
 在离散分布家族中，伯努利分布描述了二元选择的基本模式，是构建更复杂模型的基础。二项分布将单次试验扩展到多次重复，适用于种群估计、繁殖成功率等计数问题。多项式分布处理多元选择场景，能够描述群落组成、资源分配等复杂生态系统的联合概率分布。泊松分布专门处理稀有事件和空间分布问题，是研究稀有物种分布和随机分布模式的重要工具。几何分布和负二项分布则关注等待时间问题，分别描述第一次成功和第r次成功所需的努力，在行为生态学和进化研究中具有重要应用。
 
-连续分布家族则为我们提供了描述测量值变化的数学工具。均匀分布刻画了完全随机的选择过程，指数分布描述了事件发生的时间间隔，特别适合生存分析和风险建模。正态分布以其经典的钟形曲线和中心极限定理的支撑，成为生态学中最常用的分布之一，能够描述大多数受到多重微小因素影响的生态变量。威布尔分布提供了更灵活的生存分析工具，能够刻画随时间变化的死亡风险模式。伽马分布作为指数分布的一般化，适用于描述累积等待时间和生物量积累过程。贝塔分布则是处理比例变量的理想选择，特别适合行为时间分配和资源选择偏好的研究。
+连续分布家族则为我们提供了描述测量值变化的数学工具。均匀分布刻画了完全随机的选择过程。正态分布以其经典的钟形曲线和中心极限定理的支撑，成为生态学中最常用的分布之一，能够描述大多数受到多重微小因素影响的生态变量。此外，通过本章的AI视角讨论，我们还初步接触了指数分布、伽马分布和贝塔分布在深度学习损失函数设计中的应用，这些分布将在后续章节中进一步展开。
 
 中心极限定理作为概率论的核心成果，解释了为什么正态分布在统计学中如此普遍。无论原始总体分布形态如何，只要样本量足够大，样本均值的分布就会趋于正态，这为生态学的统计推断提供了坚实的理论基础。通过这个定理，我们能够在不知道总体真实分布的情况下，仍然能够进行可靠的参数估计和假设检验。
 
@@ -1338,7 +1294,7 @@ $$P(Y = y) = \begin{cases}
 
 概率与分布理论的价值不仅在于提供具体的计算方法，更在于培养一种“概率思维"，用数学语言理解和描述生态世界的能力。在人工智能技术快速发展的今天，这种能力显得尤为重要。AI模型虽然能够处理海量数据，但其输出本质上是概率性的，只有深刻理解概率原理，才能正确解读AI的预测结果，评估模型的可信度。
 
-生态学研究面对的是自然界中最复杂的系统之一。与物理实验不同，生态学观察通常无法在完全受控的条件下重复进行。概率与分布理论为我们提供了一种量化不确定性的工具，帮助我们设计更科学的生态调查方案，准确解读复杂的生态数据，与数据科学家高效合作，并在AI时代保持批批判性和创造性。
+生态学研究面对的是自然界中最复杂的系统之一。与物理实验不同，生态学观察通常无法在完全受控的条件下重复进行。概率与分布理论为我们提供了一种量化不确定性的工具，帮助我们设计更科学的生态调查方案，准确解读复杂的生态数据，与数据科学家高效合作，并在AI时代保持批判性和创造性。
 
 通过本章的学习，我们不仅掌握了概率与分布的基本概念和计算方法，更重要的是建立了连接生态观察与数学分析的桥梁。这种数学框架使我们能够从定性的生态描述迈向定量的科学分析，为理解生物决策机制、种群动态、群落结构等生态学核心问题提供了强有力的工具。在数据驱动的生态学时代，概率与分布理论将继续发挥不可替代的作用，帮助我们更好地理解和保护这个充满不确定性的自然世界。
 

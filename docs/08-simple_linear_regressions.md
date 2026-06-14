@@ -14,7 +14,7 @@
 
 常林站在天童山样地中，手中是50棵树的测量数据：胸径、树高、年生长量，以及每棵树冠层上方的光照强度。她想知道一个看似简单却关乎整个保护区管理的问题：光照每增加一个单位，树木年生长量会增加多少？这个问题无法用肉眼观察回答——她需要一个数学模型，将生态关系翻译为精确的数字语言。
 
-**首先**，线性回归提供了这种翻译工具。它将"光照影响生长"这个模糊的生态直觉，转化为一个简洁的数学陈述：$y = \beta_0 + \beta_1 x$。$\beta_1$告诉常林光照每增加1 μmol/m²/s，树木年生长量平均增加多少厘米。更重要的是，回归不仅给出估计值，还给出这个估计的不确定性——标准误、置信区间、p值——让她知道这个数字有多可靠。
+**首先**，线性回归提供了这种翻译工具。它将"光照影响生长"这个模糊的生态直觉，转化为一个简洁的数学陈述：$y = \beta_0 + \beta_1 x$。$\beta_1$将直接回答她的核心问题：光照每增加1 μmol/m²/s，树木年生长量平均增加多少厘米。更重要的是，回归不仅给出估计值，还给出这个估计的不确定性——标准误、置信区间、p值——让她知道这个数字有多可靠。
 
 **进而**，常林的追问自然地从"光照够不够"扩展到"还有哪些因素在影响生长"。多元回归让她同时纳入土壤养分、邻体竞争、海拔等多个预测变量，在"其他条件不变"的前提下分离每个因子的独立贡献。多项式回归则让她捕捉到光照对生长的非线性饱和效应——当光照超过某个阈值后，边际增益递减，这比直线假设更接近光合作用的生理真实。
 
@@ -32,19 +32,21 @@
 - **x**是自变量（解释变量），在常林的研究中就是温度。这个因子如同森林生态系统的调节器，影响着树木的生长。
 - **$\beta_0$**是截距项，表示当自变量$x$为0时，因变量$y$的期望值。在常林的研究中，这表示在温度为0℃时的树木生长速率，反映了森林生态系统的基线状态。
 - **$\beta_1$**是斜率系数，表示自变量$x$每变化一个单位，因变量$y$平均变化多少单位。这是线性回归的核心，告诉常林温度与生长速率关系的强度和方向。
-- **$\varepsilon$**是误差项，代表模型无法解释的随机变异。在生态学中，这反映了自然界的随机性、测量误差以及其他未考虑因素的影响，提醒常林生态系统的复杂性永远超出模型的简化描述。
+- **$\varepsilon$**是误差项（error term），代表模型无法解释的随机变异。它来自自然界的随机性、测量误差以及所有未被纳入模型的生态因子。需要特别注意的是，$\varepsilon$是理论上的**不可观测**量——我们永远无法知道它的真实值。在实际分析中，我们用**残差**（residual，$e = y - \hat{y}$）来近似它：残差是观测值$y$与模型预测值$\hat{y}$之差（可正可负），是可以从数据中计算出来的。理解这一区别是正确解读回归诊断的前提。
 
 ## 生态关系的最小二乘估计
 
 常林需要找到最能代表温度与生长速率关系的直线。最小二乘法是线性回归中估计参数$\beta_0$和$\beta_1$的核心方法。它的基本思想是找到一条直线，使得所有数据点到这条直线的垂直距离（残差）的平方和最小。这种方法如同在生态数据的星空中寻找最亮的轨迹线，让她的模型与观测数据达到最佳契合。
 
-在生态学研究中，最小二乘估计具有重要的实际意义。当常林收集了野外调查数据后，她希望找到最能代表这些数据真实关系的直线。在研究森林中树木胸径与树高的关系时，最小二乘法能够给出最符合观测数据的回归线，帮助她理解树木生长的基本规律。
+在生态学研究中，最小二乘估计具有重要的实际意义。当常林收集了野外调查数据后，她希望找到最能代表这些数据真实关系的直线——就温度与生长速率而言，就是穿过散点云、使得各数据点到直线的垂直距离平方和最小的那条线。
 
 ### R语言中的lm()函数详解
 
 常林打开R软件，准备使用`lm()`函数来拟合她的第一个线性回归模型。这个函数是"linear model"的缩写，是R中最基础也是最重要的统计建模函数之一。
 
 ### lm()函数的基本语法
+
+`lm()`函数的调用格式如下，其中前两个参数是最常用的：
 
 ```r
 lm(formula, data, subset, weights, na.action, ...)
@@ -89,7 +91,7 @@ str(model)
 
 `lm`对象包含以下重要组件：
 
-- **coefficients**：回归系数向量，包含截距和斜率
+- **coefficients**：回归系数向量，包含截距项和所有自变量的斜率系数
 - **residuals**：残差向量（观测值 - 预测值）
 - **fitted.values**：拟合值向量
 - **rank**：模型矩阵的秩
@@ -100,34 +102,34 @@ str(model)
 
 ### 提取回归结果的常用函数
 
-R提供了多个函数来提取和分析回归结果：
+R提供了多个函数来提取和分析回归结果，以下是最常用的几个：
 
 ```r
-# 基本摘要信息
+# 基本摘要信息——最全面的模型概览，包含系数、R²、F检验等
 summary(model)
 
-# 提取系数
+# 提取系数——coef()和coefficients()等价，返回命名的数值向量
 coef(model)
 coefficients(model)
 
-# 提取残差
+# 提取残差——residuals()和resid()等价，返回每个观测的残差值
 residuals(model)
 resid(model)
 
-# 提取拟合值
+# 提取拟合值——fitted()和fitted.values()等价，返回模型预测值
 fitted(model)
 fitted.values(model)
 
-# 模型诊断图
+# 模型诊断图——一次生成四张诊断图（残差vs拟合值、Q-Q、尺度-位置、残差vs杠杆）
 plot(model)
 
-# 方差分析表
+# 方差分析表——用于比较嵌套模型的拟合差异
 anova(model)
 
-# 置信区间
+# 置信区间——默认计算回归系数的95%置信区间
 confint(model)
 
-# 预测新值
+# 预测新值——基于模型对新数据进行预测，可指定预测区间或置信区间
 predict(model, newdata)
 ```
 
@@ -145,39 +147,48 @@ knitr::kable(summary(model)$coefficients,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:forest-survey-coefficients)森林调查温度与植物生长速率的关系 - 系数估计}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 2.1009145 & 0.4681754 & 4.487452 & 4.5e-05\\
-temperature & 0.4966745 & 0.0224552 & 22.118467 & 0.0e+00\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:forest-survey-coefficients)(\#tab:forest-survey-coefficients)森林调查温度与植物生长速率的关系 - 系数估计</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 2.1009145 </td>
+   <td style="text-align:right;"> 0.4681754 </td>
+   <td style="text-align:right;"> 4.487452 </td>
+   <td style="text-align:right;"> 4.5e-05 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> temperature </td>
+   <td style="text-align:right;"> 0.4966745 </td>
+   <td style="text-align:right;"> 0.0224552 </td>
+   <td style="text-align:right;"> 22.118467 </td>
+   <td style="text-align:right;"> 0.0e+00 </td>
+  </tr>
+</tbody>
+</table>
 
-为了直观展示温度与植物生长速率之间的关系，我们生成了散点图并添加了线性回归线（见\@ref(fig:forest-survey-plot)）。该图形化地呈现了常林森林调查数据的核心发现：随着温度从10℃升高到30℃，植物生长速率呈现明显的正相关趋势。图中深绿色的散点代表实际观测数据，红色直线为基于最小二乘法拟合的线性回归线，清晰地展示了温度对生长速率的正向影响模式。这种可视化方法不仅验证了线性关系的存在，还为理解生态系统中环境因子与生物响应之间的关系提供了直观依据。
+为了直观展示温度与植物生长速率之间的关系，我们生成了散点图并添加了线性回归线（见\@ref(fig:forest-survey-plot)）。该图直观呈现了常林森林调查数据的核心发现：随着温度从10℃升高到30℃，植物生长速率呈现明显的正相关趋势。图中深绿色的散点代表实际观测数据，红色直线为基于最小二乘法拟合的线性回归线，清晰地展示了温度对生长速率的正向影响模式。这种可视化方法不仅验证了线性关系的存在，还为理解生态系统中环境因子与生物响应之间的关系提供了直观依据。
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/forest-survey-plot-1.png" alt="温度与植物生长速率的散点图及线性回归拟合线。" width="80%" />
+<p class="caption">(\#fig:forest-survey-plot)温度与植物生长速率的散点图及线性回归拟合线。</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/forest-survey-plot-1} 
+通过上述回归分析，我们得以从四个维度量化温度与植物生长速率之间的生态关系：
 
-}
-
-\caption{温度与植物生长速率的散点图及线性回归拟合线。}(\#fig:forest-survey-plot)
-\end{figure}
-
-为了量化温度与植物生长速率之间的关系，我们使用R语言的`lm()`函数构建线性回归模型。`lm()`函数（linear model）是R语言中用于拟合线性模型的核心函数，它通过**最小二乘法**寻找最佳拟合直线。具体来说，`lm()`函数会寻找一条直线，使得所有数据点到这条直线的垂直距离（即残差）的平方和最小。
-
-在生态学应用中，`lm()`模型帮助我们：
-
-1. **估计关系强度**：通过斜率系数精确量化温度每变化1°C对生长速率的影响程度  
-2. **检验统计显著性**：通过t检验和p值判断观察到的关系是否具有统计学意义  
-3. **预测未知值**：基于建立的模型预测在特定温度条件下的生长速率  
-4. **评估模型拟合度**：通过R²值衡量模型解释数据变异的比例  
+1. **估计关系强度**：斜率系数精确量化了温度每变化1°C对生长速率的影响程度
+2. **检验统计显著性**：t检验和p值帮助我们判断观察到的关系是否具有统计学意义
+3. **预测未知值**：基于建立的模型，可以对特定温度条件下的生长速率进行预测
+4. **评估模型拟合度**：R²值衡量了模型解释数据变异的比例
 
 模型的具体参数估计结果如\@ref(tab:forest-survey-coefficients)所示，其中包含了截距项和斜率系数的估计值、标准误、t统计量和p值。
 
@@ -185,56 +196,46 @@ temperature & 0.4966745 & 0.0224552 & 22.118467 & 0.0e+00\\
 
 `summary()`函数提供了最全面的模型信息，理解这些输出对于正确解释生态学关系至关重要。
 
-**残差 (Residuals)**是观测值与模型预测值之间的差异，计算公式为残差 = 实际观测值 - 模型预测值。五数概括显示残差分布特征，包括最小值、第一四分位数、中位数、第三四分位数和最大值。从生态学意义来看，残差反映了模型无法解释的随机变异，包括测量误差、未考虑的环境因子以及生态系统的自然随机性。理想情况下，残差应该随机分布在0附近，没有明显的模式。
+**残差 (Residuals)**是观测值与模型预测值之间的差异（$e = y - \hat{y}$），它是理论误差项$\varepsilon$的观测近似。`summary()`输出的五数概括显示残差分布特征，包括最小值、第一四分位数、中位数、第三四分位数和最大值。从生态学意义来看，残差反映了模型无法解释的随机变异——测量误差、未考虑的环境因子以及生态系统的自然随机性。理想情况下，残差应该随机分布在0附近，没有明显的模式。
 
-**系数估计 (Coefficients)**包括截距项和斜率系数。截距项表示当所有自变量为0时因变量的期望值，而斜率系数表示自变量每变化1个单位，因变量平均变化的量。每个系数包含估计值、标准误、t值和p值。在生态学解释中，例如在温度与生长速率的关系中，斜率系数0.5表示温度每升高1°C，生长速率平均增加0.5单位。
+**系数估计 (Coefficients)**包括截距项和斜率系数。截距项表示当所有自变量为0时因变量的期望值，而斜率系数表示自变量每变化1个单位，因变量平均变化的量。每个系数包含估计值、标准误、t值和p值。在生态学解释中，以上述温度与生长速率的关系为例（假设斜率系数估计值为0.5），这意味着温度每升高1°C，生长速率平均增加0.5单位。
 
-**决定系数 (Multiple R-squared)**表示模型能够解释的因变量变异比例，计算公式为R² = 1 - (残差平方和 / 总平方和)。取值范围从0到1，R²=0.65表示模型解释了65%的物种丰富度变异。这个指标具有重要的生态学意义，衡量模型捕捉生态关系的能力。图\@ref(fig:r2-comparison-plot)直观展示了不同R²值对应的拟合效果差异。
+**决定系数 (Multiple R-squared)**表示模型能够解释的因变量变异比例，计算公式为R² = 1 - (残差平方和 / 总平方和)。取值范围从0到1，例如R²=0.65表示模型解释了因变量65%的变异。这个指标在生态学中衡量模型捕捉生态关系的能力——R²越高，说明我们能用已知的环境因子解释越多的生态响应变异。图\@ref(fig:r2-comparison-plot)直观展示了不同R²值对应的拟合效果差异。
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/r2-comparison-plot-1} 
-
-}
-
-\caption{不同R²值的拟合效果对比：左(R²=0.1)弱、中(R²=0.5)中等、右(R²=0.9)强。}(\#fig:r2-comparison-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/r2-comparison-plot-1.png" alt="不同R²值的拟合效果对比：左(R²=0.1)弱、中(R²=0.5)中等、右(R²=0.9)强。" width="80%" />
+<p class="caption">(\#fig:r2-comparison-plot)不同R²值的拟合效果对比：左(R²=0.1)弱、中(R²=0.5)中等、右(R²=0.9)强。</p>
+</div>
 
 
 ```
 ## === 不同R²值的生态学解释 ===
 ## 
-## R² = 0.1 (左图): 模型只能解释10%的变异，表明环境因子对生态响应的影响很弱，
-##     大部分变异由其他未考虑因素决定
+##  R² = 0.1 (左图): 模型只能解释10%的变异，表明环境因子对生态响应的影响很弱， 大部分变异由其他未考虑因素决定
 ## 
-## R² = 0.5 (中图): 模型解释了50%的变异，表明环境因子是重要的驱动因素，
-##     但仍有相当一部分变异需要其他解释
+##  R² = 0.5 (中图): 模型解释了50%的变异，表明环境因子是重要的驱动因素， 但仍有相当一部分变异需要其他解释
 ## 
-## R² = 0.9 (右图): 模型解释了90%的变异，表明环境因子是生态响应的主要决定因素，
-##     模型具有很强的预测能力
+##  R² = 0.9 (右图): 模型解释了90%的变异，表明环境因子是生态响应的主要决定因素， 模型具有很强的预测能力
 ```
 
 **调整后的决定系数 (Adjusted R-squared)**
 
-- 对R²的修正，考虑了模型中自变量的数量
-- 公式：调整R² = 1 - [(1-R²)(n-1)/(n-p-1)]，其中n是样本量，p是自变量个数
-- **为什么需要两个值？**：R²总是随着变量增加而增加，即使添加无关变量；调整R²惩罚模型复杂度，只有真正改善模型的变量才会提高调整R²
-- 在生态学中，调整R²更可靠，避免过度拟合
+调整R²是对普通R²的修正，它在R²的基础上惩罚了模型中自变量的数量。其公式为：调整R² = 1 - [(1-R²)(n-1)/(n-p-1)]，其中n是样本量，p是自变量个数。**为什么需要两个值？** 因为R²总是随着变量的增加而单调递增——即使加入的是与因变量毫无关系的噪声变量，R²也不会下降；调整R²则不同，它会对模型复杂度施加惩罚，只有那些真正改善了模型拟合的变量才会使调整R²提高。在生态学建模中，调整R²比普通R²更可靠，能有效帮助我们避免过度拟合。
 
 
 
 
 ``` r
-# 模型拟合：拟合不同复杂度的模型
+# 模型拟合：比较不同变量数量下R²与调整R²的变化趋势
 models <- list()
 r2_values <- numeric(10)
 adj_r2_values <- numeric(10)
 
 # 拟合从1到10个变量的模型
 for (i in 1:10) {
-  # 构建模型公式
+  # 构建模型公式，逐步加入更多自变量
   formula_str <- paste("y ~", paste(paste0("x", 1:i), collapse = " + "))
 
   # 拟合线性回归模型
@@ -245,9 +246,81 @@ for (i in 1:10) {
   r2_values[i] <- summary(model)$r.squared
   adj_r2_values[i] <- summary(model)$adj.r.squared
 }
+
+# 输出对比结果：展示R²始终递增而调整R²可能下降的现象
+comparison <- data.frame(
+  变量数 = 1:10,
+  R平方 = round(r2_values, 3),
+  调整R平方 = round(adj_r2_values, 3)
+)
+knitr::kable(comparison,
+             caption = "R²与调整R²随变量数量增加的变化对比",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:r2-adjr2-comparison)(\#tab:r2-adjr2-comparison)R²与调整R²随变量数量增加的变化对比</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> 变量数| R </th>
+   <th style="text-align:right;"> 方| 调整R </th>
+   <th style="text-align:right;"> 方| </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0.577 </td>
+   <td style="text-align:right;"> 0.568 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 2 </td>
+   <td style="text-align:right;"> 0.605 </td>
+   <td style="text-align:right;"> 0.588 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 3 </td>
+   <td style="text-align:right;"> 0.615 </td>
+   <td style="text-align:right;"> 0.590 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 4 </td>
+   <td style="text-align:right;"> 0.615 </td>
+   <td style="text-align:right;"> 0.581 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0.620 </td>
+   <td style="text-align:right;"> 0.577 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 6 </td>
+   <td style="text-align:right;"> 0.620 </td>
+   <td style="text-align:right;"> 0.567 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 0.621 </td>
+   <td style="text-align:right;"> 0.558 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 0.632 </td>
+   <td style="text-align:right;"> 0.561 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 0.658 </td>
+   <td style="text-align:right;"> 0.581 </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> 10 </td>
+   <td style="text-align:right;"> 0.659 </td>
+   <td style="text-align:right;"> 0.571 </td>
+  </tr>
+</tbody>
+</table>
 
 我们使用R语言的`plot(model, which = 1)`命令生成残差 vs 拟合值图（见\@ref(fig:residual-vs-fitted-plot)），这是线性回归诊断中最重要的图形之一。该命令通过`which = 1`参数指定生成第一个诊断图，其中横轴显示模型的拟合值（预测值），纵轴显示对应的残差（观测值与预测值之差）。在生态学建模中，这个图形帮助我们验证两个关键假设：线性关系假设（残差应随机分布在0附近）和同方差性假设（残差的变异程度应保持恒定）。通过观察残差的分布模式，我们可以判断模型是否充分捕捉了生态变量之间的真实关系。
 
@@ -258,14 +331,10 @@ for (i in 1:10) {
 plot(model, which = 1, main = "残差 vs 拟合值图")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/residual-vs-fitted-plot-1} 
-
-}
-
-\caption{残差 vs 拟合值图：用于检查线性性和同方差性假设。}(\#fig:residual-vs-fitted-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/residual-vs-fitted-plot-1.png" alt="残差 vs 拟合值图：用于检查线性性和同方差性假设。" width="80%" />
+<p class="caption">(\#fig:residual-vs-fitted-plot)残差 vs 拟合值图：用于检查线性性和同方差性假设。</p>
+</div>
 
 **残差 vs 拟合值图**主要用于检查线性性和同方差性两个重要假设。在理想情况下，残差应该随机分布在水平线y=0周围，没有任何明显的模式。如果残差呈现U形或倒U形分布，这往往暗示着非线性关系的存在。例如，在研究植物生长与温度的关系时，如果存在最适温度范围，残差就可能呈现U形模式。另一方面，如果残差随着拟合值的增大而扩散，形成所谓的"喇叭形"模式，这表明存在异方差性问题。在生态学中，这种异方差性现象十分常见，比如物种丰富度在资源丰富的地区变异较小，而在资源贫瘠的地区变异较大。
 
@@ -278,20 +347,14 @@ plot(model, which = 1, main = "残差 vs 拟合值图")
 plot(model, which = 2, main = "正态Q-Q图")
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/qq-plot-1} 
-
-}
-
-\caption{正态Q-Q图：用于检查残差的正态性假设。}(\#fig:qq-plot)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/qq-plot-1.png" alt="正态Q-Q图：用于检查残差的正态性假设。" width="80%" />
+<p class="caption">(\#fig:qq-plot)正态Q-Q图：用于检查残差的正态性假设。</p>
+</div>
 
 **正态Q-Q图**专门用于评估残差的正态性。理想情况下，标准化残差应该大致沿着45度对角线分布。轻微的尾部偏离通常是可以接受的，但如果出现系统性偏离，特别是S形或弯曲模式，就表明残差不服从正态分布。生态学数据经常面临正态性挑战，特别是计数数据（如个体数量）和比例数据（如覆盖率）。当发现严重的非正态性时，我们需要考虑数据变换或使用更适合的统计模型。
 
-**尺度-位置图**提供了另一种检查同方差性的视角。这个图展示了标准化残差的平方根与拟合值的关系。理想情况下，点应该围绕水平线随机分布。如果出现明显的上升或下降趋势，就表明存在异方差性。在生态学研究中，这种异方差性往往与环境条件的极端性相关。例如，在干旱胁迫严重的地区，植物生长速率的变异可能显著增大；而在适宜的环境中，变异相对较小。
-
-图\@ref(fig:scale-location-plot)展示了尺度-位置图的生成代码和结果。代码中`plot(model, which = 3)`命令调用R的绘图函数，其中`which = 3`参数指定生成尺度-位置图。这个图将标准化残差的平方根（√|标准化残差|）作为纵轴，拟合值作为横轴，用于检测残差的方差是否随着拟合值的变化而变化。
+我们使用`plot(model, which = 3)`命令生成尺度-位置图（见\@ref(fig:scale-location-plot)），这是检查同方差性的另一种视角。该命令通过`which = 3`参数指定生成第三个诊断图，其中纵轴为标准化残差的平方根（√|标准化残差|），横轴为拟合值，用于检测残差的方差是否随着拟合值的变化而变化。
 
 
 ``` r
@@ -300,18 +363,14 @@ plot(model, which = 2, main = "正态Q-Q图")
 plot(model, which = 3, main = "尺度-位置图")
 ```
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/scale-location-plot-1.png" alt="尺度-位置图：用于检查同方差性假设。" width="80%" />
+<p class="caption">(\#fig:scale-location-plot)尺度-位置图：用于检查同方差性假设。</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/scale-location-plot-1} 
+**尺度-位置图**提供了另一种检查同方差性的视角。理想情况下，点应该围绕水平线随机分布。如果出现明显的上升或下降趋势，就表明存在异方差性。在生态学研究中，这种异方差性往往与环境条件的极端性相关。例如，在干旱胁迫严重的地区，植物生长速率的变异可能显著增大；而在适宜的环境中，变异相对较小。
 
-}
-
-\caption{尺度-位置图：用于检查同方差性假设。}(\#fig:scale-location-plot)
-\end{figure}
-
-**残差 vs 杠杆图**帮助我们识别异常值和有影响的观测点。在这个图中，我们需要特别关注那些同时具有高杠杆和大残差的点。高杠杆点是指在自变量空间中位置异常的观测，它们对回归线的位置有较大影响；大残差点则是模型预测效果很差的观测。在生态调查中，这些有影响的点可能代表着特殊的生境类型或异常的环境条件，需要仔细检查其生态学合理性。Cook's距离等高线提供了判断观测点影响程度的参考标准。
-
-图\@ref(fig:residual-leverage-plot)展示了残差 vs 杠杆图的生成代码和结果。代码中`plot(model, which = 5)`命令调用R的绘图函数，其中`which = 5`参数指定生成残差 vs 杠杆图。这个图将标准化残差作为纵轴，杠杆值作为横轴，同时显示Cook's距离等高线，用于识别对模型有过度影响的观测点。
+我们使用`plot(model, which = 5)`命令生成残差 vs 杠杆图（见\@ref(fig:residual-leverage-plot)），用于识别对模型有过度影响的观测点。该命令通过`which = 5`参数指定生成第四个诊断图，其中纵轴为标准化残差，横轴为杠杆值，同时显示Cook's距离等高线作为判断观测点影响程度的参考标准。
 
 
 ``` r
@@ -320,18 +379,16 @@ plot(model, which = 3, main = "尺度-位置图")
 plot(model, which = 5, main = "残差 vs 杠杆图")
 ```
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/residual-leverage-plot-1.png" alt="残差 vs 杠杆图：用于识别异常值和有影响的观测点。" width="80%" />
+<p class="caption">(\#fig:residual-leverage-plot)残差 vs 杠杆图：用于识别异常值和有影响的观测点。</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/residual-leverage-plot-1} 
-
-}
-
-\caption{残差 vs 杠杆图：用于识别异常值和有影响的观测点。}(\#fig:residual-leverage-plot)
-\end{figure}
+**残差 vs 杠杆图**帮助我们识别异常值和有影响的观测点。在这个图中，我们需要特别关注那些同时具有高杠杆和大残差的点。高杠杆点是指在自变量空间中位置异常的观测，它们对回归线的位置有较大影响；大残差点则是模型预测效果很差的观测。在生态调查中，这些有影响的点可能代表着特殊的生境类型或异常的环境条件，需要仔细检查其生态学合理性。
 
 ### 模型质量的综合评估
 
-一个良好的回归模型应该在所有诊断图中都表现出令人满意的特征。在残差 vs 拟合值图中，我们希望看到残差随机分布在零线周围，没有任何明显的模式。这种随机分布表明模型已经充分捕捉了数据中的线性趋势，剩余的是纯粹的随机变异。在正态Q-Q图中，点应该基本沿着对角线分布，轻微的尾部偏离通常是可以接受的，但系统性偏离则需要引起重视。尺度-位置图应该显示水平趋势，表明残差的方差在不同拟合值水平上保持相对恒定。最后，在残差 vs 杠杆图中，所有观测点都应该位于Cook's距离等高线之内，表明没有单个观测对模型结果产生过度影响。
+一个良好的回归模型应该在所有诊断图中都表现出令人满意的特征。在残差 vs 拟合值图中，我们希望看到残差随机分布在水平线y=0周围，没有任何明显的模式。这种随机分布表明模型已经充分捕捉了数据中的线性趋势，剩余的是纯粹的随机变异。在正态Q-Q图中，点应该基本沿着对角线分布，轻微的尾部偏离通常是可以接受的，但系统性偏离则需要引起重视。尺度-位置图应该显示水平趋势，表明残差的方差在不同拟合值水平上保持相对恒定。最后，在残差 vs 杠杆图中，所有观测点都应该位于Cook's距离等高线之内，表明没有单个观测对模型结果产生过度影响。
 
 相反，当模型存在问题时，诊断图会显示出明显的警示信号。非线性关系通常表现为残差的U形或倒U形分布，表明真实关系可能比线性模型所能描述的更为复杂。严重的异方差性会在残差 vs 拟合值图和尺度-位置图中表现为明显的"喇叭形"或趋势性模式，这意味着模型的预测精度在不同区域存在系统性差异。严重的非正态性在Q-Q图中表现为系统性偏离对角线，这可能影响统计推断的可靠性。有影响的异常值在残差 vs 杠杆图中表现为超出Cook's距离等高线的点，这些点可能对模型结果产生不成比例的影响。
 
@@ -339,19 +396,19 @@ plot(model, which = 5, main = "残差 vs 杠杆图")
 
 在生态学研究中，我们经常面临各种诊断挑战，但幸运的是，对于每个常见问题都有相应的解决方案。当遇到非线性关系时，我们可以考虑使用多项式回归来捕捉曲线趋势，或者采用更加灵活的广义可加模型，后者不需要预先指定函数形式。对于异方差性问题，加权最小二乘法可以根据观测值的可靠性赋予不同权重，或者通过适当的数据变换（如对数变换、平方根变换）来稳定方差。
 
-当数据严重偏离正态分布时，广义线性模型提供了更加合适的框架，它允许误差项服从不同的分布族，如泊松分布（适用于计数数据）或二项分布（适用于比例数据）。对于空间自相关问题，空间回归模型能够 explicitly 考虑观测点之间的空间依赖性，从而提供更加准确的参数估计。
+当数据严重偏离正态分布时，广义线性模型提供了更加合适的框架，它允许误差项服从不同的分布族，如泊松分布（适用于计数数据）或二项分布（适用于比例数据）。对于空间自相关问题，空间回归模型能够明确考虑观测点之间的空间依赖性，从而提供更加准确的参数估计。
 
 回归诊断不仅仅是一个技术性步骤，更是连接统计模型与生态学现实的重要桥梁。通过仔细的回归诊断，我们不仅能够确保模型的统计可靠性，更重要的是能够深入理解生态过程的本质特征。一个经过充分诊断的模型不仅提供数值结果，更能够揭示生态系统的内在规律，为生态学解释提供坚实的科学基础。
 
 ## 残差分析与AI：从简约原则到双重下降
 
-### 残差分析与AI：双重下降现象
+### 双重下降：当参数数量超过样本量时
 
-经过回归诊断的学习，我们已经掌握了评估模型质量的核心工具，残差分析。在经典统计框架中，残差分析服务于一个不言自明的核心原则：在拟合优度和模型复杂度之间寻找平衡。这一原则的经典体现就是偏差-方差权衡（bias-variance tradeoff）的U形曲线：随着模型复杂度增加，训练误差单调下降，但测试误差（泛化误差）先下降后上升，构成一个经典的U形。正是这条U形曲线支撑了统计建模中的"简约原则"（奥卡姆剃刀）：在拟合能力相近的模型中，选择最简单的那个。
+经过回归诊断的学习，我们已经掌握了评估模型质量的核心工具——残差分析。在经典统计框架中，残差分析服务于一个不言自明的核心原则：在拟合优度和模型复杂度之间寻找平衡。这一原则的经典体现就是偏差-方差权衡（bias-variance tradeoff）的U形曲线：随着模型复杂度增加，训练误差单调下降，但测试误差（泛化误差）先下降后上升，构成一个经典的U形。正是这条U形曲线支撑了统计建模中的"简约原则"（奥卡姆剃刀）：在拟合能力相近的模型中，选择最简单的那个。
 
-这一原则在生态统计教学中被反复强调，也是常林在多项式回归中亲身体验的教训，7次多项式虽然$R^2$更高，但泛化能力远不如二次多项式。这个教训是如此基本，以至于我们几乎将其视为统计建模的"物理学定律"。然而，现代深度学习的发展揭示了一个令人困惑且发人深省的现象，它迫使我们重新审视这一经典教条。
+这一原则在生态统计教学中被反复强调。常林稍后将在多项式回归中亲身体验这个教训（见本章"总结"部分）：7次多项式虽然$R^2$更高，但泛化能力远不如二次多项式。这个教训是如此基本，以至于我们几乎将其视为统计建模的"物理学定律"。然而，现代深度学习的发展揭示了一个令人困惑且发人深省的现象，它迫使我们重新审视这一经典教条。
 
-**双重下降现象：U形曲线之外的另一半**。Belkin等人在2019年系统描述了"双重下降"（Double Descent）现象：当模型参数数量逐渐增加并超过训练样本数时（进入所谓的"过参数化"区域），测试误差并非如经典理论预测的那样持续上升，而是，在经历了一个峰值（插值阈值附近）后，再次下降。完整的测试误差曲线呈现下降-上升-再下降的"双重下降"模式。
+**双重下降现象：U形曲线之外的另一半**。Belkin等人在2019年系统描述了"双重下降"（Double Descent）现象：当模型参数数量逐渐增加并超过训练样本数时（进入所谓的"过参数化"区域），测试误差并非如经典理论预测的那样持续上升，而是在经历了一个峰值（插值阈值附近）后再次下降。完整的测试误差曲线呈现下降-上升-再下降的"双重下降"模式。
 
 这在经典统计框架中是完全无法解释的。按照传统理解，当一个模型的参数数量超过样本数量（$p > n$）时，存在无限多个完美拟合训练数据的参数解（插值解），模型理应严重过拟合。但实践中，大规模神经网络，参数数量远超训练样本数，不仅没有崩溃，反而表现出卓越的泛化能力。这种"过参数化的良性效应"挑战了我们对过拟合的传统认知。
 
@@ -374,7 +431,7 @@ plot(model, which = 5, main = "残差 vs 杠杆图")
 
 ### 生态学应用实例
 
-常林继续她的研究，现在她需要分析森林中树木胸径（DBH）与树高的关系。这是一个经典的生态学问题，可以帮助她理解树木的生长模式：
+在吸收了AI视角带来的统计哲学反思后，常林回到她的数据桌前，继续处理另一个经典的生态学问题：分析森林中树木胸径（DBH）与树高的关系。这个问题看似简单，却能帮助她理解树木的生长模式和不同树种间的结构差异：
 
 
 
@@ -394,37 +451,51 @@ maple_model <- lm(height ~ dbh,
                   data = forest_data[forest_data$species == "枫树", ])
 ```
 
-我们首先拟合了整体回归模型，该模型不考虑树种差异，直接分析胸径对树高的影响。表\@ref(tab:overall-model-coefficients)展示了整体回归模型的系数估计结果，包括截距项和斜率项的估计值、标准误、t统计量和p值。
+我们首先拟合了整体回归模型，该模型忽略树种差异，假设所有树木共享同一条胸径-树高关系曲线。但生态学常识告诉我们：不同树种的生长策略和形态结构截然不同——橡树粗壮矮胖，松树挺拔高耸，枫树居中。如果强行用一条回归线代表所有树种，我们可能会遗漏重要的生态信息。因此，除了整体模型外，我们还需要分树种拟合，比较不同树种的斜率（树高随胸径的增速）是否存在差异。表\@ref(tab:overall-model-coefficients)首先展示了整体模型的系数估计结果。
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:overall-model-coefficients)整体回归模型结果}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 1.4358832 & 0.6029381 & 2.381477 & 0.0193989\\
-dbh & 0.3733529 & 0.0174277 & 21.422995 & 0.0000000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:overall-model-coefficients)(\#tab:overall-model-coefficients)整体回归模型结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 1.4358832 </td>
+   <td style="text-align:right;"> 0.6029381 </td>
+   <td style="text-align:right;"> 2.381477 </td>
+   <td style="text-align:right;"> 0.0193989 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> dbh </td>
+   <td style="text-align:right;"> 0.3733529 </td>
+   <td style="text-align:right;"> 0.0174277 </td>
+   <td style="text-align:right;"> 21.422995 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+</tbody>
+</table>
 
 
 ```
-## 
 ## === 各树种回归模型比较 ===
 ## 
-## 橡树模型: 截距 = 3.484 斜率 = 0.362 R² = 0.878 
+##  橡树模型: 截距 = 3.484 斜率 = 0.362 R² = 0.878 
 ## 
-## 松树模型: 截距 = 1.541 斜率 = 0.353 R² = 0.863 
+##  松树模型: 截距 = 1.541 斜率 = 0.353 R² = 0.863 
 ## 
-## 枫树模型: 截距 = 1.996 斜率 = 0.313 R² = 0.842
+##  枫树模型: 截距 = 1.996 斜率 = 0.313 R² = 0.842
 ```
 
-## 生态模型中的变量选择
+## 从单变量到多变量：多元线性回归
 
-常林发现，仅仅考虑温度对树木生长的影响是不够的。在真实的森林生态系统中，生物响应通常受到多个环境因子的共同影响。多元线性回归允许她同时考虑多个自变量，从而更全面地理解生态系统的复杂性。这种扩展的建模方法如同为她的数学望远镜添加了多个镜头，让她能够同时观察多个生态因子的综合效应。
+分树种建模让常林认识到：忽略分组信息（树种）会导致对胸径-树高关系的片面理解。顺着同样的逻辑推演，她开始追问一个更深入的问题——之前的温度-生长速率分析只考虑了单一预测变量，但真实的森林生态系统中，生物响应从来就不是由单一因子决定的。温度、降水、土壤养分……多个环境因子在同时发挥作用。多元线性回归允许她同时考虑多个自变量，从而更全面地理解生态系统的复杂性。这种扩展的建模方法如同为她的数学望远镜添加了多个镜头，让她能够同时观察多个生态因子的综合效应。
 
 多元线性回归的公式扩展为：$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \cdots + \beta_k x_k + \varepsilon$$
 
@@ -445,12 +516,10 @@ y ~ x1 * x2
 
 ```
 
-这些公式语法在生态学研究中非常有用：
+这些公式语法在生态学研究中非常实用：
 
-- **多元回归**：同时考虑多个环境因子的影响
-- **交互项**：研究两个环境因子的交互作用
-
-在生态学中，我们经常使用这些复杂的模型公式来更准确地描述生态系统的复杂性。
+- **多元回归**：同时考虑多个环境因子的独立影响
+- **交互项**：研究两个环境因子的协同或拮抗作用（例如温度升高对生物量的促进效应是否因降水量的不同而改变）
 
 
 
@@ -461,37 +530,65 @@ multi_model <- lm(biomass ~ temperature + precipitation + soil_nitrogen,
                   data = forest_multi_data)
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:multi-regression-results)多元线性回归模型结果}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 7.3208544 & 1.4611221 & 5.010433 & 0.0000025\\
-temperature & 0.5690084 & 0.0504506 & 11.278528 & 0.0000000\\
-precipitation & 0.0022242 & 0.0007307 & 3.043824 & 0.0030139\\
-soil\_nitrogen & 0.3226185 & 0.0177608 & 18.164683 & 0.0000000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:multi-regression-results)(\#tab:multi-regression-results)多元线性回归模型结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 7.3208544 </td>
+   <td style="text-align:right;"> 1.4611221 </td>
+   <td style="text-align:right;"> 5.010433 </td>
+   <td style="text-align:right;"> 0.0000025 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> temperature </td>
+   <td style="text-align:right;"> 0.5690084 </td>
+   <td style="text-align:right;"> 0.0504506 </td>
+   <td style="text-align:right;"> 11.278528 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> precipitation </td>
+   <td style="text-align:right;"> 0.0022242 </td>
+   <td style="text-align:right;"> 0.0007307 </td>
+   <td style="text-align:right;"> 3.043824 </td>
+   <td style="text-align:right;"> 0.0030139 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> soil_nitrogen </td>
+   <td style="text-align:right;"> 0.3226185 </td>
+   <td style="text-align:right;"> 0.0177608 </td>
+   <td style="text-align:right;"> 18.164683 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+</tbody>
+</table>
 
 多元线性回归模型的系数估计结果如表\@ref(tab:multi-regression-results)所示，在控制其他变量的情况下：
 
 
 ```
-## 
 ## === 生态学解释 ===
 ## 
-## - 温度每升高1°C，植物生物量平均增加 0.569 单位
-## - 降水量每增加1mm，植物生物量平均增加 0.002 单位
-## - 土壤氮含量每增加1ppm，植物生物量平均增加 0.323 单位
+##  - 温度每升高1°C，植物生物量平均增加 0.569 单位
+##  - 降水量每增加1mm，植物生物量平均增加 0.002 单位
+##  - 土壤氮含量每增加1ppm，植物生物量平均增加 0.323 单位
 ```
 
 ## 生态多因子模型的变量选择
 
-常林收集了8个环境因子的数据，但她意识到并非所有因子都需要包含在最终的回归模型中。变量选择是多元回归分析中的关键步骤，它帮助她找到既能充分解释生态现象又保持简约性的最优模型。
+上面的三变量模型只是常林探索的起点。在实际的森林调查中，她记录的环境因子远不止三个——海拔、坡度、冠层盖度、人为干扰强度等都可能影响生物量。当她将数据表扩展到8个候选预测变量后，一个新问题浮现出来：哪些变量真正值得纳入最终模型？
+
+常林意识到并非所有因子都需要包含在最终的回归模型中。变量选择是多元回归分析中的关键步骤，它帮助她找到既能充分解释生态现象又保持简约性的最优模型。
 
 ### 变量选择的重要性
 
@@ -516,14 +613,14 @@ soil\_nitrogen & 0.3226185 & 0.0177608 & 18.164683 & 0.0000000\\
 变量间的高度相关性会降低模型稳定性，使系数估计不可靠。选择变量时应检查方差膨胀因子（VIF），通常VIF > 10表示存在严重多重共线性问题。
 
 **4. 模型诊断原则**
-选择的变量应保证模型满足线性回归的基本假设：线性关系、误差独立性、方差齐性和正态分布。
+选择的变量应保证模型满足线性回归的基本假设：线性关系、误差独立性（各观测之间不相互关联，违反此假设常见于时间序列或空间数据）、方差齐性和正态分布。
 
-#### 系数显著性的理论基础
+### 回归系数的统计推断：显著性检验原理
 
-在多元线性回归中，系数显著性的计算基于以下统计理论：
+理解了变量选择的基本原则后，我们需要掌握判断系数是否显著的技术依据。在多元线性回归中，每个系数的统计显著性通过以下理论框架来评估：
 
 **1. $t$检验原理**
-每个回归系数β_j的显著性通过t检验来评估。检验统计量计算为：
+每个回归系数$\beta_j$的显著性通过t检验来评估。检验统计量计算为：
 
 $$t = \beta_j / SE(\beta_j)$$
 
@@ -573,8 +670,6 @@ p值表示在原假设（系数为0）成立的情况下，观察到当前或更
 
 首先对森林生态系统数据进行初步探索，数据的基本统计摘要如表\@ref(tab:data-summary)所示。
 
-**模型选择考虑**：通过散点图矩阵，我们可以初步判断变量间的关系模式（线性或非线性），这有助于决定是否需要考虑多项式项或交互项。
-
 
 ``` r
 # 1. 数据探索
@@ -583,26 +678,101 @@ knitr::kable(summary(forest_ecosystem_data),
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:data-summary)数据框摘要}
-\centering
-\begin{tabular}[t]{llllllllll}
-\toprule
-  &    richness &      area &   vegetation & water\_distance &    soil\_ph &   elevation & precipitation &  canopy\_cover & human\_disturbance\\
-\midrule
- & Min.   : 1.00 & Min.   : 1.052 & Min.   :0.1107 & Min.   :0.1431 & Min.   :4.506 & Min.   :123.1 & Min.   : 503.1 & Min.   :0.2039 & Min.   :0.00419\\
- & 1st Qu.: 6.00 & 1st Qu.:29.358 & 1st Qu.:0.2462 & 1st Qu.:0.8951 & 1st Qu.:5.233 & 1st Qu.:420.1 & 1st Qu.: 798.9 & 1st Qu.:0.4133 & 1st Qu.:0.34514\\
- & Median :10.00 & Median :46.215 & Median :0.4880 & Median :2.4927 & Median :6.172 & Median :678.0 & Median :1032.9 & Median :0.5919 & Median :0.59159\\
- & Mean   :12.47 & Mean   :49.982 & Mean   :0.4783 & Mean   :2.5488 & Mean   :6.348 & Mean   :628.0 & Mean   :1033.5 & Mean   :0.5752 & Mean   :0.55623\\
- & 3rd Qu.:17.00 & 3rd Qu.:71.325 & 3rd Qu.:0.6927 & 3rd Qu.:4.0514 & 3rd Qu.:7.350 & 3rd Qu.:845.7 & 3rd Qu.:1252.1 & 3rd Qu.:0.7574 & 3rd Qu.:0.78908\\
-\addlinespace
- & Max.   :47.00 & Max.   :97.365 & Max.   :0.8962 & Max.   :4.9714 & Max.   :8.471 & Max.   :990.3 & Max.   :1492.8 & Max.   :0.8795 & Max.   :0.99831\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:data-summary)(\#tab:data-summary)数据框摘要</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:left;"> richness </th>
+   <th style="text-align:left;"> area </th>
+   <th style="text-align:left;"> vegetation </th>
+   <th style="text-align:left;"> water_distance </th>
+   <th style="text-align:left;"> soil_ph </th>
+   <th style="text-align:left;"> elevation </th>
+   <th style="text-align:left;"> precipitation </th>
+   <th style="text-align:left;"> canopy_cover </th>
+   <th style="text-align:left;"> human_disturbance </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Min.   : 1.00 </td>
+   <td style="text-align:left;"> Min.   : 1.052 </td>
+   <td style="text-align:left;"> Min.   :0.1107 </td>
+   <td style="text-align:left;"> Min.   :0.1431 </td>
+   <td style="text-align:left;"> Min.   :4.506 </td>
+   <td style="text-align:left;"> Min.   :123.1 </td>
+   <td style="text-align:left;"> Min.   : 503.1 </td>
+   <td style="text-align:left;"> Min.   :0.2039 </td>
+   <td style="text-align:left;"> Min.   :0.00419 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> 1st Qu.: 6.00 </td>
+   <td style="text-align:left;"> 1st Qu.:29.358 </td>
+   <td style="text-align:left;"> 1st Qu.:0.2462 </td>
+   <td style="text-align:left;"> 1st Qu.:0.8951 </td>
+   <td style="text-align:left;"> 1st Qu.:5.233 </td>
+   <td style="text-align:left;"> 1st Qu.:420.1 </td>
+   <td style="text-align:left;"> 1st Qu.: 798.9 </td>
+   <td style="text-align:left;"> 1st Qu.:0.4133 </td>
+   <td style="text-align:left;"> 1st Qu.:0.34514 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Median :10.00 </td>
+   <td style="text-align:left;"> Median :46.215 </td>
+   <td style="text-align:left;"> Median :0.4880 </td>
+   <td style="text-align:left;"> Median :2.4927 </td>
+   <td style="text-align:left;"> Median :6.172 </td>
+   <td style="text-align:left;"> Median :678.0 </td>
+   <td style="text-align:left;"> Median :1032.9 </td>
+   <td style="text-align:left;"> Median :0.5919 </td>
+   <td style="text-align:left;"> Median :0.59159 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Mean   :12.47 </td>
+   <td style="text-align:left;"> Mean   :49.982 </td>
+   <td style="text-align:left;"> Mean   :0.4783 </td>
+   <td style="text-align:left;"> Mean   :2.5488 </td>
+   <td style="text-align:left;"> Mean   :6.348 </td>
+   <td style="text-align:left;"> Mean   :628.0 </td>
+   <td style="text-align:left;"> Mean   :1033.5 </td>
+   <td style="text-align:left;"> Mean   :0.5752 </td>
+   <td style="text-align:left;"> Mean   :0.55623 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> 3rd Qu.:17.00 </td>
+   <td style="text-align:left;"> 3rd Qu.:71.325 </td>
+   <td style="text-align:left;"> 3rd Qu.:0.6927 </td>
+   <td style="text-align:left;"> 3rd Qu.:4.0514 </td>
+   <td style="text-align:left;"> 3rd Qu.:7.350 </td>
+   <td style="text-align:left;"> 3rd Qu.:845.7 </td>
+   <td style="text-align:left;"> 3rd Qu.:1252.1 </td>
+   <td style="text-align:left;"> 3rd Qu.:0.7574 </td>
+   <td style="text-align:left;"> 3rd Qu.:0.78908 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:left;"> Max.   :47.00 </td>
+   <td style="text-align:left;"> Max.   :97.365 </td>
+   <td style="text-align:left;"> Max.   :0.8962 </td>
+   <td style="text-align:left;"> Max.   :4.9714 </td>
+   <td style="text-align:left;"> Max.   :8.471 </td>
+   <td style="text-align:left;"> Max.   :990.3 </td>
+   <td style="text-align:left;"> Max.   :1492.8 </td>
+   <td style="text-align:left;"> Max.   :0.8795 </td>
+   <td style="text-align:left;"> Max.   :0.99831 </td>
+  </tr>
+</tbody>
+</table>
 
 为了直观地探索变量间的关系，我们使用`pairs()`函数生成散点图矩阵，如图\@ref(fig:pairs-plot)所示。该代码选择了物种丰富度（richness）与四个关键环境因子（栖息地面积、植被密度、距水源距离和土壤pH值）进行可视化，通过两两变量的散点图展示它们之间的潜在关系模式。
+
+**模型选择考虑**：通过散点图矩阵，我们可以初步判断变量间的关系模式（线性或非线性），这有助于决定是否需要考虑多项式项或交互项。
 
 
 ``` r
@@ -612,16 +782,12 @@ pairs(forest_ecosystem_data[, c("richness", "area", "vegetation",
       main = "常林的森林调查：物种丰富度与主要环境因子的关系")
 ```
 
-\begin{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/pairs-plot-1.png" alt="物种丰富度与主要环境因子的散点图矩阵，展示各变量间的两两关系，用于初步探索相关性和分布特征。" width="80%" />
+<p class="caption">(\#fig:pairs-plot)物种丰富度与主要环境因子的散点图矩阵，展示各变量间的两两关系，用于初步探索相关性和分布特征。</p>
+</div>
 
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/pairs-plot-1} 
-
-}
-
-\caption{物种丰富度与主要环境因子的散点图矩阵，展示各变量间的两两关系，用于初步探索相关性和分布特征。}(\#fig:pairs-plot)
-\end{figure}
-
-### 完整模型拟合
+#### 完整模型拟合
 
 **模型评估要点**：拟合完整模型是变量选择的第一步。完整模型包含所有潜在的解释变量，这为我们提供了基准性能。完整模型的系数估计结果如表\@ref(tab:full-model-results)所示。但需要注意的是，完整模型可能包含冗余变量，导致多重共线性问题。
 
@@ -639,29 +805,85 @@ knitr::kable(summary(full_model)$coefficients,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:full-model-results)完整多元线性回归模型结果}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 1.0703826 & 5.9121852 & 0.1810469 & 0.8568466\\
-area & 0.2159594 & 0.0239462 & 9.0185272 & 0.0000000\\
-vegetation & 11.6581168 & 2.7555428 & 4.2307877 & 0.0000685\\
-water\_distance & -2.8333733 & 0.4217195 & -6.7186213 & 0.0000000\\
-soil\_ph & 0.3317705 & 0.5335264 & 0.6218446 & 0.5360358\\
-\addlinespace
-elevation & -0.0014548 & 0.0025624 & -0.5677731 & 0.5719801\\
-precipitation & 0.0003581 & 0.0024916 & 0.1437284 & 0.8861221\\
-canopy\_cover & -1.7460966 & 3.3155084 & -0.5266452 & 0.6000815\\
-human\_disturbance & 3.0531542 & 2.3336352 & 1.3083254 & 0.1949827\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:full-model-results)(\#tab:full-model-results)完整多元线性回归模型结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 1.0703826 </td>
+   <td style="text-align:right;"> 5.9121852 </td>
+   <td style="text-align:right;"> 0.1810469 </td>
+   <td style="text-align:right;"> 0.8568466 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> area </td>
+   <td style="text-align:right;"> 0.2159594 </td>
+   <td style="text-align:right;"> 0.0239462 </td>
+   <td style="text-align:right;"> 9.0185272 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> vegetation </td>
+   <td style="text-align:right;"> 11.6581168 </td>
+   <td style="text-align:right;"> 2.7555428 </td>
+   <td style="text-align:right;"> 4.2307877 </td>
+   <td style="text-align:right;"> 0.0000685 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> water_distance </td>
+   <td style="text-align:right;"> -2.8333733 </td>
+   <td style="text-align:right;"> 0.4217195 </td>
+   <td style="text-align:right;"> -6.7186213 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> soil_ph </td>
+   <td style="text-align:right;"> 0.3317705 </td>
+   <td style="text-align:right;"> 0.5335264 </td>
+   <td style="text-align:right;"> 0.6218446 </td>
+   <td style="text-align:right;"> 0.5360358 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> elevation </td>
+   <td style="text-align:right;"> -0.0014548 </td>
+   <td style="text-align:right;"> 0.0025624 </td>
+   <td style="text-align:right;"> -0.5677731 </td>
+   <td style="text-align:right;"> 0.5719801 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> precipitation </td>
+   <td style="text-align:right;"> 0.0003581 </td>
+   <td style="text-align:right;"> 0.0024916 </td>
+   <td style="text-align:right;"> 0.1437284 </td>
+   <td style="text-align:right;"> 0.8861221 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> canopy_cover </td>
+   <td style="text-align:right;"> -1.7460966 </td>
+   <td style="text-align:right;"> 3.3155084 </td>
+   <td style="text-align:right;"> -0.5266452 </td>
+   <td style="text-align:right;"> 0.6000815 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> human_disturbance </td>
+   <td style="text-align:right;"> 3.0531542 </td>
+   <td style="text-align:right;"> 2.3336352 </td>
+   <td style="text-align:right;"> 1.3083254 </td>
+   <td style="text-align:right;"> 0.1949827 </td>
+  </tr>
+</tbody>
+</table>
 
-### 变量选择过程
+#### 变量选择过程
 
 **模型选择方法**：变量选择是生态统计建模中的关键步骤。我们使用多种方法来识别最重要的环境因子，包括逐步回归和基于AIC的模型比较。通过逐步回归方法选择的最终模型结果如表\@ref(tab:stepwise-model-results)所示。
 
@@ -676,21 +898,48 @@ knitr::kable(summary(step_model)$coefficients,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:stepwise-model-results)逐步回归模型结果}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 3.2826905 & 1.9994067 & 1.641832 & 0.1047567\\
-area & 0.2140697 & 0.0226151 & 9.465779 & 0.0000000\\
-vegetation & 12.2330984 & 2.6069842 & 4.692433 & 0.0000117\\
-water\_distance & -2.8868698 & 0.4092891 & -7.053375 & 0.0000000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:stepwise-model-results)(\#tab:stepwise-model-results)逐步回归模型结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 3.2826905 </td>
+   <td style="text-align:right;"> 1.9994067 </td>
+   <td style="text-align:right;"> 1.641832 </td>
+   <td style="text-align:right;"> 0.1047567 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> area </td>
+   <td style="text-align:right;"> 0.2140697 </td>
+   <td style="text-align:right;"> 0.0226151 </td>
+   <td style="text-align:right;"> 9.465779 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> vegetation </td>
+   <td style="text-align:right;"> 12.2330984 </td>
+   <td style="text-align:right;"> 2.6069842 </td>
+   <td style="text-align:right;"> 4.692433 </td>
+   <td style="text-align:right;"> 0.0000117 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> water_distance </td>
+   <td style="text-align:right;"> -2.8868698 </td>
+   <td style="text-align:right;"> 0.4092891 </td>
+   <td style="text-align:right;"> -7.053375 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+</tbody>
+</table>
 
 **基于AIC的模型比较**
 
@@ -711,9 +960,9 @@ model_soil <- lm(richness ~ area + vegetation + water_distance + soil_ph,
 
 ```
 ## 简单模型 (面积+植被) AIC: 546.2091 
-## 水源模型 (面积+植被+水源) AIC: 507.9241 
-## 土壤模型 (面积+植被+水源+pH) AIC: 509.5558 
-## 逐步回归模型 AIC: 507.9241
+##  水源模型 (面积+植被+水源) AIC: 507.9241 
+##  土壤模型 (面积+植被+水源+pH) AIC: 509.5558 
+##  逐步回归模型 AIC: 507.9241
 ```
 
 从AIC值可以看出逐步回归选择的模型在简约性和拟合优度之间取得了最佳平衡。接下来检查模型中是否存在多重共线性问题。
@@ -737,14 +986,13 @@ print(vif_full)
 ```
 
 ```
-## 
 ## 多重共线性评估：
 ## 
-## VIF > 10 的变量：  
-## 建议移除高VIF变量以避免共线性问题
+##  VIF > 10 的变量：  
+##  建议移除高VIF变量以避免共线性问题
 ```
 
-### 最优模型选择与结果解释
+#### 最优模型选择与结果解释
 
 **模型评估要点**：基于AIC和多重共线性诊断，我们选择了最优模型。这个模型在统计性能和生态学解释性之间取得了最佳平衡。最优模型的详细系数估计结果如表\@ref(tab:optimal-model-results)所示。
 
@@ -758,21 +1006,48 @@ knitr::kable(summary(forest_model)$coefficients,
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:optimal-model-results)最优模型结果}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 3.2826905 & 1.9994067 & 1.641832 & 0.1047567\\
-area & 0.2140697 & 0.0226151 & 9.465779 & 0.0000000\\
-vegetation & 12.2330984 & 2.6069842 & 4.692433 & 0.0000117\\
-water\_distance & -2.8868698 & 0.4092891 & -7.053375 & 0.0000000\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:optimal-model-results)(\#tab:optimal-model-results)最优模型结果</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 3.2826905 </td>
+   <td style="text-align:right;"> 1.9994067 </td>
+   <td style="text-align:right;"> 1.641832 </td>
+   <td style="text-align:right;"> 0.1047567 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> area </td>
+   <td style="text-align:right;"> 0.2140697 </td>
+   <td style="text-align:right;"> 0.0226151 </td>
+   <td style="text-align:right;"> 9.465779 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> vegetation </td>
+   <td style="text-align:right;"> 12.2330984 </td>
+   <td style="text-align:right;"> 2.6069842 </td>
+   <td style="text-align:right;"> 4.692433 </td>
+   <td style="text-align:right;"> 0.0000117 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> water_distance </td>
+   <td style="text-align:right;"> -2.8868698 </td>
+   <td style="text-align:right;"> 0.4092891 </td>
+   <td style="text-align:right;"> -7.053375 </td>
+   <td style="text-align:right;"> 0.0000000 </td>
+  </tr>
+</tbody>
+</table>
 
 **模型选择理由**
 
@@ -780,31 +1055,31 @@ water\_distance & -2.8868698 & 0.4092891 & -7.053375 & 0.0000000\\
 
 
 ```
-## 
 ## === 模型选择理由 ===
 ## 
-## 选择当前模型的原因：
-## - AIC值最低： 507.9241 
-## - 调整R²较高： 0.616 
-## - 所有变量统计显著（p < 0.05）
-## - 生态学意义明确
+##  选择当前模型的原因：
+##  - AIC值最低： 507.9241 
+##  - 调整R²较高： 0.616 
+##  - 所有变量统计显著（p < 0.05）
+##  - 生态学意义明确
 ```
 
 ```
-## 
 ## === 关键统计量 ===
 ## 
-## R² = 0.631 
-## 调整R² = 0.616 
-## F统计量 = 43.24 
-## p值 = <2e-16
+##  R² = 0.631 
+##  调整R² = 0.616 
+##  F统计量 = 43.24 
+##  p值 = <2e-16
 ```
 
-**生态学解释与系数分析**
+#### 生态学解释与系数分析
 
 **模型评估要点**：系数的生态学解释是模型评估的重要环节。我们不仅要关注统计显著性，还要理解系数的生态学意义和实际影响大小。
 
-### 模型诊断与假设检验
+以最优模型中的系数为例：面积（area）的系数为正，表明栖息地面积越大，物种丰富度越高，这符合岛屿生物地理学的基本预测；植被密度（vegetation）的系数反映了生境结构复杂性对物种多样性的支撑作用；距水源距离（water_distance）的系数若为负值，则意味着离水源越远的样方物种数趋于减少。每一个系数的正负号和量级都不是孤立的数字，而是可以通过生态学理论来解读的生态信号。如果某个系数的方向与生态学预期相反（例如距水源距离的系数为正），则需要回到野外记录中核查是否存在混杂因素。
+
+#### 模型诊断与假设检验
 
 **模型评估要点**：模型诊断是验证统计假设是否满足的关键步骤。通过残差分析、正态性检验和诊断图，我们可以评估模型的适用性和可靠性。在生态学研究中，模型诊断不仅具有统计意义，更重要的是能够揭示数据中可能存在的生态学异常。
 
@@ -817,14 +1092,10 @@ par(mfrow = c(2, 2))
 plot(forest_model)
 ```
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/forest-model-diagnostics-1} 
-
-}
-
-\caption{森林生态系统模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。}(\#fig:forest-model-diagnostics)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/forest-model-diagnostics-1.png" alt="森林生态系统模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。" width="80%" />
+<p class="caption">(\#fig:forest-model-diagnostics)森林生态系统模型的回归诊断图。包括残差vs拟合值图、正态Q-Q图、尺度-位置图和残差vs杠杆图，用于全面评估模型假设的满足情况。</p>
+</div>
 
 ``` r
 par(mfrow = c(1, 1))
@@ -835,17 +1106,16 @@ par(mfrow = c(1, 1))
 
 ``` r
 # 9. 残差分析
-cat("\n=== 残差分析 ===\n
-残差均值 =", round(mean(residuals(forest_model)), 4), "
-残差标准差 =", round(sd(residuals(forest_model)), 4), "\n")
+cat("=== 残差分析 ===\n\n",
+    "残差均值 =", round(mean(residuals(forest_model)), 4), "\n",
+    "残差标准差 =", round(sd(residuals(forest_model)), 4), "\n\n")
 ```
 
 ```
-## 
 ## === 残差分析 ===
 ## 
-## 残差均值 = 0 
-## 残差标准差 = 5.4705
+##  残差均值 = 0 
+##  残差标准差 = 5.4705
 ```
 
 ``` r
@@ -871,13 +1141,15 @@ if (shapiro_test$p.value > 0.05) {
 ## ✗ 残差不服从正态分布
 ```
 
-### 模型预测与应用
+#### 模型预测与应用
 
 **模型评估要点**：预测能力是模型实用性的重要体现。通过预测新观测值及其置信区间，我们可以评估模型在实际应用中的可靠性。在生态学中，预测不仅提供数值结果，更重要的是为生态保护决策提供科学依据。
 
 
 ``` r
 # 8. 预测新观测值
+# 注意：new_site 中必须包含逐步回归模型所选中的全部变量
+# 此处假设 forest_model 保留了 area, vegetation, water_distance 三个变量
 new_site <- data.frame(
   area = 50,
   vegetation = 0.7,
@@ -890,30 +1162,28 @@ prediction <- predict(forest_model, newdata = new_site,
 
 
 ```
-## 
 ## === 预测示例 ===
 ## 
-## 对于面积为50公顷、植被密度0.7、距水源1.2km的栖息地：
-## 预测物种丰富度 = 19.1 种
-## 95%置信区间: [ 17 ,  21.2 ]
+##  对于面积为50公顷、植被密度0.7、距水源1.2km的栖息地：
+##  预测物种丰富度 = 19.1 种
+##  95%置信区间: [ 17 ,  21.2 ]
 ```
 
-### 模型比较与评估
+#### 模型比较与评估
 
 **模型评估要点**：模型比较是评估变量选择效果的关键环节。通过比较完整模型与选择模型在R²、调整R²和AIC等指标上的差异，我们可以量化变量选择带来的统计改善。在生态学中，这种比较不仅验证了统计方法的有效性，更重要的是证明了简约性原则在生态建模中的价值。
 
 
 ```
-## 
 ## === 模型比较：完整模型 vs 选择模型 ===
 ## 
-## 完整模型 R²: 0.644 
-## 完整模型 调整R²: 0.604 
-## 完整模型 AIC: 515 
+##  完整模型 R²: 0.644 
+##  完整模型 调整R²: 0.604 
+##  完整模型 AIC: 515 
 ## 
-## 选择模型 R²: 0.631 
-## 选择模型 调整R²: 0.616 
-## 选择模型 AIC: 507.9
+##  选择模型 R²: 0.631 
+##  选择模型 调整R²: 0.616 
+##  选择模型 AIC: 507.9
 ```
 
 
@@ -939,13 +1209,13 @@ if (aic_improvement > 2) {
 ## ✓ 变量选择显著改善了模型质量
 ```
 
-### 生态学解释与模型选择价值
+#### 生态学解释与模型选择价值
 
 **模型评估要点**：最终模型选择的合理性不仅体现在统计指标上，更重要的是其生态学解释性。通过对比完整模型和选择模型的生态学含义，我们可以理解变量选择在生态学研究中的实际价值。一个好的生态模型应该既统计可靠又具有明确的生态学意义。
 
-生态学解释对比显示，完整模型虽然包含了所有8个环境因子，但其中部分因子可能存在统计不显著、与其他变量高度相关（多重共线性）或生态学意义不明确等问题。相比之下，经过变量选择后的模型具有明显优势：它只保留了统计显著且生态学意义明确的因子，减少了模型复杂度并提高了泛化能力，同时提供了更清晰的生态机制解释，有效避免了过度拟合的风险。
+从生态学解释的角度来对比：完整模型虽然纳入了所有8个环境因子，但其中往往混杂着统计不显著、与其他变量高度相关（多重共线性）或生态学意义不明确的变量，这些"噪音"变量不仅没有提高模型的解释力，反而稀释了核心因子的信号。相比之下，经过变量选择后的模型只保留统计显著且生态学意义明确的因子，在降低模型复杂度的同时提升了泛化能力，而且提供了更清晰的生态机制解释——它告诉我们，在众多候选因子中，究竟哪几个才是真正驱动物种丰富度空间变异的关键环境变量。
 
-### 案例分析总结
+#### 案例分析总结
 
 这个完整的生态学案例展示了线性回归分析的标准流程，特别强调了变量选择在生态学研究中的重要性：
 
@@ -957,7 +1227,7 @@ if (aic_improvement > 2) {
 6. **预测应用**：使用模型进行新观测值的预测
 7. **结果报告**：以生态学语言解释研究发现
 
-#### 变量选择的生态学价值
+##### 变量选择的生态学价值
 
 通过这个案例，我们特别强调了变量选择在生态学研究中的关键作用：
 
@@ -1006,17 +1276,17 @@ if (aic_improvement > 2) {
 在R语言中，多项式回归可以通过多种方式实现：
 
 ```r
-# 方法1：使用I()函数显式指定高次项
+# 方法1：使用I()函数显式指定高次项（系数在原始尺度上，易于解释）
 model1 <- lm(y ~ x + I(x^2) + I(x^3), data = eco_data)
 
-# 方法2：使用poly()函数（推荐）
+# 方法2：使用poly()生成正交多项式（默认，数值稳定性好，减少多重共线性）
 model2 <- lm(y ~ poly(x, degree = 3), data = eco_data)
 
-# 方法3：使用正交多项式（减少多重共线性）
-model3 <- lm(y ~ poly(x, degree = 3, raw = FALSE), data = eco_data)
+# 方法3：使用poly(raw = TRUE)生成原始尺度多项式（系数可像方法1一样解释）
+model3 <- lm(y ~ poly(x, degree = 3, raw = TRUE), data = eco_data)
 ```
 
-`poly()`函数是更推荐的方法，因为它可以自动生成正交多项式以减少多重共线性问题，同时能提供更好的数值稳定性，且便于模型比较和解释。
+`poly()`函数是更推荐的方法。默认情况下（`raw = FALSE`），它生成正交多项式，能有效减少高次项之间的多重共线性，数值稳定性更好，适合模型比较和假设检验。但正交多项式的系数不再具有直观的生态学解释（系数不代表"$x^2$每变化1单位"的效应）。如果你需要直接解读各次项的生态学含义，可以使用`raw = TRUE`获得原始尺度上的系数，代价是多重共线性可能增大。
 
 ### 生态学应用实例
 
@@ -1024,39 +1294,56 @@ model3 <- lm(y ~ poly(x, degree = 3, raw = FALSE), data = eco_data)
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{08-simple_linear_regressions_files/figure-latex/poly-regression-comparison-1} 
-
-}
-
-\caption{物种丰富度与海拔关系的多项式回归：线性与二次多项式的拟合对比。}(\#fig:poly-regression-comparison)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="08-simple_linear_regressions_files/figure-html/poly-regression-comparison-1.png" alt="物种丰富度与海拔关系的多项式回归：线性与二次多项式的拟合对比。" width="80%" />
+<p class="caption">(\#fig:poly-regression-comparison)物种丰富度与海拔关系的多项式回归：线性与二次多项式的拟合对比。</p>
+</div>
 
 
 ```
 ## === 模型比较 ===
 ## 
-## 线性模型 R²: 0.358 
-## 多项式模型 R²: 0.924
+##  线性模型 R²: 0.358 
+##  多项式模型 R²: 0.924
 ```
 
-\begin{table}[!h]
-\centering
-\caption{(\#tab:poly-model-summary)多项式模型摘要}
-\centering
-\begin{tabular}[t]{lrrrr}
-\toprule
-  & Estimate & Std. Error & t value & Pr(>|t|)\\
-\midrule
-(Intercept) & 65.60220 & 0.4571385 & 143.50617 & 0\\
-poly(altitude, degree = 2)1 & -97.84435 & 4.5713852 & -21.40366 & 0\\
-poly(altitude, degree = 2)2 & -123.18639 & 4.5713852 & -26.94728 & 0\\
-\bottomrule
-\end{tabular}
-\end{table}
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>(\#tab:poly-model-summary)(\#tab:poly-model-summary)多项式模型摘要</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">  </th>
+   <th style="text-align:right;"> Estimate </th>
+   <th style="text-align:right;"> Std. Error </th>
+   <th style="text-align:right;"> t value </th>
+   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:right;"> 65.60220 </td>
+   <td style="text-align:right;"> 0.4571385 </td>
+   <td style="text-align:right;"> 143.50617 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> poly(altitude, degree = 2)1 </td>
+   <td style="text-align:right;"> -97.84435 </td>
+   <td style="text-align:right;"> 4.5713852 </td>
+   <td style="text-align:right;"> -21.40366 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> poly(altitude, degree = 2)2 </td>
+   <td style="text-align:right;"> -123.18639 </td>
+   <td style="text-align:right;"> 4.5713852 </td>
+   <td style="text-align:right;"> -26.94728 </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+</tbody>
+</table>
 
-如表\@ref(tab:poly-model-summary)所示，二次多项式模型显著改善了拟合效果，表明物种丰富度与海拔之间存在非线性关系。这种单峰分布模式在生态学中很常见，反映了物种对海拔梯度的最适响应。
+如表\@ref(tab:poly-model-summary)所示，二次多项式模型显著改善了拟合效果，表明物种丰富度与海拔之间存在非线性关系。**注意**：由于此处使用了正交多项式（`poly()`的默认设置），表中的系数并非直接对应"海拔"和"海拔²"的效应——正交化后每一项的系数独立于其他项。如果你需要直接解读各次项（例如得到二次项系数以判断曲线的开口方向），应使用`poly(altitude, degree = 2, raw = TRUE)`来获取原始尺度上的系数。这种单峰分布模式在生态学中很常见，反映了物种对海拔梯度的最适响应。
 
 ### 多项式回归的生态学意义
 
@@ -1086,10 +1373,10 @@ degree_4 <- lm(richness ~ poly(altitude, degree = 4), data = altitude_data)
 ```
 ## === 多项式阶数选择 ===
 ## 
-## 1次多项式 AIC: 804.5485 
-## 2次多项式 AIC: 592.705 
-## 3次多项式 AIC: 594.6889 
-## 4次多项式 AIC: 596.1912
+##  1次多项式 AIC: 804.5485 
+##  2次多项式 AIC: 592.705 
+##  3次多项式 AIC: 594.6889 
+##  4次多项式 AIC: 596.1912
 ```
 
 
@@ -1101,7 +1388,6 @@ best_degree <- which.min(c(AIC(degree_1), AIC(degree_2),
 
 
 ```
-## 
 ## 最优多项式阶数: 2
 ```
 
@@ -1152,7 +1438,7 @@ $$f(\mathbf{x}) = \sum_{j=1}^{m} \beta_j h_j(\mathbf{x}) = \sum_{j=1}^{m} \beta_
 
 ## 常见错误与陷阱
 
-**错误1：只看R²就判断模型的好坏。** R²高可能只是因为你盲目加入了很多噪音变量导致过拟合，R²低可能仅仅因为生态系统的随机成分本身就很大。调整R²惩罚了变量数量，残差标准误（RSE）和RMSE提供了预测精度的绝对度量，不应只盯着一个数字下结论。更关键的是看残差图中是否还存在未被模型捕捉的结构性模式。
+**错误1：只看R²就判断模型的好坏。** R²高可能只是因为盲目加入了大量噪音变量导致过拟合，R²低可能仅仅因为生态系统的随机成分本身就很大。调整R²惩罚了变量数量，残差标准误（RSE）和RMSE提供了预测精度的绝对度量，不应只盯着一个数字下结论。更关键的是看残差图中是否还存在未被模型捕捉的结构性模式。
 
 **错误2：不检查残差图就报告回归结果。** 残差vs拟合值图中出现"喇叭形"扩散模式说明异方差性，标准误的估计将不可靠。Q-Q图中点偏离对角线说明残差非正态，t检验和F检验的p值将不再准确。个别点的Cook's距离过大说明存在强影响点，删掉这一个点，回归线可能大幅改变。残差诊断不是锦上添花的可选项，而是回归分析必须完成的前置检查。
 
@@ -1194,7 +1480,7 @@ $$f(\mathbf{x}) = \sum_{j=1}^{m} \beta_j h_j(\mathbf{x}) = \sum_{j=1}^{m} \beta_
 
 ## 本章要点回顾
 
-**常林学到了什么**：回到天童山的样地，常林用多元回归模型来预测树木的年生长量。她将光照强度、土壤含水量、氮含量以及邻近树木的竞争指数作为自变量输入模型。通过AIC比较，她发现光照和竞争指数是驱动生长的最关键因子，而土壤含水量在多个变量共存时其独立贡献并不明显，这让她理解了"单变量显著不等同于多变量场景中仍然重要"的关键洞察。回归诊断中，她发现低光照样方的残差异常偏大，追溯原因后意识到这些样方曾遭受虫害，这不是模型的问题，而是数据中隐藏了未被记录的干扰事件。多项式回归让她捕捉到了光照对生长速率的非线性饱和效应，当光照超过某个阈限后，生长的边际增益开始递减，这比直线假设更能反映植物光合作用的生理规律。
+**常林学到了什么**：回到天童山的样地，常林用多元回归模型来预测树木的年生长量。她将光照强度、土壤氮含量、降水等多个候选环境因子作为自变量输入模型。通过AIC比较和逐步回归，她发现光照是驱动生长的最关键因子，而部分变量（如降水）在多个变量共存时其独立贡献并不明显，这让她理解了"单变量显著不等同于多变量场景中仍然重要"的关键洞察。回归诊断中，她发现低光照样方的残差异常偏大，追溯原因后意识到这些样方曾遭受虫害——这不是模型的问题，而是数据中隐藏了未被记录的干扰事件。多项式回归让她捕捉到了光照对生长速率的非线性饱和效应，当光照超过某个阈限后，生长的边际增益开始递减，这比直线假设更能反映植物光合作用的生理规律。
 
 **统计-AI桥梁**：常林写下$y = X\beta + \varepsilon$后意识到，这正是只有一个输出层且没有激活函数的神经网络！回归系数$\beta$就是网络的"权重"，最小二乘法等价于以均方误差为损失函数的训练过程。她由此理解了深度学习的双重基因：正向继承了回归将多元输入映射为标量输出的基本框架，反向则是通过堆叠隐藏层和非线性激活将这种线性映射的容量拓展到极致。双重下降现象让她对"过拟合"有了更细腻的认识，在参数量超过样本量的某个深处，测试误差可能不升反降，这意味着"越多参数越危险"不是绝对的铁律。
 
