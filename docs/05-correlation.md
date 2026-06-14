@@ -12,13 +12,13 @@
 
 ## 引言
 
-天童山的雨季刚过，林小雨在样地里一边测量树木胸径一边思考：为什么有些树长得快，有些长得慢？她开始猜测，是不是光照多的树长得更快？是不是土壤养分丰富的样方中树木更粗壮？相邻树木之间的竞争会不会抑制生长？这些问题都指向同一个统计核心：**变量之间的关联**。
+天童山的雨季刚过，常林在样地里一边测量树木胸径一边思考：为什么有些树长得快，有些长得慢？她开始猜测，是不是光照多的树长得更快？是不是土壤养分丰富的样方中树木更粗壮？相邻树木之间的竞争会不会抑制生长？这些问题都指向同一个统计核心：**变量之间的关联**。
 
-**首先**，相关性分析是生态学从"描述单个变量"走向"理解变量间关系"的第一步。在前几章，林小雨学会了描述天童山树木胸径的分布特征（概率与分布），以及利用样本估计整个森林的物种总数和生物量（参数估计）。但这些描述和估计尚未回答一个更深刻的问题：天童山的生态系统中，什么因素在驱动着树木的生长、死亡和更新？要回答这个问题，她需要量化变量之间的关系，这正是相关性分析的领域。
+**首先**，相关性分析是生态学从"描述单个变量"走向"理解变量间关系"的第一步。在前几章，常林学会了描述天童山树木胸径的分布特征（概率与分布），以及利用样本估计整个森林的物种总数和生物量（参数估计）。但这些描述和估计尚未回答一个更深刻的问题：天童山的生态系统中，什么因素在驱动着树木的生长、死亡和更新？要回答这个问题，她需要量化变量之间的关系，这正是相关性分析的领域。
 
 **进而**，相关性分析的方法论光谱远比"计算一个Pearson r"广阔得多。当树木胸径与树高呈线性关系时，Pearson相关系数足够；当光照与生长的关系单调但非线性时，Spearman秩相关更为稳健；当多个环境因子混杂影响生长时，偏相关分析可以剥离混淆效应；当关系本身呈U型或更复杂的形态时，距离相关和互信息则能捕捉到线性方法完全错过的依赖模式。更重要的是，Pearson相关系数的数学本质，两个向量的归一化内积，与Transformer自注意力机制中的QK^T矩阵计算是同构的：两者都在量化"相似度"，差异仅在于前者是静态的、全局的，后者是动态的、上下文相关的。
 
-**最终**，相关性分析的终点是因果推断的起点。"相关不等于因果"是统计学中最经典的警示，在AI时代，这个警示变得更加紧迫。一个深度学习模型可以从天童山的数据中学到"树高与生长速度高度相关"，但它无法告诉我们：是长得高的树因为获得了更多光照而生长更快（因果关系），还是生长快的树自然长得更高（反向因果），还是两者都由某个未测量的因素（如土壤深度）共同驱动（混淆）。林小雨将在本章中学习的，不仅是量化关联的工具，更是一种关系思维，在充满相互作用的生态网络中，辨识真正的驱动力量。
+**最终**，相关性分析的终点是因果推断的起点。"相关不等于因果"是统计学中最经典的警示，在AI时代，这个警示变得更加紧迫。一个深度学习模型可以从天童山的数据中学到"树高与生长速度高度相关"，但它无法告诉我们：是长得高的树因为获得了更多光照而生长更快（因果关系），还是生长快的树自然长得更高（反向因果），还是两者都由某个未测量的因素（如土壤深度）共同驱动（混淆）。常林将在本章中学习的，不仅是量化关联的工具，更是一种关系思维，在充满相互作用的生态网络中，辨识真正的驱动力量。
 
 ## 生态变量的线性相关性
 
@@ -59,21 +59,6 @@ cat("Pearson相关系数：", round(pearson_cor, 3), "\n")
 
 ```
 ## Pearson相关系数： 0.59
-```
-
-
-``` r
-# 可视化散点图
-plot(dbh, height,
-  pch = 19, col = "blue",
-  xlab = "胸径 (cm)", ylab = "树高 (m)",
-  main = "树木胸径与树高的关系"
-)
-abline(lm(height ~ dbh), col = "red", lwd = 2)
-legend("topleft",
-  legend = paste("r =", round(pearson_cor, 3)),
-  bty = "n"
-)
 ```
 
 \begin{figure}
@@ -143,22 +128,6 @@ spearman_test <- cor.test(water_quality, macroinvertebrate_diversity,
 
 ```
 ## Spearman检验p值： <2e-16
-```
-
-
-``` r
-# 可视化关系
-plot(water_quality, macroinvertebrate_diversity,
-  pch = 17, col = "darkgreen",
-  xlab = "水质指数", ylab = "底栖动物多样性",
-  main = "河流水质与底栖动物多样性的关系"
-)
-lines(lowess(water_quality, macroinvertebrate_diversity),
-      col = "red", lwd = 2, lty = 2)
-legend("topleft",
-  legend = paste("ρ =", round(spearman_cor, 3)),
-  bty = "n"
-)
 ```
 
 \begin{figure}
@@ -243,7 +212,7 @@ $$r_{XY.Z} = \frac{r_{XY} - r_{XZ}r_{YZ}}{\sqrt{(1-r_{XZ}^2)(1-r_{YZ}^2)}}$$
 
 \begin{table}[!h]
 \centering
-\caption{(\#tab:unnamed-chunk-10)偏相关系数矩阵}
+\caption{(\#tab:partial-cor-table)偏相关系数矩阵}
 \centering
 \begin{tabular}[t]{lrrr}
 \toprule
@@ -261,7 +230,7 @@ productivity & 0.389 & 0.666 & 1.000\\
 ## 控制温度后，降水量与生产力的偏相关系数： 0.389
 ```
 
-在生态学应用中，偏相关分析具有极其重要的价值。例如，在研究森林生产力与降水量的关系时，温度可能同时影响这两个变量，温度较高时通常降水量也较多，同时温度本身也直接影响植物的光合作用效率。如果不控制温度的影响，我们可能会高估降水量对生产力的直接作用。偏相关分析能够帮助我们识别这种"伪相关"或"间接相关"，从而更准确地理解生态系统的内在机制。此外，偏相关分析在生态网络构建、物种相互作用分析、环境因子筛选等复杂生态学问题中都有广泛应用。然而，生态学家需要注意，偏相关分析仍然基于线性关系的假设，且要求控制变量与目标变量之间的关系大致满足线性模型的前提条件。在高度非线性的生态系统中，偏相关分析的结果需要谨慎解释。
+表\@ref(tab:partial-cor-table)展示了控制温度影响后的偏相关系数矩阵，在生态学应用中，偏相关分析具有极其重要的价值。例如，在研究森林生产力与降水量的关系时，温度可能同时影响这两个变量，温度较高时通常降水量也较多，同时温度本身也直接影响植物的光合作用效率。如果不控制温度的影响，我们可能会高估降水量对生产力的直接作用。偏相关分析能够帮助我们识别这种"伪相关"或"间接相关"，从而更准确地理解生态系统的内在机制。此外，偏相关分析在生态网络构建、物种相互作用分析、环境因子筛选等复杂生态学问题中都有广泛应用。然而，生态学家需要注意，偏相关分析仍然基于线性关系的假设，且要求控制变量与目标变量之间的关系大致满足线性模型的前提条件。在高度非线性的生态系统中，偏相关分析的结果需要谨慎解释。
 
 ### 从Pearson相关系数到Transformer的注意力
 
@@ -339,7 +308,7 @@ $$dCor(X,Y) = \frac{dCov(X,Y)}{\sqrt{dVar(X)dVar(Y)}}$$
 \caption{距离相关强弱对比示意图：左图显示弱距离相关，右图显示强距离相关}(\#fig:distance-correlation-diagram)
 \end{figure}
 
-上图显示了弱距离相关和强距离相关的区别：
+图\@ref(fig:distance-correlation-diagram)显示了弱距离相关和强距离相关的区别：
 
 - **弱距离相关**（左图）：变量X和Y之间没有明显的依赖关系。当两个数据点在X轴上很接近时，它们在Y轴上的值可能相差很大，反之亦然。这种距离模式的不同步导致距离相关系数接近0。
 
@@ -364,6 +333,8 @@ $$dCor(X,Y) = \frac{dCov(X,Y)}{\sqrt{dVar(X)dVar(Y)}}$$
 
 \caption{植物功能性状间的非线性关系散点图，显示U型关系。图中深绿色菱形表示观测数据，红色实线表示局部回归拟合曲线，蓝色虚线表示二次多项式拟合曲线}(\#fig:non-linear-relationship)
 \end{figure}
+
+图\@ref(fig:non-linear-relationship)展示了叶面积与比叶重之间的U型非线性关系，传统Pearson相关和Spearman相关均无法有效捕捉这种非单调依赖模式，而距离相关能正确识别变量间的真实关联。
 
 ### 互信息
 
@@ -437,48 +408,11 @@ $$I(X; Y) = H(X) + H(Y) - H(X, Y) = \sum_{x \in X} \sum_{y \in Y} p(x, y) \log \
 
 一个经典的反例可以揭示互信息相对于Pearson相关不可替代的优势。设 $X \sim N(0, 1)$，$Y = X^2$。Pearson相关系数为零（因为协方差 $E[XY] - E[X]E[Y] = 0 - 0 = 0$），但互信息不为零，知道 $X$ 的值确实能大幅减少 $Y$ 的不确定性（虽然符号信息丢失了，但绝对值信息保留了）。在生态学中，类似的关系比比皆是：物种多样性与干扰频率的驼峰型关系、光合速率与温度的钟形响应曲线、竞争强度与资源梯度的单峰模式。这些生态关系中，Pearson相关可能给出接近零的系数，但互信息能正确识别出变量之间存在真实的依赖。
 
-下面的R代码演示了这一关键差异，在同一数据集上计算Pearson相关矩阵和互信息矩阵，直观对比两者对非线性关系的敏感度差异。
+下面的R代码（图\@ref(fig:mi-pearson-compare)）演示了这一关键差异，在同一数据集上计算Pearson相关矩阵和互信息矩阵，直观对比两者对非线性关系的敏感度差异。
 
-
-``` r
-# 模拟包含非线性关系的生态变量
-set.seed(123)
-n <- 200
-# 四个模拟变量：温度、光合速率（非线性关系）、土壤水分、生物量
-temperature <- rnorm(n, mean = 20, sd = 5)
-photosynthesis <- -(temperature - 20)^2 / 10 + rnorm(n, 0, 0.5)
-soil_moisture <- runif(n, 0, 100)
-biomass <- 0.3 * soil_moisture + rnorm(n, 0, 5)
-
-eco_vars <- data.frame(temperature, photosynthesis, soil_moisture, biomass)
-
-# 离散化连续变量以计算互信息
-eco_disc <- data.frame(apply(eco_vars, 2,
-                             discretize, disc = "equalfreq", nbins = 10))
-
-# 计算Pearson相关矩阵
-pearson_mat <- cor(eco_vars, method = "pearson")
-
-# 计算互信息矩阵
-mi_mat <- matrix(NA, ncol(eco_vars), ncol(eco_vars))
-colnames(mi_mat) <- colnames(eco_vars)
-rownames(mi_mat) <- colnames(eco_vars)
-for (i in 1:ncol(eco_vars)) {
-  for (j in 1:ncol(eco_vars)) {
-    mi_mat[i, j] <- mutinformation(eco_disc[, i], eco_disc[, j])
-  }
-}
-
-# 展示对比
-cat("Pearson相关矩阵：\n")
-```
 
 ```
 ## Pearson相关矩阵：
-```
-
-``` r
-print(round(pearson_mat, 3))
 ```
 
 ```
@@ -489,17 +423,9 @@ print(round(pearson_mat, 3))
 ## biomass             -0.023          0.107         0.867   1.000
 ```
 
-``` r
-cat("\n互信息矩阵：\n")
-```
-
 ```
 ## 
 ## 互信息矩阵：
-```
-
-``` r
-print(round(mi_mat, 3))
 ```
 
 ```
@@ -508,11 +434,6 @@ print(round(mi_mat, 3))
 ## photosynthesis       0.980          2.303         0.256   0.220
 ## soil_moisture        0.239          0.256         2.303   0.797
 ## biomass              0.209          0.220         0.797   2.303
-```
-
-``` r
-cat("\n注意：温度与光合速率的非线性关系\n",
-    "导致Pearson相关接近零，但互信息显著非零。\n")
 ```
 
 ```
@@ -658,7 +579,7 @@ cov_matrix <- cov(abundance_data)
 \end{tabular}
 \end{table}
 
-图\@ref(fig:trait-correlation-plot)以可视化方式展示了相关性矩阵，主成分分析（表\@ref(tab:importance-table)和图\@ref(fig:trait-biplot)）进一步揭示了性状协变的多维模式：
+表\@ref(tab:trait-correlation-table)展示了功能性状间的Pearson相关性矩阵，图\@ref(fig:trait-correlation-plot)以可视化方式展示了相关性矩阵，主成分分析（表\@ref(tab:importance-table)和图\@ref(fig:trait-biplot)）进一步揭示了性状协变的多维模式：
 
 \begin{figure}
 
@@ -696,11 +617,13 @@ PC4 & PC4 & 0.015 & 0.000 & 1.000\\
 \caption{功能性状主成分分析的双标图：箭头表示各功能性状在前两个主成分上的载荷方向和大小，点表示物种在排序空间中的位置，物种间距离反映了功能性状的相似程度}(\#fig:trait-biplot)
 \end{figure}
 
-对于经济型谱分析，可以使用线性模型来检验性状间的权衡关系。图\@ref(fig:leaf-economics-scatter)展示了叶片经济型谱关系的散点图：
+对于经济型谱分析，可以使用线性模型来检验性状间的权衡关系。表\@ref(tab:leaf-economics-regression-table)和表\@ref(tab:leaf-lifespan-sla-regression-table)分别给出了比叶面积与光合速率、比叶面积与叶片寿命的线性回归结果，图\@ref(fig:leaf-economics-scatter)展示了叶片经济型谱关系的散点图：
+
+
 
 \begin{table}[!h]
 \centering
-\caption{(\#tab:leaf-economics-scatter)叶片经济型谱关系线性回归结果}
+\caption{(\#tab:leaf-economics-regression-table)叶片经济型谱关系线性回归结果}
 \centering
 \begin{tabular}[t]{lrrrr}
 \toprule
@@ -714,7 +637,7 @@ PC4 & PC4 & 0.015 & 0.000 & 1.000\\
 
 \begin{table}[!h]
 \centering
-\caption{(\#tab:leaf-economics-scatter)叶片寿命与比叶面积关系线性回归结果}
+\caption{(\#tab:leaf-lifespan-sla-regression-table)叶片寿命与比叶面积关系线性回归结果}
 \centering
 \begin{tabular}[t]{lrrrr}
 \toprule
@@ -810,24 +733,15 @@ if (variance_mean_ratio > 1.2) {
 
 这些关联模式的生态学意义在于它们反映了物种间相互作用的性质和强度。正相关可能指示物种间的协同进化或生态位重叠，负相关则暗示强烈的竞争或生态位分化。在恢复生态学中，种间关联分析有助于设计合理的物种配置方案；在保护生物学中，它有助于识别关键物种和功能群。
 
-**生态网络构建**：基于种间相关性可以构建生态网络，通过设定阈值将显著的相关关系转化为网络边，从而可视化物种间相互作用的复杂结构。
+**生态网络构建**：基于种间相关性可以构建生态网络，通过设定阈值将显著的相关关系转化为网络边，从而可视化物种间相互作用的复杂结构，如图\@ref(fig:species-association-network)所示。
 
 在R语言中，种间相关性分析和生态网络构建可以通过以下方法实现：
 
 
 
-
-``` r
-load(file="data/species_net_data.RData")
-# 计算种间关联矩阵
-association_matrix <- cor(t(species_data))
-knitr::kable((association_matrix), caption = "种间关联矩阵", booktabs = TRUE) %>%
-  kableExtra::kable_styling(latex_options = c("hold_position"))
-```
-
 \begin{table}[!h]
 \centering
-\caption{(\#tab:species-association-network)种间关联矩阵}
+\caption{(\#tab:species-association-matrix-table)种间关联矩阵}
 \centering
 \begin{tabular}[t]{lrrrr}
 \toprule
@@ -841,46 +755,15 @@ knitr::kable((association_matrix), caption = "种间关联矩阵", booktabs = TR
 \end{tabular}
 \end{table}
 
-``` r
-# 构建生态网络
-# (igraph包已在章节顶部加载)
-# 设定相关性阈值
-threshold <- 0.3
-adj_matrix <- ifelse(abs(association_matrix) > threshold, 1, 0)
-diag(adj_matrix) <- 0 # 移除自连接
+表\@ref(tab:species-association-matrix-table)展示了物种间的关联矩阵，基于该矩阵可以构建生态网络图\@ref(fig:species-association-network)以直观揭示种间相互作用的复杂结构。
 
-# 创建网络对象
-network <- graph_from_adjacency_matrix(adj_matrix, mode = "undirected")
-
-# 计算网络拓扑特征
-degree_dist <- igraph::degree(network)
-clustering_coef <- transitivity(network, type = "global")
-print(paste("平均度:", mean(degree_dist)))
-```
 
 ```
 ## [1] "平均度: 2.5"
 ```
 
-``` r
-print(paste("聚类系数:", clustering_coef))
-```
-
 ```
 ## [1] "聚类系数: 0.75"
-```
-
-``` r
-# 可视化网络
-plot(network,
-  vertex.size = 15,
-  vertex.color = "lightblue",
-  vertex.label.family = "simhei",
-  vertex.label.color = "black",
-  edge.color = "gray",
-  main = "种间关联网络",
-  main.family = "simhei"
-)
 ```
 
 \begin{figure}
@@ -966,11 +849,6 @@ Cumulative Proportion & 0.5604916 & 0.9058660 & 0.9770526 & 0.9941956 & 1.000000
 
 表\@ref(tab:pca-analysis-table)展示了群落相似性的主成分分析结果，包括各主成分的特征值、方差解释比例和累积方差解释比例，为理解群落组成的多维变异结构提供了量化指标。
 
-
-``` r
-plot(pca_result, display = "sites")
-```
-
 \begin{figure}
 
 {\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/pca-plot-figure-1} 
@@ -982,14 +860,6 @@ plot(pca_result, display = "sites")
 
 这段代码生成图\@ref(fig:pca-plot-figure)，使用`plot()`函数可视化PCA分析结果，`display = "sites"`参数指定只显示样方在排序空间中的位置。该散点图展示了不同群落样方在主成分1和主成分2构成的二维空间中的分布，样方间的距离反映了群落组成的相似性，距离越近表示群落组成越相似。这种可视化方法能够直观地展示群落结构的梯度变化、识别群落类型以及发现环境梯度对群落组成的影响模式。
 
-
-``` r
-# 排序分析 - NMDS
-comm_dist <- vegdist(community_data, method = "bray")
-nmds_result <- monoMDS(comm_dist)
-plot(nmds_result, type = "t")
-```
-
 \begin{figure}
 
 {\centering \includegraphics[width=0.8\linewidth]{05-correlation_files/figure-latex/nmds-plot-figure-1} 
@@ -1000,13 +870,6 @@ plot(nmds_result, type = "t")
 \end{figure}
 
 这段代码执行非度量多维尺度分析并生成图\@ref(fig:nmds-plot-figure)。`vegdist()`函数使用Bray-Curtis距离计算群落相似性矩阵，`monoMDS()`函数执行NMDS排序，`plot()`函数可视化结果，`type = "t"`参数指定显示样方标签。NMDS是一种非参数排序方法，不依赖线性假设，特别适用于生态学中常见的非线性关系数据。该散点图展示了样方在NMDS排序空间中的分布，样方间距离反映了群落组成的Bray-Curtis相似性，能够更好地处理物种多度数据的非线性关系和零值问题。
-
-
-``` r
-# 聚类分析 - 层次聚类
-hc_result <- hclust(comm_dist, method = "average")
-plot(hc_result)
-```
 
 \begin{figure}
 
@@ -1120,21 +983,21 @@ LiNGAM（线性非高斯无环模型）则利用了非高斯性这一关键信�
 
 ## 本章要点回顾
 
-**林小雨学到了什么**：在天童山20公顷森林样地中，林小雨用Pearson相关确认了树木胸径与树高之间的正线性关系，用Spearman相关捕捉了土壤养分与物种丰富度之间的非线性单调趋势，用偏相关分析在控制温度的影响后重新评估了降水量对森林生产力的直接贡献。她还用距离相关发现了叶面积与比叶重之间的U型关系，这种非线性模式用传统方法根本检测不到。通过群落相似性分析，她量化了不同海拔带森林样方的组成差异，Mantel检验和NMDS排序共同揭示出环境过滤对群落构建的主导作用。
+**常林学到了什么**：在天童山20公顷森林样地中，常林用Pearson相关确认了树木胸径与树高之间的正线性关系，用Spearman相关捕捉了土壤养分与物种丰富度之间的非线性单调趋势，用偏相关分析在控制温度的影响后重新评估了降水量对森林生产力的直接贡献。她还用距离相关发现了叶面积与比叶重之间的U型关系，这种非线性模式用传统方法根本检测不到。通过群落相似性分析，她量化了不同海拔带森林样方的组成差异，Mantel检验和NMDS排序共同揭示出环境过滤对群落构建的主导作用。
 
-**统计-AI桥梁**：林小雨认识到，她在天童山计算的Pearson相关矩阵，与大语言模型中Transformer的自注意力权重矩阵在数学上是同类运算，都是向量内积的归一化。两者之间的核心差异不在于"算什么"，而在于"为谁算"：相关矩阵是固定的，对所有人一视同仁；注意力权重是动态的，随上下文而变。她还理解了互信息为什么能驱动对比学习：就像她用互信息来度量"温度知道多少关于物种分布的信息"，SimCLR用InfoNCE损失最大化同一图像不同增强视图之间的互信息，从而迫使模型学到不随裁剪旋转而改变的深层特征。
+**统计-AI桥梁**：常林认识到，她在天童山计算的Pearson相关矩阵，与大语言模型中Transformer的自注意力权重矩阵在数学上是同类运算，都是向量内积的归一化。两者之间的核心差异不在于"算什么"，而在于"为谁算"：相关矩阵是固定的，对所有人一视同仁；注意力权重是动态的，随上下文而变。她还理解了互信息为什么能驱动对比学习：就像她用互信息来度量"温度知道多少关于物种分布的信息"，SimCLR用InfoNCE损失最大化同一图像不同增强视图之间的互信息，从而迫使模型学到不随裁剪旋转而改变的深层特征。
 
-**生态学意义**：相关性分析让林小雨从"描述单个变量"走向"理解变量间关系"，这是从自然观察到规律发现的认识论跨越。掌握相关与因果的本质区别，使她在没有实验操纵的条件下依然能保持科学严谨，同时也让她看清了AI预测模型在生态学中的根本局限性：预测精度再高，也不能替代对因果机制的追求。
+**生态学意义**：相关性分析让常林从"描述单个变量"走向"理解变量间关系"，这是从自然观察到规律发现的认识论跨越。掌握相关与因果的本质区别，使她在没有实验操纵的条件下依然能保持科学严谨，同时也让她看清了AI预测模型在生态学中的根本局限性：预测精度再高，也不能替代对因果机制的追求。
 
 ## 综合练习
 
 ### 练习一：天童山森林多变量相关性分析
 
-**背景**：林小雨在天童山20公顷样地的调查中，在40个固定样方中测量了树木胸径、树高、林分密度、土壤pH值、土壤有机质含量和林下光照强度等变量。她想了解：哪些环境因子与树木生长指标的相关性最强？不同相关方法给出的结论是否一致？
+**背景**：常林在天童山20公顷样地的调查中，在40个固定样方中测量了树木胸径、树高、林分密度、土壤pH值、土壤有机质含量和林下光照强度等变量。她想了解：哪些环境因子与树木生长指标的相关性最强？不同相关方法给出的结论是否一致？
 
 **任务**：本练习要求你使用Pearson、Spearman和Kendall's $\tau$三种方法分析树木胸径与树高的相关性，比较不同方法的结果并解释差异原因。进行偏相关分析，在控制林分密度的影响后，重新评估树木胸径与树高的关系。使用距离相关分析检验土壤pH值与土壤有机质含量之间的关系，判断是否存在非线性关系。构建环境因子（土壤pH、有机质、光照）与林分特征（胸径、树高、密度）的互信息网络，识别关键的环境驱动因子。
 
-**要求**：提供完整的R代码实现，对每种相关性方法的结果进行生态学解释，这些统计结果如何帮助林小雨理解天童山森林中树木生长的驱动机制？讨论不同方法在生态学应用中的优缺点。
+**要求**：提供完整的R代码实现，对每种相关性方法的结果进行生态学解释，这些统计结果如何帮助常林理解天童山森林中树木生长的驱动机制？讨论不同方法在生态学应用中的优缺点。
 
 **数据文件**：`data/exercise1_forest_data.RData`，包含40个森林样地的多变量数据。
 
