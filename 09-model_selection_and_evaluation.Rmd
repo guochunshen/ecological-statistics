@@ -24,6 +24,7 @@ showtext_auto()     # 自动启用中文字体
 theme_eco <- function(base_size = 10, legend_position = "bottom") {
   theme_bw(base_size = base_size) +
     theme(
+      text = element_text(family = "wqy-microhei"),
       plot.title = element_text(hjust = 0.5, face = "bold"),
       axis.title = element_text(size = base_size),
       axis.text = element_text(size = base_size - 1),
