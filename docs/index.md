@@ -82,6 +82,8 @@ lot: False
 - PDF版 https://gitee.com/gcshen/ecological-statistics/blob/master/docs/ecological-statistics.pdf
 - 原代码 https://gitee.com/gcshen/ecological-statistics
 
+书中绝大多数图表均由R代码直接生成，如果你想了解某一图表的完整实现细节，可以在本书的源代码中找到对应的Rmd文件，从中查看所有代码块和数据生成逻辑。
+
 请同学们根据个人学习习惯选择合适的版本，充分利用这些资源进行课前预习和课后复习。
 
 **特别声明：** 为提升教材内容质量与教学效率，本书在编写过程中采用大语言模型作为辅助工具，用于准备教学素材与案例。我们始终秉持一个明确宗旨：本书的核心价值不在于创造前所未有的统计方法描述或提出全新理论，而在于以更清晰、更有效的方式，帮助学生理解已有的生态统计知识体系。为此，我们充分借助大语言模型在整合与表达领域知识方面的优势，积极借鉴和融合该领域中那些被广泛认可的经典方法与成熟阐述，力求“站在巨人的肩膀上”，编撰出一本真正贴合学生学习需求、实用且易懂的教材。同时，全书内容均系编写者在人工智能辅助下独立完成，除合理使用大语言模型所生成的内容外，不存在任何形式的抄袭行为。
@@ -94,14 +96,10 @@ lot: False
 
 
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{imgs/how to learn R} 
-
-}
-
-\caption{思R不学则殆，学R不思则罔}(\#fig:learn-r-progress)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="imgs/how to learn R.png" alt="思R不学则殆，学R不思则罔" width="80%" />
+<p class="caption">(\#fig:learn-r-progress)思R不学则殆，学R不思则罔</p>
+</div>
 R语言的学习是一个渐进的过程，需要持续不断的实践和积累。我们建议同学们将R语言的学习融入到日常的统计学习中，而不是将其视为一个独立的技术任务。每学习一个新的统计方法，都要尝试用R语言来实现它；每遇到一个数据分析问题，都要思考如何用R语言来解决它。通过这种理论与实践的紧密结合，你不仅能够掌握统计方法，更能培养出解决实际问题的能力。
 
 ### 在错误中快速成长
@@ -115,14 +113,10 @@ R语言的学习是一个渐进的过程，需要持续不断的实践和积累�
 - **逻辑错误**帮助你建立更严谨的编程思维
 - **结果解读错误**培养你对统计输出的批判性思考
 
-\begin{figure}
-
-{\centering \includegraphics[width=0.8\linewidth]{imgs/how to learn R 2} 
-
-}
-
-\caption{像哈利波特学习魔法一样从错误中快速成长}(\#fig:learn-r-mistakes)
-\end{figure}
+<div class="figure" style="text-align: center">
+<img src="imgs/how to learn R 2.png" alt="像哈利波特学习魔法一样从错误中快速成长" width="80%" />
+<p class="caption">(\#fig:learn-r-mistakes)像哈利波特学习魔法一样从错误中快速成长</p>
+</div>
 
 重要的是，不要因为害怕犯错而不敢尝试。相反，你应该主动地创造犯错的机会——大胆地修改示例代码，尝试不同的分析方法，探索R语言的各种可能性。每一次成功的调试，每一次对错误的理解，都是你能力提升的重要标志。
 
@@ -285,7 +279,7 @@ devtools::session_info()
 ```
 
 ```
-## - Session info ---------------------------------------------------------------
+## ─ Session info ───────────────────────────────────────────────────────────────
 ##  setting  value
 ##  version  R version 4.3.3 (2024-02-29)
 ##  os       Ubuntu 24.04.1 LTS
@@ -295,13 +289,14 @@ devtools::session_info()
 ##  collate  en_US.UTF-8
 ##  ctype    en_US.UTF-8
 ##  tz       Etc/UTC
-##  date     2026-06-09
+##  date     2026-06-10
 ##  pandoc   3.1.3 @ /usr/bin/ (via rmarkdown)
 ##  quarto   NA
 ## 
-## - Packages -------------------------------------------------------------------
+## ─ Packages ───────────────────────────────────────────────────────────────────
 ##  package     * version date (UTC) lib source
 ##  bookdown      0.44    2025-08-21 [1] CRAN (R 4.3.3)
+##  bslib         0.9.0   2025-01-30 [1] CRAN (R 4.3.3)
 ##  cachem        1.1.0   2024-05-16 [1] CRAN (R 4.3.3)
 ##  cli           3.6.5   2025-04-23 [1] CRAN (R 4.3.3)
 ##  codetools     0.2-19  2023-02-01 [4] CRAN (R 4.2.2)
@@ -315,6 +310,8 @@ devtools::session_info()
 ##  htmltools     0.5.8.1 2024-04-04 [1] CRAN (R 4.3.3)
 ##  htmlwidgets   1.6.4   2023-12-06 [1] CRAN (R 4.3.3)
 ##  httpuv        1.6.15  2024-03-26 [1] CRAN (R 4.3.3)
+##  jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.3.3)
+##  jsonlite      2.0.0   2025-03-27 [1] CRAN (R 4.3.3)
 ##  knitr         1.49    2024-11-08 [1] CRAN (R 4.3.3)
 ##  later         1.4.1   2024-11-27 [1] CRAN (R 4.3.3)
 ##  lifecycle     1.0.4   2023-11-07 [1] CRAN (R 4.3.3)
@@ -332,6 +329,7 @@ devtools::session_info()
 ##  remotes       2.5.0   2024-03-17 [1] CRAN (R 4.3.3)
 ##  rlang         1.1.6   2025-04-11 [1] CRAN (R 4.3.3)
 ##  rmarkdown     2.29    2024-11-04 [1] CRAN (R 4.3.3)
+##  sass          0.4.9   2024-03-15 [1] CRAN (R 4.3.3)
 ##  sessioninfo   1.2.3   2025-02-05 [1] CRAN (R 4.3.3)
 ##  shiny         1.10.0  2024-12-14 [1] CRAN (R 4.3.3)
 ##  urlchecker    1.0.1   2021-11-30 [1] CRAN (R 4.3.3)
@@ -346,5 +344,23 @@ devtools::session_info()
 ##  [3] /usr/lib/R/site-library
 ##  [4] /usr/lib/R/library
 ## 
-## ------------------------------------------------------------------------------
+## ──────────────────────────────────────────────────────────────────────────────
+```
+
+为了保持正文简洁，后续各章节的分析代码中将不再逐一列出所需的R包加载语句。如果你在运行某段代码时遇到"找不到函数"的错误，请根据代码中出现的函数名判断其所属的R包并自行加载。简便的做法是：一开始就加载以下这些本书中常用的核心R包，可以避免反复查找的麻烦：
+
+
+``` r
+# 本书核心R包，建议一次性加载
+library(tidyverse)    # 数据处理与可视化（dplyr, ggplot2等）
+library(vegan)        # 群落生态学分析
+library(lme4)         # 混合效应模型
+library(showtext)     # 中文字体支持
+library(corrplot)     # 相关性可视化
+library(ppcor)        # 偏相关分析
+library(energy)       # 距离相关
+library(infotheo)     # 互信息
+library(igraph)       # 网络分析
+library(car)          # 回归诊断
+library(MuMIn)        # 模型选择
 ```

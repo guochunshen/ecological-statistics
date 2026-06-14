@@ -108,3 +108,15 @@
 %\preto\Shaded{\par\vspace{-0.5\baselineskip}}  % 代码块前减少空白
 %\appto\endShaded{\par\vspace{-0.5\baselineskip}}  % 代码块后减少空白
 \makeatother
+
+% AI协作面板 - 对应HTML中的.ai-box样式
+\usepackage{xcolor}
+\usepackage{framed}
+\definecolor{ai-box-bg}{HTML}{F0F4FA}
+\definecolor{ai-box-border}{HTML}{5B9BD5}
+\newenvironment{ai-box}{%
+  \def\FrameCommand{{\color{ai-box-border}\vrule width 4pt}\hspace{10pt}}%
+  \MakeFramed {\advance\hsize-\width \FrameRestore\noindent\ignorespaces}%
+}{%
+  \endMakeFramed
+}
