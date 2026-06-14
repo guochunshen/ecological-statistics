@@ -103,6 +103,8 @@ theme_eco <- function(base_size = 10, legend_position = "bottom") {
 - PDF版 https://gitee.com/gcshen/ecological-statistics/blob/master/docs/ecological-statistics.pdf
 - 原代码 https://gitee.com/gcshen/ecological-statistics
 
+书中绝大多数图表均由R代码直接生成，如果你想了解某一图表的完整实现细节，可以在本书的源代码中找到对应的Rmd文件，从中查看所有代码块和数据生成逻辑。
+
 请同学们根据个人学习习惯选择合适的版本，充分利用这些资源进行课前预习和课后复习。
 
 **特别声明：** 为提升教材内容质量与教学效率，本书在编写过程中采用大语言模型作为辅助工具，用于准备教学素材与案例。我们始终秉持一个明确宗旨：本书的核心价值不在于创造前所未有的统计方法描述或提出全新理论，而在于以更清晰、更有效的方式，帮助学生理解已有的生态统计知识体系。为此，我们充分借助大语言模型在整合与表达领域知识方面的优势，积极借鉴和融合该领域中那些被广泛认可的经典方法与成熟阐述，力求“站在巨人的肩膀上”，编撰出一本真正贴合学生学习需求、实用且易懂的教材。同时，全书内容均系编写者在人工智能辅助下独立完成，除合理使用大语言模型所生成的内容外，不存在任何形式的抄袭行为。
@@ -291,4 +293,21 @@ devtools::install_github("GotelliLab/EcoSimR") #群落零模型
 
 ```{r}
 devtools::session_info()
+```
+
+为了保持正文简洁，后续各章节的分析代码中将不再逐一列出所需的R包加载语句。如果你在运行某段代码时遇到"找不到函数"的错误，请根据代码中出现的函数名判断其所属的R包并自行加载。简便的做法是：一开始就加载以下这些本书中常用的核心R包，可以避免反复查找的麻烦：
+
+```{r eval=FALSE}
+# 本书核心R包，建议一次性加载
+library(tidyverse)    # 数据处理与可视化（dplyr, ggplot2等）
+library(vegan)        # 群落生态学分析
+library(lme4)         # 混合效应模型
+library(showtext)     # 中文字体支持
+library(corrplot)     # 相关性可视化
+library(ppcor)        # 偏相关分析
+library(energy)       # 距离相关
+library(infotheo)     # 互信息
+library(igraph)       # 网络分析
+library(car)          # 回归诊断
+library(MuMIn)        # 模型选择
 ```

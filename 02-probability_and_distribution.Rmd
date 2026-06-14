@@ -1,6 +1,6 @@
 # 概率与分布：从生态随机性到AI的数学语言 {#ch02}
 
-```{r include=FALSE}
+```{r echo=FALSE}
 # 初始化设置
 knitr::opts_chunk$set(
   dev = "cairo_pdf",
@@ -25,7 +25,7 @@ theme_eco <- function(base_size = 10, legend_position = "bottom") {
 }
 ```
 
-```{r setup-libraries, message=FALSE}
+```{r setup-libraries, echo=FALSE, message=FALSE}
 
 library(ggplot2)
 library(showtext)

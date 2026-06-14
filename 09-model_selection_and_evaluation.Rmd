@@ -1,6 +1,6 @@
 # 模型选择与验证：从信息准则到AI评估 {#ch09}
 
-```{r include=FALSE}
+```{r echo=FALSE}
 # 初始化设置
 knitr::opts_chunk$set(
   dev = "cairo_pdf",

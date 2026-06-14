@@ -1,6 +1,6 @@
 # 从样本到总体：生态参数估计与AI推断 {#ch04}
 
-```{r include=FALSE}
+```{r echo=FALSE}
 knitr::opts_chunk$set(
   dev = "cairo_pdf",
   echo = TRUE,

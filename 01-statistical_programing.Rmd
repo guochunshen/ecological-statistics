@@ -1,6 +1,6 @@
 # AI辅助编程基础
 
-```{r include=FALSE}
+```{r echo=FALSE}
 # 初始化设置
 knitr::opts_chunk$set(
   dev = "cairo_pdf",
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup-libraries, message=FALSE}
+```{r setup-libraries, echo=FALSE, message=FALSE}
 # 加载本章所需的主要R包
 library(showtext)  # 中文字体支持
 library(ggplot2)   # 数据可视化

@@ -1,6 +1,6 @@
 # 回归建模：从线性模型到通用函数逼近 {#ch08}
 
-```{r include=FALSE}
+```{r echo=FALSE}
 # 初始化设置
 knitr::opts_chunk$set(
   dev = "cairo_pdf",

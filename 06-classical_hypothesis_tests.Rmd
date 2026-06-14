@@ -1,6 +1,6 @@
 # 生态假设检验：从经典方法到AI时代推断 {#ch06}
 
-```{r include=FALSE}
+```{r echo=FALSE}
 # 初始化设置
 knitr::opts_chunk$set(
   dev = "cairo_pdf",
