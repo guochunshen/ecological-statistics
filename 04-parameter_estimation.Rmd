@@ -1,6 +1,6 @@
 # 从样本到总体：生态参数估计与AI推断 {#ch04}
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(
   dev = "cairo_pdf",
   echo = TRUE,
@@ -70,7 +70,6 @@ load("data/forest_birds.rda")
 ```
 
 ```{r forest-birds-load}
-cat("数据集结构概览：\n")
 str(forest_birds)
 cat("\n总体均值：", mean(forest_birds$abundance), "\n")
 ```
@@ -122,15 +121,13 @@ cat("系统抽样均值估计：", mean(systematic_sample$abundance), "\n")
 最后比较不同抽样方法的估计效果，评估各种方法的性能差异：
 
 ```{r sampling-comparison}
-cat("不同抽样方法对种群数量均值的估计比较：\n",
-    "总体均值：", mean(forest_birds$abundance), "\n",
+cat("总体均值：", mean(forest_birds$abundance), "\n",
     "随机抽样估计：", mean(random_sample$abundance), "\n",
     "分层抽样估计：", mean(stratified_sample$abundance), "\n",
     "系统抽样估计：", mean(systematic_sample$abundance), "\n")
 
 true_mean <- mean(forest_birds$abundance)
-cat("\n估计偏差分析：\n",
-    "随机抽样偏差：",
+cat("随机抽样偏差：",
     (mean(random_sample$abundance) - true_mean) / true_mean * 100, "%\n",
     "分层抽样偏差：",
     (mean(stratified_sample$abundance) - true_mean) / true_mean * 100,
@@ -465,9 +462,8 @@ result <- optim(initial_params, log_likelihood, data = tree_diameter,
                 control = list(fnscale = -1), method = "L-BFGS-B",
                 lower = c(-1000, 0.001), upper = c(1000, 200))
 
-cat("\n使用优化算法的最大似然估计结果：\n",
-  "总体均值估计：", result$par[1], "cm\n",
-  "总体标准差估计：", result$par[2], "cm\n")
+cat("总体均值估计：", result$par[1], "cm\n",
+    "总体标准差估计：", result$par[2], "cm\n")
 ```
 
 最大似然估计的生态学意义
@@ -584,10 +580,7 @@ $$-\log L = -\sum_{i=1}^{n} \sum_{k=1}^{K} y_{ik} \log(\hat{p}_{ik}) = L_{\text{
 
 如果说最大似然估计是“最合理猜测"，那么矩估计就是“用样本特征来匹配总体特征"的方法。让我们用一个简单的生态学例子来理解：
 
-假设你正在研究一片草地中某种昆虫的体长分布。你测量了100只昆虫的体长，得到了样本数据。矩估计的思路很简单：
-
-- 用样本的平均体长来估计整个种群的平均体长  
-- 用样本体长的变异程度来估计整个种群体长的变异程度  
+假设你正在研究一片草地中某种昆虫的体长分布。你测量了100只昆虫的体长，得到了样本数据。矩估计的思路很简单：用样本的平均体长来估计整个种群的平均体长，用样本体长的变异程度来估计整个种群体长的变异程度。
 
 数学表达
 
@@ -615,10 +608,7 @@ $$-\log L = -\sum_{i=1}^{n} \sum_{k=1}^{K} y_{ik} \log(\hat{p}_{ik}) = L_{\text{
    \hat{\sigma}^2_{MM} &= m_2 - m_1^2 = \frac{1}{n}\sum_{i=1}^{n} x_i^2 - \left(\frac{1}{n}\sum_{i=1}^{n} x_i\right)^2
    \end{align*}
 
-因此，对于正态分布$N(\mu, \sigma^2)$：
-
-- 一阶样本矩（样本均值）$m_1$ 用于估计总体均值 $\mu$
-- 二阶样本中心矩 $m_2 - m_1^2$（即 $\frac{1}{n}\sum(x_i - \bar{x})^2$）用于估计总体方差 $\sigma^2$
+因此，对于正态分布 $N(\mu, \sigma^2)$，一阶样本矩（样本均值）$m_1$ 用于估计总体均值 $\mu$，二阶样本中心矩 $m_2 - m_1^2$（即 $\frac{1}{n}\sum(x_i - \bar{x})^2$）用于估计总体方差 $\sigma^2$。
 
 注意这里的方差估计使用的是二阶中心矩（除数 $n$），而非无偏样本方差（除数 $n-1$）。矩估计不必是无偏的，这一差异在小样本时尤为明显。
 
@@ -631,16 +621,14 @@ tree_diameter <- rnorm(50, mean = 25, sd = 5)  # 真实均值25cm，标准差5cm
 mu_hat_moment <- mean(tree_diameter)
 sigma2_hat_moment <- mean((tree_diameter - mu_hat_moment)^2)
 
-cat("矩估计结果：\n",
-    "总体均值估计：", mu_hat_moment, "cm\n",
+cat("总体均值估计：", mu_hat_moment, "cm\n",
     "总体方差估计：", sigma2_hat_moment, "cm²\n")
 
 # 指数分布的矩估计：lambda = 1 / 样本均值
 exp_lifespan <- rexp(100, rate = 0.1)  # 平均寿命10天
 lambda_hat_moment <- 1 / mean(exp_lifespan)
 
-cat("\n昆虫寿命分布的矩估计：\n",
-    "指数分布参数估计：", lambda_hat_moment, "（真实值：0.1）\n",
+cat("指数分布参数估计：", lambda_hat_moment, "（真实值：0.1）\n",
     "平均寿命估计：", 1 / lambda_hat_moment, "天（真实值：10天）\n")
 ```
 
@@ -692,10 +680,7 @@ cat("\n昆虫寿命分布的矩估计：\n",
 
 在实际生态学研究中，研究人员应该根据具体的研究目标和数据特征选择合适的估计方法：
 
-- 对于初步探索和快速评估，矩估计是很好的选择
-- 对于需要高精度估计的关键决策，建议使用最大似然估计或贝叶斯估计
-- 在数据存在异常值或分布偏离假设时，需要考虑使用稳健估计方法
-- 在教学和科学传播中，矩估计的直观性使其成为首选的解释工具
+对于初步探索和快速评估，矩估计是很好的选择；对于需要高精度估计的关键决策，建议使用最大似然估计或贝叶斯估计；在数据存在异常值或分布偏离假设时，需要考虑使用稳健估计方法；在教学和科学传播中，矩估计的直观性使其成为首选的解释工具。
 
 简单总结：矩估计就像是“用样本的镜子照出总体的样子"，简单直接，但在需要精确估计时可能还需要更复杂的方法。它虽然不是最精确的估计方法，但凭借其简单性、直观性和广泛适用性，在生态学研究中发挥着不可替代的作用。
 
@@ -770,8 +755,7 @@ posterior_samples <- as.data.frame(fit_brm)
 posterior_mean <- mean(posterior_samples$b_Intercept)  # 截距项即总体均值
 posterior_sd <- mean(posterior_samples$sigma)
 
-cat("\n贝叶斯估计结果：\n",
-    "后验均值：", round(posterior_mean, 2), "cm\n",
+cat("后验均值：", round(posterior_mean, 2), "cm\n",
     "后验标准差：", round(posterior_sd, 2), "cm\n")
 ```
 
@@ -799,8 +783,7 @@ par(mfrow = c(1, 1))
 ci_mean <- quantile(posterior_samples$b_Intercept, probs = c(0.025, 0.975))
 ci_sigma <- quantile(posterior_samples$sigma, probs = c(0.025, 0.975))
 
-cat("\n95%可信区间：\n",
-    "均值：[", round(ci_mean[1], 2), ", ", round(ci_mean[2], 2), "] cm\n",
+cat("均值：[", round(ci_mean[1], 2), ", ", round(ci_mean[2], 2), "] cm\n",
     "标准差：[", round(ci_sigma[1], 2), ", ", round(ci_sigma[2], 2), "] cm\n")
 ```
 
@@ -837,12 +820,7 @@ cat("\n95%可信区间：\n",
 
 贝叶斯估计的发展趋势
 
-随着计算技术的进步和统计软件的发展，贝叶斯估计在生态学中的应用正在不断扩展和深化：
-
-- 计算方法的改进：马尔可夫链蒙特卡洛（MCMC）算法、变分推断等计算方法的发展使得贝叶斯估计能够处理越来越复杂的生态学模型；
-- 软件工具的普及：Stan、JAGS、NIMBLE等贝叶斯建模软件的出现降低了贝叶斯方法的技术门槛；
-- 多学科整合：贝叶斯方法促进了生态学与其他学科（如经济学、社会学）的交叉研究；
-- 决策支持应用：贝叶斯决策分析在生态管理中的应用日益广泛。
+随着计算技术的进步和统计软件的发展，贝叶斯估计在生态学中的应用正在不断扩展和深化：计算方法的改进（如马尔可夫链蒙特卡洛算法、变分推断等）使得贝叶斯估计能够处理越来越复杂的生态学模型，软件工具的普及（如Stan、JAGS、NIMBLE等）降低了贝叶斯方法的技术门槛，多学科整合促进了生态学与其他学科（如经济学、社会学）的交叉研究，而贝叶斯决策分析在生态管理中的应用也日益广泛。
 
 简单总结：贝叶斯估计就像是”站在前人的肩膀上”，它让我们能够利用已有的知识，结合新的观测，做出更加全面和稳健的估计。这种方法特别适合那些数据有限但知识丰富的生态学研究。随着生态学研究问题的日益复杂和对科学决策支持需求的增加，贝叶斯估计在生态学中的地位和作用将会越来越重要。
 
@@ -1121,7 +1099,6 @@ for (i in 2:nrow(capture_data)) {
                                  sum(capture_data$R_t[1:i])
 }
 
-cat("各次捕获后的累计估计值（第1次无估计）：\n")
 print(cumulative_estimates[2:length(cumulative_estimates)])
 
 # 可视化：累计估计值随捕获次数收敛则表明估计稳定
@@ -1161,8 +1138,8 @@ js_data <- data.frame(
   freq = c(20, 18, 15, 12, 10, 8, 7, 6, 5, 6, 5, 4, 4, 3, 2)
 )
 
-cat("Jolly-Seber模型需要专门的数据格式和模型设定\n",
-    "在实际应用中，建议使用RMark包进行完整的Jolly-Seber分析\n")
+# Jolly-Seber模型需要专门的数据格式和模型设定，
+# 在实际应用中建议使用RMark包进行完整的Jolly-Seber分析
 
 # 简化的存活率计算：存活率 = 本次重捕数 / 前次标记数
 marked_counts <- c(50, 45, 40, 35, 30)
@@ -1173,7 +1150,6 @@ for (i in 2:length(marked_counts)) {
   survival_rates[i - 1] <- recaptures[i] / marked_counts[i - 1]
 }
 
-cat("简化的存活率估计：\n")
 print(survival_rates)
 ```
 

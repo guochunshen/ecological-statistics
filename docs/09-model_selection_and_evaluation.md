@@ -163,10 +163,14 @@ aic_overfit <- AIC(model_overfit)
 
 为了直观展示不同复杂度模型的拟合效果，常林生成了模型比较图（图\@ref(fig:model-complexity-comparison)）。该图采用2×2布局，分别展示了线性、二次、三次和10次多项式模型的拟合效果，每个子图都标注了相应的$R^2$和$\text{AIC}$值，便于读者直观比较模型复杂度与拟合优度的平衡关系。
 
-<div class="figure" style="text-align: center">
-<embed src="09-model_selection_and_evaluation_files/figure-html/model-complexity-comparison-1.pdf" title="模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:model-complexity-comparison)模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/model-complexity-comparison-1} 
+
+}
+
+\caption{模型复杂度与拟合优度平衡：线性、二次、三次和10次多项式模型对植物生物量与土壤养分关系的拟合效果比较}(\#fig:model-complexity-comparison)
+\end{figure}
 
 从图\@ref(fig:model-complexity-comparison)中可以清晰地观察到不同复杂度模型的拟合特征：线性模型过于平滑，无法捕捉数据中的非线性趋势；二次模型恰当地反映了植物对养分的最适响应模式；三次模型虽然拟合度略有提升，但增加了不必要的复杂度；而10次多项式模型则明显过拟合，曲线过度适应数据中的随机波动。
 
@@ -267,90 +271,35 @@ best_bic <- forest_bird_model_comparison$Model[
   which.min(forest_bird_model_comparison$BIC)]
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:forest-bird-model-comparison-table)(\#tab:forest-bird-model-comparison-table)信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;"> Model </th>
-   <th style="text-align:right;"> R2 </th>
-   <th style="text-align:right;"> AIC </th>
-   <th style="text-align:right;"> BIC </th>
-   <th style="text-align:right;"> Parameters </th>
-   <th style="text-align:right;"> delta_AIC </th>
-   <th style="text-align:right;"> delta_BIC </th>
-   <th style="text-align:right;"> AIC_weight </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> full_model </td>
-   <td style="text-align:right;"> 0.606 </td>
-   <td style="text-align:right;"> 737.998 </td>
-   <td style="text-align:right;"> 753.629 </td>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> 0.000 </td>
-   <td style="text-align:right;"> 0.000 </td>
-   <td style="text-align:right;"> 0.76 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> overfit_model </td>
-   <td style="text-align:right;"> 0.613 </td>
-   <td style="text-align:right;"> 740.300 </td>
-   <td style="text-align:right;"> 761.141 </td>
-   <td style="text-align:right;"> 7 </td>
-   <td style="text-align:right;"> 2.302 </td>
-   <td style="text-align:right;"> 7.512 </td>
-   <td style="text-align:right;"> 0.24 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> area_water </td>
-   <td style="text-align:right;"> 0.511 </td>
-   <td style="text-align:right;"> 755.660 </td>
-   <td style="text-align:right;"> 766.081 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 17.662 </td>
-   <td style="text-align:right;"> 12.452 </td>
-   <td style="text-align:right;"> 0.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> area_vegetation </td>
-   <td style="text-align:right;"> 0.419 </td>
-   <td style="text-align:right;"> 772.850 </td>
-   <td style="text-align:right;"> 783.270 </td>
-   <td style="text-align:right;"> 3 </td>
-   <td style="text-align:right;"> 34.852 </td>
-   <td style="text-align:right;"> 29.641 </td>
-   <td style="text-align:right;"> 0.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> area_only </td>
-   <td style="text-align:right;"> 0.342 </td>
-   <td style="text-align:right;"> 783.379 </td>
-   <td style="text-align:right;"> 791.195 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 45.381 </td>
-   <td style="text-align:right;"> 37.566 </td>
-   <td style="text-align:right;"> 0.00 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> vegetation_only </td>
-   <td style="text-align:right;"> 0.119 </td>
-   <td style="text-align:right;"> 812.484 </td>
-   <td style="text-align:right;"> 820.300 </td>
-   <td style="text-align:right;"> 2 </td>
-   <td style="text-align:right;"> 74.486 </td>
-   <td style="text-align:right;"> 66.671 </td>
-   <td style="text-align:right;"> 0.00 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:forest-bird-model-comparison-table)信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣}
+\centering
+\begin{tabular}[t]{lrrrrrrr}
+\toprule
+Model & R2 & AIC & BIC & Parameters & delta\_AIC & delta\_BIC & AIC\_weight\\
+\midrule
+full\_model & 0.606 & 737.998 & 753.629 & 5 & 0.000 & 0.000 & 0.76\\
+overfit\_model & 0.613 & 740.300 & 761.141 & 7 & 2.302 & 7.512 & 0.24\\
+area\_water & 0.511 & 755.660 & 766.081 & 3 & 17.662 & 12.452 & 0.00\\
+area\_vegetation & 0.419 & 772.850 & 783.270 & 3 & 34.852 & 29.641 & 0.00\\
+area\_only & 0.342 & 783.379 & 791.195 & 2 & 45.381 & 37.566 & 0.00\\
+\addlinespace
+vegetation\_only & 0.119 & 812.484 & 820.300 & 2 & 74.486 & 66.671 & 0.00\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 为了更直观地展示模型比较结果，常林创建了信息准则可视化图（图\@ref(fig:forest-bird-info-criteria-plot)）。该图采用双面板布局，左侧展示ΔAIC比较，右侧展示ΔBIC比较。图中使用三色编码辅助判断：绿色表示强支持模型（ΔAIC/ΔBIC < 2），黄色表示有实质性差异的模型（2 ≤ ΔAIC/ΔBIC < 7），红色表示支持度较弱的模型（ΔAIC/ΔBIC ≥ 7，其中7-10为过渡地带，>10时基本无支持）。两条虚线分别标示了ΔAIC/ΔBIC为2和7的阈值。注意三色分类是简化的视觉辅助，精确解读时应参考上文给出的完整阈值区间。
 
-<div class="figure" style="text-align: center">
-<embed src="09-model_selection_and_evaluation_files/figure-html/forest-bird-info-criteria-plot-1.pdf" title="信息准则可视化：ΔAIC和ΔBIC差异比较，展示不同模型的相对优劣" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:forest-bird-info-criteria-plot)信息准则可视化：ΔAIC和ΔBIC差异比较，展示不同模型的相对优劣</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/forest-bird-info-criteria-plot-1} 
+
+}
+
+\caption{信息准则可视化：ΔAIC和ΔBIC差异比较，展示不同模型的相对优劣}(\#fig:forest-bird-info-criteria-plot)
+\end{figure}
 
 从图\@ref(fig:forest-bird-info-criteria-plot)中可以清晰地观察到，full_model模型在AIC和BIC准则下都表现最优（绿色柱状图），而过度拟合模型虽然R²较高，但由于参数过多受到了信息准则的惩罚（红色柱状图）。这种可视化方式使得模型比较结果更加直观易懂，读者可以快速识别出统计上最优且生态学意义明确的模型。
 
@@ -427,117 +376,54 @@ nursery_lrt_p_value <- nursery_lrt_result$`Pr(>Chisq)`[2]
 
 似然比检验的结果显示在表\@ref(tab:nursery-lrt-result-table)中，该表比较了简单模型（只有主效应）和复杂模型（包含交互项）的拟合差异。
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:nursery-lrt-result-table)(\#tab:nursery-lrt-result-table)似然比检验结果：植物生长与温度、光照的关系</caption>
- <thead>
-  <tr>
-   <th style="text-align:right;"> #Df </th>
-   <th style="text-align:right;"> LogLik </th>
-   <th style="text-align:right;"> Df </th>
-   <th style="text-align:right;"> Chisq </th>
-   <th style="text-align:right;"> Pr(&gt;Chisq) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:right;"> 4 </td>
-   <td style="text-align:right;"> -58.86869 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 5 </td>
-   <td style="text-align:right;"> -56.40071 </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 4.935962 </td>
-   <td style="text-align:right;"> 0.0263034 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:nursery-lrt-result-table)似然比检验结果：植物生长与温度、光照的关系}
+\centering
+\begin{tabular}[t]{rrrrr}
+\toprule
+\#Df & LogLik & Df & Chisq & Pr(>Chisq)\\
+\midrule
+4 & -58.86869 & NA & NA & NA\\
+5 & -56.40071 & 1 & 4.935962 & 0.0263034\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 为了更详细地了解两个模型的参数估计，表\@ref(tab:nursery-model-simple-table)展示了简单模型的系数估计结果，该模型只包含温度和光照的主效应。
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:nursery-model-simple-table)(\#tab:nursery-model-simple-table)模型比较：简单模型 (只有主效应)</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Estimate </th>
-   <th style="text-align:right;"> Std. Error </th>
-   <th style="text-align:right;"> t value </th>
-   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 0.9522163 </td>
-   <td style="text-align:right;"> 0.3475783 </td>
-   <td style="text-align:right;"> 2.739574 </td>
-   <td style="text-align:right;"> 0.0076414 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> temp </td>
-   <td style="text-align:right;"> 0.1589956 </td>
-   <td style="text-align:right;"> 0.0149805 </td>
-   <td style="text-align:right;"> 10.613532 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> light </td>
-   <td style="text-align:right;"> 0.0037280 </td>
-   <td style="text-align:right;"> 0.0002189 </td>
-   <td style="text-align:right;"> 17.031520 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:nursery-model-simple-table)模型比较：简单模型 (只有主效应)}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 0.9522163 & 0.3475783 & 2.739574 & 0.0076414\\
+temp & 0.1589956 & 0.0149805 & 10.613532 & 0.0000000\\
+light & 0.0037280 & 0.0002189 & 17.031520 & 0.0000000\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 表\@ref(tab:nursery-model-complex-table)则展示了复杂模型的系数估计结果，该模型包含了温度与光照的交互项，可以检验环境因子之间的协同作用。
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:nursery-model-complex-table)(\#tab:nursery-model-complex-table)模型比较：复杂模型 (包含交互项)</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Estimate </th>
-   <th style="text-align:right;"> Std. Error </th>
-   <th style="text-align:right;"> t value </th>
-   <th style="text-align:right;"> Pr(&gt;&amp;#124;t&amp;#124;) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 2.6217208 </td>
-   <td style="text-align:right;"> 0.8314621 </td>
-   <td style="text-align:right;"> 3.1531452 </td>
-   <td style="text-align:right;"> 0.0023129 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> temp </td>
-   <td style="text-align:right;"> 0.0819161 </td>
-   <td style="text-align:right;"> 0.0379749 </td>
-   <td style="text-align:right;"> 2.1571128 </td>
-   <td style="text-align:right;"> 0.0341579 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> light </td>
-   <td style="text-align:right;"> 0.0009324 </td>
-   <td style="text-align:right;"> 0.0012889 </td>
-   <td style="text-align:right;"> 0.7234173 </td>
-   <td style="text-align:right;"> 0.4716442 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> temp:light </td>
-   <td style="text-align:right;"> 0.0001286 </td>
-   <td style="text-align:right;"> 0.0000585 </td>
-   <td style="text-align:right;"> 2.1992829 </td>
-   <td style="text-align:right;"> 0.0308988 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:nursery-model-complex-table)模型比较：复杂模型 (包含交互项)}
+\centering
+\begin{tabular}[t]{lrrrr}
+\toprule
+  & Estimate & Std. Error & t value & Pr(>|t|)\\
+\midrule
+(Intercept) & 2.6217208 & 0.8314621 & 3.1531452 & 0.0023129\\
+temp & 0.0819161 & 0.0379749 & 2.1571128 & 0.0341579\\
+light & 0.0009324 & 0.0012889 & 0.7234173 & 0.4716442\\
+temp:light & 0.0001286 & 0.0000585 & 2.1992829 & 0.0308988\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 ``` r
@@ -564,10 +450,14 @@ nursery_r2_improvement <- nursery_r2_complex - nursery_r2_simple
 ## === 交互作用可视化 ===
 ```
 
-<div class="figure" style="text-align: center">
-<embed src="09-model_selection_and_evaluation_files/figure-html/nursery-interaction-plot-1.pdf" title="常林的苗圃实验：温度与光照对植物生长速率的交互作用，展示了环境因子交互作用在植物生长中的重要性" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:nursery-interaction-plot)常林的苗圃实验：温度与光照对植物生长速率的交互作用，展示了环境因子交互作用在植物生长中的重要性</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/nursery-interaction-plot-1} 
+
+}
+
+\caption{常林的苗圃实验：温度与光照对植物生长速率的交互作用，展示了环境因子交互作用在植物生长中的重要性}(\#fig:nursery-interaction-plot)
+\end{figure}
 
 从图\@ref(fig:nursery-interaction-plot)中可以观察到，在不同光照强度下，温度对植物生长的影响模式存在明显差异。具体而言，三条预测线的斜率不同，反映了温度与光照的交互作用：在低光照（300 lux）条件下，温度-生长曲线的斜率较平缓，升温对生长的促进有限；在高光照（900 lux）条件下，温度-生长曲线斜率更大，升温的促进效应更为显著。这种可视化有助于理解环境因子之间的复杂关系，为生态学研究提供直观的证据。
 
@@ -656,15 +546,6 @@ stream_all_models <- dredge(stream_full_model)
 stream_avg_model <- model.avg(stream_all_models, fit = TRUE)
 
 # 输出模型平均结果
-cat("\n=== 常林的溪流鱼类模型平均结果 ===\n")
-```
-
-```
-## 
-## === 常林的溪流鱼类模型平均结果 ===
-```
-
-``` r
 # 提取平均模型的系数
 stream_avg_coef <- summary(stream_avg_model)$coefmat.full
 
@@ -672,75 +553,27 @@ knitr::kable(stream_avg_coef, caption = "常林的溪流鱼类模型平均结果
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:stream-model-avg-table)(\#tab:stream-model-avg-table)常林的溪流鱼类模型平均结果：平均模型系数</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Estimate </th>
-   <th style="text-align:right;"> Std. Error </th>
-   <th style="text-align:right;"> Adjusted SE </th>
-   <th style="text-align:right;"> z value </th>
-   <th style="text-align:right;"> Pr(&gt;&amp;#124;z&amp;#124;) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> (Intercept) </td>
-   <td style="text-align:right;"> 1.6226421 </td>
-   <td style="text-align:right;"> 0.2324172 </td>
-   <td style="text-align:right;"> 0.2348710 </td>
-   <td style="text-align:right;"> 6.9086519 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> oxygen </td>
-   <td style="text-align:right;"> 0.1702822 </td>
-   <td style="text-align:right;"> 0.0075580 </td>
-   <td style="text-align:right;"> 0.0076378 </td>
-   <td style="text-align:right;"> 22.2946060 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> ph </td>
-   <td style="text-align:right;"> 0.8242705 </td>
-   <td style="text-align:right;"> 0.0293587 </td>
-   <td style="text-align:right;"> 0.0296689 </td>
-   <td style="text-align:right;"> 27.7823265 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> temp </td>
-   <td style="text-align:right;"> 0.0531857 </td>
-   <td style="text-align:right;"> 0.0037299 </td>
-   <td style="text-align:right;"> 0.0037693 </td>
-   <td style="text-align:right;"> 14.1103420 </td>
-   <td style="text-align:right;"> 0.0000000 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> turbidity </td>
-   <td style="text-align:right;"> -0.0001485 </td>
-   <td style="text-align:right;"> 0.0007176 </td>
-   <td style="text-align:right;"> 0.0007243 </td>
-   <td style="text-align:right;"> 0.2050028 </td>
-   <td style="text-align:right;"> 0.8375699 </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:stream-model-avg-table)常林的溪流鱼类模型平均结果：平均模型系数}
+\centering
+\begin{tabular}[t]{lrrrrr}
+\toprule
+  & Estimate & Std. Error & Adjusted SE & z value & Pr(>|z|)\\
+\midrule
+(Intercept) & 1.6226421 & 0.2324172 & 0.2348710 & 6.9086519 & 0.0000000\\
+oxygen & 0.1702822 & 0.0075580 & 0.0076378 & 22.2946060 & 0.0000000\\
+ph & 0.8242705 & 0.0293587 & 0.0296689 & 27.7823265 & 0.0000000\\
+temp & 0.0531857 & 0.0037299 & 0.0037693 & 14.1103420 & 0.0000000\\
+turbidity & -0.0001485 & 0.0007176 & 0.0007243 & 0.2050028 & 0.8375699\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 ``` r
 # 计算变量重要性
 stream_var_importance <- sw(stream_all_models)
 
-cat("\n=== 变量重要性 ===\n")
-```
-
-```
-## 
-## === 变量重要性 ===
-```
-
-``` r
 print(stream_var_importance)
 ```
 
@@ -752,10 +585,14 @@ print(stream_var_importance)
 
 模型平均系数结果如表\@ref(tab:stream-model-avg-table)所示。可视化是理解模型平均结果的重要工具，图\@ref(fig:stream-model-averaging-plot)展示了常林溪流鱼类研究的模型平均结果，采用双面板布局：左侧的变量重要性图显示各环境因子的相对重要性，帮助识别影响鱼类丰度的关键驱动因子；右侧的模型权重分布图展示不同候选模型的相对支持度，反映了基于AIC权重的模型不确定性量化。
 
-<div class="figure" style="text-align: center">
-<embed src="09-model_selection_and_evaluation_files/figure-html/stream-model-averaging-plot-1.pdf" title="常林的溪流鱼类模型平均结果：变量重要性排序和模型权重分布。左图显示各环境因子的相对重要性，右图展示不同候选模型的相对支持度" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:stream-model-averaging-plot)常林的溪流鱼类模型平均结果：变量重要性排序和模型权重分布。左图显示各环境因子的相对重要性，右图展示不同候选模型的相对支持度</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/stream-model-averaging-plot-1} 
+
+}
+
+\caption{常林的溪流鱼类模型平均结果：变量重要性排序和模型权重分布。左图显示各环境因子的相对重要性，右图展示不同候选模型的相对支持度}(\#fig:stream-model-averaging-plot)
+\end{figure}
 
 从图\@ref(fig:stream-model-averaging-plot)左图中可以观察到各环境因子的变量重要性排序：oxygen、ph、temp的重要性最高，表明它们是影响溪流鱼类丰度的关键驱动因子，这与生态学理论中水温、溶解氧和pH对水生生物分布的决定性作用相符。右图的模型权重分布显示没有单一模型占据绝对优势，多个模型都获得了一定的支持度，这体现了模型平均的必要性——如果仅选"最优"模型，我们将丢失其他合理模型所包含的信息。这种可视化方式使得复杂的模型平均结果变得直观易懂，为生态学决策提供了清晰的依据。
 
@@ -864,14 +701,6 @@ cv_model <- train(log(richness + 1) ~ area + vegetation + temp + ph,
 )
 
 # 输出交叉验证结果
-cat("=== 常林的森林鸟类模型10折交叉验证结果 ===\n")
-```
-
-```
-## === 常林的森林鸟类模型10折交叉验证结果 ===
-```
-
-``` r
 print(cv_model)
 ```
 
@@ -908,10 +737,14 @@ cv_results <- cv_model$results
 
 交叉验证性能的可视化能够直观展示模型在不同数据子集上的稳定性。图\@ref(fig:forest-cv-rmse-plot)展示了常林森林鸟类模型的10折交叉验证结果，通过RMSE在各折之间的波动程度来评估模型的泛化能力。判断原则是：如果RMSE在不同折之间波动很大，说明模型对特定数据子集过度敏感，泛化能力可能不足；如果各折RMSE差异较小（如此例），模型在不同数据子集上表现相对一致。
 
-<div class="figure" style="text-align: center">
-<embed src="09-model_selection_and_evaluation_files/figure-html/forest-cv-rmse-plot-1.pdf" title="常林的森林鸟类模型10折交叉验证：各折RMSE的变化，红色虚线为平均RMSE。通过各折之间的波动程度评估模型的稳定性" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:forest-cv-rmse-plot)常林的森林鸟类模型10折交叉验证：各折RMSE的变化，红色虚线为平均RMSE。通过各折之间的波动程度评估模型的稳定性</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/forest-cv-rmse-plot-1} 
+
+}
+
+\caption{常林的森林鸟类模型10折交叉验证：各折RMSE的变化，红色虚线为平均RMSE。通过各折之间的波动程度评估模型的稳定性}(\#fig:forest-cv-rmse-plot)
+\end{figure}
 
 从图\@ref(fig:forest-cv-rmse-plot)中可以观察RMSE在各折之间的波动情况。如果各折RMSE差异较大，说明模型对特定数据子集过度敏感，泛化能力可能不足；如果波动较小（如此例所示），则表明模型在不同数据子集上表现一致。图中红色虚线表示平均RMSE值，为模型性能提供了基准参考。这种可视化方式使得交叉验证结果更加直观，有助于识别潜在的过度拟合问题。
 
@@ -1092,10 +925,14 @@ rmse_increase <- (test_rmse - train_rmse) / train_rmse * 100
 
 为了直观展示外部验证结果，图\@ref(fig:external-validation-plot)比较了训练集和测试集上植物物种丰富度模型的预测性能。该图采用分面布局，分别展示了训练集（原森林区域）和测试集（新森林区域）的预测值与观测值关系，通过1:1参考线（黑色虚线）直观评估模型的预测准确性。
 
-<div class="figure" style="text-align: center">
-<embed src="09-model_selection_and_evaluation_files/figure-html/external-validation-plot-1.pdf" title="常林的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:external-validation-plot)常林的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{09-model_selection_and_evaluation_files/figure-latex/external-validation-plot-1} 
+
+}
+
+\caption{常林的森林生态系统外部验证：训练集和测试集上植物物种丰富度模型的预测性能比较。训练集基于某森林区域数据，测试集代表生态条件不同的另一森林区域}(\#fig:external-validation-plot)
+\end{figure}
 
 在常林的植物物种丰富度研究中，训练集基于她最初调查的山地森林区域数据，测试集代表邻近但生态条件略有不同的另一个山地森林区域。外部验证检验了她的模型在不同森林生态系统中的空间普适性。如果模型在测试集上表现良好，说明其在不同森林区域的适用性较广；如果性能显著下降，可能需要考虑森林区域特异性因素，如不同的优势树种、土壤类型、地形特征或干扰历史。常林通过外部验证深刻理解了森林生态系统的空间异质性，这为她制定更精准的森林保护策略提供了重要启示。
 

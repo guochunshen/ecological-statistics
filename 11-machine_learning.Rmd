@@ -412,7 +412,6 @@ rmse <- sqrt(mean((predictions - forest_data$碳储量)^2))
 r_squared <- 1 - sum((forest_data$碳储量 - predictions)^2) /
                    sum((forest_data$碳储量 - mean(forest_data$碳储量))^2)
 
-cat("回归树性能指标:\n")
 cat("RMSE:", round(rmse, 2), "\n")
 cat("R²:", round(r_squared, 3), "\n")
 
@@ -541,12 +540,10 @@ cat("决策树分类准确率:", round(accuracy * 100, 2), "%\n")
 
 # 混淆矩阵
 conf_matrix <- table(预测 = predictions, 实际 = forest_data$森林类型)
-print("混淆矩阵:")
 print(conf_matrix)
 
 # 变量重要性
 importance <- tree_model$variable.importance
-print("变量重要性:")
 print(importance)
 ```
 
@@ -634,12 +631,7 @@ $$\hat{y} = \text{majority vote}\{f_1(x), f_2(x), ..., f_T(x)\}$$
 则 生态系统 = 高山针叶林
 ```
 
-**随机森林的优势**：
-- 树1：关注海拔和温度条件
-- 树2：关注降水和土壤特性
-- 树3：关注植被组成和地形特征
-- ...
-- 最终综合所有树的判断，避免因单一环境因子误判
+**随机森林的优势**体现在每棵树关注不同的特征子集——树1关注海拔和温度条件，树2关注降水和土壤特性，树3关注植被组成和地形特征——最终综合所有树的判断，避免因单一环境因子误判。
 
 ### R代码实现
 
@@ -711,7 +703,6 @@ print(conf_matrix)
 
 # 特征重要性分析
 importance_scores <- importance(rf_model)
-print("特征重要性得分:")
 print(importance_scores)
 
 # 可视化特征重要性
@@ -783,7 +774,6 @@ legend("topright",
 
 # 计算变量重要性
 importance_scores <- importance(rf_model)
-print("变量重要性得分:")
 print(importance_scores)
 
 # 可视化变量重要性
@@ -821,11 +811,7 @@ ggplot(importance_df, aes(x = reorder(特征, 准确率重要性), y = 准确率
 3. 对预测结果求平均，得到该特征取值对应的平均预测值
 
 **生态学意义**：
-部分依赖图在生态学中特别有用，因为它能够：
-- 揭示环境因子与生态响应之间的非线性关系
-- 识别生态阈值和临界点
-- 理解单个环境因子的独立效应
-- 为生态管理提供决策支持
+部分依赖图在生态学中特别有用，因为它能够揭示环境因子与生态响应之间的非线性关系、识别生态阈值和临界点、理解单个环境因子的独立效应，并为生态管理提供决策支持。
 
 **R代码实现**：
 ```{r, fig.cap="随机森林部分依赖图，展示海拔对生态系统分类的影响以及海拔与年均温的交互作用"}
@@ -873,11 +859,9 @@ predictions <- predict(rf_model, features_test)
 
 # 混淆矩阵
 conf_matrix <- confusionMatrix(predictions, target_test)
-print("混淆矩阵:")
 print(conf_matrix)
 
 # 各类别的性能指标
-cat("\n各类别性能指标:\n")
 print(conf_matrix$byClass)
 
 # 绘制ROC曲线（多分类问题）
@@ -941,7 +925,6 @@ stability_summary <- data.frame(
   变异系数 = apply(stability_df, 1, function(x) sd(x)/mean(x))
 )
 
-print("模型稳定性分析:")
 print(stability_summary)
 
 # 可视化稳定性结果
@@ -958,13 +941,7 @@ ggplot(stability_summary, aes(x = reorder(特征, 均值重要性), y = 均值�
 
 ### 生态学应用实例
 
-在生态学研究中，这些评估工具的组合使用能够提供全面的模型理解：
-
-1. **物种分布建模**：通过变量重要性分析识别关键环境因子，通过部分依赖图理解环境因子与物种出现概率的非线性关系。
-
-2. **生态系统健康评估**：使用袋外误差评估模型的泛化能力，通过模型稳定性分析确保评估结果的可靠性。
-
-3. **生态预测**：结合ROC曲线和混淆矩阵评估模型的分类性能，为生态管理决策提供科学依据。
+在生态学研究中，这些评估工具的组合使用能够提供全面的模型理解：在物种分布建模中，通过变量重要性分析识别关键环境因子，通过部分依赖图理解环境因子与物种出现概率的非线性关系；在生态系统健康评估中，使用袋外误差评估模型的泛化能力，通过模型稳定性分析确保评估结果的可靠性；在生态预测中，结合ROC曲线和混淆矩阵评估模型的分类性能，为生态管理决策提供科学依据。
 
 正如生态系统中生物多样性带来稳定性一样，随机森林通过模型的多样性获得了预测的稳定性和准确性。这种从自然界中汲取智慧的方法，体现了机器学习与生态学之间的深刻联系。通过全面的模型评估，我们不仅能够获得准确的预测，还能够深入理解生态系统的内在机制，为生态保护和可持续发展提供科学支持。
 
@@ -1125,15 +1102,9 @@ $$\text{subject to } y_i(w^T x_i + b) \geq 1 - \xi_i, \quad \xi_i \geq 0$$
 
 想象我们要在一片连续的景观中划分森林和草原的边界：
 
-**传统方法的问题**：
-- 线性分类器可能无法捕捉复杂的边界形状
-- 决策树可能产生过于复杂的边界
-- 简单的阈值划分可能忽略重要的环境梯度
+**传统方法的问题**：线性分类器可能无法捕捉复杂的边界形状，决策树可能产生过于复杂的边界，简单的阈值划分可能忽略重要的环境梯度。
 
-**支持向量机的优势**：
-- 通过核技巧，能够学习复杂的非线性边界
-- 最大间隔原则确保边界位于最不适宜的区域
-- 支持向量识别出关键的边界样本
+**支持向量机的优势**：通过核技巧能够学习复杂的非线性边界，最大间隔原则确保边界位于最不适宜的区域，而支持向量则识别出关键的边界样本。
 
 **具体过程**：
 1. 收集环境因子数据（海拔、降水、土壤类型等）
@@ -1143,16 +1114,9 @@ $$\text{subject to } y_i(w^T x_i + b) \geq 1 - \xi_i, \quad \xi_i \geq 0$$
 
 #### 例子2：湿地生态系统分类
 
-在湿地生态系统研究中，我们需要区分不同类型的湿地：
+在湿地生态系统研究中，我们需要区分不同类型的湿地：沼泽（常年积水，以挺水植物为主）、泥炭地（有机质积累，酸性环境）和季节性湿地（干湿交替，适应性强）。
 
-- **沼泽**：常年积水，以挺水植物为主
-- **泥炭地**：有机质积累，酸性环境
-- **季节性湿地**：干湿交替，适应性强
-
-支持向量机能够：
-- 综合考虑水位、土壤pH、植被组成等多个因子
-- 识别不同类型湿地之间的最优边界
-- 为湿地保护提供科学的分类依据
+支持向量机能够综合考虑水位、土壤pH、植被组成等多个因子，识别不同类型湿地之间的最优边界，为湿地保护提供科学的分类依据。
 
 ### R代码实现
 
@@ -1215,7 +1179,6 @@ cat("测试集准确率:", round(accuracy * 100, 2), "%\n")
 
 # 混淆矩阵
 conf_matrix <- table(预测 = predictions, 实际 = target_test)
-print("混淆矩阵:")
 print(conf_matrix)
 
 # 可视化决策边界（使用仅含两个主特征的简化模型）
@@ -1324,7 +1287,6 @@ svm_tune <- train(
 )
 
 # 查看调优结果
-print("最优参数:")
 print(svm_tune$bestTune)
 
 # 绘制参数调优结果
@@ -1373,7 +1335,6 @@ ggplot(combined_data, aes(x = 海拔, fill = 类型)) +
 
 # 支持向量的森林健康状态分布
 sv_health <- table(support_vectors$森林健康状态)
-cat("支持向量的森林健康状态分布:\n")
 print(sv_health)
 
 # 可视化支持向量分布
@@ -1484,11 +1445,9 @@ prob_predictions <- kernlab::predict(final_model, as.matrix(forest_health[,1:4])
 
 # 混淆矩阵
 conf_matrix <- confusionMatrix(predictions, forest_health$森林健康状态)
-print("混淆矩阵和性能指标:")
 print(conf_matrix)
 
 # 各类别的详细性能
-cat("\n各类别性能指标:\n")
 print(conf_matrix$byClass)
 
 # 绘制ROC曲线（多分类问题）
@@ -1519,7 +1478,6 @@ legend("bottomright",
 
 # 计算平均AUC
 auc_values <- sapply(roc_curves, function(x) x$auc)
-cat("\n各类别AUC值:\n")
 print(auc_values)
 cat("平均AUC:", round(mean(auc_values), 3), "\n")
 ```

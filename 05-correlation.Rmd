@@ -859,13 +859,14 @@ denominator <- total_individuals * (total_individuals - 1)
 morisita_index <- numerator / denominator
 print(paste("Morisita指数:", morisita_index))
 
-# 判断分布模式
+# 判断分布模式：方差均值比>1.2为聚集，<0.8为均匀，否则随机
+# 结果通过上方打印的方差均值比和Morisita指数即可判断
 if (variance_mean_ratio > 1.2) {
-  print("分布模式：聚集分布")
+  # 聚集分布
 } else if (variance_mean_ratio < 0.8) {
-  print("分布模式：均匀分布")
+  # 均匀分布
 } else {
-  print("分布模式：随机分布")
+  # 随机分布
 }
 ```
 

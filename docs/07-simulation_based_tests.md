@@ -334,45 +334,20 @@ knitr::kable(adonis_result, caption = "置换ANOVA分析结果", booktabs = TRUE
   kableExtra::kable_styling(latex_options = c("hold_position"))
 ```
 
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<caption>(\#tab:adonis-result-table)(\#tab:adonis-result-table)置换ANOVA分析结果</caption>
- <thead>
-  <tr>
-   <th style="text-align:left;">  </th>
-   <th style="text-align:right;"> Df </th>
-   <th style="text-align:right;"> SumOfSqs </th>
-   <th style="text-align:right;"> R2 </th>
-   <th style="text-align:right;"> F </th>
-   <th style="text-align:right;"> Pr(&gt;F) </th>
-  </tr>
- </thead>
-<tbody>
-  <tr>
-   <td style="text-align:left;"> Model </td>
-   <td style="text-align:right;"> 1 </td>
-   <td style="text-align:right;"> 0.0098147 </td>
-   <td style="text-align:right;"> 0.0145518 </td>
-   <td style="text-align:right;"> 0.2658007 </td>
-   <td style="text-align:right;"> 0.791 </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Residual </td>
-   <td style="text-align:right;"> 18 </td>
-   <td style="text-align:right;"> 0.6646505 </td>
-   <td style="text-align:right;"> 0.9854482 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> NA </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> Total </td>
-   <td style="text-align:right;"> 19 </td>
-   <td style="text-align:right;"> 0.6744652 </td>
-   <td style="text-align:right;"> 1.0000000 </td>
-   <td style="text-align:right;"> NA </td>
-   <td style="text-align:right;"> NA </td>
-  </tr>
-</tbody>
-</table>
+\begin{table}[!h]
+\centering
+\caption{(\#tab:adonis-result-table)置换ANOVA分析结果}
+\centering
+\begin{tabular}[t]{lrrrrr}
+\toprule
+  & Df & SumOfSqs & R2 & F & Pr(>F)\\
+\midrule
+Model & 1 & 0.0098147 & 0.0145518 & 0.2658007 & 0.791\\
+Residual & 18 & 0.6646505 & 0.9854482 & NA & NA\\
+Total & 19 & 0.6744652 & 1.0000000 & NA & NA\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 表 \@ref(tab:adonis-result-table) 展示了置换ANOVA分析的结果，从中可以看出不同栖息地类型对植物群落组成的影响是否具有统计显著性。
 
@@ -783,11 +758,7 @@ Bagging和Random Forest的方差分解分析还为我们理解模型选择提供
 
 传统方法的局限性：传统的群落分析方法（如多样性指数、相似性分析）虽然能够描述群落的特征，但难以区分这些特征是生态过程的结果还是随机期望。传统的统计检验往往依赖于特定的分布假设，而这些假设在复杂的群落数据中往往不成立。
 
-基于模拟的优势：群落组装零模型通过随机化群落矩阵来构建期望分布，不依赖于特定的分布假设，特别适合处理：
-- 复杂的物种-环境关系
-- 多物种间的相互作用
-- 空间和时间异质性
-- 小样本群落数据
+基于模拟的优势：群落组装零模型通过随机化群落矩阵来构建期望分布，不依赖于特定的分布假设，特别适合处理复杂的物种-环境关系、多物种间的相互作用、空间和时间异质性，以及小样本群落数据。
 
 生态学实例：检验梅花鹿栖息地植物群落共存机制
 
@@ -873,17 +844,25 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:c-score-null-dist)展示了群落组装零模型检验的C-score零分布：
 
-<div class="figure" style="text-align: center">
-<embed src="07-simulation_based_tests_files/figure-html/c-score-null-dist-1.pdf" title="梅花鹿栖息地植物群落组装零模型检验：C-score零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:c-score-null-dist)梅花鹿栖息地植物群落组装零模型检验：C-score零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/c-score-null-dist-1} 
+
+}
+
+\caption{梅花鹿栖息地植物群落组装零模型检验：C-score零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别}(\#fig:c-score-null-dist)
+\end{figure}
 
 图\@ref(fig:community-matrix-heatmap)展示了梅花鹿栖息地植物群落的物种分布热图：
 
-<div class="figure" style="text-align: center">
-<embed src="07-simulation_based_tests_files/figure-html/community-matrix-heatmap-1.pdf" title="梅花鹿栖息地植物群落物种分布热图：基于环境梯度的物种分布模式。使用颜色和透明度组合表示物种存在状态" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:community-matrix-heatmap)梅花鹿栖息地植物群落物种分布热图：基于环境梯度的物种分布模式。使用颜色和透明度组合表示物种存在状态</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/community-matrix-heatmap-1} 
+
+}
+
+\caption{梅花鹿栖息地植物群落物种分布热图：基于环境梯度的物种分布模式。使用颜色和透明度组合表示物种存在状态}(\#fig:community-matrix-heatmap)
+\end{figure}
 
 生态学意义：如果零模型检验显示显著的C-score（p < 0.05），表明树种的共现模式显著偏离随机期望。较高的C-score通常表示物种间存在竞争排斥，物种倾向于避免在相同的样点中共存。这支持了"竞争排斥"假说在梅花鹿栖息地植物群落组装中的重要性。
 
@@ -893,11 +872,7 @@ cat("零模型检验p值:", p_value, "\n")
 
 传统方法的挑战：传统的网络分析方法主要描述网络的结构特征，但难以评估这些特征是否具有统计显著性。网络结构的复杂性使得理论分布难以确定，特别是对于真实生态网络中常见的非随机模式。
 
-基于模拟的优势：生态网络零模型通过随机化网络结构来构建期望分布，能够：
-- 检验网络拓扑特征的统计显著性
-- 区分不同生态过程对网络结构的影响
-- 处理各种类型的生态网络（二分网络、加权网络等）
-- 考虑网络的生物学约束（如物种的生态位）
+基于模拟的优势：生态网络零模型通过随机化网络结构来构建期望分布，能够检验网络拓扑特征的统计显著性、区分不同生态过程对网络结构的影响、处理各种类型的生态网络（二分网络、加权网络等），并考虑网络的生物学约束（如物种的生态位）。
 
 生态学实例：检验传粉网络的嵌套结构
 
@@ -967,24 +942,36 @@ cat("零模型检验p值:", p_value, "\n")
 
 图\@ref(fig:nestedness-null-dist)展示了传粉网络嵌套性零模型检验的零分布：
 
-<div class="figure" style="text-align: center">
-<embed src="07-simulation_based_tests_files/figure-html/nestedness-null-dist-1.pdf" title="传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:nestedness-null-dist)传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nestedness-null-dist-1} 
+
+}
+
+\caption{传粉网络嵌套性零模型检验：嵌套性零分布与观测值比较。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别}(\#fig:nestedness-null-dist)
+\end{figure}
 
 图\@ref(fig:pollination-network-structure)展示了传粉网络的结构图：
 
-<div class="figure" style="text-align: center">
-<embed src="07-simulation_based_tests_files/figure-html/pollination-network-structure-1.pdf" title="传粉网络结构可视化：植物与传粉者的二分网络。使用颜色和形状组合区分不同类型节点" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:pollination-network-structure)传粉网络结构可视化：植物与传粉者的二分网络。使用颜色和形状组合区分不同类型节点</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/pollination-network-structure-1} 
+
+}
+
+\caption{传粉网络结构可视化：植物与传粉者的二分网络。使用颜色和形状组合区分不同类型节点}(\#fig:pollination-network-structure)
+\end{figure}
 
 图\@ref(fig:pollination-matrix-heatmap)展示了传粉网络相互作用的矩阵热图：
 
-<div class="figure" style="text-align: center">
-<embed src="07-simulation_based_tests_files/figure-html/pollination-matrix-heatmap-1.pdf" title="传粉网络相互作用矩阵热图：嵌套结构的可视化。使用颜色和透明度组合表示相互作用存在状态" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:pollination-matrix-heatmap)传粉网络相互作用矩阵热图：嵌套结构的可视化。使用颜色和透明度组合表示相互作用存在状态</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/pollination-matrix-heatmap-1} 
+
+}
+
+\caption{传粉网络相互作用矩阵热图：嵌套结构的可视化。使用颜色和透明度组合表示相互作用存在状态}(\#fig:pollination-matrix-heatmap)
+\end{figure}
 
 生态学意义：如果零模型检验显示显著的嵌套性（p < 0.05），表明传粉网络的结构确实具有嵌套模式。嵌套结构通常被认为能够增强生态网络的稳定性和韧性，当某些物种消失时，嵌套结构有助于维持网络的连接性。这种结构信息对于理解传粉服务的稳定性和设计保护策略具有重要意义。
 
@@ -1007,12 +994,7 @@ cat("零模型检验p值:", p_value, "\n")
    - 适用场景：检验特定生态假说
    - 生态学意义：整合生物学知识构建更真实的零模型
 
-生态学研究的最佳实践：
-
-1. 多模型比较：使用多种零模型算法相互验证
-2. 生物学合理性：选择与生态过程相符的随机化算法
-3. 敏感性分析：检验结果对不同零模型算法的敏感性
-4. 生态学解释：结合生态学机制解释统计结果
+生态学研究的最佳实践包括：使用多种零模型算法相互验证（多模型比较），选择与生态过程相符的随机化算法（生物学合理性），检验结果对不同零模型算法的敏感性（敏感性分析），以及结合生态学机制解释统计结果（生态学解释）。
 
 R语言中的零模型分析工具：
 
@@ -1033,10 +1015,10 @@ summary(cooc_null)
 ```
 
 ```
-## Time Stamp:  Sun Jun 14 08:24:03 2026 
+## Time Stamp:  Sun Jun 14 07:38:55 2026 
 ## Reproducible:  
 ## Number of Replications:  
-## Elapsed Time:  0.51 secs 
+## Elapsed Time:  0.49 secs 
 ## Metric:  c_score 
 ## Algorithm:  sim9 
 ## Observed Index:  13.671 
@@ -1083,17 +1065,25 @@ cat("p值:", p_value, "\n")
 
 图\@ref(fig:cooc-null-model-plot)展示了EcoSimR包中物种共现零模型的检验结果：
 
-<div class="figure" style="text-align: center">
-<embed src="07-simulation_based_tests_files/figure-html/cooc-null-model-plot-1.pdf" title="物种共现零模型检验：EcoSimR包分析结果" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:cooc-null-model-plot)物种共现零模型检验：EcoSimR包分析结果</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/cooc-null-model-plot-1} 
+
+}
+
+\caption{物种共现零模型检验：EcoSimR包分析结果}(\#fig:cooc-null-model-plot)
+\end{figure}
 
 图\@ref(fig:nestedness-null-hist)展示了网络嵌套性零模型的零分布直方图：
 
-<div class="figure" style="text-align: center">
-<embed src="07-simulation_based_tests_files/figure-html/nestedness-null-hist-1.pdf" title="网络嵌套性零模型检验：嵌套性指数零分布。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别" width="80%" type="application/pdf" />
-<p class="caption">(\#fig:nestedness-null-hist)网络嵌套性零模型检验：嵌套性指数零分布。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别</p>
-</div>
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{07-simulation_based_tests_files/figure-latex/nestedness-null-hist-1} 
+
+}
+
+\caption{网络嵌套性零模型检验：嵌套性指数零分布。使用虚线标识观测值位置，确保在彩色显示和黑白打印时都能清晰识别}(\#fig:nestedness-null-hist)
+\end{figure}
 
 零模型检验已广泛应用于保护生物学（保护区设计、入侵物种风险评估）、群落生态学（区分环境过滤与竞争排斥）和全球变化研究（监测群落对气候变化的响应）。这些方法的共同价值在于：通过构建合理的随机期望，让我们能够可靠地推断观测生态模式的形成机制，而非仅凭直觉判断"这个模式是否特殊"。
 

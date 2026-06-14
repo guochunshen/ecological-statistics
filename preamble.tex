@@ -109,13 +109,13 @@
 %\appto\endShaded{\par\vspace{-0.5\baselineskip}}  % 代码块后减少空白
 \makeatother
 
-% AI协作面板 - 对应HTML中的.ai-box样式
+% AI协作面板 - 重定义quote环境，添加左侧蓝色边框
 \usepackage{xcolor}
 \usepackage{framed}
-\definecolor{ai-box-bg}{HTML}{F0F4FA}
-\definecolor{ai-box-border}{HTML}{5B9BD5}
-\newenvironment{ai-box}{%
-  \def\FrameCommand{{\color{ai-box-border}\vrule width 4pt}\hspace{10pt}}%
+\definecolor{quote-bg}{HTML}{F0F4FA}
+\definecolor{quote-border}{HTML}{5B9BD5}
+\renewenvironment{quote}{%
+  \def\FrameCommand{{\color{quote-border}\vrule width 4pt}\hspace{10pt}}%
   \MakeFramed {\advance\hsize-\width \FrameRestore\noindent\ignorespaces}%
 }{%
   \endMakeFramed

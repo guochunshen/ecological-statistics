@@ -563,7 +563,6 @@ stream_all_models <- dredge(stream_full_model)
 stream_avg_model <- model.avg(stream_all_models, fit = TRUE)
 
 # 输出模型平均结果
-cat("\n=== 常林的溪流鱼类模型平均结果 ===\n")
 # 提取平均模型的系数
 stream_avg_coef <- summary(stream_avg_model)$coefmat.full
 
@@ -573,7 +572,6 @@ knitr::kable(stream_avg_coef, caption = "常林的溪流鱼类模型平均结果
 # 计算变量重要性
 stream_var_importance <- sw(stream_all_models)
 
-cat("\n=== 变量重要性 ===\n")
 print(stream_var_importance)
 ```
 
@@ -705,7 +703,6 @@ cv_model <- train(log(richness + 1) ~ area + vegetation + temp + ph,
 )
 
 # 输出交叉验证结果
-cat("=== 常林的森林鸟类模型10折交叉验证结果 ===\n")
 print(cv_model)
 
 # 提取交叉验证统计量
