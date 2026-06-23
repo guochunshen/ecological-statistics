@@ -1,5 +1,5 @@
 ---
-title: "生态统计学：AI时代的生态数据分析"
+title: "AI赋能的生态统计"
 author: "沈国春、李勤"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
