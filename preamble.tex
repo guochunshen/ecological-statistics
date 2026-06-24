@@ -1,5 +1,13 @@
-% 中文支持 - 使用 ctex 包提供更好的中文排版
-\usepackage[fontset=none]{ctex}
+% 中文支持 - ctexbook 文档类已自动加载 ctex
+% 中文章节标题格式：第X章独占一行居中，章题目在下一行居中
+\ctexset{
+  chapter/name = {第,章},
+  chapter/format = {\centering\bfseries},
+  chapter/nameformat = {\huge},
+  chapter/numberformat = {\huge},
+  chapter/titleformat = {\LARGE},
+  chapter/aftername = {\par\vspace{8pt}},
+}
 
 % 中文字体设置
 % 正文：思源宋体 (Noto Serif CJK SC) — Google与Adobe联合开发，专为中文印刷排版设计
