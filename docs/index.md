@@ -1,7 +1,7 @@
 ---
 title: "AI赋能的生态统计"
 author: "沈国春、李勤"
-date: "2026-06-24"
+date: "2026-06-28"
 site: bookdown::bookdown_site
 documentclass: ctexbook
 bibliography: [book.bib, packages.bib]

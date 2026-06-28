@@ -197,7 +197,7 @@ best_bic <- forest_bird_model_comparison$Model[
 \centering
 \begin{tabular}[t]{lrrrrrrr}
 \toprule
-Model & R2 & AIC & BIC & Parameters & delta\_AIC & delta\_BIC & AIC\_weight\\
+模型 & $R^2$ & AIC & BIC & 参数数 & $\Delta$AIC & $\Delta$BIC & AIC权重\\
 \midrule
 full\_model & 0.606 & 737.998 & 753.629 & 5 & 0.000 & 0.000 & 0.76\\
 overfit\_model & 0.613 & 740.300 & 761.141 & 7 & 2.302 & 7.512 & 0.24\\

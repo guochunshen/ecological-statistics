@@ -378,6 +378,7 @@ contribution_df <- data.frame(
 )
 
 ggplot(contribution_df, aes(x = 情景, y = 贡献度, fill = 情景)) +
+  geom_col() +
   geom_text(aes(label = round(贡献度, 3)), vjust = -0.5, size = 3) +
   scale_fill_manual(values = c("#4CAF50", "#FFC107", "#E91E63")) +
   labs(
@@ -768,6 +769,7 @@ cat("95%置信区间: [", round(ci_lower, 3), ", ",
 load("data/ch02_random_variable_demo.rda")
 
 ggplot(choice_df, aes(x = plant_type, y = count, fill = plant_type)) +
+  geom_col() +
   geom_text(aes(label = count), vjust = -0.5, size = 4) +
   scale_fill_manual(values = c("#90EE90", "#87CEEB", "#FFFACD")) +
   labs(title = "蚱蜢植物选择行为的随机模拟", x = "植物类型", y = "选择次数") +

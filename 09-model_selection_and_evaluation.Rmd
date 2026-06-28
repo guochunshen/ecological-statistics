@@ -125,9 +125,9 @@ par(mfrow = c(2, 2))
 # 绘制散点图显示观测数据
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
-  # 标题包含R²和AIC值用于模型比较
-  main = paste("线性模型\n$R^2$ =", round(r2_linear, 3),
-  "$\\text{AIC}$ =", round(aic_linear, 1)),
+  # 标题用bquote渲染R²和AIC数学符号
+  main = bquote(atop("线性模型",
+    R^2 == .(round(r2_linear, 3)) ~ AIC == .(round(aic_linear, 1)))),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"  # 蓝色实心圆点
 )
@@ -137,8 +137,8 @@ lines(forest_soil_data$soil_nutrient, predict(model_linear), col = "red", lwd = 
 # 二次模型图
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
-  main = paste("二次模型\n$R^2$ =", round(r2_quadratic, 3),
-  "$\\text{AIC}$ =", round(aic_quadratic, 1)),
+  main = bquote(atop("二次模型",
+    R^2 == .(round(r2_quadratic, 3)) ~ AIC == .(round(aic_quadratic, 1)))),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"
 )
@@ -147,8 +147,8 @@ lines(forest_soil_data$soil_nutrient, predict(model_quadratic), col = "red", lwd
 # 三次模型图
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
-  main = paste("三次模型\n$R^2$ =", round(r2_cubic, 3),
-  "$\\text{AIC}$ =", round(aic_cubic, 1)),
+  main = bquote(atop("三次模型",
+    R^2 == .(round(r2_cubic, 3)) ~ AIC == .(round(aic_cubic, 1)))),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"
 )
@@ -157,8 +157,8 @@ lines(forest_soil_data$soil_nutrient, predict(model_cubic), col = "red", lwd = 2
 # 过度拟合模型图
 plot(plant_biomass ~ soil_nutrient,
   data = forest_soil_data,
-  main = paste("10次多项式\n$R^2$ =", round(r2_overfit, 3),
-  "$\\text{AIC}$ =", round(aic_overfit, 1)),
+  main = bquote(atop("10次多项式",
+    R^2 == .(round(r2_overfit, 3)) ~ AIC == .(round(aic_overfit, 1)))),
   xlab = "土壤养分", ylab = "植物生物量",
   pch = 16, col = "blue"
 )
@@ -269,8 +269,17 @@ best_bic <- forest_bird_model_comparison$Model[
 ```
 
 ```{r forest-bird-model-comparison-table, echo=FALSE}
-# 输出模型比较结果
-knitr::kable(forest_bird_model_comparison, caption = "信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣", row.names = FALSE, digits = 3, booktabs = TRUE) %>%
+# 转义模型名称中的下划线，避免LaTeX报错
+forest_bird_model_comparison$Model <-
+  gsub("_", "\\\\_", forest_bird_model_comparison$Model)
+
+# 输出模型比较结果，用LaTeX数学格式修复上标和下标
+knitr::kable(forest_bird_model_comparison,
+  caption = "信息准则模型比较：通过ΔAIC和ΔBIC差异比较不同鸟类丰富度模型的相对优劣",
+  row.names = FALSE, digits = 3, booktabs = TRUE,
+  col.names = c("模型", "$R^2$", "AIC", "BIC", "参数数",
+                "$\\Delta$AIC", "$\\Delta$BIC", "AIC权重"),
+  escape = FALSE) %>%
 kableExtra::kable_styling(latex_options = c("hold_position") )
 ```
 
